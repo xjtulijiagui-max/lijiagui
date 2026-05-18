@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>李家贵AI课程销售资料</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --brand-blue: #1F7BFF;
+      --deep-blue: #071B42;
+      --ice-blue: #DDF0FF;
+      --glass: rgba(255,255,255,0.72);
+      --line: rgba(31,123,255,0.22);
+    }
+
+    * { scroll-behavior: smooth; }
+
+    body {
+      font-family: "STKaiti", "KaiTi", "Microsoft YaHei", "PingFang SC", serif;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(31,123,255,0.18), transparent 32%),
+        radial-gradient(circle at 85% 18%, rgba(76,184,255,0.20), transparent 34%),
+        linear-gradient(135deg, #f7fbff 0%, #eef7ff 42%, #ffffff 100%);
+      color: #0B1D3A;
+      overflow-x: hidden;
+    }
+
+    .particle-field {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(31,123,255,0.55);
+      box-shadow: 0 0 18px rgba(31,123,255,0.75);
+      animation: floatUp linear infinite;
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(100vh) scale(.65); opacity: 0; }
+      10% { opacity: .75; }
+      80% { opacity: .75; }
+      to { transform: translateY(-12vh) scale(1.2); opacity: 0; }
+    }
+
+    .grid-light {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      opacity: .35;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(31,123,255,.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(31,123,255,.12) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 82%, transparent 100%);
+    }
+
+    .glass-card {
+      background: linear-gradient(135deg, rgba(255,255,255,.82), rgba(236,247,255,.66));
+      border: 1px solid rgba(31,123,255,.22);
+      box-shadow: 0 22px 70px rgba(15,78,155,.12);
+      backdrop-filter: blur(18px);
+    }
+
+    .nav-link {
+      transition: all .22s ease;
+      border: 1px solid transparent;
+    }
+
+    .nav-link:hover {
+      background: rgba(31,123,255,.10);
+      border-color: rgba(31,123,255,.22);
+      transform: translateX(4px);
+    }
+
+    .shine {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .shine::after {
+      content: "";
+      position: absolute;
+      top: -40%;
+      left: -80%;
+      width: 55%;
+      height: 180%;
+      transform: rotate(18deg);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.55), transparent);
+      animation: shine 5s infinite;
+    }
+
+    @keyframes shine {
+      0%, 38% { left: -80%; }
+      55%, 100% { left: 132%; }
+    }
+
+    .copy-toast {
+      position: fixed;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 50;
+      transition: all .25s ease;
+    }
+
+    .copy-toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    .soft-ring {
+      box-shadow:
+        0 0 0 1px rgba(31,123,255,.16),
+        inset 0 1px 0 rgba(255,255,255,.72),
+        0 16px 46px rgba(31,123,255,.12);
+    }
+
+    .section-anchor {
+      scroll-margin-top: 32px;
+    }
+
+    @media (max-width: 1024px) {
+      aside { position: relative !important; top: auto !important; height: auto !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="particle-field" id="particles"></div>
+  <div class="grid-light"></div>
+
+  <div id="toast" class="copy-toast rounded-full bg-[#071B42] px-5 py-3 text-sm text-white shadow-2xl">
+    已复制到剪贴板
+  </div>
+
+  <main class="relative z-10 mx-auto flex w-full max-w-[1440px] gap-8 px-6 py-8 lg:px-10">
+    <aside class="sticky top-8 hidden h-[calc(100vh-64px)] w-[280px] shrink-0 flex-col justify-between rounded-[32px] border border-blue-200/60 bg-white/70 p-5 shadow-2xl shadow-blue-100/60 backdrop-blur-xl lg:flex">
+      <div>
+        <div class="mb-7 rounded-[26px] bg-gradient-to-br from-[#08245C] via-[#0D3F93] to-[#1F7BFF] p-5 text-white shadow-xl shadow-blue-200/60 shine">
+          <div class="text-xs tracking-[0.35em] text-blue-100">AI COURSE</div>
+          <h1 class="mt-4 text-2xl font-bold leading-tight">李家贵<br/>AI课程销售资料</h1>
+          <p class="mt-4 text-sm leading-relaxed text-blue-50">面向销售沟通、客户转发、课前资料准备的统一入口。</p>
+        </div>
+
+        <nav class="space-y-2 text-[15px] font-semibold text-slate-700">
+          <a href="#overview" class="nav-link flex items-center gap-3 rounded-2xl px-4 py-3">
+            <span class="h-2.5 w-2.5 rounded-full bg-[#1F7BFF] shadow-[0_0_14px_rgba(31,123,255,.85)]"></span>资料总览
+          </a>
+          <a href="#qualification" class="nav-link flex items-center gap-3 rounded-2xl px-4 py-3">
+            <span class="h-2.5 w-2.5 rounded-full bg-[#1F7BFF] shadow-[0_0_14px_rgba(31,123,255,.85)]"></span>个人资质
+          </a>
+          <a href="#profile" class="nav-link flex items-center gap-3 rounded-2xl px-4 py-3">
+            <span class="h-2.5 w-2.5 rounded-full bg-[#1F7BFF] shadow-[0_0_14px_rgba(31,123,255,.85)]"></span>个人简介
+          </a>
+          <a href="#outline" class="nav-link flex items-center gap-3 rounded-2xl px-4 py-3">
+            <span class="h-2.5 w-2.5 rounded-full bg-[#1F7BFF] shadow-[0_0_14px_rgba(31,123,255,.85)]"></span>课程大纲
+          </a>
+          <a href="#video" class="nav-link flex items-center gap-3 rounded-2xl px-4 py-3">
+            <span class="h-2.5 w-2.5 rounded-full bg-[#1F7BFF] shadow-[0_0_14px_rgba(31,123,255,.85)]"></span>授课视频
+          </a>
+        </nav>
+      </div>
+
+      <div class="rounded-[24px] border border-blue-100 bg-blue-50/70 p-4 text-sm leading-relaxed text-slate-600">
+        <div class="mb-2 font-bold text-[#071B42]">备注</div>
+        本页面资料均支持百度网盘下载，提取码统一为 <span class="font-bold text-[#1F7BFF]">6666</span>。
+      </div>
+    </aside>
+
+    <section class="min-w-0 flex-1">
+      <section id="overview" class="section-anchor glass-card overflow-hidden rounded-[36px] p-8 md:p-10">
+        <div class="flex flex-col gap-8 xl:flex-row xl:items-end xl:justify-between">
+          <div class="max-w-3xl">
+            <div class="mb-5 inline-flex items-center gap-3 rounded-full border border-blue-200 bg-white/70 px-4 py-2 text-sm font-bold text-[#1F7BFF] shadow-lg shadow-blue-100/60">
+              <span class="h-2 w-2 rounded-full bg-[#1F7BFF] shadow-[0_0_16px_rgba(31,123,255,.9)]"></span>
+              销售资料统一入口
+            </div>
+            <h2 class="text-4xl font-black leading-tight tracking-tight text-[#071B42] md:text-6xl">
+              李家贵AI课程<br class="hidden md:block"/>销售资料
+            </h2>
+            <p class="mt-6 max-w-2xl text-lg leading-9 text-slate-600">
+              这里汇总个人资质、个人简介、课程大纲与授课视频四类关键资料。销售人员可根据客户沟通阶段快速打开下载链接，也可以一键复制完整资料信息，直接粘贴到微信、邮件或客户群。
+            </p>
+          </div>
+
+          <div class="w-full max-w-md rounded-[30px] bg-gradient-to-br from-[#071B42] via-[#0A3A8B] to-[#1F7BFF] p-6 text-white shadow-2xl shadow-blue-200/70">
+            <div class="text-sm tracking-[0.35em] text-blue-100">DOWNLOAD READY</div>
+            <div class="mt-5 text-3xl font-black">百度网盘资料包</div>
+            <p class="mt-4 text-base leading-8 text-blue-50">点击复制时仅复制可下载链接；全部复制时输出四行纯地址，适合直接粘贴转发。</p>
+            <button onclick="copyAll()" class="mt-6 w-full rounded-2xl bg-white px-5 py-4 text-base font-black text-[#0A3A8B] shadow-xl transition hover:-translate-y-0.5 hover:shadow-2xl">
+              一键复制全部链接
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="mt-8 grid gap-6 xl:grid-cols-2">
+        <article id="qualification" class="section-anchor glass-card soft-ring rounded-[32px] p-7">
+          <div class="flex items-start justify-between gap-5">
+            <div>
+              <div class="mb-4 inline-flex rounded-full bg-blue-100 px-3 py-1 text-xs font-bold tracking-[0.25em] text-[#1F7BFF]">01</div>
+              <h3 class="text-2xl font-black text-[#071B42]">个人资质</h3>
+              <p class="mt-3 text-base leading-8 text-slate-600">含资质、版权课程，用于客户初步信任建立、讲师背书与项目立项沟通。</p>
+            </div>
+            <div class="rounded-3xl bg-[#1F7BFF]/10 p-4 text-3xl text-[#1F7BFF]">✦</div>
+          </div>
+          <div class="mt-6 rounded-3xl border border-blue-100 bg-white/70 p-5">
+            <div class="break-all text-sm leading-7 text-slate-600">链接: https://pan.baidu.com/s/1Mm-d6BimkKvIOj-jx1iWWg?pwd=6666</div>
+            <div class="mt-2 text-sm font-bold text-[#1F7BFF]">提取码: 6666</div>
+          </div>
+          <div class="mt-5 flex flex-col gap-3 sm:flex-row">
+            <a href="https://pan.baidu.com/s/1Mm-d6BimkKvIOj-jx1iWWg?pwd=6666" target="_blank" class="flex-1 rounded-2xl bg-[#1F7BFF] px-5 py-3 text-center font-bold text-white shadow-lg shadow-blue-200 transition hover:-translate-y-0.5">打开资料</a>
+            <button onclick="copyText(`https://pan.baidu.com/s/1Mm-d6BimkKvIOj-jx1iWWg?pwd=6666`)" class="flex-1 rounded-2xl border border-blue-200 bg-white px-5 py-3 font-bold text-[#1F7BFF] transition hover:bg-blue-50">复制链接</button>
+          </div>
+        </article>
+
+        <article id="profile" class="section-anchor glass-card soft-ring rounded-[32px] p-7">
+          <div class="flex items-start justify-between gap-5">
+            <div>
+              <div class="mb-4 inline-flex rounded-full bg-blue-100 px-3 py-1 text-xs font-bold tracking-[0.25em] text-[#1F7BFF]">02</div>
+              <h3 class="text-2xl font-black text-[#071B42]">个人简介</h3>
+              <p class="mt-3 text-base leading-8 text-slate-600">含最新版个人简介、形象照片，适合用于课程介绍、宣传海报、邀约页面与客户背调。</p>
+            </div>
+            <div class="rounded-3xl bg-[#1F7BFF]/10 p-4 text-3xl text-[#1F7BFF]">◈</div>
+          </div>
+          <div class="mt-6 rounded-3xl border border-blue-100 bg-white/70 p-5">
+            <div class="break-all text-sm leading-7 text-slate-600">链接: https://pan.baidu.com/s/1sIlz8BIVUDlcOpUpKK9omg?pwd=6666</div>
+            <div class="mt-2 text-sm font-bold text-[#1F7BFF]">提取码: 6666</div>
+          </div>
+          <div class="mt-5 flex flex-col gap-3 sm:flex-row">
+            <a href="https://pan.baidu.com/s/1sIlz8BIVUDlcOpUpKK9omg?pwd=6666" target="_blank" class="flex-1 rounded-2xl bg-[#1F7BFF] px-5 py-3 text-center font-bold text-white shadow-lg shadow-blue-200 transition hover:-translate-y-0.5">打开资料</a>
+            <button onclick="copyText(`https://pan.baidu.com/s/1sIlz8BIVUDlcOpUpKK9omg?pwd=6666`)" class="flex-1 rounded-2xl border border-blue-200 bg-white px-5 py-3 font-bold text-[#1F7BFF] transition hover:bg-blue-50">复制链接</button>
+          </div>
+        </article>
+
+        <article id="outline" class="section-anchor glass-card soft-ring rounded-[32px] p-7">
+          <div class="flex items-start justify-between gap-5">
+            <div>
+              <div class="mb-4 inline-flex rounded-full bg-blue-100 px-3 py-1 text-xs font-bold tracking-[0.25em] text-[#1F7BFF]">03</div>
+              <h3 class="text-2xl font-black text-[#071B42]">课程大纲</h3>
+              <p class="mt-3 text-base leading-8 text-slate-600">含畅销课程和长尾课程大纲，便于销售按客户行业、岗位层级和培训场景快速匹配。</p>
+            </div>
+            <div class="rounded-3xl bg-[#1F7BFF]/10 p-4 text-3xl text-[#1F7BFF]">▣</div>
+          </div>
+          <div class="mt-6 rounded-3xl border border-blue-100 bg-white/70 p-5">
+            <div class="break-all text-sm leading-7 text-slate-600">链接: https://pan.baidu.com/s/1FxmGSLVxB2qs2dToQxm4yQ?pwd=6666</div>
+            <div class="mt-2 text-sm font-bold text-[#1F7BFF]">提取码: 6666</div>
+          </div>
+          <div class="mt-5 flex flex-col gap-3 sm:flex-row">
+            <a href="https://pan.baidu.com/s/1FxmGSLVxB2qs2dToQxm4yQ?pwd=6666" target="_blank" class="flex-1 rounded-2xl bg-[#1F7BFF] px-5 py-3 text-center font-bold text-white shadow-lg shadow-blue-200 transition hover:-translate-y-0.5">打开资料</a>
+            <button onclick="copyText(`https://pan.baidu.com/s/1FxmGSLVxB2qs2dToQxm4yQ?pwd=6666`)" class="flex-1 rounded-2xl border border-blue-200 bg-white px-5 py-3 font-bold text-[#1F7BFF] transition hover:bg-blue-50">复制链接</button>
+          </div>
+        </article>
+
+        <article id="video" class="section-anchor glass-card soft-ring rounded-[32px] p-7">
+          <div class="flex items-start justify-between gap-5">
+            <div>
+              <div class="mb-4 inline-flex rounded-full bg-blue-100 px-3 py-1 text-xs font-bold tracking-[0.25em] text-[#1F7BFF]">04</div>
+              <h3 class="text-2xl font-black text-[#071B42]">授课视频</h3>
+              <p class="mt-3 text-base leading-8 text-slate-600">覆盖不同授课场景和视频长度，适合客户评估讲师风格、表达节奏与课堂感染力。</p>
+            </div>
+            <div class="rounded-3xl bg-[#1F7BFF]/10 p-4 text-3xl text-[#1F7BFF]">◇</div>
+          </div>
+          <div class="mt-6 rounded-3xl border border-blue-100 bg-white/70 p-5">
+            <div class="break-all text-sm leading-7 text-slate-600">链接: https://pan.baidu.com/s/1TdQCeE8ibFFqTjLd2z4W4A?pwd=6666</div>
+            <div class="mt-2 text-sm font-bold text-[#1F7BFF]">提取码: 6666</div>
+          </div>
+          <div class="mt-5 flex flex-col gap-3 sm:flex-row">
+            <a href="https://pan.baidu.com/s/1TdQCeE8ibFFqTjLd2z4W4A?pwd=6666" target="_blank" class="flex-1 rounded-2xl bg-[#1F7BFF] px-5 py-3 text-center font-bold text-white shadow-lg shadow-blue-200 transition hover:-translate-y-0.5">打开资料</a>
+            <button onclick="copyText(`https://pan.baidu.com/s/1TdQCeE8ibFFqTjLd2z4W4A?pwd=6666`)" class="flex-1 rounded-2xl border border-blue-200 bg-white px-5 py-3 font-bold text-[#1F7BFF] transition hover:bg-blue-50">复制链接</button>
+          </div>
+        </article>
+      </section>
+
+      <section class="mt-8 rounded-[32px] border border-blue-200 bg-white/70 p-7 shadow-2xl shadow-blue-100/50 backdrop-blur-xl">
+        <h3 class="text-2xl font-black text-[#071B42]">销售使用建议</h3>
+        <p class="mt-4 text-base leading-9 text-slate-600">
+          在客户刚开始了解课程时，优先发送“个人简介”和“课程大纲”，让客户先看到讲师定位与课程结构；在客户进入采购论证或内部汇报阶段，再补充“个人资质”和“授课视频”，形成从信任背书到内容验证的完整链路。这个页面的“一键复制”按钮，适合快速转发给渠道伙伴、客户HR、培训负责人或业务部门负责人。
+        </p>
+      </section>
+
+      <footer class="py-10 text-center text-sm text-slate-500">
+        © 李家贵AI课程销售资料 · 支持百度下载 · 提取码 6666
+      </footer>
+    </section>
+  </main>
+
+  <script>
+    const materials = [
+      {
+        title: "个人资质（含资质，版权课程）",
+        link: "https://pan.baidu.com/s/1Mm-d6BimkKvIOj-jx1iWWg?pwd=6666",
+        code: "6666"
+      },
+      {
+        title: "个人简介（含最新版个人简介，形象照片）",
+        link: "https://pan.baidu.com/s/1sIlz8BIVUDlcOpUpKK9omg?pwd=6666",
+        code: "6666"
+      },
+      {
+        title: "课程大纲（含畅销和长尾课程大纲）",
+        link: "https://pan.baidu.com/s/1FxmGSLVxB2qs2dToQxm4yQ?pwd=6666",
+        code: "6666"
+      },
+      {
+        title: "授课视频（各个场景和长度）",
+        link: "https://pan.baidu.com/s/1TdQCeE8ibFFqTjLd2z4W4A?pwd=6666",
+        code: "6666"
+      }
+    ];
+
+    function showToast() {
+      const toast = document.getElementById("toast");
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 1600);
+    }
+
+    async function copyText(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (err) {
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        textarea.remove();
+      }
+      showToast();
+    }
+
+    function copyAll() {
+      const text = `https://pan.baidu.com/s/1Mm-d6BimkKvIOj-jx1iWWg?pwd=6666
+https://pan.baidu.com/s/1sIlz8BIVUDlcOpUpKK9omg?pwd=6666
+https://pan.baidu.com/s/1FxmGSLVxB2qs2dToQxm4yQ?pwd=6666
+https://pan.baidu.com/s/1TdQCeE8ibFFqTjLd2z4W4A?pwd=6666`;
+      copyText(text);
+    }
+
+    function createParticles() {
+      const field = document.getElementById("particles");
+      const count = 70;
+      for (let i = 0; i < count; i++) {
+        const p = document.createElement("span");
+        p.className = "particle";
+        p.style.left = Math.random() * 100 + "%";
+        p.style.animationDuration = (8 + Math.random() * 14) + "s";
+        p.style.animationDelay = (-Math.random() * 18) + "s";
+        p.style.opacity = (0.25 + Math.random() * 0.65).toString();
+        p.style.width = p.style.height = (2 + Math.random() * 4) + "px";
+        field.appendChild(p);
+      }
+    }
+
+    createParticles();
+  </script>
+</body>
+</html>
