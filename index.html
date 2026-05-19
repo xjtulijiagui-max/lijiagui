@@ -3,60 +3,708 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>重定向到 iCAR 分析报告</title>
-    <script>
-        // 自动重定向到 icar 目录
-        window.location.href = window.location.href.replace(/\/$/, '') + '/icar/';
-    </script>
+    <title>iCAR品牌AI赋能培训需求调研报告</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.0/dist/echarts.min.js"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 16px;
+            padding: 24px;
+            color: white;
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 400px;
+            margin: 20px 0;
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 24px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2px;
+        }
+
+        .insight-box {
+            background: linear-gradient(135deg, #f6f8fb 0%, #ffffff 100%);
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 14px;
+            margin: 4px;
+            background: #e2e8f0;
+            color: #2d3748;
+        }
+
+        .tag-primary {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
         }
-        .container {
-            text-align: center;
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-        }
-        h1 {
-            margin-bottom: 20px;
-            font-size: 32px;
-        }
-        p {
-            font-size: 18px;
-            opacity: 0.9;
-        }
-        .link {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 15px 30px;
-            background: white;
-            color: #667eea;
-            text-decoration: none;
-            border-radius: 10px;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-        .link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
     </style>
 </head>
-<body>
-    <div class="container">
-        <h1>🚀 iCAR AI 赋能培训需求调研报告</h1>
-        <p>正在跳转到报告页面...</p>
-        <p style="font-size: 14px; margin-top: 20px;">如果没有自动跳转，请点击下方按钮</p>
-        <a href="/lijiagui/icar/" class="link">查看报告</a>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <div class="gradient-bg text-white py-16">
+        <div class="max-w-7xl mx-auto px-6">
+            <h1 class="text-4xl font-bold mb-4">iCAR品牌AI赋能培训需求调研报告</h1>
+            <p class="text-xl opacity-90 mb-6">基于31份有效问卷的综合分析</p>
+            <div class="flex flex-wrap gap-4">
+                <div class="bg-white/20 backdrop-blur-sm rounded-lg px-6 py-3">
+                    <div class="text-sm opacity-80">调研时间</div>
+                    <div class="font-semibold">2026年5月13日-19日</div>
+                </div>
+                <div class="bg-white/20 backdrop-blur-sm rounded-lg px-6 py-3">
+                    <div class="text-sm opacity-80">样本量</div>
+                    <div class="font-semibold">31份</div>
+                </div>
+                <div class="bg-white/20 backdrop-blur-sm rounded-lg px-6 py-3">
+                    <div class="text-sm opacity-80">主要区域</div>
+                    <div class="font-semibold">安徽省芜湖市</div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-6 py-12">
+
+        <!-- Key Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+            <div class="stat-card card-hover">
+                <div class="text-3xl font-bold mb-2">26%</div>
+                <div class="text-sm opacity-90">AI工具使用率</div>
+            </div>
+            <div class="stat-card card-hover">
+                <div class="text-3xl font-bold mb-2">87%</div>
+                <div class="text-sm opacity-90">面临选题枯竭挑战</div>
+            </div>
+            <div class="stat-card card-hover">
+                <div class="text-3xl font-bold mb-2">71%</div>
+                <div class="text-sm opacity-90">抖音创作难度最高</div>
+            </div>
+            <div class="stat-card card-hover">
+                <div class="text-3xl font-bold mb-2">94%</div>
+                <div class="text-sm opacity-90">希望实操培训</div>
+            </div>
+        </div>
+
+        <!-- Section 1: 工作类型分布 -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8 card-hover">
+            <h2 class="section-title">1. 当前工作类型分布</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="chart-container" id="workTypeChart"></div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">关键发现</h3>
+                    <div class="insight-box">
+                        <p class="text-gray-700 mb-4"><strong>数据分析与内容运营</strong>是最主要的工作类型，占比<strong>48%</strong>，说明团队成员更偏向数据驱动的运营工作。</p>
+                    </div>
+                    <div class="insight-box">
+                        <p class="text-gray-700 mb-4"><strong>多平台内容创作</strong>成为常态，<strong>39%</strong>的成员同时负责多个平台的内容，需要提升跨平台创作效率。</p>
+                    </div>
+                    <div class="insight-box">
+                        <p class="text-gray-700"><strong>短视频内容</strong>需求旺盛，<strong>42%</strong>的成员负责抖音/视频号脚本创作，与当前短视频营销趋势吻合。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: 核心挑战 -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8 card-hover">
+            <h2 class="section-title">2. 内容创作核心挑战</h2>
+            <div class="chart-container" id="challengesChart" style="height: 500px;"></div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                <div class="bg-red-50 rounded-xl p-6 border-l-4 border-red-500">
+                    <h4 class="font-semibold text-red-700 mb-2">🔥 最紧迫挑战</h4>
+                    <p class="text-gray-700">选题/灵感枯竭（87%）和内容量过大（74%）是时间压力的主要来源</p>
+                </div>
+                <div class="bg-yellow-50 rounded-xl p-6 border-l-4 border-yellow-500">
+                    <h4 class="font-semibold text-yellow-700 mb-2">⚠️ 质量控制难点</h4>
+                    <p class="text-gray-700">质量参差不齐（65%）和平台差异（58%）导致重复工作</p>
+                </div>
+                <div class="bg-blue-50 rounded-xl p-6 border-l-4 border-blue-500">
+                    <h4 class="font-semibold text-blue-700 mb-2">💡 转化瓶颈</h4>
+                    <p class="text-gray-700">产品信息到创意转化效率低（71%）是能力短板</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: AI工具使用现状 -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8 card-hover">
+            <h2 class="section-title">3. AI工具使用现状与痛点</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="chart-container" id="aiUsageChart"></div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">关键洞察</h3>
+                    <div class="mb-6">
+                        <div class="flex items-center mb-2">
+                            <div class="w-3 h-3 rounded-full bg-red-500 mr-2"></div>
+                            <span class="text-gray-700">暂未使用AI工具：<strong>23%</strong></span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-red-500 h-2 rounded-full" style="width: 23%"></div>
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <div class="flex items-center mb-2">
+                            <div class="w-3 h-3 rounded-full bg-purple-500 mr-2"></div>
+                            <span class="text-gray-700">已使用但效果不佳：<strong>48%</strong></span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-purple-500 h-2 rounded-full" style="width: 48%"></div>
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <div class="flex items-center mb-2">
+                            <div class="w-3 h-3 rounded-full bg-green-500 mr-2"></div>
+                            <span class="text-gray-700">有效使用：<strong>29%</strong></span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-green-500 h-2 rounded-full" style="width: 29%"></div>
+                        </div>
+                    </div>
+
+                    <h4 class="font-semibold text-gray-800 mb-3">AI使用痛点TOP3：</h4>
+                    <ol class="list-decimal list-inside space-y-2 text-gray-700">
+                        <li>生成内容缺乏品牌感（71%）</li>
+                        <li>不知道如何写提示词（65%）</li>
+                        <li>生成内容需大量修改（58%）</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: 平台创作难度 -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8 card-hover">
+            <h2 class="section-title">4. 各平台创作难度评估</h2>
+            <div class="chart-container" id="platformChart"></div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                <div class="text-center p-6 bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl">
+                    <div class="text-4xl mb-2">📱</div>
+                    <h4 class="font-semibold text-gray-800 mb-2">抖音最难</h4>
+                    <p class="text-gray-600 text-sm">脚本节奏感强，需配合视频，71%认为最难</p>
+                </div>
+                <div class="text-center p-6 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl">
+                    <div class="text-4xl mb-2">📝</div>
+                    <h4 class="font-semibold text-gray-800 mb-2">小红书次之</h4>
+                    <p class="text-gray-600 text-sm">创意要求高，需要爆款感，23%认为最难</p>
+                </div>
+                <div class="text-center p-6 bg-gradient-to-br from-green-50 to-teal-50 rounded-xl">
+                    <div class="text-4xl mb-2">📰</div>
+                    <h4 class="font-semibold text-gray-800 mb-2">公众号相对简单</h4>
+                    <p class="text-gray-600 text-sm">深度内容，逻辑要求高，6%认为最难</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: 培训需求 -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8 card-hover">
+            <h2 class="section-title">5. AI赋能培训核心需求</h2>
+
+            <h3 class="text-xl font-semibold mb-4">希望重点解决的创作场景</h3>
+            <div class="chart-container" id="scenarioChart" style="height: 450px;"></div>
+
+            <h3 class="text-xl font-semibold mt-8 mb-4">培训内容优先级</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-purple-50 rounded-lg p-4 border-l-4 border-purple-500">
+                    <div class="flex justify-between items-center">
+                        <span class="font-medium text-gray-800">提示词技巧与模板</span>
+                        <span class="text-purple-600 font-bold">90%</span>
+                    </div>
+                    <div class="w-full bg-purple-200 rounded-full h-2 mt-2">
+                        <div class="bg-purple-500 h-2 rounded-full" style="width: 90%"></div>
+                    </div>
+                </div>
+                <div class="bg-blue-50 rounded-lg p-4 border-l-4 border-blue-500">
+                    <div class="flex justify-between items-center">
+                        <span class="font-medium text-gray-800">批量生成实操方法</span>
+                        <span class="text-blue-600 font-bold">84%</span>
+                    </div>
+                    <div class="w-full bg-blue-200 rounded-full h-2 mt-2">
+                        <div class="bg-blue-500 h-2 rounded-full" style="width: 84%"></div>
+                    </div>
+                </div>
+                <div class="bg-green-50 rounded-lg p-4 border-l-4 border-green-500">
+                    <div class="flex justify-between items-center">
+                        <span class="font-medium text-gray-800">品牌调性把控</span>
+                        <span class="text-green-600 font-bold">77%</span>
+                    </div>
+                    <div class="w-full bg-green-200 rounded-full h-2 mt-2">
+                        <div class="bg-green-500 h-2 rounded-full" style="width: 77%"></div>
+                    </div>
+                </div>
+                <div class="bg-yellow-50 rounded-lg p-4 border-l-4 border-yellow-500">
+                    <div class="flex justify-between items-center">
+                        <span class="font-medium text-gray-800">热点追踪与选题</span>
+                        <span class="text-yellow-600 font-bold">71%</span>
+                    </div>
+                    <div class="w-full bg-yellow-200 rounded-full h-2 mt-2">
+                        <div class="bg-yellow-500 h-2 rounded-full" style="width: 71%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6: 培训形式与产出 -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8 card-hover">
+            <h2 class="section-title">6. 培训形式偏好与期望产出</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">培训形式偏好</h3>
+                    <div class="chart-container" id="formatChart"></div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">希望带走的产出物</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center mr-3">
+                                <span class="text-purple-600 font-bold text-sm">1</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between">
+                                    <span class="font-medium text-gray-800">提示词素材库</span>
+                                    <span class="text-purple-600 font-bold">87%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
+                                    <div class="bg-purple-500 h-2 rounded-full" style="width: 87%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+                                <span class="text-blue-600 font-bold text-sm">2</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between">
+                                    <span class="font-medium text-gray-800">标准化操作流程</span>
+                                    <span class="text-blue-600 font-bold">71%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
+                                    <div class="bg-blue-500 h-2 rounded-full" style="width: 71%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-green-100 flex items-center justify-center mr-3">
+                                <span class="text-green-600 font-bold text-sm">3</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between">
+                                    <span class="font-medium text-gray-800">AI创作Checklist</span>
+                                    <span class="text-green-600 font-bold">65%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: 65%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center mr-3">
+                                <span class="text-yellow-600 font-bold text-sm">4</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between">
+                                    <span class="font-medium text-gray-800">可复用模板</span>
+                                    <span class="text-yellow-600 font-bold">58%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
+                                    <div class="bg-yellow-500 h-2 rounded-full" style="width: 58%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7: 期望改变 -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8 card-hover">
+            <h2 class="section-title">7. 培训后期望实现的改变</h2>
+            <div class="chart-container" id="expectationChart"></div>
+            <div class="mt-8 p-6 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl">
+                <h3 class="font-semibold text-gray-800 mb-3">🎯 核心诉求总结</h3>
+                <p class="text-gray-700 leading-relaxed">
+                    参训者最希望通过培训实现：<strong>内容质量和品牌一致性显著提升（52%）</strong>、
+                    <strong>单条内容制作时间缩短50%以上（32%）</strong>、
+                    <strong>能够独立批量产出多平台内容（10%）</strong>。
+                    这反映出团队对<strong>效率提升</strong>和<strong>质量保障</strong>的双重需求。
+                </p>
+            </div>
+        </div>
+
+        <!-- Section 8: 具体痛点与建议 -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8 card-hover">
+            <h2 class="section-title">8. 具体痛点与培训建议</h2>
+
+            <h3 class="text-xl font-semibold mb-4">高频痛点关键词</h3>
+            <div class="flex flex-wrap gap-2 mb-8">
+                <span class="tag tag-primary">提示词不精准</span>
+                <span class="tag tag-primary">生成内容偏离预期</span>
+                <span class="tag tag-primary">AI内容过于通用</span>
+                <span class="tag tag-primary">需要大量修改</span>
+                <span class="tag tag-primary">缺乏品牌感</span>
+                <span class="tag tag-primary">视频生成不准确</span>
+                <span class="tag tag-primary">数据源整合困难</span>
+                <span class="tag tag-primary">热点感知滞后</span>
+                <span class="tag tag-primary">审核修改耗时</span>
+                <span class="tag tag-primary">门店沟通效率低</span>
+            </div>
+
+            <h3 class="text-xl font-semibold mb-4">培训建议分类</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-blue-50 rounded-lg p-6">
+                    <h4 class="font-semibold text-blue-800 mb-3">🔧 技术层面</h4>
+                    <ul class="space-y-2 text-gray-700">
+                        <li>• 提示词书写逻辑与结构化指令</li>
+                        <li>• 私有知识库与定制AI</li>
+                        <li>• AI工作流与批量自动化</li>
+                        <li>• 视频生成词汇与模板</li>
+                        <li>• 数据分析与结论产出</li>
+                    </ul>
+                </div>
+                <div class="bg-green-50 rounded-lg p-6">
+                    <h4 class="font-semibold text-green-800 mb-3">📋 业务层面</h4>
+                    <ul class="space-y-2 text-gray-700">
+                        <li>• 围绕iCAR真实业务场景练习</li>
+                        <li>• 产品信息到内容创意转化</li>
+                        <li>• 竞品分析与行业资讯转化</li>
+                        <li>• 门店沟通与思路传达</li>
+                        <li>• UGC内容二次创作</li>
+                    </ul>
+                </div>
+                <div class="bg-purple-50 rounded-lg p-6">
+                    <h4 class="font-semibold text-purple-800 mb-3">🎯 效果层面</h4>
+                    <ul class="space-y-2 text-gray-700">
+                        <li>• 品牌调性一致性把控</li>
+                        <li>• 内容质量标准化</li>
+                        <li>• 提升创意与传播力</li>
+                        <li>• 跨平台差异化运营</li>
+                        <li>• 热点追踪与快速反应</li>
+                    </ul>
+                </div>
+                <div class="bg-yellow-50 rounded-lg p-6">
+                    <h4 class="font-semibold text-yellow-800 mb-3">⚙️ 流程层面</h4>
+                    <ul class="space-y-2 text-gray-700">
+                        <li>• 实操大于理论</li>
+                        <li>• 标准化操作流程</li>
+                        <li>• 质量审核checklist</li>
+                        <li>• 持续性巩固机制</li>
+                        <li>• 行业垂直AI工具推荐</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 9: 综合建议 -->
+        <div class="bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl shadow-lg p-8 text-white">
+            <h2 class="text-2xl font-bold mb-6">💡 培训方案综合建议</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+                    <h3 class="text-xl font-semibold mb-4">课程设计</h3>
+                    <ul class="space-y-3 text-white/90">
+                        <li class="flex items-start">
+                            <span class="mr-2">✓</span>
+                            <span><strong>实操优先</strong>：70%实操演练 + 30%理论框架</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2">✓</span>
+                            <span><strong>场景化教学</strong>：围绕iCAR真实业务场景设计练习</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2">✓</span>
+                            <span><strong>平台专项</strong>：公众号、小红书、抖音分模块深入</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2">✓</span>
+                            <span><strong>分层教学</strong>：针对AI使用经验差异设置基础/进阶</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+                    <h3 class="text-xl font-semibold mb-4">产出物设计</h3>
+                    <ul class="space-y-3 text-white/90">
+                        <li class="flex items-start">
+                            <span class="mr-2">✓</span>
+                            <span><strong>提示词文库</strong>：分场景、分平台的可复用模板</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2">✓</span>
+                            <span><strong>素材库</strong>：iCAR产品相关的提示词素材</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2">✓</span>
+                            <span><strong>SOP手册</strong>：批量生产内容的标准化流程</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2">✓</span>
+                            <span><strong>Checklist</strong>：各平台AI创作的质量核查清单</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-6 p-4 bg-white/20 rounded-xl">
+                <p class="text-white font-medium">
+                    ⚡ <strong>核心目标</strong>：帮助参训者实现"单条内容制作时间缩短50%+"和"内容质量与品牌一致性显著提升"
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="bg-gray-800 text-white py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <p class="text-gray-400">iCAR品牌AI赋能培训需求调研报告</p>
+            <p class="text-gray-500 text-sm mt-2">基于31份有效问卷 | 生成时间：2026年5月19日</p>
+        </div>
+    </div>
+
+    <script>
+        // Chart 1: Work Type Distribution
+        const workTypeChart = echarts.init(document.getElementById('workTypeChart'));
+        workTypeChart.setOption({
+            tooltip: { trigger: 'item' },
+            legend: { orient: 'vertical', left: 'left' },
+            series: [{
+                name: '工作类型',
+                type: 'pie',
+                radius: '50%',
+                data: [
+                    { value: 15, name: '数据分析与内容运营' },
+                    { value: 13, name: '抖音/视频号短视频脚本' },
+                    { value: 12, name: '小红书图文内容创作' },
+                    { value: 9, name: '品牌活动/营销策划文案' },
+                    { value: 6, name: '公众号内容策划与撰写' },
+                    { value: 8, name: '其他' }
+                ],
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }]
+        });
+
+        // Chart 2: Challenges
+        const challengesChart = echarts.init(document.getElementById('challengesChart'));
+        challengesChart.setOption({
+            tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+            grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
+            xAxis: { type: 'value', max: 100 },
+            yAxis: {
+                type: 'category',
+                data: ['审核流程耗时', '选题/灵感枯竭', '内容量太大', '质量参差不齐', '平台差异大', '产品转化效率低'],
+                axisLabel: { fontSize: 12 }
+            },
+            series: [{
+                name: '占比',
+                type: 'bar',
+                data: [48, 87, 74, 65, 58, 71],
+                itemStyle: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                        { offset: 0, color: '#667eea' },
+                        { offset: 1, color: '#764ba2' }
+                    ])
+                },
+                label: {
+                    show: true,
+                    position: 'right',
+                    formatter: '{c}%'
+                }
+            }]
+        });
+
+        // Chart 3: AI Usage
+        const aiUsageChart = echarts.init(document.getElementById('aiUsageChart'));
+        aiUsageChart.setOption({
+            tooltip: { trigger: 'item' },
+            legend: { orient: 'vertical', left: 'left' },
+            series: [{
+                name: 'AI使用现状',
+                type: 'pie',
+                radius: ['40%', '70%'],
+                avoidLabelOverlap: false,
+                itemStyle: {
+                    borderRadius: 10,
+                    borderColor: '#fff',
+                    borderWidth: 2
+                },
+                label: { show: false, position: 'center' },
+                emphasis: {
+                    label: { show: true, fontSize: 20, fontWeight: 'bold' }
+                },
+                labelLine: { show: false },
+                data: [
+                    { value: 8, name: '暂未使用', itemStyle: { color: '#f87171' } },
+                    { value: 15, name: '已使用但效果不佳', itemStyle: { color: '#a78bfa' } },
+                    { value: 8, name: '有效使用', itemStyle: { color: '#34d399' } }
+                ]
+            }]
+        });
+
+        // Chart 4: Platform Difficulty
+        const platformChart = echarts.init(document.getElementById('platformChart'));
+        platformChart.setOption({
+            tooltip: { trigger: 'item' },
+            legend: { top: '5%', left: 'center' },
+            series: [{
+                name: '平台创作难度',
+                type: 'pie',
+                radius: ['40%', '70%'],
+                avoidLabelOverlap: false,
+                itemStyle: {
+                    borderRadius: 10,
+                    borderColor: '#fff',
+                    borderWidth: 2
+                },
+                label: {
+                    show: true,
+                    position: 'outside',
+                    formatter: '{b}: {d}%\n{c}人'
+                },
+                data: [
+                    { value: 22, name: '抖音', itemStyle: { color: '#ef4444' } },
+                    { value: 7, name: '小红书', itemStyle: { color: '#f59e0b' } },
+                    { value: 2, name: '公众号', itemStyle: { color: '#10b981' } }
+                ]
+            }]
+        });
+
+        // Chart 5: Scenarios
+        const scenarioChart = echarts.init(document.getElementById('scenarioChart'));
+        scenarioChart.setOption({
+            tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+            grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
+            xAxis: { type: 'value', max: 100 },
+            yAxis: {
+                type: 'category',
+                data: ['用户故事UGC', '日常品牌互动', '竞品对比', '节点营销', '新车上市'],
+                axisLabel: { fontSize: 12 }
+            },
+            series: [{
+                name: '占比',
+                type: 'bar',
+                data: [42, 55, 39, 65, 74],
+                itemStyle: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                        { offset: 0, color: '#667eea' },
+                        { offset: 1, color: '#764ba2' }
+                    ])
+                },
+                label: {
+                    show: true,
+                    position: 'right',
+                    formatter: '{c}%'
+                }
+            }]
+        });
+
+        // Chart 6: Format
+        const formatChart = echarts.init(document.getElementById('formatChart'));
+        formatChart.setOption({
+            tooltip: { trigger: 'item' },
+            legend: { orient: 'vertical', left: 'left' },
+            series: [{
+                name: '培训形式偏好',
+                type: 'pie',
+                radius: '60%',
+                data: [
+                    { value: 16, name: '先讲理论再实操', itemStyle: { color: '#667eea' } },
+                    { value: 14, name: '边学边练', itemStyle: { color: '#764ba2' } },
+                    { value: 1, name: '真实业务场景练习', itemStyle: { color: '#f59e0b' } }
+                ],
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }]
+        });
+
+        // Chart 7: Expectation
+        const expectationChart = echarts.init(document.getElementById('expectationChart'));
+        expectationChart.setOption({
+            tooltip: { trigger: 'item' },
+            legend: { orient: 'vertical', left: 'left' },
+            series: [{
+                name: '期望改变',
+                type: 'pie',
+                radius: ['40%', '70%'],
+                avoidLabelOverlap: false,
+                itemStyle: {
+                    borderRadius: 10,
+                    borderColor: '#fff',
+                    borderWidth: 2
+                },
+                label: {
+                    show: true,
+                    position: 'outside',
+                    formatter: '{b}: {d}%'
+                },
+                data: [
+                    { value: 16, name: '质量与品牌一致性提升', itemStyle: { color: '#667eea' } },
+                    { value: 10, name: '制作时间缩短50%+', itemStyle: { color: '#f59e0b' } },
+                    { value: 3, name: '独立批量产出', itemStyle: { color: '#10b981' } },
+                    { value: 2, name: '学会AI选题', itemStyle: { color: '#ef4444' } }
+                ]
+            }]
+        });
+
+        // Responsive
+        window.addEventListener('resize', () => {
+            workTypeChart.resize();
+            challengesChart.resize();
+            aiUsageChart.resize();
+            platformChart.resize();
+            scenarioChart.resize();
+            formatChart.resize();
+            expectationChart.resize();
+        });
+    </script>
 </body>
 </html>
