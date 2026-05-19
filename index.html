@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>重定向到 iCAR 分析报告</title>
+    <script>
+        // 自动重定向到 icar 目录
+        window.location.href = window.location.href.replace(/\/$/, '') + '/icar/';
+    </script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .container {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 32px;
+        }
+        p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        .link {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 15px 30px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 iCAR AI 赋能培训需求调研报告</h1>
+        <p>正在跳转到报告页面...</p>
+        <p style="font-size: 14px; margin-top: 20px;">如果没有自动跳转，请点击下方按钮</p>
+        <a href="/lijiagui/icar/" class="link">查看报告</a>
+    </div>
+</body>
+</html>
