@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=900, initial-scale=1" />
+<title>AI -PAC 效能提升 · 2026 年 5 月月报</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:           #F5F1EB;
+    --bg-card:      #FAF7F2;
+    --bg-soft:      #EFEAE1;
+    --bg-deep:      #2A2622;
+    --ink:          #1F1E1D;
+    --ink-soft:     #4A4744;
+    --ink-mute:     #8B8680;
+    --line:         #E0D9CC;
+    --line-strong:  #CFC6B4;
+    --accent:       #D97757;
+    --accent-deep:  #B85C3E;
+    --accent-bg:    #F4E4D9;
+    --serif:        'Noto Serif SC', Georgia, ui-serif, serif;
+    --sans:         'Inter', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif;
+    --mono:         'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    background: #E5E0D6;
+    color: var(--ink);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .page {
+    width: 900px;
+    margin: 32px auto;
+    background: var(--bg);
+    box-shadow: 0 12px 60px rgba(31, 30, 29, 0.12);
+    padding: 60px 64px 80px;
+    background-image:
+      radial-gradient(circle at 12% 8%, rgba(217,119,87,0.05) 0, transparent 40%),
+      radial-gradient(circle at 88% 92%, rgba(217,119,87,0.04) 0, transparent 45%);
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* ============ Masthead ============ */
+  .masthead {
+    border-top: 3px solid var(--ink);
+    border-bottom: 1px solid var(--line-strong);
+    padding: 20px 0 18px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .masthead-left .vol {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .masthead-left h1 {
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: 36px;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .masthead-left h1 .sub {
+    color: var(--accent);
+  }
+  .masthead-right {
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-mute);
+    letter-spacing: 0.08em;
+    line-height: 1.7;
+  }
+
+  /* ============ Hero / Lede ============ */
+  .lede {
+    padding: 56px 0 48px;
+    border-bottom: 1px solid var(--line);
+  }
+  .lede-label {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    color: var(--accent);
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    margin-bottom: 22px;
+  }
+  .lede h2 {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 52px;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    margin-bottom: 28px;
+  }
+  .lede h2 .hl {
+    background: linear-gradient(180deg, transparent 60%, var(--accent-bg) 60%);
+    padding: 0 4px;
+  }
+  .lede p {
+    font-size: 17px;
+    color: var(--ink-soft);
+    line-height: 1.8;
+    max-width: 680px;
+  }
+  .lede p + p { margin-top: 14px; }
+  .lede p .first {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 28px;
+    float: left;
+    line-height: 0.9;
+    margin: 6px 8px 0 0;
+    color: var(--accent);
+  }
+
+  /* ============ Section Header ============ */
+  section { padding: 48px 0 8px; }
+  .sec-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .sec-title {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 30px;
+    margin-bottom: 28px;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 12px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+  .sec-title .meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-mute);
+    letter-spacing: 0.15em;
+    font-weight: 400;
+  }
+
+  /* ============ Stats Strip ============ */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    background: var(--bg-deep);
+    color: #F5F1EB;
+    margin: 0 -64px;
+    padding: 28px 64px;
+  }
+  .stat .num {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 38px;
+    line-height: 1;
+    color: #F4E4D9;
+  }
+  .stat .num small { font-size: 16px; color: #8B8680; margin-left: 4px; }
+  .stat .lbl {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #8B8680;
+    margin-top: 8px;
+  }
+
+  /* ============ Storylines ============ */
+  .story {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 24px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .story:last-child { border-bottom: none; }
+  .story-meta {
+    text-align: right;
+    padding-right: 12px;
+    border-right: 2px solid var(--accent);
+  }
+  .story-meta .date {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  .story-meta .tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-mute);
+    letter-spacing: 0.12em;
+    margin-top: 4px;
+    text-transform: uppercase;
+  }
+  .story-body h3 {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 1.3;
+    margin-bottom: 10px;
+  }
+  .story-body p {
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    line-height: 1.75;
+  }
+  .story-body p + p { margin-top: 8px; }
+  .story-body .quote {
+    margin: 12px 0 4px;
+    padding: 10px 16px;
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 13.5px;
+    line-height: 1.65;
+  }
+  .story-body .quote cite {
+    display: block;
+    margin-top: 6px;
+    font-style: normal;
+    font-size: 11px;
+    color: var(--ink-mute);
+    font-family: var(--mono);
+    letter-spacing: 0.06em;
+  }
+
+  /* ============ Cast Cards ============ */
+  .cast-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .cast {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 18px 18px 16px;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .cast::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-deep));
+  }
+  .cast:hover { transform: translateY(-2px); border-color: var(--line-strong); }
+  .cast-rank {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .cast-name {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 19px;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .cast-cnt {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-mute);
+    margin-bottom: 10px;
+  }
+  .cast-cnt b { color: var(--accent); font-size: 13px; }
+  .cast-desc {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.65;
+  }
+
+  /* ============ Resources ============ */
+  .res-list { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .res {
+    display: grid;
+    grid-template-columns: 110px 1fr 80px;
+    gap: 16px;
+    padding: 14px 18px;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    align-items: center;
+    transition: all 0.2s ease;
+  }
+  .res:hover { border-color: var(--accent); background: #FFFCF7; }
+  .res-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-transform: uppercase;
+    padding: 3px 8px;
+    background: var(--accent-bg);
+    border-radius: 4px;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .res-title {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--ink);
+  }
+  .res-by {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-mute);
+    margin-top: 3px;
+  }
+  .res-link {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--ink-mute);
+    text-align: right;
+    word-break: break-all;
+  }
+
+  /* ============ Heatmap ============ */
+  .heat {
+    display: grid;
+    grid-template-columns: repeat(16, 1fr);
+    gap: 4px;
+    padding: 14px 0;
+  }
+  .heat-cell {
+    aspect-ratio: 1;
+    background: var(--bg-soft);
+    border-radius: 3px;
+    position: relative;
+  }
+  .heat-cell.l1 { background: #F4E4D9; }
+  .heat-cell.l2 { background: #ECC0A0; }
+  .heat-cell.l3 { background: #D97757; }
+  .heat-cell.l4 { background: #B85C3E; }
+  .heat-cell .d {
+    position: absolute;
+    bottom: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--ink-mute);
+  }
+  .heat-legend {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 28px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-mute);
+    letter-spacing: 0.06em;
+  }
+  .heat-legend .sw {
+    display: inline-flex; gap: 3px;
+  }
+  .heat-legend .sw span {
+    width: 12px; height: 12px; border-radius: 3px;
+  }
+
+  /* ============ Keywords Bar ============ */
+  .kw {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .kw-pill {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    padding: 7px 14px;
+    border: 1px solid var(--line);
+    background: var(--bg-card);
+    border-radius: 999px;
+    font-size: 13px;
+    color: var(--ink);
+  }
+  .kw-pill .n {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .kw-pill.big { font-size: 16px; padding: 9px 18px; border-color: var(--accent); background: var(--accent-bg); }
+  .kw-pill.big .n { font-size: 13px; }
+
+  /* ============ Vibe Block ============ */
+  .vibe {
+    background: var(--bg-deep);
+    color: #F4E4D9;
+    margin: 0 -64px;
+    padding: 48px 64px;
+  }
+  .vibe .sec-num { color: #ECC0A0; }
+  .vibe .sec-title { color: #F5F1EB; border-bottom-color: #F5F1EB; }
+  .vibe h2 {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 1.3;
+    margin-bottom: 20px;
+    color: #F5F1EB;
+  }
+  .vibe h2 .accent { color: var(--accent); }
+  .vibe p {
+    font-size: 16px;
+    line-height: 1.85;
+    color: #C9C4BB;
+    max-width: 680px;
+  }
+  .vibe p + p { margin-top: 14px; }
+
+  /* ============ Footer ============ */
+  .colophon {
+    border-top: 3px solid var(--ink);
+    margin-top: 60px;
+    padding-top: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+  }
+  .colophon-left {
+    font-family: var(--serif);
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    max-width: 480px;
+  }
+  .colophon-left .sig {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--ink-mute);
+    letter-spacing: 0.14em;
+    margin-top: 8px;
+    text-transform: uppercase;
+  }
+  .colophon-right {
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-mute);
+    letter-spacing: 0.12em;
+    line-height: 1.8;
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- =============== MASTHEAD =============== -->
+  <header class="masthead">
+    <div class="masthead-left">
+      <div class="vol">VOL. 2026 · MAY · ISSUE 01</div>
+      <h1>AI -PAC <span class="sub">效能提升</span></h1>
+    </div>
+    <div class="masthead-right">
+      MONTHLY DIGEST<br>
+      MAY 5 — MAY 20, 2026<br>
+      94 VOICES · 1,808 MESSAGES
+    </div>
+  </header>
+
+  <!-- =============== LEDE =============== -->
+  <section class="lede">
+    <span class="lede-label">封面故事 · COVER STORY</span>
+    <h2>这个月，<span class="hl">codex</span> 接管了群里的所有<br>注意力，CLI 化的浪潮真正开始了。</h2>
+    <p><span class="first">五</span>月 6 日下午四点十六分，群主一句"codex 登录要手机验证码了"把整个群点燃。接下来 72 小时，AI -PAC 围绕 codex 风波、海外手机号、5.5 Pro 与 Opus 4.7 的对比、cloudflare CLI 一键部署、Skill 共建展开了 700 多条消息的连续讨论。</p>
+    <p>到 5 月 8 日深夜，群主用 codex + cloudflare CLI 两小时上线了 onepod.site，喊出"以后所有 APP 都要 CLI 化了，这用了就回不来了"——这成了本月最被反复引用的一句话。</p>
+  </section>
+
+  <!-- =============== STATS STRIP =============== -->
+  <section style="padding-top: 20px;">
+    <div class="stats">
+      <div class="stat"><div class="num">1808</div><div class="lbl">Total Msgs</div></div>
+      <div class="stat"><div class="num">94</div><div class="lbl">Active Voices</div></div>
+      <div class="stat"><div class="num">16<small>/30</small></div><div class="lbl">Active Days</div></div>
+      <div class="stat"><div class="num">291<small>/day</small></div><div class="lbl">Peak (May 19)</div></div>
+    </div>
+  </section>
+
+  <!-- =============== TIMELINE =============== -->
+  <section>
+    <div class="sec-num">01 — TIMELINE</div>
+    <h2 class="sec-title">本月主线 <span class="meta">CHRONICLE</span></h2>
+
+    <div class="story">
+      <div class="story-meta"><div class="date">05 · 06</div><div class="tag">Incident</div></div>
+      <div class="story-body">
+        <h3>codex 风控降临，群主第一时间踩坑接码</h3>
+        <p>下午 4:16，zephyr 报告 codex CLI 升级后强制要求手机验证码。72 小时内全员讨论：gmail 登录是否安全、虚拟号能否撑住、海外手机号哪里搞、双重认证为什么不够。徐浩从 OpenAI 帮助文档里挖出原文："4 月 30 日起新设备/异常环境会触发额外验证"。最终结论：算力紧张，风控对齐 Gemini 套路。</p>
+        <div class="quote">"算力紧张了，风控就严了。最近转 codex 的人很多。"<cite>— zephyr · 05/06 16:28</cite></div>
+      </div>
+    </div>
+
+    <div class="story">
+      <div class="story-meta"><div class="date">05 · 07</div><div class="tag">Marketplace</div></div>
+      <div class="story-body">
+        <h3>M98 在咸鱼上挂出 codex 认证代办，群里开了个小集市</h3>
+        <p>风波第二天，M98 在群里发"群里有需要 codex 认证的，可以找我，刚挂了咸鱼最低价"。需求侧瞬间排队，jessie 问"什么是 codex 认证"，石榴酸不酸贴出 hero-sms.com 虚拟号站点。一条线索带出整个 AI 接码灰产链的认知扫盲。</p>
+      </div>
+    </div>
+
+    <div class="story">
+      <div class="story-meta"><div class="date">05 · 08</div><div class="tag">Build</div></div>
+      <div class="story-body">
+        <h3>群主用 codex + Cloudflare CLI 两小时上线 onepod.site</h3>
+        <p>下午 2:50 起手，5:18 部署完成。整个流程零写代码：codex 自己授权 wrangler、自己写 worker 代码、自己 cloudflare 部署。zephyr 当场感叹"codex 太牛了比 claudecode 好用多了"、"cloudflare 设计的比阿里云腾讯云好用多了"、"以后所有 APP 都要 CLI 化了，这用了就回不来了"。这一晚成了本月的认知拐点。</p>
+        <div class="quote">"额度用完了，只要写代码，额度就不够用了。两个屏幕分开跑——claude 写文章，codex 写代码，两个都限额了。"<cite>— zephyr · 05/08 18:20</cite></div>
+      </div>
+    </div>
+
+    <div class="story">
+      <div class="story-meta"><div class="date">05 · 08</div><div class="tag">Open Source</div></div>
+      <div class="story-body">
+        <h3>群主开源 pm-skills + protodesign 仓库，群里 Skill 共建文化成型</h3>
+        <p>螃蟹走猫步问"有没有好用的 pdm 写需求的 agent 或者 skill 推荐"，zephyr 直接甩出两个自己的 GitHub 仓库。后面一周内"反蒸馏 Skill"、"微信读书 Skill"、"群日报 Skill"轮番被分享、被改、被装。群里 Skill 这个词出现 10 次，全是被讨论怎么造或怎么装。</p>
+      </div>
+    </div>
+
+    <div class="story">
+      <div class="story-meta"><div class="date">05 · 09</div><div class="tag">Manifesto</div></div>
+      <div class="story-body">
+        <h3>群主放出极端宣言："还没用过 Agent 的可以退群了"</h3>
+        <p>13:31 zephyr 转发自己刚写的 Agent 入门文章："集成了我最近做咨询遇到的最多的问题，从一个新手的角度来讲怎么入门 Agent。"三分钟后补刀："说句极端的，要是咱们这个群有人还没用过 Agent，上面这个文章就是学习路线，如果没有计划去安装使用的话，可以退群了，没啥帮助。"群里没人反驳，反而开始讨论"老板有 80% 都不知道什么是 Agent"——议题从工具焦虑直接跳到企业服务定位。</p>
+      </div>
+    </div>
+
+    <div class="story">
+      <div class="story-meta"><div class="date">05 · 13</div><div class="tag">Hardware</div></div>
+      <div class="story-body">
+        <h3>Jackie_Wong 的口袋 AI Agent 硬件上 Kickstarter</h3>
+        <p>凌晨 0:41，Jackie_Wong 甩出 rorolee pocket AI agent 的 Kickstarter 页面："我们做的小产品。"达尔文很快回："刷到了，热度很高。"群里出海硬件玩家第一次集体出现在视野里，"AI Agent + 实体形态"的方向第一次被认真讨论。</p>
+      </div>
+    </div>
+
+    <div class="story">
+      <div class="story-meta"><div class="date">05 · 15</div><div class="tag">Tooling</div></div>
+      <div class="story-body">
+        <h3>codex 移动端发现仪式：左边那个按钮被翻出来了</h3>
+        <p>zephyr 上午说"移动端没有 codex"，狂热秒回"有，左边"。后面一群人在群里互教 codex 移动端怎么用。同期 5.5 Pro vs Opus 4.7 的对比第二轮再起：徐浩坚持"5.5 pro 独一档"，pdrr 当场充值 200 美元 Pro 计划"狠狠地蹬"。</p>
+      </div>
+    </div>
+
+    <div class="story">
+      <div class="story-meta"><div class="date">05 · 18-19</div><div class="tag">Climax</div></div>
+      <div class="story-body">
+        <h3>月末爆发：两天 445 条消息，焦点回到额度焦虑</h3>
+        <p>5 月 19 日单日 291 条创月度峰值。话题密集回到 codex Team 版 vs Plus 版的额度对比、cc 速度变慢、自建节点、get 笔记硬件广告评测。Linpe 一句"今天的五小时又快没了"被多个人接龙。整个月在工具焦虑和工具自洽之间反复横跳。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============== CAST -->
+  <section>
+    <div class="sec-num">02 — CAST</div>
+    <h2 class="sec-title">本月高光人物 <span class="meta">VOICES OF MAY</span></h2>
+
+    <div class="cast-grid">
+      <div class="cast">
+        <div class="cast-rank">№ 01 · GROUP OWNER</div>
+        <div class="cast-name">zephyr · 空格</div>
+        <div class="cast-cnt">发言 <b>286</b> 条 · 占全群 16%</div>
+        <div class="cast-desc">codex 风波首发现场、onepod.site 上线人、pm-skills 与 protodesign 开源作者、"CLI 化是未来"宣言提出者。本月一个人贡献了三个被反复引用的判断。</div>
+      </div>
+      <div class="cast">
+        <div class="cast-rank">№ 02 · VIBE CODER</div>
+        <div class="cast-name">Shrike</div>
+        <div class="cast-cnt">发言 <b>145</b> 条</div>
+        <div class="cast-desc">vibe coding 信仰者，金句"看不懂就 accept，持续 git 就行"的原作者。月内对 image2 生图、codex Team 版细节贡献多次拆解。</div>
+      </div>
+      <div class="cast">
+        <div class="cast-rank">№ 03 · OBSIDIAN GEEK</div>
+        <div class="cast-name">年轮</div>
+        <div class="cast-cnt">发言 <b>129</b> 条</div>
+        <div class="cast-desc">Obsidian 深度玩家，群里"群主公众号你居然不看"梗的发源人。codex 与 Obsidian 联动方案的主要答疑者。</div>
+      </div>
+      <div class="cast">
+        <div class="cast-rank">№ 04 · ONE LINER</div>
+        <div class="cast-name">唤起记忆</div>
+        <div class="cast-cnt">发言 <b>99</b> 条</div>
+        <div class="cast-desc">本月金句生产线："孙割你的缓存价格"、"ai 都开始冲击 hr 的认知了"。短句战神，氛围调节器。</div>
+      </div>
+      <div class="cast">
+        <div class="cast-rank">№ 05 · QUESTION MASTER</div>
+        <div class="cast-name">Linpe</div>
+        <div class="cast-cnt">发言 <b>84</b> 条</div>
+        <div class="cast-desc">问题大王。本月几个高质量话题的引爆点："Agent Teams 怎么用好"、"碎片想法手机如何沉淀到 Obsidian"、"用国内模型怎么优化工作流"。</div>
+      </div>
+      <div class="cast">
+        <div class="cast-rank">№ 06 · MODEL CRITIC</div>
+        <div class="cast-name">徐浩</div>
+        <div class="cast-cnt">发言 <b>72</b> 条</div>
+        <div class="cast-desc">模型评测家，"5.5 Pro 独一档、Opus 4.6/4.7 与 5.5 Thinking 相近各有千秋"的论断作者。codex 风控触发条件第一个查到的人。</div>
+      </div>
+      <div class="cast">
+        <div class="cast-rank">№ 07 · ENTERPRISE LENS</div>
+        <div class="cast-name">石榴酸不酸</div>
+        <div class="cast-cnt">发言 <b>73</b> 条</div>
+        <div class="cast-desc">企业落地视角的常驻发言人。"开源私有化部署 + 买 API 混合"、"我们的电话客服一部分已经是 AI 了"——给群里带来 to B 的真实味道。</div>
+      </div>
+      <div class="cast">
+        <div class="cast-rank">№ 08 · QUIET CHEF</div>
+        <div class="cast-name">狂热</div>
+        <div class="cast-cnt">发言 <b>76</b> 条</div>
+        <div class="cast-desc">默默贡献干货的那种人。codex 移动端被他第一个翻出来。月末"上次谁说要打开特定应用来着"主导隐私屏话题。</div>
+      </div>
+      <div class="cast">
+        <div class="cast-rank">№ 09 · BUILDER</div>
+        <div class="cast-name">达尔文</div>
+        <div class="cast-cnt">发言 <b>—</b> · 关键贡献</div>
+        <div class="cast-desc">两次关键带话题：要求"AI Coding 团队报价评估工具"、第一时间转 Jackie_Wong 的 Kickstarter。商业嗅觉敏锐型选手。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============== KEYWORDS =============== -->
+  <section>
+    <div class="sec-num">03 — KEYWORDS</div>
+    <h2 class="sec-title">本月词频 <span class="meta">WHAT WE TALKED ABOUT</span></h2>
+
+    <div class="kw">
+      <span class="kw-pill big">codex <span class="n">66</span></span>
+      <span class="kw-pill big">claude <span class="n">26</span></span>
+      <span class="kw-pill big">模型 <span class="n">23</span></span>
+      <span class="kw-pill">额度 / token <span class="n">22</span></span>
+      <span class="kw-pill">pro <span class="n">19</span></span>
+      <span class="kw-pill">笔记 <span class="n">13</span></span>
+      <span class="kw-pill">Skill <span class="n">10</span></span>
+      <span class="kw-pill">推荐 <span class="n">9</span></span>
+      <span class="kw-pill">飞书 <span class="n">7</span></span>
+      <span class="kw-pill">Agent <span class="n">6</span></span>
+      <span class="kw-pill">opus <span class="n">5</span></span>
+      <span class="kw-pill">分享 <span class="n">5</span></span>
+      <span class="kw-pill">提示词 <span class="n">5</span></span>
+      <span class="kw-pill">obsidian <span class="n">4</span></span>
+      <span class="kw-pill">kimi <span class="n">4</span></span>
+      <span class="kw-pill">deepseek <span class="n">4</span></span>
+      <span class="kw-pill">教程 <span class="n">4</span></span>
+      <span class="kw-pill">cursor <span class="n">3</span></span>
+      <span class="kw-pill">龙虾 <span class="n">2</span></span>
+    </div>
+    <p style="margin-top: 20px; font-size: 13px; color: var(--ink-mute); font-family: var(--mono); letter-spacing: 0.04em;">
+      &gt; codex 的出现频次是 claude 的 2.5 倍，是 cursor 的 22 倍。这是 AI -PAC 5 月的"工具迁移指纹"。
+    </p>
+  </section>
+
+  <!-- =============== HEATMAP =============== -->
+  <section>
+    <div class="sec-num">04 — ACTIVITY MAP</div>
+    <h2 class="sec-title">活跃度热力图 <span class="meta">MAY 05 — MAY 20</span></h2>
+
+    <div class="heat">
+      <div class="heat-cell l1" title="5/5: 17"><span class="d">05</span></div>
+      <div class="heat-cell l3" title="5/6: 178"><span class="d">06</span></div>
+      <div class="heat-cell l3" title="5/7: 214"><span class="d">07</span></div>
+      <div class="heat-cell l4" title="5/8: 246"><span class="d">08</span></div>
+      <div class="heat-cell l3" title="5/9: 178"><span class="d">09</span></div>
+      <div class="heat-cell l1" title="5/10: 24"><span class="d">10</span></div>
+      <div class="heat-cell l2" title="5/11: 87"><span class="d">11</span></div>
+      <div class="heat-cell l2" title="5/12: 68"><span class="d">12</span></div>
+      <div class="heat-cell l2" title="5/13: 53"><span class="d">13</span></div>
+      <div class="heat-cell l2" title="5/14: 77"><span class="d">14</span></div>
+      <div class="heat-cell l2" title="5/15: 100"><span class="d">15</span></div>
+      <div class="heat-cell" title="5/16: 0"><span class="d">16</span></div>
+      <div class="heat-cell l1" title="5/17: 31"><span class="d">17</span></div>
+      <div class="heat-cell l3" title="5/18: 154"><span class="d">18</span></div>
+      <div class="heat-cell l4" title="5/19: 291"><span class="d">19</span></div>
+      <div class="heat-cell l1" title="5/20: 26"><span class="d">20</span></div>
+    </div>
+    <div class="heat-legend" style="margin-top: 40px;">
+      <span>LESS</span>
+      <div class="sw">
+        <span style="background: var(--bg-soft);"></span>
+        <span style="background: #F4E4D9;"></span>
+        <span style="background: #ECC0A0;"></span>
+        <span style="background: #D97757;"></span>
+        <span style="background: #B85C3E;"></span>
+      </div>
+      <span>MORE</span>
+      <span style="margin-left: auto;">两个峰值：5/8（onepod 上线日 246 条）· 5/19（额度焦虑日 291 条）</span>
+    </div>
+  </section>
+
+  <!-- =============== RESOURCES =============== -->
+  <section>
+    <div class="sec-num">05 — ARTIFACTS</div>
+    <h2 class="sec-title">本月沉淀 <span class="meta">WHAT WE SHIPPED</span></h2>
+
+    <div class="res-list">
+      <div class="res">
+        <span class="res-tag">Product</span>
+        <div>
+          <div class="res-title">onepod.site — 播客资讯转文字站</div>
+          <div class="res-by">by zephyr · 5 月 8 日上线 · codex + cloudflare CLI 一晚做完</div>
+        </div>
+        <div class="res-link">onepod.site</div>
+      </div>
+      <div class="res">
+        <span class="res-tag">Open Source</span>
+        <div>
+          <div class="res-title">pm-skills — 产品经理 Skill 集合</div>
+          <div class="res-by">by zephyr · 写 PRD / 出原型 / 做评审等场景</div>
+        </div>
+        <div class="res-link">github.com/<br>zephyrwang6/pm-skills</div>
+      </div>
+      <div class="res">
+        <span class="res-tag">Open Source</span>
+        <div>
+          <div class="res-title">protodesign — 原型 / 设计 Skill 集合</div>
+          <div class="res-by">by zephyr · 截图复刻、网页克隆、组件设计</div>
+        </div>
+        <div class="res-link">github.com/<br>zephyrwang6/protodesign</div>
+      </div>
+      <div class="res">
+        <span class="res-tag">Hardware</span>
+        <div>
+          <div class="res-title">rorolee pocket AI agent — Kickstarter 众筹</div>
+          <div class="res-by">by Jackie_Wong · 口袋 AI 实体 Agent</div>
+        </div>
+        <div class="res-link">kickstarter.com/<br>projects/deotaland</div>
+      </div>
+      <div class="res">
+        <span class="res-tag">Reference</span>
+        <div>
+          <div class="res-title">AI 资讯站 · 卡兹克大好人</div>
+          <div class="res-by">by 达尔文 · 一个聚合 AI 热点的看板</div>
+        </div>
+        <div class="res-link">aihot.virxact.com</div>
+      </div>
+      <div class="res">
+        <span class="res-tag">Tool</span>
+        <div>
+          <div class="res-title">hero-sms.com — 虚拟号接码（codex 验证用）</div>
+          <div class="res-by">by 石榴酸不酸 · codex 风控期间的应急方案</div>
+        </div>
+        <div class="res-link">hero-sms.com/cn</div>
+      </div>
+      <div class="res">
+        <span class="res-tag">Article</span>
+        <div>
+          <div class="res-title">空格的键盘 · Agent 入门指南</div>
+          <div class="res-by">by zephyr · 5 月 9 日发布 · 群主原话"没用过 Agent 的可以退群了"</div>
+        </div>
+        <div class="res-link">mp.weixin.qq.com</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============== VIBE =============== -->
+  <section style="padding-top: 56px;">
+    <div class="vibe">
+      <div class="sec-num">06 — VIBE</div>
+      <h2 class="sec-title">这个月的群是什么气质 <span class="meta">THE MOOD</span></h2>
+
+      <h2>一个把 <span class="accent">"工具焦虑"</span> 跑成 <span class="accent">"工具自洽"</span> 的月份。</h2>
+
+      <p>5 月的 AI -PAC 不是在讨论"哪个 AI 更强"。它在讨论"我把哪个 AI 接到我的工作流里了"。codex 接管了第一注意力，但没人在追新；大家追的是"在 codex 上能跑通什么"。</p>
+
+      <p>群主一句"以后所有 APP 都要 CLI 化了"是个判断也是个赌注。这个月里有人在 cloudflare CLI 上跑通了产品上线、有人在 codex 移动端找到了出口、有人开源了自己的 Skill、有人把 obsidian 接进了 codex。每一件小事都在验证那个判断。</p>
+
+      <p>这是一个 deep doer 群，不是聊天群。94 个声音里，绝大多数在分享"我刚跑通了什么"，不在抱怨"我又卡在哪里"。这就是这个群的稀缺。</p>
+    </div>
+  </section>
+
+  <!-- =============== COLOPHON =============== -->
+  <footer class="colophon">
+    <div class="colophon-left">
+      <p>本期月报基于 AI -PAC 效能提升 群 5 月 5 日至 5 月 20 日的 1808 条聊天记录自动生成。数据 100% 本地处理，未上传任何外部服务。</p>
+      <div class="sig">GENERATED · 2026 / 05 / 20</div>
+    </div>
+    <div class="colophon-right">
+      AI -PAC · MONTHLY DIGEST<br>
+      VOL. 2026 · MAY<br>
+      © Zephyr / 空格 的键盘
+    </div>
+  </footer>
+
+</div>
+
+</body>
+</html>
