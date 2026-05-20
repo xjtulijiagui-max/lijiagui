@@ -1,710 +1,454 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iCAR品牌AI赋能培训需求调研报告</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.0/dist/echarts.min.js"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>不翻墙 AI 编程工具与 API Token 准备指南</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "STKaiti", "KaiTi", "Microsoft YaHei", Arial, sans-serif;
+      background: #f5f8fc;
+      color: #1f2937;
+      line-height: 1.8;
+    }
 
-        body {
-            font-family: 'Noto Sans SC', sans-serif;
-        }
+    .page {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 48px 28px 72px;
+    }
 
-        .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
+    .hero {
+      background: linear-gradient(135deg, #eaf3ff 0%, #ffffff 48%, #dcecff 100%);
+      border: 1px solid #c9ddf5;
+      border-radius: 22px;
+      padding: 42px 46px;
+      box-shadow: 0 18px 45px rgba(47, 93, 151, 0.12);
+      margin-bottom: 32px;
+    }
 
-        .card-hover {
-            transition: all 0.3s ease;
-        }
+    .eyebrow {
+      font-size: 16px;
+      color: #2f65b0;
+      letter-spacing: 2px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
 
-        .card-hover:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-        }
+    h1 {
+      margin: 0;
+      font-size: 34px;
+      color: #153b6f;
+      line-height: 1.35;
+    }
 
-        .stat-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 16px;
-            padding: 24px;
-            color: white;
-        }
+    .subtitle {
+      margin-top: 18px;
+      font-size: 19px;
+      color: #455a75;
+    }
 
-        .chart-container {
-            width: 100%;
-            height: 400px;
-            margin: 20px 0;
-        }
+    section {
+      background: #ffffff;
+      border: 1px solid #d8e5f4;
+      border-radius: 18px;
+      padding: 30px 34px;
+      margin-top: 24px;
+      box-shadow: 0 10px 26px rgba(31, 64, 104, 0.06);
+    }
 
-        .section-title {
-            font-size: 28px;
-            font-weight: 700;
-            color: #1a202c;
-            margin-bottom: 24px;
-            position: relative;
-            padding-left: 20px;
-        }
+    h2 {
+      font-size: 25px;
+      color: #173f74;
+      margin: 0 0 16px;
+      padding-left: 14px;
+      border-left: 5px solid #2f7bdc;
+    }
 
-        .section-title::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 4px;
-            height: 32px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 2px;
-        }
+    h3 {
+      font-size: 21px;
+      color: #1c4d89;
+      margin-top: 26px;
+      margin-bottom: 10px;
+    }
 
-        .insight-box {
-            background: linear-gradient(135deg, #f6f8fb 0%, #ffffff 100%);
-            border-left: 4px solid #667eea;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 8px;
-        }
+    p {
+      font-size: 18px;
+      margin: 12px 0;
+    }
 
-        .tag {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 14px;
-            margin: 4px;
-            background: #e2e8f0;
-            color: #2d3748;
-        }
+    .note {
+      background: #edf6ff;
+      border: 1px solid #bfdbfe;
+      color: #244c7c;
+      padding: 18px 22px;
+      border-radius: 14px;
+      margin: 20px 0;
+      font-size: 18px;
+    }
 
-        .tag-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-    </style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 18px;
+      font-size: 17px;
+      overflow: hidden;
+      border-radius: 14px;
+    }
+
+    th {
+      background: #1e5fae;
+      color: #ffffff;
+      padding: 14px 12px;
+      text-align: left;
+      font-weight: bold;
+    }
+
+    td {
+      border: 1px solid #dbe7f5;
+      padding: 14px 12px;
+      vertical-align: top;
+      background: #ffffff;
+    }
+
+    tr:nth-child(even) td {
+      background: #f8fbff;
+    }
+
+    a {
+      color: #145bb8;
+      text-decoration: none;
+      font-weight: bold;
+      word-break: break-all;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .step {
+      background: #f1f7ff;
+      border: 1px solid #cfe2fa;
+      border-radius: 16px;
+      padding: 18px;
+      min-height: 118px;
+    }
+
+    .step strong {
+      display: block;
+      color: #17477f;
+      font-size: 19px;
+      margin-bottom: 8px;
+    }
+
+    .step span {
+      font-size: 16px;
+      color: #4b5f78;
+    }
+
+    .recommend {
+      background: linear-gradient(135deg, #173f74 0%, #2469b7 100%);
+      color: #ffffff;
+      border-radius: 18px;
+      padding: 28px 32px;
+      margin-top: 24px;
+    }
+
+    .recommend h2 {
+      color: #ffffff;
+      border-left-color: #ffffff;
+    }
+
+    .recommend p {
+      color: #edf6ff;
+    }
+
+    .footer {
+      margin-top: 28px;
+      color: #607086;
+      font-size: 15px;
+      text-align: center;
+    }
+
+    @media (max-width: 760px) {
+      .hero {
+        padding: 30px 24px;
+      }
+
+      h1 {
+        font-size: 27px;
+      }
+
+      section {
+        padding: 24px 20px;
+      }
+
+      .flow {
+        grid-template-columns: 1fr;
+      }
+
+      table {
+        font-size: 15px;
+      }
+    }
+  </style>
 </head>
-<body class="bg-gray-50">
-    <!-- Header -->
-    <div class="gradient-bg text-white py-16">
-        <div class="max-w-7xl mx-auto px-6">
-            <h1 class="text-4xl font-bold mb-4">iCAR品牌AI赋能培训需求调研报告</h1>
-            <p class="text-xl opacity-90 mb-6">基于31份有效问卷的综合分析</p>
-            <div class="flex flex-wrap gap-4">
-                <div class="bg-white/20 backdrop-blur-sm rounded-lg px-6 py-3">
-                    <div class="text-sm opacity-80">调研时间</div>
-                    <div class="font-semibold">2026年5月13日-19日</div>
-                </div>
-                <div class="bg-white/20 backdrop-blur-sm rounded-lg px-6 py-3">
-                    <div class="text-sm opacity-80">样本量</div>
-                    <div class="font-semibold">31份</div>
-                </div>
-                <div class="bg-white/20 backdrop-blur-sm rounded-lg px-6 py-3">
-                    <div class="text-sm opacity-80">主要区域</div>
-                    <div class="font-semibold">安徽省芜湖市</div>
-                </div>
-            </div>
-        </div>
+
+<body>
+  <main class="page">
+    <div class="hero">
+      <div class="eyebrow">AI 编程环境准备指南</div>
+      <h1>不翻墙技术栈推荐：国内 API Token + Trae / Claude Code</h1>
+      <p class="subtitle">
+        这份指南面向希望快速搭建 AI 编程环境的普通电脑用户。核心思路不是一开始追求最复杂的工程体系，而是先准备一个稳定的大模型 API，再选择一款能调用模型、能辅助写代码、能执行项目任务的 AI 编程工具。
+      </p>
     </div>
 
-    <!-- Main Content -->
-    <div class="max-w-7xl mx-auto px-6 py-12">
+    <section>
+      <h2>一、前提：先准备一个可用的 API Token</h2>
+      <p>
+        使用 AI 编程工具之前，通常需要先购买或开通一个大模型 API Token。可以把 API Token 理解为“模型调用的通行证”：工具本身只是工作台，真正提供智能能力的是背后的大模型服务。没有 Token，很多智能问答、代码生成、Agent 执行能力就无法稳定运行。
+      </p>
 
-        <!-- Key Stats -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-            <div class="stat-card card-hover">
-                <div class="text-3xl font-bold mb-2">26%</div>
-                <div class="text-sm opacity-90">AI工具使用率</div>
-            </div>
-            <div class="stat-card card-hover">
-                <div class="text-3xl font-bold mb-2">87%</div>
-                <div class="text-sm opacity-90">面临选题枯竭挑战</div>
-            </div>
-            <div class="stat-card card-hover">
-                <div class="text-3xl font-bold mb-2">71%</div>
-                <div class="text-sm opacity-90">抖音创作难度最高</div>
-            </div>
-            <div class="stat-card card-hover">
-                <div class="text-3xl font-bold mb-2">94%</div>
-                <div class="text-sm opacity-90">希望实操培训</div>
-            </div>
+      <p>
+        对于不希望翻墙、希望国内环境可用的用户，建议优先考虑国内大模型 API。当前比较适合入门和训练营使用的选择包括 DeepSeek、清华智谱 GLM、MiniMax、Kimi。四者选择一个即可，不需要一开始全部购买。后续如果做多模型对比、成本优化或企业级方案验证，再逐步补充其他模型。
+      </p>
+
+      <div class="note">
+        也可以购买 ChatGPT 或 Claude 的 API Token，但相对成本更高，并且在国内网络环境下通常还会涉及访问稳定性问题。因此，面向普通学员和企业内训场景，推荐优先采用“国内 API + AI 编程工具”的组合。
+      </div>
+    </section>
+
+    <section>
+      <h2>二、国内 API Token 购买与开通地址</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>模型平台</th>
+            <th>适合场景</th>
+            <th>官方入口</th>
+            <th>购买 / 充值 / 控制台入口</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>DeepSeek API</td>
+            <td>适合代码、推理、Agent 编程、低成本大模型调用</td>
+            <td>
+              <a href="https://platform.deepseek.com/" target="_blank">
+                https://platform.deepseek.com/
+              </a>
+            </td>
+            <td>
+              <a href="https://platform.deepseek.com/api_keys" target="_blank">
+                API Key 创建
+              </a>
+              <br />
+              <a href="https://api-docs.deepseek.com/zh-cn/quick_start/pricing" target="_blank">
+                价格说明
+              </a>
+              <br />
+              登录平台后进入「充值」或「账单」页面
+            </td>
+          </tr>
+
+          <tr>
+            <td>智谱 GLM API</td>
+            <td>适合国产通用大模型、企业应用、文本生成、知识问答</td>
+            <td>
+              <a href="https://open.bigmodel.cn/" target="_blank">
+                https://open.bigmodel.cn/
+              </a>
+            </td>
+            <td>
+              <a href="https://bigmodel.cn/pricing" target="_blank">
+                价格页面
+              </a>
+              <br />
+              <a href="https://open.bigmodel.cn/" target="_blank">
+                登录开放平台后进入控制台 / 财务充值
+              </a>
+            </td>
+          </tr>
+
+          <tr>
+            <td>MiniMax API</td>
+            <td>适合多模态、语音、视频、Agent 与代码类任务探索</td>
+            <td>
+              <a href="https://www.minimax.io/" target="_blank">
+                https://www.minimax.io/
+              </a>
+            </td>
+            <td>
+              <a href="https://platform.minimaxi.com/login" target="_blank">
+                国内平台登录 / 控制台
+              </a>
+              <br />
+              <a href="https://www.minimax.io/" target="_blank">
+                官网 API / Pricing / Console Login
+              </a>
+            </td>
+          </tr>
+
+          <tr>
+            <td>Kimi API</td>
+            <td>适合长文本、文档理解、知识库问答、通用智能体调用</td>
+            <td>
+              <a href="https://platform.moonshot.cn/" target="_blank">
+                https://platform.moonshot.cn/
+              </a>
+            </td>
+            <td>
+              <a href="https://platform.kimi.ai/console/pay" target="_blank">
+                Kimi API 充值入口
+              </a>
+              <br />
+              <a href="https://platform.moonshot.cn/" target="_blank">
+                Moonshot / Kimi API 控制台
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        入门建议是先选择一个平台完成注册、实名认证、充值和 API Key 创建。拿到 API Key 后，不要把它发到微信群、公开文档或截图里。API Key 就像银行卡密码，一旦泄露，别人可能会消耗你的额度。
+      </p>
+    </section>
+
+    <section>
+      <h2>三、AI 编程工具下载安装地址</h2>
+
+      <p>
+        API Token 解决的是“模型能力来源”，编程工具解决的是“如何把模型能力接入真实工作流”。如果把大模型比作发动机，那么 Trae、Cursor、Claude Code 这类工具就是驾驶舱：它们负责让模型理解代码、修改文件、生成项目、执行命令，并逐步进入 Agent 化工作模式。
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>工具</th>
+            <th>定位</th>
+            <th>官方下载 / 学习入口</th>
+            <th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Trae</td>
+            <td>AI 编程 IDE，适合国内用户快速上手</td>
+            <td>
+              <a href="https://trae.cn/" target="_blank">
+                https://trae.cn/
+              </a>
+            </td>
+            <td>
+              支持 macOS、Windows、Linux。国内学员优先推荐使用 Trae，因为安装和登录门槛相对低，更适合培训现场快速跑通。
+            </td>
+          </tr>
+
+          <tr>
+            <td>Cursor</td>
+            <td>AI 原生代码编辑器，适合有一定开发基础的用户</td>
+            <td>
+              <a href="https://cursor.com/cn/download" target="_blank">
+                https://cursor.com/cn/download
+              </a>
+            </td>
+            <td>
+              支持 macOS、Windows、Linux。适合工程师、产品技术团队、需要频繁阅读和改造代码项目的用户。
+            </td>
+          </tr>
+
+          <tr>
+            <td>Claude Code</td>
+            <td>命令行式 AI 编程助手，适合 Agent 化开发与项目级改造</td>
+            <td>
+              <a href="https://code.claude.com/docs/en/quickstart" target="_blank">
+                Claude Code 官方快速开始
+              </a>
+              <br />
+              <a href="https://code.claude.com/docs/en/setup" target="_blank">
+                Claude Code 高级安装说明
+              </a>
+              <br />
+              <a href="https://www.helloagent.top/openclaw&CC/index.html" target="_blank">
+                OpenClaw & Claude Code 教学入口
+              </a>
+            </td>
+            <td>
+              Claude Code 能力很强，但在国内环境下可能涉及账号、网络和 API 配置问题。培训场景中可作为进阶工具介绍，基础入门仍建议优先跑通 Trae + 国内 API。
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>四、设备要求</h2>
+
+      <p>
+        这套技术栈对电脑要求并不高，正常办公电脑即可。原因在于大模型推理主要发生在云端，电脑本地主要承担编辑器运行、文件管理、命令执行和浏览器访问等任务。换句话说，本地电脑不是“炼钢炉”，更像是“调度台”：真正的算力消耗在 API 服务商那边完成。
+      </p>
+
+      <p>
+        建议配置为 Windows 10 / Windows 11 或 macOS 系统，内存 8GB 以上更稳妥，硬盘预留 2GB 以上空间安装工具。网络方面，国内 API + Trae 的组合对普通宽带即可支持，不需要额外复杂配置。
+      </p>
+    </section>
+
+    <section>
+      <h2>五、不翻墙技术栈推荐</h2>
+
+      <p>
+        对普通学员、企业内训和非专业开发者而言，推荐路线是：国内 API Token + Trae。这个组合的优势是简单、稳定、容易部署。先让学员完成一次真实调用，看到 AI 能写代码、改网页、生成小工具，再逐步进入 Cursor、Claude Code、OpenClaw 等更复杂的 Agent 工作流。
+      </p>
+
+      <div class="flow">
+        <div class="step">
+          <strong>第一步：选 API</strong>
+          <span>DeepSeek、智谱 GLM、MiniMax、Kimi 四选一，完成注册和充值。</span>
         </div>
 
-        <!-- Section 1: 工作类型分布 -->
-        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8 card-hover">
-            <h2 class="section-title">1. 当前工作类型分布</h2>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div class="chart-container" id="workTypeChart"></div>
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">关键发现</h3>
-                    <div class="insight-box">
-                        <p class="text-gray-700 mb-4"><strong>数据分析与内容运营</strong>是最主要的工作类型，占比<strong>48%</strong>，说明团队成员更偏向数据驱动的运营工作。</p>
-                    </div>
-                    <div class="insight-box">
-                        <p class="text-gray-700 mb-4"><strong>多平台内容创作</strong>成为常态，<strong>39%</strong>的成员同时负责多个平台的内容，需要提升跨平台创作效率。</p>
-                    </div>
-                    <div class="insight-box">
-                        <p class="text-gray-700"><strong>短视频内容</strong>需求旺盛，<strong>42%</strong>的成员负责抖音/视频号脚本创作，与当前短视频营销趋势吻合。</p>
-                    </div>
-                </div>
-            </div>
+        <div class="step">
+          <strong>第二步：拿 Key</strong>
+          <span>在控制台创建 API Key，并妥善保存，不要公开泄露。</span>
         </div>
 
-        <!-- Section 2: 核心挑战 -->
-        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8 card-hover">
-            <h2 class="section-title">2. 内容创作核心挑战</h2>
-            <div class="chart-container" id="challengesChart" style="height: 500px;"></div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-                <div class="bg-red-50 rounded-xl p-6 border-l-4 border-red-500">
-                    <h4 class="font-semibold text-red-700 mb-2">🔥 最紧迫挑战</h4>
-                    <p class="text-gray-700">选题/灵感枯竭（87%）和内容量过大（74%）是时间压力的主要来源</p>
-                </div>
-                <div class="bg-yellow-50 rounded-xl p-6 border-l-4 border-yellow-500">
-                    <h4 class="font-semibold text-yellow-700 mb-2">⚠️ 质量控制难点</h4>
-                    <p class="text-gray-700">质量参差不齐（65%）和平台差异（58%）导致重复工作</p>
-                </div>
-                <div class="bg-blue-50 rounded-xl p-6 border-l-4 border-blue-500">
-                    <h4 class="font-semibold text-blue-700 mb-2">💡 转化瓶颈</h4>
-                    <p class="text-gray-700">产品信息到创意转化效率低（71%）是能力短板</p>
-                </div>
-            </div>
+        <div class="step">
+          <strong>第三步：装工具</strong>
+          <span>优先安装 Trae；有开发基础的用户可继续安装 Cursor。</span>
         </div>
 
-        <!-- Section 3: AI工具使用现状 -->
-        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8 card-hover">
-            <h2 class="section-title">3. AI工具使用现状与痛点</h2>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div class="chart-container" id="aiUsageChart"></div>
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">关键洞察</h3>
-                    <div class="mb-6">
-                        <div class="flex items-center mb-2">
-                            <div class="w-3 h-3 rounded-full bg-red-500 mr-2"></div>
-                            <span class="text-gray-700">暂未使用AI工具：<strong>23%</strong></span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div class="bg-red-500 h-2 rounded-full" style="width: 23%"></div>
-                        </div>
-                    </div>
-                    <div class="mb-6">
-                        <div class="flex items-center mb-2">
-                            <div class="w-3 h-3 rounded-full bg-purple-500 mr-2"></div>
-                            <span class="text-gray-700">已使用但效果不佳：<strong>48%</strong></span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div class="bg-purple-500 h-2 rounded-full" style="width: 48%"></div>
-                        </div>
-                    </div>
-                    <div class="mb-6">
-                        <div class="flex items-center mb-2">
-                            <div class="w-3 h-3 rounded-full bg-green-500 mr-2"></div>
-                            <span class="text-gray-700">有效使用：<strong>29%</strong></span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div class="bg-green-500 h-2 rounded-full" style="width: 29%"></div>
-                        </div>
-                    </div>
-
-                    <h4 class="font-semibold text-gray-800 mb-3">AI使用痛点TOP3：</h4>
-                    <ol class="list-decimal list-inside space-y-2 text-gray-700">
-                        <li>生成内容缺乏品牌感（71%）</li>
-                        <li>不知道如何写提示词（65%）</li>
-                        <li>生成内容需大量修改（58%）</li>
-                    </ol>
-                </div>
-            </div>
+        <div class="step">
+          <strong>第四步：跑任务</strong>
+          <span>从生成网页、改代码、写脚本、整理文档等轻量任务开始。</span>
         </div>
+      </div>
+    </section>
 
-        <!-- Section 4: 平台创作难度 -->
-        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8 card-hover">
-            <h2 class="section-title">4. 各平台创作难度评估</h2>
-            <div class="chart-container" id="platformChart"></div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-                <div class="text-center p-6 bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl">
-                    <div class="text-4xl mb-2">📱</div>
-                    <h4 class="font-semibold text-gray-800 mb-2">抖音最难</h4>
-                    <p class="text-gray-600 text-sm">脚本节奏感强，需配合视频，71%认为最难</p>
-                </div>
-                <div class="text-center p-6 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl">
-                    <div class="text-4xl mb-2">📝</div>
-                    <h4 class="font-semibold text-gray-800 mb-2">小红书次之</h4>
-                    <p class="text-gray-600 text-sm">创意要求高，需要爆款感，23%认为最难</p>
-                </div>
-                <div class="text-center p-6 bg-gradient-to-br from-green-50 to-teal-50 rounded-xl">
-                    <div class="text-4xl mb-2">📰</div>
-                    <h4 class="font-semibold text-gray-800 mb-2">公众号相对简单</h4>
-                    <p class="text-gray-600 text-sm">深度内容，逻辑要求高，6%认为最难</p>
-                </div>
-            </div>
-        </div>
+    <div class="recommend">
+      <h2>最终推荐方案</h2>
+      <p>
+        如果目标是“不翻墙、低门槛、可培训、可落地”，最推荐的组合是：DeepSeek API 或 Kimi API + Trae。DeepSeek 更适合推理与代码任务，Kimi 更适合长文档和知识型任务。如果团队有更强的工程化需求，再引入 Cursor；如果要进入 Agent 化开发、OpenClaw 工作流和项目级自动执行，再进一步学习 Claude Code。
+      </p>
 
-        <!-- Section 5: 培训需求 -->
-        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8 card-hover">
-            <h2 class="section-title">5. AI赋能培训核心需求</h2>
-
-            <h3 class="text-xl font-semibold mb-4">希望重点解决的创作场景</h3>
-            <div class="chart-container" id="scenarioChart" style="height: 450px;"></div>
-
-            <h3 class="text-xl font-semibold mt-8 mb-4">培训内容优先级</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="bg-purple-50 rounded-lg p-4 border-l-4 border-purple-500">
-                    <div class="flex justify-between items-center">
-                        <span class="font-medium text-gray-800">提示词技巧与模板</span>
-                        <span class="text-purple-600 font-bold">90%</span>
-                    </div>
-                    <div class="w-full bg-purple-200 rounded-full h-2 mt-2">
-                        <div class="bg-purple-500 h-2 rounded-full" style="width: 90%"></div>
-                    </div>
-                </div>
-                <div class="bg-blue-50 rounded-lg p-4 border-l-4 border-blue-500">
-                    <div class="flex justify-between items-center">
-                        <span class="font-medium text-gray-800">批量生成实操方法</span>
-                        <span class="text-blue-600 font-bold">84%</span>
-                    </div>
-                    <div class="w-full bg-blue-200 rounded-full h-2 mt-2">
-                        <div class="bg-blue-500 h-2 rounded-full" style="width: 84%"></div>
-                    </div>
-                </div>
-                <div class="bg-green-50 rounded-lg p-4 border-l-4 border-green-500">
-                    <div class="flex justify-between items-center">
-                        <span class="font-medium text-gray-800">品牌调性把控</span>
-                        <span class="text-green-600 font-bold">77%</span>
-                    </div>
-                    <div class="w-full bg-green-200 rounded-full h-2 mt-2">
-                        <div class="bg-green-500 h-2 rounded-full" style="width: 77%"></div>
-                    </div>
-                </div>
-                <div class="bg-yellow-50 rounded-lg p-4 border-l-4 border-yellow-500">
-                    <div class="flex justify-between items-center">
-                        <span class="font-medium text-gray-800">热点追踪与选题</span>
-                        <span class="text-yellow-600 font-bold">71%</span>
-                    </div>
-                    <div class="w-full bg-yellow-200 rounded-full h-2 mt-2">
-                        <div class="bg-yellow-500 h-2 rounded-full" style="width: 71%"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Section 6: 培训形式与产出 -->
-        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8 card-hover">
-            <h2 class="section-title">6. 培训形式偏好与期望产出</h2>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">培训形式偏好</h3>
-                    <div class="chart-container" id="formatChart"></div>
-                </div>
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">希望带走的产出物</h3>
-                    <div class="space-y-4">
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center mr-3">
-                                <span class="text-purple-600 font-bold text-sm">1</span>
-                            </div>
-                            <div class="flex-1">
-                                <div class="flex justify-between">
-                                    <span class="font-medium text-gray-800">提示词素材库</span>
-                                    <span class="text-purple-600 font-bold">87%</span>
-                                </div>
-                                <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
-                                    <div class="bg-purple-500 h-2 rounded-full" style="width: 87%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-3">
-                                <span class="text-blue-600 font-bold text-sm">2</span>
-                            </div>
-                            <div class="flex-1">
-                                <div class="flex justify-between">
-                                    <span class="font-medium text-gray-800">标准化操作流程</span>
-                                    <span class="text-blue-600 font-bold">71%</span>
-                                </div>
-                                <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
-                                    <div class="bg-blue-500 h-2 rounded-full" style="width: 71%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-green-100 flex items-center justify-center mr-3">
-                                <span class="text-green-600 font-bold text-sm">3</span>
-                            </div>
-                            <div class="flex-1">
-                                <div class="flex justify-between">
-                                    <span class="font-medium text-gray-800">AI创作Checklist</span>
-                                    <span class="text-green-600 font-bold">65%</span>
-                                </div>
-                                <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
-                                    <div class="bg-green-500 h-2 rounded-full" style="width: 65%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center mr-3">
-                                <span class="text-yellow-600 font-bold text-sm">4</span>
-                            </div>
-                            <div class="flex-1">
-                                <div class="flex justify-between">
-                                    <span class="font-medium text-gray-800">可复用模板</span>
-                                    <span class="text-yellow-600 font-bold">58%</span>
-                                </div>
-                                <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
-                                    <div class="bg-yellow-500 h-2 rounded-full" style="width: 58%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Section 7: 期望改变 -->
-        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8 card-hover">
-            <h2 class="section-title">7. 培训后期望实现的改变</h2>
-            <div class="chart-container" id="expectationChart"></div>
-            <div class="mt-8 p-6 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl">
-                <h3 class="font-semibold text-gray-800 mb-3">🎯 核心诉求总结</h3>
-                <p class="text-gray-700 leading-relaxed">
-                    参训者最希望通过培训实现：<strong>内容质量和品牌一致性显著提升（52%）</strong>、
-                    <strong>单条内容制作时间缩短50%以上（32%）</strong>、
-                    <strong>能够独立批量产出多平台内容（10%）</strong>。
-                    这反映出团队对<strong>效率提升</strong>和<strong>质量保障</strong>的双重需求。
-                </p>
-            </div>
-        </div>
-
-        <!-- Section 8: 具体痛点与建议 -->
-        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8 card-hover">
-            <h2 class="section-title">8. 具体痛点与培训建议</h2>
-
-            <h3 class="text-xl font-semibold mb-4">高频痛点关键词</h3>
-            <div class="flex flex-wrap gap-2 mb-8">
-                <span class="tag tag-primary">提示词不精准</span>
-                <span class="tag tag-primary">生成内容偏离预期</span>
-                <span class="tag tag-primary">AI内容过于通用</span>
-                <span class="tag tag-primary">需要大量修改</span>
-                <span class="tag tag-primary">缺乏品牌感</span>
-                <span class="tag tag-primary">视频生成不准确</span>
-                <span class="tag tag-primary">数据源整合困难</span>
-                <span class="tag tag-primary">热点感知滞后</span>
-                <span class="tag tag-primary">审核修改耗时</span>
-                <span class="tag tag-primary">门店沟通效率低</span>
-            </div>
-
-            <h3 class="text-xl font-semibold mb-4">培训建议分类</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-blue-50 rounded-lg p-6">
-                    <h4 class="font-semibold text-blue-800 mb-3">🔧 技术层面</h4>
-                    <ul class="space-y-2 text-gray-700">
-                        <li>• 提示词书写逻辑与结构化指令</li>
-                        <li>• 私有知识库与定制AI</li>
-                        <li>• AI工作流与批量自动化</li>
-                        <li>• 视频生成词汇与模板</li>
-                        <li>• 数据分析与结论产出</li>
-                    </ul>
-                </div>
-                <div class="bg-green-50 rounded-lg p-6">
-                    <h4 class="font-semibold text-green-800 mb-3">📋 业务层面</h4>
-                    <ul class="space-y-2 text-gray-700">
-                        <li>• 围绕iCAR真实业务场景练习</li>
-                        <li>• 产品信息到内容创意转化</li>
-                        <li>• 竞品分析与行业资讯转化</li>
-                        <li>• 门店沟通与思路传达</li>
-                        <li>• UGC内容二次创作</li>
-                    </ul>
-                </div>
-                <div class="bg-purple-50 rounded-lg p-6">
-                    <h4 class="font-semibold text-purple-800 mb-3">🎯 效果层面</h4>
-                    <ul class="space-y-2 text-gray-700">
-                        <li>• 品牌调性一致性把控</li>
-                        <li>• 内容质量标准化</li>
-                        <li>• 提升创意与传播力</li>
-                        <li>• 跨平台差异化运营</li>
-                        <li>• 热点追踪与快速反应</li>
-                    </ul>
-                </div>
-                <div class="bg-yellow-50 rounded-lg p-6">
-                    <h4 class="font-semibold text-yellow-800 mb-3">⚙️ 流程层面</h4>
-                    <ul class="space-y-2 text-gray-700">
-                        <li>• 实操大于理论</li>
-                        <li>• 标准化操作流程</li>
-                        <li>• 质量审核checklist</li>
-                        <li>• 持续性巩固机制</li>
-                        <li>• 行业垂直AI工具推荐</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- Section 9: 综合建议 -->
-        <div class="bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl shadow-lg p-8 text-white">
-            <h2 class="text-2xl font-bold mb-6">💡 培训方案综合建议</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6">
-                    <h3 class="text-xl font-semibold mb-4">课程设计</h3>
-                    <ul class="space-y-3 text-white/90">
-                        <li class="flex items-start">
-                            <span class="mr-2">✓</span>
-                            <span><strong>实操优先</strong>：70%实操演练 + 30%理论框架</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="mr-2">✓</span>
-                            <span><strong>场景化教学</strong>：围绕iCAR真实业务场景设计练习</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="mr-2">✓</span>
-                            <span><strong>平台专项</strong>：公众号、小红书、抖音分模块深入</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="mr-2">✓</span>
-                            <span><strong>分层教学</strong>：针对AI使用经验差异设置基础/进阶</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6">
-                    <h3 class="text-xl font-semibold mb-4">产出物设计</h3>
-                    <ul class="space-y-3 text-white/90">
-                        <li class="flex items-start">
-                            <span class="mr-2">✓</span>
-                            <span><strong>提示词文库</strong>：分场景、分平台的可复用模板</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="mr-2">✓</span>
-                            <span><strong>素材库</strong>：iCAR产品相关的提示词素材</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="mr-2">✓</span>
-                            <span><strong>SOP手册</strong>：批量生产内容的标准化流程</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="mr-2">✓</span>
-                            <span><strong>Checklist</strong>：各平台AI创作的质量核查清单</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="mt-6 p-4 bg-white/20 rounded-xl">
-                <p class="text-white font-medium">
-                    ⚡ <strong>核心目标</strong>：帮助参训者实现"单条内容制作时间缩短50%+"和"内容质量与品牌一致性显著提升"
-                </p>
-            </div>
-        </div>
-
+      <p>
+        技术栈的选择不应该一开始就追求“最豪华”，而应该像修一条铁路：先铺通第一段，让火车跑起来，再逐步扩展到更多站点。对企业和学员来说，第一目标不是炫技，而是让 AI 从“会聊天”变成“能干活”。
+      </p>
     </div>
 
-    <!-- Footer -->
-    <div class="bg-gray-800 text-white py-8 mt-12">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <p class="text-gray-400">iCAR品牌AI赋能培训需求调研报告</p>
-            <p class="text-gray-500 text-sm mt-2">基于31份有效问卷 | 生成时间：2026年5月19日</p>
-        </div>
+    <div class="footer">
+      本页面可作为 AI 编程训练营、Agent Skills 入门课、OpenClaw 实战课的课前准备说明。
     </div>
-
-    <script>
-        // Chart 1: Work Type Distribution
-        const workTypeChart = echarts.init(document.getElementById('workTypeChart'));
-        workTypeChart.setOption({
-            tooltip: { trigger: 'item' },
-            legend: { orient: 'vertical', left: 'left' },
-            series: [{
-                name: '工作类型',
-                type: 'pie',
-                radius: '50%',
-                data: [
-                    { value: 15, name: '数据分析与内容运营' },
-                    { value: 13, name: '抖音/视频号短视频脚本' },
-                    { value: 12, name: '小红书图文内容创作' },
-                    { value: 9, name: '品牌活动/营销策划文案' },
-                    { value: 6, name: '公众号内容策划与撰写' },
-                    { value: 8, name: '其他' }
-                ],
-                emphasis: {
-                    itemStyle: {
-                        shadowBlur: 10,
-                        shadowOffsetX: 0,
-                        shadowColor: 'rgba(0, 0, 0, 0.5)'
-                    }
-                }
-            }]
-        });
-
-        // Chart 2: Challenges
-        const challengesChart = echarts.init(document.getElementById('challengesChart'));
-        challengesChart.setOption({
-            tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
-            grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
-            xAxis: { type: 'value', max: 100 },
-            yAxis: {
-                type: 'category',
-                data: ['审核流程耗时', '选题/灵感枯竭', '内容量太大', '质量参差不齐', '平台差异大', '产品转化效率低'],
-                axisLabel: { fontSize: 12 }
-            },
-            series: [{
-                name: '占比',
-                type: 'bar',
-                data: [48, 87, 74, 65, 58, 71],
-                itemStyle: {
-                    color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
-                        { offset: 0, color: '#667eea' },
-                        { offset: 1, color: '#764ba2' }
-                    ])
-                },
-                label: {
-                    show: true,
-                    position: 'right',
-                    formatter: '{c}%'
-                }
-            }]
-        });
-
-        // Chart 3: AI Usage
-        const aiUsageChart = echarts.init(document.getElementById('aiUsageChart'));
-        aiUsageChart.setOption({
-            tooltip: { trigger: 'item' },
-            legend: { orient: 'vertical', left: 'left' },
-            series: [{
-                name: 'AI使用现状',
-                type: 'pie',
-                radius: ['40%', '70%'],
-                avoidLabelOverlap: false,
-                itemStyle: {
-                    borderRadius: 10,
-                    borderColor: '#fff',
-                    borderWidth: 2
-                },
-                label: { show: false, position: 'center' },
-                emphasis: {
-                    label: { show: true, fontSize: 20, fontWeight: 'bold' }
-                },
-                labelLine: { show: false },
-                data: [
-                    { value: 8, name: '暂未使用', itemStyle: { color: '#f87171' } },
-                    { value: 15, name: '已使用但效果不佳', itemStyle: { color: '#a78bfa' } },
-                    { value: 8, name: '有效使用', itemStyle: { color: '#34d399' } }
-                ]
-            }]
-        });
-
-        // Chart 4: Platform Difficulty
-        const platformChart = echarts.init(document.getElementById('platformChart'));
-        platformChart.setOption({
-            tooltip: { trigger: 'item' },
-            legend: { top: '5%', left: 'center' },
-            series: [{
-                name: '平台创作难度',
-                type: 'pie',
-                radius: ['40%', '70%'],
-                avoidLabelOverlap: false,
-                itemStyle: {
-                    borderRadius: 10,
-                    borderColor: '#fff',
-                    borderWidth: 2
-                },
-                label: {
-                    show: true,
-                    position: 'outside',
-                    formatter: '{b}: {d}%\n{c}人'
-                },
-                data: [
-                    { value: 22, name: '抖音', itemStyle: { color: '#ef4444' } },
-                    { value: 7, name: '小红书', itemStyle: { color: '#f59e0b' } },
-                    { value: 2, name: '公众号', itemStyle: { color: '#10b981' } }
-                ]
-            }]
-        });
-
-        // Chart 5: Scenarios
-        const scenarioChart = echarts.init(document.getElementById('scenarioChart'));
-        scenarioChart.setOption({
-            tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
-            grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
-            xAxis: { type: 'value', max: 100 },
-            yAxis: {
-                type: 'category',
-                data: ['用户故事UGC', '日常品牌互动', '竞品对比', '节点营销', '新车上市'],
-                axisLabel: { fontSize: 12 }
-            },
-            series: [{
-                name: '占比',
-                type: 'bar',
-                data: [42, 55, 39, 65, 74],
-                itemStyle: {
-                    color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
-                        { offset: 0, color: '#667eea' },
-                        { offset: 1, color: '#764ba2' }
-                    ])
-                },
-                label: {
-                    show: true,
-                    position: 'right',
-                    formatter: '{c}%'
-                }
-            }]
-        });
-
-        // Chart 6: Format
-        const formatChart = echarts.init(document.getElementById('formatChart'));
-        formatChart.setOption({
-            tooltip: { trigger: 'item' },
-            legend: { orient: 'vertical', left: 'left' },
-            series: [{
-                name: '培训形式偏好',
-                type: 'pie',
-                radius: '60%',
-                data: [
-                    { value: 16, name: '先讲理论再实操', itemStyle: { color: '#667eea' } },
-                    { value: 14, name: '边学边练', itemStyle: { color: '#764ba2' } },
-                    { value: 1, name: '真实业务场景练习', itemStyle: { color: '#f59e0b' } }
-                ],
-                emphasis: {
-                    itemStyle: {
-                        shadowBlur: 10,
-                        shadowOffsetX: 0,
-                        shadowColor: 'rgba(0, 0, 0, 0.5)'
-                    }
-                }
-            }]
-        });
-
-        // Chart 7: Expectation
-        const expectationChart = echarts.init(document.getElementById('expectationChart'));
-        expectationChart.setOption({
-            tooltip: { trigger: 'item' },
-            legend: { orient: 'vertical', left: 'left' },
-            series: [{
-                name: '期望改变',
-                type: 'pie',
-                radius: ['40%', '70%'],
-                avoidLabelOverlap: false,
-                itemStyle: {
-                    borderRadius: 10,
-                    borderColor: '#fff',
-                    borderWidth: 2
-                },
-                label: {
-                    show: true,
-                    position: 'outside',
-                    formatter: '{b}: {d}%'
-                },
-                data: [
-                    { value: 16, name: '质量与品牌一致性提升', itemStyle: { color: '#667eea' } },
-                    { value: 10, name: '制作时间缩短50%+', itemStyle: { color: '#f59e0b' } },
-                    { value: 3, name: '独立批量产出', itemStyle: { color: '#10b981' } },
-                    { value: 2, name: '学会AI选题', itemStyle: { color: '#ef4444' } }
-                ]
-            }]
-        });
-
-        // Responsive
-        window.addEventListener('resize', () => {
-            workTypeChart.resize();
-            challengesChart.resize();
-            aiUsageChart.resize();
-            platformChart.resize();
-            scenarioChart.resize();
-            formatChart.resize();
-            expectationChart.resize();
-        });
-    </script>
+  </main>
 </body>
 </html>
