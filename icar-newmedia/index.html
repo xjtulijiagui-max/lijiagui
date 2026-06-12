@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI赋能新媒体内容打造 · 奇瑞汽车 iCar 事业部学习平台</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --ink: #1f2430;
+            --muted: #606878;
+            --soft: #858d9c;
+            --line: rgba(31, 36, 48, 0.11);
+            --paper: rgba(255, 255, 255, 0.84);
+            --paper-solid: #ffffff;
+            --blue: #1769e0;
+            --indigo: #5451d6;
+            --violet: #8657d9;
+            --rose: #d94d72;
+            --green: #12805c;
+            --orange: #d46a1f;
+            --amber: #b87812;
+            --shadow: 0 18px 50px rgba(36, 45, 72, 0.11);
+            --shadow-soft: 0 10px 28px rgba(36, 45, 72, 0.08);
+            --radius: 8px;
+            --ease: cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 96px;
+        }
+
+        body {
+            margin: 0;
+            min-width: 320px;
+            overflow-x: hidden;
+            color: var(--ink);
+            font-family: "Noto Sans SC", "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+            letter-spacing: 0;
+            background:
+                linear-gradient(180deg, #f8fafc 0%, #eef3f7 48%, #f7f8fb 100%);
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -2;
+            background:
+                linear-gradient(90deg, rgba(23, 105, 224, 0.08) 1px, transparent 1px),
+                linear-gradient(180deg, rgba(23, 105, 224, 0.06) 1px, transparent 1px);
+            background-size: 56px 56px;
+            mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.72), transparent 80%);
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        #network-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .topbar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            z-index: 30;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+            background: rgba(248, 250, 252, 0.86);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+
+        .nav-inner {
+            width: min(1180px, calc(100% - 40px));
+            min-height: 72px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 22px;
+        }
+
+        .brand {
+            display: flex;
+            min-width: 0;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-mark,
+        .section-mark,
+        .tile-icon {
+            display: grid;
+            place-items: center;
+            flex: 0 0 auto;
+            color: #ffffff;
+            background: linear-gradient(135deg, var(--blue), var(--violet));
+            box-shadow: var(--shadow-soft);
+        }
+
+        .brand-mark {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius);
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        .brand-title {
+            margin: 0;
+            font-size: 18px;
+            line-height: 1.2;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .brand-subtitle {
+            margin: 4px 0 0;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.25;
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px;
+            border: 1px solid rgba(31, 36, 48, 0.08);
+            border-radius: var(--radius);
+            background: rgba(255, 255, 255, 0.68);
+        }
+
+        .nav-links a {
+            min-height: 36px;
+            display: inline-flex;
+            align-items: center;
+            padding: 0 12px;
+            border-radius: 6px;
+            color: var(--muted);
+            font-size: 14px;
+            font-weight: 700;
+            transition: color 180ms var(--ease), background 180ms var(--ease);
+        }
+
+        .nav-links a:hover,
+        .nav-links a:focus-visible {
+            color: var(--blue);
+            background: rgba(23, 105, 224, 0.08);
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #19a86b;
+            box-shadow: 0 0 0 6px rgba(25, 168, 107, 0.12);
+        }
+
+        .page-shell {
+            width: min(1180px, calc(100% - 40px));
+            margin: 0 auto;
+        }
+
+        .hero {
+            padding: 128px 0 52px;
+        }
+
+        .hero-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.72fr);
+            gap: 48px;
+            align-items: end;
+        }
+
+        .eyebrow {
+            width: fit-content;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 22px;
+            padding: 8px 12px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: var(--paper);
+            color: var(--muted);
+            font-size: 14px;
+            font-weight: 700;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--blue);
+        }
+
+        .hero h1 {
+            margin: 0;
+            max-width: 760px;
+            color: var(--ink);
+            font-size: 64px;
+            line-height: 1.05;
+            font-weight: 900;
+            letter-spacing: 0;
+        }
+
+        .accent-title {
+            display: block;
+            color: var(--blue);
+        }
+
+        .hero-copy {
+            max-width: 720px;
+            margin: 24px 0 0;
+            color: var(--muted);
+            font-size: 21px;
+            line-height: 1.75;
+            font-weight: 500;
+        }
+
+        .hero-copy span {
+            color: var(--soft);
+            font-size: 17px;
+        }
+
+        .quick-panel {
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: var(--paper);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .quick-panel header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 18px 20px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .quick-panel h2 {
+            margin: 0;
+            font-size: 18px;
+            line-height: 1.2;
+        }
+
+        .quick-panel p {
+            margin: 5px 0 0;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.45;
+        }
+
+        .quick-number {
+            color: var(--blue);
+            font-size: 36px;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .quick-list {
+            display: grid;
+        }
+
+        .quick-list a {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 56px;
+            padding: 0 20px;
+            border-top: 1px solid rgba(31, 36, 48, 0.07);
+            color: var(--ink);
+            font-size: 15px;
+            font-weight: 800;
+            transition: background 180ms var(--ease), color 180ms var(--ease);
+        }
+
+        .quick-list a:first-child {
+            border-top: 0;
+        }
+
+        .quick-list a::after,
+        .card-link::after,
+        .primary-link::after {
+            content: "→";
+            flex: 0 0 auto;
+            margin-left: 10px;
+            transition: transform 180ms var(--ease);
+        }
+
+        .quick-list a:hover,
+        .quick-list a:focus-visible {
+            color: var(--blue);
+            background: rgba(23, 105, 224, 0.07);
+        }
+
+        .quick-list a:hover::after,
+        .resource-card:hover .card-link::after,
+        .assignment-card:hover .primary-link::after {
+            transform: translateX(4px);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
+            margin-bottom: 34px;
+        }
+
+        .stat {
+            min-height: 104px;
+            padding: 20px 18px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: var(--paper);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .stat strong {
+            display: block;
+            color: var(--blue);
+            font-size: 34px;
+            line-height: 1;
+            font-weight: 900;
+        }
+
+        .stat span {
+            display: block;
+            margin-top: 10px;
+            color: var(--muted);
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .content-section {
+            padding: 42px 0 58px;
+            border-top: 1px solid rgba(31, 36, 48, 0.09);
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .section-mark {
+            width: 54px;
+            height: 54px;
+            border-radius: var(--radius);
+            font-size: 16px;
+            font-weight: 900;
+        }
+
+        .section-heading h2 {
+            margin: 0;
+            font-size: 31px;
+            line-height: 1.18;
+            font-weight: 900;
+        }
+
+        .section-heading p {
+            margin: 5px 0 0;
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.45;
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .resource-card,
+        .note-card,
+        .assignment-card {
+            position: relative;
+            min-width: 0;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: var(--paper);
+            box-shadow: var(--shadow-soft);
+            transition: transform 220ms var(--ease), box-shadow 220ms var(--ease), border-color 220ms var(--ease), background 220ms var(--ease);
+        }
+
+        .resource-card {
+            min-height: 260px;
+            display: flex;
+            flex-direction: column;
+            padding: 22px;
+        }
+
+        .resource-card:hover,
+        .resource-card:focus-visible,
+        .assignment-card:hover,
+        .assignment-card:focus-visible {
+            transform: translateY(-4px);
+            border-color: rgba(23, 105, 224, 0.28);
+            background: var(--paper-solid);
+            box-shadow: var(--shadow);
+        }
+
+        .card-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 22px;
+        }
+
+        .tile-icon {
+            width: 54px;
+            height: 54px;
+            border-radius: var(--radius);
+            font-size: 12px;
+            line-height: 1.05;
+            font-weight: 900;
+            text-align: center;
+        }
+
+        .tag-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 6px;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            min-height: 26px;
+            padding: 0 9px;
+            border: 1px solid rgba(31, 36, 48, 0.08);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.72);
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .tag.orange { color: #a94f18; background: #fff2e8; }
+        .tag.red { color: #b7354e; background: #fff0f3; }
+        .tag.purple { color: #7449bd; background: #f4efff; }
+        .tag.blue { color: #175db7; background: #edf5ff; }
+        .tag.green { color: #0f7355; background: #eaf8f2; }
+        .tag.amber { color: #946111; background: #fff7df; }
+        .tag.pink { color: #b83a65; background: #fff0f6; }
+
+        .resource-card h3,
+        .assignment-card h3,
+        .note-card h3 {
+            margin: 0 0 10px;
+            color: var(--ink);
+            font-size: 21px;
+            line-height: 1.28;
+            font-weight: 900;
+        }
+
+        .resource-card p,
+        .assignment-card p,
+        .note-card p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.72;
+        }
+
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            margin-top: auto;
+            padding-top: 20px;
+            color: var(--blue);
+            font-size: 14px;
+            font-weight: 900;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+            gap: 18px;
+        }
+
+        .feature-card-inner {
+            display: flex;
+            align-items: flex-start;
+            gap: 22px;
+        }
+
+        .feature-card-inner .tile-icon {
+            width: 72px;
+            height: 72px;
+            font-size: 13px;
+        }
+
+        .note-card {
+            min-height: 260px;
+            padding: 22px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(240, 245, 255, 0.84));
+        }
+
+        .note-card .tile-icon {
+            margin-bottom: 18px;
+            background: linear-gradient(135deg, var(--violet), var(--rose));
+        }
+
+        .assignment-wrap {
+            max-width: 760px;
+        }
+
+        .assignment-card {
+            display: block;
+            padding: 26px;
+            overflow: hidden;
+        }
+
+        .assignment-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--green), #26a46f, var(--blue));
+        }
+
+        .assignment-inner {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 22px;
+        }
+
+        .assignment-inner .tile-icon {
+            width: 74px;
+            height: 74px;
+            background: linear-gradient(135deg, var(--green), #27a56f);
+        }
+
+        .primary-link {
+            display: inline-flex;
+            align-items: center;
+            min-height: 44px;
+            margin-top: 20px;
+            padding: 0 18px;
+            border-radius: var(--radius);
+            color: #ffffff;
+            background: var(--green);
+            font-size: 14px;
+            font-weight: 900;
+            box-shadow: 0 12px 28px rgba(18, 128, 92, 0.22);
+        }
+
+        .footer {
+            margin-top: 8px;
+            border-top: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.62);
+        }
+
+        .footer-inner {
+            width: min(1180px, calc(100% - 40px));
+            min-height: 88px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            color: var(--muted);
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .footer-brand {
+            display: flex;
+            min-width: 0;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-brand .brand-mark {
+            width: 32px;
+            height: 32px;
+            font-size: 12px;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity 520ms var(--ease), transform 520ms var(--ease);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        a:focus-visible {
+            outline: 3px solid rgba(23, 105, 224, 0.42);
+            outline-offset: 3px;
+        }
+
+        @media (max-width: 960px) {
+            .nav-inner,
+            .page-shell,
+            .footer-inner {
+                width: min(100% - 32px, 760px);
+            }
+
+            .hero-layout,
+            .demo-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .hero {
+                padding-top: 118px;
+            }
+
+            .hero h1 {
+                font-size: 52px;
+            }
+
+            .resource-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 720px) {
+            html {
+                scroll-padding-top: 86px;
+            }
+
+            .nav-inner {
+                min-height: 66px;
+                gap: 12px;
+            }
+
+            .brand-title {
+                font-size: 16px;
+            }
+
+            .brand-subtitle,
+            .status-dot {
+                display: none;
+            }
+
+            .nav-links {
+                gap: 2px;
+                padding: 3px;
+            }
+
+            .nav-links a {
+                min-height: 34px;
+                padding: 0 8px;
+                font-size: 13px;
+            }
+
+            .hero {
+                padding: 104px 0 34px;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+                line-height: 1.12;
+            }
+
+            .hero-copy {
+                margin-top: 18px;
+                font-size: 18px;
+                line-height: 1.65;
+            }
+
+            .hero-copy span {
+                font-size: 15px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .resource-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .resource-card,
+            .note-card {
+                min-height: auto;
+            }
+
+            .section-heading {
+                align-items: flex-start;
+            }
+
+            .section-heading h2 {
+                font-size: 26px;
+            }
+
+            .feature-card-inner,
+            .assignment-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .footer-inner {
+                min-height: 104px;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 460px) {
+            .nav-inner,
+            .page-shell,
+            .footer-inner {
+                width: calc(100% - 24px);
+            }
+
+            .brand-mark {
+                width: 36px;
+                height: 36px;
+            }
+
+            .brand-title {
+                max-width: 142px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .nav-links a {
+                padding: 0 7px;
+                font-size: 12px;
+            }
+
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            .quick-panel header,
+            .quick-list a,
+            .resource-card,
+            .note-card,
+            .assignment-card {
+                padding-right: 16px;
+                padding-left: 16px;
+            }
+
+            .stats-grid {
+                gap: 10px;
+            }
+
+            .stat {
+                min-height: 96px;
+                padding: 18px 14px;
+            }
+
+            .tag-group {
+                justify-content: flex-start;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            .fade-in {
+                opacity: 1;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="network-canvas" aria-hidden="true"></canvas>
+
+    <nav class="topbar" aria-label="页面导航">
+        <div class="nav-inner">
+            <a class="brand" href="#top" aria-label="返回顶部">
+                <span class="brand-mark">AI</span>
+                <span>
+                    <strong class="brand-title">AI新媒体内容打造</strong>
+                    <span class="brand-subtitle">奇瑞汽车 iCar 事业部 · 专题学习</span>
+                </span>
+            </a>
+            <div class="nav-links" aria-label="资源分类">
+                <a href="#knowledge">知识类</a>
+                <a href="#demo">演示类</a>
+                <a href="#assignment">作业提交</a>
+            </div>
+            <span class="status-dot" aria-label="页面已就绪"></span>
+        </div>
+    </nav>
+
+    <main id="top">
+        <section class="hero page-shell">
+            <div class="hero-layout">
+                <div>
+                    <div class="eyebrow fade-in">奇瑞汽车 iCar 事业部学员专用</div>
+                    <h1 class="fade-in">
+                        AI 赋能
+                        <span class="accent-title">新媒体内容打造</span>
+                    </h1>
+                    <p class="hero-copy fade-in">
+                        智能化工具 × 创意表达 × 高效产出<br>
+                        <span>构建属于你的新媒体内容创作工作流</span>
+                    </p>
+                </div>
+
+                <aside class="quick-panel fade-in" aria-label="快速入口">
+                    <header>
+                        <div>
+                            <h2>学习资源总览</h2>
+                            <p>按学习、演示、提交三个阶段进入</p>
+                        </div>
+                        <strong class="quick-number">9</strong>
+                    </header>
+                    <div class="quick-list">
+                        <a href="#knowledge">知识类资源</a>
+                        <a href="#demo">每日新闻演示</a>
+                        <a href="#assignment">作业提交入口</a>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <section class="page-shell stats-grid" aria-label="资源统计">
+            <div class="stat fade-in">
+                <strong>7</strong>
+                <span>知识类资源</span>
+            </div>
+            <div class="stat fade-in">
+                <strong>1</strong>
+                <span>演示类资源</span>
+            </div>
+            <div class="stat fade-in">
+                <strong>1</strong>
+                <span>作业提交入口</span>
+            </div>
+            <div class="stat fade-in">
+                <strong>∞</strong>
+                <span>创意可能</span>
+            </div>
+        </section>
+
+        <section id="knowledge" class="content-section">
+            <div class="page-shell">
+                <div class="section-heading fade-in">
+                    <span class="section-mark">01</span>
+                    <div>
+                        <h2>知识类</h2>
+                        <p>理论学习 · 提示词工程 · 技巧手册</p>
+                    </div>
+                </div>
+
+                <div class="resource-grid">
+                    <a class="resource-card fade-in" href="https://xjtulijiagui-max.github.io/lijiagui/icar" target="_blank" rel="noopener noreferrer">
+                        <div class="card-top">
+                            <span class="tile-icon" style="background: linear-gradient(135deg, #e47825, #c94444);">PPT</span>
+                            <span class="tag orange">提示词</span>
+                        </div>
+                        <h3>PPT 附属提示词</h3>
+                        <p>配套 PPT 内容的高效提示词模板，帮助快速生成专业演示文案与视觉创意。</p>
+                        <span class="card-link">访问资源</span>
+                    </a>
+
+                    <a class="resource-card fade-in" href="https://xjtulijiagui-max.github.io/lijiagui/car" target="_blank" rel="noopener noreferrer">
+                        <div class="card-top">
+                            <span class="tile-icon" style="background: linear-gradient(135deg, #d9465f, #a72f50);">CAR</span>
+                            <span class="tag red">提示词</span>
+                        </div>
+                        <h3>车提示词</h3>
+                        <p>专为汽车内容创作设计的提示词库，覆盖车型描述、卖点提炼、场景化表达。</p>
+                        <span class="card-link">访问资源</span>
+                    </a>
+
+                    <a class="resource-card fade-in" href="https://www.helloagent.top/seedance/index.html" target="_blank" rel="noopener noreferrer">
+                        <div class="card-top">
+                            <span class="tile-icon" style="background: linear-gradient(135deg, #8657d9, #5d49bf);">AI</span>
+                            <span class="tag purple">AI工具</span>
+                        </div>
+                        <h3>Seedance 创造工作台</h3>
+                        <p>AI 视频生成与创意工作台，输入想法即可生成高质量动态影像内容。</p>
+                        <span class="card-link">访问资源</span>
+                    </a>
+
+                    <a class="resource-card fade-in" href="https://www.feishu.cn/docx/KyPJdQvF9orymFx6j9wc30a5nzd" target="_blank" rel="noopener noreferrer">
+                        <div class="card-top">
+                            <span class="tile-icon" style="background: linear-gradient(135deg, #1769e0, #2744a8);">CASE</span>
+                            <span class="tag blue">案例</span>
+                        </div>
+                        <h3>沃尔沃案例</h3>
+                        <p>豪华品牌新媒体营销案例解析，学习安全、品质与情感化内容表达。</p>
+                        <span class="card-link">访问资源</span>
+                    </a>
+
+                    <a class="resource-card fade-in" href="https://www.feishu.cn/docx/TFWedHIIdoT54HxXkuJcDxmYn4L" target="_blank" rel="noopener noreferrer">
+                        <div class="card-top">
+                            <span class="tile-icon" style="background: linear-gradient(135deg, #12805c, #16839a);">GUIDE</span>
+                            <span class="tag green">手册</span>
+                        </div>
+                        <h3>实践手册</h3>
+                        <p>从理论到落地的完整操作指南，掌握 AI 新媒体内容创作的全流程。</p>
+                        <span class="card-link">访问资源</span>
+                    </a>
+
+                    <a class="resource-card fade-in" href="https://www.feishu.cn/wiki/SIFAwwWlaimTBikZCsccSFb1n1e" target="_blank" rel="noopener noreferrer">
+                        <div class="card-top">
+                            <span class="tile-icon" style="background: linear-gradient(135deg, #d46a1f, #b87812);">SHOT</span>
+                            <span class="tag amber">技巧</span>
+                        </div>
+                        <h3>运镜技巧</h3>
+                        <p>专业镜头语言与拍摄技巧，提升视频内容的视觉表现力与叙事节奏。</p>
+                        <span class="card-link">访问资源</span>
+                    </a>
+
+                    <a class="resource-card fade-in" href="https://lijiagui.feishu.cn/wiki/JwOQwdKH5izgjmkMa4mcQnNUnRg" target="_blank" rel="noopener noreferrer">
+                        <div class="card-top">
+                            <span class="tile-icon" style="background: linear-gradient(135deg, #d94d72, #a63d88);">IDEA</span>
+                            <span class="tag pink">创意</span>
+                        </div>
+                        <h3>Happy Horse</h3>
+                        <p>创意内容灵感库，探索趣味化、年轻化的新媒体表达方式。</p>
+                        <span class="card-link">访问资源</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="demo" class="content-section">
+            <div class="page-shell">
+                <div class="section-heading fade-in">
+                    <span class="section-mark" style="background: linear-gradient(135deg, var(--violet), var(--rose));">02</span>
+                    <div>
+                        <h2>演示类</h2>
+                        <p>实战演示 · 案例参考 · 内容模板</p>
+                    </div>
+                </div>
+
+                <div class="demo-grid">
+                    <a class="resource-card fade-in" href="https://lijiagui.feishu.cn/base/HJhsb1hzoaOWnhshRP0cyPuFn7f?from=from_copylink" target="_blank" rel="noopener noreferrer">
+                        <div class="feature-card-inner">
+                            <span class="tile-icon" style="background: linear-gradient(135deg, #5451d6, #8657d9);">NEWS</span>
+                            <div>
+                                <div class="tag-group" style="justify-content: flex-start; margin-bottom: 12px;">
+                                    <span class="tag purple">多维表格</span>
+                                    <span class="tag green">每日更新</span>
+                                </div>
+                                <h3>iCar 每日新闻</h3>
+                                <p>每日汽车行业动态与 iCar 相关内容聚合，提供创作灵感与素材参考，是内容策划的必备数据源。</p>
+                                <span class="card-link">查看每日新闻</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <div class="note-card fade-in">
+                        <span class="tile-icon">TIP</span>
+                        <h3>使用提示</h3>
+                        <p>演示类资源建议结合知识类提示词与技巧手册一起学习。先从每日新闻中获取热点，再用 AI 工具生成创意内容，逐步形成个人创作方法论。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="assignment" class="content-section">
+            <div class="page-shell">
+                <div class="section-heading fade-in">
+                    <span class="section-mark" style="background: linear-gradient(135deg, var(--green), #27a56f);">03</span>
+                    <div>
+                        <h2>作业提交</h2>
+                        <p>作品提交 · 学习反馈 · 成果沉淀</p>
+                    </div>
+                </div>
+
+                <div class="assignment-wrap">
+                    <a class="assignment-card fade-in" href="https://lijiagui.feishu.cn/share/base/form/shrcngeFnbnsNzvj00hMj2q9cEc" target="_blank" rel="noopener noreferrer">
+                        <div class="assignment-inner">
+                            <span class="tile-icon">SEND</span>
+                            <div>
+                                <div class="tag-group" style="justify-content: flex-start; margin-bottom: 12px;">
+                                    <span class="tag green">飞书表单</span>
+                                    <span class="tag blue">必填</span>
+                                </div>
+                                <h3>作业提交入口</h3>
+                                <p>完成学习内容后，请通过此表单提交你的作业作品与学习心得。优秀作品将有机会在团队内进行展示与分享。</p>
+                                <span class="primary-link">立即提交作业</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span class="brand-mark">AI</span>
+                <span>AI 赋能新媒体内容打造 · 奇瑞汽车 iCar 事业部</span>
+            </div>
+            <span>学习辅助网页 · 持续更新中</span>
+        </div>
+    </footer>
+
+    <script>
+        const canvas = document.getElementById("network-canvas");
+        const ctx = canvas ? canvas.getContext("2d") : null;
+        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        let particles = [];
+        let animationFrame = 0;
+        let pointer = { x: null, y: null };
+
+        function resizeCanvas() {
+            if (!canvas || !ctx) return;
+            const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+            canvas.width = Math.floor(window.innerWidth * pixelRatio);
+            canvas.height = Math.floor(window.innerHeight * pixelRatio);
+            canvas.style.width = `${window.innerWidth}px`;
+            canvas.style.height = `${window.innerHeight}px`;
+            ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+
+            const count = Math.min(Math.floor((window.innerWidth * window.innerHeight) / 22000), 54);
+            particles = Array.from({ length: count }, () => ({
+                x: Math.random() * window.innerWidth,
+                y: Math.random() * window.innerHeight,
+                vx: (Math.random() - 0.5) * 0.28,
+                vy: (Math.random() - 0.5) * 0.28,
+                size: Math.random() * 1.7 + 0.8
+            }));
+        }
+
+        function drawNetwork() {
+            if (!canvas || !ctx) return;
+            ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+            particles.forEach((particle, index) => {
+                if (!prefersReducedMotion) {
+                    particle.x += particle.vx;
+                    particle.y += particle.vy;
+                }
+
+                if (particle.x < -20) particle.x = window.innerWidth + 20;
+                if (particle.x > window.innerWidth + 20) particle.x = -20;
+                if (particle.y < -20) particle.y = window.innerHeight + 20;
+                if (particle.y > window.innerHeight + 20) particle.y = -20;
+
+                if (pointer.x !== null && pointer.y !== null && !prefersReducedMotion) {
+                    const dx = pointer.x - particle.x;
+                    const dy = pointer.y - particle.y;
+                    const distance = Math.hypot(dx, dy);
+                    if (distance < 120) {
+                        const force = (120 - distance) / 120;
+                        particle.x -= dx * force * 0.012;
+                        particle.y -= dy * force * 0.012;
+                    }
+                }
+
+                ctx.beginPath();
+                ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                ctx.fillStyle = "rgba(23, 105, 224, 0.18)";
+                ctx.fill();
+
+                for (let next = index + 1; next < particles.length; next += 1) {
+                    const other = particles[next];
+                    const distance = Math.hypot(particle.x - other.x, particle.y - other.y);
+                    if (distance < 130) {
+                        ctx.beginPath();
+                        ctx.moveTo(particle.x, particle.y);
+                        ctx.lineTo(other.x, other.y);
+                        ctx.strokeStyle = `rgba(23, 105, 224, ${0.11 * (1 - distance / 130)})`;
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    }
+                }
+            });
+
+            if (!prefersReducedMotion) {
+                animationFrame = window.requestAnimationFrame(drawNetwork);
+            }
+        }
+
+        window.addEventListener("resize", () => {
+            window.cancelAnimationFrame(animationFrame);
+            resizeCanvas();
+            drawNetwork();
+        });
+
+        window.addEventListener("pointermove", (event) => {
+            pointer.x = event.clientX;
+            pointer.y = event.clientY;
+        }, { passive: true });
+
+        window.addEventListener("pointerleave", () => {
+            pointer.x = null;
+            pointer.y = null;
+        });
+
+        const observer = "IntersectionObserver" in window
+            ? new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("visible");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" })
+            : null;
+
+        document.querySelectorAll(".fade-in").forEach((element) => {
+            if (observer) {
+                observer.observe(element);
+            } else {
+                element.classList.add("visible");
+            }
+        });
+
+        resizeCanvas();
+        drawNetwork();
+    </script>
+</body>
+</html>
