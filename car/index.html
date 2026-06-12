@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>汽车提示词合集</title>
+  <style>
+    :root{--bg:#eef2ef;--paper:#fbfaf6;--panel:#fff;--ink:#202224;--muted:#636a6e;--line:#d8ded9;--line-strong:#b9c4bd;--red:#b3322d;--red-soft:#f5dedb;--teal:#1a776d;--teal-soft:#dcefeb;--amber:#b47a16;--amber-soft:#f6ead1;--graphite:#171b1f;--code:#181c20;--code-text:#f4efe5;--shadow:0 18px 50px rgba(26,31,28,.10);--radius:8px}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:linear-gradient(90deg,rgba(26,119,109,.08) 0 1px,transparent 1px 100%) 0 0/48px 48px,linear-gradient(0deg,rgba(179,50,45,.06) 0 1px,transparent 1px 100%) 0 0/48px 48px,var(--bg);font-family:"HarmonyOS Sans SC","Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;line-height:1.62;letter-spacing:0}button,input{font:inherit}a{color:inherit;text-decoration:none}.page{display:grid;grid-template-columns:304px minmax(0,1fr);min-height:100vh}.rail{position:sticky;top:0;height:100vh;overflow:auto;padding:22px 18px;background:rgba(251,250,246,.92);border-right:1px solid var(--line);backdrop-filter:blur(12px)}.mark{display:grid;grid-template-columns:38px minmax(0,1fr);gap:11px;align-items:center;margin-bottom:18px}.mark-icon{width:38px;height:38px;border-radius:var(--radius);background:conic-gradient(from 210deg,var(--red),var(--amber),var(--teal),var(--red));position:relative;box-shadow:inset 0 0 0 1px rgba(255,255,255,.58)}.mark-icon:after{content:"";position:absolute;inset:9px 7px 11px;border:2px solid rgba(255,255,255,.92);border-top-left-radius:14px;border-top-right-radius:14px;border-bottom:0}.mark strong{display:block;font-size:17px;line-height:1.22}.mark span{display:block;color:var(--muted);font-size:12px;margin-top:2px}.search-wrap{position:relative;margin-bottom:14px}.search-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:17px;height:17px;color:var(--teal);pointer-events:none}.search{width:100%;height:42px;border:1px solid var(--line-strong);border-radius:var(--radius);background:#fffefa;color:var(--ink);outline:0;padding:0 12px 0 38px}.search:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,119,109,.15)}.filters{display:grid;gap:7px;margin:16px 0 22px}.filter-btn{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:38px;padding:8px 10px;border:1px solid transparent;border-radius:var(--radius);background:transparent;color:var(--ink);text-align:left;cursor:pointer}.filter-btn:hover{background:rgba(26,119,109,.08)}.filter-btn.is-active{border-color:color-mix(in srgb,var(--teal) 38%,var(--line));background:var(--teal-soft);color:#0d4d45;font-weight:800}.filter-btn b{font-size:12px;color:var(--muted);font-weight:700}.rail-title{color:var(--muted);font-size:12px;font-weight:800;margin:22px 0 9px}.toc{display:grid;gap:6px}.toc a{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 9px;border-radius:var(--radius);color:#34403c;font-size:13px}.toc a:hover{background:rgba(179,50,45,.08)}.toc span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.toc em{color:var(--red);font-style:normal;font-weight:800}main{min-width:0}.hero{position:relative;min-height:392px;display:grid;align-items:end;overflow:hidden;border-bottom:1px solid var(--line);background:var(--graphite);color:#fff8eb}.hero:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(18,22,25,.96),rgba(18,22,25,.73) 40%,rgba(18,22,25,.28) 72%,rgba(18,22,25,.42)),url("assets/汽车提示词合集-hero.png") center/cover no-repeat;transform:scale(1.01)}.hero:after{content:"";position:absolute;inset:auto 0 0;height:88px;background:linear-gradient(0deg,rgba(238,242,239,1),rgba(238,242,239,0))}.hero-inner{position:relative;z-index:1;width:min(1120px,calc(100% - 52px));margin:0 auto;padding:42px 0 62px}.kicker{display:inline-flex;align-items:center;gap:8px;margin:0 0 13px;color:#ffd9ba;font-size:13px;font-weight:800}.kicker:before{content:"";width:28px;height:2px;background:var(--red)}h1{margin:0;max-width:780px;font-family:"Noto Serif SC","Source Han Serif SC","Songti SC","Microsoft YaHei",serif;font-size:clamp(34px,7vw,76px);line-height:.98;letter-spacing:0}.hero-copy{max-width:760px;margin:18px 0 0;color:rgba(255,248,235,.82);font-size:clamp(15px,1.6vw,18px)}.stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}.stat{display:grid;gap:2px;min-width:118px;padding:10px 12px;border:1px solid rgba(255,255,255,.22);border-radius:var(--radius);background:rgba(255,255,255,.08)}.stat strong{font-size:20px;line-height:1;color:#fff}.stat span{font-size:12px;color:rgba(255,248,235,.72)}.toolbar{position:sticky;top:0;z-index:4;display:none;padding:10px 16px;border-bottom:1px solid var(--line);background:rgba(251,250,246,.94);backdrop-filter:blur(12px)}.content{width:min(1180px,calc(100% - 52px));margin:-28px auto 54px;position:relative;z-index:2}.collection-head{display:flex;align-items:end;justify-content:space-between;gap:18px;margin:0 0 16px}.collection-head h2{margin:0;font-size:clamp(22px,3vw,32px);line-height:1.2;letter-spacing:0}.count-note{color:var(--muted);font-size:14px}.prompt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(380px,100%),1fr));gap:16px;align-items:start}.prompt-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}.prompt-card.is-hidden{display:none}.card-top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:start;padding:17px 17px 14px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fff,var(--paper))}.badge-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:9px}.badge{display:inline-flex;align-items:center;height:23px;padding:0 8px;border-radius:999px;font-size:12px;font-weight:800;color:#37413d;background:#edf1ee;border:1px solid var(--line)}.badge.type-通用框架{background:var(--teal-soft);color:#0f5a52;border-color:#b7d6d0}.badge.type-实战案例{background:var(--red-soft);color:#8f2825;border-color:#e8bdb9}.badge.type-剪映适配{background:var(--amber-soft);color:#80530f;border-color:#e2c786}.badge.type-品牌故事{background:#e8ebef;color:#363f48;border-color:#cfd6dc}.prompt-card h3{margin:0;font-size:18px;line-height:1.34;letter-spacing:0}.summary{margin:7px 0 0;color:var(--muted);font-size:13px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.copy-btn{display:inline-grid;grid-template-columns:16px auto;align-items:center;justify-content:center;gap:6px;height:34px;min-width:78px;border:1px solid color-mix(in srgb,var(--teal) 46%,var(--line));border-radius:var(--radius);background:#f5fbf9;color:#0d5d54;cursor:pointer;font-weight:800;font-size:13px}.copy-btn:hover{background:var(--teal-soft)}.copy-btn svg{width:15px;height:15px}pre{margin:0;max-height:470px;overflow:auto;padding:16px 18px 19px;background:var(--code);color:var(--code-text);white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;font-family:"Cascadia Mono","Microsoft YaHei UI",Consolas,monospace;font-size:13px;line-height:1.72}code{font-family:inherit}.empty{display:none;padding:44px 18px;border:1px dashed var(--line-strong);border-radius:var(--radius);background:rgba(251,250,246,.72);color:var(--muted);text-align:center}.empty.is-visible{display:block}.back-top{position:fixed;right:18px;bottom:18px;z-index:5;width:42px;height:42px;border:1px solid var(--line-strong);border-radius:var(--radius);background:var(--paper);color:var(--ink);cursor:pointer;box-shadow:var(--shadow)}.back-top svg{width:18px;height:18px}@media(max-width:900px){.page{display:block}.rail{position:relative;height:auto;border-right:0;border-bottom:1px solid var(--line)}.toolbar{display:block}.hero{min-height:360px}.hero-inner,.content{width:min(100% - 32px,1180px)}.hero-inner{padding:38px 0 58px}.collection-head{display:block}.count-note{margin-top:6px}.card-top{grid-template-columns:1fr}.copy-btn{width:100%}}@media(max-width:520px){.rail{padding:18px 14px}.hero{min-height:328px}.hero-copy{font-size:14px}.stat{min-width:calc(50% - 5px)}pre{max-height:360px;font-size:12px}}@media print{body{background:#fff}.rail,.toolbar,.copy-btn,.back-top{display:none}.page{display:block}.hero{min-height:auto;color:#111;background:#fff;border-bottom:2px solid #111}.hero:before,.hero:after{display:none}.hero-inner,.content{width:100%;margin:0;padding:16px 0}.prompt-grid{display:block}.prompt-card{break-inside:avoid;box-shadow:none;margin:0 0 14px}pre{max-height:none;background:#fff;color:#111;border-top:1px solid #ddd}}
+  </style>
+</head>
+<body>
+  <div class="page">
+    <aside class="rail" aria-label="筛选与目录">
+      <div class="mark"><span class="mark-icon" aria-hidden="true"></span><div><strong>汽车提示词合集</strong><span>即梦 / 剪映 / 品牌故事</span></div></div>
+      <div class="search-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg><input id="search" class="search" type="search" placeholder="搜索品牌、场景、镜头" autocomplete="off" /></div>
+      <div class="rail-title">分类</div><div id="filters" class="filters"></div><div class="rail-title">目录</div><nav id="toc" class="toc"></nav>
+    </aside>
+    <main>
+      <header class="hero" id="top"><div class="hero-inner"><p class="kicker">Prompt Library for Automotive Video</p><h1>汽车提示词合集</h1><p class="hero-copy">面向汽车短视频生成与剪辑的提示词资料库，覆盖通用公式、广告分镜、剪映适配和品牌幕后操盘手故事。</p><div class="stats" aria-label="页面统计"><div class="stat"><strong id="stat-prompts">0</strong><span>提示词卡片</span></div><div class="stat"><strong id="stat-types">0</strong><span>内容分类</span></div><div class="stat"><strong id="stat-brands">0</strong><span>品牌故事</span></div></div></div></header>
+      <div class="toolbar"><div class="search-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg><input id="mobileSearch" class="search" type="search" placeholder="搜索品牌、场景、镜头" autocomplete="off" /></div></div>
+      <section class="content" aria-labelledby="library-title"><div class="collection-head"><h2 id="library-title">全部提示词</h2><div id="countNote" class="count-note"></div></div><div id="promptGrid" class="prompt-grid"></div><div id="empty" class="empty">没有匹配的提示词</div></section>
+    </main>
+  </div>
+  <button class="back-top" type="button" aria-label="回到顶部" title="回到顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"></path></svg></button>
+  <script>(function clientScript() {
+  const SOURCE_TEXT = "# 剪映&即梦 汽车短视频提示词合集\n\n## 一、即梦AI 通用提示词框架\n### 1. 万能正向公式\n主体描述 + 动作描述 + 场景与空间 + 光线与氛围 + 镜头与运镜 + 画质关键词\n（越靠前的词权重越高，描述越具体，AI生成结果越精准）\n\n### 2. 通用兜底词\n- 画质词：8K超高清，细节拉满，电影级质感，构图完美，主体突出，色彩自然，人体结构正常\n- 反向提示词（必填）：模糊，低清，畸形，扭曲，水印，logo，杂乱背景，过曝，多余肢体，五官变形\n\n\n## 二、即梦AI 汽车类实战提示词\n### 1. 汽车科普故事类（奥迪A7案例）\n#### 文生图提示词\n主体：一位穿着黑色简约T恤、黑色长裤、白色运动鞋，佩戴手表，手拿香烟的帅气动漫男性，手持黑色雨伞\n车辆：奥迪A7（车头经典立标显眼，车牌为京A88888）\n场景：雨夜的都市街道，地面潮湿反光，霓虹灯点缀的现代建筑，路灯散发暖光\n环境细节：右侧有婚纱店橱窗（展示白色婚纱），背景有朦胧的树木与其他车辆，整体氛围湿润、都市感十足且略带氛围感\n艺术风格：写实风与动漫风格结合，光影细腻，色彩偏向冷调的雨夜质感\n\n#### 图生视频提示词\n人物转身看向身后的婚纱店，表情若有所思，香烟飘着烟，天空下着雨\n\n\n### 2. 汽车广告宣传类（红旗SUV案例）\n#### 15s品牌短片完整提示词\n# 视频主题:15s红旗SUV品牌质感短片\n【镜头序列(丝滑连贯)】\n0-2s:特写镜头，一只手按下红色汽车一键启动按钮，按钮亮起红光，轻微震动反馈，背景虚化，氛围感拉满。\n2-4s:车内第一视角，清爽短发男性握着方向盘，窗外城市夜景流光快速划过，镜头随方向盘轻微晃动，营造动态速度感。\n4-6s:后视镜特写，反射出男性专注的眼神，背景是日落时分的公路，暖金色阳光洒入车内，镜头缓慢推近，突出人物神态。\n6-8s:低角度跟拍全景，红色红旗SUV行驶在盘山公路上，背景是层叠山峦与橙红色晚霞，画面大气开阔，车辆动态丝滑。\n8-10s:海边慢镜头，红色红旗SUV停在悬崖边，男性站在车旁面朝大海，背景是广阔海面与蓝天，镜头缓慢拉远，营造宁静自由的氛围。\n10-12s:雨夜侧方跟拍，红色红旗SUV行驶在霓虹闪烁的城市街道，雨滴打在车窗上，灯光在玻璃上折射出彩色光斑，镜头从侧方跟拍，突出车辆的动感与雨夜氛围感。\n12-14s:侧窗中景，男性坐在驾驶位，眼神坚定看向前方，窗外大雨瓢泼，镜头轻微拉近，突出人物沉稳气质，雨丝细节清晰。\n14-15s:航拍远景收尾，红色红旗SUV在城市天际线前行驶，镜头缓慢拉远，展现城市高楼与红色车辆的鲜明对比，画面定格在车辆向前行驶的动态瞬间。\n【画面风格】 电影级质感，8K分辨率，HDR高动态范围，自然光影，电影级调色，色彩层次丰富，运镜流畅丝滑，无抖动，转场自然衔接，人物表情自然，车辆细节真实，无AI瑕疵，画面稳定，动态模糊自然，氛围大气磅礴、现代高级，比例16:9。\n【背景音乐和音效】增加背景音乐和音效，不要生成字幕。\n\n\n#### 九宫格分镜提示词\n请你扮演一位专业的电影分镜师，为红旗SUV创建一个3x3网格布局的九宫格商业广告故事分镜图片，每一张分镜图都要有区分。\n(通用规则)风格:写实电影风，构图充满强烈的电影感和视觉冲击力\n核心元素:画面中只出现一辆左舵驾驶的红旗SUV和一名男主角。男主角形象:一位帅气的男子，身穿简约的灰色短袖T恤和黑色长裤。\n强制要求:每个分镜的左上角，必须用统一、清晰的字体和格式标注场景编号，顺序为“C1”、“C2”、“C3”... 直至“C9”。\n(分镜画面要求)\nC1:低角度仰拍。红旗SUV从镜头前高速驶过，男主角在驾驶位上眼神坚定，背景是繁华的城市天际线。\nC2:大远景。红旗SUV在蜿蜒的盘山公路上加速驶向夕阳，画面留白，男主角在车内。\nC3:侧面中景。红旗SUV在雨中行驶，车窗上挂着雨珠，透过车窗能看到男主角专注的侧脸。\nC4:低角度仰拍。红旗SUV停在海边悬崖旁，男主角靠在车门上眺望远方。\nC5:车内后视镜特写。从车内后视镜中看到男主角的眼睛，背景是模糊的夕阳余晖和道路。\nC6:全景镜头。红旗SUV在现代都市的霓虹灯下疾驰，车身线条流畅，透过车窗可见男主角的身影。\nC7:中景跟拍。男主角在车内露出自信的微笑，窗外光影掠过。\nC8:特写镜头。男主角戴着时尚眼镜，眼神专注，手握红旗SUV的方向盘。\nC9:细节特写。男主角的手指轻轻按下车内的启动按钮。\n\n\n## 三、剪映适配提示词\n剪映的AI生成/智能多帧功能提示词逻辑与即梦通用，可直接替换车辆、场景参数复用上述模板，针对剪映剪辑流程的补充提示词参考：\n- 智能多帧分镜提示词：\n  镜头1：车头特写，车辆LOGO清晰，侧光打亮车身线条，浅景深虚化背景\n  镜头2：侧面跟拍，车辆在公路匀速行驶，背景是橙红色晚霞，运镜缓慢跟随\n  镜头3：内饰特写，中控屏幕亮起，手指滑动操作界面，按键细节清晰\n  通用配置：4K超清，电影质感，运镜流畅无抖动，色彩自然\n把主要汽车品牌的幕后操盘手的视频提示词都找出来\nplaintext\n# 剪映&即梦 汽车品牌幕后操盘手 视频提示词合集\n（适配即梦AI文生视频/图生视频，剪映可直接导入生成素材剪辑，通用兜底词可复用：8K超高清，细节拉满，电影级质感，主体突出，反向提示词：模糊,低清,畸形,扭曲,水印）\n\n---\n\n## 1. 特斯拉 | 埃隆·马斯克\n### 完整15s品牌故事视频提示词\n# 视频主题:特斯拉幕后掌舵人马斯克的创业故事片段\n【镜头序列】\n0-2s:特写，马斯克的手在蓝图上勾画电动车的设计草图，笔尖划过纸张，细节清晰。\n2-5s:中景，马斯克穿着黑色工装，站在特斯拉早期工厂里，身后是简陋的生产线，他眼神坚定地和工程师讨论。\n5-8s:切换，马斯克站在SpaceX火箭旁，转头看向镜头，笑容自信，背景是星空下的发射台。\n8-12s:现代场景，马斯克站在特斯拉超级工厂的自动化生产线前，机械臂在身后忙碌组装Model 3，他抬手比划着产能目标。\n12-15s:航拍收尾，特斯拉的超级工厂全景，阳光下的厂区，车辆源源不断驶出，镜头拉远展现规模。\n【画面风格】写实电影风，8K分辨率，光影自然，运镜流畅，转场自然，无抖动，纪实感强烈，色彩真实。\n\n---\n\n## 2. 比亚迪 | 王传福\n### 完整15s品牌故事视频提示词\n# 视频主题:比亚迪创始人王传福的电池造车之路\n【镜头序列】\n0-2s:特写，王传福的手拿起一块刀片电池，手指摩挲着电池表面，眼神专注。\n2-5s:中景，穿着工装衬衫、戴着安全帽的王传福，站在比亚迪早期的电池车间里，和工人一起手工拆解电池零件，背景是简陋的作坊式生产线。\n5-8s:切换，现代的比亚迪电池工厂，干净整洁的自动化生产线，王传福站在生产线前，向团队展示最新的磷酸铁锂产品，脸上带着笑容。\n8-12s:车厂场景，王传福站在比亚迪新能源汽车旁，拍着车身，身后是排列整齐的新能源整车，即将出口海外。\n12-15s:收尾，比亚迪的全球厂区分布图，镜头拉远，展现品牌的全球布局，暖色调氛围，充满奋进感。\n【画面风格】写实工业风，8K超清，暖光氛围，细节拉满，运镜丝滑，人物表情自然，无AI瑕疵。\n\n---\n\n## 3. 理想汽车 | 李想\n### 完整15s品牌故事视频提示词\n# 视频主题:理想汽车创始人李想的家庭造车理念\n【镜头序列】\n0-2s:特写，李想的手在电脑上敲下\"家庭用车\"的产品定义，屏幕上是理想L9的设计图。\n2-5s:回忆镜头，年轻的李想，穿着休闲卫衣，在早期的办公室里，和团队讨论车的配置，背景是简单的白墙办公室。\n5-8s:展厅场景，李想站在理想汽车的展厅里，对着镜头介绍车内的空间，手势比划着后排的亲子座椅，身后是理想L9车型。\n8-12s:家庭场景，李想坐在理想车的驾驶位，妻子孩子坐在后排，一家人笑着互动，窗外是自驾游的公路风景。\n12-15s:收尾，理想汽车的用户车队，一群家庭用户开着理想车在草原上自驾游，镜头拉远，展现\"移动的家\"的理念。\n【画面风格】温馨纪实风，4K超清，暖色调，光影柔和，运镜自然，手持呼吸感，真实接地气。\n\n---\n\n## 4. 奔驰 | 卡尔·本茨\n### 完整15s品牌起源视频提示词\n# 视频主题:汽车之父卡尔·本茨的发明之路\n【镜头序列】\n0-2s:特写，1886年的专利证书，上面写着\"汽车专利\"，卡尔·本茨的签名清晰可见。\n2-5s:复古场景，卡尔·本茨，穿着19世纪的复古西装，戴着礼帽，在他的作坊里，调试着第一辆三轮汽车的发动机，满手油污。\n5-8s:街道场景，本茨的妻子贝塔，驾驶着第一辆汽车，在德国的小镇石板路上行驶，引来路人的围观，本茨站在路边，紧张又期待地看着。\n8-12s:现代场景，奔驰的4S店，最新的S级轿车停在展厅里，镜头从现代车拉回，叠化到当年的三轮汽车，展现百年传承。\n12-15s:收尾，奔驰的三叉星LOGO，在阳光下亮起，背景是百年的品牌历史墙，暖金色的复古胶片质感。\n【画面风格】复古电影风，8K超清，胶片颗粒感，午后暖光，侧光勾勒轮廓，运镜缓慢，历史感厚重。\n\n---\n\n## 5. 宝马 | 吉斯坦·奥托\n### 完整15s品牌起源视频提示词\n# 视频主题:宝马创始人吉斯坦·奥托的航空转造车之路\n【镜头序列】\n0-2s:特写，早期的航空发动机零件，奥托的手在调试发动机的活塞，眼神专注。\n2-5s:一战后的工厂，奥托站在废弃的航空工厂里，看着剩下的发动机零件，思考着转型的方向。\n5-8s:第一辆宝马摩托车下线，奥托站在摩托车旁，擦拭着车身，脸上带着兴奋的笑容，身后是工厂的工人在欢呼。\n8-12s:现代的宝马工厂，最新的宝马M系列轿车下线，奥托的形象叠化在现代的生产线前，展现品牌的运动基因传承。\n12-15s:收尾，宝马的蓝天白云LOGO，旋转着亮起，背景是赛道上的宝马赛车，引擎的轰鸣声氛围感拉满。\n【画面风格】工业复古风，8K超清，冷调转暖调，光影细腻，运镜流畅，转场自然，细节真实。\n\n---\n\n## 6. 奥迪 | 奥古斯特·霍希\n### 完整15s品牌起源视频提示词\n# 视频主题:奥迪创始人奥古斯特·霍希的豪华品牌之路\n【镜头序列】\n0-2s:特写，霍希的手在笔记本上写下\"Horch\"，然后划掉，写下\"Audi\"（拉丁文的\"听\"，对应霍希的德文意思）。\n2-5s:早期的工厂，霍希穿着西装，站在他的第一辆豪华汽车旁，向客户介绍车的做工，车身的钣金细节清晰。\n5-8s:四个品牌的合并场景，霍希站在中间，身边是另外三个汽车品牌的创始人，四人握手，背景是四个圆环的LOGO雏形。\n8-12s:现代的奥迪工厂，最新的奥迪A8轿车，激光焊接的车身细节，霍希的形象叠化在现代的质检台前，展现\"突破科技 启迪未来\"的传承。\n12-15s:收尾，奥迪的四个圆环LOGO，在灯光下亮起，背景是奥迪的科技展厅，充满未来感。\n【画面风格】高端商务风，8K超清，冷调科技感，光影精致，运镜优雅，细节拉满，豪华质感。\n\n---\n\n## 7. 丰田 | 丰田喜一郎\n### 完整15s品牌起源视频提示词\n# 视频主题:丰田创始人丰田喜一郎的精益生产之路\n【镜头序列】\n0-2s:特写，丰田喜一郎的手在织布机的零件上调试，早期的丰田织布机，细节清晰。\n2-5s:早期的汽车作坊，喜一郎站在简陋的车间里，和工人一起手工打磨汽车零件，背景是从织布机转型的生产线。\n5-8s:精益生产的场景，喜一郎站在生产线旁，记录着生产的浪费点，提出\"准时化生产\"的理念，工人在有序的工作。\n8-12s:现代的丰田工厂，TPS精益生产线，机器人高效的组装，喜一郎的形象叠化在生产线前，展现精益理念的传承。\n12-15s:收尾，丰田的三个椭圆LOGO，亮起，背景是全球的丰田工厂，展现品牌的全球影响力。\n【画面风格】务实工业风，8K超清，暖光氛围，运镜平稳，细节真实，纪实感强烈。\n\n---\n\n## 8. 大众 | 费迪南德·保时捷\n### 完整15s品牌起源视频提示词\n# 视频主题:大众创始人费迪南德·保时捷的国民车之路\n【镜头序列】\n0-2s:特写，保时捷的手在草图上画下甲壳虫的设计，圆润的车身线条，细节清晰。\n2-5s:二战前的德国，保时捷站在希特勒面前，讲解着国民车的计划，要让每个德国人都能买得起汽车。\n5-8s:甲壳虫的生产线，第一辆甲壳虫汽车下线，保时捷站在车旁，看着这辆国民车，眼神充满期待。\n8-12s:现代的大众工厂，数百万辆甲壳虫的纪念墙，最新的ID系列电动车下线，保时捷的形象叠化在现代的电动车旁，展现品牌的转型。\n12-15s:收尾，大众的VW LOGO，亮起，背景是全球的大众车主，开着甲壳虫的聚会，充满情怀。\n【画面风格】复古情怀风，8K超清，暖色调，胶片质感，运镜缓慢，充满故事感。##整理全部视频提示词，合理的方式分割，提示词代码块形式呈现，输出为ppt";
+  const TYPE_ORDER = ['全部', '通用框架', '实战案例', '剪映适配', '品牌故事'];
+  const BRAND_PATTERN = /特斯拉|比亚迪|理想汽车|奔驰|宝马|奥迪|丰田|大众|马斯克|王传福|李想|本茨|奥托|霍希|丰田喜一郎|保时捷/;
+  const grid = document.getElementById('promptGrid');
+  const filters = document.getElementById('filters');
+  const toc = document.getElementById('toc');
+  const empty = document.getElementById('empty');
+  const countNote = document.getElementById('countNote');
+  const search = document.getElementById('search');
+  const mobileSearch = document.getElementById('mobileSearch');
+  let activeType = '全部';
+  let query = '';
+
+  function escapeHtml(value) {
+    return String(value).replace(/[&<>"]/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[char]));
+  }
+  function cleanHeading(line) {
+    return line.replace(/^#{1,4}\s*/, '').trim().replace(/^[-—]+\s*/, '');
+  }
+  function isNoiseLine(line) {
+    return /^plaintext\s*$/i.test(line.trim()) || /^---\s*$/.test(line.trim());
+  }
+  function inferType(item) {
+    const location = [item.section, item.title].join(' ');
+    const text = [location, item.content].join(' ');
+    if (/品牌幕后|创始人|掌舵人|品牌起源|创业故事|汽车之父|品牌故事视频/.test(text)) return '品牌故事';
+    if (/剪映适配|智能多帧/.test(text)) return '剪映适配';
+    if (/汽车类实战|广告宣传|红旗|奥迪A7|九宫格|分镜|文生图|图生视频/.test(location)) return '实战案例';
+    return '通用框架';
+  }
+  function summarize(content) {
+    const lines = content.split('\n').map(line => line.trim()).filter(Boolean).filter(line => !isNoiseLine(line));
+    const first = lines.find(line => !/^\(?通用规则\)?/.test(line)) || lines[0] || '';
+    return first.replace(/^[-*]\s*/, '').slice(0, 88);
+  }
+  function parseSource(text) {
+    const lines = text.replace(/\r\n/g, '\n').split('\n');
+    let collection = '';
+    let section = '总览';
+    let sub = '';
+    let current = null;
+    const items = [];
+    function pushCurrent() {
+      if (!current) return;
+      const content = current.lines.join('\n').trim();
+      if (content && !content.split('\n').every(isNoiseLine)) {
+        const item = {
+          id: 'p' + String(items.length + 1).padStart(2, '0'),
+          title: current.title,
+          section: current.section,
+          collection: current.collection,
+          content,
+          summary: summarize(content)
+        };
+        item.type = inferType(item);
+        item.search = [item.title, item.section, item.collection, item.type, item.content].join('\n').toLowerCase();
+        items.push(item);
+      }
+      current = null;
+    }
+    lines.forEach(line => {
+      if (/^#\s+(?!视频主题[:：])/.test(line)) {
+        pushCurrent();
+        const heading = cleanHeading(line);
+        collection = heading;
+        section = heading;
+        sub = '';
+        return;
+      }
+      if (/^##\s+/.test(line)) {
+        pushCurrent();
+        section = cleanHeading(line);
+        sub = '';
+        current = { title: section, section, collection, lines: [] };
+        return;
+      }
+      if (/^###\s+/.test(line)) {
+        pushCurrent();
+        sub = cleanHeading(line);
+        current = { title: sub, section, collection, lines: [] };
+        return;
+      }
+      if (/^####\s+/.test(line)) {
+        pushCurrent();
+        const heading = cleanHeading(line);
+        current = { title: sub ? sub + ' / ' + heading : heading, section, collection, lines: [] };
+        return;
+      }
+      if (current) current.lines.push(line);
+    });
+    pushCurrent();
+    return items;
+  }
+
+  const items = parseSource(SOURCE_TEXT);
+  function typeClass(type) { return 'type-' + type.replace(/\s+/g, '-'); }
+  function renderCards() {
+    grid.innerHTML = items.map(item => `
+      <article class="prompt-card" id="${item.id}" data-type="${escapeHtml(item.type)}" data-search="${escapeHtml(item.search)}">
+        <div class="card-top">
+          <div>
+            <div class="badge-row">
+              <span class="badge ${typeClass(item.type)}">${escapeHtml(item.type)}</span>
+              <span class="badge">${escapeHtml(item.section.replace(/^\d+\.\s*/, '').slice(0, 24))}</span>
+            </div>
+            <h3>${escapeHtml(item.title.replace(/^\d+\.\s*/, ''))}</h3>
+            <p class="summary">${escapeHtml(item.summary)}</p>
+          </div>
+          <button class="copy-btn" type="button" onclick="copyPrompt('${item.id}', this)" title="复制">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg><span>复制</span>
+          </button>
+        </div>
+        <pre><code>${escapeHtml(item.content)}</code></pre>
+      </article>`).join('');
+  }
+  function renderFilters() {
+    const counts = new Map(TYPE_ORDER.map(type => [type, 0]));
+    counts.set('全部', items.length);
+    items.forEach(item => counts.set(item.type, (counts.get(item.type) || 0) + 1));
+    filters.innerHTML = TYPE_ORDER.map(type => `<button type="button" class="filter-btn ${activeType === type ? 'is-active' : ''}" data-type="${type}"><span>${type}</span><b>${counts.get(type) || 0}</b></button>`).join('');
+    filters.querySelectorAll('.filter-btn').forEach(button => button.addEventListener('click', () => {
+      activeType = button.dataset.type;
+      renderFilters();
+      applyFilter();
+    }));
+  }
+  function renderToc() {
+    const sectionMap = new Map();
+    items.forEach(item => {
+      const label = item.section.replace(/^\d+\.\s*/, '');
+      if (!sectionMap.has(label)) sectionMap.set(label, { id: item.id, count: 0 });
+      sectionMap.get(label).count += 1;
+    });
+    toc.innerHTML = [...sectionMap.entries()].slice(0, 18).map(([label, data]) => `<a href="#${data.id}"><span>${escapeHtml(label)}</span><em>${data.count}</em></a>`).join('');
+  }
+  function applyFilter() {
+    const normalized = query.trim().toLowerCase();
+    let visible = 0;
+    document.querySelectorAll('.prompt-card').forEach(card => {
+      const show = (activeType === '全部' || card.dataset.type === activeType) && (!normalized || card.dataset.search.includes(normalized));
+      card.classList.toggle('is-hidden', !show);
+      if (show) visible += 1;
+    });
+    empty.classList.toggle('is-visible', visible === 0);
+    countNote.textContent = '当前显示 ' + visible + ' / ' + items.length + ' 条';
+  }
+  async function copyPrompt(id, button) {
+    const text = document.getElementById(id).querySelector('code').textContent.trim();
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch (error) {
+      const area = document.createElement('textarea');
+      area.value = text;
+      area.style.position = 'fixed';
+      area.style.opacity = '0';
+      document.body.appendChild(area);
+      area.select();
+      document.execCommand('copy');
+      area.remove();
+    }
+    const label = button.querySelector('span');
+    const old = label.textContent;
+    label.textContent = '已复制';
+    setTimeout(() => { label.textContent = old; }, 1200);
+  }
+  window.copyPrompt = copyPrompt;
+  function bindSearch(input, mirror) {
+    input.addEventListener('input', () => {
+      query = input.value;
+      if (mirror && mirror.value !== query) mirror.value = query;
+      applyFilter();
+    });
+  }
+  renderCards();
+  renderFilters();
+  renderToc();
+  bindSearch(search, mobileSearch);
+  bindSearch(mobileSearch, search);
+  document.getElementById('stat-prompts').textContent = items.length;
+  document.getElementById('stat-types').textContent = new Set(items.map(item => item.type)).size;
+  document.getElementById('stat-brands').textContent = items.filter(item => item.type === '品牌故事').length;
+  applyFilter();
+})();</script>
+</body>
+</html>
