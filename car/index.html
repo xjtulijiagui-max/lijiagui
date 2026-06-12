@@ -1,0 +1,1380 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI 赋能媒体内容营销实战 - 提示词库</title>
+  <style>
+    :root {
+      --bg: #f7f5ef;
+      --panel: #fffdf8;
+      --ink: #202126;
+      --muted: #686b73;
+      --line: #ded8cc;
+      --green: #146c5c;
+      --red: #b0443e;
+      --blue: #315f91;
+      --gold: #aa7a22;
+      --code: #191a1f;
+      --code-line: #343642;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans SC", Arial, sans-serif;
+      line-height: 1.55;
+    }
+    a { color: inherit; text-decoration: none; }
+    .layout { display: grid; grid-template-columns: 300px minmax(0, 1fr); min-height: 100vh; }
+    aside {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 26px 20px;
+      border-right: 1px solid var(--line);
+      background: #f0eadf;
+      overflow: auto;
+    }
+    .brand { font-weight: 800; font-size: 18px; letter-spacing: 0; margin-bottom: 6px; }
+    .sub { color: var(--muted); font-size: 13px; margin: 0 0 18px; }
+    .search { width: 100%; border: 1px solid #cfc7ba; background: #fffaf0; color: var(--ink); padding: 11px 12px; border-radius: 8px; outline: none; font-size: 14px; }
+    .toc-title { margin: 22px 0 10px; color: var(--muted); font-size: 12px; font-weight: 700; text-transform: uppercase; }
+    .toc a { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 8px; border-radius: 8px; font-size: 14px; }
+    .toc a:hover { background: #e4ddd0; }
+    .toc span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .toc strong { color: var(--green); font-size: 12px; }
+    main { min-width: 0; }
+    .hero { padding: 34px 42px 22px; border-bottom: 1px solid var(--line); background: var(--panel); }
+    .hero h1 { margin: 0; font-size: clamp(28px, 4vw, 48px); line-height: 1.12; letter-spacing: 0; }
+    .hero p { max-width: 920px; margin: 12px 0 0; color: var(--muted); }
+    .stats { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .stat { border: 1px solid var(--line); background: #faf4e9; padding: 8px 11px; border-radius: 8px; font-size: 13px; color: #44464c; }
+    .chapter { padding: 32px 42px; }
+    .chapter + .chapter { border-top: 1px solid var(--line); }
+    .chapter-head { max-width: 980px; margin-bottom: 18px; }
+    .eyebrow { margin: 0 0 6px; color: var(--red); font-size: 12px; font-weight: 800; text-transform: uppercase; }
+    .chapter h2 { margin: 0; font-size: 28px; line-height: 1.22; letter-spacing: 0; }
+    .chapter-head p:last-child { margin: 8px 0 0; color: var(--muted); }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; align-items: start; }
+    .prompt-card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; box-shadow: 0 10px 28px rgba(35, 28, 18, .06); }
+    .card-top { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px; padding: 18px 18px 14px; border-bottom: 1px solid var(--line); }
+    .meta { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 8px; }
+    .meta span { color: var(--blue); background: #eaf0f6; border: 1px solid #d5dfeb; border-radius: 999px; padding: 3px 8px; font-size: 12px; font-weight: 700; }
+    .prompt-card h3 { margin: 0; font-size: 18px; line-height: 1.35; letter-spacing: 0; }
+    .prompt-card p { margin: 7px 0 0; color: var(--muted); font-size: 13px; }
+    .copy-btn { height: 34px; padding: 0 12px; border-radius: 8px; border: 1px solid #a9b8af; background: #eef7f2; color: var(--green); font-weight: 800; cursor: pointer; }
+    .copy-btn:hover { background: #dcefe6; }
+    pre { margin: 0; padding: 16px 18px 18px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; background: var(--code); color: #f1f0e8; font-family: "Cascadia Mono", Consolas, "Courier New", monospace; font-size: 13px; line-height: 1.7; border-top: 1px solid var(--code-line); max-height: 540px; overflow: auto; }
+    .empty { display: none; padding: 40px 42px; color: var(--muted); }
+    @media (max-width: 860px) {
+      .layout { display: block; }
+      aside { position: relative; height: auto; border-right: 0; border-bottom: 1px solid var(--line); }
+      .hero, .chapter, .empty { padding-left: 18px; padding-right: 18px; }
+      .cards { grid-template-columns: 1fr; }
+      .card-top { grid-template-columns: 1fr; }
+      .copy-btn { width: 100%; }
+    }
+    @media print {
+      aside, .copy-btn, .search { display: none; }
+      .layout { display: block; }
+      body { background: #fff; }
+      .hero, .chapter { padding: 18px 0; }
+      .prompt-card { break-inside: avoid; box-shadow: none; }
+      pre { max-height: none; background: #fff; color: #111; border: 1px solid #ddd; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside>
+      <div class="brand">提示词库</div>
+      <p class="sub">按课程章节整理</p>
+      <input class="search" id="search" type="search" placeholder="搜索提示词、章节或场景" />
+      <div class="toc-title">章节目录</div>
+      <nav class="toc"><a href="#c1"><span>第一章 视频提示词工程：从文本指令到镜头工单</span><strong>19</strong></a><a href="#c2"><span>第二章 内容营销挑战：从个人压力到组织产能</span><strong>4</strong></a><a href="#c3"><span>第三章 问题边界归因：模型能力、提示词与流程治理</span><strong>8</strong></a><a href="#c4"><span>第四章 核心问题案例：岗位场景、SOP与提示词模板</span><strong>18</strong></a></nav>
+    </aside>
+    <main>
+      <header class="hero">
+        <h1>AI 赋能媒体内容营销实战 - 提示词库</h1>
+        <p>来源课件: AI赋能媒体内容营销实战_大字清爽打印版(4).pptx</p>
+        <div class="stats">
+          <div class="stat">共整理 49 条提示词/模板</div>
+          <div class="stat">111 幻灯片</div>
+          <div class="stat">已将飞书 token、table_id 和本地路径替换为占位符，便于对外分享。</div>
+        </div>
+      </header>
+
+    <section class="chapter" id="c1">
+      <div class="chapter-head">
+        <p class="eyebrow">幻灯片 4</p>
+        <h2>第一章 视频提示词工程：从文本指令到镜头工单</h2>
+        <p>视频提示词工程：从文本指令到镜头工单</p>
+      </div>
+      <div class="cards">
+
+        <article class="prompt-card" id="card-01">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>框架</span><span>来源页码: 6</span></div>
+              <h3>标准视频提示词公式：把“好看”拆成10个可控变量</h3>
+              <p>视频提示词不是写作文，而是写给模型执行的镜头说明书。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第6页] 标准视频提示词公式：把“好看”拆成10个可控变量
+主体
+动作
+场景
+景别
+运镜
+光线
+情绪
+风格
+时长
+禁止项
+【镜头目标】展示车型的年轻、科技、户外气质
+【画面主体】一辆白色硬派新能源SUV停在明亮展厅中央，车身轮廓清晰
+【动作与镜头】产品顾问站在车身左前方，轻微转头看向车辆；中远景，镜头缓慢推进
+【光线与风格】蓝白科技灯光，真实商业广告风，专业、克制、高级
+【时长与禁止项】4秒；不要多余人物、不要车标变形、不要夸张表情、不要复杂手部动作</pre>
+        </article>
+        <article class="prompt-card" id="card-02">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>分镜脚本</span><span>来源页码: 7</span></div>
+              <h3>从文学描述到分镜指令</h3>
+              <p>提示词工程的第一步，是把抽象审美转成可观察、可执行、可质检的镜头语言。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第7页] 从文学描述到分镜指令
+错误写法：愿望型描述
+“让销售顾问很有感染力地介绍新车，画面要高端、有科技感、像大片一样吸引人。”
+问题：主体、动作、景别、运镜、时长、禁止项都不清晰，模型会自行发挥。
+正确写法：导演型工单
+镜头1｜产品顾问站在车辆左前方｜中景｜轻微点头微笑｜镜头缓慢推进｜4秒
+镜头2｜车身前脸特写｜低角度｜灯组清晰｜横向缓移｜3秒
+镜头3｜座舱屏幕真实素材｜近景｜字幕后期添加｜2秒
+转换原则：少用形容词，多用镜头词；少写“情绪结果”，多写“表情、姿态、光线、节奏”。</pre>
+        </article>
+        <article class="prompt-card" id="card-03">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>视频生成</span><span>来源页码: 13</span></div>
+              <h3>即梦AI / 剪映：万能正向公式</h3>
+              <p>越靠前的词权重越高，描述越具体，生成结果越稳定。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第13页] 即梦AI / 剪映：万能正向公式
+主体描述 + 动作描述 + 场景与空间 + 光线与氛围 + 镜头与运镜 + 画质关键词
+示例：
+一辆红色2025款新能源SUV，车身线条流畅，沿海公路高速行驶，
+黄昏时分，金色夕阳侧光照亮车身，航拍环绕镜头，低角度跟拍，
+电影级调色，8K超高清，动态模糊自然，氛围大气磅礴。
+核心三要素：主体 + 运动 + 场景；增强项：镜头语言、光影、氛围。
+主体描述
+品牌、型号、颜色、车身细节，例如“红色红旗SUV，车身线条饱满”。
+运动动作
+行驶、漂移、停靠、启动、换电、变形、镜头跟随。
+场景空间
+雨夜都市、盘山公路、海边悬崖、超级工厂、复古作坊。
+镜头光影
+低角度跟拍、航拍拉远、后视镜特写、暖金色侧光。
+质感氛围
+电影级质感、工业风、复古胶片、赛博朋克、温馨纪实。</pre>
+        </article>
+        <article class="prompt-card" id="card-04">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>质量与反向词</span><span>来源页码: 14</span></div>
+              <h3>通用兜底词：保证画面干净、稳定、可剪辑</h3>
+              <p>用于每条提示词结尾，尤其适合汽车广告、品牌故事片和九宫格分镜。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第14页] 通用兜底词：保证画面干净、稳定、可剪辑
+画质词：8K超高清，细节拉满，电影级质感，构图完美，主体突出，色彩自然，人体结构正常，车辆结构真实，车身比例准确，光影自然，运镜流畅无抖动，动态模糊自然，转场自然衔接。
+反向提示词（必填）：模糊，低清，畸形，扭曲，水印，logo，杂乱背景，过曝，多余肢体，五官变形，车轮变形，车标错误，车身比例异常，人物表情僵硬，字幕乱码。
+prompt guardrail
+剪映/即梦通用配置：
+4K/8K超清，电影质感，运镜流畅无抖动，色彩自然，浅景深，主体突出，不生成字幕。
+建议：品牌故事片尽量写“人物身份 + 场景 + 动作 + 镜头 + 情绪”；车型广告片尽量写“车型 + 速度 + 场景 + 光影 + 车身细节”。</pre>
+        </article>
+        <article class="prompt-card" id="card-05">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>分镜脚本</span><span>来源页码: 15</span></div>
+              <h3>剪映智能多帧：三镜头可复用汽车素材模板</h3>
+              <p>适合快速生成“车头—行驶—内饰”三段素材，再进入剪映剪辑。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第15页] 剪映智能多帧：三镜头可复用汽车素材模板
+镜头1：车头特写，车辆LOGO清晰，侧光打亮车身线条，浅景深虚化背景。
+镜头2：侧面跟拍，车辆在公路匀速行驶，背景是橙红色晚霞，运镜缓慢跟随。
+镜头3：内饰特写，中控屏幕亮起，手指滑动操作界面，按键细节清晰。
+通用配置：4K超清，电影质感，运镜流畅无抖动，色彩自然。</pre>
+        </article>
+        <article class="prompt-card" id="card-06">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>视频生成</span><span>来源页码: 16</span></div>
+              <h3>汽车科普故事类：奥迪A7雨夜叙事</h3>
+              <p>文生图先建立人物、车、场景与情绪，再用图生视频驱动人物动作。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第16页] 汽车科普故事类：奥迪A7雨夜叙事
+文生图提示词：
+主体：一位穿着黑色简约T恤、黑色长裤、白色运动鞋，佩戴手表，手拿香烟的帅气动漫男性，手持黑色雨伞。
+车辆：奥迪A7，车头经典立标显眼，车牌为京A88888。
+场景：雨夜的都市街道，地面潮湿反光，霓虹灯点缀的现代建筑，路灯散发暖光。
+环境细节：右侧有婚纱店橱窗，展示白色婚纱，背景有朦胧树木与其他车辆。
+艺术风格：写实风与动漫风格结合，光影细腻，色彩偏冷调雨夜质感。
+image-to-video prompt
+图生视频提示词：
+人物转身看向身后的婚纱店，表情若有所思，香烟飘着烟，天空下着雨。</pre>
+        </article>
+        <article class="prompt-card" id="card-07">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>分镜脚本</span><span>来源页码: 17, 18</span></div>
+              <h3>红旗SUV 15s品牌质感短片（一）：启动、驾驶、山路、海边</h3>
+              <p>用“时间轴 + 镜头语言”锁定每2秒的画面节奏。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第17页] 红旗SUV 15s品牌质感短片（一）：启动、驾驶、山路、海边
+# 视频主题：15s红旗SUV品牌质感短片
+【镜头序列】
+0-2s：特写镜头，一只手按下红色汽车一键启动按钮，按钮亮起红光，轻微震动反馈，背景虚化，氛围感拉满。
+2-4s：车内第一视角，清爽短发男性握着方向盘，窗外城市夜景流光快速划过，镜头随方向盘轻微晃动，营造动态速度感。
+4-6s：后视镜特写，反射出男性专注的眼神，背景是日落时分的公路，暖金色阳光洒入车内，镜头缓慢推近，突出人物神态。
+6-8s：低角度跟拍全景，红色红旗SUV行驶在盘山公路上，背景是层叠山峦与橙红色晚霞，画面大气开阔，车辆动态丝滑。
+8-10s：海边慢镜头，红色红旗SUV停在悬崖边，男性站在车旁面朝大海，背景是广阔海面与蓝天，镜头缓慢拉远，营造宁静自由的氛围。
+
+[第18页] 红旗SUV 15s品牌质感短片（二）：雨夜、人物、城市收尾
+10-12s：雨夜侧方跟拍，红色红旗SUV行驶在霓虹闪烁的城市街道，雨滴打在车窗上，灯光在玻璃上折射出彩色光斑，镜头从侧方跟拍，突出车辆的动感与雨夜氛围感。
+12-14s：侧窗中景，男性坐在驾驶位，眼神坚定看向前方，窗外大雨瓢泼，镜头轻微拉近，突出人物沉稳气质，雨丝细节清晰。
+14-15s：航拍远景收尾，红色红旗SUV在城市天际线前行驶，镜头缓慢拉远，展现城市高楼与红色车辆的鲜明对比，画面定格在车辆向前行驶的动态瞬间。
+【画面风格】电影级质感，8K分辨率，HDR高动态范围，自然光影，电影级调色，色彩层次丰富，运镜流畅丝滑，无抖动，转场自然衔接，人物表情自然，车辆细节真实，无AI瑕疵，画面稳定，动态模糊自然，氛围大气磅礴、现代高级，比例16:9。
+【背景音乐和音效】增加背景音乐和音效，不要生成字幕。</pre>
+        </article>
+        <article class="prompt-card" id="card-08">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>分镜脚本</span><span>来源页码: 19, 20</span></div>
+              <h3>红旗SUV九宫格分镜：总提示词与C1-C3</h3>
+              <p>用于一次生成3×3商业广告故事板，统一角色、车辆和编号格式。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第19页] 红旗SUV九宫格分镜：总提示词与C1-C3
+请扮演专业电影分镜师，为红旗SUV创建3x3网格布局的九宫格商业广告故事分镜图片，每一张分镜图都要有区分。
+通用规则：写实电影风，构图有强烈电影感和视觉冲击力。
+核心元素：画面中只出现一辆左舵驾驶的红旗SUV和一名男主角。男主角：帅气男子，简约灰色短袖T恤、黑色长裤。
+强制要求：每个分镜左上角用统一、清晰字体标注场景编号C1-C9。
+C1-C3
+C1：低角度仰拍。红旗SUV从镜头前高速驶过，男主角在驾驶位上眼神坚定，背景是繁华城市天际线。
+C2：大远景。红旗SUV在蜿蜒盘山公路上加速驶向夕阳，画面留白，男主角在车内。
+C3：侧面中景。红旗SUV在雨中行驶，车窗挂着雨珠，透过车窗能看到男主角专注的侧脸。
+
+[第20页] 红旗SUV九宫格分镜：C4-C9
+C4：低角度仰拍。红旗SUV停在海边悬崖旁，男主角靠在车门上眺望远方。
+C5：车内后视镜特写。从后视镜中看到男主角的眼睛，背景是模糊的夕阳余晖和道路。
+C6：全景镜头。红旗SUV在现代都市霓虹灯下疾驰，车身线条流畅，透过车窗可见男主角身影。
+C7：中景跟拍。男主角在车内露出自信微笑，窗外光影掠过。
+C8：特写镜头。男主角戴着时尚眼镜，眼神专注，手握红旗SUV方向盘。
+C9：细节特写。男主角的手指轻轻按下车内启动按钮。</pre>
+        </article>
+        <article class="prompt-card" id="card-09">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>分镜脚本</span><span>来源页码: 21</span></div>
+              <h3>品牌幕后操盘手：15秒人物故事片模板</h3>
+              <p>把创始人/关键人物拍成“一个关键动作 + 一个转折场景 + 一个现代传承”的品牌短片。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第21页] 品牌幕后操盘手：15秒人物故事片模板
+# 通用结构
+0-2s：关键物件特写，例如蓝图、电池、专利证书、发动机零件。
+2-5s：早期创业/工厂/作坊场景，人物与团队讨论或亲手调试。
+5-8s：关键转折或理念形成，呈现品牌历史节点。
+8-12s：现代工厂、展厅、生产线或用户场景，人物形象与现代场景叠化。
+12-15s：航拍、LOGO、全球布局或车队收尾，形成品牌记忆点。
+画面风格：写实电影风，8K超清，光影自然，运镜流畅，纪实感强烈。</pre>
+        </article>
+        <article class="prompt-card" id="card-10">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>视频生成</span><span>来源页码: 22</span></div>
+              <h3>具体品牌车型：从“车”出发的广告短片提示词</h3>
+              <p>这一组更适合车型宣传、短视频封面、商品页素材与账号日更。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第22页] 具体品牌车型：从“车”出发的广告短片提示词
+# 品牌车型广告提示词母版
+[品牌名] [车型] 在 [标志性场景] 中行驶，
+[车身颜色/动力/造型细节]，
+[运镜方式：航拍环绕 / 低角度跟拍 / 侧面中景 / 内饰特写]，
+[光影：金色夕阳 / 霓虹雨夜 / 雪山自然光 / 赛道强光]，
+[氛围：豪华 / 家庭 / 赛博朋克 / 运动 / 东方美学]，
+电影级调色，8K超高清，动态模糊自然，车辆细节真实。</pre>
+        </article>
+        <article class="prompt-card" id="card-11">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>视频生成</span><span>来源页码: 23</span></div>
+              <h3>比亚迪：雨夜城市与越野沙漠双场景</h3>
+              <p>一组城市速度感，一组越野力量感，适合新能源品牌气质表达。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第23页] 比亚迪：雨夜城市与越野沙漠双场景
+BYD prompt 01
+比亚迪海豹在雨夜城市街道飞驰，
+霓虹灯反射在湿滑路面上，车灯划破夜色，
+低角度跟拍，运动模糊，赛博朋克光影，
+电影级调色，史诗感氛围。
+BYD prompt 02
+比亚迪仰望U8在沙漠中行驶，
+沙尘飞扬，车轮卷起沙浪，
+航拍俯视镜头，强烈阳光直射，
+粗犷豪迈氛围，8K超高清。</pre>
+        </article>
+        <article class="prompt-card" id="card-12">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>视频生成</span><span>来源页码: 24, 25</span></div>
+              <h3>理想 / 蔚来 / 乐道：家庭、东方美学与换电科技</h3>
+              <p>不同品牌要抓住不同情绪锚点：理想是家庭，蔚来是审美，乐道是效率。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第24页] 理想 / 蔚来 / 乐道：家庭、东方美学与换电科技
+Li Auto
+理想L9在雪山公路上平稳行驶，
+车窗外白雪皑皑，阳光洒进车内，
+内饰特写，温馨家庭氛围，
+浅景深，自然光，治愈系风格。
+NIO
+蔚来ET5在竹林小道穿行，
+竹叶随风摇曳，车身纯净白，
+侧拍镜头，清新自然光，
+东方美学氛围，8K写实风格。
+ONVO
+乐道L60在换电站前，
+自动换电过程特写，
+科技感蓝白光效，
+微观镜头，未来感氛围。
+creative meme
+理想汽车创始人李想AI数字人，
+在沃尔沃卡车广告场景中完成一字马，
+搞笑幽默风格，高还原度。
+（注：此为李想本人实际发布的AI视频创意）
+
+[第25页] 特斯拉 / 宝马 / 奔驰：自由、速度与豪华
+Tesla
+Tesla Model Y在加州一号公路飞驰，
+太平洋悬崖海岸线背景，
+航拍跟随镜头，金色夕阳，
+自由奔放氛围，电影《007》风格。
+BMW
+BMW M3在纽博格林赛道疾驰，
+车身侧倾过弯，轮胎冒烟，
+低角度动态跟拍，运动模糊，
+肾上腺素飙升氛围，广告级调色。
+Mercedes-Benz
+奔驰S级在巴黎香榭丽舍大道优雅行驶，
+法式浪漫路灯映照车身，
+慢镜头，奢华内饰特写，
+贵族气质氛围，古典油画风格。</pre>
+        </article>
+        <article class="prompt-card" id="card-13">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>视频生成</span><span>来源页码: 26, 27, 28</span></div>
+              <h3>即梦AI 10种模板（一）：画质、艺术、奢华</h3>
+              <p>通用模板可迁移到汽车视频，核心是“风格词 + 场景词 + 镜头词”。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第26页] 即梦AI 10种模板（一）：画质、艺术、奢华
+1. 画质提升类
+8kuhd，超写实风格都市街道，霓虹闪烁，车水马龙，建筑细节和玻璃幕墙反射清晰可见，夜景逼真到仿佛身临其境。
+2. 艺术风格类
+宫崎骏风格，童话森林中一辆老式吉普车静静停放，阳光洒下，小精灵围绕车身飞舞，远处有古老木屋，梦幻治愈氛围。
+3. 巴洛克奢华类
+巴洛克风格，宫廷门前停放银色劳斯莱斯，水晶灯璀璨反光在车漆上，人们身着礼服围绕，古典油画与金色装饰，极致奢华氛围。
+
+[第27页] 即梦AI 10种模板（二）：赛博朋克、像素、电影写实
+4. 赛博朋克类（汽车视频最常用）
+赛博朋克风格，未来城市夜景，霓虹灯广告牌繁体中文，湿滑街道反射多彩灯光，一辆改装电动车飞驰而过，尾灯拖影，第一人称视角(FPV)，高速运动模糊，动态模糊+航拍环绕+霓虹光效，紧张刺激追逐氛围。
+5. 像素风类（抖音爆款）
+16-bit像素风，复古游戏画面，一辆像素赛车在像素赛道上飞驰，8-bit芯片音乐背景，怀旧游戏厅氛围。
+6. 电影写实类
+超写实主义，电影《速度与激情》风格，地下赛车场，霓虹灯闪烁，一辆改装日产GT-R引擎轰鸣，特写轮胎冒烟，慢动作镜头，肾上腺素飙升氛围，好莱坞大片调色。
+
+[第28页] 即梦AI 10种模板（三）：黑白、航拍、微观、品牌广告
+7. 黑白极简类
+黑白摄影风格，高对比度，一辆老式沃尔沃在雪地中静静停靠，极简构图，孤独寂静氛围，像一张安塞尔·亚当斯的风光照片。
+8. 无人机航拍类
+无人机航拍视角，黄金时刻日落，一条沿海公路蜿蜒进无垠大海，几辆私家车像玩具一样在路上行驶，上帝视角，宏大壮丽氛围。
+9. 微观特写类
+微观摄影，超微距镜头，车漆表面的金属颗粒在阳光下闪烁，雨滴落在引擎盖上，每一滴水珠里都有世界倒影，8K超高清，ASMR级别细节。
+10. 品牌广告片类
+汽车广告大片，电影级调色，[品牌名] [车型] 在 [标志性场景] 中行驶，[运镜方式]，史诗感背景音乐，“突破想象极限”标语在片尾浮现。</pre>
+        </article>
+        <article class="prompt-card" id="card-14">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>视频生成</span><span>来源页码: 29</span></div>
+              <h3>爆款玩法：万物变汽车</h3>
+              <p>适合做抖音/视频号强视觉开头，用“普通物体—机械重组—车型出现”制造停留。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第29页] 爆款玩法：万物变汽车
+核心创意公式：
+[普通物体] 逐渐变形/重组为 [汽车品牌车型]，
+变形过程特写，金属光泽，机械结构展现，
+科幻电影《变形金刚》风格，震撼转场，史诗感背景音乐。
+麻将变汽车：
+一桌麻将牌自动组装变形，齿轮转动，金属碰撞，最终变成一辆敞篷跑车，赛博朋克光影，科幻机械风。
+摩托车变汽车：
+一辆停在地库的摩托车，零件自动分解重组，变成特斯拉Cybertruck，科幻变形过程，8K超高清。
+直升机变汽车：
+直升机降落草坪，旋翼收缩，机身展开变成一辆SUV，变形金刚风格，震撼视觉。</pre>
+        </article>
+        <article class="prompt-card" id="card-15">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>平台改写</span><span>来源页码: 30</span></div>
+              <h3>4S店短视频：黄金3秒与情绪代入</h3>
+              <p>这不是单纯画面生成，而是为账号运营提供“开头钩子”和“情绪转化”脚本。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第30页] 4S店短视频：黄金3秒与情绪代入
+黄金3秒公式：
+悬念 / 反常识 / 视觉冲击 + 快速剪辑
+AI提示词写法：
+视频开头0-3秒：一辆豪华车突然自燃 / 一辆旧车瞬间变新车，强视觉冲击，快速剪辑，悬念感，让观众停下来。
+情绪代入公式：
+痛点场景 + 情感共鸣 + 解决方案
+AI提示词写法：
+一个普通家庭站在4S店门口犹豫，销售走过来微笑，画面温暖，解决问题后的释然表情，治愈系风格。</pre>
+        </article>
+        <article class="prompt-card" id="card-16">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>分镜脚本</span><span>来源页码: 31</span></div>
+              <h3>15秒汽车品牌片：可替换母版</h3>
+              <p>把品牌、人物、车型、场景替换进去，就能批量生成不同品牌的短片。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第31页] 15秒汽车品牌片：可替换母版
+# 视频主题：[品牌名] [车型/创始人] 15秒品牌故事短片
+【镜头序列】
+0-2s：关键物件特写，[物件] 被人物拿起/按下/绘制，背景虚化，细节清晰。
+2-5s：早期/核心场景，[人物] 在 [工厂/实验室/办公室/展厅] 与团队讨论或亲自操作，眼神坚定。
+5-8s：关键转折，[技术/理念/产品] 被展示出来，镜头缓慢推近，强调品牌精神。
+8-12s：现代场景，[车型] 在 [城市/山路/海边/工厂] 中出现，机械臂/道路/家庭/赛道作为背景。
+12-15s：航拍或LOGO收尾，[品牌视觉] 在光影中出现，车辆向前行驶，画面定格在动态瞬间。
+【画面风格】写实电影风，8K超清，电影级调色，光影自然，运镜流畅，转场自然，无抖动，车辆细节真实，不生成字幕。</pre>
+        </article>
+        <article class="prompt-card" id="card-17">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>分镜脚本</span><span>来源页码: 32</span></div>
+              <h3>九宫格分镜：可替换母版</h3>
+              <p>适合先生成故事板，再拆成单镜头视频，最后放入剪映组合成片。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第32页] 九宫格分镜：可替换母版
+请扮演专业电影分镜师，为[品牌名][车型]创建一个3x3网格布局的九宫格商业广告故事分镜图片，每一张分镜图都要有区分。
+通用规则：写实电影风，构图具有电影感和视觉冲击力。
+核心元素：画面中只出现一辆[品牌车型]和一名[男/女主角]。
+强制要求：每个分镜左上角必须用统一、清晰字体标注场景编号C1-C9。
+C1：低角度仰拍，车辆高速驶过，城市天际线。
+C2：大远景，车辆驶向夕阳，画面留白。
+C3：侧面中景，雨中行驶，车窗雨珠与人物侧脸。
+C4：低角度仰拍，车辆停在海边悬崖旁，人物眺望远方。
+C5：后视镜特写，人物眼神与模糊道路。
+C6：全景镜头，霓虹都市疾驰，车身线条清晰。
+C7：中景跟拍，人物自信微笑，窗外光影掠过。
+C8：特写镜头，人物手握方向盘，眼神专注。
+C9：细节特写，手指按下启动按钮。</pre>
+        </article>
+        <article class="prompt-card" id="card-18">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>框架</span><span>来源页码: 33</span></div>
+              <h3>参数替换清单：让提示词可以规模化生产</h3>
+              <p>把提示词当作“创意零件库”，不同品牌只替换参数，不重写结构。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第33页] 参数替换清单：让提示词可以规模化生产
+品牌/车型
+品牌名、车型、颜色、车标、车身线条、动力类型。
+人物/身份
+创始人、工程师、车主、销售顾问、家庭用户、赛车手。
+场景/空间
+雨夜都市、沿海公路、盘山公路、超级工厂、展厅、赛道、4S店。
+镜头/运镜
+特写、低角度、航拍、侧方跟拍、后视镜、微距、慢镜头。
+光影/氛围
+暖金色、冷调科技、赛博朋克、复古胶片、温馨纪实、工业质感。
+剪辑/声音
+背景音乐、引擎声、雨声、机械臂声音、不要字幕、转场自然。
+production rule
+组合方式：选择一个品牌 + 一个车型 + 一个核心情绪 + 三种镜头尺度（远景/中景/特写）+ 一组兜底词。</pre>
+        </article>
+        <article class="prompt-card" id="card-19">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>视频生成</span><span>来源页码: 34</span></div>
+              <h3>最终复制模板：汽车短视频一键提示词</h3>
+              <p>适合放在提示词库首页，后续每个品牌只做变量替换。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第34页] 最终复制模板：汽车短视频一键提示词
+# 汽车短视频生成提示词
+视频主题：[品牌名][车型/人物] [15秒品牌质感短片/品牌故事片/爆款创意视频]
+【镜头序列】
+0-2s：[关键物件/车辆局部] 特写，[动作]，背景虚化，光影精致。
+2-5s：[人物/车辆] 位于 [场景]，[动作]，镜头 [推近/跟拍/环绕]。
+5-8s：[转折镜头]，展示 [技术/理念/场景冲突]，画面有情绪张力。
+8-12s：[主视觉镜头]，[车型] 在 [道路/工厂/展厅/自然场景] 中动态呈现。
+12-15s：[收尾镜头]，航拍拉远/LOGO亮起/车队前行/人物望向远方，形成品牌记忆点。
+【画面风格】8K超高清，电影级质感，HDR高动态范围，主体突出，色彩自然，车辆结构真实，人物表情自然，运镜流畅丝滑，转场自然，无抖动，动态模糊自然，不生成字幕。
+【反向提示词】模糊，低清，畸形，扭曲，水印，logo错误，杂乱背景，过曝，多余肢体，五官变形，车轮变形，车身比例异常。</pre>
+        </article>
+      </div>
+    </section>
+    <section class="chapter" id="c2">
+      <div class="chapter-head">
+        <p class="eyebrow">幻灯片 36</p>
+        <h2>第二章 内容营销挑战：从个人压力到组织产能</h2>
+        <p>内容营销挑战：从个人压力到组织产能</p>
+      </div>
+      <div class="cards">
+
+        <article class="prompt-card" id="card-20">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>框架</span><span>来源页码: 38</span></div>
+              <h3>痛点一：选题灵感枯竭的双轨解法</h3>
+              <p>87%的压力来自“内容从哪里来”。解法不能只靠个人灵感，而要把素材情报变成团队共享资产。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第38页] 痛点一：选题灵感枯竭的双轨解法
+个人能力层：四维选题框架
+1. 用户问题：客户真实疑问与评论区高频词
+2. 产品卖点：配置、场景、体验、对比
+3. 平台热点：热点话题、挑战、节日、地域内容
+4. 转化动作：预约试驾、留资、到店、直播互动
+输出：AI选题库 + 热点接入公式
+团队基础设施层：共享素材情报站
+OpenClaw 定时采集内容
+→ 飞书多维表格清洗归档
+→ 群共享推送热点与素材
+→ 运营/编导共同维护选题池
+输出：素材情报站 + 主题标签 + 反例库</pre>
+        </article>
+        <article class="prompt-card" id="card-21">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>自动化</span><span>来源页码: 40</span></div>
+              <h3>每天早上8点自动采集iCAR相关新闻并写入飞书多维表格。</h3>
+              <p>具体步骤：</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第40页] 每天早上8点自动采集iCAR相关新闻并写入飞书多维表格。
+每天早上8点自动采集iCAR相关新闻并写入飞书多维表格。
+具体步骤：
+1. 使用 web_search 从以下来源搜索最近24小时的 iCAR 新闻（按优先级）： - 汽车之家：搜索关键词 &quot;iCAR site:autohome.com.cn&quot;
+- 懂车帝：搜索关键词 &quot;iCAR site:dcdapp.com&quot;
+- 易车网：搜索关键词 &quot;iCAR site:yiche.com&quot;
+- 通用搜索：搜索关键词 &quot;iCAR 奇瑞 新闻 最新&quot;
+2. 对每条搜索结果，提取以下字段（跳过重复标题的条目）：
+- 新闻标题 - 来源媒体（汽车之家/懂车帝/易车网/微博/微信公众号/其他） - 新闻摘要（150字以内，核心信息提炼）
+- 原文链接 - 发布时间（尽量提取，无法确定则为空）
+- 采集时间（当前时间）
+- 关键词标签（从&quot;新车发布/价格调整/销量数据/产品评测/品牌活动/技术动态/合作动态&quot;中选最匹配的1个）
+3. 将采集到的新闻条目写入飞书多维表格： - base_token: {base_token} - table_id: {table_id} - 使用命令：cd &quot;{project_dir}&quot; &amp;&amp; lark-cli base +record-upsert --base-token {base_token} --table-id {table_id} --json &quot;./record_batch.json&quot; - 字段映射：新闻标题(fld1Kg8sx6)、来源媒体(fldOchrHTu)、发布时间(fldMs7ejLk)、新闻摘要(fldMPQfCXK)、原文链接(fldr8dozWV)、采集时间(fldTz3oBvn)、关键词标签(fldU4E11o9) - 日期字段（发布时间/采集时间）需用毫秒时间戳格式 4. 完成后汇报：当天采集到的新闻条数和标题清单。 注意：每次最多写入500条，通常预期10-30条/天。如无相关新闻则记录&quot;当日无iCAR相关新闻&quot;到摘要字段。</pre>
+        </article>
+        <article class="prompt-card" id="card-22">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>平台改写</span><span>来源页码: 41</span></div>
+              <h3>痛点二：内容压力与平台适配</h3>
+              <p>同一个主题不能只生成一条内容，而要变成“中心内容 + 平台改写 + 批量分发”的工作流。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第41页] 痛点二：内容压力与平台适配
+中心主题
+产品卖点/客户问题/热点事件
+母稿生成
+一条主内容：完整逻辑、证据与转化动作
+平台改写
+公众号深度｜小红书种草｜抖音短视频
+发布复盘
+标题、互动、留资、转化数据回流
+公众号
+重逻辑、重信息密度、重信任建立。适合产品深度、活动解释与品牌叙事。
+小红书
+重场景、重体验、重标题钩子。适合生活方式、用户故事与真实体验。
+抖音
+重节奏、重画面、重前3秒。适合卖点短打、直播引流与强行动指令。
+核心动作：一条内容变三条，一组提示词模板反复复用，把生产时间从“手工重写”压缩为“结构化改写”。</pre>
+        </article>
+        <article class="prompt-card" id="card-23">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>平台改写</span><span>来源页码: 42</span></div>
+              <h3>痛点三：产品转化效率低，本质是“翻译问题”</h3>
+              <p>产品信息通常是参数语言，平台内容需要的是场景语言；AI的价值，是把卖点翻译成客户愿意听的表达。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第42页] 痛点三：产品转化效率低，本质是“翻译问题”
+专项训练：产品信息 → 内容创意
+提示词要求AI先抽取“客户利益”，再转译为平台语言，最后按公众号、小红书、抖音分别输出。
+质量控制：不编造、不越权
+价格、权益、金融方案、官方参数必须标注来源；不确定信息进入人工审核。</pre>
+        </article>
+      </div>
+    </section>
+    <section class="chapter" id="c3">
+      <div class="chapter-head">
+        <p class="eyebrow">幻灯片 46</p>
+        <h2>第三章 问题边界归因：模型能力、提示词与流程治理</h2>
+        <p>问题边界归因：模型能力、提示词与流程治理</p>
+      </div>
+      <div class="cards">
+
+        <article class="prompt-card" id="card-24">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>框架</span><span>来源页码: 55</span></div>
+              <h3>提示词公式：从“文学描述”改为“分镜指令”</h3>
+              <p>视频提示词不是写作文，而是写给模型执行的镜头说明书。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第55页] 提示词公式：从“文学描述”改为“分镜指令”
+主体 + 动作 + 场景 + 景别 + 运镜 + 光线 + 情绪 + 风格 + 时长 + 禁止项
+主体
+人物、车辆、空间、道具必须明确，避免“一个人”“一辆车”这种模糊表达。
+镜头
+中景、近景、低角度、环绕、缓慢推进等必须单独写出。
+限制
+不要多余人物、不要文字变形、不要夸张表情、不要快速动作。
+模板：镜头编号｜画面主体｜动作描述｜场景｜景别｜运镜｜光线｜情绪｜风格｜时长｜负面限制</pre>
+        </article>
+        <article class="prompt-card" id="card-25">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>分镜脚本</span><span>来源页码: 56</span></div>
+              <h3>提示词代码块：AI视频标准分镜模板</h3>
+              <p>每一条提示词只完成一个镜头目标，避免一个镜头承载太多任务。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第56页] 提示词代码块：AI视频标准分镜模板
+【镜头目标】展示ICAR车型的年轻、科技、户外气质
+【画面主体】一辆白色硬派新能源SUV停在明亮展厅中央，车身轮廓清晰
+【人物动作】年轻产品顾问站在车身左前方，轻微转头看向车辆，不走动
+【场景】现代汽车展厅，蓝白科技灯光，背景干净，无杂乱文字
+【景别/构图】中远景，车辆占画面60%，人物占画面20%，三分法构图
+【运镜】镜头缓慢向前推进，速度平稳，不环绕，不快速移动
+【情绪/风格】专业、克制、高级、未来感，真实商业广告风
+【时长】4秒
+【禁止项】不要多余人物，不要车标变形，不要夸张表情，不要手部复杂动作
+使用要点：
+把“不要出错”的地方写进禁止项，把“必须稳定”的元素改用参考图或真实素材。</pre>
+        </article>
+        <article class="prompt-card" id="card-26">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>质量与反向词</span><span>来源页码: 57</span></div>
+              <h3>负面提示词SOP：把高频错误提前拦截</h3>
+              <p>负面提示词不能消灭所有问题，但能降低明显跑偏。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第57页] 负面提示词SOP：把高频错误提前拦截
+通用负面限制：
+- 不要多指、融指、畸形手
+- 不要车标变形、错字、乱码
+- 不要人物脸部漂移
+- 不要突然换衣服、换发型
+- 不要快速跑动、跳跃、转身
+- 不要画面闪烁、跳帧、瞬移
+- 不要过度赛博朋克、廉价霓虹
+- 不要出现竞品品牌元素
+适用场景：
+用于稳定画风、减少明显错误、限制模型自由发挥。
+不适用场景：
+不能保证复杂动作、精准口型、长视频一致性和车标文字完全正确。
+管理建议：
+把每次出错截图沉淀到反例库，形成部门级负面提示词。</pre>
+        </article>
+        <article class="prompt-card" id="card-27">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>SOP</span><span>来源页码: 58</span></div>
+              <h3>提示词调试闭环：一次只改一个变量</h3>
+              <p>调试不是反复碰运气，而是像做实验一样控制变量。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第58页] 提示词调试闭环：一次只改一个变量
+标准记录字段：
+提示词版本、参考图、模型/工具、参数、生成条数、合格条数、主要失败原因、是否可复用、是否进入模板库。</pre>
+        </article>
+        <article class="prompt-card" id="card-28">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>品牌风格</span><span>来源页码: 61</span></div>
+              <h3>品牌一致性SOP：建立ICAR AI风格包</h3>
+              <p>风格跑偏不是单条提示词问题，而是品牌资产没有结构化。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第61页] 品牌一致性SOP：建立ICAR AI风格包
+ICAR品牌风格提示词骨架：
+现代新能源汽车品牌广告风，蓝白科技色调，户外探索气质，画面干净，高级克制，
+车辆轮廓真实清晰，灯光柔和，人物专业自然，不夸张表演，
+适合汽车官方短视频与直播间视觉素材。
+负面限制：不要廉价赛博朋克，不要杂乱文字，不要车标错位，不要竞品元素。</pre>
+        </article>
+        <article class="prompt-card" id="card-29">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>分镜脚本</span><span>来源页码: 62</span></div>
+              <h3>AI编导SOP：普通脚本要转成“模型可执行分镜”</h3>
+              <p>传统脚本给人理解，AI分镜给模型执行，二者不能混用。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第62页] AI编导SOP：普通脚本要转成“模型可执行分镜”
+传统脚本：
+“顾问介绍新车，强调智能座舱、户外能力和年轻化设计，画面要有科技感。”
+AI分镜：
+镜头1：展厅远景，车辆居中，4秒。
+镜头2：车灯特写，慢推，3秒。
+镜头3：座舱屏幕真实素材，2秒。
+镜头4：顾问站定口播，数字人生成，8秒。
+编导原则：先拆镜头，再写提示词；先保稳定，再谈创意。</pre>
+        </article>
+        <article class="prompt-card" id="card-30">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>直播</span><span>来源页码: 63</span></div>
+              <h3>AI直播边界：必须强约束，不能自由发挥</h3>
+              <p>AI直播的风险不只是说错话，还包括平台规则、画面动作、引流方式和账号行为。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第63页] AI直播边界：必须强约束，不能自由发挥
+AI直播话术控制模板：
+【只允许回答】车型亮点、预约试驾、门店信息、官方活动、常见配置说明
+【必须转人工】价格争议、金融方案、投诉售后、竞品对比、政策承诺
+【禁止表达】绝对化承诺、夸大效果、诱导私信、平台敏感词、未经确认优惠</pre>
+        </article>
+        <article class="prompt-card" id="card-31">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>客服</span><span>来源页码: 64</span></div>
+              <h3>AI客服边界：高频问题自动化，复杂责任转人工</h3>
+              <p>客服不是让AI“什么都答”，而是让AI在可控边界内稳定提效。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第64页] AI客服边界：高频问题自动化，复杂责任转人工
+自动回答：
+车型配置、门店地址、预约试驾流程、常规活动说明。
+谨慎回答：
+优惠政策、交付周期、售后进度、客户信息变更。
+必须转人工：
+投诉、退款、纠纷、法律责任、金融方案、情绪激烈客户。
+必须记录：
+客户问题、AI答复、转人工原因、最终处理结果、知识库缺口。
+客服SOP：AI回答前先检索知识库；低置信度不回答；涉及承诺和纠纷必须转人工；每周复盘知识库缺口。</pre>
+        </article>
+      </div>
+    </section>
+    <section class="chapter" id="c4">
+      <div class="chapter-head">
+        <p class="eyebrow">幻灯片 70</p>
+        <h2>第四章 核心问题案例：岗位场景、SOP与提示词模板</h2>
+        <p>核心问题案例：岗位场景、SOP与提示词模板</p>
+      </div>
+      <div class="cards">
+
+        <article class="prompt-card" id="card-32">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>框架</span><span>来源页码: 74</span></div>
+              <h3>提示词总模板：从“描述愿望”到“下达工单”</h3>
+              <p>汽车AI内容尤其要避免抽象表达，必须把主体、动作、镜头、限制写清楚。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第74页] 提示词总模板：从“描述愿望”到“下达工单”
+# 角色
+你是汽车品牌AI内容导演，熟悉短视频、直播转化与品牌合规。
+# 任务
+将【业务目标】转化为可执行的AI分镜/话术/客服回复。
+# 输入
+品牌：ICAR
+车型/产品：{车型或卖点}
+渠道：{抖音/视频号/直播/客服}
+目标：{种草/留资/试驾/答疑/安抚}
+# 约束
+1. 不编造价格、权益、政策与参数。
+2. 保持品牌年轻、科技、可靠的表达。
+3. 每个镜头3—6秒；复杂动作拆分。
+4. 涉及投诉、金融、售后争议时必须提示转人工。
+# 输出格式
+表格：场景｜动作/话术｜镜头/语气｜风险点｜质检标准
+使用方法
+不要把模板一次性塞满。先填“目标、渠道、车型、受众”，再让AI追问缺失信息。对于视频任务，先出分镜，再逐镜头生成；对于客服任务，先出意图分类，再出回复模板。
+禁区提醒
+凡涉及价格承诺、金融方案、官方参数、售后责任、投诉赔付、平台引流，都不能让AI自由发挥，必须接入审核或人工兜底。</pre>
+        </article>
+        <article class="prompt-card" id="card-33">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>分镜脚本</span><span>来源页码: 76</span></div>
+              <h3>1. 人物动作不自然｜提示词代码块</h3>
+              <p>复制后替换 { } 中的业务信息；先小样验证，再批量生成。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第76页] 1. 人物动作不自然｜提示词代码块
+# 任务
+把复杂人物动作拆成AI视频可控短镜头。
+# 输入
+场景：{人物在车旁介绍车型}
+原动作：{走向车辆并打开车门}
+# 要求
+1. 每个镜头3-5秒，只出现一个动作。
+2. 避免完整走路、奔跑、复杂抓取。
+3. 优先中景、半身、局部特写。
+# 输出
+镜头号｜景别｜人物动作｜车的位置｜运镜｜负面限制
+质检清单
+1. 动作是否被拆小
+2. 是否避免连续走路
+3. 手部是否需要后期替换
+4. 是否有真实素材兜底
+复盘口径
+每次失败不要只写“效果不好”。要写清楚：是模型边界、提示词歧义、参考素材不足、工具链不适配，还是审核流程缺失。
+落地建议
+将高命中提示词沉淀为团队模板；将低命中案例沉淀为反例库；每周更新一次品牌风格包和禁用项。</pre>
+        </article>
+        <article class="prompt-card" id="card-34">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>品牌风格</span><span>来源页码: 78</span></div>
+              <h3>2. 前后画面不一致｜提示词代码块</h3>
+              <p>复制后替换 { } 中的业务信息；先小样验证，再批量生成。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第78页] 2. 前后画面不一致｜提示词代码块
+# 角色一致性提示
+你是汽车品牌视觉一致性监督。
+# 固定角色
+人物：{30岁男性销售顾问，短黑发，白色冲锋衣，胸前ICAR标识}
+车辆：{ICAR车型，白色车身，方盒子越野风格}
+场景：{展厅，背景有BORN TO PLAY}
+# 禁止变化
+发型、衣服颜色、车身比例、车标、背景文字不得改变。
+# 输出
+生成提示词 + 负面提示词 + 质检项
+质检清单
+1. 是否有角色参考图
+2. 是否有车辆参考图
+3. 是否固定服装颜色
+4. 是否检查车标与背景字
+复盘口径
+每次失败不要只写“效果不好”。要写清楚：是模型边界、提示词歧义、参考素材不足、工具链不适配，还是审核流程缺失。
+落地建议
+将高命中提示词沉淀为团队模板；将低命中案例沉淀为反例库；每周更新一次品牌风格包和禁用项。</pre>
+        </article>
+        <article class="prompt-card" id="card-35">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>视频生成</span><span>来源页码: 80</span></div>
+              <h3>3. 口型对不上｜提示词代码块</h3>
+              <p>复制后替换 { } 中的业务信息；先小样验证，再批量生成。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第80页] 3. 口型对不上｜提示词代码块
+# 数字人口播生成
+角色：ICAR产品顾问
+语气：自然、专业、有亲和力
+台词：{粘贴最终脚本}
+# 口型要求
+1. 按最终音频驱动口型。
+2. 重点词放慢并轻微停顿。
+3. 不允许临场改写台词。
+# 输出
+口播分段｜停顿位置｜重音词｜字幕分行
+质检清单
+1. 脚本是否最终版
+2. 是否先有音频
+3. 重点词是否标重音
+4. 字幕是否逐句核对
+复盘口径
+每次失败不要只写“效果不好”。要写清楚：是模型边界、提示词歧义、参考素材不足、工具链不适配，还是审核流程缺失。
+落地建议
+将高命中提示词沉淀为团队模板；将低命中案例沉淀为反例库；每周更新一次品牌风格包和禁用项。</pre>
+        </article>
+        <article class="prompt-card" id="card-36">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>品牌风格</span><span>来源页码: 82</span></div>
+              <h3>4. 风格混乱跑偏｜提示词代码块</h3>
+              <p>复制后替换 { } 中的业务信息；先小样验证，再批量生成。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第82页] 4. 风格混乱跑偏｜提示词代码块
+# 品牌风格控制
+品牌：ICAR
+关键词：年轻、户外、科技、可靠、探索感
+色调：浅蓝灰、白色、自然光、清洁展厅
+# 禁用风格
+重金属、廉价霓虹、恐怖、夸张卡通、车标变形。
+# 任务
+为{视频主题}生成10条统一风格的分镜提示词。
+# 输出
+镜头｜画面｜风格词｜禁用项｜质检标准
+质检清单
+1. 是否调用品牌风格包
+2. 是否写明禁用风格
+3. 是否统一色调
+4. 是否保留可复用样片
+复盘口径
+每次失败不要只写“效果不好”。要写清楚：是模型边界、提示词歧义、参考素材不足、工具链不适配，还是审核流程缺失。
+落地建议
+将高命中提示词沉淀为团队模板；将低命中案例沉淀为反例库；每周更新一次品牌风格包和禁用项。</pre>
+        </article>
+        <article class="prompt-card" id="card-37">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>质量与反向词</span><span>来源页码: 84</span></div>
+              <h3>5. 发丝、手部、五官崩坏｜提示词代码块</h3>
+              <p>复制后替换 { } 中的业务信息；先小样验证，再批量生成。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第84页] 5. 发丝、手部、五官崩坏｜提示词代码块
+# 细节风险规避
+请将以下画面改写为低风险AI视频提示词。
+原画面：{销售顾问手拿钥匙，指向车机屏幕}
+# 改写要求
+1. 避免手部特写和复杂抓取。
+2. 关键车机UI与LOGO后期添加。
+3. 使用中景或肩部以上镜头。
+# 输出
+低风险画面提示词｜需要后期添加内容｜质检点
+质检清单
+1. 是否避免手部特写
+2. LOGO是否后期加
+3. 脸部是否需真人素材
+4. 文字是否人工叠加
+复盘口径
+每次失败不要只写“效果不好”。要写清楚：是模型边界、提示词歧义、参考素材不足、工具链不适配，还是审核流程缺失。
+落地建议
+将高命中提示词沉淀为团队模板；将低命中案例沉淀为反例库；每周更新一次品牌风格包和禁用项。</pre>
+        </article>
+        <article class="prompt-card" id="card-38">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>分镜脚本</span><span>来源页码: 86</span></div>
+              <h3>6. 运镜生硬｜提示词代码块</h3>
+              <p>复制后替换 { } 中的业务信息；先小样验证，再批量生成。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第86页] 6. 运镜生硬｜提示词代码块
+# 运镜生成模板
+主题：{ICAR车型户外探索感}
+镜头目的：{突出方盒子车身与年轻越野气质}
+# 运镜选择
+A. 缓慢推进 B. 侧向横移 C. 低角度仰拍 D. 车身局部特写
+# 输出
+为每种运镜写一条3-5秒AI视频提示词，
+包含景别、主体、速度、光线、禁止项。
+质检清单
+1. 是否只有一种运镜
+2. 镜头是否3-6秒
+3. 是否写明景别
+4. 是否避免快速复杂运动
+复盘口径
+每次失败不要只写“效果不好”。要写清楚：是模型边界、提示词歧义、参考素材不足、工具链不适配，还是审核流程缺失。
+落地建议
+将高命中提示词沉淀为团队模板；将低命中案例沉淀为反例库；每周更新一次品牌风格包和禁用项。</pre>
+        </article>
+        <article class="prompt-card" id="card-39">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>分镜脚本</span><span>来源页码: 88</span></div>
+              <h3>7. 长片段跳帧｜提示词代码块</h3>
+              <p>复制后替换 { } 中的业务信息；先小样验证，再批量生成。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第88页] 7. 长片段跳帧｜提示词代码块
+# 长视频拆镜
+目标成片：{30秒ICAR车型种草视频}
+# 拆分规则
+1. 生成8个镜头，每个3-5秒。
+2. 每个镜头独立完整，不依赖前后连续动作。
+3. 用字幕和音乐连接情绪。
+# 输出
+镜头号｜时长｜画面目标｜AI提示词｜转场建议｜质检项
+质检清单
+1. 是否拆成短镜头
+2. 是否留转场空间
+3. 是否避免动作连续依赖
+4. 是否有剪辑节奏
+复盘口径
+每次失败不要只写“效果不好”。要写清楚：是模型边界、提示词歧义、参考素材不足、工具链不适配，还是审核流程缺失。
+落地建议
+将高命中提示词沉淀为团队模板；将低命中案例沉淀为反例库；每周更新一次品牌风格包和禁用项。</pre>
+        </article>
+        <article class="prompt-card" id="card-40">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>分镜脚本</span><span>来源页码: 90</span></div>
+              <h3>8. 提示词难控制｜提示词代码块</h3>
+              <p>复制后替换 { } 中的业务信息；先小样验证，再批量生成。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第90页] 8. 提示词难控制｜提示词代码块
+# 抽象词转分镜
+请把以下抽象描述改写成AI视频可执行提示词。
+抽象描述：{悲伤地哭泣/兴奋地介绍/高级科技感}
+# 改写规则
+情绪 = 面部表情 + 身体姿态 + 镜头距离 + 光线色调。
+# 输出
+原词｜可观察动作｜镜头建议｜提示词｜负面提示词
+质检清单
+1. 是否少用抽象词
+2. 是否写成可观察动作
+3. 是否控制变量
+4. 是否有负面提示词
+复盘口径
+每次失败不要只写“效果不好”。要写清楚：是模型边界、提示词歧义、参考素材不足、工具链不适配，还是审核流程缺失。
+落地建议
+将高命中提示词沉淀为团队模板；将低命中案例沉淀为反例库；每周更新一次品牌风格包和禁用项。</pre>
+        </article>
+        <article class="prompt-card" id="card-41">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>SOP</span><span>来源页码: 92</span></div>
+              <h3>9. 优质视频比例低｜提示词代码块</h3>
+              <p>复制后替换 { } 中的业务信息；先小样验证，再批量生成。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第92页] 9. 优质视频比例低｜提示词代码块
+# 素材工厂批量生成
+主题：{ICAR直播预热视频}
+分镜：{粘贴分镜}
+# 任务
+为同一分镜生成5个不同版本提示词，
+只改变光线、景别或运镜中的一个变量。
+# 输出
+版本｜变化变量｜提示词｜预期风险｜筛选标准
+质检清单
+1. 是否批量生成
+2. 是否记录参数
+3. 是否三类分池
+4. 是否统计命中率
+复盘口径
+每次失败不要只写“效果不好”。要写清楚：是模型边界、提示词歧义、参考素材不足、工具链不适配，还是审核流程缺失。
+落地建议
+将高命中提示词沉淀为团队模板；将低命中案例沉淀为反例库；每周更新一次品牌风格包和禁用项。</pre>
+        </article>
+        <article class="prompt-card" id="card-42">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>合规</span><span>来源页码: 94</span></div>
+              <h3>10. AI视频平台侵权｜提示词代码块</h3>
+              <p>复制后替换 { } 中的业务信息；先小样验证，再批量生成。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第94页] 10. AI视频平台侵权｜提示词代码块
+# AI视频合规自查
+请作为平台合规审核员，检查以下视频方案。
+内容：{粘贴脚本/分镜}
+素材来源：{AI生成/实拍/素材库}
+平台：{抖音/视频号/小红书}
+# 检查维度
+版权、肖像、商标、竞品、引流、夸大宣传、敏感词。
+# 输出
+风险项｜风险等级｜修改建议｜是否可发布
+质检清单
+1. 素材来源是否记录
+2. 音乐字体是否授权
+3. 是否有竞品标识
+4. 发布前是否留痕
+复盘口径
+每次失败不要只写“效果不好”。要写清楚：是模型边界、提示词歧义、参考素材不足、工具链不适配，还是审核流程缺失。
+落地建议
+将高命中提示词沉淀为团队模板；将低命中案例沉淀为反例库；每周更新一次品牌风格包和禁用项。</pre>
+        </article>
+        <article class="prompt-card" id="card-43">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>分镜脚本</span><span>来源页码: 96</span></div>
+              <h3>11. AI编导脚本质量不稳｜提示词代码块</h3>
+              <p>复制后替换 { } 中的业务信息；先小样验证，再批量生成。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第96页] 11. AI编导脚本质量不稳｜提示词代码块
+# AI编导脚本转分镜
+你是汽车短视频编导。
+# 输入
+目标：{试驾留资}
+车型卖点：{空间/智能/续航/安全}
+受众：{年轻家庭/户外用户}
+# 输出
+1. 15秒/30秒脚本
+2. 分镜表：镜头号｜时长｜画面｜台词｜运镜｜AI提示词
+3. 结尾转化话术
+质检清单
+1. 是否有钩子
+2. 是否有证据
+3. 是否有转化动作
+4. 是否拆成可生成镜头
+复盘口径
+每次失败不要只写“效果不好”。要写清楚：是模型边界、提示词歧义、参考素材不足、工具链不适配，还是审核流程缺失。
+落地建议
+将高命中提示词沉淀为团队模板；将低命中案例沉淀为反例库；每周更新一次品牌风格包和禁用项。</pre>
+        </article>
+        <article class="prompt-card" id="card-44">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>直播</span><span>来源页码: 98</span></div>
+              <h3>12. AI直播话术跑偏｜提示词代码块</h3>
+              <p>复制后替换 { } 中的业务信息；先小样验证，再批量生成。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第98页] 12. AI直播话术跑偏｜提示词代码块
+# 直播话术白名单
+角色：ICAR直播助理
+任务：根据用户问题匹配固定话术。
+# 规则
+1. 只能使用白名单内容，不得自编价格和政策。
+2. 用户问金融、投诉、售后争议，提示人工顾问跟进。
+3. 每句话不超过35字，适合口播。
+# 输出
+用户意图｜可用话术｜转人工条件｜禁用表达
+质检清单
+1. 是否有白名单
+2. 是否有黑名单
+3. 是否限制自编
+4. 是否设置接管条件
+复盘口径
+每次失败不要只写“效果不好”。要写清楚：是模型边界、提示词歧义、参考素材不足、工具链不适配，还是审核流程缺失。
+落地建议
+将高命中提示词沉淀为团队模板；将低命中案例沉淀为反例库；每周更新一次品牌风格包和禁用项。</pre>
+        </article>
+        <article class="prompt-card" id="card-45">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>直播</span><span>来源页码: 100</span></div>
+              <h3>13. AI直播语气生硬｜提示词代码块</h3>
+              <p>复制后替换 { } 中的业务信息；先小样验证，再批量生成。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第100页] 13. AI直播语气生硬｜提示词代码块
+# 直播口播优化
+请把以下产品说明改成AI直播口播。
+产品说明：{粘贴内容}
+# 要求
+1. 每句25字以内。
+2. 标注[停顿][重音][微笑][提问]。
+3. 每60秒出现一次互动引导。
+4. 不夸大，不承诺。
+# 输出
+口播脚本｜情绪标签｜互动点｜风险提示
+质检清单
+1. 是否短句化
+2. 是否标重音停顿
+3. 是否有互动点
+4. 是否试音筛选
+复盘口径
+每次失败不要只写“效果不好”。要写清楚：是模型边界、提示词歧义、参考素材不足、工具链不适配，还是审核流程缺失。
+落地建议
+将高命中提示词沉淀为团队模板；将低命中案例沉淀为反例库；每周更新一次品牌风格包和禁用项。</pre>
+        </article>
+        <article class="prompt-card" id="card-46">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>合规</span><span>来源页码: 102</span></div>
+              <h3>14. AI直播违规封号｜提示词代码块</h3>
+              <p>复制后替换 { } 中的业务信息；先小样验证，再批量生成。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第102页] 14. AI直播违规封号｜提示词代码块
+# 直播违规风险排查
+请作为平台风控顾问，检查直播方案。
+直播脚本：{粘贴话术}
+画面元素：{车型/人物/背景/字幕/二维码}
+互动方式：{评论引导/私信/留资}
+# 输出
+文本风险｜画面风险｜行为风险｜账号风险｜修改建议
+质检清单
+1. 是否查画面
+2. 是否查引流
+3. 是否查价格金融
+4. 是否有直播监控员
+复盘口径
+每次失败不要只写“效果不好”。要写清楚：是模型边界、提示词歧义、参考素材不足、工具链不适配，还是审核流程缺失。
+落地建议
+将高命中提示词沉淀为团队模板；将低命中案例沉淀为反例库；每周更新一次品牌风格包和禁用项。</pre>
+        </article>
+        <article class="prompt-card" id="card-47">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>客服</span><span>来源页码: 104</span></div>
+              <h3>15. AI客服接管、日志、知识库｜提示词代码块</h3>
+              <p>复制后替换 { } 中的业务信息；先小样验证，再批量生成。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第104页] 15. AI客服接管、日志、知识库｜提示词代码块
+# 客服知识库维护SOP
+请为以下新政策生成客服知识条目。
+政策内容：{粘贴新话术/政策}
+适用范围：{车型/地区/时间}
+# 输出
+标准问法｜标准答案｜适用条件｜禁答边界｜转人工条件｜更新时间｜Owner
+质检清单
+1. 日志是否可查
+2. 是否有Owner
+3. 是否有更新周期
+4. 是否定义转人工
+复盘口径
+每次失败不要只写“效果不好”。要写清楚：是模型边界、提示词歧义、参考素材不足、工具链不适配，还是审核流程缺失。
+落地建议
+将高命中提示词沉淀为团队模板；将低命中案例沉淀为反例库；每周更新一次品牌风格包和禁用项。</pre>
+        </article>
+        <article class="prompt-card" id="card-48">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>客服</span><span>来源页码: 106</span></div>
+              <h3>16. AI客服答错｜提示词代码块</h3>
+              <p>复制后替换 { } 中的业务信息；先小样验证，再批量生成。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第106页] 16. AI客服答错｜提示词代码块
+# 客服安全回复
+用户问题：{粘贴客户问题}
+知识库内容：{检索结果}
+# 回复规则
+1. 只能依据知识库回答。
+2. 无依据时说“我需要为您转人工确认”。
+3. 涉及价格、金融、投诉、赔付必须转人工。
+# 输出
+答复｜依据来源｜置信度｜是否转人工｜原因
+质检清单
+1. 是否引用知识库
+2. 是否有置信度
+3. 是否有禁答清单
+4. 错答是否复盘
+复盘口径
+每次失败不要只写“效果不好”。要写清楚：是模型边界、提示词歧义、参考素材不足、工具链不适配，还是审核流程缺失。
+落地建议
+将高命中提示词沉淀为团队模板；将低命中案例沉淀为反例库；每周更新一次品牌风格包和禁用项。</pre>
+        </article>
+        <article class="prompt-card" id="card-49">
+          <div class="card-top">
+            <div>
+              <div class="meta"><span>客服</span><span>来源页码: 109</span></div>
+              <h3>AI客服闭环：让AI少犯错，更要知道何时不回答</h3>
+              <p>客服AI的底线是可追溯、可接管、可修正。</p>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyPrompt(this)">复制</button>
+          </div>
+          <pre class="prompt-text">[第109页] AI客服闭环：让AI少犯错，更要知道何时不回答
+客服低风险回复底稿
+您好，这个问题我需要根据最新政策为您确认。
+我先帮您记录：{客户诉求/车型/地区/联系方式}。
+涉及价格、权益、售后责任或金融方案时，
+我会转给人工顾问为您准确处理。</pre>
+        </article>
+      </div>
+    </section>
+      <div class="empty" id="empty">未找到匹配的提示词</div>
+    </main>
+  </div>
+  <script>
+    const copiedLabel = "已复制";
+    const copyLabel = "复制";
+    async function copyPrompt(btn) {
+      const card = btn.closest('.prompt-card');
+      const text = card.querySelector('.prompt-text').innerText.trim();
+      try {
+        await navigator.clipboard.writeText(text);
+        btn.textContent = copiedLabel;
+      } catch (err) {
+        const area = document.createElement('textarea');
+        area.value = text;
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand('copy');
+        document.body.removeChild(area);
+        btn.textContent = copiedLabel;
+      }
+      setTimeout(() => btn.textContent = copyLabel, 1300);
+    }
+    const input = document.getElementById('search');
+    const empty = document.getElementById('empty');
+    input.addEventListener('input', () => {
+      const q = input.value.trim().toLowerCase();
+      let visible = 0;
+      document.querySelectorAll('.prompt-card').forEach(card => {
+        const ok = !q || card.textContent.toLowerCase().includes(q);
+        card.style.display = ok ? '' : 'none';
+        if (ok) visible += 1;
+      });
+      document.querySelectorAll('.chapter').forEach(section => {
+        const any = Array.from(section.querySelectorAll('.prompt-card')).some(card => card.style.display !== 'none');
+        section.style.display = any ? '' : 'none';
+      });
+      empty.style.display = visible ? 'none' : 'block';
+    });
+  </script>
+</body>
+</html>
