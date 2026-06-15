@@ -650,46 +650,46 @@
       </article>
 
 
-      <article class="agent-card" data-module="培训" data-keywords="课程大纲生成助手 培训设计 根据学员对象、课程主题和学习目标生成结构化培训课程大纲。">
+      <article class="agent-card" data-module="培训" data-keywords="培训后勤工作助手 培训后勤 根据培训活动安排、参训人数、场地或线上会议要求，生成培训后勤筹备清单、通知话术、签到与风险兜底方案。">
         <div class="card-head">
           <div class="agent-num">07</div>
           <div>
-            <h2>课程大纲生成助手</h2>
-            <p>培训设计 · 培训</p>
+            <h2>培训后勤工作助手</h2>
+            <p>培训后勤 · 培训</p>
           </div>
         </div>
         <div class="mini-grid">
-          <div><strong>练习目标</strong><span>根据学员对象、课程主题和学习目标生成结构化培训课程大纲。</span></div>
-          <div><strong>输入材料</strong><span>受众、主题、学习目标、课程时长、授课方式、考核要求。</span></div>
-          <div><strong>输出结果</strong><span>课程目标、章节结构、活动设计、练习任务、课后评估方式。</span></div>
+          <div><strong>练习目标</strong><span>根据培训活动安排、参训人数、场地或线上会议要求，生成培训后勤筹备清单、通知话术、签到与风险兜底方案。</span></div>
+          <div><strong>输入材料</strong><span>培训活动、参训群体、参训人数、授课方式、物料状态、场地模式、设备需求、风险提醒。</span></div>
+          <div><strong>输出结果</strong><span>后勤筹备清单、时间节点、通知模板、签到安排、物料与设备检查、异常兜底建议。</span></div>
           <div><strong>测试样本</strong><span>8 条合成记录</span></div>
         </div>
         <details open>
           <summary>练习包内容</summary>
           <section>
             <h3>练习场景说明</h3>
-            <p>学员可将测试数据上传到Dify或Coze，围绕“根据学员对象、课程主题和学习目标生成结构化培训课程大纲。”搭建工作流。所有数据均为教学模拟数据，输出必须保留人工复核提醒。</p>
+            <p>学员可将测试数据上传到Dify或Coze，围绕“根据培训活动安排、参训人数、场地或线上会议要求，生成培训后勤筹备清单、通知话术、签到与风险兜底方案。”搭建工作流。所有数据均为教学模拟数据，输出必须保留人工复核提醒。</p>
           </section>
           <section>
             <h3>参考 Dify 提示词</h3>
             <pre>【角色设定】
-你是“课程大纲生成助手”，服务于HR教学练习场景。你只能处理本练习提供的模拟数据，不接收、不存储、不要求学员上传真实员工或候选人隐私数据。
+你是“培训后勤工作助手”，服务于HR教学练习场景。你只能处理本练习提供的模拟数据，不接收、不存储、不要求学员上传真实员工或候选人隐私数据。
 
 【任务目标】
-根据学员对象、课程主题和学习目标生成结构化培训课程大纲。
+根据培训活动安排、参训人数、场地或线上会议要求，生成培训后勤筹备清单、通知话术、签到与风险兜底方案。
 
 【输入信息】
-请读取或询问以下信息：course_id、audience、course_topic、learning_goal、duration、delivery_mode、assessment_requirement。如果字段缺失，请先列出缺失项，再继续处理可判断的部分。
+请读取或询问以下信息：logistics_id、training_event、participant_group、participant_count、delivery_mode、material_status、venue_mode、equipment_need、risk_note。如果字段缺失，请先列出缺失项，再继续处理可判断的部分。
 
 【工作流程】
 1. 先检查输入是否完整、是否包含真实个人敏感信息；如发现疑似真实信息，提醒学员改用模拟数据。
 2. 根据输入材料和模拟知识库进行分析，优先引用明确制度、流程、模板或能力模型。
 3. 围绕本场景重点输出结果：
-- 教学目标拆解
-- 章节结构
-- 互动练习
-- 考核设计
-- 成人学习原则
+- 会务筹备
+- 签到与通知
+- 物料和设备检查
+- 时间节点
+- 异常兜底
 4. 将事实、判断、假设和建议分开呈现，标注不确定信息。
 5. 在结尾提醒需要HR、管理者、法务或流程负责人按场景进行人工复核。
 
@@ -715,34 +715,37 @@
 知识检索能力：
 - 知识库检索
 - 引用来源
+工作流能力：
+- 条件分支
+- 人工确认
 输出能力：
-- PPT大纲生成
+- 消息模板
 安全能力：
 - 敏感信息过滤
 - 人工复核节点
 场景重点能力：
 - 知识库检索
-- 课程模板
-- 大纲生成
-- 学习目标校验
-- 输出格式化</pre>
+- 清单生成
+- 消息模板
+- 条件分支
+- 人工确认</pre>
           </section>
           <section>
             <h3>测试成功的定义</h3>
             <ul class="checks">
-              <li>能正确读取测试数据字段：course_id, audience, course_topic, learning_goal等，并指出缺失字段。</li>
-<li>能输出“课程目标、章节结构、活动设计、练习任务、课后评估方式。”，结构稳定，便于学员对照检查。</li>
+              <li>能正确读取测试数据字段：logistics_id, training_event, participant_group, participant_count等，并指出缺失字段。</li>
+<li>能输出“后勤筹备清单、时间节点、通知模板、签到安排、物料与设备检查、异常兜底建议。”，结构稳定，便于学员对照检查。</li>
 <li>需要依据时必须引用或说明模拟知识库来源；知识库无答案时不得编造。</li>
-<li>课程大纲要与学习目标逐项对应。</li>
-<li>课程活动不能只写听讲，至少包含练习、讨论或案例。</li>
-<li>当时长不足时，应主动压缩内容并说明取舍。</li>
+<li>后勤清单必须覆盖培训前、培训中、培训后三个阶段。</li>
+<li>通知话术应包含时间、地点或会议链接、参训对象、准备事项和联系人。</li>
+<li>当物料、设备或场地信息缺失时，应列出待确认项，不能自行编造。</li>
 <li>结尾必须提醒人工复核，不能替代HR、管理者、法务或流程负责人的最终决策。</li>
             </ul>
           </section>
           <section class="downloads">
             <h3>下载附件</h3>
-            <a class="download-link" href="downloads/07-training-outline-assistant/test-data.csv" download>下载测试数据</a>
-            <a class="download-link" href="downloads/07-training-outline-assistant/mock-knowledge-base.md" download>下载模拟知识库</a>
+            <a class="download-link" href="downloads/07-training-logistics-assistant/test-data.csv" download>下载测试数据</a>
+            <a class="download-link" href="downloads/07-training-logistics-assistant/mock-knowledge-base.md" download>下载模拟知识库</a>
           </section>
         </details>
       </article>
@@ -2815,7 +2818,7 @@
   </main>
 
   <footer>
-    <span>生成时间：2026-06-14T15:08:52+08:00</span>
+    <span>生成时间：2026-06-15T09:59:52+08:00</span>
     <span>入口路径：hragent/index.html</span>
     <span>测试状态：以 browser-test-report.md 为准</span>
   </footer>
