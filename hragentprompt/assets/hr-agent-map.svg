@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="260" viewBox="0 0 880 260" role="img" aria-label="HR智能体分类图谱">
+<rect width="880" height="260" rx="8" fill="#f7f4ef"/>
+<text x="32" y="46" font-family="Microsoft YaHei,Arial" font-size="24" font-weight="700" fill="#243238">HR Agent Prompt Map</text>
+<text x="32" y="74" font-family="Microsoft YaHei,Arial" font-size="13" fill="#66736f">15 prompts organized by HR workflow</text>
+<rect x="32" y="104" width="242" height="28" rx="6" fill="#1f7a6d" opacity="0.92"/>
+<text x="46" y="123" font-family="Microsoft YaHei,Arial" font-size="14" font-weight="700" fill="#fff">人才管理 · 1</text>
+<rect x="32" y="142" width="680" height="28" rx="6" fill="#cf5d3a" opacity="0.92"/>
+<text x="46" y="161" font-family="Microsoft YaHei,Arial" font-size="14" font-weight="700" fill="#fff">招聘 · 8</text>
+<rect x="32" y="180" width="242" height="28" rx="6" fill="#7d6b20" opacity="0.92"/>
+<text x="46" y="199" font-family="Microsoft YaHei,Arial" font-size="14" font-weight="700" fill="#fff">入职服务 · 1</text>
+<rect x="32" y="218" width="367" height="28" rx="6" fill="#2d628f" opacity="0.92"/>
+<text x="46" y="237" font-family="Microsoft YaHei,Arial" font-size="14" font-weight="700" fill="#fff">培训与会议 · 3</text>
+<rect x="32" y="256" width="305" height="28" rx="6" fill="#7b4662" opacity="0.92"/>
+<text x="46" y="275" font-family="Microsoft YaHei,Arial" font-size="14" font-weight="700" fill="#fff">制度与问答 · 2</text>
+<circle cx="700" cy="106" r="9" fill="#1f7a6d"/>
+<text x="700" y="110" text-anchor="middle" font-family="Arial" font-size="9" font-weight="700" fill="#fff">1</text>
+<circle cx="728" cy="106" r="9" fill="#cf5d3a"/>
+<text x="728" y="110" text-anchor="middle" font-family="Arial" font-size="9" font-weight="700" fill="#fff">2</text>
+<circle cx="756" cy="106" r="9" fill="#7d6b20"/>
+<text x="756" y="110" text-anchor="middle" font-family="Arial" font-size="9" font-weight="700" fill="#fff">3</text>
+<circle cx="784" cy="106" r="9" fill="#2d628f"/>
+<text x="784" y="110" text-anchor="middle" font-family="Arial" font-size="9" font-weight="700" fill="#fff">4</text>
+<circle cx="812" cy="106" r="9" fill="#7b4662"/>
+<text x="812" y="110" text-anchor="middle" font-family="Arial" font-size="9" font-weight="700" fill="#fff">5</text>
+<circle cx="700" cy="144" r="9" fill="#57606a"/>
+<text x="700" y="148" text-anchor="middle" font-family="Arial" font-size="9" font-weight="700" fill="#fff">6</text>
+<circle cx="728" cy="144" r="9" fill="#1f7a6d"/>
+<text x="728" y="148" text-anchor="middle" font-family="Arial" font-size="9" font-weight="700" fill="#fff">7</text>
+<circle cx="756" cy="144" r="9" fill="#cf5d3a"/>
+<text x="756" y="148" text-anchor="middle" font-family="Arial" font-size="9" font-weight="700" fill="#fff">8</text>
+<circle cx="784" cy="144" r="9" fill="#7d6b20"/>
+<text x="784" y="148" text-anchor="middle" font-family="Arial" font-size="9" font-weight="700" fill="#fff">9</text>
+<circle cx="812" cy="144" r="9" fill="#2d628f"/>
+<text x="812" y="148" text-anchor="middle" font-family="Arial" font-size="9" font-weight="700" fill="#fff">10</text>
+<circle cx="700" cy="182" r="9" fill="#7b4662"/>
+<text x="700" y="186" text-anchor="middle" font-family="Arial" font-size="9" font-weight="700" fill="#fff">11</text>
+<circle cx="728" cy="182" r="9" fill="#57606a"/>
+<text x="728" y="186" text-anchor="middle" font-family="Arial" font-size="9" font-weight="700" fill="#fff">12</text>
+<circle cx="756" cy="182" r="9" fill="#1f7a6d"/>
+<text x="756" y="186" text-anchor="middle" font-family="Arial" font-size="9" font-weight="700" fill="#fff">13</text>
+<circle cx="784" cy="182" r="9" fill="#cf5d3a"/>
+<text x="784" y="186" text-anchor="middle" font-family="Arial" font-size="9" font-weight="700" fill="#fff">14</text>
+<circle cx="812" cy="182" r="9" fill="#7d6b20"/>
+<text x="812" y="186" text-anchor="middle" font-family="Arial" font-size="9" font-weight="700" fill="#fff">15</text>
+</svg>
