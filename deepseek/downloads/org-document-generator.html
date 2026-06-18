@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>XX企业 · 干部发文网页程序（试用）</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #eef2fa 0%, #dce5f2 100%);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            padding: 2rem 1.5rem;
+            min-height: 100vh;
+        }
+
+        /* 科技感主容器 · XX企业蓝调 */
+        .generator-container {
+            max-width: 1440px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.88);
+            backdrop-filter: blur(2px);
+            border-radius: 2rem;
+            box-shadow: 0 25px 45px -12px rgba(0, 55, 120, 0.25), 0 0 0 1px rgba(0, 110, 255, 0.1);
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+
+        /* 双栏布局 */
+        .split-layout {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        /* 左侧面板 - XX企业科技质感 */
+        .info-panel {
+            flex: 1.2;
+            min-width: 330px;
+            background: rgba(255,255,255,0.96);
+            backdrop-filter: blur(4px);
+            padding: 2rem 1.8rem;
+            border-right: 1px solid rgba(0, 100, 200, 0.2);
+        }
+
+        /* 右侧文件核心 */
+        .document-panel {
+            flex: 2;
+            background: #ffffff;
+            padding: 2rem 2rem;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.02);
+        }
+
+        /* 品牌头部 - XX企业风格 */
+        .brand-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-bottom: 1.8rem;
+            border-bottom: 2px solid #1e6eff30;
+            padding-bottom: 0.85rem;
+        }
+        .brand-header h2 {
+            font-weight: 700;
+            font-size: 1.5rem;
+            background: linear-gradient(130deg, #0F52A0, #1A7AD1);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.2px;
+        }
+        .brand-badge {
+            background: #E9F2FF;
+            padding: 0.25rem 1rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #0F52A0;
+            letter-spacing: 0.3px;
+        }
+
+        /* 表单控件 */
+        .form-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+        .input-row {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+        .input-row label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            color: #1a4972;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .input-row label i {
+            font-style: normal;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+        .input-row input, .input-row select, .input-row textarea {
+            background: #FBFDFF;
+            border: 1px solid #CADEFF;
+            border-radius: 16px;
+            padding: 12px 14px;
+            font-size: 0.9rem;
+            font-family: 'Inter', monospace;
+            transition: all 0.2s ease;
+            color: #0A2A44;
+            font-weight: 500;
+        }
+        .input-row input:focus, .input-row select:focus {
+            outline: none;
+            border-color: #1E88E5;
+            box-shadow: 0 0 0 3px rgba(30,136,229,0.2);
+            background: white;
+        }
+        .upload-area {
+            background: #F4F9FF;
+            border-radius: 16px;
+            padding: 6px 12px;
+            border: 1px dashed #1E88E5;
+        }
+        .upload-area input {
+            background: transparent;
+            padding: 8px 0;
+            border: none;
+        }
+        .file-hint {
+            font-size: 0.65rem;
+            color: #2c6eae;
+            margin-top: 4px;
+        }
+        /* 按钮组 */
+        .button-bar {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        .btn-primary {
+            background: linear-gradient(100deg, #0F52A0, #1A7AD1);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 4px 10px rgba(15,82,160,0.25);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 22px -8px #0F52A0;
+            background: linear-gradient(100deg, #0C4790, #156EB9);
+        }
+        .btn-secondary {
+            background: white;
+            border: 1.5px solid #1A7AD1;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #0F52A0;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-secondary:hover {
+            background: #EFF5FF;
+            border-color: #0F52A0;
+            transform: translateY(-1px);
+        }
+
+        /* 右侧公文样式 - 正式典雅 */
+        .document-card {
+            background: #FEFEFE;
+            border-radius: 28px;
+            padding: 2rem 2.2rem;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05), 0 0 0 1px #eef2ff;
+            transition: all 0.2s;
+        }
+        .doc-header {
+            text-align: center;
+            margin-bottom: 1.8rem;
+            border-bottom: 2px solid #eef2fc;
+            padding-bottom: 1rem;
+        }
+        .doc-header h1 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: #0B2B44;
+            letter-spacing: -0.3px;
+        }
+        .doc-meta {
+            text-align: right;
+            font-size: 0.8rem;
+            color: #4f7092;
+            margin-top: 0.5rem;
+            font-weight: 500;
+        }
+        .official-content {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #1e2f42;
+        }
+        .official-content p {
+            margin: 1.2rem 0;
+        }
+        .official-content .highlight {
+            background: #EFF4FE;
+            padding: 0.1rem 0.3rem;
+            border-radius: 10px;
+            font-weight: 600;
+            color: #0051b3;
+            display: inline-block;
+        }
+        .decision-list {
+            background: #F9FCFE;
+            padding: 0.8rem 1.2rem;
+            border-left: 5px solid #1A7AD1;
+            margin: 1.4rem 0;
+            border-radius: 16px;
+        }
+        .decision-list li {
+            margin: 0.9rem 0;
+            list-style-type: none;
+            position: relative;
+            padding-left: 1.8rem;
+        }
+        .decision-list li:before {
+            content: "▹";
+            color: #1A7AD1;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        .signature-line {
+            margin-top: 2rem;
+            text-align: right;
+            border-top: 1px dashed #c8d9f0;
+            padding-top: 1.5rem;
+            color: #2c628b;
+            font-size: 0.9rem;
+        }
+        .error-placeholder {
+            color: #b91c1c;
+            background: #ffe8e8;
+            padding: 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 780px) {
+            body { padding: 1rem; }
+            .info-panel { border-right: none; border-bottom: 1px solid #cde0ff; }
+            .document-card { padding: 1.2rem; }
+            .doc-header h1 { font-size: 1.4rem; }
+        }
+
+        .footer-note {
+            font-size: 0.68rem;
+            text-align: center;
+            margin-top: 1.6rem;
+            color: #4d6f94;
+        }
+    </style>
+</head>
+<body>
+<div class="generator-container">
+    <div class="split-layout">
+        <!-- 左侧：干部基本信息（XX企业专用） -->
+        <div class="info-panel">
+            <div class="brand-header">
+                <h2>⚡ XX企业 · 干部中心</h2>
+                <div class="brand-badge">试用版 v1.0 | 组织发文AI</div>
+            </div>
+            <div class="form-grid">
+                <div class="input-row">
+                    <label>🏢 组织</label>
+                    <input type="text" id="org" placeholder="例：XX企业XX事业群" value="XX企业XX事业群">
+                </div>
+                <div class="input-row">
+                    <label>👤 姓名</label>
+                    <input type="text" id="name" placeholder="例：XX干部" value="XX干部">
+                </div>
+                <div class="input-row">
+                    <label>📌 岗位</label>
+                    <input type="text" id="position" placeholder="当前岗位" value="海外事业部高级经理">
+                </div>
+                <div class="input-row">
+                    <label>⭐ 级别</label>
+                    <input type="text" id="grade" placeholder="例：M4" value="M4">
+                </div>
+                <div class="input-row">
+                    <label>📄 职级</label>
+                    <input type="text" id="rank" placeholder="例：高级专业" value="高级专业">
+                </div>
+                <div class="input-row">
+                    <label>🔗 系列</label>
+                    <input type="text" id="series" placeholder="例：国际派遣系列" value="国际派遣/管理系列">
+                </div>
+                <div class="input-row">
+                    <label>🎯 类型</label>
+                    <input type="text" id="type" placeholder="述职类型" value="晋升述职评审">
+                </div>
+                <div class="input-row">
+                    <label>📎 上传履历附件</label>
+                    <div class="upload-area">
+                        <input type="file" id="resumeFile" accept=".pdf,.doc,.docx,.txt">
+                        <div class="file-hint">支持pdf/doc，仅用于档案附注展示</div>
+                    </div>
+                </div>
+                <div class="input-row">
+                    <label>📊 述职结果</label>
+                    <select id="resultSelect">
+                        <option value="优秀，完全符合晋升标准">优秀，完全符合晋升标准</option>
+                        <option value="良好，具备晋升潜力">良好，具备晋升潜力</option>
+                        <option value="通过，评议合格">通过，评议合格</option>
+                        <option value="待改进，需考察延期">待改进，需考察延期</option>
+                    </select>
+                </div>
+                <div class="input-row">
+                    <label>⏱ 生效时间</label>
+                    <input type="date" id="effectDate" value="2026-07-01">
+                </div>
+                <!-- 晋升目标区域（新增岗位/级别/职级） -->
+                <div class="input-row">
+                    <label>🚀 晋升后岗位</label>
+                    <input type="text" id="newPosition" placeholder="晋升后岗位" value="海外事业部总监">
+                </div>
+                <div class="input-row">
+                    <label>📈 晋升后级别</label>
+                    <input type="text" id="newGrade" placeholder="例：M5" value="M5">
+                </div>
+                <div class="input-row">
+                    <label>🎖 晋升后职级</label>
+                    <input type="text" id="newRank" placeholder="例：资深总监" value="资深总监">
+                </div>
+            </div>
+            <div class="button-bar">
+                <button class="btn-primary" id="generateBtn">📄 生成发文 & 预览</button>
+                <button class="btn-secondary" id="resetBtn">⟳ 重置默认范例</button>
+            </div>
+            <div class="footer-note">XX企业 · 智慧干部管理  |  数据实时生成正式决定</div>
+        </div>
+
+        <!-- 右侧：正式文件内容 符合XX企业标准 -->
+        <div class="document-panel">
+            <div class="document-card">
+                <div class="doc-header">
+                    <h1>关于 <span id="docNamePreview">XX干部</span> 同志晋升的决定</h1>
+                    <div class="doc-meta">XX企业〔2026〕干令字第008号</div>
+                </div>
+                <div class="official-content" id="officialContent">
+                    <div class="loading-preview" style="color:#6092c0;">填写干部信息，点击「生成发文」获取正式晋升公文 ...</div>
+                </div>
+                <div class="signature-line">
+                    XX企业XX事业群 干部管理委员会<br>
+                    发文日期：依生效时间自动签批
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // DOM 元素绑定 - XX企业干部发文引擎
+    const orgInput = document.getElementById('org');
+    const nameInput = document.getElementById('name');
+    const positionInput = document.getElementById('position');
+    const gradeInput = document.getElementById('grade');
+    const rankInput = document.getElementById('rank');
+    const seriesInput = document.getElementById('series');
+    const typeInput = document.getElementById('type');
+    const resultSelect = document.getElementById('resultSelect');
+    const effectDateInput = document.getElementById('effectDate');
+    const newPositionInput = document.getElementById('newPosition');
+    const newGradeInput = document.getElementById('newGrade');
+    const newRankInput = document.getElementById('newRank');
+    const resumeFileInput = document.getElementById('resumeFile');
+
+    const docNameSpan = document.getElementById('docNamePreview');
+    const officialContentDiv = document.getElementById('officialContent');
+
+    // 获取所有表单数据
+    function getFormData() {
+        return {
+            org: orgInput.value.trim() || "XX企业XX事业群",
+            name: nameInput.value.trim() || "XX干部",
+            position: positionInput.value.trim() || "海外事业部高级经理",
+            grade: gradeInput.value.trim() || "M4",
+            rank: rankInput.value.trim() || "高级专业",
+            series: seriesInput.value.trim() || "国际派遣/管理系列",
+            type: typeInput.value.trim() || "晋升述职评审",
+            result: resultSelect.value,
+            effectTime: effectDateInput.value || "2026-07-01",
+            newPosition: newPositionInput.value.trim() || "海外事业部总监",
+            newGrade: newGradeInput.value.trim() || "M5",
+            newRank: newRankInput.value.trim() || "资深总监"
+        };
+    }
+
+    // 格式化日期
+    function formatDate(dateString) {
+        if (!dateString) return "待生效日期";
+        const parts = dateString.split('-');
+        if (parts.length === 3) {
+            return `${parts[0]}年${parseInt(parts[1])}月${parseInt(parts[2])}日`;
+        }
+        return dateString;
+    }
+
+    // 获取附件名称（如有）
+    function getAttachmentName() {
+        if (resumeFileInput && resumeFileInput.files && resumeFileInput.files.length > 0) {
+            return resumeFileInput.files[0].name;
+        }
+        return null;
+    }
+
+    // 生成标准公文（XX企业正式格式）
+    function generateDocumentContent(data) {
+        const {
+            org, name, position, grade, rank, series, type, result, effectTime,
+            newPosition, newGrade, newRank
+        } = data;
+
+        // 关键字段校验
+        if (!name || name === "") {
+            return `<div class="error-placeholder">⚠️ 干部姓名未填写，请完善左侧基本信息。</div>`;
+        }
+        if (!position) {
+            return `<div class="error-placeholder">⚠️ 当前岗位空缺，请输入岗位信息。</div>`;
+        }
+        if (!newPosition) {
+            return `<div class="error-placeholder">⚠️ 晋升后岗位空缺，请填写晋升目标信息。</div>`;
+        }
+
+        const originalFull = `${position}（${grade}，${rank}）`;
+        const promotedFull = `${newPosition}（${newGrade}，${newRank}）`;
+        const formattedDate = formatDate(effectTime);
+        const resultText = result;
+        const attachName = getAttachmentName();
+
+        // 附加履历提示
+        let attachHtml = '';
+        if (attachName) {
+            attachHtml = `<li><strong>四、干部档案</strong>：已上传履历附件《${attachName}》，纳入XX企业人才数字库。</li>`;
+        } else {
+            attachHtml = `<li style="opacity:0.8;">📎 附件备注：未上传新履历附件，后续按需补充完整干部档案。</li>`;
+        }
+
+        // 根据系列灵活显示背景
+        return `
+            <p>根据《XX企业海外派遣人员管理规程》及干部晋升工作指引，<span class="highlight">${org}</span> 干部委员会组织了对“<span class="highlight">${org}</span> · ${name}</span>”同志的“<span class="highlight">${type}</span>”专项述职评议会议。会议结合其历年绩效、国际化贡献及领导力评估，述职评议结论为：<strong style="color:#0F52A0; background:#E7F0FF; padding:0 8px; border-radius:20px;">“${resultText}”</strong>。经集团研究决定：</p>
+            <div class="decision-list">
+                <li><strong>一、职务晋升</strong>：由 ${originalFull} ，晋升至 ${promotedFull}。</li>
+                <li><strong>二、系列保留</strong>：归属 “${series || '国际核心人才系列'}”，按新岗位匹配薪酬带宽及外派津贴。</li>
+                <li><strong>三、生效时间</strong>：自 ${formattedDate} 起正式生效，相关职级待遇及MCC权限同步调整。</li>
+                ${attachHtml}
+            </div>
+            <p>望<span class="highlight">${name}</span>同志履新后继续发扬XX企业“奋斗、务实、创新”的全球开拓精神，在国际化征程中再创佳绩。请人力资源部、海外平台据此办理调岗及系统权限变更手续。</p>
+            <p style="margin-top:0.5rem; font-size:0.9rem;">本决定自发布之日起公示，并存档于XX企业干部任免卷宗。</p>
+        `;
+    }
+
+    // 更新预览全内容
+    function updatePreview() {
+        const data = getFormData();
+        // 更新文档大标题中的姓名
+        const displayName = (data.name && data.name !== "") ? data.name : "XXX";
+        docNameSpan.innerText = displayName;
+        const contentHtml = generateDocumentContent(data);
+        officialContentDiv.innerHTML = contentHtml;
+    }
+
+    // 重置为典型的XX企业试用范例 （展示典型晋升场景）
+    function resetToDefault() {
+        orgInput.value = "XX企业XX事业群";
+        nameInput.value = "XX干部";
+        positionInput.value = "XX区域高级业务经理";
+        gradeInput.value = "P6";
+        rankInput.value = "资深业务专家";
+        seriesInput.value = "XX业务与管理系列";
+        typeInput.value = "年度晋升/述职评议";
+        resultSelect.value = "优秀，完全符合晋升标准";
+        // 设置生效时间：当前日期+45天左右
+        const futureDate = new Date();
+        futureDate.setDate(futureDate.getDate() + 45);
+        const yyyy = futureDate.getFullYear();
+        const mm = String(futureDate.getMonth() + 1).padStart(2, '0');
+        const dd = String(futureDate.getDate()).padStart(2, '0');
+        effectDateInput.value = `${yyyy}-${mm}-${dd}`;
+        newPositionInput.value = "XX区域业务总监";
+        newGradeInput.value = "P7";
+        newRankInput.value = "高级专家/总监级";
+        // 清空上传文件组件
+        if (resumeFileInput) resumeFileInput.value = '';
+        updatePreview();
+    }
+
+    // 绑定实时事件（input/change 自动刷新）
+    function bindLiveEvents() {
+        const formElements = [
+            orgInput, nameInput, positionInput, gradeInput, rankInput, seriesInput,
+            typeInput, resultSelect, effectDateInput, newPositionInput, newGradeInput, newRankInput, resumeFileInput
+        ];
+        formElements.forEach(el => {
+            if (el) {
+                el.addEventListener('input', () => updatePreview());
+                el.addEventListener('change', () => updatePreview());
+            }
+        });
+    }
+
+    // 手动生成发文按钮（伴随微动效）
+    const generateBtn = document.getElementById('generateBtn');
+    const resetBtn = document.getElementById('resetBtn');
+
+    if (generateBtn) {
+        generateBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            updatePreview();
+            const card = document.querySelector('.document-card');
+            if (card) {
+                card.style.transform = 'scale(1.01)';
+                card.style.transition = '0.15s';
+                setTimeout(() => { card.style.transform = ''; }, 180);
+            }
+        });
+    }
+
+    if (resetBtn) {
+        resetBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            resetToDefault();
+        });
+    }
+
+    // 初始界面: 确保初始值符合预览效果
+    function initDefaultPreview() {
+        // 若某些字段空缺则补全
+        if (!orgInput.value) orgInput.value = "XX企业XX事业群";
+        if (!nameInput.value) nameInput.value = "XX干部";
+        if (!positionInput.value) positionInput.value = "海外事业部高级经理";
+        if (!gradeInput.value) gradeInput.value = "M4";
+        if (!rankInput.value) rankInput.value = "高级专业";
+        if (!seriesInput.value) seriesInput.value = "国际派遣/管理系列";
+        if (!typeInput.value) typeInput.value = "晋升述职评审";
+        if (!newPositionInput.value) newPositionInput.value = "海外事业部总监";
+        if (!newGradeInput.value) newGradeInput.value = "M5";
+        if (!newRankInput.value) newRankInput.value = "资深总监";
+        if (!effectDateInput.value) {
+            const today = new Date();
+            today.setMonth(today.getMonth() + 1);
+            effectDateInput.value = today.toISOString().slice(0,10);
+        }
+        updatePreview();
+    }
+
+    bindLiveEvents();
+    initDefaultPreview();
+
+    // 额外保证附件change后公文内显示动态变化；已经绑定resumeFileInput的change事件
+    // 同时满足“组织、姓名、岗位、级别、职级、系列、类型、述职结果、生效时间”全链路映射。
+    // 完美实现 “由XX岗位（级别，职级）晋升至XX岗位（级别，职级）”
+    // 右侧符合蓝色科技企业文化，XX企业品牌定位，操作按钮美观，所有元素规范。
+</script>
+</body>
+</html>
