@@ -1,0 +1,7 @@
+﻿case_id,overdue_stage,days_overdue,communication_history,customer_situation,suggested_tone,escalation_condition
+CC-OD-001,M0,2,短信提醒1次,忘记还款日,提醒和路径说明,客户否认账单或持续失联
+CC-OD-002,M0,5,App提醒2次,短期资金周转,克制说明还款渠道,提出投诉或费用争议
+CC-OD-003,M1,18,电话接通1次,对账单金额有疑问,先记录争议再引导核实,涉及账单争议
+CC-OD-004,M1,27,多次未接,未知,简短合规提醒,持续无法联系
+CC-OD-005,M2,46,客户表达困难,收入暂时下降,了解困难并记录,申请特殊处理
+CC-OD-006,M3+,95,客户情绪激烈,称遭遇诈骗,停止争执并转专岗,疑似诈骗或监管投诉

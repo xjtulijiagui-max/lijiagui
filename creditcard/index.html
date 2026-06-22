@@ -42,13 +42,13 @@
     .hero {
       display:grid; grid-template-columns:minmax(0,1fr) minmax(300px,38%); gap:26px; margin-bottom:22px;
     }
-    .hero-copy, .visual, .toolbar, .prompt-card {
+    .hero-copy, .visual, .toolbar, .download-panel, .prompt-card {
       background:var(--panel); border:1px solid var(--line); border-radius:8px; box-shadow:var(--shadow);
     }
     .hero-copy { padding:30px; }
     h1 { margin:0 0 12px; font-size:clamp(30px,4.4vw,58px); line-height:1.06; letter-spacing:0; }
     .hero-copy p { margin:0; color:var(--muted); max-width:780px; }
-    .stats { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin-top:24px; }
+    .stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin-top:24px; }
     .stat { border:1px solid var(--line); border-radius:8px; background:#faf8f2; padding:14px; }
     .stat strong { display:block; color:var(--green); font-size:28px; line-height:1; }
     .stat span { color:var(--muted); font-size:13px; }
@@ -62,6 +62,24 @@
       background:#fff; color:var(--ink); font:inherit; min-width:0;
     }
     .notice { color:var(--muted); font-size:13px; margin:14px 0 20px; }
+    .download-panel { padding:20px; margin-bottom:20px; }
+    .download-heading {
+      display:flex; align-items:center; justify-content:space-between; gap:14px; margin-bottom:10px;
+    }
+    .download-heading p { margin:0 0 3px; color:var(--green); font-size:13px; font-weight:800; }
+    .download-heading h2 { margin:0; font-size:24px; }
+    .download-primary, .download-link {
+      color:inherit; text-decoration:none; border-radius:8px; border:1px solid var(--line);
+    }
+    .download-primary {
+      flex:none; background:var(--green); color:#fff; padding:10px 14px; font-weight:900;
+    }
+    .download-note { margin:0 0 14px; color:var(--muted); font-size:13px; }
+    .download-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:10px; }
+    .download-link { display:grid; gap:4px; padding:12px; background:#faf8f2; }
+    .download-link:hover { border-color:var(--green); background:#fff; }
+    .download-link span { font-weight:900; line-height:1.35; }
+    .download-link small { color:var(--muted); line-height:1.45; }
     .prompt-list { display:grid; gap:18px; }
     .prompt-card { padding:20px; scroll-margin-top:86px; }
     .card-title { display:flex; gap:13px; align-items:flex-start; margin-bottom:10px; }
@@ -101,6 +119,8 @@
     @media (max-width: 680px) {
       main { padding-inline:14px; }
       .stats, .toolbar, nav { grid-template-columns:1fr; }
+      .download-heading { align-items:flex-start; flex-direction:column; }
+      .download-primary { width:100%; text-align:center; }
       .actions button { width:100%; }
       pre { max-height:360px; font-size:13px; }
     }
@@ -133,6 +153,7 @@
             <div class="stat"><strong>10</strong><span>个练习场景</span></div>
             <div class="stat"><strong>7</strong><span>个业务模块</span></div>
             <div class="stat"><strong>20</strong><span>个可复制项</span></div>
+            <div class="stat"><strong>11</strong><span>个下载文件</span></div>
           </div>
         </div>
         <div class="visual"><img src="assets/creditcard-map.svg" alt="信用卡中心 Coze 练习场景地图"></div>
@@ -147,7 +168,61 @@
 <option value="分期与账单">分期与账单</option>
 <option value="数据与经营分析">数据与经营分析</option></select>
       </section>
-      <p class="notice">公开练习版不包含真实客户信息，不用于实际授信、风控结论或客户个案处理。生成时间：2026-06-21 23:41。</p>
+      <p class="notice">公开练习版不包含真实客户信息，不用于实际授信、风控结论或客户个案处理。生成时间：2026-06-22 10:09。</p>
+
+      <section class="download-panel" aria-label="练习数据下载">
+        <div class="download-heading">
+          <div>
+            <p>练习数据下载</p>
+            <h2>配套模拟数据包</h2>
+          </div>
+          <a class="download-primary" href="downloads/creditcard-practice-data.xlsx" download>下载完整 Excel</a>
+        </div>
+        <p class="download-note">所有数据均为模拟样例，仅用于 Coze 智能体练习；不包含真实姓名、手机号、证件号、卡号或账户信息。</p>
+        <div class="download-grid">
+          <a class="download-link" href="downloads/01-application-precheck.csv" download>
+            <span>01 信用卡申请预审助手</span>
+            <small>申请资料预审、补件与人工复核点练习数据</small>
+          </a>
+          <a class="download-link" href="downloads/02-customer-segmentation.csv" download>
+            <span>02 客户分群与权益推荐助手</span>
+            <small>客户分群、权益匹配与触达限制练习数据</small>
+          </a>
+          <a class="download-link" href="downloads/03-campaign-copy-compliance.csv" download>
+            <span>03 营销活动文案合规审校助手</span>
+            <small>营销文案合规审校与改写练习数据</small>
+          </a>
+          <a class="download-link" href="downloads/04-outbound-script.csv" download>
+            <span>04 外呼话术生成与质检助手</span>
+            <small>外呼开场、异议处理与质检清单练习数据</small>
+          </a>
+          <a class="download-link" href="downloads/05-complaint-workorder.csv" download>
+            <span>05 客诉工单摘要与处理建议助手</span>
+            <small>客诉摘要、待核实事项与升级判断练习数据</small>
+          </a>
+          <a class="download-link" href="downloads/06-overdue-reminder.csv" download>
+            <span>06 逾期提醒与协商话术助手</span>
+            <small>逾期提醒、协商记录与升级条件练习数据</small>
+          </a>
+          <a class="download-link" href="downloads/07-fraud-risk-triage.csv" download>
+            <span>07 交易异常初判与核查清单助手</span>
+            <small>异常交易初判、客户核查问题与下一步动作练习数据</small>
+          </a>
+          <a class="download-link" href="downloads/08-installment-advisor.csv" download>
+            <span>08 账单分期说明与异议处理助手</span>
+            <small>分期费用说明、异议处理与知识库条目练习数据</small>
+          </a>
+          <a class="download-link" href="downloads/09-knowledge-qa.csv" download>
+            <span>09 信用卡知识库问答助手</span>
+            <small>知识库问答、依据摘要与转人工条件练习数据</small>
+          </a>
+          <a class="download-link" href="downloads/10-ops-data-daily.csv" download>
+            <span>10 信用卡运营数据日报解读助手</span>
+            <small>运营日报指标解读、异常假设与行动建议练习数据</small>
+          </a>
+        </div>
+      </section>
+
       <section class="prompt-list">
       <article class="prompt-card" id="application-precheck" data-module="进件与获客" data-title="信用卡申请预审助手">
         <div class="card-title">
