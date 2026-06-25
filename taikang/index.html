@@ -232,6 +232,96 @@
       text-align: right;
     }
 
+    .site-section {
+      margin-top: clamp(28px, 5vw, 52px);
+      padding: clamp(22px, 4vw, 34px);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 253, 248, 0.82);
+      box-shadow: var(--shadow);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      color: var(--brand-strong);
+      font-size: clamp(24px, 4vw, 38px);
+      line-height: 1.16;
+    }
+
+    .section-head p {
+      max-width: 520px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      text-align: right;
+    }
+
+    .site-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .site-group {
+      display: grid;
+      align-content: start;
+      gap: 12px;
+      min-width: 0;
+      padding: 18px;
+      border: 1px solid rgba(222, 212, 199, 0.85);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    .site-group h3 {
+      margin: 0;
+      color: var(--ink);
+      font-size: 18px;
+      line-height: 1.25;
+    }
+
+    .site-links {
+      display: grid;
+      gap: 8px;
+    }
+
+    .site-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 42px;
+      padding: 9px 11px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: rgba(248, 244, 236, 0.5);
+      color: var(--brand-strong);
+      font-weight: 700;
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+    }
+
+    .site-link::after {
+      content: "打开";
+      flex: 0 0 auto;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .site-link:hover {
+      border-color: var(--brand);
+      background: #fffaf0;
+      transform: translateY(-1px);
+    }
+
     .workspace {
       display: grid;
       grid-template-columns: 260px minmax(0, 1fr);
@@ -422,6 +512,19 @@
         grid-template-columns: 1fr;
       }
 
+      .section-head {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .section-head p {
+        text-align: left;
+      }
+
+      .site-grid {
+        grid-template-columns: 1fr;
+      }
+
       .toc {
         position: static;
       }
@@ -470,6 +573,7 @@
       <span>泰康 AI 办公自动化练习页</span>
     </a>
     <nav class="topnav" aria-label="页面导航">
+      <a href="#sites">网站入口</a>
       <a href="#prompts">提示词</a>
       <a href="#download">下载数据</a>
     </nav>
@@ -483,6 +587,7 @@
         <p>从授课 PPT 中整理出的提示词，按课堂顺序排列，覆盖 Agent 创建、数据分析、PPT、网页与经营图表练习。</p>
         <div class="actions">
           <button class="primary-button" type="button" id="copyAll">复制全部提示词</button>
+          <a class="ghost-button" href="#sites">查看网站入口</a>
           <a class="ghost-button" href="#download">下载练习数据</a>
         </div>
       </div>
@@ -492,14 +597,46 @@
           <dd>13 条</dd>
         </div>
         <div class="summary-item">
-          <dt>对应模块</dt>
-          <dd>4 个</dd>
+          <dt>网站入口</dt>
+          <dd>8 个</dd>
         </div>
         <div class="summary-item">
           <dt>练习数据</dt>
           <dd>Excel</dd>
         </div>
       </dl>
+    </section>
+
+    <section class="site-section" id="sites" aria-labelledby="sites-title">
+      <div class="section-head">
+        <h2 id="sites-title">常用网站入口</h2>
+        <p>放在提示词前，课堂练习时可以先打开对应工具，再复制下面的提示词。</p>
+      </div>
+      <div class="site-grid">
+        <div class="site-group">
+          <h3>数据分析智能体</h3>
+          <div class="site-links">
+            <a class="site-link" href="https://coze.cn/" target="_blank" rel="noopener noreferrer">coze.cn</a>
+          </div>
+        </div>
+        <div class="site-group">
+          <h3>AI PPT</h3>
+          <div class="site-links">
+            <a class="site-link" href="https://qianwen.com/" target="_blank" rel="noopener noreferrer">qianwen.com</a>
+            <a class="site-link" href="https://doubao.com/" target="_blank" rel="noopener noreferrer">doubao.com</a>
+            <a class="site-link" href="https://coze.com/" target="_blank" rel="noopener noreferrer">coze.com</a>
+            <a class="site-link" href="https://kimi.com/" target="_blank" rel="noopener noreferrer">kimi.com</a>
+            <a class="site-link" href="https://aippt.com/" target="_blank" rel="noopener noreferrer">aippt.com</a>
+          </div>
+        </div>
+        <div class="site-group">
+          <h3>网页</h3>
+          <div class="site-links">
+            <a class="site-link" href="https://doubao.com/" target="_blank" rel="noopener noreferrer">doubao.com</a>
+            <a class="site-link" href="https://chat.deepseek.com/" target="_blank" rel="noopener noreferrer">chat.deepseek.com</a>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section class="workspace" id="prompts" aria-label="提示词列表">
