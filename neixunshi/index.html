@@ -159,6 +159,47 @@
       margin: 0;
       padding-left: 20px;
     }
+    aside {
+      max-height: calc(100vh - 108px);
+      overflow: auto;
+    }
+    .nav-heading {
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+    }
+    .resource-nav,
+    .prompt-nav {
+      display: grid;
+      gap: 6px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .resource-nav a,
+    .prompt-nav a {
+      display: block;
+      color: #3d5265;
+      text-decoration: none;
+      padding: 6px 8px;
+      border: 1px solid transparent;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .resource-nav a {
+      background: #fff;
+      border-color: #cad5cf;
+      color: var(--ink);
+      font-weight: 800;
+    }
+    .resource-nav a:hover,
+    .prompt-nav a:hover,
+    .prompt-nav a.active {
+      border-color: var(--teal);
+      background: var(--soft);
+      color: #095c55;
+    }
     .cards {
       display: grid;
       gap: 16px;
@@ -215,6 +256,50 @@
       justify-content: space-between;
       gap: 12px;
       flex-wrap: wrap;
+    }
+    .resource-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 16px 0 0;
+    }
+    .action-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      border: 1px solid #b8c2bd;
+      background: #fff;
+      color: var(--ink);
+      padding: 8px 14px;
+      text-decoration: none;
+      font-weight: 800;
+      border-radius: 6px;
+    }
+    .action-link.primary {
+      border-color: var(--teal);
+      background: var(--teal);
+      color: #fff;
+    }
+    .action-link.secondary {
+      border-color: #e2b8ad;
+      background: #fff4ef;
+      color: #963d2e;
+    }
+    .action-link:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(23, 33, 43, .10);
+    }
+    .install-steps {
+      margin: 16px 0 0;
+      padding-left: 20px;
+      color: #3d5265;
+    }
+    .install-steps code {
+      background: #f2f5f3;
+      padding: 2px 6px;
+      border: 1px solid #d8ded8;
+      border-radius: 4px;
     }
     .tags {
       display: flex;
@@ -289,6 +374,7 @@
 <button type="button" data-filter="kind" data-value="练习提示词">练习提示词</button>
 <button type="button" data-filter="kind" data-value="示范话术">示范话术</button>
 <button type="button" data-filter="kind" data-value="追问提示词">追问提示词</button>
+<button type="button" data-filter="kind" data-value="工具入口">工具入口</button>
       </div>
     </div>
   </section>
@@ -296,12 +382,13 @@
   <main class="wrap">
     <div class="layout">
       <aside>
-        <h2>章节顺序</h2>
-        <ol>
-          <li>课程设计：课前、课中、课后</li>
-          <li>课程开发：PPT、手册、微课、海报</li>
-          <li>提示词工程：示范话术与追问</li>
-        </ol>
+        <h2>资源入口</h2>
+        <nav class="resource-nav" aria-label="资源入口">
+          <a href="#workbuddy-download">下载 WorkBuddy 插件包</a>
+          <a href="#homework-submit">作业提交入口</a>
+        </nav>
+        <h2 class="nav-heading">提示词目录</h2>
+        <ol class="prompt-nav" id="promptNav" aria-label="提示词目录"></ol>
       </aside>
       <section>
         <div class="cards" id="cards">
@@ -1333,83 +1420,48 @@
         </div>
       </article>
     
+      <article class="prompt-card resource-card" id="workbuddy-download" data-chapter="附录" data-kind="工具入口" data-search="workbuddy 插件包 下载 内训师专家插件 claude code ai empowered trainer">
+        <div class="card-topline">
+          <span class="source">工具下载</span>
+          <span class="kind">工具入口</span>
+        </div>
+        <h3>下载 WorkBuddy 插件包</h3>
+        <p class="meta">附录 · 课堂工具包</p>
+        <p class="usage">下载插件压缩包后，可按课堂说明安装到 Claude Code skills 目录中使用。文件名：<code>ai-empowered-trainer.zip</code>。</p>
+        <div class="resource-actions">
+          <a class="action-link primary" href="downloads/ai-empowered-trainer.zip" download="ai-empowered-trainer.zip">下载插件包</a>
+        </div>
+        <ol class="install-steps">
+          <li>下载 <code>ai-empowered-trainer.zip</code>。</li>
+          <li>解压到 Claude Code skills 目录，例如 <code>C:\Users\你的用户名\.claude\skills\</code> 或 <code>~/.claude/skills/</code>。</li>
+          <li>重启 Claude Code 后，在对话中按课程说明调用插件。</li>
+        </ol>
+        <div class="card-actions">
+          <div class="tags"><span>WorkBuddy</span><span>工具下载</span><span>插件包</span></div>
+        </div>
+      </article>
+
+      <article class="prompt-card resource-card" id="homework-submit" data-chapter="附录" data-kind="工具入口" data-search="作业 提交 入口 飞书 表单 课程练习 homework submit">
+        <div class="card-topline">
+          <span class="source">作业提交</span>
+          <span class="kind">工具入口</span>
+        </div>
+        <h3>作业提交入口</h3>
+        <p class="meta">附录 · 飞书表单</p>
+        <p class="usage">完成课堂练习或课后作业后，通过飞书表单提交作业材料。</p>
+        <div class="resource-actions">
+          <a class="action-link secondary" href="https://lijiagui.feishu.cn/share/base/form/shrcn5xQpcUBjJ3oHECIFPUup5g" target="_blank" rel="noopener noreferrer">提交作业</a>
+        </div>
+        <div class="card-actions">
+          <div class="tags"><span>飞书表单</span><span>作业提交</span></div>
+        </div>
+      </article>
+
         </div>
         <div class="empty" id="empty">没有匹配的提示词，换个关键词试试。</div>
       </section>
     </div>
   </main>
-
-      <!-- 插件安装部分 -->
-      <article class="prompt-card plugin-install" data-chapter="附录" data-kind="工具下载" data-search="内训师专家插件 安装 下载 claude code">
-        <div class="card-topline">
-          <span class="source">工具下载</span>
-          <span class="kind">Claude Code 插件</span>
-        </div>
-        <h3>内训师专家插件安装</h3>
-        <p class="meta">附录 · Claude Code 技能插件</p>
-        <p class="usage">内训师专家提示词插件，可在 Claude Code 中直接调用使用。</p>
-        
-        <div class="download-section">
-          <h4>📦 下载安装</h4>
-          <p>点击下方按钮下载插件压缩包：</p>
-          
-          <a href="downloads/ai-empowered-trainer.zip" 
-             class="download-btn" 
-             download="ai-empowered-trainer.zip"
-             style="display: inline-block;
-                    padding: 14px 28px;
-                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                    color: white;
-                    text-decoration: none;
-                    border-radius: 12px;
-                    font-weight: 600;
-                    font-size: 16px;
-                    margin: 16px 0;
-                    box-shadow: 0 4px 14px rgba(102, 126, 234, 0.4);
-                    transition: all 0.3s ease;">
-            <i class="fas fa-download"></i> 下载内训师专家插件
-          </a>
-          
-          <div class="install-steps" style="margin-top: 24px;">
-            <h4>📋 安装步骤</h4>
-            <ol style="line-height: 1.8; padding-left: 20px;">
-              <li>下载插件压缩包 <code>ai-empowered-trainer.zip</code></li>
-              <li>解压到你的 Claude Code skills 目录：</li>
-              <li style="margin: 12px 0;">
-                <code style="background: #f5f5f5; 
-                          padding: 8px 12px; 
-                          border-radius: 6px;
-                          font-size: 14px;
-                          display: block;
-                          margin: 8px 0;">
-                  Windows: C:\Users\你的用户名\.claude\skills\<br>
-                  macOS: ~/.claude/skills/
-                </code>
-              </li>
-              <li>重启 Claude Code</li>
-              <li>在对话中输入 <code style="background: #f5f5f5; padding: 4px 8px; border-radius: 4px;">/内训师专家</code> 即可使用</li>
-            </ol>
-          </div>
-          
-          <div class="features" style="margin-top: 24px;">
-            <h4>✨ 功能特点</h4>
-            <ul style="line-height: 1.8; padding-left: 20px;">
-              <li>基于内训师课程体系的完整提示词库</li>
-              <li>支持快速调用各类培训场景提示词</li>
-              <li>包含课程设计、内容开发、培训实施等全流程</li>
-              <li>可直接在 Claude Code 中使用，无需手动输入提示词</li>
-            </ul>
-          </div>
-        </div>
-        
-        <div class="card-actions">
-          <div class="tags">
-            <span>工具下载</span>
-            <span>Claude Code</span>
-            <span>插件</span>
-          </div>
-        </div>
-      </article>
 
   <footer>
     <div class="wrap">来源：AI赋能内训师-授课PPT。页面只整理提示词正文、使用说明和 PPT 页码，不包含本地文件路径。</div>
@@ -1417,6 +1469,8 @@
 
   <script>
     const cards = Array.from(document.querySelectorAll('.prompt-card'));
+    const promptCards = cards.filter((card) => card.querySelector('pre[id^="prompt-"]'));
+    const promptNav = document.getElementById('promptNav');
     const empty = document.getElementById('empty');
     const search = document.getElementById('search');
     let active = { type: 'all', value: '' };
@@ -1425,14 +1479,62 @@
       const q = search.value.trim().toLowerCase();
       let shown = 0;
       for (const card of cards) {
-        const bySearch = !q || card.dataset.search.includes(q);
-        const byFilter = active.type === 'all' || card.dataset[active.type] === active.value;
+        const bySearch = !q || (card.dataset.search || '').toLowerCase().includes(q);
+        const byFilter = active.type === 'all' || (card.dataset[active.type] || '') === active.value;
         const visible = bySearch && byFilter;
         card.style.display = visible ? '' : 'none';
         if (visible) shown += 1;
       }
       empty.style.display = shown ? 'none' : 'block';
     }
+
+    function resetFilters() {
+      search.value = '';
+      active = { type: 'all', value: '' };
+      document.querySelectorAll('[data-filter]').forEach((item) => item.classList.remove('active'));
+      document.querySelector('[data-filter="all"]').classList.add('active');
+      applyFilter();
+    }
+
+    function setActiveNavLink(link) {
+      document.querySelectorAll('.prompt-nav a').forEach((item) => item.classList.remove('active'));
+      if (link) link.classList.add('active');
+    }
+
+    function scrollToTarget(target, hash) {
+      resetFilters();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      history.replaceState(null, '', hash);
+    }
+
+    promptCards.forEach((card) => {
+      const prompt = card.querySelector('pre[id^="prompt-"]');
+      const title = card.querySelector('h3');
+      const cardId = prompt.id.replace('prompt-', 'card-');
+      card.id = cardId;
+
+      const item = document.createElement('li');
+      const link = document.createElement('a');
+      link.href = `#${cardId}`;
+      link.textContent = title.textContent.trim();
+      link.addEventListener('click', (event) => {
+        event.preventDefault();
+        setActiveNavLink(link);
+        scrollToTarget(card, link.hash);
+      });
+      item.appendChild(link);
+      promptNav.appendChild(item);
+    });
+
+    document.querySelectorAll('.resource-nav a').forEach((link) => {
+      link.addEventListener('click', (event) => {
+        const target = document.getElementById(link.hash.slice(1));
+        if (!target) return;
+        event.preventDefault();
+        setActiveNavLink(null);
+        scrollToTarget(target, link.hash);
+      });
+    });
 
     search.addEventListener('input', applyFilter);
     document.querySelectorAll('[data-filter]').forEach((btn) => {
@@ -1454,6 +1556,17 @@
         setTimeout(() => btn.textContent = old, 1200);
       });
     });
+
+    applyFilter();
+
+    if (location.hash) {
+      const target = document.getElementById(location.hash.slice(1));
+      const link = document.querySelector(`.prompt-nav a[href="${location.hash}"]`);
+      if (target) {
+        setActiveNavLink(link);
+        setTimeout(() => target.scrollIntoView({ block: 'start' }), 0);
+      }
+    }
   </script>
 </body>
 </html>
