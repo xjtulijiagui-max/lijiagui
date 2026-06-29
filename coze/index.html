@@ -114,11 +114,6 @@
       color: #fff;
     }
 
-    .button.dify {
-      background: #9fe3df;
-      color: #101828;
-    }
-
     .visual {
       border: 1px solid rgba(255, 255, 255, .18);
       border-radius: 8px;
@@ -454,11 +449,11 @@
       <div>
         <p class="eyebrow">课前准备通知</p>
         <h1>智能体从入门到精通</h1>
-        <p class="lead">请同学们课前完成平台登录、备用入口确认和练习资料下载。课堂会围绕 Coze / Dify 搭建客服智能体与会议纪要智能体。</p>
+        <p class="lead">请同学们课前完成扣子平台登录、备用入口确认和练习资料下载。课堂重点围绕 Coze 搭建客服智能体与会议纪要智能体。</p>
         <div class="actions">
           <a class="button" href="https://code.coze.cn/" target="_blank" rel="noopener">打开扣子编程</a>
           <a class="button secondary" href="https://www.coze.cn/space/" target="_blank" rel="noopener">扣子备用入口</a>
-          <a class="button dify" href="https://dify.ai/" target="_blank" rel="noopener">Dify 官网</a>
+          <a class="button secondary" href="#downloads">下载课堂资料</a>
         </div>
       </div>
       <div class="visual" aria-label="智能体课程准备示意">
@@ -496,8 +491,8 @@
           <p>如果 code.coze.cn 无法打开，请改用 <a href="https://www.coze.cn/space/" target="_blank" rel="noopener">https://www.coze.cn/space/</a>。</p>
         </article>
         <article class="card">
-          <strong>同时准备 Dify</strong>
-          <p>需要使用 Dify 的同学，请提前打开 <a href="https://dify.ai/" target="_blank" rel="noopener">dify.ai</a> 并完成账号登录。</p>
+          <strong>下载课堂资料</strong>
+          <p>提前下载客服知识库和会议纪要模板，课堂上直接复制提示词、上传资料并测试效果。</p>
         </article>
       </div>
       <div class="notice">
@@ -534,7 +529,7 @@
         <article class="download-card">
           <div>
             <h3>课堂使用建议</h3>
-            <p>先下载资料，再复制下方提示词到 Coze 或 Dify。涉及真实客户、保单、身份和医疗材料时必须脱敏。</p>
+            <p>先下载资料，再复制下方提示词到 Coze。涉及真实客户、保单、身份和医疗材料时必须脱敏。</p>
           </div>
           <a class="download" href="#prompts">查看提示词</a>
         </article>
@@ -667,10 +662,40 @@
         </article>
       </div>
     </section>
+
+    <section class="band" id="dify">
+      <div class="section-head">
+        <h2>了解 Dify</h2>
+        <span class="tag">拓展了解即可，不需要深度掌握</span>
+      </div>
+      <div class="downloads">
+        <article class="download-card">
+          <div>
+            <h3>Dify 官网</h3>
+            <p>Dify 是另一类智能体和 AI 应用搭建平台，本课程只作为拓展对照了解，不要求课前注册、配置或深度学习。</p>
+          </div>
+          <a class="download" href="https://dify.ai/" target="_blank" rel="noopener">打开 dify.ai</a>
+        </article>
+        <article class="download-card">
+          <div>
+            <h3>了解重点</h3>
+            <p>知道它也能做知识库、工作流和智能体应用即可。课堂主线仍以 Coze 实操为准。</p>
+          </div>
+          <a class="download" href="#prep">返回课前准备</a>
+        </article>
+        <article class="download-card">
+          <div>
+            <h3>学习边界</h3>
+            <p>不需要掌握 Dify 的部署、模型配置、插件开发或复杂工作流，只保留平台认知。</p>
+          </div>
+          <a class="download" href="#prompts">回到提示词</a>
+        </article>
+      </div>
+    </section>
   </main>
 
   <footer class="footer">
-    <div class="wrap">用于“智能体从入门到精通”课程课前准备、资料下载和提示词复制。</div>
+    <div class="wrap">用于“智能体从入门到精通”课程课前准备、资料下载、提示词复制和 Dify 拓展了解。</div>
   </footer>
 
   <script>
@@ -682,7 +707,7 @@
 
         try {
           await navigator.clipboard.writeText(target.innerText.trim());
-          status.textContent = "已复制，可以粘贴到 Coze 或 Dify。";
+          status.textContent = "已复制，可以粘贴到 Coze。";
           button.textContent = "已复制";
           setTimeout(() => {
             status.textContent = "";
