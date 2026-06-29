@@ -322,6 +322,47 @@
       transform: translateY(-1px);
     }
 
+    .material-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: center;
+      padding: 18px;
+      border: 1px solid rgba(222, 212, 199, 0.85);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    .material-card h3 {
+      margin: 0 0 4px;
+      color: var(--ink);
+      font-size: 20px;
+      line-height: 1.25;
+    }
+
+    .material-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .material-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 16px;
+      border-radius: 6px;
+      background: var(--gold);
+      color: #24170a;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .material-link:hover {
+      background: #b47925;
+    }
+
     .workspace {
       display: grid;
       grid-template-columns: 260px minmax(0, 1fr);
@@ -525,6 +566,10 @@
         grid-template-columns: 1fr;
       }
 
+      .material-card {
+        grid-template-columns: 1fr;
+      }
+
       .toc {
         position: static;
       }
@@ -574,6 +619,7 @@
     </a>
     <nav class="topnav" aria-label="页面导航">
       <a href="#sites">网站入口</a>
+      <a href="#materials">PPT素材</a>
       <a href="#prompts">提示词</a>
       <a href="#download">下载数据</a>
     </nav>
@@ -588,6 +634,7 @@
         <div class="actions">
           <button class="primary-button" type="button" id="copyAll">复制全部提示词</button>
           <a class="ghost-button" href="#sites">查看网站入口</a>
+          <a class="ghost-button" href="#materials">查看 PPT 素材</a>
           <a class="ghost-button" href="#download">下载练习数据</a>
         </div>
       </div>
@@ -601,8 +648,8 @@
           <dd>8 个</dd>
         </div>
         <div class="summary-item">
-          <dt>练习数据</dt>
-          <dd>Excel</dd>
+          <dt>练习素材</dt>
+          <dd>Excel + 文章</dd>
         </div>
       </dl>
     </section>
@@ -636,6 +683,20 @@
             <a class="site-link" href="https://chat.deepseek.com/" target="_blank" rel="noopener noreferrer">chat.deepseek.com</a>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="site-section" id="materials" aria-labelledby="materials-title">
+      <div class="section-head">
+        <h2 id="materials-title">PPT 练习素材</h2>
+        <p>用于 PPT 标题打磨、框架梳理、长文本结构化和汇报大纲生成练习。</p>
+      </div>
+      <div class="material-card">
+        <div>
+          <h3>微信文章练习素材</h3>
+          <p>打开素材文章后，可配合下方 PPT 类提示词做结构化提炼与页面大纲生成。</p>
+        </div>
+        <a class="material-link" href="https://mp.weixin.qq.com/s/PGicwQzsIrYKvGh6Jnz2_Q" target="_blank" rel="noopener noreferrer">打开素材</a>
       </div>
     </section>
 
