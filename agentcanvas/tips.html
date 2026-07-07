@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 智能体开发画布 - 填写技巧</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #f0f4f8;
+            color: #1f2937;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            line-height: 1.7;
+        }
+        .page-shell {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+        .page-nav {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+            margin-bottom: 18px;
+        }
+        .nav-title {
+            font-weight: 700;
+            font-size: 18px;
+            color: #1f2937;
+        }
+        .nav-subtitle {
+            color: #64748b;
+            font-size: 12px;
+            margin-top: 2px;
+        }
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .nav-link {
+            color: #3730a3;
+            background: #eef2ff;
+            border: 1px solid #c7d2fe;
+            border-radius: 8px;
+            padding: 9px 12px;
+            font-weight: 700;
+            font-size: 14px;
+            text-decoration: none;
+        }
+        .nav-link:hover,
+        .nav-link:focus {
+            background: #e0e7ff;
+            border-color: #818cf8;
+            outline: none;
+        }
+        .hero {
+            background: linear-gradient(90deg, #3b82f6, #1e40af);
+            color: #ffffff;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 20px 48px rgba(30, 64, 175, 0.24);
+            margin-bottom: 24px;
+        }
+        .hero h1 {
+            font-size: 30px;
+            line-height: 1.25;
+            margin-bottom: 8px;
+        }
+        .hero p {
+            max-width: 780px;
+            color: #dbeafe;
+            font-size: 16px;
+        }
+        .section {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 22px;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .section h2 {
+            font-size: 20px;
+            color: #1e40af;
+            margin-bottom: 14px;
+        }
+        .grid {
+            display: grid;
+            gap: 16px;
+        }
+        .grid-2 {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .grid-4 {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+        .tip-card {
+            border: 1px solid #dbeafe;
+            border-radius: 8px;
+            padding: 16px;
+            background: #f8fbff;
+        }
+        .tip-card h3 {
+            font-size: 16px;
+            color: #3730a3;
+            margin-bottom: 8px;
+        }
+        .tip-card p,
+        .tip-card li {
+            font-size: 14px;
+            color: #475569;
+        }
+        .formula-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        .formula-table th,
+        .formula-table td {
+            border: 1px solid #d1d5db;
+            padding: 12px;
+            vertical-align: top;
+            text-align: left;
+        }
+        .formula-table th {
+            background: #eef2ff;
+            color: #312e81;
+            font-weight: 700;
+        }
+        .formula-table td:first-child {
+            width: 150px;
+            font-weight: 700;
+            color: #1e40af;
+        }
+        .checklist {
+            display: grid;
+            gap: 10px;
+            list-style: none;
+        }
+        .checklist li {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-left: 4px solid #4f46e5;
+            border-radius: 8px;
+            padding: 10px 12px;
+        }
+        .note {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            border-radius: 8px;
+            padding: 12px 14px;
+            color: #92400e;
+            font-size: 14px;
+            margin-top: 14px;
+        }
+        code {
+            background: #eef2ff;
+            color: #312e81;
+            border-radius: 4px;
+            padding: 2px 5px;
+            font-family: Consolas, 'Microsoft YaHei', monospace;
+            font-size: 0.95em;
+        }
+        @media (max-width: 900px) {
+            .page-nav {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+            .grid-2,
+            .grid-4 {
+                grid-template-columns: 1fr;
+            }
+            .hero h1 {
+                font-size: 24px;
+            }
+            .formula-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="page-shell">
+        <nav class="page-nav" aria-label="页面导航">
+            <div>
+                <div class="nav-title">填写技巧</div>
+                <div class="nav-subtitle">辅导用户把想法填成一张可落地的智能体画布</div>
+            </div>
+            <div class="nav-actions">
+                <a class="nav-link" href="index.html">返回主页面</a>
+                <a class="nav-link" href="example.html">查看示范</a>
+            </div>
+        </nav>
+
+        <section class="hero">
+            <h1>先把“谁用、做什么、怎么验收”写清楚</h1>
+            <p>这张画布不是写技术方案的第一步，而是把业务目标、提示词、工作流、插件和知识库对齐。填写时先求清楚，再求完整。</p>
+        </section>
+
+        <section class="section">
+            <h2>推荐填写顺序</h2>
+            <div class="grid grid-4">
+                <article class="tip-card">
+                    <h3>1. 明确需求</h3>
+                    <p>先写角色、目标用户、核心任务和输入输出。只要这四项不清楚，后面的提示词都会漂。</p>
+                </article>
+                <article class="tip-card">
+                    <h3>2. 写简易提示词</h3>
+                    <p>用一段低成本 Prompt 快速验证模型是否理解任务，不要一开始就追求复杂结构。</p>
+                </article>
+                <article class="tip-card">
+                    <h3>3. 补精准提示词</h3>
+                    <p>把角色、背景、目标、输出形式、约束和示例拆开，让模型知道边界和验收标准。</p>
+                </article>
+                <article class="tip-card">
+                    <h3>4. 画两条工作流</h3>
+                    <p>智能体工作流写系统内部怎么跑，业务工作流写用户现实中怎么用，两者要能互相对上。</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>每个字段怎么写</h2>
+            <table class="formula-table">
+                <thead>
+                    <tr>
+                        <th>字段</th>
+                        <th>填写公式</th>
+                        <th>好例子</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>角色定位</td>
+                        <td><code>一个具备某类专业能力的助手</code></td>
+                        <td>面向信用卡运营团队的活动规则审核助手</td>
+                    </tr>
+                    <tr>
+                        <td>目标用户</td>
+                        <td><code>谁在什么场景下使用</code></td>
+                        <td>一线运营同学在活动上线前检查规则、物料和权益口径</td>
+                    </tr>
+                    <tr>
+                        <td>核心任务</td>
+                        <td><code>输入什么，处理什么，产出什么</code></td>
+                        <td>读取活动规则文档，识别风险项，输出修改建议和上线检查表</td>
+                    </tr>
+                    <tr>
+                        <td>用户痛点</td>
+                        <td><code>现在慢、错、漏、贵在哪里</code></td>
+                        <td>人工审核容易漏掉权益限制、投诉口径和跨渠道不一致</td>
+                    </tr>
+                    <tr>
+                        <td>输入输出</td>
+                        <td><code>输入材料 + 输出物格式</code></td>
+                        <td>输入活动文档和权益表，输出风险清单、修改稿和复核摘要</td>
+                    </tr>
+                    <tr>
+                        <td>插件与知识库</td>
+                        <td><code>模型本身不会的能力和必须引用的资料</code></td>
+                        <td>文档读取、表格解析、法规检索、历史活动规则库</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="section">
+            <h2>提示词填写技巧</h2>
+            <div class="grid grid-2">
+                <article class="tip-card">
+                    <h3>简易提示词</h3>
+                    <p>用 <code>角色 + 技能 + 任务 + 背景 + 规则</code> 五句就够。它的目的不是最终上线，而是验证任务能不能被模型稳定理解。</p>
+                </article>
+                <article class="tip-card">
+                    <h3>精准提示词</h3>
+                    <p>把抽象要求拆成可检查条款。尤其要写清“禁止什么”“输出格式是什么”“遇到资料不足怎么处理”。</p>
+                </article>
+            </div>
+            <div class="note">判断是否写好了：换一个同事来看，他不需要问你背景，也能知道这个智能体服务谁、用什么材料、交付什么结果。</div>
+        </section>
+
+        <section class="section">
+            <h2>常见问题检查</h2>
+            <ul class="checklist">
+                <li>不要只写“提高效率”，要写清楚原流程哪一步慢、为什么慢、希望节省多少时间。</li>
+                <li>不要把插件写成“AI能力”，插件是外部工具，例如搜索、文件读取、表格解析、审批系统连接。</li>
+                <li>不要把知识库写成“互联网资料”，要写具体资料来源、更新频率、负责人和使用边界。</li>
+                <li>不要只画智能体内部流程，业务工作流必须包含真实用户、审批节点和最终交付动作。</li>
+                <li>不要忽略异常情况，至少写一种资料不足、冲突信息或低置信度时的处理方式。</li>
+            </ul>
+        </section>
+    </main>
+</body>
+</html>

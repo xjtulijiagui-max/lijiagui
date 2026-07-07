@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 智能体开发画布 - 合同智能生成案例</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #f4f7f6; font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+        .canvas-container { min-width: 1100px; padding: 20px; }
+        .header-gradient { background: linear-gradient(90deg, #2563eb, #1e40af); }
+        .section-header { background: linear-gradient(90deg, #4338ca, #312e81); color: white; border-radius: 9999px; padding: 6px 20px; font-weight: bold; text-align: center; margin-bottom: 12px; font-size: 0.9rem; }
+        .card { background: white; border-radius: 12px; border: 1px solid #e2e8f0; padding: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); transition: all 0.3s; }
+        .card:hover { box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+        .sidebar { background: #3730a3; color: white; width: 50px; display: flex; align-items: center; justify-content: center; writing-mode: vertical-rl; font-size: 20px; font-weight: bold; letter-spacing: 0.4em; border-radius: 8px; }
+        .content-text { color: #1e40af; font-weight: 500; border-bottom: 1px solid #bfdbfe; display: inline-block; width: 100%; min-height: 1.5em; }
+        .label-gray { color: #64748b; font-size: 0.8rem; margin-bottom: 2px; }
+        .prompt-table td { border: 1px solid #e2e8f0; padding: 8px; font-size: 0.85rem; background: #fff; vertical-align: top; }
+        .workflow-step { background: #eff6ff; border: 1px dashed #3b82f6; border-radius: 6px; padding: 6px; font-size: 0.8rem; margin-bottom: 4px; }
+        .page-nav { max-width: 80rem; margin: 0 auto 16px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; gap: 16px; box-shadow: 0 8px 24px rgba(15,23,42,0.08); }
+        .nav-title { color: #1e293b; font-weight: 700; }
+        .nav-subtitle { color: #64748b; font-size: 12px; margin-top: 2px; }
+        .nav-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .nav-link { color: #3730a3; background: #eef2ff; border: 1px solid #c7d2fe; border-radius: 8px; padding: 9px 12px; font-weight: 700; font-size: 14px; text-decoration: none; }
+        .nav-link:hover, .nav-link:focus { background: #e0e7ff; border-color: #818cf8; outline: none; }
+    </style>
+</head>
+<body class="p-4">
+
+    <div class="page-nav">
+        <div>
+            <div class="nav-title">示范页面：合同智能生成案例</div>
+            <div class="nav-subtitle">作为二级页面展示一份已经填好的智能体画布</div>
+        </div>
+        <div class="nav-actions">
+            <a class="nav-link" href="index.html">返回主页面</a>
+            <a class="nav-link" href="tips.html">填写技巧</a>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto canvas-container bg-white shadow-2xl rounded-xl overflow-hidden flex flex-col border border-gray-200">
+        <div class="header-gradient text-white flex justify-between items-center px-8 py-4">
+            <span class="text-2xl font-bold tracking-wider">AI 智能体开发画布 (Agent Canvas)</span>
+            <span class="bg-yellow-400 text-blue-900 px-3 py-1 rounded-full text-sm font-bold">案例场景：法务合规 - 合同智能生成</span>
+        </div>
+
+        <div class="flex flex-1 p-6 gap-6">
+            <div class="sidebar">实战教学案例</div>
+
+            <div class="flex-1 flex flex-col gap-6">
+                
+                <div class="grid grid-cols-3 gap-6">
+                    <div class="card border-l-4 border-l-blue-500">
+                        <div class="section-header">1. 明确需求</div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div><p class="label-gray">角色</p><span class="content-text">法务智能合规助手</span></div>
+                            <div><p class="label-gray">目标</p><span class="content-text">自动化起草合同初稿</span></div>
+                            <div><p class="label-gray">任务</p><span class="content-text">需求解析与合规生成</span></div>
+                            <div><p class="label-gray">能力</p><span class="content-text">NLP、RAG、模板填充</span></div>
+                            <div class="col-span-2"><p class="label-gray">痛点</p><span class="content-text">人工起草效率低，法律条款更新不及时</span></div>
+                            <div class="col-span-2"><p class="label-gray">输入输出</p><span class="content-text">输入：合同要点描述 -> 输出：标准Word文档</span></div>
+                        </div>
+                    </div>
+
+                    <div class="card border-l-4 border-l-indigo-500">
+                        <div class="section-header">2. 简易提示词</div>
+                        <div class="space-y-1 text-sm leading-relaxed">
+                            <p><strong># 角色：</strong>资深法务专家 DeepSeek</p>
+                            <p><strong># 技能：</strong>精通《民法典》，擅长起草各类商务合同</p>
+                            <p><strong># 任务：</strong>根据用户输入的【场景、金额、双方信息】</p>
+                            <p><strong># 背景：</strong>关联内部合规知识库，确保条款不冲突</p>
+                            <p><strong># 规则：</strong>严禁出现格式错误，必须包含违约条款</p>
+                            <div class="mt-4 p-2 bg-gray-50 border border-gray-100 rounded text-xs text-gray-500 italic">
+                                * 注：通过简单的 Prompt 快速验证模型响应逻辑。
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card border-l-4 border-l-purple-500">
+                        <div class="section-header">3. 精准提示词 (结构化)</div>
+                        <table class="prompt-table w-full">
+                            <tr>
+                                <td><strong>角色：</strong>法律AI Agent</td>
+                                <td><strong>简介：</strong>专注于合同自动化生成</td>
+                                <td><strong>背景：</strong>对接企业标准模板库</td>
+                            </tr>
+                            <tr>
+                                <td><strong>目标：</strong>输出高合规性草案</td>
+                                <td><strong>形式：</strong>Markdown/Docx</td>
+                                <td><strong>约束：</strong>遵守合规审计规则</td>
+                            </tr>
+                            <tr>
+                                <td><strong>能力：</strong>法律检索+逻辑推演</td>
+                                <td><strong>流程：</strong>解析->检索->生成</td>
+                                <td><strong>实例：</strong>《技术服务合同模版》</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-4 gap-6 flex-1">
+                    
+                    <div class="col-span-3 flex flex-col gap-6">
+                        <div class="card relative min-h-[160px] border-t-4 border-t-blue-400">
+                            <div class="section-header">智能体工作流（底层逻辑）</div>
+                            <div class="flex items-center justify-between mt-2 px-4">
+                                <div class="workflow-step w-1/5 text-center">① 用户输入场景需求</div>
+                                <span class="text-blue-400">➔</span>
+                                <div class="workflow-step w-1/5 text-center">② NLP语义解析要素</div>
+                                <span class="text-blue-400">➔</span>
+                                <div class="workflow-step w-1/5 text-center">③ RAG检索合规案例</div>
+                                <span class="text-blue-400">➔</span>
+                                <div class="workflow-step w-1/5 text-center">④ 填充模板生成草案</div>
+                            </div>
+                            <div class="absolute bottom-4 right-4 flex gap-2">
+                                <div class="w-12 h-12 bg-yellow-100 shadow-sm border border-yellow-200 flex items-center justify-center text-[10px] text-yellow-700 font-bold p-1 text-center rotate-3">Agent：DeepSeek</div>
+                                <div class="w-12 h-12 bg-blue-100 shadow-sm border border-blue-200 flex items-center justify-center text-[10px] text-blue-700 font-bold p-1 text-center -rotate-3">编排：扣子 (Coze)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="card relative min-h-[160px] border-t-4 border-t-green-400">
+                            <div class="section-header">业务工作流（用户视角）</div>
+                            <div class="flex items-center justify-around mt-2">
+                                <div class="text-center">
+                                    <div class="bg-green-100 p-2 rounded-lg text-xs font-bold mb-1">发起起草</div>
+                                    <div class="text-[10px] text-gray-500">业务人员</div>
+                                </div>
+                                <span class="text-green-400">▶</span>
+                                <div class="text-center">
+                                    <div class="bg-blue-600 text-white p-2 rounded-lg text-xs font-bold mb-1">AI 自动化起草</div>
+                                    <div class="text-[10px] text-gray-500">智能体处理</div>
+                                </div>
+                                <span class="text-green-400">▶</span>
+                                <div class="text-center">
+                                    <div class="bg-yellow-100 p-2 rounded-lg text-xs font-bold mb-1">人工复核/批注</div>
+                                    <div class="text-[10px] text-gray-500">法务专员 (WPS AI)</div>
+                                </div>
+                                <span class="text-green-400">▶</span>
+                                <div class="text-center">
+                                    <div class="bg-green-600 text-white p-2 rounded-lg text-xs font-bold mb-1">归档执行</div>
+                                    <div class="text-[10px] text-gray-500">OA系统</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-span-1 flex flex-col gap-6">
+                        <div class="card bg-slate-50 border-dashed border-2 border-slate-200">
+                            <div class="section-header">插件 (Tools)</div>
+                            <ul class="text-xs space-y-2 mt-2">
+                                <li class="flex items-center gap-2"><span class="w-2 h-2 bg-blue-500 rounded-full"></span> <strong>WPS AI 插件：</strong> 文件生成与排版</li>
+                                <li class="flex items-center gap-2"><span class="w-2 h-2 bg-blue-500 rounded-full"></span> <strong>法典搜索器：</strong> 实时检索最新法律</li>
+                                <li class="flex items-center gap-2"><span class="w-2 h-2 bg-blue-500 rounded-full"></span> <strong>电子签章：</strong> 流程末端自动对接</li>
+                            </ul>
+                        </div>
+                        <div class="card bg-slate-50 border-dashed border-2 border-slate-200">
+                            <div class="section-header">知识库 (Knowledge)</div>
+                            <div class="space-y-3 mt-2 text-xs">
+                                <div><p class="font-bold text-gray-600">文本：</p><p class="text-blue-700">企业历史合同模板库、合规手册</p></div>
+                                <div><p class="font-bold text-gray-600">表格：</p><p class="text-blue-700">风险条款矩阵表、关键词白名单</p></div>
+                                <div><p class="font-bold text-gray-600">照片/PDF：</p><p class="text-blue-700">往年争议判例扫描件 (RAG分析)</p></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="bg-gray-100 px-8 py-2 text-[10px] text-gray-400 flex justify-between">
+            <span>AI Agent Design Canvas v1.0</span>
+            <span>学习建议：先通过简易提示词验证逻辑，再通过工作流编排复杂业务。</span>
+        </div>
+    </div>
+
+</body>
+</html>
