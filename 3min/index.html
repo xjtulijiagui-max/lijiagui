@@ -30,6 +30,7 @@
       --space-2: 8px;
       --space-3: 12px;
       --space-4: 16px;
+      --space-5: 20px;
       --space-6: 24px;
       --space-8: 32px;
       --space-12: 48px;
@@ -137,18 +138,16 @@
     }
 
     .hero {
-      min-height: min(720px, calc(100dvh - 68px));
       display: grid;
-      align-content: center;
-      gap: var(--space-8);
-      padding: 76px 0 56px;
+      gap: var(--space-6);
+      padding: 38px 0 30px;
     }
 
     .hero-grid {
       display: grid;
       grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.72fr);
-      gap: var(--space-8);
-      align-items: end;
+      gap: var(--space-6);
+      align-items: center;
     }
 
     .eyebrow {
@@ -184,7 +183,7 @@
     .prep-panel {
       border: 1px solid var(--border-subtle);
       border-radius: 14px;
-      padding: var(--space-6);
+      padding: var(--space-4);
       background:
         linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.022)),
         var(--surface-panel);
@@ -256,11 +255,11 @@
       display: grid;
       grid-template-columns: repeat(7, minmax(0, 1fr));
       gap: var(--space-3);
-      margin-bottom: var(--space-12);
+      margin-bottom: var(--space-8);
     }
 
     .summary-card {
-      min-height: 110px;
+      min-height: 82px;
       transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
     }
 
@@ -289,7 +288,7 @@
     .content-grid {
       display: grid;
       grid-template-columns: 210px minmax(0, 1fr);
-      gap: var(--space-8);
+      gap: var(--space-6);
       align-items: start;
     }
 
@@ -332,7 +331,7 @@
 
     .tasks {
       display: grid;
-      gap: var(--space-6);
+      gap: var(--space-5);
     }
 
     .task-card {
@@ -356,7 +355,7 @@
     }
 
     .task-inner {
-      padding: var(--space-6);
+      padding: 20px;
     }
 
     .task-header {
@@ -451,6 +450,70 @@
       padding-left: 1.35em;
     }
 
+    .downloads {
+      border: 1px solid rgba(53,209,154,0.20);
+      border-radius: 12px;
+      margin: 0 0 var(--space-4);
+      padding: 13px 14px;
+      background:
+        linear-gradient(180deg, rgba(53,209,154,0.075), rgba(255,255,255,0.018)),
+        rgba(255,255,255,0.025);
+    }
+
+    .downloads-title {
+      margin: 0 0 10px;
+      color: var(--category-note);
+      font-size: 12px;
+      font-weight: 590;
+    }
+
+    .download-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-2);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .download-link {
+      display: grid;
+      gap: 4px;
+      border: 1px solid rgba(255,255,255,0.075);
+      border-radius: 10px;
+      padding: 10px 11px;
+      background: rgba(255,255,255,0.032);
+      color: var(--text-secondary);
+      transition: border-color 160ms ease, background 160ms ease, transform 120ms ease;
+    }
+
+    .download-link:hover {
+      border-color: rgba(53,209,154,0.45);
+      background: rgba(53,209,154,0.08);
+    }
+
+    .download-link:focus-visible {
+      outline: 2px solid var(--category-note);
+      outline-offset: 3px;
+    }
+
+    .download-link:active {
+      transform: translateY(1px);
+    }
+
+    .download-name {
+      color: var(--text-primary);
+      font-size: 14px;
+      font-weight: 590;
+      line-height: 1.45;
+    }
+
+    .download-meta {
+      color: var(--text-muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
     .prompt-wrap {
       border: 1px solid rgba(143,140,255,0.18);
       border-radius: 13px;
@@ -510,15 +573,6 @@
     .toast.is-visible {
       opacity: 1;
       transform: translate(-50%, 0);
-    }
-
-    .footer {
-      margin-top: var(--space-12);
-      border-top: 1px solid var(--border-subtle);
-      padding-top: var(--space-6);
-      color: var(--text-muted);
-      font-size: 13px;
-      line-height: 1.7;
     }
 
     @media (prefers-reduced-motion: no-preference) {
@@ -595,12 +649,13 @@
 
       .hero {
         min-height: auto;
-        padding-top: 46px;
+        padding-top: 28px;
       }
 
       .legend,
       .summary,
       .meta-grid,
+      .download-list,
       .toc nav {
         grid-template-columns: 1fr;
       }
@@ -629,7 +684,6 @@
     <header class="topbar">
       <a class="brand" href="#top" aria-label="返回顶部">
         <span class="brand-mark" aria-hidden="true">AI</span>
-        <span>CSTD 0708</span>
       </a>
       <div class="top-actions" aria-label="外部链接">
         <a href="https://www.codebuddy.cn/work/" target="_blank" rel="noopener">workbuddy</a>
@@ -723,6 +777,23 @@
                   <p>上传附件，要求以 HTML 格式输出，并按指定字体、行距、颜色和排版规则生成。</p>
                 </div>
               </div>
+              <div class="downloads" aria-label="任务 1 课堂素材下载">
+                <p class="downloads-title">课堂素材下载</p>
+                <ul class="download-list">
+                  <li>
+                    <a class="download-link" href="./downloads/task1-ai-organization-change-v3.docx" download="任务1：AI组织变革+数字员工 V3.docx">
+                      <span class="download-name">任务1：AI组织变革+数字员工 V3.docx</span>
+                      <span class="download-meta">Word · 29 KB</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="download-link" href="./downloads/task1-ai-organization-change-v3-layout.docx" download="任务1：AI组织变革+数字员工 V3-排版.docx">
+                      <span class="download-name">任务1：AI组织变革+数字员工 V3-排版.docx</span>
+                      <span class="download-meta">Word · 17 KB</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
               <div class="prompt-wrap">
                 <div class="prompt-head"><span>提示词</span></div>
                 <pre id="prompt-1">将附件的内容，以html格式输出(不要改动任何内容)，格式和排版的布局如下:
@@ -755,6 +826,23 @@
                   <span class="meta-label">流程</span>
                   <p>先生成有记忆点的 PPT 大纲，再调用 pptx skill 整理成完整 PPT。</p>
                 </div>
+              </div>
+              <div class="downloads" aria-label="任务 2 课堂素材下载">
+                <p class="downloads-title">课堂素材下载</p>
+                <ul class="download-list">
+                  <li>
+                    <a class="download-link" href="./downloads/task2-hr-ai-application-map.pdf" download="任务2：人力资源AI应用落地全景图.pdf">
+                      <span class="download-name">任务2：人力资源AI应用落地全景图.pdf</span>
+                      <span class="download-meta">PDF · 215 KB</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="download-link" href="./downloads/task2-ai-organization-public-class-v2.pptx" download="【0703微调】AI组织变革深圳公开课 - CSTD V2.pptx">
+                      <span class="download-name">AI组织变革深圳公开课 - CSTD V2.pptx</span>
+                      <span class="download-meta">PPTX · 28.7 MB</span>
+                    </a>
+                  </li>
+                </ul>
               </div>
               <div class="prompt-wrap">
                 <div class="prompt-head"><span>提示词</span></div>
@@ -820,6 +908,17 @@
                   <span class="meta-label">流程</span>
                   <p>先准备：专家 - 技能 - Skillhub - 数据分析 - 安装。然后写提示词并上传附件。</p>
                 </div>
+              </div>
+              <div class="downloads" aria-label="任务 3 课堂素材下载">
+                <p class="downloads-title">课堂素材下载</p>
+                <ul class="download-list">
+                  <li>
+                    <a class="download-link" href="./downloads/task3-store-profile-sample.xls" download="任务3：门店画像模拟数据.xls">
+                      <span class="download-name">任务3：门店画像模拟数据.xls</span>
+                      <span class="download-meta">Excel · 89 KB</span>
+                    </a>
+                  </li>
+                </ul>
               </div>
               <div class="prompt-wrap">
                 <div class="prompt-head"><span>提示词</span></div>
@@ -935,6 +1034,17 @@
                   <span class="meta-label">流程</span>
                   <p>可以补充更多数据分析的具体要求，并上传对应附件数据。</p>
                 </div>
+              </div>
+              <div class="downloads" aria-label="任务 4 课堂素材下载">
+                <p class="downloads-title">课堂素材下载</p>
+                <ul class="download-list">
+                  <li>
+                    <a class="download-link" href="./downloads/task4-maotai-financial-metrics.docx" download="任务4：茅台酒主要财务指标.docx">
+                      <span class="download-name">任务4：茅台酒主要财务指标.docx</span>
+                      <span class="download-meta">Word · 23 KB</span>
+                    </a>
+                  </li>
+                </ul>
               </div>
               <div class="prompt-wrap">
                 <div class="prompt-head"><span>提示词</span></div>
@@ -1077,6 +1187,17 @@
                   <p>把专业理解转成一分钟短视频口播稿。</p>
                 </div>
               </div>
+              <div class="downloads" aria-label="任务 7 课堂素材下载">
+                <p class="downloads-title">课堂素材下载</p>
+                <ul class="download-list">
+                  <li>
+                    <a class="download-link" href="./downloads/task7-videoflow.html" download="任务7-videoflow.html">
+                      <span class="download-name">任务7-videoflow.html</span>
+                      <span class="download-meta">HTML · 6 KB</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
               <div class="prompt-wrap">
                 <div class="prompt-head"><span>提示词</span></div>
                 <pre id="prompt-7">请把我以上内容转为一分钟短视频口播稿</pre>
@@ -1086,9 +1207,6 @@
         </section>
       </div>
 
-      <footer class="footer">
-        <p>输出要求：工具、流程、提示词、备注用四个颜色；提示词可以复制；复制后显示已经复制；生成 HTML；视觉检查后上传到 GitHub Pages。</p>
-      </footer>
     </main>
   </div>
 
