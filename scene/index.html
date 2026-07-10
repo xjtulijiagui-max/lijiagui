@@ -1157,7 +1157,6 @@
     document.querySelectorAll("[data-screenshot-src]").forEach((frame) => {
       const placeholder = frame.querySelector(".screenshot-placeholder");
       const image = new Image();
-      image.loading = "lazy";
       image.decoding = "async";
       image.alt = frame.dataset.screenshotAlt || "";
       image.width = 960;
