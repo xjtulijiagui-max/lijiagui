@@ -1,0 +1,1110 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="立白 AI 终端突围战学员提示词与课堂数据下载页">
+  <title>立白 AI 终端突围战｜学员提示词与数据下载</title>
+  <style>
+    :root {
+      --surface-primary: #F7F6EF;
+      --surface-secondary: #FFFDF7;
+      --surface-elevated: #FFFFFF;
+      --text-primary: #141413;
+      --text-secondary: #5E5D59;
+      --text-tertiary: #87867F;
+      --border-default: #E7E2D6;
+      --border-subtle: #F0EEE6;
+      --accent-primary: #178A5A;
+      --accent-hover: #0F6F49;
+      --accent-warm: #C96442;
+      --status-success: #178A5A;
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+      --space-16: 64px;
+      color-scheme: light;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 14% 0%, rgba(23, 138, 90, 0.12), transparent 28rem),
+        linear-gradient(180deg, var(--surface-primary), #F1EFE5 58%, #ECE8DC);
+      color: var(--text-primary);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .page-shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+      gap: var(--space-10);
+      align-items: center;
+      padding: var(--space-16) 0 var(--space-12);
+    }
+
+    .hero-copy {
+      display: grid;
+      gap: var(--space-5);
+    }
+
+    .eyebrow {
+      width: fit-content;
+      border: 1px solid var(--border-default);
+      border-radius: 999px;
+      background: rgba(255, 253, 247, 0.76);
+      padding: var(--space-2) var(--space-4);
+      color: var(--accent-warm);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+
+    h1 span {
+      display: block;
+    }
+
+    .hero-copy p {
+      max-width: 720px;
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 18px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+    }
+
+    .action-link {
+      display: inline-flex;
+      min-height: 44px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      padding: 10px 16px;
+      font-weight: 700;
+      transition: transform 160ms ease-out, border-color 160ms ease-out, background-color 160ms ease-out;
+    }
+
+    .action-link.primary {
+      border: 1px solid var(--accent-primary);
+      background: var(--accent-primary);
+      color: #FFFFFF;
+    }
+
+    .action-link.secondary {
+      border: 1px solid var(--border-default);
+      background: var(--surface-elevated);
+      color: var(--text-primary);
+    }
+
+    .action-link:hover {
+      transform: translateY(-1px);
+    }
+
+    .product-panel {
+      overflow: hidden;
+      border: 1px solid var(--border-default);
+      border-radius: 20px;
+      background: var(--surface-elevated);
+      box-shadow: 0 14px 40px rgba(20, 20, 19, 0.08);
+    }
+
+    .product-panel img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      background: var(--border-subtle);
+    }
+
+    .product-caption {
+      padding: var(--space-5);
+    }
+
+    .product-caption strong {
+      display: block;
+      margin-bottom: var(--space-1);
+      font-size: 18px;
+    }
+
+    .product-caption span {
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .section {
+      padding: var(--space-12) 0;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: var(--space-6);
+      margin-bottom: var(--space-6);
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(28px, 3.5vw, 42px);
+      line-height: 1.2;
+    }
+
+    .section-heading p {
+      max-width: 460px;
+      margin: 0;
+      color: var(--text-secondary);
+    }
+
+    .download-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-5);
+    }
+
+    .download-card {
+      display: grid;
+      gap: var(--space-2);
+      min-height: 184px;
+      border: 1px solid var(--border-default);
+      border-radius: 16px;
+      background: var(--surface-elevated);
+      padding: var(--space-6);
+      box-shadow: 0 14px 40px rgba(20, 20, 19, 0.06);
+      transition: transform 160ms ease-out, border-color 160ms ease-out, box-shadow 160ms ease-out;
+    }
+
+    .download-card:hover,
+    .download-card:focus-visible {
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 1px rgba(23, 138, 90, 0.18), 0 18px 46px rgba(20, 20, 19, 0.08);
+      transform: translateY(-2px);
+      outline: none;
+    }
+
+    .download-kicker {
+      color: var(--accent-primary);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+
+    .download-card strong {
+      font-size: 22px;
+      line-height: 1.25;
+    }
+
+    .download-card span:not(.download-kicker) {
+      color: var(--text-secondary);
+    }
+
+    .download-card small {
+      color: var(--text-tertiary);
+      font-size: 12px;
+      word-break: break-all;
+    }
+
+    .tool-row {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      border: 1px solid var(--border-default);
+      border-radius: 16px;
+      background: rgba(255, 253, 247, 0.92);
+      padding: var(--space-3);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: 0 10px 28px rgba(20, 20, 19, 0.06);
+    }
+
+    .filter-button {
+      min-height: 38px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: 8px 13px;
+      transition: background-color 120ms ease-out, color 120ms ease-out, border-color 120ms ease-out;
+    }
+
+    .filter-button:hover,
+    .filter-button:focus-visible {
+      border-color: var(--border-default);
+      background: var(--surface-elevated);
+      outline: none;
+    }
+
+    .filter-button.is-active {
+      background: var(--accent-primary);
+      color: #FFFFFF;
+    }
+
+    .prompt-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-5);
+      margin-top: var(--space-6);
+    }
+
+    .prompt-card {
+      display: grid;
+      align-content: start;
+      gap: var(--space-4);
+      border: 1px solid var(--border-default);
+      border-radius: 16px;
+      background: var(--surface-secondary);
+      padding: var(--space-6);
+      box-shadow: 0 10px 30px rgba(20, 20, 19, 0.04);
+      transition: transform 160ms ease-out, border-color 160ms ease-out, box-shadow 160ms ease-out;
+    }
+
+    .prompt-card:hover {
+      border-color: rgba(23, 138, 90, 0.46);
+      box-shadow: 0 0 0 1px rgba(23, 138, 90, 0.12), 0 16px 38px rgba(20, 20, 19, 0.07);
+      transform: translateY(-2px);
+    }
+
+    .prompt-card.is-hidden {
+      display: none;
+    }
+
+    .card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+
+    .card-meta span {
+      border: 1px solid var(--border-default);
+      border-radius: 999px;
+      background: var(--surface-elevated);
+      color: var(--text-secondary);
+      padding: 5px 9px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .prompt-card h3 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.25;
+    }
+
+    .prompt-card p {
+      margin: 0;
+      color: var(--text-secondary);
+    }
+
+    pre {
+      overflow: auto;
+      margin: 0;
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      background: #FFFFFF;
+      color: var(--text-primary);
+      padding: var(--space-4);
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 13px;
+      line-height: 1.62;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    pre.is-collapsed {
+      overflow: hidden;
+      max-height: 320px;
+    }
+
+    pre.is-expanded {
+      overflow: auto;
+      max-height: none;
+    }
+
+    .card-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+
+    .copy-button {
+      width: fit-content;
+      min-height: 42px;
+      border: 1px solid var(--accent-primary);
+      border-radius: 12px;
+      background: var(--accent-primary);
+      color: #FFFFFF;
+      cursor: pointer;
+      padding: 9px 14px;
+      font-weight: 800;
+      transition: transform 120ms ease-out, background-color 120ms ease-out, border-color 120ms ease-out;
+    }
+
+    .expand-button {
+      width: fit-content;
+      min-height: 42px;
+      border: 1px solid var(--border-default);
+      border-radius: 12px;
+      background: var(--surface-elevated);
+      color: var(--text-primary);
+      cursor: pointer;
+      padding: 9px 14px;
+      font-weight: 800;
+      transition: transform 120ms ease-out, background-color 120ms ease-out, border-color 120ms ease-out;
+    }
+
+    .copy-button:hover,
+    .copy-button:focus-visible {
+      border-color: var(--accent-hover);
+      background: var(--accent-hover);
+      outline: none;
+    }
+
+    .expand-button:hover,
+    .expand-button:focus-visible {
+      border-color: var(--accent-primary);
+      background: var(--surface-secondary);
+      outline: none;
+    }
+
+    .copy-button:active {
+      transform: translateY(1px);
+    }
+
+    .expand-button:active {
+      transform: translateY(1px);
+    }
+
+    .copy-button.is-copied {
+      border-color: var(--status-success);
+      background: var(--status-success);
+    }
+
+    .empty-state {
+      display: none;
+      border: 1px solid var(--border-default);
+      border-radius: 16px;
+      background: var(--surface-elevated);
+      padding: var(--space-8);
+      color: var(--text-secondary);
+      text-align: center;
+    }
+
+    .empty-state.is-visible {
+      display: block;
+    }
+
+    footer {
+      padding: var(--space-12) 0 var(--space-16);
+      color: var(--text-tertiary);
+      font-size: 14px;
+    }
+
+    @media (max-width: 860px) {
+      .hero,
+      .download-grid,
+      .prompt-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-heading {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .tool-row {
+        position: static;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .page-shell {
+        width: min(100% - 24px, 1180px);
+      }
+
+      .hero {
+        padding-top: var(--space-10);
+      }
+
+      .download-card,
+      .prompt-card {
+        padding: var(--space-5);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition-duration: 1ms !important;
+        animation-duration: 1ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="page-shell hero">
+    <div class="hero-copy">
+      <span class="eyebrow">学员手册提示词库</span>
+      <h1><span>立白 AI 终端突围战</span><span>课堂工具页</span></h1>
+      <p>这里汇总学员手册中的关键提示词，并提供课堂数据集下载。上课时直接复制提示词、粘贴资料、调用工具即可进入对应关卡。</p>
+      <div class="hero-actions">
+        <a class="action-link primary" href="#prompts">查看提示词</a>
+        <a class="action-link secondary" href="#downloads">下载数据</a>
+      </div>
+    </div>
+    <aside class="product-panel" aria-label="课程视觉素材">
+      <img src="assets/liby-product.jpg" alt="立白产品素材">
+      <div class="product-caption">
+        <strong>终端业务场景</strong>
+        <span>围绕项目立项、终端内容增长、经销商答疑和阶段汇报展开。</span>
+      </div>
+    </aside>
+  </header>
+
+  <main>
+    <section class="page-shell section" id="downloads">
+      <div class="section-heading">
+        <h2>课堂文件下载</h2>
+        <p>两个 Excel 保留原文件名，适合直接用于数据分析、看板生成和课前调研复盘。</p>
+      </div>
+      <div class="download-grid">
+        
+        <a class="download-card" href="assets/关卡4_立白智净终端项目管理_模拟数据集 (1).xlsx" download>
+          <span class="download-kicker">Excel 下载</span>
+          <strong>关卡4项目管理模拟数据集</strong>
+          <span>用于生成项目管理驾驶舱、日报、周报、月报和管理层关注事项。</span>
+          <small>关卡4_立白智净终端项目管理_模拟数据集 (1).xlsx · 33.2 KB</small>
+        </a>
+
+        <a class="download-card" href="assets/课前调研问卷结果导出-钉钉(1).xlsx" download>
+          <span class="download-kicker">Excel 下载</span>
+          <strong>课前调研问卷结果导出</strong>
+          <span>用于课堂画像、分组分析、需求识别和课前调研复盘。</span>
+          <small>课前调研问卷结果导出-钉钉(1).xlsx · 12.5 KB</small>
+        </a>
+      </div>
+    </section>
+
+    <section class="page-shell section" id="prompts">
+      <div class="section-heading">
+        <h2>可复制提示词</h2>
+        <p>按关卡筛选后复制。长提示词保留结构，便于直接粘贴到 DeepSeek、Kimi、Coze 或其他工具中。</p>
+      </div>
+      <div class="tool-row" aria-label="提示词筛选">
+        <button class="filter-button is-active" type="button" data-filter="全部" aria-pressed="true">全部</button>
+<button class="filter-button" type="button" data-filter="关卡01" aria-pressed="false">关卡01</button>
+<button class="filter-button" type="button" data-filter="关卡02" aria-pressed="false">关卡02</button>
+<button class="filter-button" type="button" data-filter="关卡03" aria-pressed="false">关卡03</button>
+<button class="filter-button" type="button" data-filter="关卡04" aria-pressed="false">关卡04</button>
+<button class="filter-button" type="button" data-filter="关卡05" aria-pressed="false">关卡05</button>
+<button class="filter-button" type="button" data-filter="关卡06" aria-pressed="false">关卡06</button>
+<button class="filter-button" type="button" data-filter="关卡07" aria-pressed="false">关卡07</button>
+      </div>
+      <div class="prompt-grid" id="promptGrid">
+        
+        <article class="prompt-card" data-category="线索卡C" data-stage="通用">
+          <div class="card-meta">
+            <span>通用</span>
+            <span>线索卡C</span>
+          </div>
+          <h3>万能提示词框架 CRISPE</h3>
+          <p>用于把模糊需求整理成角色、任务、背景、风格、语气和示例。</p>
+          <pre id="prompt-0">C-Character（角色）：你是一位[角色描述]
+R-Request（任务）：请帮我[具体任务]
+I-Insight（背景）：背景是[上下文信息]
+S-Style（风格）：风格要求[专业/活泼/简洁]
+P-Personality（语气）：语气[正式/友好]
+E-Example（示例）：参考示例[XXX]</pre>
+          <button class="copy-button" type="button" data-copy-target="prompt-0" aria-label="复制提示词">复制提示词</button>
+        </article>
+
+        <article class="prompt-card" data-category="线索卡C" data-stage="关卡01">
+          <div class="card-meta">
+            <span>关卡01</span>
+            <span>线索卡C</span>
+          </div>
+          <h3>队名生成提示词</h3>
+          <p>用于快速生成战队名称备选和寓意说明。</p>
+          <pre id="prompt-1">你是一位创意命名专家。我们是7人探险团队，即将前往西沙群岛开展AIGC实战。请生成10个队名备选，要求：体现海洋元素+科技感+团队精神，每个队名附带寓意说明。</pre>
+          <button class="copy-button" type="button" data-copy-target="prompt-1" aria-label="复制提示词">复制提示词</button>
+        </article>
+
+        <article class="prompt-card" data-category="线索卡D" data-stage="关卡02">
+          <div class="card-meta">
+            <span>关卡02</span>
+            <span>线索卡D</span>
+          </div>
+          <h3>手绘草图提示词</h3>
+          <p>用于把项目路径、业务逻辑或文档主线生成极简手绘图。</p>
+          <pre id="prompt-2">## 角色（Role）
+你是一名专业的手绘笔记艺术家和信息设计师。
+
+## 任务（Task）
+字体设计，有创意，创意手绘字，文字排版艺术，手写字线条细，线条圆润，冲击力，艺术构图，先锋艺术，极致清晰，极简主义，简约高级，杰作。
+基于我选中的文本内容或者我选中的资料或者page，创建一张清晰、简洁的手绘笔记风格的手绘草图图像，画风要有很强的手绘感，旨在帮助读者快速把握其内在逻辑和核心要点。
+
+## 步骤（Steps）
+阅读并提取“关键节点”（角色/动作/结果/条件），按流程或因果关系进行组织。
+确保每一幅图都有一个清晰、简短的主题，把主题用大字表现，并确保视觉集中。不要在一幅手绘图中提供过多信息，不要让视觉过于拥挤。
+用简洁的中文关键词命名其他关键节点，确保文字书写正确、措辞易于理解，字号要比主题小至少一级。不要在一张图里放太多文字。文字是次要的，插图才是第一优先。
+根据核心要求创建图像，让生成效果更简洁，填满画布以保证视觉均衡，不要过度居中。
+
+## 核心要求（Core Requirements）
+视觉风格：严格遵循手绘笔记的手绘风格。所有元素都应具有手写感。使用干净、极简的线条，并配合简单图标。整体感觉应像用彩色铅笔在白板或笔记本上绘制。
+构图与布局：整体布局必须清晰、简洁、有逻辑，能自然引导读者视线。布局不需要严格遵循从左到右或从上到下；合理自由地安排元素，并确保它们之间有足够的空间。严格避免箭头重叠；确保视觉不混乱。
+颜色：黑色为主要素描线条，以确保视觉清晰，但可用其他颜色（如红色用于强调、绿色或黄色用于装饰），保持整体简洁；纯白色背景，高对比度；不使用渐变、不使用阴影、不使用照片/3D/拟物风格。
+尺寸：始终保持 4:3 比例。
+语言：中文输出为主，部分内容可有少量英文。
+
+## 输出目标（Output Goal）
+生成一张极简手绘草图，能清晰解释原文的核心思想，让任何看到这张图的人都能快速理解其主要内容。</pre>
+          <button class="copy-button" type="button" data-copy-target="prompt-2" aria-label="复制提示词">复制提示词</button>
+        </article>
+
+        <article class="prompt-card" data-category="线索卡E" data-stage="关卡05">
+          <div class="card-meta">
+            <span>关卡05</span>
+            <span>线索卡E</span>
+          </div>
+          <h3>Coze 智能体角色设定示例</h3>
+          <p>用于新建智能体时配置角色、服务对象和固定口径。</p>
+          <pre id="prompt-3">你是一个专业的中越双语翻译助手，主要服务于中国渔民与越南渔民之间的沟通。当用户输入中文时，你输出对应的越南语翻译；当用户输入越南语时，你输出对应的中文翻译。每次翻译后，请在末尾加上一句：「附近有中国海军巡逻保护，请放心作业。」</pre>
+          <button class="copy-button" type="button" data-copy-target="prompt-3" aria-label="复制提示词">复制提示词</button>
+        </article>
+
+        <article class="prompt-card" data-category="线索卡G" data-stage="关卡02">
+          <div class="card-meta">
+            <span>关卡02</span>
+            <span>线索卡G</span>
+          </div>
+          <h3>高记忆 Word 文档提示词</h3>
+          <p>用于生成适合管理层阅读的正式文档、目录框架和执行摘要。</p>
+          <pre id="prompt-4" class="is-collapsed">Role：信息架构师、商业文档专家和记忆策略专家
+
+Background：
+用户需要撰写一份正式Word文档。该文档不仅要内容完整、信息丰富，还要具备清晰的章节结构、高记忆度的标题和顺畅的阅读逻辑，使管理者能够在短时间内理解核心内容，并记住关键结论。
+
+Profile：
+你是一位精通商业写作、信息组织和记忆心理学的专家，擅长将复杂、零散的业务信息，整理为逻辑清晰、标题整齐、重点突出的正式文档。你能够运用类比串联法、同字串联法、拆字串联法、数字记忆法和递进结构法，为文档设计具有传播力和记忆点的章节体系。
+
+Skills：
+你具备以下能力：
+提炼文档核心主题和管理目标。
+将复杂材料归纳为清晰的章节结构。
+设计整齐、对仗、朗朗上口的章节标题。
+运用记忆法则串联不同业务模块。
+将抽象概念转化为具体案例、结论和行动建议。
+控制文档层级，使标题、段落、表格和结论相互支撑。
+使用正式、专业、适合企业汇报的语言。
+
+Goals：
+根据用户提供的原始材料，创建一份具有高记忆点的Word文档框架，并进一步形成可供管理层快速阅读和决策的正式文档。
+
+文档需要实现以下目标：
+让读者快速看懂文档要解决什么问题。
+让各章节之间形成清晰的逻辑关系。
+让每个章节都有一个容易复述的核心观点。
+让全文形成“背景、问题、分析、方案、价值、行动”的逻辑闭环。
+让管理层阅读后能够明确项目价值、实施路径和决策事项。
+
+Constraints：
+必须严格基于用户提供的原始信息，不得虚构事实和数据。
+文档结构应简洁、清晰、正式，避免堆砌概念。
+一级标题应整齐统一，尽量采用同字、同音、类比、递进或数字串联方式。
+每个章节都应包含明确的核心结论，不得只有背景描述。
+重要观点应通过加粗、结论句、表格或公式突出。
+避免使用过于口语化、网络化或夸张的表达。
+文档既要有记忆点，也要符合企业正式汇报口径。
+如原始资料存在信息缺口，应明确标注“待补充”，不得自行编造。
+章节标题应尽量朗朗上口，但不得为了押韵牺牲专业性和准确性。
+文档应具备可直接复制到Word中的完整结构。
+
+Output Format：
+一、文档名称
+设计一个正式、准确、具有记忆点的文档标题。
+
+二、文档核心主题
+用一句话说明文档需要解决的核心问题。
+
+三、核心记忆主线
+选择一种最适合本主题的记忆串联方法，并说明选择理由。可选择：类比串联法、同字串联法、拆字串联法、数字串联法、场景串联法、递进串联法、问题链串联法。
+
+四、Word文档目录框架
+为每个章节提供：章节标题、本章需要回答的核心问题、本章核心内容、本章核心结论、本章记忆点、建议使用的表格、公式、案例或图示。
+
+五、执行摘要
+输出一段适合管理层阅读的执行摘要，内容包括：为什么要开展该项目、当前存在什么问题、建议采取什么方案、预计产生什么价值、需要管理层做出什么决策。
+
+六、正文内容
+根据目录生成完整正文。每一章采用以下结构：背景说明、现状或问题分析、核心观点、具体方案、数据或案例支撑、本章结论。
+
+七、结尾与行动建议
+总结全文，并提出下一步行动安排、责任分工、关键时间节点和管理层决策事项。
+
+Workflow：
+阅读原始材料，识别文档主题、读者和使用场景。
+明确文档需要解决的核心问题和管理目标。
+提炼3到7个主要信息模块。
+分析各模块之间的因果、递进、并列或流程关系。
+选择合适的记忆串联方法。
+为各章节设计整齐、统一、有记忆点的标题。
+为每章提炼一句核心结论。
+补充必要的表格、公式、案例和行动建议。
+检查全文是否形成逻辑闭环。
+以正式Word文档的结构输出最终内容。
+
+User Input：
+请根据以下材料，生成一份具有高记忆点、逻辑闭环、适合企业管理层审阅的Word文档：
+
+【在此粘贴项目背景、业务问题、数据材料、实施要求和其他相关信息】</pre>
+          <div class="card-actions"><button class="copy-button" type="button" data-copy-target="prompt-4" aria-label="复制提示词">复制提示词</button><button class="expand-button" type="button" data-expand-target="prompt-4" aria-label="展开或收起提示词全文">展开全文</button></div>
+        </article>
+
+        <article class="prompt-card" data-category="线索卡H" data-stage="关卡02">
+          <div class="card-meta">
+            <span>关卡02</span>
+            <span>线索卡H</span>
+          </div>
+          <h3>原文数据整理与对比表格</h3>
+          <p>用于把零散材料转成可直接放入 Word 的数据口径、对比表和结论。</p>
+          <pre id="prompt-5" class="is-collapsed">Role：数据分析师、商业文档顾问和表格设计专家
+
+Task：
+请根据以下原始材料，对【分析对象】进行总结和对比，并以适合直接放入Word文档的表格形式输出。
+
+Requirements：
+严格基于原文提供的数据、事实和表述进行整理。
+不得自行补充、推测或编造原文中没有的数据。
+对原文中的不同方案、区域、阶段、部门、产品或指标进行横向比较。
+表格字段应根据原文内容自动设计。
+同一指标必须使用统一单位、统一口径和统一时间范围。
+对无法直接比较的数据，应在备注中说明原因。
+对缺失的数据统一标注为“原文未提供”。
+表格之后需要输出一段总结分析，指出主要差异、优势、风险和结论。
+分析结论必须能够在表格中找到依据。
+输出内容应适合直接复制到正式Word报告中。
+
+Output Format：
+一、数据口径说明
+说明数据来源、时间范围、统计单位和对比对象。
+
+二、核心数据对比表
+根据原文信息生成表格。推荐字段包括但不限于：对比维度、对象A、对象B、对象C、差异说明、数据来源。
+
+三、关键发现
+用连续段落总结表格中最重要的发现，包括：哪个对象表现最好、哪个对象存在明显短板、差异主要产生在哪里、哪些数据值得管理层重点关注。
+
+四、管理结论
+根据数据提出明确、审慎、可执行的结论。
+
+Prompt：
+请根据以下信息，总结分析【分析对象】之间的差异，并用表格形式输出。请严格基于原文的数据，不得虚构或补充原文没有的信息。
+
+【在此粘贴原始数据和文字材料】</pre>
+          <div class="card-actions"><button class="copy-button" type="button" data-copy-target="prompt-5" aria-label="复制提示词">复制提示词</button><button class="expand-button" type="button" data-expand-target="prompt-5" aria-label="展开或收起提示词全文">展开全文</button></div>
+        </article>
+
+        <article class="prompt-card" data-category="线索卡H" data-stage="关卡02">
+          <div class="card-meta">
+            <span>关卡02</span>
+            <span>线索卡H</span>
+          </div>
+          <h3>数据校验、缺失补充与实时更新</h3>
+          <p>用于检查表格数据缺失、错误、口径不一致或时间过期。</p>
+          <pre id="prompt-6" class="is-collapsed">Role：数据核验专家、行业研究员和商业分析师
+
+Task：
+请检查上一轮表格中的数据是否存在缺失、错误、口径不一致、时间过期或来源不明确的问题。对于需要外部补充的数据，进行联网检索和实时更新。
+
+Requirements：
+首先逐项检查上一轮表格中的数据。
+明确区分以下情况：原文已提供且数据完整、原文已提供但数据可能有误、原文数据口径不一致、原文数据已经过期、原文没有提供需要外部补充、无法通过可靠渠道核实。
+联网检索时优先使用以下来源：政府部门、上市公司公告、企业官方网站、行业协会、权威研究机构、正式财务报告、可信媒体和数据库。
+每项外部数据必须注明：数据值、数据时间、数据口径、数据来源、检索或更新时间。
+不得将不同年份、不同区域、不同统计口径的数据直接进行比较。
+无法核实的数据应保留为空，并注明“暂未查询到可靠数据”。
+更新后的表格应将“原文数据”和“更新数据”分开呈现。
+对数据变化较大的项目，应分析变化原因。
+最终结论应同时考虑原始材料和最新公开数据。
+不得使用缺乏出处的自媒体文章作为核心数据来源。
+
+Output Format：
+一、数据校验结果表
+数据项目、原文数据、校验结果、存在问题、是否需要更新。
+
+二、更新后的数据表
+数据项目、原文数据、最新数据、数据时间、数据口径、权威来源。
+
+三、数据变化说明
+分析原文数据与最新数据之间的变化，并说明可能原因。
+
+四、更新后的结论
+基于校验后的数据，重新形成分析结论和管理建议。
+
+Prompt：
+请检查以下表格中的数据是否存在缺失、错误、时间过期或统计口径不一致的问题。对于缺失或可能有误的数据，请联网检索权威来源进行核验和更新，并注明数据时间、统计口径和来源。
+
+【在此粘贴第一轮生成的表格】</pre>
+          <div class="card-actions"><button class="copy-button" type="button" data-copy-target="prompt-6" aria-label="复制提示词">复制提示词</button><button class="expand-button" type="button" data-expand-target="prompt-6" aria-label="展开或收起提示词全文">展开全文</button></div>
+        </article>
+
+        <article class="prompt-card" data-category="线索卡H" data-stage="关卡02">
+          <div class="card-meta">
+            <span>关卡02</span>
+            <span>线索卡H</span>
+          </div>
+          <h3>业务描述转公式</h3>
+          <p>用于把业务逻辑提炼成可测算公式，并说明变量和假设。</p>
+          <pre id="prompt-7" class="is-collapsed">Role：商业分析师、财务建模专家和公式表达专家
+
+Task：
+请将以下业务描述提炼为一个简明、准确、可计算的公式，并解释公式中每个变量的含义。
+
+Requirements：
+公式必须能够反映原文中的核心业务逻辑。
+不得遗漏关键影响因素。
+优先使用加、减、乘、除、比例、增长率、投入产出比和盈亏平衡公式。
+变量名称应简洁、清楚，尽量使用中文变量。
+必须说明每个变量的定义、单位和数据来源。
+如存在前提条件，应明确列出计算假设。
+如原文不足以形成唯一公式，应提供“基础公式”和“扩展公式”。
+不得为了形式简洁而扭曲业务逻辑。
+公式后应提供一个简单的模拟计算案例。
+模拟数据必须明确标注为“示例数据”，不得与真实业务数据混淆。
+
+Output Format：
+一、业务逻辑提炼
+用一段话说明该业务指标由哪些因素共同决定。
+
+二、核心公式
+指标结果 = 变量A × 变量B − 变量C
+或者根据实际情况设计更加合适的公式。
+
+三、变量说明表
+变量、变量名称、含义、单位、数据来源。
+
+四、计算假设
+列出公式成立所依赖的业务条件和边界。
+
+五、模拟测算
+使用一组示例数据代入公式，并展示计算过程。
+
+六、管理含义
+说明公式能够帮助管理者判断什么问题，以及哪些变量最值得优先改善。
+
+Prompt：
+请将以下业务描述总结为一个简明、准确、可以进行数据测算的公式。请说明每个变量的含义、单位、计算假设和数据来源，并提供一个使用示例数据的模拟计算案例。
+
+【在此粘贴需要转化为公式的业务描述】</pre>
+          <div class="card-actions"><button class="copy-button" type="button" data-copy-target="prompt-7" aria-label="复制提示词">复制提示词</button><button class="expand-button" type="button" data-expand-target="prompt-7" aria-label="展开或收起提示词全文">展开全文</button></div>
+        </article>
+
+        <article class="prompt-card" data-category="关卡04" data-stage="关卡04">
+          <div class="card-meta">
+            <span>关卡04</span>
+            <span>关卡04</span>
+          </div>
+          <h3>项目管理驾驶舱生成提示词</h3>
+          <p>基于关卡4模拟数据集，生成单文件 HTML 项目管理驾驶舱。</p>
+          <pre id="prompt-8">你是项目管理数据分析师、前端可视化工程师和企业汇报顾问。
+
+请基于《关卡4_立白智净终端项目管理_模拟数据集 (1).xlsx》生成一个单文件HTML项目管理驾驶舱。
+
+页面必须展示：
+项目基本信息、总体健康度、KPI、九大工作流、里程碑、团队分工、区域试点、预算收益、风险问题、行动项与待决策事项。
+
+分析要求：
+1. 同时呈现计划进度与实际进度。
+2. 自动标识延期任务、关键路径和红黄绿状态。
+3. 基于同一数据源生成日报、周报、月报摘要，核心数字必须保持一致。
+4. 输出管理层Top 3关注事项，明确责任人、行动与截止日期。
+5. 对所有图表和指标说明数据来源工作表，不得虚构数据。
+
+技术要求：
+1. 输出完整可运行的单文件HTML。
+2. 可以使用原生HTML/CSS/JavaScript，也可以使用Chart.js或ECharts CDN。
+3. 页面适合投屏汇报，信息层级清晰。
+4. 若数据字段存在缺失或冲突，请在页面中标注“需人工确认”。</pre>
+          <button class="copy-button" type="button" data-copy-target="prompt-8" aria-label="复制提示词">复制提示词</button>
+        </article>
+
+        <article class="prompt-card" data-category="关卡05" data-stage="关卡05">
+          <div class="card-meta">
+            <span>关卡05</span>
+            <span>关卡05</span>
+          </div>
+          <h3>终端内容增长智能体提示词</h3>
+          <p>用于搭建 Coze 内容增长智能体，支持公众号内容包和销售连环画脚本。</p>
+          <pre id="prompt-9">你是“立白终端内容增长智能体”，服务对象是一线终端营销团队、渠道运营人员和内容增长负责人。
+
+你的任务是根据用户输入的主题、产品资料、目标人群和渠道场景，自动识别任务类型并输出对应内容。
+
+你必须识别两类任务：
+A. 微信公众号内容包。
+B. 低线市场4到6格销售连环画脚本。
+
+当任务是公众号内容包时，请输出：
+选题、标题、摘要、正文结构、正文、配图提示词、排版建议和发布检查清单。
+
+当任务是销售连环画脚本时，请输出：
+人物、场景、冲突、产品解决方案、购买引导和逐格绘图提示词。
+
+合规检查：
+你必须检查品牌事实、产品卖点准确性、夸大宣传、敏感表述和信息缺失。
+信息不足时，必须先追问，不得自由编造。
+涉及功效、价格、促销、售后和政策承诺时，必须提示人工复核。
+
+输出要求：
+结构清晰，可直接复制给内容团队使用。
+每次输出末尾增加“发布前人工复核清单”。</pre>
+          <button class="copy-button" type="button" data-copy-target="prompt-9" aria-label="复制提示词">复制提示词</button>
+        </article>
+
+        <article class="prompt-card" data-category="关卡06" data-stage="关卡06">
+          <div class="card-meta">
+            <span>关卡06</span>
+            <span>关卡06</span>
+          </div>
+          <h3>经销商政策答疑智能体提示词</h3>
+          <p>用于搭建知识库型经销商答疑智能体，强调来源、边界和转人工。</p>
+          <pre id="prompt-10">你是“立白经销商政策答疑智能体”，服务对象是经销商、一线销售和渠道运营人员。
+
+回答原则：
+1. 先给结论，再给依据，再说明适用条件，最后给下一步建议。
+2. 所有回答必须基于知识库资料，不能凭经验自由发挥。
+3. 如果知识库中没有依据，请明确说明“当前资料不足，建议转人工确认”。
+4. 不得承诺费用、合同、特殊审批、个人信息处理或超权限事项。
+5. 对高风险问题必须转人工，包括费用争议、合同条款、特殊审批、售后赔付、个人信息和政策冲突。
+
+输出结构：
+一、简明结论
+二、依据来源
+三、适用条件
+四、下一步建议
+五、是否需要转人工
+
+测试要求：
+请根据知识库设计不少于10个测试问题，覆盖正常问题、边界问题、诱导问题、冲突问题和知识库无答案场景。
+测试后输出准确性、引用情况、风险问题和改进项。</pre>
+          <button class="copy-button" type="button" data-copy-target="prompt-10" aria-label="复制提示词">复制提示词</button>
+        </article>
+
+        <article class="prompt-card" data-category="关卡07" data-stage="关卡07">
+          <div class="card-meta">
+            <span>关卡07</span>
+            <span>关卡07</span>
+          </div>
+          <h3>项目进度智能邮件提示词</h3>
+          <p>用于把前六关成果和关卡4数据转成可视化 HTML 汇报邮件。</p>
+          <pre id="prompt-11">你是企业项目汇报顾问、数据可视化设计师和管理层邮件写作专家。
+
+请汇总第一至第六关成果，并调用第四关项目看板数据，生成一封可直接发送或复制的可视化HTML项目进度邮件。
+
+邮件必须包含：
+1. 简短、有品牌感的开场句或藏头短诗，引出阶段成果，避免喧宾夺主。
+2. 项目总体状态。
+3. 前六关完成情况。
+4. 核心成果。
+5. 关键数据。
+6. 风险问题。
+7. 下一步计划。
+8. 需要管理层支持或决策的事项。
+
+视觉呈现要求：
+使用进度条、状态卡片、简洁图表和成果缩略图。
+所有数据必须与第四关项目看板保持一致。
+管理层应能在3分钟内掌握状态与决策事项。
+
+输出要求：
+输出完整单文件HTML邮件代码，并在代码后用简短文字说明核心数据来源和需要人工确认的口径。</pre>
+          <button class="copy-button" type="button" data-copy-target="prompt-11" aria-label="复制提示词">复制提示词</button>
+        </article>
+
+        <article class="prompt-card" data-category="线索卡I" data-stage="关卡03">
+          <div class="card-meta">
+            <span>关卡03</span>
+            <span>线索卡I</span>
+          </div>
+          <h3>人才画像提示词</h3>
+          <p>用于把模糊用人需求转成可验证、可追问的人才画像。</p>
+          <pre id="prompt-12" class="is-collapsed">【角色设定】
+你是“人才画像助手”。你的职责是帮助HR和业务管理者把模糊的“想要什么样的人”转化为清晰的人才画像，包括能力、经验、行为特征、价值贡献、发展潜力和风险信号。
+
+【任务目标】
+根据岗位、业务目标、典型任务和优秀员工样本，生成可用于招聘、面试、培养、盘点的人才画像。你要避免把画像写成空泛形容词，必须尽量转化为可观察、可验证、可追问的行为证据。
+
+【输入信息】
+JD，详见附件：优秀员工样本和财产险三大岗位说明书。
+
+选填：
+1. 高绩效员工样本：__________
+2. 低绩效或不匹配案例：__________
+3. 能力模型/任职资格：__________
+4. 关键成果指标：__________
+5. 团队文化与管理风格：__________
+
+【工作流程】
+1. 从岗位说明书倒推岗位需要创造的价值。
+2. 从优秀员工样本中提炼关键能力和行为要求。
+3. 对比高绩效样本和不匹配样本，识别差异性行为证据。
+4. 将人才画像分为硬条件、软能力、经验偏好、行为特征、潜力特征和风险信号。
+5. 将每项画像要求转化为验证方法，例如简历证据、面试问题、测评方式或试岗任务。
+6. 排除与岗位无关的敏感属性和刻板印象。
+
+【输出格式】
+请使用Markdown输出，并生成word格式：
+
+# 人才画像报告
+
+## 一、画像适用场景
+## 二、岗位价值定位
+## 三、人才画像总览
+| 画像维度 | 具体要求 | 可观察行为 | 验证方式 | 重要性 |
+|---|---|---|---|---|
+
+## 四、关键能力画像
+## 五、经验与成果画像
+## 六、风险信号
+## 七、应用建议
+- 招聘筛选如何使用：
+- 面试如何使用：
+- 培养发展如何使用：
+- 人才盘点如何使用：
+
+# 以上内容转为Skill
+请将以上提示词转化为一个可通过 / 唤醒的Skill。生成Skill后，用户通过 /技能名 唤醒Skill，并输入必要的输入信息，即可得到结果。</pre>
+          <div class="card-actions"><button class="copy-button" type="button" data-copy-target="prompt-12" aria-label="复制提示词">复制提示词</button><button class="expand-button" type="button" data-expand-target="prompt-12" aria-label="展开或收起提示词全文">展开全文</button></div>
+        </article>
+      </div>
+      <div class="empty-state" id="emptyState">当前筛选下没有提示词。</div>
+    </section>
+  </main>
+
+  <footer class="page-shell">
+    <span>资料来源：立白 AI 终端突围战学员手册与课堂配套数据。</span>
+  </footer>
+
+  <script>
+    const filterButtons = Array.from(document.querySelectorAll('.filter-button'));
+    const cards = Array.from(document.querySelectorAll('.prompt-card'));
+    const emptyState = document.getElementById('emptyState');
+
+    function applyFilter(filter) {
+      let visible = 0;
+      cards.forEach((card) => {
+        const shouldShow = filter === '全部' || card.dataset.stage === filter;
+        card.classList.toggle('is-hidden', !shouldShow);
+        if (shouldShow) visible += 1;
+      });
+      emptyState.classList.toggle('is-visible', visible === 0);
+      filterButtons.forEach((button) => {
+        const active = button.dataset.filter === filter;
+        button.classList.toggle('is-active', active);
+        button.setAttribute('aria-pressed', String(active));
+      });
+    }
+
+    filterButtons.forEach((button) => {
+      button.addEventListener('click', () => applyFilter(button.dataset.filter));
+    });
+
+    async function copyText(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        return;
+      }
+      const area = document.createElement('textarea');
+      area.value = text;
+      area.setAttribute('readonly', '');
+      area.style.position = 'fixed';
+      area.style.opacity = '0';
+      document.body.appendChild(area);
+      area.select();
+      document.execCommand('copy');
+      area.remove();
+    }
+
+    document.querySelectorAll('.copy-button').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const target = document.getElementById(button.dataset.copyTarget);
+        const original = button.textContent;
+        try {
+          await copyText(target.textContent);
+          button.textContent = '已复制';
+          button.classList.add('is-copied');
+          window.setTimeout(() => {
+            button.textContent = original;
+            button.classList.remove('is-copied');
+          }, 1400);
+        } catch (error) {
+          button.textContent = '复制失败';
+          window.setTimeout(() => {
+            button.textContent = original;
+          }, 1400);
+        }
+      });
+    });
+
+    document.querySelectorAll('.expand-button').forEach((button) => {
+      button.addEventListener('click', () => {
+        const target = document.getElementById(button.dataset.expandTarget);
+        const isExpanded = target.classList.toggle('is-expanded');
+        target.classList.toggle('is-collapsed', !isExpanded);
+        button.textContent = isExpanded ? '收起' : '展开全文';
+      });
+    });
+  </script>
+</body>
+</html>
+
