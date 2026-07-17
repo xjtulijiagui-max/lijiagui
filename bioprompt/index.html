@@ -1,0 +1,1507 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biomni与ChatGPT研究任务示例提示词库</title>
+<style>
+:root{
+  --blue:#1f4e9b;
+  --blue2:#3f73c6;
+  --ink:#122042;
+  --muted:#5e6b85;
+  --bg:#f5f7fb;
+  --card:#ffffff;
+  --line:#d9e2f2;
+  --biomni:#0b6f88;
+  --chatgpt:#6b46c1;
+  --warn:#fff3cd;
+  --warn-line:#ffd66b;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC",Arial,sans-serif;
+  color:var(--ink);
+  background:linear-gradient(180deg,#f7f9ff 0%,#ffffff 45%,#f6f8fc 100%);
+}
+header{
+  background:linear-gradient(135deg,#153f86,#477bd2);
+  color:white;
+  padding:42px 52px 34px;
+  border-bottom:6px solid #0b2e67;
+}
+header h1{
+  margin:0 0 10px;
+  font-size:34px;
+  letter-spacing:.5px;
+}
+header p{
+  margin:8px 0 0;
+  font-size:16px;
+  line-height:1.8;
+  max-width:1080px;
+  opacity:.94;
+}
+.container{
+  max-width:1220px;
+  margin:0 auto;
+  padding:28px 26px 60px;
+}
+.toc{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:20px 22px;
+  margin:0 0 26px;
+  box-shadow:0 12px 30px rgba(31,78,155,.08);
+}
+.toc h2{
+  margin:0 0 12px;
+  font-size:20px;
+  color:var(--blue);
+}
+.toc-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;
+}
+.toc a{
+  display:block;
+  text-decoration:none;
+  color:var(--ink);
+  background:#f3f6fc;
+  border:1px solid #e2e9f6;
+  border-radius:12px;
+  padding:12px 14px;
+  line-height:1.55;
+  font-size:14px;
+}
+.toc a:hover{border-color:var(--blue2); background:#eef4ff;}
+.module{
+  margin:34px 0 44px;
+}
+.module-head{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:18px;
+  padding-bottom:10px;
+  border-bottom:2px solid #d6e1f3;
+}
+.module-badge{
+  background:var(--blue);
+  color:#fff;
+  padding:8px 14px;
+  border-radius:999px;
+  font-weight:700;
+  letter-spacing:.5px;
+}
+.module-title{
+  font-size:25px;
+  font-weight:800;
+  color:var(--blue);
+}
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:18px;
+  margin:18px 0;
+  overflow:hidden;
+  box-shadow:0 10px 26px rgba(18,32,66,.07);
+}
+.card-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:18px 22px;
+  background:linear-gradient(180deg,#ffffff,#f7f9fd);
+  border-bottom:1px solid var(--line);
+}
+.card-title{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:20px;
+  font-weight:800;
+}
+.tag{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:13px;
+  padding:5px 10px;
+  border-radius:999px;
+  color:white;
+  font-weight:700;
+  min-width:76px;
+}
+.tag.biomni{background:var(--biomni);}
+.tag.chatgpt{background:var(--chatgpt);}
+.copy-btn{
+  border:0;
+  background:var(--blue);
+  color:#fff;
+  border-radius:10px;
+  padding:9px 15px;
+  cursor:pointer;
+  font-weight:700;
+  font-size:14px;
+  white-space:nowrap;
+}
+.copy-btn:hover{background:#153f86;}
+.prompt{
+  margin:0;
+  padding:22px 24px 28px;
+  background:#fbfcff;
+  overflow:auto;
+  max-height:620px;
+  border-top:0;
+  white-space:pre-wrap;
+  font-family:"Consolas","SFMono-Regular","Menlo","Microsoft YaHei",monospace;
+  font-size:14px;
+  line-height:1.72;
+  color:#14213d;
+}
+.note{
+  background:#fff7e6;
+  border:1px solid #ffe0a3;
+  color:#674700;
+  padding:12px 16px;
+  border-radius:12px;
+  margin-top:14px;
+  line-height:1.65;
+}
+
+.usage-banner{
+  background:linear-gradient(180deg,#fffaf0,#fff3cd);
+  border:1px solid var(--warn-line);
+  border-left:6px solid #f0a500;
+  border-radius:18px;
+  padding:20px 22px;
+  margin:0 0 26px;
+  box-shadow:0 12px 28px rgba(240,165,0,.10);
+  line-height:1.75;
+}
+.usage-banner h2{
+  margin:0 0 8px;
+  font-size:21px;
+  color:#8a5a00;
+}
+.usage-banner p{
+  margin:6px 0;
+  color:#4d3a08;
+  font-size:15px;
+}
+.usage-banner strong{color:#8a4500;}
+
+.footer{
+  color:var(--muted);
+  font-size:13px;
+  padding:18px 0 0;
+  border-top:1px solid var(--line);
+  line-height:1.7;
+}
+@media(max-width:900px){
+  header{padding:32px 24px}
+  header h1{font-size:26px}
+  .toc-grid{grid-template-columns:1fr}
+  .card-header{align-items:flex-start; flex-direction:column}
+  .module-title{font-size:21px}
+}
+@media print{
+  header,.toc,.copy-btn{display:none}
+  .container{padding:0}
+  .card{box-shadow:none; page-break-inside:avoid}
+  .prompt{max-height:none}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>Biomni与ChatGPT研究任务示例提示词库</h1>
+  <p>围绕 AI 靶点发现、化合物筛选、制剂开发、工艺优化与中药现代化的研究任务设计。每个任务均已标注推荐工具，提示词可一键复制，用于课堂演示、科研模拟与研发方案讨论。</p>
+  <p><strong>定位说明：</strong>本网页是“示例提示词库”，用于模拟真实研发任务的提问方式、任务拆解和输出结构；真实项目应根据具体疾病、靶点、数据来源、实验条件、合规边界和研发阶段进行调整。</p>
+</header>
+<main class="container">
+  <section class="usage-banner">
+    <h2>使用前说明：示例提示词库，不是固定模板</h2>
+    <p><strong>第一，本提示词库用于模拟真实任务。</strong>它的作用是帮助学员理解如何把生物医药研发问题拆成可交给 Biomni 或 ChatGPT 执行的研究任务，适合课堂演示、方法训练和方案讨论。</p>
+    <p><strong>第二，真实任务必须根据实际情况调整。</strong>在正式研发中，请结合具体研究对象、疾病场景、靶点清单、数据集质量、实验平台、样本条件、剂型要求、监管要求和企业研发目标，对提示词中的范围、字段、阈值、输出格式和验证方案进行修改。</p>
+  </section>
+  <section class="toc">
+    <h2>模块导航</h2>
+    <div class="toc-grid">
+      <a href="#module-2"><strong>模块二</strong><br>AI在靶点发现与验证中的应用</a><a href="#module-3"><strong>模块三</strong><br>AI辅助化合物筛选与优化</a><a href="#module-4"><strong>模块四</strong><br>AI在制剂开发与工艺优化中的应用</a><a href="#module-5"><strong>模块五</strong><br>AI赋能中药现代化</a>
+    </div>
+    <div class="note">工具使用建议：除“AI辅助给药系统设计”和“生产工艺的AI预测与控制”推荐使用 ChatGPT 外，其余任务推荐使用 Biomni。本库所有内容均为示例提示词，用于模拟真实任务，不是固定模板；真实项目必须根据实际研究条件、数据可得性、合规要求和业务目标进行调整，不替代临床决策、生产验证或监管申报。</div>
+  </section>
+  
+    <section class="module" id="module-2">
+      <div class="module-head">
+        <span class="module-badge">模块二</span>
+        <span class="module-title">AI在靶点发现与验证中的应用</span>
+      </div>
+      
+        <section class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <span>基于组学数据的靶点挖掘</span>
+              <span class="tag biomni">工具：Biomni</span>
+            </div>
+            <button class="copy-btn" data-target="prompt-0-0">复制提示词</button>
+          </div>
+          <pre class="prompt" id="prompt-0-0">请围绕“肥胖、脂代谢异常、胰岛素抵抗和非酒精性脂肪肝的潜在治疗靶点挖掘”执行一个基于公开组学数据的靶点发现任务。
+
+使用说明：以下提示词为示例任务，用于模拟真实研发流程；正式使用时请根据具体疾病、靶点、数据集、实验条件、合规边界和研发目标进行修改。
+
+研究背景：
+我们希望以肥胖、NAFLD/MASH、胰岛素抵抗、脂代谢异常为疾病场景，从公开转录组、单细胞转录组、蛋白组或代谢组数据中识别潜在治疗靶点。本任务仅用于科研和教学模拟，不作为临床诊断或治疗建议。
+
+研究目标：
+1. 检索公开数据库中与 obesity、insulin resistance、NAFLD、MASH、high-fat diet、adipose tissue、liver tissue 相关的人类或动物组学数据集。
+2. 优先选择样本量较大、分组清晰、包含疾病组和对照组的数据集。
+3. 对转录组数据进行差异表达分析，识别疾病组相对于健康对照组显著上调或下调的基因。
+4. 如果有单细胞数据，请识别候选基因主要分布在哪些细胞类型中，例如 adipocytes、hepatocytes、Kupffer cells、macrophages、endothelial cells、stellate cells。
+5. 对差异基因进行 GO、KEGG、Reactome 通路富集分析，重点关注脂质代谢、胰岛素信号、炎症反应、线粒体功能、氧化应激、胆汁酸代谢和肠肝轴相关通路。
+6. 构建蛋白互作网络，识别网络中的 hub genes。
+7. 综合差异表达显著性、通路重要性、网络中心性、细胞类型特异性和文献证据，对候选靶点进行优先级排序。
+8. 输出 Top 20 候选靶点，并为 Top 10 靶点提供简要解释。
+
+输出字段：
+- Gene symbol
+- Full gene name
+- Disease context
+- Dataset source
+- Upregulated or downregulated
+- Tissue or cell type
+- Main pathway
+- Evidence from omics data
+- Evidence from literature
+- Potential therapeutic relevance
+- Priority score
+- Recommendation: high / medium / low
+
+最后请总结：
+1. 最值得进一步验证的 5 个靶点；
+2. 每个靶点建议采用的验证实验；
+3. 这些靶点是否适合与药食同源成分、天然产物或中药复方干预方向结合。</pre>
+        </section>
+        
+        <section class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <span>AI预测靶点-疾病关联</span>
+              <span class="tag biomni">工具：Biomni</span>
+            </div>
+            <button class="copy-btn" data-target="prompt-0-1">复制提示词</button>
+          </div>
+          <pre class="prompt" id="prompt-0-1">请围绕“肥胖、NAFLD、胰岛素抵抗和2型糖尿病的靶点—疾病关联预测”执行一个 AI 辅助靶点优先级排序任务。
+
+使用说明：以下提示词为示例任务，用于模拟真实研发流程；正式使用时请根据具体疾病、靶点、数据集、实验条件、合规边界和研发目标进行修改。
+
+研究背景：
+我们希望将公开疾病数据库、基因功能数据库、蛋白互作网络、通路数据库、药物靶点数据库和文献证据整合起来，预测候选靶点与代谢性疾病之间的潜在关联强度。本任务仅用于科研和教学模拟。
+
+输入：
+请先从公开数据库和文献中检索与 obesity、NAFLD、MASH、insulin resistance、type 2 diabetes、metabolic syndrome 相关的已知靶点；然后结合公开组学数据中的差异表达基因，形成候选靶点池。
+
+研究目标：
+1. 整合疾病相关数据库、基因功能数据库、蛋白互作网络、通路数据库、药物靶点数据库和文献证据。
+2. 构建 disease-gene-pathway-drug-phenotype 关系网络。
+3. 对每一个候选靶点，评估其与以下疾病表型的关联强度：
+   - Obesity
+   - NAFLD / MASH
+   - Insulin resistance
+   - Dyslipidemia
+   - Type 2 diabetes
+   - Chronic low-grade inflammation
+4. 如果可行，请使用网络传播、相似性评分、图嵌入或 link prediction 思路，预测候选靶点与疾病之间的潜在关联。
+5. 区分三类靶点：
+   - established targets：已有明确疾病证据的靶点
+   - plausible targets：有间接机制证据的靶点
+   - novel candidates：具有新颖性但需要进一步验证的候选靶点
+6. 为每个候选靶点输出证据解释，避免只给黑箱评分。
+
+输出字段：
+- Target gene
+- Related disease phenotype
+- Known or predicted association
+- Evidence type
+- Key supporting databases or papers
+- Related pathways
+- Existing drugs or ligands if any
+- Novelty level
+- Confidence score
+- Explanation for ranking
+
+最后请输出：
+1. Top 10 靶点—疾病关联预测结果；
+2. 其中最适合作为创新靶点的 3 个候选；
+3. 每个候选靶点下一步需要补充的实验或数据证据。</pre>
+        </section>
+        
+        <section class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <span>靶点可药性预测</span>
+              <span class="tag biomni">工具：Biomni</span>
+            </div>
+            <button class="copy-btn" data-target="prompt-0-2">复制提示词</button>
+          </div>
+          <pre class="prompt" id="prompt-0-2">请对肥胖、NAFLD、胰岛素抵抗相关候选靶点进行可药性和开发优先级评估。
+
+使用说明：以下提示词为示例任务，用于模拟真实研发流程；正式使用时请根据具体疾病、靶点、数据集、实验条件、合规边界和研发目标进行修改。
+
+研究背景：
+一个靶点即使与疾病高度相关，也不代表适合进入药物开发。请从靶点结构、蛋白类型、亚细胞定位、已知配体、已上市药物、遗传学证据、安全性风险和竞争格局等维度，对候选靶点进行系统评估。本任务仅用于科研和教学模拟。
+
+输入：
+请使用前一步靶点挖掘和靶点—疾病关联预测得到的 Top 20 候选靶点。如果没有现成列表，请先基于公开数据库整理一组肥胖/NAFLD/胰岛素抵抗相关候选靶点。
+
+研究目标：
+1. 对每个靶点评估 druggability，包括：
+   - 蛋白类型：enzyme、receptor、transporter、ion channel、transcription factor、secreted protein、structural protein 等；
+   - 亚细胞定位：membrane、cytoplasm、nucleus、secreted、mitochondria 等；
+   - 是否存在已知三维结构或 AlphaFold 高可信结构；
+   - 是否存在已知 ligand-binding pocket；
+   - 是否已有小分子、抗体、肽类、核酸药物或天然产物调控证据；
+   - 是否被 DrugBank、ChEMBL、Open Targets、BindingDB、PDB 等数据库收录；
+   - 是否有遗传学、人群 GWAS 或疾病相关突变证据；
+   - 组织表达谱和潜在安全性风险；
+   - 是否存在同类靶点的临床失败或成功案例。
+2. 对每个靶点判断适合的干预方式：
+   - small molecule
+   - antibody
+   - peptide
+   - RNA therapy
+   - PROTAC / targeted protein degradation
+   - natural product modulation
+   - TCM compound or formula-level modulation
+   - biomarker only
+3. 建立靶点优先级评分模型，评分维度包括：
+   - disease relevance
+   - human genetic evidence
+   - omics support
+   - pathway centrality
+   - druggability
+   - safety risk
+   - novelty
+   - competitive landscape
+   - feasibility of experimental validation
+4. 输出每个靶点的开发建议。
+
+输出字段：
+- Target
+- Protein class
+- Subcellular location
+- Disease relevance score
+- Omics evidence score
+- Human genetics evidence
+- Known ligand or drug evidence
+- Structure availability
+- Druggability level
+- Safety concern
+- Best modality
+- Natural product / TCM relevance
+- Development priority
+- Recommended next experiment
+
+最后请总结：
+1. 最适合小分子开发的 3 个靶点；
+2. 最适合天然产物或中药复方调节的 3 个靶点；
+3. 最适合作为疾病分型或疗效标志物的 3 个靶点；
+4. 不建议继续开发的靶点及理由。</pre>
+        </section>
+        
+    </section>
+    
+    <section class="module" id="module-3">
+      <div class="module-head">
+        <span class="module-badge">模块三</span>
+        <span class="module-title">AI辅助化合物筛选与优化</span>
+      </div>
+      
+        <section class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <span>AI虚拟筛选：从百万分子到候选分子</span>
+              <span class="tag biomni">工具：Biomni</span>
+            </div>
+            <button class="copy-btn" data-target="prompt-1-0">复制提示词</button>
+          </div>
+          <pre class="prompt" id="prompt-1-0">请围绕“肥胖、NAFLD、胰岛素抵抗相关靶点的小分子虚拟筛选”执行一个 AI 虚拟筛选任务。
+
+使用说明：以下提示词为示例任务，用于模拟真实研发流程；正式使用时请根据具体疾病、靶点、数据集、实验条件、合规边界和研发目标进行修改。
+
+研究背景：
+我们已经通过组学数据和靶点—疾病关联预测，得到一组与 obesity、NAFLD、MASH、insulin resistance、dyslipidemia 相关的候选靶点。现在希望从大规模小分子库、天然产物库和中药活性成分库中筛选潜在候选分子。本任务仅用于科研和教学模拟。
+
+输入：
+1. 候选靶点：请优先选择上一阶段 Top 3 靶点。如果没有现成靶点列表，请先基于公开数据库整理肥胖/NAFLD 相关且具备结构信息或配体信息的靶点。
+2. 化合物来源：
+   - public small molecule libraries
+   - natural product libraries
+   - traditional Chinese medicine active compounds
+   - food-medicine homology related compounds
+3. 疾病方向：
+   - obesity
+   - NAFLD / MASH
+   - insulin resistance
+   - dyslipidemia
+
+任务目标：
+1. 检索每个靶点的蛋白结构信息，包括 PDB 结构、AlphaFold 结构、已知 ligand-binding pocket、已知配体和关键结合残基。
+2. 构建或调用候选化合物库，优先包含天然产物和药食同源来源化合物，例如 flavonoids、polyphenols、alkaloids、terpenoids、saponins、phenolic acids。
+3. 对化合物进行初筛，排除明显不适合药物开发的分子。
+4. 对通过初筛的化合物进行结构相似性筛选、药效团匹配或靶点相关性评分。
+5. 对候选化合物进行分子对接或 AI binding affinity prediction。
+6. 综合 binding score、target relevance、novelty、natural product relevance、synthetic accessibility 和初步 ADMET 风险，对候选分子排序。
+7. 输出 Top 20 候选分子，其中 Top 5 给出详细解释。
+
+输出字段：
+- Target name
+- Compound name
+- Compound source
+- SMILES
+- Molecular weight
+- Key physicochemical properties
+- Predicted binding affinity or docking score
+- Binding pocket residues
+- Known literature evidence if any
+- Natural product / TCM relevance
+- Novelty level
+- Synthetic accessibility
+- Initial ADMET concern
+- Priority score
+- Recommended next validation experiment
+
+最后请总结：
+1. 每个靶点最值得验证的 3 个候选分子；
+2. 哪些分子更像 repurposing candidate；
+3. 哪些分子更像 novel hit；
+4. 哪些分子适合进入体外结合实验、酶活实验或细胞功能实验。</pre>
+        </section>
+        
+        <section class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <span>AI-guided分子生成与优化</span>
+              <span class="tag biomni">工具：Biomni</span>
+            </div>
+            <button class="copy-btn" data-target="prompt-1-1">复制提示词</button>
+          </div>
+          <pre class="prompt" id="prompt-1-1">请围绕“肥胖/NAFLD 相关靶点的 AI-guided 分子生成与优化”执行一个分子设计任务。
+
+使用说明：以下提示词为示例任务，用于模拟真实研发流程；正式使用时请根据具体疾病、靶点、数据集、实验条件、合规边界和研发目标进行修改。
+
+研究背景：
+我们已经通过虚拟筛选获得一组 hit compounds。现在希望以这些 hit compounds 为起点，使用 AI 生成结构类似物或新颖分子，并在保持靶点结合能力的同时，优化 drug-likeness、ADMET properties、synthetic accessibility 和 novelty。本任务仅用于科研和教学模拟。
+
+输入：
+1. Target：使用虚拟筛选阶段优先级最高的靶点。
+2. Seed compounds：使用虚拟筛选得到的 Top 5 hit compounds。
+3. 每个 seed compound 需要包含：
+   - compound name
+   - SMILES
+   - predicted binding score
+   - binding mode if available
+   - key pharmacophore features
+   - major liabilities
+
+任务目标：
+1. 分析每个 seed compound 的核心骨架、关键药效团、可修饰位点和潜在结构风险。
+2. 基于 seed compounds 生成 100-500 个 analogs 或 novel molecules。
+3. 分子生成需要满足以下约束：
+   - 保留关键 binding pharmacophore；
+   - 尽量改善 predicted binding affinity；
+   - 改善 solubility、permeability、metabolic stability；
+   - 避免明显 toxicophores 和 PAINS-like structures；
+   - 保持合理 molecular weight、logP、HBD、HBA、TPSA；
+   - 尽量提高 synthetic accessibility；
+   - 保持一定 chemical novelty。
+4. 对生成分子进行多目标优化评分，评分维度包括：
+   - target binding score
+   - ligand efficiency
+   - drug-likeness
+   - ADMET profile
+   - novelty
+   - synthetic accessibility
+   - natural product likeness if relevant
+5. 对 Top 20 generated molecules 进行聚类，避免输出结构高度重复的分子。
+6. 对 Top 10 molecules 给出结构优化解释，说明相对于 seed compound 做了哪些改变，以及为什么这些改变可能有利。
+
+输出字段：
+- Generated molecule ID
+- Parent seed compound
+- SMILES
+- Main structural modification
+- Predicted binding score
+- Ligand efficiency
+- Drug-likeness score
+- Predicted solubility
+- Predicted permeability
+- Predicted metabolic stability
+- Toxicity alert
+- Synthetic accessibility score
+- Novelty level
+- Overall optimization score
+- Explanation of improvement
+
+最后请总结：
+1. 最值得进入下一轮 ADMET 评估的 10 个生成分子；
+2. 每个分子的主要优化逻辑；
+3. 哪些分子适合保守优化；
+4. 哪些分子适合探索新骨架；
+5. 下一轮 wet-lab 或计算验证建议。</pre>
+        </section>
+        
+        <section class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <span>ADMET性质预测</span>
+              <span class="tag biomni">工具：Biomni</span>
+            </div>
+            <button class="copy-btn" data-target="prompt-1-2">复制提示词</button>
+          </div>
+          <pre class="prompt" id="prompt-1-2">请围绕“肥胖/NAFLD 候选分子的 ADMET 性质预测与开发优先级评估”执行一个候选分子风险分层任务。
+
+使用说明：以下提示词为示例任务，用于模拟真实研发流程；正式使用时请根据具体疾病、靶点、数据集、实验条件、合规边界和研发目标进行修改。
+
+研究背景：
+我们已经通过 AI 虚拟筛选和 AI-guided 分子生成得到一批候选分子。现在希望系统评估这些分子的 ADMET properties，并根据药物开发风险进行优先级排序。本任务仅用于科研和教学模拟。
+
+输入：
+1. Virtual screening Top 20 compounds
+2. AI-generated Top 20 molecules
+3. 每个分子至少包含：
+   - compound name or molecule ID
+   - SMILES
+   - target
+   - predicted binding score
+   - source: screening hit or generated molecule
+
+任务目标：
+1. 预测每个候选分子的基本理化性质：
+   - molecular weight
+   - logP / logD
+   - TPSA
+   - HBD
+   - HBA
+   - rotatable bonds
+   - solubility
+2. 预测 absorption 相关性质：
+   - intestinal absorption
+   - Caco-2 permeability
+   - P-gp substrate or inhibitor risk
+   - oral bioavailability risk
+3. 预测 distribution 相关性质：
+   - plasma protein binding
+   - volume of distribution
+   - blood-brain barrier penetration
+4. 预测 metabolism 相关性质：
+   - CYP450 substrate risk
+   - CYP450 inhibition risk
+   - metabolic stability
+   - major metabolic liability if available
+5. 预测 excretion 相关性质：
+   - clearance
+   - half-life tendency
+6. 预测 toxicity 相关风险：
+   - hERG inhibition
+   - hepatotoxicity
+   - mutagenicity / Ames risk
+   - carcinogenicity alert
+   - acute toxicity
+   - skin sensitization
+   - mitochondrial toxicity if available
+7. 检测 structural alerts：
+   - PAINS alerts
+   - reactive functional groups
+   - toxicophores
+   - aggregation risk
+8. 建立综合评分模型：
+   - binding score
+   - ADME score
+   - toxicity risk
+   - drug-likeness
+   - synthetic accessibility
+   - novelty
+   - development feasibility
+9. 将分子分成三类：
+   - Advance：建议继续推进
+   - Optimize：建议结构优化后再评估
+   - Drop：不建议继续推进
+
+输出字段：
+- Molecule ID
+- SMILES
+- Source
+- Target
+- Binding score
+- MW
+- logP
+- TPSA
+- Solubility
+- Permeability
+- Oral absorption risk
+- CYP risk
+- hERG risk
+- Hepatotoxicity risk
+- Ames risk
+- PAINS alert
+- Synthetic accessibility
+- ADMET overall score
+- Development decision
+- Reason for decision
+- Suggested optimization direction
+
+最后请输出：
+1. 最值得推进的 5 个候选分子；
+2. 需要结构优化的 5 个候选分子及优化建议；
+3. 建议淘汰的分子及淘汰原因；
+4. 下一步体外 ADMET 实验建议，例如 microsomal stability、CYP inhibition、hERG assay、hepatocyte toxicity、Caco-2 permeability。</pre>
+        </section>
+        
+    </section>
+    
+    <section class="module" id="module-4">
+      <div class="module-head">
+        <span class="module-badge">模块四</span>
+        <span class="module-title">AI在制剂开发与工艺优化中的应用</span>
+      </div>
+      
+        <section class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <span>AI辅助给药系统设计</span>
+              <span class="tag chatgpt">工具：ChatGPT</span>
+            </div>
+            <button class="copy-btn" data-target="prompt-2-0">复制提示词</button>
+          </div>
+          <pre class="prompt" id="prompt-2-0">请作为“药物制剂与给药系统设计顾问”，围绕一个候选活性成分或中药复方，设计可用于研发讨论的给药系统方案。本任务仅用于科研和教学模拟，不作为临床用药、处方剂量或生产放大建议。
+
+使用说明：以下提示词为示例任务，用于模拟真实研发流程；正式使用时请根据具体疾病、靶点、数据集、实验条件、合规边界和研发目标进行修改。
+
+背景信息：
+- 候选物质：请根据我提供的活性成分、中药复方或天然产物进行分析。如果我没有提供，请以“药食同源减重复方：荷叶、山楂、决明子、陈皮、茯苓”为示例。
+- 目标疾病/场景：肥胖、脂代谢异常、胰岛素抵抗、NAFLD/MASH 或用户指定场景。
+- 期望剂型：口服颗粒、胶囊、片剂、口服液、代用茶、固体饮料、缓释制剂、靶向递送系统等。
+
+请完成以下任务：
+
+1. 给药系统需求分析
+请从以下角度分析该候选物质对给药系统的需求：
+- 主要有效成分的理化性质：溶解性、稳定性、分子量、极性、挥发性、吸湿性
+- 主要吸收障碍：溶出、肠道通透性、首过代谢、胃肠刺激性
+- 主要安全性与依从性问题：口感、服用频次、剂量负担、长期使用风险
+- 目标使用场景：药品、功能食品、医学营养、院内制剂或科研验证制剂
+
+2. 候选给药系统设计
+请至少提出 4 种候选给药系统方案，例如：
+- 传统口服颗粒剂
+- 胶囊或片剂
+- 固体饮料或代用茶
+- 缓释/控释口服系统
+- 微囊化系统
+- 纳米递送系统
+- 脂质体、纳米乳、自微乳系统
+- 肠溶系统
+- 多成分分层释放系统
+
+每种方案请说明：
+- 设计逻辑
+- 适用成分或复方类型
+- 可能提升的关键属性
+- 工艺复杂度
+- 成本与放大难度
+- 质量控制难点
+- 安全性和合规风险
+- 推荐适用阶段：概念验证/临床前/中试/产品化
+
+3. 多目标评价矩阵
+请建立评价矩阵，对每种给药系统进行 0-100 分评分。
+评分维度包括：
+- 有效成分保护能力
+- 溶出或吸收改善潜力
+- 稳定性
+- 口感和依从性
+- 制备工艺可行性
+- 质量控制可行性
+- 放大生产可行性
+- 成本可控性
+- 法规合规可行性
+- 与中药复方特点的匹配度
+
+4. 推荐方案
+请给出 Top 2 推荐给药系统，并说明：
+- 为什么推荐
+- 最适合承载哪些成分
+- 关键辅料或技术路线
+- 需要重点验证的风险点
+- 下一步小试实验建议
+
+5. 实验验证设计
+请设计下一步研发实验，包括：
+- 溶出度或释放曲线实验
+- 稳定性实验
+- 吸湿性/流动性/压片性测试
+- 口感评价或掩味实验
+- 体外吸收模型，如 Caco-2 或人工胃肠液
+- 关键质量属性 CQA
+- 关键工艺参数 CPP
+
+输出格式：
+一、给药系统需求诊断
+二、候选给药系统比较表
+三、评分矩阵
+四、Top 2 推荐方案
+五、下一步实验验证计划
+六、主要风险与限制</pre>
+        </section>
+        
+        <section class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <span>制剂配方优化</span>
+              <span class="tag biomni">工具：Biomni</span>
+            </div>
+            <button class="copy-btn" data-target="prompt-2-1">复制提示词</button>
+          </div>
+          <pre class="prompt" id="prompt-2-1">请围绕“药食同源中药制剂用于肥胖、脂代谢异常和非酒精性脂肪肝干预的配方优化”执行一个中药复方研发模拟任务。
+
+使用说明：以下提示词为示例任务，用于模拟真实研发流程；正式使用时请根据具体疾病、靶点、数据集、实验条件、合规边界和研发目标进行修改。
+
+研究背景：
+我们希望基于公开文献、中药系统药理数据库、疾病靶点数据库、组学数据和 ADMET 预测，设计一个面向肥胖、脂代谢异常、胰岛素抵抗和 NAFLD / MASH 的药食同源中药候选制剂。该任务仅用于科研和教学模拟，不作为临床处方或实际用药建议。
+
+候选药材范围：
+- 荷叶
+- 山楂
+- 决明子
+- 陈皮
+- 茯苓
+- 葛根
+- 薏苡仁
+- 桑叶
+- 枸杞子
+- 姜黄
+
+目标疾病和表型：
+- obesity
+- overweight
+- dyslipidemia
+- insulin resistance
+- metabolic syndrome
+- NAFLD / MASH
+- hepatic steatosis
+- chronic low-grade inflammation
+
+任务目标：
+1. 文献和数据库检索
+请检索每味候选药材及其主要活性成分在肥胖、脂代谢异常、胰岛素抵抗、NAFLD / MASH 方面的临床前和临床研究证据。
+优先检索以下证据：
+- cell experiments
+- animal models
+- high-fat diet model
+- clinical trials
+- systematic reviews
+- network pharmacology studies
+- metabolomics / transcriptomics studies
+
+2. 活性成分整理
+请为每味药材整理主要活性成分，包括 flavonoids、alkaloids、polysaccharides、phenolic acids、terpenoids、saponins、anthraquinones、organic acids 等。
+请输出每个成分的：
+- compound name
+- source herb
+- SMILES if available
+- predicted or known targets
+- disease-related pathways
+- ADMET-related information
+- literature evidence
+
+3. 疾病靶点和通路映射
+请围绕 obesity、NAFLD、insulin resistance、dyslipidemia 构建疾病靶点集合。
+重点关注：
+- lipid metabolism
+- fatty acid oxidation
+- adipogenesis
+- insulin signaling
+- AMPK signaling
+- PPAR signaling
+- bile acid metabolism
+- gut microbiota related metabolism
+- inflammatory signaling
+- oxidative stress
+- mitochondrial function
+
+请建立“herb-compound-target-pathway-disease phenotype”网络，并识别每味药材覆盖的关键通路。
+
+4. 配伍协同分析
+请从候选药材中设计至少 5 个复方组合方案：
+- Formula A：偏脂代谢调节
+- Formula B：偏胰岛素抵抗改善
+- Formula C：偏脂肪肝和肝脏炎症改善
+- Formula D：偏肠道菌群和代谢重塑
+- Formula E：综合平衡型配方
+
+每个配方需要说明：
+- core herbs
+- assistant herbs
+- expected mechanism
+- covered disease pathways
+- overlapping and complementary targets
+- possible synergy
+- potential antagonism or redundancy
+- major safety concerns
+
+5. 多目标配方优化
+请建立配方评分模型，评分维度包括：
+- disease relevance
+- target coverage
+- pathway complementarity
+- evidence strength
+- clinical evidence
+- preclinical evidence
+- compound diversity
+- predicted efficacy
+- ADMET risk
+- herb-herb interaction risk
+- formulation feasibility
+- quality control feasibility
+- novelty
+- experimental validation feasibility
+
+6. 制剂可行性评估
+请评估每个候选配方适合的制剂形式：
+- granule
+- capsule
+- tablet
+- oral liquid
+- tea bag / functional beverage
+- solid beverage
+
+7. 质量控制指标设计
+请为最佳配方设计质量控制方案，包括：
+- 3-5 个 marker compounds
+- HPLC / LC-MS 建议
+- 批间一致性指标
+- 指纹图谱策略
+- 最小质量属性
+
+8. 实验验证方案
+请为 Top 2 配方设计下一步验证方案，包括：
+- in vitro assay
+- cell model
+- animal model
+- positive control
+- intervention duration
+- primary endpoints
+- secondary endpoints
+- safety endpoints
+- omics validation strategy if useful
+
+输出格式：
+一、候选药材证据矩阵
+二、候选配方比较矩阵
+三、最佳配方详细说明
+四、风险和限制</pre>
+        </section>
+        
+        <section class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <span>生产工艺的AI预测与控制</span>
+              <span class="tag chatgpt">工具：ChatGPT</span>
+            </div>
+            <button class="copy-btn" data-target="prompt-2-2">复制提示词</button>
+          </div>
+          <pre class="prompt" id="prompt-2-2">请作为“制药工艺开发、QbD 与智能制造顾问”，围绕一个中药制剂或天然产物制剂，设计生产工艺的 AI 预测与控制方案。本任务仅用于研发讨论和教学模拟，不作为正式生产工艺、验证方案或监管申报文件。
+
+使用说明：以下提示词为示例任务，用于模拟真实研发流程；正式使用时请根据具体疾病、靶点、数据集、实验条件、合规边界和研发目标进行修改。
+
+背景信息：
+- 产品类型：中药复方颗粒/胶囊/片剂/口服液/固体饮料/提取物，或用户指定产品。
+- 示例产品：药食同源减重复方，组成可包含荷叶、山楂、决明子、陈皮、茯苓。
+- 目标：通过 AI 建模、过程分析技术 PAT、质量源于设计 QbD 和模型预测控制 MPC，提高批间一致性、稳定性、收率和质量可控性。
+
+请完成以下任务：
+
+1. 工艺流程拆解
+请将该类制剂的生产流程拆解为关键工序，例如：
+- 原药材验收与前处理
+- 粉碎/切制/混合
+- 提取
+- 浓缩
+- 干燥
+- 制粒
+- 整粒
+- 混合
+- 压片/填充/包装
+- 成品检验
+
+2. 识别关键质量属性 CQA
+请识别可能影响产品质量的 CQA，包括：
+- 指标成分含量
+- 指纹图谱相似度
+- 水分
+- 粒径分布
+- 溶出/释放行为
+- 含量均匀度
+- 微生物限度
+- 杂质或降解产物
+- 口感/色泽/气味
+- 批间一致性
+
+3. 识别关键工艺参数 CPP
+请按工序识别 CPP，例如：
+- 提取温度、时间、溶媒比例、液料比、pH
+- 浓缩温度、真空度、终点固含量
+- 干燥温度、风量、进出口温度、干燥时间
+- 制粒液加入量、喷雾速度、搅拌速度
+- 压片压力、转速、硬度控制
+- 包装湿度、密封性等
+
+4. AI建模方案
+请设计 AI 预测模型，用于预测 CQA 或工艺终点。
+至少包括：
+- 输入变量：原料属性、CPP、在线传感器数据、近红外/NIR、温湿度、设备参数
+- 输出变量：指标成分含量、水分、粒径、收率、指纹图谱相似度、溶出度等
+- 模型类型：多元线性回归、随机森林、XGBoost、神经网络、时间序列模型、贝叶斯优化、模型预测控制 MPC
+- 数据需求：批次数量、采样频率、训练/验证/测试划分
+- 模型评估指标：R²、RMSE、MAE、分类准确率、偏差控制等
+
+5. 过程控制策略
+请设计从“事后检测”走向“过程预测与实时控制”的控制方案：
+- 离线检测
+- 在线检测
+- 软测量模型
+- 异常预警
+- 工艺终点预测
+- 参数自动推荐
+- 模型预测控制
+- 偏差根因分析
+
+6. 智能工艺优化
+请设计一个多目标优化方案，目标包括：
+- 提高有效成分保留率
+- 提高收率
+- 降低能耗
+- 缩短工艺时间
+- 降低批间波动
+- 提高稳定性
+- 保证安全与合规
+
+7. 输出一个落地蓝图
+请给出从 0 到 1 的实施路线：
+- 第 1 阶段：数据采集与工艺知识整理
+- 第 2 阶段：CQA/CPP 识别与小试 DoE
+- 第 3 阶段：建模与验证
+- 第 4 阶段：中试过程监测
+- 第 5 阶段：上线预警与工艺推荐
+- 第 6 阶段：闭环控制与持续改进
+
+输出格式：
+一、工艺流程地图
+二、CQA/CPP 对照表
+三、AI预测模型设计表
+四、过程控制策略
+五、异常预警与偏差分析方案
+六、实施路线图
+七、风险、合规注意事项与数据治理要求</pre>
+        </section>
+        
+    </section>
+    
+    <section class="module" id="module-5">
+      <div class="module-head">
+        <span class="module-badge">模块五</span>
+        <span class="module-title">AI赋能中药现代化</span>
+      </div>
+      
+        <section class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <span>AI在中药成分分析中的应用</span>
+              <span class="tag biomni">工具：Biomni</span>
+            </div>
+            <button class="copy-btn" data-target="prompt-3-0">复制提示词</button>
+          </div>
+          <pre class="prompt" id="prompt-3-0">请围绕“药食同源中药复方的化学成分识别、活性成分筛选与质量标志物发现”执行一个中药成分分析任务。
+
+使用说明：以下提示词为示例任务，用于模拟真实研发流程；正式使用时请根据具体疾病、靶点、数据集、实验条件、合规边界和研发目标进行修改。
+
+研究背景：
+我们希望分析一个面向肥胖、脂代谢异常、胰岛素抵抗和 NAFLD 的药食同源中药复方。候选药材包括荷叶、山楂、决明子、陈皮、茯苓、葛根、桑叶、薏苡仁、姜黄等。本任务仅用于科研和教学模拟，不作为临床用药建议。
+
+任务目标：
+1. 成分数据库检索
+请检索 HERB、TCMSP、PubChem、ChEMBL、NPASS、文献数据库中与以下药材相关的已知化学成分：
+- 荷叶
+- 山楂
+- 决明子
+- 陈皮
+- 茯苓
+- 葛根
+- 桑叶
+- 薏苡仁
+- 姜黄
+
+2. 成分类别归纳
+请将检索到的成分按照化学类别进行归类：
+- flavonoids
+- alkaloids
+- polysaccharides
+- phenolic acids
+- terpenoids
+- saponins
+- anthraquinones
+- organic acids
+- essential oils
+- coumarins
+
+3. 成分信息提取
+请为每个关键成分提取以下字段：
+- compound name
+- source herb
+- chemical class
+- molecular formula
+- molecular weight
+- SMILES
+- InChIKey
+- known biological activity
+- predicted or known targets
+- disease-related pathways
+- ADME properties if available
+- literature evidence
+- database source
+
+4. LC-MS / UPLC-QTOF-MS 成分注释模拟
+如果存在公开质谱数据或文献中的质谱峰信息，请模拟成分注释流程：
+- retention time
+- m/z
+- ion mode
+- fragment ions
+- possible compound annotation
+- confidence level
+- reference evidence
+
+5. 活性成分优先级排序
+请结合以下维度筛选潜在活性成分：
+- 与肥胖、脂代谢异常、NAFLD、胰岛素抵抗的疾病相关性
+- 靶点数量和靶点质量
+- 是否覆盖 AMPK、PPAR、SREBP、insulin signaling、inflammation、oxidative stress、bile acid metabolism 等关键通路
+- 文献证据强度
+- ADMET 可接受性
+- 是否适合作为质量控制标志物
+- 是否具有药食同源产品开发价值
+
+6. 质量标志物 Q-marker 发现
+请从候选成分中筛选 5-8 个潜在质量标志物，并说明选择理由。
+质量标志物需要同时考虑：
+- 成分可检测性
+- 来源药材代表性
+- 药效相关性
+- 稳定性
+- 批间一致性
+- 安全性风险
+- 是否适合 HPLC、LC-MS 或指纹图谱检测
+
+输出格式：
+一、成分总表
+字段包括：
+- Compound
+- Herb source
+- Chemical class
+- SMILES
+- Known targets
+- Main pathways
+- Disease relevance
+- ADME information
+- Evidence level
+- Recommendation
+
+二、活性成分优先级表
+字段包括：
+- Rank
+- Compound
+- Source herb
+- Mechanism hypothesis
+- Target/pathway coverage
+- Literature support
+- ADMET concern
+- Development value
+
+三、质量标志物建议表
+字段包括：
+- Q-marker candidate
+- Source herb
+- Reason for selection
+- Detection method
+- Pharmacological relevance
+- Quality control value
+- Risk or limitation
+
+最后请总结：
+1. 最值得关注的 10 个活性成分；
+2. 最适合作为质量标志物的 5 个成分；
+3. 当前成分分析证据的不足；
+4. 下一步建议开展的 LC-MS、HPLC、指纹图谱或定量分析实验。</pre>
+        </section>
+        
+        <section class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <span>中药复方作用机制的AI预测</span>
+              <span class="tag biomni">工具：Biomni</span>
+            </div>
+            <button class="copy-btn" data-target="prompt-3-1">复制提示词</button>
+          </div>
+          <pre class="prompt" id="prompt-3-1">请围绕“中药复方干预肥胖、脂代谢异常、胰岛素抵抗和 NAFLD 的作用机制预测”执行一个 AI 机制解析任务。
+
+使用说明：以下提示词为示例任务，用于模拟真实研发流程；正式使用时请根据具体疾病、靶点、数据集、实验条件、合规边界和研发目标进行修改。
+
+研究背景：
+我们已经完成了中药复方的成分识别和活性成分筛选。现在希望基于成分、靶点、疾病、通路、组学数据和文献证据，预测该复方的核心作用机制，并提出可验证的机制假设。本任务仅用于科研和教学模拟。
+
+输入：
+1. 复方组成：
+- 荷叶
+- 山楂
+- 决明子
+- 陈皮
+- 茯苓
+也可以根据检索结果扩展葛根、桑叶、薏苡仁、姜黄等药材。
+
+2. 疾病方向：
+- obesity
+- dyslipidemia
+- insulin resistance
+- metabolic syndrome
+- NAFLD / MASH
+- hepatic steatosis
+- chronic low-grade inflammation
+
+3. 成分列表：
+请使用前一步成分分析得到的 Top active compounds。如果没有现成成分列表，请先基于 HERB、TCMSP、PubChem 和文献数据库整理候选成分。
+
+任务目标：
+1. 靶点预测
+请对每个候选成分预测或检索潜在靶点。
+靶点来源包括：
+- known targets from databases
+- predicted targets based on chemical similarity
+- reverse docking targets
+- literature-reported targets
+- gene expression signature-based targets
+
+2. 疾病靶点集合构建
+请构建肥胖、NAFLD、胰岛素抵抗和脂代谢异常相关疾病靶点集合。
+靶点来源包括：
+- DisGeNET
+- GeneCards
+- OMIM
+- Open Targets
+- GEO / transcriptomics datasets
+- GWAS if available
+- disease-related literature
+
+3. 交集与网络分析
+请建立以下网络：
+- herb-compound-target network
+- target-disease network
+- compound-target-pathway network
+- protein-protein interaction network
+- herb-compound-target-pathway-disease integrated network
+
+请识别：
+- hub targets
+- bridge targets
+- disease module targets
+- formula-specific targets
+- redundant targets
+- complementary targets
+
+4. 通路富集分析
+请对复方潜在靶点进行 GO、KEGG、Reactome 富集分析。
+重点关注：
+- lipid metabolism
+- fatty acid oxidation
+- adipogenesis
+- insulin signaling
+- AMPK signaling
+- PPAR signaling
+- SREBP-mediated lipid synthesis
+- bile acid metabolism
+- gut microbiota related metabolism
+- oxidative stress
+- mitochondrial dysfunction
+- inflammatory signaling
+- macrophage polarization
+- hepatic fibrosis if relevant
+
+5. 多组学证据整合
+请检索是否存在相关转录组、代谢组、蛋白组或单细胞数据支持这些机制。
+如果有，请分析复方或关键成分是否能够逆转疾病相关表达特征。
+重点输出：
+- disease-upregulated genes reversed by formula
+- disease-downregulated genes restored by formula
+- enriched metabolic pathways
+- cell-type specific effects if single-cell data is available
+
+6. 复方协同机制解释
+请从“君臣佐使”与现代系统药理两个角度解释复方协同作用。
+需要说明：
+- 哪些药材承担核心机制作用
+- 哪些药材补充通路覆盖
+- 哪些药材可能改善吸收、耐受性或代谢状态
+- 哪些成分之间可能存在协同
+- 哪些成分之间可能存在冗余或潜在拮抗
+
+7. 机制假设生成
+请提出 3-5 条可验证的机制假设。
+每条假设需要包括：
+- hypothesis
+- key compounds
+- key targets
+- key pathways
+- expected phenotype
+- supporting evidence
+- validation experiment
+
+输出格式：
+一、核心靶点表
+字段包括：
+- Target
+- Related compounds
+- Source herbs
+- Disease relevance
+- Network role
+- Pathway involvement
+- Evidence type
+- Confidence score
+
+二、核心通路表
+字段包括：
+- Pathway
+- Related targets
+- Related compounds
+- Related herbs
+- Disease phenotype
+- Evidence strength
+- Mechanism interpretation
+
+三、复方作用机制图谱
+请用文字描述以下结构：
+Herb → Compound → Target → Pathway → Disease phenotype
+
+四、机制假设表
+字段包括：
+- Hypothesis ID
+- Mechanism hypothesis
+- Key compounds
+- Key targets
+- Key pathways
+- Experimental model
+- Validation endpoints
+- Priority
+
+最后请总结：
+1. 最可能的核心作用机制；
+2. 最关键的 5-10 个靶点；
+3. 最值得验证的 3 条机制假设；
+4. 推荐的细胞、动物和组学验证方案。</pre>
+        </section>
+        
+        <section class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <span>基于AI的中药二次开发</span>
+              <span class="tag biomni">工具：Biomni</span>
+            </div>
+            <button class="copy-btn" data-target="prompt-3-2">复制提示词</button>
+          </div>
+          <pre class="prompt" id="prompt-3-2">请围绕“基于 AI 的中药二次开发：从已有中药复方到新适应症和新产品定位”执行一个中药二次开发研究任务。
+
+使用说明：以下提示词为示例任务，用于模拟真实研发流程；正式使用时请根据具体疾病、靶点、数据集、实验条件、合规边界和研发目标进行修改。
+
+研究背景：
+我们希望评估一个已有中药复方或药食同源产品是否具备二次开发潜力。该复方原本用于体重管理、消食化积、健脾祛湿或脂代谢调节方向，现在希望探索其在 NAFLD / MASH、代谢综合征、胰岛素抵抗、血脂异常等方向的潜在开发价值。本任务仅用于科研和教学模拟，不作为临床疗效宣称或用药建议。
+
+输入：
+1. 候选复方或产品：
+- 荷叶山楂决明子陈皮茯苓类复方
+或
+- 用户指定的经典方、院内制剂、上市中成药、保健食品或功能食品配方
+
+2. 原始定位：
+- 体重管理
+- 消食化积
+- 健脾祛湿
+- 调脂
+- 肠道代谢调节
+- 其他用户指定方向
+
+3. 希望探索的新方向：
+- NAFLD / MASH
+- dyslipidemia
+- insulin resistance
+- metabolic syndrome
+- obesity-related inflammation
+- gut microbiota dysbiosis
+- hepatic steatosis
+
+任务目标：
+1. 原始产品证据梳理
+请检索该复方或类似复方的已有证据，包括：
+- traditional use
+- pharmacopoeia or classical source if available
+- clinical studies
+- animal studies
+- cell experiments
+- network pharmacology studies
+- real-world evidence if available
+- safety reports
+- quality standard information
+
+2. 成分和靶点重建
+请基于该复方组成，重新构建：
+- herb list
+- compound list
+- active compound candidates
+- predicted targets
+- known targets
+- disease-related targets
+- target-pathway-disease network
+
+3. 新适应症匹配
+请将该复方的靶点和通路与候选新适应症进行匹配。
+候选新适应症包括：
+- NAFLD / MASH
+- dyslipidemia
+- insulin resistance
+- metabolic syndrome
+- obesity
+- chronic low-grade inflammation
+- gut microbiota-related metabolic disorder
+
+请输出每个新适应症的匹配度，并说明：
+- overlapping targets
+- overlapping pathways
+- literature evidence
+- omics evidence
+- clinical evidence
+- biological plausibility
+- development risk
+
+4. AI repurposing 评分
+请建立二次开发评分模型，评分维度包括：
+- disease relevance
+- mechanism plausibility
+- existing evidence strength
+- novelty
+- clinical unmet need
+- safety basis
+- formulation feasibility
+- quality control readiness
+- regulatory feasibility
+- market differentiation
+- experimental validation feasibility
+
+请对每个候选新适应症给出 0-100 分评分。
+
+5. 产品升级路径设计
+请根据不同开发目标，设计 3 条二次开发路径：
+路径 A：机制再阐明型
+目标是补充现代药理机制、组学证据和靶点通路证据。
+
+路径 B：新适应症拓展型
+目标是从原有体重管理或消食调脂方向，拓展到 NAFLD、MASH、代谢综合征等方向。
+
+路径 C：产品形态升级型
+目标是从传统复方、代用茶或普通制剂，升级为标准化颗粒、胶囊、功能食品、医学营养产品或新型中药制剂。
+
+6. 临床前验证方案
+请为最有潜力的新方向设计临床前验证方案，包括：
+- disease model
+- animal model
+- cell model
+- intervention group
+- positive control
+- primary endpoints
+- secondary endpoints
+- safety endpoints
+- omics validation
+- dose-response design
+- biomarker strategy
+
+7. 临床研究设计建议
+请为未来人体研究提出初步设计建议：
+- target population
+- inclusion criteria
+- exclusion criteria
+- study type
+- control group
+- intervention duration
+- primary endpoint
+- secondary endpoints
+- safety monitoring
+- sample size consideration at conceptual level
+- ethical and regulatory caution
+
+8. 知识产权和差异化分析
+请分析二次开发的差异化空间：
+- new indication
+- new mechanism
+- new quality markers
+- new extraction process
+- new formulation
+- new combination
+- biomarker-guided use
+- patentability risk
+- competitive products
+
+输出格式：
+一、原始产品证据表
+二、新适应症匹配矩阵
+三、二次开发路径表
+四、推荐开发方案
+
+最后请总结：
+1. 是否具备二次开发潜力；
+2. 最适合拓展的新方向；
+3. 最大证据缺口；
+4. 需要优先补齐的实验；
+5. 不建议推进的方向及理由。</pre>
+        </section>
+        
+    </section>
+    
+  <section class="footer">
+    本网页为提示词资料页，可直接发给学员或研发团队使用。复制后可根据具体靶点、成分、复方、剂型、数据集或产品名称进一步替换变量。
+  </section>
+</main>
+<script>
+document.querySelectorAll('.copy-btn').forEach(function(btn){
+  btn.addEventListener('click', async function(){
+    var id = btn.getAttribute('data-target');
+    var text = document.getElementById(id).innerText;
+    try {
+      await navigator.clipboard.writeText(text);
+      var old = btn.innerText;
+      btn.innerText = '已复制';
+      setTimeout(function(){ btn.innerText = old; }, 1400);
+    } catch(e) {
+      var range = document.createRange();
+      range.selectNodeContents(document.getElementById(id));
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      btn.innerText = '请手动复制';
+    }
+  });
+});
+</script>
+</body>
+</html>

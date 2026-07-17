@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>中移互联网产品经理练习页面</title>
+  <style>
+    :root {
+      --primary: #155eef;
+      --primary-dark: #0f3f9e;
+      --cyan: #13c2ff;
+      --bg: #f4f8ff;
+      --card: rgba(255, 255, 255, 0.92);
+      --text: #122033;
+      --muted: #61728a;
+      --line: #dce7f7;
+      --code-bg: #0d1728;
+      --code-text: #e7f0ff;
+      --shadow: 0 22px 60px rgba(21, 94, 239, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 8% 0%, rgba(19, 194, 255, 0.20), transparent 32%),
+        radial-gradient(circle at 92% 10%, rgba(21, 94, 239, 0.18), transparent 34%),
+        linear-gradient(135deg, #eef6ff 0%, #f8fbff 48%, #eefaff 100%);
+      line-height: 1.7;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 360px;
+      padding: 54px 7vw 46px;
+      overflow: hidden;
+      color: #fff;
+      background:
+        linear-gradient(135deg, rgba(6, 40, 112, 0.96), rgba(21, 94, 239, 0.88)),
+        linear-gradient(45deg, #072d7c, #155eef);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 520px;
+      height: 520px;
+      border-radius: 50%;
+      right: -150px;
+      top: -190px;
+      background: radial-gradient(circle, rgba(19, 194, 255, 0.35), transparent 68%);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.07) 1px, transparent 1px);
+      background-size: 42px 42px;
+      opacity: .34;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border: 1px solid rgba(255,255,255,.26);
+      border-radius: 999px;
+      background: rgba(255,255,255,.12);
+      backdrop-filter: blur(10px);
+      font-size: 14px;
+      letter-spacing: .4px;
+    }
+
+    .hero h1 {
+      margin: 28px 0 18px;
+      font-size: clamp(34px, 5.2vw, 64px);
+      line-height: 1.08;
+      letter-spacing: -1.8px;
+      font-weight: 900;
+    }
+
+    .hero p {
+      max-width: 900px;
+      margin: 0;
+      color: rgba(255,255,255,.82);
+      font-size: 18px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 30px;
+    }
+
+    .hero-actions a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 44px;
+      padding: 0 18px;
+      border-radius: 14px;
+      color: #07307c;
+      background: #fff;
+      text-decoration: none;
+      font-weight: 800;
+      box-shadow: 0 12px 28px rgba(0,0,0,.14);
+    }
+
+    .hero-actions a.secondary {
+      background: rgba(255,255,255,.12);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.28);
+      box-shadow: none;
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: -38px auto 68px;
+      padding: 0 22px;
+      position: relative;
+      z-index: 5;
+    }
+
+    .toc {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .toc a {
+      min-height: 96px;
+      padding: 18px;
+      border-radius: 22px;
+      background: var(--card);
+      border: 1px solid rgba(220, 231, 247, .95);
+      text-decoration: none;
+      color: var(--text);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+
+    .toc a:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 26px 70px rgba(21, 94, 239, .18);
+    }
+
+    .toc span {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 900;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--cyan));
+    }
+
+    .prompt-card {
+      margin-top: 22px;
+      padding: 26px;
+      border-radius: 28px;
+      background: var(--card);
+      border: 1px solid rgba(220, 231, 247, .95);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .section-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow {
+      font-size: 13px;
+      color: var(--primary);
+      font-weight: 900;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin: 8px 0 0;
+      font-size: 25px;
+      line-height: 1.35;
+      letter-spacing: -.4px;
+    }
+
+    .copy-btn {
+      flex: 0 0 auto;
+      height: 40px;
+      padding: 0 14px;
+      border: 0;
+      border-radius: 12px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary), var(--cyan));
+      cursor: pointer;
+      font-weight: 800;
+      box-shadow: 0 12px 24px rgba(21,94,239,.22);
+    }
+
+    .copy-btn.copied {
+      background: linear-gradient(135deg, #16a34a, #22c55e);
+    }
+
+    pre {
+      margin: 0;
+      max-height: 560px;
+      overflow: auto;
+      border-radius: 20px;
+      background: var(--code-bg);
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+    }
+
+    code {
+      display: block;
+      padding: 22px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: var(--code-text);
+      font-family: "Cascadia Code", "Consolas", "SFMono-Regular", monospace;
+      font-size: 14px;
+      line-height: 1.72;
+    }
+
+    .appendix {
+      margin-top: 22px;
+      padding: 26px;
+      border-radius: 28px;
+      background:
+        linear-gradient(135deg, rgba(21,94,239,.08), rgba(19,194,255,.08)),
+        var(--card);
+      border: 1px solid rgba(220, 231, 247, .95);
+      box-shadow: var(--shadow);
+    }
+
+    .appendix h2 {
+      margin: 0 0 16px;
+    }
+
+    .links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .link-card {
+      display: block;
+      padding: 18px;
+      border-radius: 18px;
+      background: #fff;
+      border: 1px solid var(--line);
+      text-decoration: none;
+      color: var(--text);
+      transition: transform .18s ease, border-color .18s ease;
+    }
+
+    .link-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(21, 94, 239, .45);
+    }
+
+    .link-card span {
+      display: block;
+      font-size: 18px;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .link-card em {
+      display: block;
+      font-style: normal;
+      color: var(--muted);
+      font-size: 13px;
+      word-break: break-all;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 26px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 980px) {
+      .toc {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .links {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero {
+        padding: 36px 20px 70px;
+      }
+      .container {
+        margin-top: -46px;
+        padding: 0 14px 44px;
+      }
+      .toc {
+        grid-template-columns: 1fr;
+      }
+      .section-top {
+        flex-direction: column;
+      }
+      .copy-btn {
+        width: 100%;
+      }
+      pre {
+        max-height: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="badge">AI产品经理练习 · Prompt Practice</div>
+      <h1>中移互联网产品经理练习页面</h1>
+      <p>本页面汇总四个关键练习提示词：流程梳理、流程AI化、PRD生成、高保真产品原型HTML生成。学员可按顺序复制使用，完成从业务流程到产品原型的完整训练闭环。</p>
+      <div class="hero-actions">
+        <a href="#prompt-1">开始练习</a>
+        <a class="secondary" href="#appendix">查看附录链接</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <nav class="toc" aria-label="提示词目录">
+      <a href="#prompt-1"><span>1</span>流程提示词：中移互联网AI场景创新与落地流程梳理</a>
+<a href="#prompt-2"><span>2</span>流程AI化提示词：识别AI介入节点并重新绘制流程</a>
+<a href="#prompt-5"><span>5</span>PRD生成提示词：基于AI化流程输出产品需求文档</a>
+<a href="#prompt-6"><span>6</span>高保真产品原型HTML生成提示词：基于PRD生成可演示原型</a>
+    </nav>
+
+    
+    <section class="prompt-card" id="prompt-1">
+      <div class="section-top">
+        <div>
+          <div class="eyebrow">PROMPT 1 · DeepSeek</div>
+          <h2>流程提示词：中移互联网AI场景创新与落地流程梳理</h2>
+        </div>
+        <button class="copy-btn" onclick="copyPrompt('code-1', this)">复制提示词</button>
+      </div>
+      <pre><code id="code-1">## 1、流程提示词：中移互联网AI场景创新与落地流程梳理
+工具：DeepSeek
+
+你是一名企业AI战略落地顾问，熟悉通信运营商、互联网业务、用户增长、内容运营、客服运营、产品研发、数据分析、安全合规、智能体建设与企业数字化转型。请围绕“中移互联网开展AI场景创新与智能体落地”这个主题，系统梳理从业务调研到场景识别、从场景湖建设到高ROI场景筛选、从MVP验证到规模化推广的完整流程。
+
+### C｜Context 背景信息
+中移互联网作为大型通信运营商体系下的互联网业务组织，业务通常涉及APP运营、内容运营、用户增长、权益运营、活动营销、客服服务、产品研发、数据分析、风控合规、政企协同、知识管理与内部办公提效等场景。当前企业希望通过AI、大模型、智能体、知识库、工作流和自动化工具，系统提升业务效率、用户体验、运营质量和创新速度。
+
+### H｜History 已有信息
+我们正在围绕“中移互联网AI场景创新”开展小组讨论和方案设计，需要先把完整业务流程梳理出来，再进一步识别哪些环节可以被AI介入。请参考企业AI战略落地的一般流程：战略规划、业务调研、场景创新、场景湖建设、价值筛选、数据治理、合规评估、MVP验证、系统集成、组织推广、运营复盘。
+
+### A｜Action 任务要求
+请你梳理“中移互联网AI场景创新与落地”的完整流程，至少覆盖以下环节：
+
+1. 项目启动与目标对齐：明确AI建设目标、业务边界、组织责任人与评估指标。
+2. 业务调研与痛点识别：访谈业务部门，识别运营、客服、产品、研发、数据、风控、办公等场景痛点。
+3. 流程拆解与机会识别：拆解高频流程，识别重复劳动、知识密集、数据密集、规则密集、跨系统协同等AI机会点。
+4. 场景湖建设：将所有潜在AI场景沉淀为统一清单。
+5. 场景分类与分层：区分降本类、增效类、增长类、控险类、体验类、创新类场景。
+6. 数据与系统条件评估：判断是否有数据、知识库、接口、权限、流程入口和业务负责人。
+7. 合规与安全评估：关注用户隐私、数据安全、内容安全、模型输出风险和运营商体系合规要求。
+8. 高ROI场景筛选：根据价值、可行性、数据基础、复制性、风险等维度进行评分。
+9. MVP方案设计：选择Top场景，设计最小可行验证方案。
+10. AI工具与智能体设计：判断使用知识库、工作流、RAG、Agent、自动化脚本、数据分析智能体或代码智能体。
+11. 试点验证与指标评估：验证效率提升、成本节约、转化提升、满意度改善、风险降低等指标。
+12. 资产沉淀与组织推广：沉淀提示词、流程SOP、知识库、智能体模板、评估表、复盘报告。
+13. 持续运营与迭代：建立AI场景经营机制，定期更新场景湖和高价值场景池。
+
+### T｜Target 输出要求
+请输出一个完整的 Mermaid 流程图，格式必须为 `flowchart TD`。流程图要体现主流程、分支判断和关键交付物。请使用中文节点名称，逻辑清晰，适合直接放入PPT或方案文档中。
+
+请只输出 Mermaid 代码，不要输出额外解释。</code></pre>
+    </section>
+    
+    <section class="prompt-card" id="prompt-2">
+      <div class="section-top">
+        <div>
+          <div class="eyebrow">PROMPT 2 · DeepSeek</div>
+          <h2>流程AI化提示词：识别AI介入节点并重新绘制流程</h2>
+        </div>
+        <button class="copy-btn" onclick="copyPrompt('code-2', this)">复制提示词</button>
+      </div>
+      <pre><code id="code-2">## 2、流程AI化提示词：识别AI介入节点并重新绘制流程
+工具：DeepSeek
+
+请基于上一个“中移互联网AI场景创新与落地流程图”，进一步分析哪些流程节点可以引入AI，从而大幅提升场景挖掘效率、方案设计效率、数据分析效率、运营决策效率和落地验证效率。请使用管理创新和业务分析方法进行系统判断，包括但不限于 SCAMPER、SWOT、价值链分析、流程再造、AI五力模型、痛点-价值-可行性分析等。
+
+### C｜Context 背景信息
+中移互联网的AI落地不是单点工具应用，而是要形成“持续发现高价值AI场景、持续验证、持续推广”的经营机制。AI可以介入的方向包括但不限于：会议纪要提炼、业务痛点归纳、用户评论分析、客服工单分析、运营活动复盘、内容生成、数据分析、需求文档生成、知识库问答、代码辅助、流程自动化、合规审核和智能体编排。
+
+### H｜History 已有信息
+目前已经完成了中移互联网AI场景创新与落地的基础流程图。现在需要在该流程基础上进一步判断：哪些节点适合AI辅助，哪些节点适合AI半自动化，哪些节点可以通过智能体、工作流或RAG知识库进行深度改造。
+
+### A｜Action 任务要求
+请完成以下分析：
+
+1. 逐个检查流程中的关键节点，判断AI是否可以介入。
+2. 对AI介入节点说明介入方式，例如：大模型辅助分析、知识库问答、智能体执行、工作流自动化、数据分析Agent、内容生成、合规审核、用户洞察分析等。
+3. 用不同颜色标注AI介入节点。普通流程节点保持默认颜色，AI介入节点使用醒目颜色。
+4. 对于AI介入强度较高的节点，可以标注“AI增强”“AI辅助”“AI自动化”“智能体执行”。
+5. 输出一个新的 Mermaid 流程图，保留原有业务流程逻辑，但将AI可介入节点突出显示。
+6. 在流程图中体现典型AI介入点，例如：
+   - AI自动整理访谈纪要与业务痛点
+   - AI从录音和文档中生成场景湖
+   - AI辅助进行SCAMPER与SWOT分析
+   - AI对场景进行ROI初评
+   - AI生成MVP方案和验证指标
+   - AI辅助设计知识库、工作流和智能体
+   - AI自动生成复盘报告和推广材料
+
+### T｜Target 输出要求
+请输出一个 Mermaid 流程图，格式为 `flowchart TD`。
+
+要求：
+1. AI介入节点必须使用另一种颜色标注。
+2. Mermaid 中需要使用 `classDef` 和 `class` 定义AI节点样式。
+3. 节点名称要适合放入PPT展示，不能过长。
+4. 请只输出 Mermaid 代码，不要输出额外解释。</code></pre>
+    </section>
+    
+    <section class="prompt-card" id="prompt-5">
+      <div class="section-top">
+        <div>
+          <div class="eyebrow">PROMPT 5 · DeepSeek / ChatGPT / Claude / 小浣熊</div>
+          <h2>PRD生成提示词：基于AI化流程输出产品需求文档</h2>
+        </div>
+        <button class="copy-btn" onclick="copyPrompt('code-5', this)">复制提示词</button>
+      </div>
+      <pre><code id="code-5">## 5、PRD生成提示词：基于AI化流程输出产品需求文档
+适用场景：基于AI化业务流程、场景湖和高ROI场景评分结果，生成完整PRD文档
+推荐工具：DeepSeek / ChatGPT / Claude / 小浣熊
+
+你是一名资深产品经理、AI产品架构师和企业数字化转型顾问，熟悉产品需求文档PRD撰写、企业级SaaS系统设计、AI场景创新、智能体平台、知识库、RAG、工作流、数据分析、ROI评估与MVP试点管理。请基于我提供的AI化流程图、场景湖清单和高ROI评分结果，生成一份专业、完整、可用于开发沟通和评审汇报的PRD文档。
+
+### C｜Context 背景信息
+企业正在从“零散寻找AI点子”升级为“持续经营AI场景”的体系化机制。现在已经完成了业务流程梳理、AI介入节点识别、场景湖建设和高ROI场景筛选，需要进一步将其中一个或一组高价值AI场景产品化，形成可开发、可测试、可验收的产品需求文档。
+
+PRD需要帮助业务团队、产品团队、研发团队、测试团队和管理层形成统一理解：这个产品要解决什么问题、服务谁、如何使用、有哪些功能、业务规则是什么、如何验收、如何分阶段上线。
+
+### H｜History 已有信息
+请基于以下输入材料进行PRD生成：
+
+【输入1：AI化业务流程图】
+请粘贴 Mermaid 流程图或流程说明：
+&lt;&lt;&lt;在这里粘贴AI化流程图&gt;&gt;&gt;
+
+【输入2：场景湖清单】
+请粘贴场景湖表格内容，或概述高价值场景：
+&lt;&lt;&lt;在这里粘贴场景湖内容&gt;&gt;&gt;
+
+【输入3：高ROI场景评分结果】
+请粘贴评分表内容，或列出P0/P1优先场景：
+&lt;&lt;&lt;在这里粘贴高ROI评分结果&gt;&gt;&gt;
+
+【输入4：目标产品名称】
+请填写目标产品名称：
+&lt;&lt;&lt;例如：中移互联网AI场景经营平台 / AI客服工单分析助手 / AI营销活动复盘平台&gt;&gt;&gt;
+
+如果输入材料不完整，请基于业务逻辑进行合理补全，但不要偏离原始场景。
+
+### A｜Action 任务要求
+请为目标产品生成一份完整PRD，要求包含以下内容：
+
+1. 文档信息
+   - 文档名称
+   - 产品名称
+   - 版本号
+   - 作者
+   - 更新时间
+   - 适用对象
+   - 文档状态
+
+2. 产品概述
+   - 产品背景
+   - 业务现状
+   - 当前痛点
+   - 产品定位
+   - 产品目标
+   - 核心价值
+   - 成功指标
+
+3. 目标用户与角色
+   - 核心用户画像
+   - 用户痛点
+   - 用户任务
+   - 使用频率
+   - 权限边界
+   - 不同角色的关注点
+
+4. 核心业务场景
+   - 场景一：主要业务场景
+   - 场景二：协同业务场景
+   - 场景三：管理评审场景
+   - 每个场景需包含触发条件、用户动作、系统响应、预期结果
+
+5. 产品流程设计
+   - 主流程说明
+   - 子流程说明
+   - 状态流转
+   - 异常流程
+   - 人工审核与AI自动生成之间的关系
+   - 如适合，请输出 Mermaid 流程图
+
+6. 功能需求
+   请按照模块拆解功能，每个模块需包含：
+   - 模块名称
+   - 功能说明
+   - 用户入口
+   - 前置条件
+   - 操作步骤
+   - 系统规则
+   - 输出结果
+   - 优先级：P0 / P1 / P2
+   - 验收标准
+
+7. 页面需求
+   - 首页/工作台
+   - 列表页
+   - 详情页
+   - 生成页
+   - 审核页
+   - 数据看板页
+   - 设置页
+   请描述每个页面的信息结构、核心组件和关键操作。
+
+8. 业务规则
+   - 数据规则
+   - 评分规则
+   - 状态规则
+   - 权限规则
+   - 审核规则
+   - 通知规则
+   - 导出规则
+
+9. AI能力设计
+   - AI输入材料
+   - AI处理逻辑
+   - AI输出内容
+   - 人工确认节点
+   - 提示词模板
+   - 知识库或RAG要求
+   - 智能体/工作流设计建议
+   - AI生成内容质量标准
+
+10. 数据与系统集成
+    - 需要接入的数据源
+    - 需要对接的系统
+    - 数据字段建议
+    - API接口建议
+    - 日志与审计要求
+
+11. 非功能性需求
+    - 性能要求
+    - 安全要求
+    - 合规要求
+    - 可用性要求
+    - 可扩展性要求
+    - 兼容性要求
+
+12. 异常场景与边界条件
+    - 输入材料不足
+    - AI生成结果质量低
+    - 数据权限不足
+    - 审核不通过
+    - 重复场景合并
+    - 导出失败
+    - 系统超时
+
+13. 验收标准与测试用例
+    - 功能验收
+    - 数据验收
+    - AI生成质量验收
+    - 权限验收
+    - 性能验收
+    - 典型测试用例
+
+14. 版本规划与里程碑
+    - V1.0 最小可用版本
+    - V1.1 增强版本
+    - V1.2 自动化版本
+    - V2.0 智能体协同版本
+
+### T｜Target 输出要求
+请输出一份完整的PRD文档，格式为 Markdown。
+
+要求：
+1. 内容要专业、详尽、可直接用于产品评审。
+2. 不要只写原则，要写清楚具体页面、功能、规则和验收标准。
+3. 如果涉及AI生成内容，必须说明人工审核机制。
+4. 如果涉及数据或权限，必须说明安全与合规要求。
+5. PRD内容要能够支持后续继续生成高保真HTML原型。
+6. 不要反问问题；如果信息不足，请基于合理产品假设补齐，并在“设计假设”中说明。</code></pre>
+    </section>
+    
+    <section class="prompt-card" id="prompt-6">
+      <div class="section-top">
+        <div>
+          <div class="eyebrow">PROMPT 6 · Claude / ChatGPT / DeepSeek / CodeBuddy / Cursor / 小浣熊</div>
+          <h2>高保真产品原型HTML生成提示词：基于PRD生成可演示原型</h2>
+        </div>
+        <button class="copy-btn" onclick="copyPrompt('code-6', this)">复制提示词</button>
+      </div>
+      <pre><code id="code-6">## 6、高保真产品原型HTML生成提示词
+适用场景：基于已有PRD文档，一键生成可演示、可评审、可交付开发的高保真HTML产品原型
+推荐工具：Claude / ChatGPT / DeepSeek / CodeBuddy / Cursor / 小浣熊
+
+你是一名资深产品经理、交互设计专家、UI设计师和前端工程师，擅长根据PRD文档快速生成高保真产品原型。请基于我提供的PRD文档，设计并输出一个完整的高保真产品原型HTML。
+
+### C｜Context 背景信息
+我已经完成了一份产品PRD文档，里面包含产品背景、目标用户、核心场景、功能需求、业务流程、页面结构、业务规则、异常场景、非功能性需求和验收标准。现在需要将PRD进一步转化为一个可以直接在浏览器中打开的高保真产品原型，用于产品评审、客户演示、开发沟通和方案汇报。
+
+这个原型不是低保真线框图，而是接近真实产品界面的高保真交互原型。它需要体现产品的信息架构、页面布局、核心功能、关键业务流程、数据状态、用户操作入口和视觉风格。
+
+### H｜History 已有信息
+以下是产品PRD文档，请你完整阅读并理解其中的产品定位、用户角色、核心流程、功能模块、页面结构和业务规则。
+
+【PRD文档】
+请粘贴完整PRD内容：
+&lt;&lt;&lt;在这里粘贴PRD文档&gt;&gt;&gt;
+
+如PRD中已经包含页面结构，请严格按照PRD页面结构生成原型。
+如PRD中页面结构不完整，请根据产品目标、用户场景和功能需求，合理补全页面结构。
+如PRD中存在不清晰的信息，请在不改变产品方向的前提下，基于产品经理经验进行合理假设，并在页面内容中体现清晰、专业、可评审的设计结果。
+
+### A｜Action 任务要求
+请你基于上述PRD，完成以下任务：
+
+一、先理解PRD并提炼原型设计要点
+请从PRD中提取以下信息，并用于原型设计：
+1. 产品名称
+2. 产品定位
+3. 目标用户
+4. 核心业务场景
+5. 核心功能模块
+6. 关键业务流程
+7. 主要页面结构
+8. 关键数据指标
+9. 用户操作入口
+10. 业务状态和流转关系
+
+二、生成高保真HTML原型
+请输出一个完整的单文件HTML代码，要求包含：
+1. HTML结构
+2. CSS样式
+3. 少量必要的JavaScript交互
+4. 可直接复制保存为 `.html` 文件并在浏览器中打开
+5. 不依赖外部图片资源
+6. 不依赖后端接口
+7. 不省略任何核心代码
+
+三、页面设计要求
+请根据PRD内容生成完整页面，而不是只生成单个卡片或局部区域。页面应至少包含：
+1. 顶部导航栏：产品名称、当前用户信息、搜索入口、消息或通知入口、常用操作按钮
+2. 左侧菜单栏：根据PRD中的功能模块生成菜单，当前页面需要有选中态，菜单层级清晰
+3. 首页/工作台：展示核心数据指标、关键任务、业务流程进度、待处理事项、重点推荐或风险提醒
+4. 核心功能页面：根据PRD自动选择最重要的1-3个功能模块进行原型展示
+5. 详情页或弹窗区域：展示某个核心对象的详细信息，包含基础信息、状态信息、操作记录、下一步操作等
+6. 关键操作区：包含新增、编辑、生成、审核、提交、导出、查看详情等按钮，按钮文案要符合PRD业务语境
+
+四、视觉设计要求
+请根据产品类型选择合适风格。默认采用企业级SaaS高保真风格：
+1. 整体风格：专业、清爽、可信、科技感
+2. 色彩体系：以蓝色、青色、白色、浅灰为主，可根据产品行业适当调整
+3. 布局方式：卡片式布局、清晰分区、信息密度适中
+4. 组件风格：圆角、阴影、渐变、标签、进度条、状态徽标
+5. 字体要求：中文界面优先使用系统默认中文字体
+6. 页面比例：适合16:9大屏演示，也适合普通浏览器查看
+7. 视觉层级：核心指标突出，次级信息清晰，操作入口明确
+
+五、内容填充要求
+请不要生成空洞的“示例数据”。需要结合PRD的业务背景，生成具有真实感的业务数据和页面内容。
+
+例如：
+1. 如果PRD是AI场景管理平台，页面中应出现场景名称、ROI评分、优先级、业务部门、AI介入方式等内容。
+2. 如果PRD是客户管理系统，页面中应出现客户分层、跟进状态、商机金额、转化概率等内容。
+3. 如果PRD是数据分析平台，页面中应出现指标卡片、趋势变化、分析结论、筛选条件等内容。
+4. 如果PRD是审批系统，页面中应出现审批状态、申请人、流程节点、处理意见等内容。
+5. 如果PRD是智能体平台，页面中应出现智能体名称、工具调用、知识库、运行状态、任务日志等内容。
+
+六、交互要求
+请在HTML中加入少量轻量级交互，使原型更接近真实产品：
+1. 菜单切换高亮
+2. 表格行 hover 效果
+3. 按钮点击反馈
+4. 弹窗打开与关闭
+5. Tab切换
+6. 筛选条件视觉变化
+7. 进度条或状态变化展示
+
+不需要实现复杂业务逻辑，但要让原型具备演示感。
+
+七、代码要求
+请保证代码质量：
+1. 使用语义化HTML结构
+2. CSS写在 `&lt;style&gt;` 标签中
+3. JavaScript写在 `&lt;script&gt;` 标签中
+4. 代码结构清晰，注释适度
+5. 不要引用外部CDN
+6. 不要使用需要安装的框架
+7. 不要输出伪代码
+8. 不要省略CSS或JS
+9. 不要只给设计说明，必须输出完整HTML代码
+
+### T｜Target 输出格式
+请按照以下格式输出：
+
+第一部分：原型设计说明
+请用简短文字说明你从PRD中提炼出的原型设计重点，包括产品定位、核心用户、关键页面和视觉风格。
+
+第二部分：完整HTML代码
+请输出完整HTML代码，代码必须放在一个代码块中，格式为：
+
+```html
+完整HTML代码
+```
+
+HTML必须可以直接复制保存为 `.html` 文件，并在浏览器中打开查看。
+
+### 输出限制
+1. 不要反问我问题。
+2. 不要只输出页面描述。
+3. 不要输出低保真线框图。
+4. 不要省略代码。
+5. 不要生成与PRD无关的功能。
+6. 不要使用外部图片、外部字体或外部JS库。
+7. 如果PRD信息不足，请基于合理产品设计假设补齐。
+8. 最终结果必须是一个可运行、可演示、可评审的高保真HTML原型。</code></pre>
+    </section>
+    
+
+    <section class="appendix" id="appendix">
+      <h2>附录链接</h2>
+      <div class="links">
+        <a class="link-card" href="https://lijiagui.feishu.cn/share/base/form/shrcnBSSDUVE6F2MdBGgBFDfXKA" target="_blank" rel="noopener noreferrer"><span>作业提交</span><em>https://lijiagui.feishu.cn/share/base/form/shrcnBSSDUVE6F2MdBGgBFDfXKA</em></a>
+<a class="link-card" href="https://lijiagui.feishu.cn/docx/W8pydXLB1oi5CexPUfPcX25KnBI" target="_blank" rel="noopener noreferrer"><span>通用PRD提示词</span><em>https://lijiagui.feishu.cn/docx/W8pydXLB1oi5CexPUfPcX25KnBI</em></a>
+      </div>
+    </section>
+
+    <div class="footer">中移互联网产品经理练习页面 · AI流程化、PRD化与原型化训练</div>
+  </main>
+
+  <script>
+    async function copyPrompt(id, btn) {
+      const el = document.getElementById(id);
+      const text = el ? el.innerText : "";
+      try {
+        await navigator.clipboard.writeText(text);
+        btn.textContent = "已复制";
+        btn.classList.add("copied");
+        setTimeout(() => {
+          btn.textContent = "复制提示词";
+          btn.classList.remove("copied");
+        }, 1400);
+      } catch (e) {
+        const range = document.createRange();
+        range.selectNodeContents(el);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        btn.textContent = "请按 Ctrl+C";
+      }
+    }
+  </script>
+</body>
+</html>
