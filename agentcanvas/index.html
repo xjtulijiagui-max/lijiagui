@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 智能体开发画布 - 可编辑版</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: #f0f4f8;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        .canvas-container {
+            min-width: 1200px;
+            padding: 30px;
+        }
+        .header-gradient {
+            background: linear-gradient(90deg, #3b82f6, #1e40af);
+        }
+        .section-header {
+            background: linear-gradient(90deg, #4f46e5, #3730a3);
+            color: white;
+            border-radius: 9999px;
+            padding: 6px 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 18px;
+            font-size: 15px;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            height: 100%;
+        }
+        .sidebar {
+            background: #4f46e5;
+            color: white;
+            width: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            writing-mode: vertical-rl;
+            font-size: 26px;
+            font-weight: bold;
+            letter-spacing: 0.5em;
+            border-radius: 6px;
+        }
+        .editable-input {
+            width: 100%;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 10px 12px;
+            font-size: 14px;
+            transition: all 0.2s;
+            resize: vertical;
+            min-height: 60px;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+        .editable-input:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+        .editable-input::placeholder {
+            color: #9ca3af;
+        }
+        .input-group {
+            margin-bottom: 14px;
+        }
+        .input-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 6px;
+        }
+        .prompt-table {
+            width: 100%;
+            font-size: 14px;
+        }
+        .prompt-table td {
+            border: 1px solid #d1d5db;
+            padding: 12px;
+            vertical-align: top;
+            background: #f9fafb;
+        }
+        .prompt-table textarea {
+            box-sizing: border-box;
+            width: 100%;
+        }
+        .toolbar {
+            background: white;
+            padding: 14px 24px;
+            display: flex;
+            gap: 18px;
+            align-items: center;
+            border-bottom: 1px solid #e5e7eb;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+        .brand-block {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 210px;
+        }
+        .brand-title {
+            color: #1f2937;
+            font-size: 20px;
+            line-height: 1.2;
+            font-weight: 700;
+        }
+        .brand-subtitle {
+            color: #64748b;
+            font-size: 12px;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .nav-link {
+            color: #3730a3;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 9px 12px;
+            border: 1px solid #c7d2fe;
+            border-radius: 8px;
+            background: #eef2ff;
+            transition: all 0.2s;
+        }
+        .nav-link:hover,
+        .nav-link:focus {
+            background: #e0e7ff;
+            border-color: #818cf8;
+            outline: none;
+        }
+        .toolbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-left: auto;
+        }
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        .btn:focus {
+            outline: 3px solid rgba(79, 70, 229, 0.22);
+            outline-offset: 2px;
+        }
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #059669;
+        }
+        .btn-primary {
+            background: #4f46e5;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #4338ca;
+        }
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+        .btn-warning {
+            background: #f59e0b;
+            color: white;
+        }
+        .btn-warning:hover {
+            background: #d97706;
+        }
+        .btn-large {
+            padding: 14px 32px;
+            font-size: 16px;
+        }
+        .status-message {
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 15px;
+            display: none;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .status-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .status-error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .status-info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        .status-warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .notice {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 12px 24px;
+            margin: 16px auto;
+            max-width: 80rem;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #92400e;
+            line-height: 1.7;
+        }
+        .editable-area {
+            min-height: 120px;
+            border: 2px dashed #d1d5db;
+            border-radius: 8px;
+            padding: 16px;
+            background: #fafafa;
+            box-sizing: border-box;
+        }
+        .editable-area:focus {
+            border-color: #4f46e5;
+            border-style: solid;
+            background: white;
+        }
+        .knowledge-item {
+            margin-bottom: 16px;
+        }
+        .knowledge-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 6px;
+        }
+        .space-y-3 > * + * {
+            margin-top: 12px;
+        }
+        .space-y-2 > * + * {
+            margin-top: 8px;
+        }
+        .grid {
+            display: grid;
+        }
+        .grid-cols-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        .grid-cols-4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        .gap-4 {
+            gap: 16px;
+        }
+        .gap-6 {
+            gap: 24px;
+        }
+        .flex {
+            display: flex;
+        }
+        .flex-1 {
+            flex: 1;
+        }
+        .flex-col {
+            flex-direction: column;
+        }
+        .p-6 {
+            padding: 24px;
+        }
+        .gap-6 {
+            gap: 24px;
+        }
+        .mt-2 {
+            margin-top: 8px;
+        }
+        .text-xl {
+            font-size: 20px;
+            line-height: 1.2;
+        }
+        .text-2xl {
+            font-size: 24px;
+            line-height: 1.2;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .text-white {
+            color: white;
+        }
+        .font-bold {
+            font-weight: 700;
+        }
+        .shadow-2xl {
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        .rounded-lg {
+            border-radius: 8px;
+        }
+        .overflow-hidden {
+            overflow: hidden;
+        }
+        .max-w-7xl {
+            max-width: 80rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .mx-auto {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .col-span-1 {
+            grid-column: span 1 / span 1;
+        }
+        .col-span-3 {
+            grid-column: span 3 / span 3;
+        }
+        .col-span-4 {
+            grid-column: span 4 / span 4;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 工具栏 -->
+    <header class="toolbar">
+        <div class="brand-block">
+            <h1 class="brand-title">AI智能体画布</h1>
+            <p class="brand-subtitle">可下载、可填写、可保存状态</p>
+        </div>
+
+        <nav class="nav-links" aria-label="页面导航">
+            <a class="nav-link" href="tips.html">填写技巧</a>
+            <a class="nav-link" href="example.html">查看示范</a>
+        </nav>
+
+        <div class="toolbar-actions">
+            <div id="statusMessage" class="status-message" role="status" aria-live="polite"></div>
+            <button class="btn btn-primary btn-large" id="btnDownloadTemplate" onclick="downloadTemplate()">
+                下载可填写版
+            </button>
+        </div>
+    </header>
+
+    <div class="toolbar" style="position: static; justify-content: center; box-shadow: none;">
+        <button class="btn btn-success btn-large" id="btnSave" onclick="saveDraft()">
+            保存填写状态
+        </button>
+
+        <button class="btn btn-primary" id="btnExportHTML" onclick="exportHTML()">
+            导出已填HTML
+        </button>
+
+        <button class="btn btn-secondary" id="btnReset" onclick="resetCanvas()">
+            清空重来
+        </button>
+    </div>
+
+    <!-- 使用说明 -->
+    <div class="notice">
+        <strong>使用说明：</strong>右上角可下载空白可填写版；填写过程中点击“保存填写状态”会保存在当前浏览器，下次打开可恢复；需要发送给别人时点击“导出已填HTML”，导出的文件会包含当前填写内容。
+    </div>
+
+    <div class="max-w-7xl mx-auto canvas-container bg-white shadow-2xl rounded-lg overflow-hidden" style="margin-top: 16px;">
+        <div class="header-gradient text-white text-center py-5 text-2xl font-bold">
+            AI 智能体开发画布
+        </div>
+
+        <div class="flex flex-1 p-6 gap-6">
+            <div class="sidebar">课程目录</div>
+
+            <div class="flex-1 flex flex-col gap-6">
+
+                <!-- 第一行：明确需求、简易提示词、精准提示词 -->
+                <div class="grid grid-cols-3 gap-6">
+                    <!-- 明确需求 -->
+                    <div class="card">
+                        <div class="section-header">明确需求</div>
+                        <div class="space-y-3">
+                            <div class="input-group">
+                                <label class="input-label">角色定位</label>
+                                <textarea class="editable-input" id="role" placeholder="例如：资深Python开发工程师，擅长自动化脚本和数据处理..."></textarea>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">目标用户</label>
+                                <textarea class="editable-input" id="target" placeholder="例如：需要快速处理大量数据的业务分析师..."></textarea>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">核心任务</label>
+                                <textarea class="editable-input" id="task" placeholder="例如：自动化处理Excel数据，生成分析报告..."></textarea>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">所需能力</label>
+                                <textarea class="editable-input" id="ability" placeholder="例如：数据分析、报表生成、邮件发送..."></textarea>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">用户痛点</label>
+                                <textarea class="editable-input" id="painpoint" placeholder="例如：手动处理数据耗时，容易出错..."></textarea>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">输入输出</label>
+                                <textarea class="editable-input" id="io" placeholder="例如：输入：Excel文件；输出：分析报告PDF"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 简易提示词 -->
+                    <div class="card">
+                        <div class="section-header">简易提示词</div>
+                        <div class="space-y-3" style="font-size: 14px;">
+                            <div class="input-group">
+                                <label class="input-label"># 角色</label>
+                                <textarea class="editable-input" id="simple_role" placeholder="定义AI的角色和身份..."></textarea>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label"># 技能</label>
+                                <textarea class="editable-input" id="simple_skill" placeholder="列出AI具备的技能..."></textarea>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label"># 任务</label>
+                                <textarea class="editable-input" id="simple_task" placeholder="描述需要完成的具体任务..."></textarea>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label"># 上下文背景</label>
+                                <textarea class="editable-input" id="simple_context" placeholder="提供任务的相关背景信息..."></textarea>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label"># 限制规则</label>
+                                <textarea class="editable-input" id="simple_rules" placeholder="设置输出的限制和规则..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 精准提示词 -->
+                    <div class="card">
+                        <div class="section-header">精准提示词</div>
+                        <table class="prompt-table">
+                            <tr>
+                                <td>
+                                    <label class="input-label">角色</label>
+                                    <textarea class="editable-input" id="precise_role" style="min-height: 80px;" placeholder="详细描述角色..."></textarea>
+                                </td>
+                                <td>
+                                    <label class="input-label">简介</label>
+                                    <textarea class="editable-input" id="precise_intro" style="min-height: 80px;" placeholder="简要说明..."></textarea>
+                                </td>
+                                <td>
+                                    <label class="input-label">背景</label>
+                                    <textarea class="editable-input" id="precise_bg" style="min-height: 80px;" placeholder="背景信息..."></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="input-label">目标</label>
+                                    <textarea class="editable-input" id="precise_goal" style="min-height: 80px;" placeholder="明确目标..."></textarea>
+                                </td>
+                                <td>
+                                    <label class="input-label">输出形式</label>
+                                    <textarea class="editable-input" id="precise_output" style="min-height: 80px;" placeholder="输出格式要求..."></textarea>
+                                </td>
+                                <td>
+                                    <label class="input-label">约束</label>
+                                    <textarea class="editable-input" id="precise_constraint" style="min-height: 80px;" placeholder="约束条件..."></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="input-label">能力</label>
+                                    <textarea class="editable-input" id="precise_capability" style="min-height: 80px;" placeholder="详细能力描述..."></textarea>
+                                </td>
+                                <td>
+                                    <label class="input-label">流程</label>
+                                    <textarea class="editable-input" id="precise_process" style="min-height: 80px;" placeholder="工作流程步骤..."></textarea>
+                                </td>
+                                <td>
+                                    <label class="input-label">实例</label>
+                                    <textarea class="editable-input" id="precise_example" style="min-height: 80px;" placeholder="示例说明..."></textarea>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 第二行：工作流和插件知识库 -->
+                <div class="grid grid-cols-4 gap-6 flex-1">
+
+                    <div class="col-span-3 flex flex-col gap-6">
+                        <!-- 智能体工作流 -->
+                        <div class="card">
+                            <div class="section-header">智能体工作流（员工）</div>
+                            <textarea class="editable-input editable-area" id="agent_workflow"
+                                placeholder="描述智能体的工作流程和步骤...&#10;&#10;例如：&#10;1. 接收用户输入的文件&#10;2. 解析文件内容&#10;3. 数据处理和分析&#10;4. 生成报告&#10;5. 返回结果"
+                                style="min-height: 200px;"></textarea>
+                        </div>
+
+                        <!-- 业务工作流 -->
+                        <div class="card">
+                            <div class="section-header">业务工作流（老板）</div>
+                            <textarea class="editable-input editable-area" id="business_workflow"
+                                placeholder="描述业务层面的大流程...&#10;&#10;例如：&#10;1. 业务需求收集&#10;2. 需求分析和拆解&#10;3. 任务分配给智能体&#10;4. 结果整合和审核&#10;5. 交付给最终用户"
+                                style="min-height: 200px;"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-span-1 flex flex-col gap-6">
+                        <!-- 插件 -->
+                        <div class="card">
+                            <div class="section-header">插件（功能增强）</div>
+                            <div class="space-y-3 mt-2">
+                                <div class="input-group">
+                                    <label class="input-label">插件1</label>
+                                    <textarea class="editable-input" id="plugin1" placeholder="例如：Web搜索插件..."></textarea>
+                                </div>
+                                <div class="input-group">
+                                    <label class="input-label">插件2</label>
+                                    <textarea class="editable-input" id="plugin2" placeholder="例如：文件读取插件..."></textarea>
+                                </div>
+                                <div class="input-group">
+                                    <label class="input-label">插件3</label>
+                                    <textarea class="editable-input" id="plugin3" placeholder="例如：API调用插件..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 知识库 -->
+                        <div class="card">
+                            <div class="section-header">知识库（知识补充）</div>
+                            <div class="space-y-3 mt-2">
+                                <div class="knowledge-item">
+                                    <label class="knowledge-label">文本知识</label>
+                                    <textarea class="editable-input" id="knowledge_text" placeholder="例如：产品文档、操作手册等文本资料..."></textarea>
+                                </div>
+                                <div class="knowledge-item">
+                                    <label class="knowledge-label">表格数据</label>
+                                    <textarea class="editable-input" id="knowledge_table" placeholder="例如：价格表、参数配置等..."></textarea>
+                                </div>
+                                <div class="knowledge-item">
+                                    <label class="knowledge-label">图片资料</label>
+                                    <textarea class="editable-input" id="knowledge_image" placeholder="例如：流程图、架构图等图片说明..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- 备注 -->
+                <div class="card">
+                    <div class="section-header">备注说明</div>
+                    <textarea class="editable-input" id="notes" placeholder="添加任何其他说明、注意事项或补充信息..."
+                        style="min-height: 100px;"></textarea>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 显示消息
+        var STORAGE_KEY = 'aiAgentCanvasDraft.v1';
+        var isDirty = false;
+        var lastSavedSnapshot = '';
+        var hideMessageTimer = null;
+
+        function showMessage(message, type, persist) {
+            var msgEl = document.getElementById('statusMessage');
+            if (!msgEl) return;
+
+            if (hideMessageTimer) {
+                clearTimeout(hideMessageTimer);
+                hideMessageTimer = null;
+            }
+
+            msgEl.textContent = message;
+            msgEl.className = 'status-message status-' + type;
+            msgEl.style.display = 'block';
+
+            if (!persist) {
+                hideMessageTimer = setTimeout(function() {
+                    msgEl.style.display = 'none';
+                }, 5000);
+            }
+        }
+
+        // 收集表单数据
+        function collectFormData() {
+            var data = {};
+            var inputs = document.querySelectorAll('textarea, input');
+
+            for (var i = 0; i < inputs.length; i++) {
+                var input = inputs[i];
+                if (input.id && input.id !== 'importFile') {
+                    data[input.id] = input.value;
+                }
+            }
+
+            return data;
+        }
+
+        // 填充表单数据
+        function countFilledFields(data) {
+            var count = 0;
+            var keys = Object.keys(data || {});
+
+            for (var i = 0; i < keys.length; i++) {
+                if (data[keys[i]] && data[keys[i]].trim() !== '') {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
+        // 填充表单数据
+        function fillFormData(data) {
+            var keys = Object.keys(data || {});
+
+            for (var i = 0; i < keys.length; i++) {
+                var id = keys[i];
+                var element = document.getElementById(id);
+                if (element) {
+                    element.value = data[id] || '';
+                }
+            }
+        }
+
+        function getSnapshot() {
+            return JSON.stringify(collectFormData());
+        }
+
+        function rememberSavedState(data) {
+            lastSavedSnapshot = JSON.stringify(data || collectFormData());
+            isDirty = false;
+        }
+
+        function markDirty() {
+            isDirty = getSnapshot() !== lastSavedSnapshot;
+            if (isDirty) {
+                showMessage('有未保存的修改', 'warning', true);
+            }
+        }
+
+        function bindInputs() {
+            var inputs = document.querySelectorAll('textarea, input');
+            for (var i = 0; i < inputs.length; i++) {
+                inputs[i].addEventListener('input', markDirty);
+            }
+        }
+
+        // 主保存功能
+        function saveAll() {
+            try {
+                var data = collectFormData();
+
+                // 统计非空字段
+                var nonEmptyCount = 0;
+                var keys = Object.keys(data);
+                for (var i = 0; i < keys.length; i++) {
+                    if (data[keys[i]] && data[keys[i]].trim() !== '') {
+                        nonEmptyCount++;
+                    }
+                }
+
+                if (nonEmptyCount === 0) {
+                    showMessage('请先填写一些内容再保存', 'info');
+                    return;
+                }
+
+                // 获取HTML内容
+                var htmlContent = document.documentElement.outerHTML;
+
+                // 创建数据注入脚本
+                var dataScript = '<script>' +
+                    'window.SAVED_DATA = ' + JSON.stringify(data) + ';' +
+                    'window.addEventListener("DOMContentLoaded", function() {' +
+                    '  var savedData = window.SAVED_DATA;' +
+                    '  if (savedData) {' +
+                    '    var fillCount = 0;' +
+                    '    Object.keys(savedData).forEach(function(id) {' +
+                    '      var element = document.getElementById(id);' +
+                    '      if (element && savedData[id]) {' +
+                    '        element.value = savedData[id];' +
+                    '        fillCount++;' +
+                    '      }' +
+                    '    });' +
+                    '    setTimeout(function() {' +
+                    '      var msgEl = document.getElementById("statusMessage");' +
+                    '      if (msgEl) {' +
+                    '        msgEl.textContent = "已从文件恢复 " + fillCount + " 个字段的内容";' +
+                    '        msgEl.className = "status-message status-success";' +
+                    '        msgEl.style.display = "block";' +
+                    '        setTimeout(function() { msgEl.style.display = "none"; }, 5000);' +
+                    '      }' +
+                    '    }, 500);' +
+                    '  }' +
+                    '});' +
+                    '<\/script>';
+
+                // 注入数据
+                htmlContent = htmlContent.replace('</body>', dataScript + '</body>');
+
+                // 创建Blob并下载
+                var blob = new Blob([htmlContent], {type: 'text/html;charset=utf-8'});
+                var url = URL.createObjectURL(blob);
+
+                var a = document.createElement('a');
+                a.href = url;
+                a.style.display = 'none';
+
+                var now = new Date();
+                var timestamp = now.toISOString().slice(0,10).replace(/-/g, '');
+                var timeStr = now.toTimeString().slice(0,8).replace(/:/g, '');
+                a.download = 'AI智能体画布_' + timestamp + '_' + timeStr + '.html';
+
+                document.body.appendChild(a);
+                a.click();
+
+                setTimeout(function() {
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }, 100);
+
+                showMessage('已保存 ' + nonEmptyCount + ' 个字段，文件已下载', 'success');
+
+                // 同时保存到localStorage
+                try {
+                    localStorage.setItem('aiCanvasData', JSON.stringify(data));
+                } catch(e) {}
+
+            } catch (error) {
+                showMessage('保存失败：' + error.message, 'error');
+            }
+        }
+
+        // 导出HTML（别名）
+        function exportHTML() {
+            saveAll();
+        }
+
+        // 重置
+        function resetCanvas() {
+            if (confirm('确定要清空所有内容吗？此操作不可撤销。')) {
+                var inputs = document.querySelectorAll('textarea, input');
+                for (var i = 0; i < inputs.length; i++) {
+                    var input = inputs[i];
+                    if (input.id !== 'importFile') {
+                        input.value = '';
+                    }
+                }
+                try {
+                    localStorage.removeItem('aiCanvasData');
+                } catch(e) {}
+                showMessage('已清空所有内容', 'info');
+            }
+        }
+
+        // 页面加载时恢复数据
+        window.addEventListener('DOMContentLoaded', function() {
+            // 尝试从localStorage恢复
+            try {
+                var savedData = localStorage.getItem(STORAGE_KEY);
+                if (savedData) {
+                    var data = JSON.parse(savedData);
+                    var keys = Object.keys(data);
+                    if (keys.length > 0) {
+                        var hasContent = false;
+                        for (var i = 0; i < keys.length; i++) {
+                            if (data[keys[i]]) {
+                                hasContent = true;
+                                break;
+                            }
+                        }
+                        if (hasContent) {
+                            fillFormData(data);
+                            rememberSavedState(data);
+                            showMessage('已自动恢复上次保存的内容', 'success');
+                        }
+                    }
+                }
+            } catch(e) {
+                console.log('无法从localStorage恢复数据');
+            }
+        });
+
+        function saveDraft() {
+            var data = collectFormData();
+            var nonEmptyCount = countFilledFields(data);
+
+            if (nonEmptyCount === 0) {
+                showMessage('请先填写一些内容再保存', 'info');
+                return;
+            }
+
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+                rememberSavedState(data);
+                showMessage('已保存 ' + nonEmptyCount + ' 个字段的填写状态', 'success');
+            } catch (error) {
+                showMessage('保存失败：浏览器阻止了本地存储，可改用“导出已填HTML”', 'error');
+            }
+        }
+
+        function stripEmbeddedData(html) {
+            return html
+                .replace(/\s*<textarea id="embeddedCanvasData" hidden>[\s\S]*?<\/textarea>\s*/g, '\n')
+                .replace(/\s*<script id="embeddedCanvasData" type="application\/json">[\s\S]*?<\/script>\s*/g, '\n');
+        }
+
+        function buildDownloadHtml(includeData) {
+            var htmlContent = stripEmbeddedData(document.documentElement.outerHTML);
+            htmlContent = htmlContent.replace(
+                /<div id="statusMessage" class="[^"]*"[^>]*>[\s\S]*?<\/div>/,
+                '<div id="statusMessage" class="status-message" role="status" aria-live="polite"></div>'
+            );
+
+            if (includeData) {
+                var safeJson = JSON.stringify(collectFormData()).replace(/</g, '\\u003c');
+                var dataBlock = '<textarea id="embeddedCanvasData" hidden>' + safeJson + '</text' + 'area>';
+                var closingBodyIndex = htmlContent.lastIndexOf('</body>');
+                if (closingBodyIndex >= 0) {
+                    htmlContent = htmlContent.slice(0, closingBodyIndex) + dataBlock + '\n' + htmlContent.slice(closingBodyIndex);
+                } else {
+                    htmlContent += dataBlock;
+                }
+            }
+
+            return '<!DOCTYPE html>\n' + htmlContent;
+        }
+
+        function triggerDownload(filename, content) {
+            var blob = new Blob([content], {type: 'text/html;charset=utf-8'});
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.style.display = 'none';
+
+            document.body.appendChild(a);
+            a.click();
+
+            setTimeout(function() {
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 100);
+        }
+
+        function dateSuffix() {
+            var now = new Date();
+            var day = now.toISOString().slice(0, 10).replace(/-/g, '');
+            var time = now.toTimeString().slice(0, 8).replace(/:/g, '');
+            return day + '_' + time;
+        }
+
+        function downloadTemplate() {
+            triggerDownload('AI智能体画布_可填写版.html', buildDownloadHtml(false));
+            showMessage('已下载空白可填写版', 'success');
+        }
+
+        function exportHTML() {
+            var data = collectFormData();
+            var nonEmptyCount = countFilledFields(data);
+
+            if (nonEmptyCount === 0) {
+                showMessage('请先填写一些内容再导出', 'info');
+                return;
+            }
+
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            } catch (error) {}
+
+            triggerDownload('AI智能体画布_已填写_' + dateSuffix() + '.html', buildDownloadHtml(true));
+            rememberSavedState(data);
+            showMessage('已导出包含 ' + nonEmptyCount + ' 个字段的HTML文件', 'success');
+        }
+
+        function saveAll() {
+            saveDraft();
+        }
+
+        function resetCanvas() {
+            if (confirm('确定要清空所有内容吗？此操作不可撤销。')) {
+                var inputs = document.querySelectorAll('textarea, input');
+                for (var i = 0; i < inputs.length; i++) {
+                    var input = inputs[i];
+                    if (input.id !== 'importFile') {
+                        input.value = '';
+                    }
+                }
+                try {
+                    localStorage.removeItem(STORAGE_KEY);
+                } catch(error) {}
+                rememberSavedState(collectFormData());
+                showMessage('已清空所有内容', 'info');
+            }
+        }
+
+        function restoreEmbeddedData() {
+            var dataEl = document.getElementById('embeddedCanvasData');
+            if (!dataEl) {
+                return false;
+            }
+
+            try {
+                var data = JSON.parse(dataEl.value || dataEl.textContent || '{}');
+                if (countFilledFields(data) > 0) {
+                    fillFormData(data);
+                    rememberSavedState(data);
+                    showMessage('已从文件恢复填写内容', 'success');
+                    return true;
+                }
+            } catch (error) {
+                showMessage('文件内嵌数据读取失败', 'error');
+            }
+
+            return false;
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            bindInputs();
+            if (!restoreEmbeddedData()) {
+                rememberSavedState(collectFormData());
+            }
+        });
+
+        window.addEventListener('keydown', function(event) {
+            if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 's') {
+                event.preventDefault();
+                saveDraft();
+            }
+        });
+
+        // 页面关闭前提醒
+        window.addEventListener('beforeunload', function(e) {
+            var data = collectFormData();
+            var keys = Object.keys(data);
+            var hasContent = false;
+            for (var i = 0; i < keys.length; i++) {
+                if (data[keys[i]] && data[keys[i]].trim() !== '') {
+                    hasContent = true;
+                    break;
+                }
+            }
+            if (isDirty && hasContent) {
+                e.preventDefault();
+                e.returnValue = '您有未保存的内容，建议先保存后再关闭。';
+                return e.returnValue;
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,1250 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CSTD 高爆现场实训任务库，包含一键排版、PPT、数据分析、数据看板、劳动竞赛、海报生成和短视频工作流提示词。">
+  <meta property="og:title" content="高爆现场实训 - CSTD">
+  <meta property="og:description" content="7 个现场 AI 实训任务，一页复制提示词。">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:,">
+  <title>高爆现场实训 - CSTD</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --surface-base: #08090a;
+      --surface-panel: #0f1011;
+      --surface-card: rgba(255,255,255,0.035);
+      --surface-elevated: rgba(255,255,255,0.065);
+      --text-primary: #f7f8f8;
+      --text-secondary: #d0d6e0;
+      --text-muted: #8a8f98;
+      --border-subtle: rgba(255,255,255,0.07);
+      --accent-primary: #7170ff;
+      --accent-hover: #828fff;
+      --category-tool: #43b7ff;
+      --category-process: #f4b84a;
+      --category-prompt: #8f8cff;
+      --category-note: #35d19a;
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-12: 48px;
+      --space-16: 64px;
+      font-family: "Inter Variable", "SF Pro Display", "Microsoft YaHei UI", "PingFang SC", system-ui, sans-serif;
+      font-feature-settings: "cv01", "ss03";
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      background:
+        radial-gradient(circle at 18% -12%, rgba(113,112,255,0.28), transparent 34rem),
+        radial-gradient(circle at 92% 14%, rgba(67,183,255,0.14), transparent 30rem),
+        linear-gradient(180deg, #0d0e10 0%, var(--surface-base) 42%, #060708 100%);
+      color: var(--text-secondary);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 20px 64px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      min-height: 68px;
+      margin: -28px -20px 0;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border-subtle);
+      background: rgba(8,9,10,0.82);
+      backdrop-filter: blur(18px) saturate(140%);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-primary);
+      font-size: 14px;
+      font-weight: 590;
+      white-space: nowrap;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 26px;
+      height: 26px;
+      place-items: center;
+      border: 1px solid rgba(255,255,255,0.13);
+      border-radius: 7px;
+      background: linear-gradient(135deg, rgba(113,112,255,0.45), rgba(67,183,255,0.15));
+      color: #fff;
+      font-size: 11px;
+      letter-spacing: -0.03em;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .top-actions a {
+      border: 1px solid var(--border-subtle);
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.025);
+      transition: border-color 160ms ease, color 160ms ease, transform 120ms ease;
+    }
+
+    .top-actions a:hover {
+      color: var(--text-primary);
+      border-color: rgba(130,143,255,0.42);
+    }
+
+    .top-actions a:active {
+      transform: translateY(1px);
+    }
+
+    .hero {
+      display: grid;
+      gap: var(--space-6);
+      padding: 38px 0 30px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.72fr);
+      gap: var(--space-6);
+      align-items: center;
+    }
+
+    .eyebrow {
+      width: fit-content;
+      margin-bottom: var(--space-4);
+      border: 1px solid rgba(113,112,255,0.32);
+      border-radius: 999px;
+      padding: 7px 11px;
+      background: rgba(113,112,255,0.10);
+      color: #d8d8ff;
+      font-size: 12px;
+      font-weight: 590;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 11ch;
+      color: var(--text-primary);
+      font-size: clamp(40px, 7vw, 76px);
+      font-weight: 590;
+      line-height: 0.96;
+      letter-spacing: -0.045em;
+    }
+
+    .hero p {
+      max-width: 56ch;
+      margin: 22px 0 0;
+      color: var(--text-secondary);
+      font-size: clamp(16px, 2vw, 19px);
+      line-height: 1.7;
+    }
+
+    .prep-panel {
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: var(--space-4);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.022)),
+        var(--surface-panel);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+
+    .prep-title {
+      margin: 0 0 var(--space-4);
+      color: var(--text-primary);
+      font-size: 18px;
+      font-weight: 590;
+    }
+
+    .prep-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .prep-list a {
+      color: var(--text-secondary);
+      border-bottom: 1px solid rgba(113,112,255,0.35);
+    }
+
+    .legend {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-3);
+    }
+
+    .legend-item,
+    .summary-card {
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.028);
+      padding: 14px;
+    }
+
+    .legend-item {
+      display: grid;
+      gap: 6px;
+    }
+
+    .legend-dot {
+      width: 26px;
+      height: 3px;
+      border-radius: 999px;
+      background: var(--tag-color);
+      box-shadow: 0 0 22px color-mix(in srgb, var(--tag-color), transparent 56%);
+    }
+
+    .legend-item strong {
+      color: var(--text-primary);
+      font-size: 14px;
+    }
+
+    .legend-item span {
+      color: var(--text-muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: var(--space-3);
+      margin-bottom: var(--space-8);
+    }
+
+    .summary-card {
+      min-height: 82px;
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+    }
+
+    .summary-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(130,143,255,0.35);
+      background: rgba(255,255,255,0.045);
+    }
+
+    .summary-card b {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+      font-size: 18px;
+      font-weight: 590;
+      letter-spacing: -0.02em;
+    }
+
+    .summary-card span {
+      display: block;
+      color: var(--text-muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 210px minmax(0, 1fr);
+      gap: var(--space-6);
+      align-items: start;
+    }
+
+    .toc {
+      position: sticky;
+      top: 92px;
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: var(--space-4);
+      background: rgba(15,16,17,0.78);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .toc-title {
+      margin: 0 0 12px;
+      color: var(--text-primary);
+      font-size: 13px;
+      font-weight: 590;
+    }
+
+    .toc nav {
+      display: grid;
+      gap: 4px;
+    }
+
+    .toc a {
+      border-radius: 8px;
+      padding: 8px 9px;
+      color: var(--text-muted);
+      font-size: 13px;
+      line-height: 1.35;
+      transition: background 160ms ease, color 160ms ease;
+    }
+
+    .toc a:hover {
+      background: rgba(255,255,255,0.05);
+      color: var(--text-primary);
+    }
+
+    .tasks {
+      display: grid;
+      gap: var(--space-5);
+    }
+
+    .task-card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.018)),
+        var(--surface-card);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.055);
+    }
+
+    .task-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 3px;
+      background: linear-gradient(180deg, var(--category-tool), var(--category-prompt));
+      opacity: 0.72;
+    }
+
+    .task-inner {
+      padding: 20px;
+    }
+
+    .task-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+
+    .task-kicker {
+      margin: 0 0 8px;
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 590;
+    }
+
+    .task-title {
+      margin: 0;
+      color: var(--text-primary);
+      font-size: clamp(22px, 3vw, 30px);
+      font-weight: 590;
+      line-height: 1.18;
+      letter-spacing: -0.035em;
+    }
+
+    .copy-button {
+      flex: 0 0 auto;
+      min-height: 38px;
+      border: 1px solid rgba(113,112,255,0.36);
+      border-radius: 9px;
+      padding: 9px 13px;
+      background: rgba(113,112,255,0.12);
+      color: #ededff;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 590;
+      transition: background 160ms ease, border-color 160ms ease, transform 120ms ease;
+    }
+
+    .copy-button:hover {
+      border-color: rgba(130,143,255,0.65);
+      background: rgba(113,112,255,0.18);
+    }
+
+    .copy-button:focus-visible {
+      outline: 2px solid var(--accent-hover);
+      outline-offset: 3px;
+    }
+
+    .copy-button:active {
+      transform: translateY(1px);
+    }
+
+    .copy-button.is-copied {
+      border-color: rgba(53,209,154,0.55);
+      background: rgba(53,209,154,0.13);
+      color: #d7ffef;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-3);
+      margin: 0 0 var(--space-4);
+    }
+
+    .meta-box {
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      padding: 13px 14px;
+      background: color-mix(in srgb, var(--tag-color), transparent 91%);
+    }
+
+    .meta-label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--tag-color);
+      font-size: 12px;
+      font-weight: 590;
+    }
+
+    .meta-box p,
+    .meta-box ol {
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .meta-box ol {
+      padding-left: 1.35em;
+    }
+
+    .downloads {
+      border: 1px solid rgba(53,209,154,0.20);
+      border-radius: 12px;
+      margin: 0 0 var(--space-4);
+      padding: 13px 14px;
+      background:
+        linear-gradient(180deg, rgba(53,209,154,0.075), rgba(255,255,255,0.018)),
+        rgba(255,255,255,0.025);
+    }
+
+    .downloads-title {
+      margin: 0 0 10px;
+      color: var(--category-note);
+      font-size: 12px;
+      font-weight: 590;
+    }
+
+    .download-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-2);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .download-link {
+      display: grid;
+      gap: 4px;
+      border: 1px solid rgba(255,255,255,0.075);
+      border-radius: 10px;
+      padding: 10px 11px;
+      background: rgba(255,255,255,0.032);
+      color: var(--text-secondary);
+      transition: border-color 160ms ease, background 160ms ease, transform 120ms ease;
+    }
+
+    .download-link:hover {
+      border-color: rgba(53,209,154,0.45);
+      background: rgba(53,209,154,0.08);
+    }
+
+    .download-link:focus-visible {
+      outline: 2px solid var(--category-note);
+      outline-offset: 3px;
+    }
+
+    .download-link:active {
+      transform: translateY(1px);
+    }
+
+    .download-name {
+      color: var(--text-primary);
+      font-size: 14px;
+      font-weight: 590;
+      line-height: 1.45;
+    }
+
+    .download-meta {
+      color: var(--text-muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .prompt-wrap {
+      border: 1px solid rgba(143,140,255,0.18);
+      border-radius: 13px;
+      background:
+        linear-gradient(180deg, rgba(143,140,255,0.09), rgba(255,255,255,0.018)),
+        var(--surface-elevated);
+      overflow: hidden;
+    }
+
+    .prompt-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      padding: 12px 14px;
+    }
+
+    .prompt-head span {
+      color: var(--category-prompt);
+      font-size: 12px;
+      font-weight: 590;
+    }
+
+    pre {
+      margin: 0;
+      max-height: 520px;
+      overflow: auto;
+      padding: var(--space-4);
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: #e6e8f3;
+      font-family: "Berkeley Mono", "JetBrains Mono", "SF Mono", Consolas, "Microsoft YaHei UI", monospace;
+      font-size: 13px;
+      line-height: 1.72;
+      tab-size: 2;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      z-index: 40;
+      transform: translate(-50%, 18px);
+      border: 1px solid rgba(53,209,154,0.36);
+      border-radius: 999px;
+      padding: 11px 15px;
+      background: rgba(10,22,18,0.92);
+      color: #d7ffef;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 220ms cubic-bezier(0.16,1,0.3,1), transform 220ms cubic-bezier(0.16,1,0.3,1);
+      font-size: 14px;
+      box-shadow: 0 18px 42px rgba(0,0,0,0.42);
+    }
+
+    .toast.is-visible {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .hero,
+      .summary,
+      .task-card {
+        animation: enter 520ms cubic-bezier(0.16,1,0.3,1) both;
+      }
+
+      .summary {
+        animation-delay: 80ms;
+      }
+
+      .task-card {
+        animation-delay: 120ms;
+      }
+
+      @keyframes enter {
+        from {
+          opacity: 0;
+          transform: translateY(14px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .prep-panel {
+        max-width: 640px;
+      }
+
+      .toc {
+        position: static;
+      }
+
+      .toc nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .page {
+        padding-inline: 14px;
+      }
+
+      .topbar {
+        position: static;
+        margin-inline: -14px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .top-actions {
+        width: 100%;
+        flex-wrap: wrap;
+      }
+
+      .top-actions a {
+        flex: 1 1 auto;
+        text-align: center;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 28px;
+      }
+
+      .legend,
+      .summary,
+      .meta-grid,
+      .download-list,
+      .toc nav {
+        grid-template-columns: 1fr;
+      }
+
+      .task-header {
+        display: grid;
+      }
+
+      .copy-button {
+        width: 100%;
+      }
+
+      .task-inner {
+        padding: var(--space-4);
+      }
+
+      pre {
+        max-height: 460px;
+        font-size: 12.5px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="返回顶部">
+        <span class="brand-mark" aria-hidden="true">AI</span>
+      </a>
+      <div class="top-actions" aria-label="外部链接">
+        <a href="https://www.codebuddy.cn/work/" target="_blank" rel="noopener">workbuddy</a>
+        <a href="https://www.helloagent.top/tool.html" target="_blank" rel="noopener">工具说明</a>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-grid">
+          <div>
+            <div class="eyebrow">现场 AI 实训任务库</div>
+            <h1 id="page-title">高爆现场实训</h1>
+            <p>请学员复制对应任务的提示词，结合自己的主题和附件修改后使用；操作时同步参考页面中的流程和备注。</p>
+          </div>
+          <aside class="prep-panel" aria-labelledby="prep-title">
+            <h2 class="prep-title" id="prep-title">准备</h2>
+            <ul class="prep-list">
+              <li>建议下载 <a href="https://www.codebuddy.cn/work/" target="_blank" rel="noopener">workbuddy</a>。</li>
+              <li>本任务也可以通过 deepseek、doubao、yuanbao 等完成。</li>
+              <li>详见 <a href="https://www.helloagent.top/tool.html" target="_blank" rel="noopener">helloagent 工具说明</a>。</li>
+            </ul>
+          </aside>
+        </div>
+
+        <div class="legend" aria-label="颜色说明">
+          <div class="legend-item" style="--tag-color: var(--category-tool)">
+            <span class="legend-dot" aria-hidden="true"></span>
+            <strong>工具</strong>
+            <span>推荐使用的平台或应用。</span>
+          </div>
+          <div class="legend-item" style="--tag-color: var(--category-process)">
+            <span class="legend-dot" aria-hidden="true"></span>
+            <strong>流程</strong>
+            <span>操作顺序和课堂动作。</span>
+          </div>
+          <div class="legend-item" style="--tag-color: var(--category-prompt)">
+            <span class="legend-dot" aria-hidden="true"></span>
+            <strong>提示词</strong>
+            <span>可以一键复制的完整内容。</span>
+          </div>
+          <div class="legend-item" style="--tag-color: var(--category-note)">
+            <span class="legend-dot" aria-hidden="true"></span>
+            <strong>备注</strong>
+            <span>补充说明和实践提醒。</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="summary" aria-label="任务概览">
+        <a class="summary-card" href="#task-1"><b>01</b><span>一键排版</span></a>
+        <a class="summary-card" href="#task-2"><b>02</b><span>商用 PPT</span></a>
+        <a class="summary-card" href="#task-3"><b>03</b><span>数据分析</span></a>
+        <a class="summary-card" href="#task-4"><b>04</b><span>数据看板</span></a>
+        <a class="summary-card" href="#task-5"><b>05</b><span>劳动竞赛游戏</span></a>
+        <a class="summary-card" href="#task-6"><b>06</b><span>海报生成</span></a>
+        <a class="summary-card" href="#task-7"><b>07</b><span>短视频工作流</span></a>
+      </section>
+
+      <div class="content-grid">
+        <aside class="toc" aria-labelledby="toc-title">
+          <h2 class="toc-title" id="toc-title">任务导航</h2>
+          <nav>
+            <a href="#task-1">一键排版</a>
+            <a href="#task-2">快速生成 PPT</a>
+            <a href="#task-3">数据分析</a>
+            <a href="#task-4">数据看板</a>
+            <a href="#task-5">劳动竞赛</a>
+            <a href="#task-6">海报生成</a>
+            <a href="#task-7">高爆短视频</a>
+          </nav>
+        </aside>
+
+        <section class="tasks" aria-label="任务详情">
+          <article class="task-card" id="task-1">
+            <div class="task-inner">
+              <div class="task-header">
+                <div>
+                  <p class="task-kicker">任务 1</p>
+                  <h2 class="task-title">一键排版</h2>
+                </div>
+                <button class="copy-button" type="button" data-copy-target="prompt-1">复制提示词</button>
+              </div>
+              <div class="meta-grid">
+                <div class="meta-box" style="--tag-color: var(--category-tool)">
+                  <span class="meta-label">工具</span>
+                  <p>元宝 / deepseek / workbuddy</p>
+                </div>
+                <div class="meta-box" style="--tag-color: var(--category-process)">
+                  <span class="meta-label">流程</span>
+                  <p>上传附件，要求以 HTML 格式输出，并按指定字体、行距、颜色和排版规则生成。</p>
+                </div>
+              </div>
+              <div class="downloads" aria-label="任务 1 课堂素材下载">
+                <p class="downloads-title">课堂素材下载</p>
+                <ul class="download-list">
+                  <li>
+                    <a class="download-link" href="./downloads/task1-ai-organization-change-v3.docx" download="任务1：AI组织变革+数字员工 V3.docx">
+                      <span class="download-name">任务1：AI组织变革+数字员工 V3.docx</span>
+                      <span class="download-meta">Word · 29 KB</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="download-link" href="./downloads/task1-ai-organization-change-v3-layout.docx" download="任务1：AI组织变革+数字员工 V3-排版.docx">
+                      <span class="download-name">任务1：AI组织变革+数字员工 V3-排版.docx</span>
+                      <span class="download-meta">Word · 17 KB</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="prompt-wrap">
+                <div class="prompt-head"><span>提示词</span></div>
+                <pre id="prompt-1">将附件的内容，以html格式输出(不要改动任何内容)，格式和排版的布局如下:
+1.主标题:字体为二号华文楷体，行距35磅值，颜色为淡雅墨色，居中排版，上下各空一行，可添加一行简洁的装饰性横线，横线长度为标题宽度的70%，居中对齐。
+2.副标题:字体为小二号华文楷体，行距32磅值，颜色为深灰色，居中排版，段前空0.5行，段后空0.5行。
+3.正文(顶格)
+1.字体为小三号华文楷体，段落行距为28磅值，对齐方式为两端对齐，首行缩进两个字符。
+2.文中结构多层次序数依次可以用（一）、（二）标注，楷体加粗，颜色为深灰色，序数后空一格再接正文。
+3.段落间距:段前空0.3行，使文章看起来更加疏朗有致。
+4.文末:字体为小三号华文楷体，行距28磅值，对齐方式为居中，用于添加作者署名、创作日期或简短的后记等颜色为淡墨色，上下各空一行。</pre>
+              </div>
+            </div>
+          </article>
+
+          <article class="task-card" id="task-2">
+            <div class="task-inner">
+              <div class="task-header">
+                <div>
+                  <p class="task-kicker">任务 2</p>
+                  <h2 class="task-title">快速生成可以商用的 PPT</h2>
+                </div>
+                <button class="copy-button" type="button" data-copy-target="prompt-2">复制提示词</button>
+              </div>
+              <div class="meta-grid">
+                <div class="meta-box" style="--tag-color: var(--category-tool)">
+                  <span class="meta-label">工具</span>
+                  <p>doubao / workbuddy</p>
+                </div>
+                <div class="meta-box" style="--tag-color: var(--category-process)">
+                  <span class="meta-label">流程</span>
+                  <p>先生成有记忆点的 PPT 大纲，再调用 pptx skill 整理成完整 PPT。</p>
+                </div>
+              </div>
+              <div class="downloads" aria-label="任务 2 课堂素材下载">
+                <p class="downloads-title">课堂素材下载</p>
+                <ul class="download-list">
+                  <li>
+                    <a class="download-link" href="./downloads/task2-hr-ai-application-map.pdf" download="任务2：人力资源AI应用落地全景图.pdf">
+                      <span class="download-name">任务2：人力资源AI应用落地全景图.pdf</span>
+                      <span class="download-meta">PDF · 215 KB</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="prompt-wrap">
+                <div class="prompt-head"><span>提示词</span></div>
+                <pre id="prompt-2">• Role: 信息架构师和记忆策略专家
+
+• Background: 用户需要构建一个PPT，该PPT不仅要信息丰富，还要能够在短时间内给观众留下深刻印象，便于记忆和理解。
+
+• Profile: 你是一位精通信息组织和记忆心理学的专家，擅长将复杂的信息通过逻辑清晰的框架和记忆点串联起来，使内容易于理解和记忆。
+
+• Skills: 你具备信息整理、框架构建、记忆法则应用和视觉呈现设计的能力，能够将抽象的概念转化为具体、有逻辑的PPT大纲。
+
+• Goals: 创建一个有记忆点的PPT框架，帮助用户组织信息，使其内容清晰有序，便于观众记忆。
+
+• Constrains: 框架应简洁、逻辑性强，易于理解和应用，同时要考虑到不同观众的记忆习惯和信息接收能力。
+
+• OutputFormat: 提供PPT大纲框架和每个部分的记忆点提示。
+
+• Workflow:
+
+  1. 确定PPT的核心主题和目标。  2. 根据主题拆分主要信息点，并确定各部分的逻辑关系。  3. 为每个信息点设计记忆点和视觉辅助元素。
+  4. 构建PPT大纲，确保信息点之间的流畅过渡和逻辑连贯。  5. 预览和调整PPT大纲，确保信息点的呈现顺序和方式能够最大化记忆效果。
+• Examples:
+
+  • 例子1：PPT主题为“带你快速识别职场规则”(类比串联法）
+
+      -目录：
+--绿灯:3种方法获得好的第一印象
+--黄灯:不得不知的4条职场潜规则
+--红灯:2个职场禁忌千万不能碰
+  • 例子2：PPT主题为“职场精英必备的3项能力”（拆字串联法）
+
+      -目录：
+--Thinking:思考判断力
+--Office Skills: 办公技能力
+--Progress:进步突破力
+  • 例子3：PPT主题为“客户服务部工作计划”（同字串联法）
+
+       -目录：
+--提速:及时响应客户需求
+--提升:全面升级服务水平
+--提前:预防潜在投诉风险
+--提成:用绩效激励积极性
+##{你的一个想法/附件}，按照前述框架先生成大纲，然后调用pptx skill整理一个ppt</pre>
+              </div>
+            </div>
+          </article>
+
+          <article class="task-card" id="task-3">
+            <div class="task-inner">
+              <div class="task-header">
+                <div>
+                  <p class="task-kicker">任务 3</p>
+                  <h2 class="task-title">数据分析</h2>
+                </div>
+                <button class="copy-button" type="button" data-copy-target="prompt-3">复制提示词</button>
+              </div>
+              <div class="meta-grid">
+                <div class="meta-box" style="--tag-color: var(--category-tool)">
+                  <span class="meta-label">工具</span>
+                  <p>coze / workbuddy</p>
+                </div>
+                <div class="meta-box" style="--tag-color: var(--category-process)">
+                  <span class="meta-label">流程</span>
+                  <p>先准备：专家 - 技能 - Skillhub - 数据分析 - 安装。然后写提示词并上传附件。</p>
+                </div>
+              </div>
+              <div class="downloads" aria-label="任务 3 课堂素材下载">
+                <p class="downloads-title">课堂素材下载</p>
+                <ul class="download-list">
+                  <li>
+                    <a class="download-link" href="./downloads/task3-store-profile-sample.xls" download="任务3：门店画像模拟数据.xls">
+                      <span class="download-name">任务3：门店画像模拟数据.xls</span>
+                      <span class="download-meta">Excel · 89 KB</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="prompt-wrap">
+                <div class="prompt-head"><span>提示词</span></div>
+                <pre id="prompt-3">你是一名“通用数据分析智能体”，专门帮助用户处理 Excel、CSV、数据库导出表、业务报表、调研问卷、运营数据、销售数据、会员数据、财务数据、文本评论和截图表格等数据材料。
+
+你的核心能力不是机械执行固定步骤，而是根据用户提出的任务，智能判断分析目标、识别数据字段、选择合适的数据分析方法，并输出业务人员能够理解、可以直接使用的分析结果。
+
+你的工作方式是：
+
+任务识别 → 数据来源确认 → 附件内容解析 → 数据清洗与计算 → 图表与模型分析 → 业务洞察表达 → 可落地成果输出。
+
+当用户提出数据分析需求时，你的第一动作必须是判断是否已经有可分析的数据来源。
+
+如果用户已经上传 Excel、CSV、表格截图、PDF、Word、PPT、图片或其他附件，你必须优先读取并解析附件内容，识别其中的数据表、字段、指标、时间范围、业务对象和可分析维度，再决定后续分析路径。
+
+如果用户没有上传任何数据，却要求你“分析数据”“看一下表格”“做销售分析”“生成经营报告”“做图表”“预测趋势”或“输出结论”，你必须先提醒用户上传可分析的数据文件。优先建议用户上传 XLS、XLSX、CSV 或包含表格的附件；如果暂时没有文件，也可以粘贴数据表、截图或提供关键字段说明。
+
+你可以这样提醒用户：
+
+请先上传 XLS、XLSX、CSV 或包含数据表的附件，我会先解析字段和数据口径，再进行清洗、统计、图表、趋势、对比、预测或报告生成。如果你暂时没有文件，也可以直接粘贴表格内容或截图。
+
+凡是涉及数据读取、字段识别、清洗、统计、计算、对比、趋势、预测、聚类、相关性、文本分析、图表生成等任务，都必须基于真实数据或用户提供的附件内容进行分析，不得在没有数据依据的情况下凭经验下结论。
+
+你需要优先识别以下常见任务类型：
+
+1. 数据整理类任务
+   当用户要求清洗数据、整理表格、统一字段、处理缺失值、去重、规范名称、转换日期格式、整理分类或把表格变成可分析格式时，应进入数据整理任务。重点输出数据结构、字段含义、数据质量问题、清洗规则、处理结果和后续可分析方向。
+
+2. 描述性分析类任务
+   当用户要求了解整体情况、经营表现、业务概况、核心指标或数据概览时，应进入描述性分析任务。重点计算总量、均值、占比、数量、排名、分布等基础指标，并说明整体表现、主要贡献来源、异常现象和管理层可读结论。
+
+3. 对比分析类任务
+   当用户要求比较不同部门、区域、渠道、产品、客户、品牌、门店、人员或时间段表现时，应进入对比分析任务。重点输出排名、分层、差异、贡献率、结构变化和资源配置建议。
+
+4. 趋势分析类任务
+   当用户要求分析增长、下降、波动、周期变化、活动前后变化或未来走势时，应进入趋势分析任务。重点识别时间字段，按日、周、月、季度或活动周期分析变化，并解释峰值、低谷、拐点和异常波动。
+
+5. 结构分析类任务
+   当用户要求分析品类结构、客户结构、收入结构、成本结构、产品组合、价格区间、渠道结构或资源分布时，应进入结构分析任务。重点识别主要构成、头部集中度、长尾部分、结构是否健康以及优化空间。
+
+6. 相关性与驱动因素分析类任务
+   当用户要求分析什么因素影响结果、变量之间是否有关、投入与产出是否匹配时，应进入相关性分析任务。你必须谨慎表达，不能把相关性直接说成因果关系，应使用“可能相关”“需要进一步验证”“需结合业务现场判断”等表述。
+
+7. 预测与分群类任务
+   当用户要求预测未来数据、识别客户分群、产品分群、门店分群、风险分层或潜力对象时，应进入预测与分群任务。预测结果必须说明假设条件、数据限制和不确定性；分群结果必须转化为业务可理解的标签和行动建议。
+
+8. 文本与用户洞察类任务
+   当用户提供评论、问卷、客服记录、访谈纪要、社媒内容或开放题反馈时，应进入文本分析任务。重点提取高频关键词、主题分类、情绪倾向、痛点、需求、意见和改进机会。
+
+9. 方案生成类任务
+   当用户要求根据数据生成经营建议、营销方案、运营方案、管理方案、优化策略或行动计划时，应先基于数据提炼关键洞察，再生成方案。方案必须包含背景、问题、目标、关键洞察、行动策略、执行步骤、预期效果和复盘指标。
+
+10. 报告与汇报类任务
+    当用户要求输出完整报告、PPT内容、老板汇报、经营复盘、分析结论或可视化材料时，应将分析结果转化为可汇报成果。每个重要结论都应包含“数据事实 + 业务解释 + 行动建议”，避免只堆指标。
+
+你的分析规则如下：
+
+第一，必须先判断任务类型。
+第二，必须先确认是否有可分析的数据来源。
+第三，如果已有附件，必须先解析附件内容，再进入分析。
+第四，如果没有附件或数据，必须提醒用户上传 XLS、XLSX、CSV、截图表格或粘贴数据内容。
+第五，必须先理解字段含义和数据口径，再进行分析。
+第六，凡是数据不足以支持某项分析，必须明确说明限制，不得编造数据。
+第七，凡是用户需求明确，只执行对应任务，不要强行套完整流程。
+第八，凡是用户需求模糊，例如“帮我看看这份数据”“分析一下这个表”，可默认进入综合分析任务，但要根据实际字段选择最有价值的分析模块。
+第九，所有重要结论都要尽量按照“数据事实、业务解释、行动建议”的方式表达。
+第十，涉及预测、聚类、相关性和模型分析时，必须说明方法边界、假设条件和不确定性。
+第十一，如果用户没有上传数据，却要求分析结论或方案，可以先提醒上传数据；若用户明确要求先基于业务背景生成方案，则必须说明这是基于假设的方案，不是基于真实数据验证后的结论。
+
+你的默认输出结构为：
+
+1. 任务类型判断
+   说明用户当前需求属于哪类数据分析任务，以及为什么这样判断。
+
+2. 数据来源确认
+   说明当前是否已有可分析附件。如果已有附件，说明将先解析附件内容；如果没有附件，提醒用户上传 XLS、XLSX、CSV、截图表格或粘贴数据内容。
+
+3. 数据与字段理解
+   说明数据来源、核心字段、指标口径、可分析维度，以及数据质量问题。
+
+4. 核心分析结果
+   基于真实数据输出关键指标、趋势、对比、结构、异常、分布或模型结果。
+
+5. 业务洞察解读
+   把数据结果翻译成业务语言，说明数据背后的问题、机会和可能原因。
+
+6. 行动建议
+   提出可以执行、可以分工、可以复盘的下一步动作。
+
+7. 限制与补充数据建议
+   说明当前数据无法支持的分析，以及后续若要提高分析质量，需要补充哪些字段或数据。
+
+你的目标是成为一个懂数据、懂业务、懂表达的分析参谋：用户上传数据时，你能先解析附件内容；用户没有上传数据时，你能明确提醒上传 XLS、CSV 或表格附件；需要清洗时能清洗，需要统计时能统计，需要洞察时能洞察，需要方案时能方案，需要汇报时能汇报。你不是固定流程机器人，而是一个能够根据任务自动选择分析路径的数据分析智能体。</pre>
+              </div>
+            </div>
+          </article>
+
+          <article class="task-card" id="task-4">
+            <div class="task-inner">
+              <div class="task-header">
+                <div>
+                  <p class="task-kicker">任务 4</p>
+                  <h2 class="task-title">数据看板</h2>
+                </div>
+                <button class="copy-button" type="button" data-copy-target="prompt-4">复制提示词</button>
+              </div>
+              <div class="meta-grid">
+                <div class="meta-box" style="--tag-color: var(--category-tool)">
+                  <span class="meta-label">工具</span>
+                  <p>deepseek</p>
+                </div>
+                <div class="meta-box" style="--tag-color: var(--category-process)">
+                  <span class="meta-label">流程</span>
+                  <p>可以补充更多数据分析的具体要求，并上传对应附件数据。</p>
+                </div>
+              </div>
+              <div class="downloads" aria-label="任务 4 课堂素材下载">
+                <p class="downloads-title">课堂素材下载</p>
+                <ul class="download-list">
+                  <li>
+                    <a class="download-link" href="./downloads/task4-maotai-financial-metrics.docx" download="任务4：茅台酒主要财务指标.docx">
+                      <span class="download-name">任务4：茅台酒主要财务指标.docx</span>
+                      <span class="download-meta">Word · 23 KB</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="prompt-wrap">
+                <div class="prompt-head"><span>提示词</span></div>
+                <pre id="prompt-4">帮我生成附件数据的综合数据看板，要求:具有美观的可视化，详细的数据展示，以及每部分可独立保存为图像，用html代码返回</pre>
+              </div>
+            </div>
+          </article>
+
+          <article class="task-card" id="task-5">
+            <div class="task-inner">
+              <div class="task-header">
+                <div>
+                  <p class="task-kicker">任务 5</p>
+                  <h2 class="task-title">线上劳动竞赛提示词</h2>
+                </div>
+                <button class="copy-button" type="button" data-copy-target="prompt-5">复制提示词</button>
+              </div>
+              <div class="meta-grid">
+                <div class="meta-box" style="--tag-color: var(--category-tool)">
+                  <span class="meta-label">工具</span>
+                  <p>deepseek</p>
+                </div>
+                <div class="meta-box" style="--tag-color: var(--category-process)">
+                  <span class="meta-label">流程</span>
+                  <p>参考原提示词，按行业和创意改写，然后输出 HTML 游戏。</p>
+                </div>
+              </div>
+              <div class="prompt-wrap">
+                <div class="prompt-head"><span>提示词</span></div>
+                <pre id="prompt-5">我是XX银行重庆分行的工会主席，正在搞一个员工劳动竞赛，竞赛的目标是这样的，谁先拉回来1亿人民币的贷款，谁赢。游戏规则，双人比赛，玩家1操控asdf，玩家二操控上下左右，玩家每按键一次，可以拉贷款500-2000万，谁先赢，就比赛结束，并撒花庆祝，庆祝的页面一定要梦幻，因为我们要给销售冠军最大的面子，输出为html游戏</pre>
+              </div>
+            </div>
+          </article>
+
+          <article class="task-card" id="task-6">
+            <div class="task-inner">
+              <div class="task-header">
+                <div>
+                  <p class="task-kicker">任务 6</p>
+                  <h2 class="task-title">海报生成</h2>
+                </div>
+                <button class="copy-button" type="button" data-copy-target="prompt-6">复制提示词</button>
+              </div>
+              <div class="meta-grid">
+                <div class="meta-box" style="--tag-color: var(--category-tool)">
+                  <span class="meta-label">工具</span>
+                  <p>deepseek + jimeng</p>
+                </div>
+                <div class="meta-box" style="--tag-color: var(--category-process)">
+                  <span class="meta-label">流程</span>
+                  <p>先在 deepseek、豆包、元宝生成海报提示词，再在即梦生成海报。</p>
+                </div>
+              </div>
+              <div class="prompt-wrap">
+                <div class="prompt-head"><span>提示词</span></div>
+                <pre id="prompt-6">你是一名资深品牌视觉设计师、活动策划专家、中文商业海报文案专家。你的任务是根据用户输入的少量活动信息，快速生成一张高质量宣传海报方案，并输出可直接用于AI绘图工具或海报生成工具的完整提示词。
+
+用户只需要输入以下必要信息，不完整的信息请你自动合理补全，不要反复追问：
+
+活动名称：
+活动时间：
+活动地点：
+主办单位：
+面向对象：
+活动类型：如培训、沙龙、发布会、劳动竞赛、年会、招聘、公益活动、促销活动、读书会等
+核心主题：一句话说明这个活动想表达什么
+希望风格：如科技感、党建风、金融商务风、青春活力风、国潮风、高端发布会风、温暖公益风、制造业工业风等
+海报尺寸：如竖版9:16、横版16:9、A4竖版、朋友圈方图1:1等
+
+请你按照以下要求生成海报：
+
+第一，先提炼海报的核心传播主张。这个主张要像一句醒目的广告语，简洁、有力量、有画面感，能让观众一眼知道活动价值。
+
+第二，自动生成完整海报文案，包括主标题、副标题、活动亮点、时间地点、主办单位、报名提示或行动号召。文案要正式、清晰、有感染力，避免空泛口号。
+
+第三，设计海报视觉方案，包括整体风格、主视觉元素、背景氛围、颜色搭配、字体气质、版式结构、光影效果、装饰元素。画面要有高级感、秩序感和传播感。
+
+第四，输出一段可以直接用于AI绘图工具的海报生成提示词。提示词必须包含：画面主体、构图布局、中文文字内容、色彩风格、光影质感、海报尺寸、视觉层级、高清细节要求。
+
+第五，如果用户没有指定风格，请根据活动类型自动匹配最合适的风格。例如：企业培训默认“蓝色科技商务风”；工会活动默认“热烈荣誉感+集体奋斗感”；金融活动默认“深蓝金色高端商务风”；制造业活动默认“工业科技风”；青年活动默认“活力潮流风”。
+
+第六，海报文字必须准确、简洁、可读性强。不要让文字过多堆叠。主标题最大，副标题次之，时间地点和主办单位放在底部信息区。整体画面要像专业设计师完成的商业宣传海报。
+
+请按以下格式输出：
+
+一、海报核心广告语
+二、海报完整文案
+三、视觉设计方案
+四、AI海报生成提示词
+五、可直接放入海报的文字排版内容
+
+现在请根据以下活动信息生成宣传海报：
+
+【活动信息】
+活动名称：{CSTD和平安知鸟闭门会}
+活动时间：{2026.7.8}
+活动地点：{上海·荟立方SPACE活动空间(大世界店)9楼}
+主办单位：{CSTD、平安知鸟}
+面向对象：{中高管理层，HR}
+活动类型：{实训}
+核心主题：{让参会人有收获，让参会人找到真懂AI的顾问}
+希望风格：{蓝色，高大上}
+海报尺寸：{手机屏幕尺寸}</pre>
+              </div>
+            </div>
+          </article>
+
+          <article class="task-card" id="task-7">
+            <div class="task-inner">
+              <div class="task-header">
+                <div>
+                  <p class="task-kicker">任务 7</p>
+                  <h2 class="task-title">高爆短视频</h2>
+                </div>
+                <button class="copy-button" type="button" data-copy-target="prompt-7">复制提示词</button>
+              </div>
+              <div class="meta-grid">
+                <div class="meta-box" style="--tag-color: var(--category-tool)">
+                  <span class="meta-label">工具</span>
+                  <p>豆包 + 开拍 + 剪映</p>
+                </div>
+                <div class="meta-box" style="--tag-color: var(--category-note)">
+                  <span class="meta-label">备注</span>
+                  <p>李老师课上演示，大家课后去实践。</p>
+                </div>
+                <div class="meta-box" style="--tag-color: var(--category-process)">
+                  <span class="meta-label">流程</span>
+                  <ol>
+                    <li>打开豆包 APP；按住语音视频。</li>
+                    <li>快速表达你的专业理解，末尾加一句：请把我以上内容转为一分钟短视频口播稿。</li>
+                    <li>打开开拍 APP。</li>
+                    <li>复制口播稿到提示词器。</li>
+                    <li>照着手机录制。</li>
+                    <li>网感剪辑。</li>
+                    <li>深度剪辑。</li>
+                  </ol>
+                </div>
+                <div class="meta-box" style="--tag-color: var(--category-prompt)">
+                  <span class="meta-label">提示词</span>
+                  <p>把专业理解转成一分钟短视频口播稿。</p>
+                </div>
+              </div>
+              <div class="prompt-wrap">
+                <div class="prompt-head"><span>提示词</span></div>
+                <pre id="prompt-7">请把我以上内容转为一分钟短视频口播稿</pre>
+              </div>
+            </div>
+          </article>
+        </section>
+      </div>
+
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">已复制</div>
+
+  <script>
+    const toast = document.getElementById("toast");
+    let toastTimer = null;
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("is-visible");
+      window.clearTimeout(toastTimer);
+      toastTimer = window.setTimeout(() => {
+        toast.classList.remove("is-visible");
+      }, 1500);
+    }
+
+    async function writeClipboard(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        return;
+      }
+
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.setAttribute("readonly", "");
+      textArea.style.position = "fixed";
+      textArea.style.opacity = "0";
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand("copy");
+      textArea.remove();
+    }
+
+    document.querySelectorAll("[data-copy-target]").forEach((button) => {
+      button.addEventListener("click", async () => {
+        const target = document.getElementById(button.dataset.copyTarget);
+        if (!target) return;
+
+        const original = button.textContent;
+        try {
+          await writeClipboard(target.innerText.trim());
+          button.textContent = "已复制";
+          button.classList.add("is-copied");
+          showToast("已复制到剪贴板");
+          window.setTimeout(() => {
+            button.textContent = original;
+            button.classList.remove("is-copied");
+          }, 1400);
+        } catch (error) {
+          showToast("复制失败，请手动选择文本");
+        }
+      });
+    });
+  </script>
+</body>
+</html>

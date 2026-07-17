@@ -1,0 +1,702 @@
+这是您需要的产品自动报价生成器的完整HTML代码。它允许您勾选产品、设定基准价和加价率，并自动计算最终售价，同时支持上传评审记录截图。
+
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>欧标充电桩·自动报价生成器 | 简约清爽</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f2f5f9;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            padding: 2rem 1.5rem;
+            color: #1c2f3f;
+        }
+
+        /* 主容器 */
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* 头部 */
+        .header {
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 1.9rem;
+            font-weight: 600;
+            background: linear-gradient(120deg, #1b6b58, #2d9c7c);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.3px;
+        }
+
+        .header p {
+            color: #617e8f;
+            margin-top: 0.4rem;
+            font-size: 0.9rem;
+        }
+
+        /* 卡片样式 */
+        .card {
+            background: #ffffff;
+            border-radius: 26px;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.03), 0 0 0 1px rgba(0, 0, 0, 0.02);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            transition: all 0.2s;
+        }
+
+        .card-header {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1c4d3b;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            border-left: 4px solid #2c9e7a;
+            padding-left: 1rem;
+        }
+
+        /* 表格区域 */
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 20px;
+        }
+
+        .product-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            min-width: 680px;
+        }
+
+        .product-table th {
+            text-align: left;
+            padding: 1rem 0.8rem;
+            background-color: #f9fcfb;
+            font-weight: 600;
+            color: #2c5a48;
+            border-bottom: 1px solid #e7eef3;
+        }
+
+        .product-table td {
+            padding: 1rem 0.8rem;
+            border-bottom: 1px solid #f0f4f8;
+            vertical-align: middle;
+        }
+
+        .product-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* 复选框 */
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #2c9e7a;
+        }
+
+        /* 输入框简约设计 */
+        .input-number {
+            width: 130px;
+            padding: 8px 12px;
+            border-radius: 40px;
+            border: 1px solid #dce5ec;
+            background: white;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: 0.2s;
+            outline: none;
+        }
+
+        .input-number:focus {
+            border-color: #2b9e7a;
+            box-shadow: 0 0 0 3px rgba(43, 158, 122, 0.1);
+        }
+
+        .input-number.small {
+            width: 100px;
+        }
+
+        .price-badge {
+            font-weight: 600;
+            background: #eef6f3;
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            color: #1e755e;
+        }
+
+        .price-badge.invalid {
+            background: #fff0ed;
+            color: #bc5a3c;
+        }
+
+        /* 报价结果区域+上传左右布局 */
+        .split-layout {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.8rem;
+        }
+
+        .quote-area {
+            flex: 2;
+            min-width: 260px;
+        }
+
+        .upload-area {
+            flex: 1.2;
+            min-width: 260px;
+        }
+
+        .result-list {
+            background: #fefef8;
+            border-radius: 20px;
+            padding: 0.2rem 0;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.9rem 0;
+            border-bottom: 1px solid #e8eff3;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .product-label {
+            font-weight: 500;
+            color: #2c4d3e;
+        }
+
+        .final-price {
+            font-weight: 700;
+            color: #1b705a;
+            background: #e3f2ed;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+        }
+
+        .final-price.invalid {
+            background: #fce9e4;
+            color: #b45a42;
+        }
+
+        .total-row {
+            margin-top: 1rem;
+            padding-top: 0.9rem;
+            border-top: 2px solid #dfece6;
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #195c48;
+        }
+
+        .empty-quote {
+            color: #8caebb;
+            text-align: center;
+            padding: 2rem 0;
+            font-size: 0.85rem;
+        }
+
+        /* 上传卡片样式 */
+        .upload-zone {
+            border: 1px dashed #cbdbe5;
+            border-radius: 24px;
+            background: #fefefb;
+            padding: 1.2rem;
+            text-align: center;
+        }
+
+        .upload-btn {
+            background: #f1f6fa;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 20px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            color: #2e6c59;
+            border: 1px solid #e2ebf0;
+            transition: 0.2s;
+        }
+
+        .upload-btn:hover {
+            background: #e6f0ec;
+            border-color: #2b9e7a;
+        }
+
+        .preview-img {
+            margin-top: 1rem;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .preview-img img {
+            width: 100%;
+            max-height: 150px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .delete-img {
+            background: none;
+            border: none;
+            font-size: 0.7rem;
+            color: #809eab;
+            margin-top: 8px;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .action-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .reset-btn {
+            background: white;
+            border: 1px solid #dce5ec;
+            padding: 7px 18px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            color: #5d7e8c;
+            transition: 0.2s;
+        }
+
+        .reset-btn:hover {
+            background: #f8fbfe;
+            border-color: #b9cfdc;
+        }
+
+        .info-note {
+            background: #fafdfb;
+            font-size: 0.7rem;
+            color: #7b9bae;
+            padding: 10px 14px;
+            border-radius: 20px;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        hr {
+            margin: 1rem 0;
+            border: none;
+            border-top: 1px solid #e9f0f4;
+        }
+
+        @media (max-width: 780px) {
+            body {
+                padding: 1rem;
+            }
+            .input-number {
+                width: 100px;
+            }
+            .input-number.small {
+                width: 85px;
+            }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <div class="app-container">
+        <!-- 头部 -->
+        <div class="header">
+            <h1>⚡ 欧标充电桩 · 自动报价生成器</h1>
+            <p>勾选产品 | 首次填写基准价（自动记录） | 设定加价% | 实时生成最终售价 | 上传加价评审截图留档</p>
+        </div>
+
+        <!-- 产品配置卡片 -->
+        <div class="card">
+            <div class="card-header">
+                <span>📋 产品配置清单</span>
+            </div>
+            <div class="table-wrapper">
+                <table class="product-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 45px">✔️</th>
+                            <th>欧标型号</th>
+                            <th>基准价 (€)</th>
+                            <th>加价百分比 (%)</th>
+                            <th>最终售价 (€)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="product in products" :key="product.id">
+                            <td style="text-align: center;">
+                                <input type="checkbox" class="checkbox" v-model="product.selected">
+                            </td>
+                            <td>
+                                <strong>{{ product.name }}</strong>
+                                <span style="color:#819eae; font-size:0.7rem; margin-left:6px;">{{ product.power }}</span>
+                            </td>
+                            <td>
+                                <input type="number" class="input-number"
+                                       :value="product.basePrice !== null ? product.basePrice : ''"
+                                       @input="updateBasePrice(product, $event)"
+                                       step="any" placeholder="首次填写" style="width:120px;">
+                            </td>
+                            <td>
+                                <input type="number" class="input-number small"
+                                       :value="product.markupPercent"
+                                       @input="updateMarkupPercent(product, $event)"
+                                       step="any" placeholder="0"> %
+                            </td>
+                            <td>
+                                <span :class="['price-badge', getFinalPriceStatus(product) ? '' : 'invalid']">
+                                    {{ getFinalPriceDisplay(product) }}
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="action-bar">
+                <button class="reset-btn" @click="confirmResetAll">⟳ 重置全部数据（基准价/加价率/截图）</button>
+                <span style="font-size:0.7rem; color:#86a5b5;">* 基准价与加价率自动保存至浏览器，下次打开自动恢复</span>
+            </div>
+        </div>
+
+        <!-- 报价结果 + 评审截屏 左右结构 -->
+        <div class="split-layout">
+            <!-- 左侧报价 -->
+            <div class="quote-area">
+                <div class="card" style="padding: 1.3rem 1.5rem;">
+                    <div class="card-header">💰 已选产品最终售价</div>
+                    <div v-if="validSelectedProducts.length === 0" class="empty-quote">
+                        ⚡ 尚未勾选任何有效产品<br>(请勾选产品并确保基准价已填写)
+                    </div>
+                    <div v-else class="result-list">
+                        <div v-for="item in validSelectedProducts" :key="item.id" class="result-item">
+                            <span class="product-label">{{ item.name }}</span>
+                            <span class="final-price">{{ formatCurrency(item.finalPrice) }} €</span>
+                        </div>
+                        <div class="total-row">
+                            <span>合计总金额</span>
+                            <span style="font-size:1.2rem;">{{ formatCurrency(totalSelectedPrice) }} €</span>
+                        </div>
+                    </div>
+                    <div v-if="invalidSelectedProducts.length > 0" style="margin-top: 16px; background: #fff7f2; border-radius: 18px; padding: 10px 12px;">
+                        <div style="font-size:0.7rem; color:#bb7a5c;">⚠️ 以下勾选产品因基准价未填或无效，暂不计入合计：</div>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px;">
+                            <span v-for="item in invalidSelectedProducts" :key="item.id" style="background:#f8eae4; padding:2px 12px; border-radius:40px; font-size:0.7rem;">
+                                {{ item.name }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧：评审记录截屏上传 -->
+            <div class="upload-area">
+                <div class="card" style="padding: 1.3rem 1.5rem;">
+                    <div class="card-header">📎 加价评审记录凭证</div>
+                    <div class="upload-zone">
+                        <input type="file" id="screenshotFileInput" accept="image/jpeg,image/png,image/jpg,image/webp" style="display: none" @change="onScreenshotSelected">
+                        <label for="screenshotFileInput" class="upload-btn">
+                            📸 上传评审截屏
+                        </label>
+                        <div v-if="screenshotPreview" class="preview-img">
+                            <img :src="screenshotPreview" alt="评审记录截图">
+                            <button class="delete-img" @click="clearScreenshot">🗑️ 删除截图</button>
+                        </div>
+                        <div v-else style="margin-top: 12px; font-size:0.7rem; color:#88a6b6;">
+                            支持 JPG / PNG，用作加价审批依据
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="info-note">
+                        💡 提示：基准价只需首次填写，系统自动本地存储。加价百分比改动后右侧报价同步更新。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 产品固定数据
+    const PRODUCT_LIST = [
+        { id: 'std_30', name: '欧标 30kW', power: '30kW' },
+        { id: 'std_60', name: '欧标 60kW', power: '60kW' },
+        { id: 'std_120', name: '欧标 120kW', power: '120kW' },
+        { id: 'std_160', name: '欧标 160kW', power: '160kW' },
+        { id: 'std_180', name: '欧标 180kW', power: '180kW' },
+        { id: 'std_240', name: '欧标 240kW', power: '240kW' }
+    ];
+
+    // localStorage 键名
+    const STORAGE_PROD_KEY = 'auto_quote_product_config_v2';
+    const STORAGE_SCREEN_KEY = 'quote_review_screenshot';
+
+    // 辅助函数：解析有效基准价（数字 >=0 有效，null视为无效）
+    function parseBasePriceValid(value) {
+        if (value === null || value === undefined || value === '') return null;
+        const num = parseFloat(value);
+        if (isNaN(num)) return null;
+        // 价格可以为0吗？通常基准价>0，但允许输入0则无效不计价。这里按照 >0 才是有效价格
+        if (num > 0) return num;
+        return null;   // 0或负数视为无效
+    }
+
+    // 解析加价百分比：允许负数或正数, 默认0
+    function parseMarkupValid(value) {
+        if (value === null || value === undefined || value === '') return 0;
+        const num = parseFloat(value);
+        return isNaN(num) ? 0 : num;
+    }
+
+    // 计算最终售价
+    function computeFinalPrice(basePriceNum, markupPercent) {
+        if (basePriceNum === null || basePriceNum <= 0) return null;
+        const finalVal = basePriceNum * (1 + markupPercent / 100);
+        return Math.round(finalVal * 100) / 100;
+    }
+
+    new Vue({
+        el: '#app',
+        data: {
+            products: [],            // 产品动态数据 [{ id, name, power, basePrice, markupPercent, selected }]
+            screenshotPreview: null  // 截图base64
+        },
+        computed: {
+            // 已勾选且最终售价有效的产品 (用于合计展示)
+            validSelectedProducts() {
+                const valid = [];
+                for (let p of this.products) {
+                    if (!p.selected) continue;
+                    const baseValid = parseBasePriceValid(p.basePrice);
+                    const markup = parseMarkupValid(p.markupPercent);
+                    const final = computeFinalPrice(baseValid, markup);
+                    if (final !== null && final > 0) {
+                        valid.push({
+                            id: p.id,
+                            name: p.name,
+                            finalPrice: final
+                        });
+                    }
+                }
+                return valid;
+            },
+            // 已勾选但最终售价无效的产品（不计入合计，提示用）
+            invalidSelectedProducts() {
+                const invalid = [];
+                for (let p of this.products) {
+                    if (!p.selected) continue;
+                    const baseValid = parseBasePriceValid(p.basePrice);
+                    const markup = parseMarkupValid(p.markupPercent);
+                    const final = computeFinalPrice(baseValid, markup);
+                    if (final === null || final <= 0) {
+                        invalid.push({ id: p.id, name: p.name });
+                    }
+                }
+                return invalid;
+            },
+            // 总价（仅有效产品累加）
+            totalSelectedPrice() {
+                let total = 0;
+                for (let item of this.validSelectedProducts) {
+                    total += item.finalPrice;
+                }
+                return total;
+            }
+        },
+        watch: {
+            products: {
+                deep: true,
+                handler() {
+                    this.saveProductsToLocal();
+                }
+            }
+        },
+        mounted() {
+            this.loadProductsFromLocal();
+            this.loadScreenshotFromLocal();
+        },
+        methods: {
+            // 加载产品配置 (自动记录)
+            loadProductsFromLocal() {
+                const stored = localStorage.getItem(STORAGE_PROD_KEY);
+                let savedMap = {};
+                if (stored) {
+                    try {
+                        savedMap = JSON.parse(stored);
+                    } catch(e) { console.warn(e); }
+                }
+                const initialProducts = PRODUCT_LIST.map(def => {
+                    const saved = savedMap[def.id];
+                    let basePrice = null;
+                    let markupPercent = 0;
+                    let selected = false;
+                    if (saved) {
+                        // 注意：基准价可能是0或者null，存储时存入数字或null
+                        basePrice = (saved.basePrice !== undefined && saved.basePrice !== null) ? saved.basePrice : null;
+                        markupPercent = (saved.markupPercent !== undefined) ? saved.markupPercent : 0;
+                        selected = saved.selected === true;
+                    }
+                    return {
+                        id: def.id,
+                        name: def.name,
+                        power: def.power,
+                        basePrice: basePrice,
+                        markupPercent: markupPercent,
+                        selected: selected
+                    };
+                });
+                this.products = initialProducts;
+            },
+            saveProductsToLocal() {
+                const configMap = {};
+                for (let p of this.products) {
+                    configMap[p.id] = {
+                        basePrice: p.basePrice,
+                        markupPercent: p.markupPercent,
+                        selected: p.selected
+                    };
+                }
+                localStorage.setItem(STORAGE_PROD_KEY, JSON.stringify(configMap));
+            },
+            // 更新基准价 (自动保存)
+            updateBasePrice(product, event) {
+                let raw = event.target.value;
+                if (raw === '') {
+                    product.basePrice = null;
+                } else {
+                    let num = parseFloat(raw);
+                    if (!isNaN(num)) {
+                        // 允许0但最终售价无效； 但存储原样保留
+                        product.basePrice = num;
+                    } else {
+                        product.basePrice = null;
+                    }
+                }
+                // watch触发保存
+            },
+            // 更新加价百分比
+            updateMarkupPercent(product, event) {
+                let raw = event.target.value;
+                if (raw === '') {
+                    product.markupPercent = 0;
+                } else {
+                    let num = parseFloat(raw);
+                    if (!isNaN(num)) {
+                        product.markupPercent = num;
+                    } else {
+                        product.markupPercent = 0;
+                    }
+                }
+            },
+            // 获取最终售价显示文本（用于表格）
+            getFinalPriceDisplay(product) {
+                const baseValid = parseBasePriceValid(product.basePrice);
+                const markup = parseMarkupValid(product.markupPercent);
+                const finalPrice = computeFinalPrice(baseValid, markup);
+                if (finalPrice === null || finalPrice <= 0) {
+                    if (product.basePrice === null || product.basePrice === undefined || product.basePrice === '') {
+                        return '待填写基准价';
+                    }
+                    const baseNum = parseFloat(product.basePrice);
+                    if (isNaN(baseNum) || baseNum <= 0) return '基准价无效';
+                    return '售价无效';
+                }
+                return `${finalPrice.toFixed(2)} €`;
+            },
+            getFinalPriceStatus(product) {
+                const baseValid = parseBasePriceValid(product.basePrice);
+                const markup = parseMarkupValid(product.markupPercent);
+                const finalPrice = computeFinalPrice(baseValid, markup);
+                return (finalPrice !== null && finalPrice > 0);
+            },
+            formatCurrency(value) {
+                if (typeof value !== 'number' || isNaN(value)) return '0.00';
+                return value.toFixed(2);
+            },
+            // 重置所有数据（基准价、加价百分比归零、清除勾选、清除截图）
+            confirmResetAll() {
+                if (confirm('⚠️ 重置操作将清除所有产品的基准价、加价百分比（恢复0%）、取消全部勾选，并且删除已上传的评审截图。确定要继续吗？')) {
+                    for (let p of this.products) {
+                        p.basePrice = null;
+                        p.markupPercent = 0;
+                        p.selected = false;
+                    }
+                    this.saveProductsToLocal();
+                    this.clearScreenshot();
+                }
+            },
+            // 截图上传逻辑
+            onScreenshotSelected(event) {
+                const file = event.target.files[0];
+                if (!file) return;
+                if (!file.type.startsWith('image/')) {
+                    alert('请上传图片文件（JPG/PNG等格式）');
+                    return;
+                }
+                // 可选: 限制大小5MB
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('图片大小超过5MB，请压缩后重新上传');
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    this.screenshotPreview = e.target.result;
+                    // 存储到 localStorage
+                    if (this.screenshotPreview) {
+                        localStorage.setItem(STORAGE_SCREEN_KEY, this.screenshotPreview);
+                    } else {
+                        localStorage.removeItem(STORAGE_SCREEN_KEY);
+                    }
+                };
+                reader.readAsDataURL(file);
+                // 清空 input value 以便再次上传同文件可触发
+                event.target.value = '';
+            },
+            clearScreenshot() {
+                this.screenshotPreview = null;
+                localStorage.removeItem(STORAGE_SCREEN_KEY);
+                // 清空文件输入框
+                const fileInput = document.getElementById('screenshotFileInput');
+                if (fileInput) fileInput.value = '';
+            },
+            loadScreenshotFromLocal() {
+                const savedImg = localStorage.getItem(STORAGE_SCREEN_KEY);
+                if (savedImg && savedImg.startsWith('data:image')) {
+                    this.screenshotPreview = savedImg;
+                } else {
+                    this.screenshotPreview = null;
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>
+```

@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Biomni 资源索引总览 — 软件包 · 工具 · 数据库 · Skills</title>
+<style>
+  :root {
+    --bg:#ffffff;
+    --ink:#111827;
+    --muted:#6b7280;
+    --line:#e5e7eb;
+    --soft:#f8fafc;
+    --soft2:#f3f4f6;
+    --accent:#111827;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif;
+    line-height:1.7;
+  }
+  .wrap {
+    max-width: 1360px;
+    margin: 0 auto;
+    padding: 32px 28px 70px;
+  }
+  header {
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 22px;
+    margin-bottom: 22px;
+  }
+  h1 {
+    font-size: 34px;
+    margin: 0 0 10px;
+    letter-spacing: .02em;
+  }
+  .subtitle {
+    color: var(--muted);
+    font-size: 16px;
+    margin: 0;
+  }
+  .meta {
+    margin-top: 12px;
+    font-size: 14px;
+    color: var(--muted);
+  }
+  
+  /* Top nav */
+  .top-nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 18px 0 24px;
+    border-bottom: 2px solid var(--line);
+    padding-bottom: 12px;
+  }
+  .top-nav button {
+    border: 1px solid var(--line);
+    background: #fff;
+    color: var(--ink);
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all .15s ease;
+  }
+  .top-nav button:hover { background: var(--soft2); }
+  .top-nav button.active {
+    background: var(--ink);
+    color: #fff;
+    border-color: var(--ink);
+  }
+  
+  /* Global search */
+  .global-search {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin: 0 0 24px;
+    flex-wrap: wrap;
+  }
+  .global-search input {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 15px;
+    background: #fff;
+    min-width: 360px;
+    flex: 1;
+  }
+  .global-search .hint {
+    color: var(--muted);
+    font-size: 13px;
+  }
+  
+  /* Section */
+  .section {
+    display: none;
+  }
+  .section.active {
+    display: block;
+  }
+  
+  .section-header {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 16px;
+    margin-bottom: 18px;
+  }
+  .section-header h2 {
+    font-size: 26px;
+    margin: 0 0 6px;
+  }
+  .section-header .meta {
+    margin-top: 6px;
+  }
+  
+  .intro {
+    background: var(--soft);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 18px 20px;
+    margin: 18px 0;
+  }
+  .intro strong { color: var(--ink); }
+  .summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 12px;
+    margin: 18px 0;
+  }
+  .summary .box {
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px;
+    background: #fff;
+  }
+  .summary .box .big {
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .summary .box .txt {
+    margin-top: 8px;
+    color: #374151;
+    font-size: 14px;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    margin: 18px 0 24px;
+  }
+  .card {
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 14px 16px;
+    background: #fff;
+  }
+  .card .num {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+  .card .label {
+    font-weight: 700;
+    margin-top: 6px;
+  }
+  .card .en {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 2px;
+  }
+  .toolbar {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin: 18px 0 14px;
+    flex-wrap: wrap;
+  }
+  input, select {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 11px 12px;
+    font-size: 14px;
+    background: #fff;
+  }
+  input { min-width: 280px; flex: 1; }
+  select { min-width: 190px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  thead th {
+    background: var(--ink);
+    color: #fff;
+    text-align: left;
+    font-weight: 700;
+    padding: 12px 10px;
+    font-size: 14px;
+  }
+  tbody td {
+    border-top: 1px solid var(--line);
+    vertical-align: top;
+    padding: 12px 10px;
+    font-size: 14px;
+  }
+  tbody tr:nth-child(even) { background: #fafafa; }
+  tbody tr:hover { background: #f3f4f6; }
+  th:nth-child(1), td:nth-child(1) { width: 52px; text-align: center; }
+  code {
+    font-family: Consolas, "SFMono-Regular", Menlo, monospace;
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 2px 6px;
+    word-break: break-word;
+  }
+  .tag {
+    display: inline-block;
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    padding: 2px 8px;
+    font-size: 12px;
+    font-weight: 700;
+    background: #fff;
+  }
+  .type {
+    display: inline-block;
+    border-radius: 999px;
+    padding: 3px 9px;
+    font-size: 12px;
+    font-weight: 800;
+  }
+  .type.python { background: #111827; color: #fff; }
+  .type.r { background: #f3f4f6; color: #111827; border: 1px solid #111827; }
+  .type.cli { background: #fff; color: #111827; border: 1px dashed #111827; }
+  .hpc {
+    display: inline-block;
+    background: #111827;
+    color: #fff;
+    border-radius: 999px;
+    padding: 3px 9px;
+    font-size: 12px;
+    font-weight: 800;
+  }
+  .std {
+    display: inline-block;
+    border: 1px solid var(--line);
+    background: #fff;
+    color: #374151;
+    border-radius: 999px;
+    padding: 3px 9px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  small { color: var(--muted); }
+  .section-title {
+    margin-top: 36px;
+    font-size: 22px;
+    border-left: 5px solid var(--ink);
+    padding-left: 10px;
+  }
+  .map {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+    margin-top: 16px;
+  }
+  .map-item {
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px;
+    background: #fff;
+  }
+  .map-item h3 {
+    margin: 0 0 8px;
+    font-size: 17px;
+  }
+  .map-item p {
+    margin: 0;
+    color: #374151;
+    font-size: 14px;
+  }
+  footer {
+    margin-top: 40px;
+    border-top: 1px solid var(--line);
+    padding-top: 18px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .no-results {
+    padding: 20px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px;
+    display: none;
+  }
+  @media print {
+    .toolbar, .top-nav, .global-search { display: none; }
+    body { background: #fff; }
+    .wrap { max-width: none; padding: 20px; }
+    .section { display: block !important; }
+    table { page-break-inside: auto; }
+    tr { page-break-inside: avoid; page-break-after: auto; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Biomni 资源索引总览</h1>
+    <p class="subtitle">融合软件包、生物信息学工具、数据库与社区 Skills 的集中索引，支持全局搜索与分类筛选。</p>
+    <div class="meta">共整理 <strong>281</strong> 项资源 ｜ 软件包 <strong>107</strong> 个 ｜ 工具 <strong>79</strong> 个 ｜ 数据库 <strong>56</strong> 个 ｜ Skills <strong>39</strong> 个</div>
+  </header>
+
+  <div class="top-nav" id="topNav">
+    <button class="active" data-section="all">全部</button>
+    <button data-section="packages">软件包</button>
+    <button data-section="tools">生物信息学工具</button>
+    <button data-section="databases">数据库</button>
+    <button data-section="skills">Skills</button>
+  </div>
+
+  <div class="global-search">
+    <input id="globalQ" placeholder="全局搜索：输入英文名、中文名、领域或用途，例如 scanpy、单细胞、RNA-seq、AlphaFold..." />
+    <span class="hint">搜索将同时覆盖四个类别的资源</span>
+  </div>
+
+  <div class="section active" id="sec-packages">
+    <div class="section-header">
+      <h2>Biomni 软件包中文索引</h2>
+      <p class="subtitle">保留原始软件包英文名，并补充中文名、类型、用途和所属领域，方便在聊天中通过 <code>@软件包名</code> 引用。</p>
+      <div class="meta">共整理 <strong>107</strong> 个软件包与工具 ｜ Python 包 <strong>88</strong> 个，R 包 <strong>5</strong> 个，CLI 命令行工具 <strong>14</strong> 个</div>
+    </div>
+    <div class="intro"><strong>使用方式：</strong><strong>使用方式：</strong>这份索引可以理解为 Biomni 的“分析软件栈地图”。英文名用于系统调用和 <code>@</code> 引用，中文名帮助科研人员理解工具角色，类型标记用于区分 Python 包、R 包和 CLI 工具。例如，RNA-seq 质控和差异分析可组合 <code>@fastqc</code>、<code>@trimmomatic</code>、<code>@DESeq2</code>、<code>@clusterProfiler</code>；单细胞分析可组合 <code>@scanpy</code>、<code>@anndata</code>、<code>@scvi-tools</code>、<code>@scvelo</code>；药物发现可组合 <code>@rdkit</code>、<code>@DeepPurpose</code>、<code>@AutoDock Vina</code>、<code>@pubchempy</code>。</div>
+    <div class="cards"><div class='card'><div class='num'>20</div><div class='label'>基因组学</div><div class='en'>Genomics</div></div><div class='card'><div class='num'>15</div><div class='label'>单细胞与空间组学</div><div class='en'>Single Cell</div></div><div class='card'><div class='num'>11</div><div class='label'>数据科学与统计</div><div class='en'>Data Science</div></div><div class='card'><div class='num'>10</div><div class='label'>通用工具</div><div class='en'>Utilities</div></div><div class='card'><div class='num'>9</div><div class='label'>机器学习</div><div class='en'>Machine Learning</div></div><div class='card'><div class='num'>7</div><div class='label'>化学信息学</div><div class='en'>Chemistry</div></div><div class='card'><div class='num'>7</div><div class='label'>数据可视化</div><div class='en'>Visualization</div></div><div class='card'><div class='num'>6</div><div class='label'>数据格式与大数据存储</div><div class='en'>Data Formats</div></div><div class='card'><div class='num'>3</div><div class='label'>分子对接</div><div class='en'>Docking</div></div><div class='card'><div class='num'>3</div><div class='label'>图像分析</div><div class='en'>Image Analysis</div></div><div class='card'><div class='num'>3</div><div class='label'>代谢建模</div><div class='en'>Metabolic</div></div><div class='card'><div class='num'>2</div><div class='label'>序列比对</div><div class='en'>Alignment</div></div><div class='card'><div class='num'>2</div><div class='label'>测序质控与预处理</div><div class='en'>Annotation</div></div><div class='card'><div class='num'>2</div><div class='label'>质谱分析</div><div class='en'>Mass Spec</div></div><div class='card'><div class='num'>2</div><div class='label'>网络分析</div><div class='en'>Networks</div></div><div class='card'><div class='num'>2</div><div class='label'>系统发育</div><div class='en'>Phylogenetics</div></div><div class='card'><div class='num'>1</div><div class='label'>流式细胞术</div><div class='en'>Flow Cytometry</div></div><div class='card'><div class='num'>1</div><div class='label'>序列搜索</div><div class='en'>Search</div></div><div class='card'><div class='num'>1</div><div class='label'>变异检测</div><div class='en'>Variant Calling</div></div></div>
+    <div class="toolbar">
+      <input id="qPackages" placeholder="搜索软件包：英文名、中文名、领域、用途或类型..." />
+      <select id="catPackages">
+        <option value="">全部领域</option>
+        <option value="">全部领域</option>
+      <option value="Alignment">序列比对 / Alignment</option><option value="Annotation">测序质控与预处理 / Annotation</option><option value="Chemistry">化学信息学 / Chemistry</option><option value="Data Formats">数据格式与大数据存储 / Data Formats</option><option value="Data Science">数据科学与统计 / Data Science</option><option value="Docking">分子对接 / Docking</option><option value="Flow Cytometry">流式细胞术 / Flow Cytometry</option><option value="Genomics">基因组学 / Genomics</option><option value="Image Analysis">图像分析 / Image Analysis</option><option value="Machine Learning">机器学习 / Machine Learning</option><option value="Mass Spec">质谱分析 / Mass Spec</option><option value="Metabolic">代谢建模 / Metabolic</option><option value="Networks">网络分析 / Networks</option><option value="Phylogenetics">系统发育 / Phylogenetics</option><option value="Search">序列搜索 / Search</option><option value="Single Cell">单细胞与空间组学 / Single Cell</option><option value="Utilities">通用工具 / Utilities</option><option value="Variant Calling">变异检测 / Variant Calling</option><option value="Visualization">数据可视化 / Visualization</option>
+      </select>
+      <select id="typePackages">
+        <option value="">全部类型</option>
+        <option value="">全部类型</option>
+      <option value="Python">Python 包</option>
+      <option value="R">R 包</option>
+      <option value="CLI">CLI 命令行工具</option>
+      </select>
+    </div>
+    <div class="no-results" id="noPackages">没有匹配的软件包。</div>
+    <table id="pkgTable">
+      <thead>
+        <tr><th>序号</th><th>软件包英文名 / @引用名</th><th>软件包中文名</th><th>领域</th><th>类型</th><th>用途说明</th></tr>
+      </thead>
+      <tbody><tr data-category='Alignment' data-type='CLI'><td>1</td><td><code>@bwa</code><br><small>bwa</small></td><td><strong>BWA 短读长比对工具</strong></td><td><span class='tag'>序列比对</span><br><small>Alignment</small></td><td><span class='type cli'>CLI 命令行工具</span></td><td>基于 Burrows-Wheeler Transform 的短读长比对工具，常用于 DNA-seq、WGS、WES 等数据比对到参考基因组。</td></tr><tr data-category='Alignment' data-type='CLI'><td>2</td><td><code>@mafft</code><br><small>mafft</small></td><td><strong>MAFFT 多序列比对工具</strong></td><td><span class='tag'>序列比对</span><br><small>Alignment</small></td><td><span class='type cli'>CLI 命令行工具</span></td><td>用于蛋白或核酸序列的多序列比对，适合系统发育分析、保守区识别和序列家族比较。</td></tr><tr data-category='Annotation' data-type='CLI'><td>3</td><td><code>@fastqc</code><br><small>fastqc</small></td><td><strong>高通量测序质控工具</strong></td><td><span class='tag'>测序质控与预处理</span><br><small>Annotation</small></td><td><span class='type cli'>CLI 命令行工具</span></td><td>对 FASTQ 测序数据进行基础质量控制，输出 reads 质量、GC 含量、接头污染、重复率等质控指标。</td></tr><tr data-category='Annotation' data-type='CLI'><td>4</td><td><code>@trimmomatic</code><br><small>trimmomatic</small></td><td><strong>Illumina reads 修剪工具</strong></td><td><span class='tag'>测序质控与预处理</span><br><small>Annotation</small></td><td><span class='type cli'>CLI 命令行工具</span></td><td>灵活修剪 Illumina 测序 reads，去除接头、低质量碱基和过短序列，是测序数据预处理常用工具。</td></tr><tr data-category='Chemistry' data-type='Python'><td>5</td><td><code>@rdkit</code><br><small>rdkit</small></td><td><strong>化学信息学与分子机器学习工具包</strong></td><td><span class='tag'>化学信息学</span><br><small>Chemistry</small></td><td><span class='type python'>Python 包</span></td><td>用于分子结构处理、指纹计算、相似性搜索、分子描述符、反应处理和药物化学机器学习。</td></tr><tr data-category='Chemistry' data-type='Python'><td>6</td><td><code>@pyscreener</code><br><small>pyscreener</small></td><td><strong>自动化高通量虚拟筛选工具</strong></td><td><span class='tag'>化学信息学</span><br><small>Chemistry</small></td><td><span class='type python'>Python 包</span></td><td>用于自动化虚拟筛选流程，支持分子对接、候选化合物筛选和药物发现早期评估。</td></tr><tr data-category='Chemistry' data-type='Python'><td>7</td><td><code>@DeepPurpose</code><br><small>DeepPurpose</small></td><td><strong>药物—靶点相互作用深度学习工具包</strong></td><td><span class='tag'>化学信息学</span><br><small>Chemistry</small></td><td><span class='type python'>Python 包</span></td><td>基于深度学习预测药物—靶点相互作用、药物性质和生物活性，适合药物发现和再定位研究。</td></tr><tr data-category='Chemistry' data-type='Python'><td>8</td><td><code>@descriptastorus</code><br><small>descriptastorus</small></td><td><strong>SMILES 分子描述符计算工具</strong></td><td><span class='tag'>化学信息学</span><br><small>Chemistry</small></td><td><span class='type python'>Python 包</span></td><td>从 SMILES 结构中计算分子描述符和特征，用于 QSAR、ADMET 预测和化合物机器学习建模。</td></tr><tr data-category='Chemistry' data-type='Python'><td>9</td><td><code>@pubchempy</code><br><small>pubchempy</small></td><td><strong>PubChem Python 接口</strong></td><td><span class='tag'>化学信息学</span><br><small>Chemistry</small></td><td><span class='type python'>Python 包</span></td><td>通过 Python 查询 PubChem 化合物、结构、性质和生物活性信息，适合化合物数据采集。</td></tr><tr data-category='Chemistry' data-type='Python'><td>10</td><td><code>@openbabel</code><br><small>openbabel</small></td><td><strong>化学格式转换与分子处理工具</strong></td><td><span class='tag'>化学信息学</span><br><small>Chemistry</small></td><td><span class='type python'>Python 包</span></td><td>用于分子文件格式转换、结构处理、指纹计算和化学数据清洗，是化学信息学基础工具。</td></tr><tr data-category='Chemistry' data-type='Python'><td>11</td><td><code>@pdbfixer</code><br><small>pdbfixer</small></td><td><strong>PDB 结构修复工具</strong></td><td><span class='tag'>化学信息学</span><br><small>Chemistry</small></td><td><span class='type python'>Python 包</span></td><td>修复 PDB 文件中的缺失原子、残基、氢原子和结构问题，为分子动力学模拟或结构分析做准备。</td></tr><tr data-category='Data Formats' data-type='Python'><td>12</td><td><code>@h5py</code><br><small>h5py</small></td><td><strong>HDF5 文件 Python 接口</strong></td><td><span class='tag'>数据格式与大数据存储</span><br><small>Data Formats</small></td><td><span class='type python'>Python 包</span></td><td>提供 Python 方式读写 HDF5 文件，适合存储和访问大型矩阵、组学数据和层级结构数据。</td></tr><tr data-category='Data Formats' data-type='Python'><td>13</td><td><code>@zarr</code><br><small>zarr</small></td><td><strong>分块压缩 N 维数组存储库</strong></td><td><span class='tag'>数据格式与大数据存储</span><br><small>Data Formats</small></td><td><span class='type python'>Python 包</span></td><td>用于存储分块、压缩的多维数组，适合云端和大规模单细胞、多组学数据管理。</td></tr><tr data-category='Data Formats' data-type='Python'><td>14</td><td><code>@pyarrow</code><br><small>pyarrow</small></td><td><strong>Apache Arrow Python 绑定</strong></td><td><span class='tag'>数据格式与大数据存储</span><br><small>Data Formats</small></td><td><span class='type python'>Python 包</span></td><td>提供高效列式内存格式和跨语言数据交换能力，适合大数据表格处理和高性能 I/O。</td></tr><tr data-category='Data Formats' data-type='Python'><td>15</td><td><code>@xarray</code><br><small>xarray</small></td><td><strong>带标签 N 维数组与数据集工具</strong></td><td><span class='tag'>数据格式与大数据存储</span><br><small>Data Formats</small></td><td><span class='type python'>Python 包</span></td><td>用于处理带坐标和维度标签的多维数组数据，适合时空数据、多组学矩阵和科学计算。</td></tr><tr data-category='Data Formats' data-type='Python'><td>16</td><td><code>@tiledbsoma</code><br><small>tiledbsoma</small></td><td><strong>TileDB SOMA 数据格式实现</strong></td><td><span class='tag'>数据格式与大数据存储</span><br><small>Data Formats</small></td><td><span class='type python'>Python 包</span></td><td>实现 SOMA API 的 TileDB 后端，适合大规模单细胞和多模态组学数据存储与访问。</td></tr><tr data-category='Data Formats' data-type='Python'><td>17</td><td><code>@dask</code><br><small>dask</small></td><td><strong>并行计算与任务调度库</strong></td><td><span class='tag'>数据格式与大数据存储</span><br><small>Data Formats</small></td><td><span class='type python'>Python 包</span></td><td>支持大型数组、DataFrame 和任务图的并行计算，适合超出内存的数据处理和分布式计算。</td></tr><tr data-category='Data Science' data-type='Python'><td>18</td><td><code>@pandas</code><br><small>pandas</small></td><td><strong>Python 数据分析与表格处理库</strong></td><td><span class='tag'>数据科学与统计</span><br><small>Data Science</small></td><td><span class='type python'>Python 包</span></td><td>用于表格数据读取、清洗、转换、聚合和分析，是 Python 数据科学中的基础工具。</td></tr><tr data-category='Data Science' data-type='Python'><td>19</td><td><code>@numpy</code><br><small>numpy</small></td><td><strong>Python 科学计算基础数组库</strong></td><td><span class='tag'>数据科学与统计</span><br><small>Data Science</small></td><td><span class='type python'>Python 包</span></td><td>提供高性能 N 维数组和数值计算能力，是绝大多数科学计算、机器学习和生信分析库的底座。</td></tr><tr data-category='Data Science' data-type='Python'><td>20</td><td><code>@scipy</code><br><small>scipy</small></td><td><strong>Python 科学与工程计算库</strong></td><td><span class='tag'>数据科学与统计</span><br><small>Data Science</small></td><td><span class='type python'>Python 包</span></td><td>提供统计、优化、线性代数、信号处理、稀疏矩阵等科学计算功能。</td></tr><tr data-category='Data Science' data-type='Python'><td>21</td><td><code>@scikit-learn</code><br><small>scikit-learn</small></td><td><strong>Python 机器学习库</strong></td><td><span class='tag'>数据科学与统计</span><br><small>Data Science</small></td><td><span class='type python'>Python 包</span></td><td>提供分类、回归、聚类、降维、模型评估和特征工程等传统机器学习工具。</td></tr><tr data-category='Data Science' data-type='Python'><td>22</td><td><code>@statsmodels</code><br><small>statsmodels</small></td><td><strong>Python 统计建模与检验库</strong></td><td><span class='tag'>数据科学与统计</span><br><small>Data Science</small></td><td><span class='type python'>Python 包</span></td><td>提供回归模型、统计检验、时间序列和广义线性模型，适合可解释统计分析。</td></tr><tr data-category='Data Science' data-type='Python'><td>23</td><td><code>@lifelines</code><br><small>lifelines</small></td><td><strong>Python 生存分析库</strong></td><td><span class='tag'>数据科学与统计</span><br><small>Data Science</small></td><td><span class='type python'>Python 包</span></td><td>用于 Kaplan-Meier、Cox 回归和生存曲线分析，适合临床 time-to-event 数据建模。</td></tr><tr data-category='Data Science' data-type='Python'><td>24</td><td><code>@pymc3</code><br><small>pymc3</small></td><td><strong>Python 贝叶斯概率编程库</strong></td><td><span class='tag'>数据科学与统计</span><br><small>Data Science</small></td><td><span class='type python'>Python 包</span></td><td>用于构建和推断贝叶斯模型，适合不确定性建模、层级模型和概率推断。</td></tr><tr data-category='Data Science' data-type='Python'><td>25</td><td><code>@numpyro</code><br><small>numpyro</small></td><td><strong>基于 JAX 的概率编程库</strong></td><td><span class='tag'>数据科学与统计</span><br><small>Data Science</small></td><td><span class='type python'>Python 包</span></td><td>使用 JAX 加速贝叶斯推断和概率建模，适合高性能层级模型和复杂统计模型。</td></tr><tr data-category='Data Science' data-type='Python'><td>26</td><td><code>@arviz</code><br><small>arviz</small></td><td><strong>贝叶斯模型诊断与可视化库</strong></td><td><span class='tag'>数据科学与统计</span><br><small>Data Science</small></td><td><span class='type python'>Python 包</span></td><td>用于贝叶斯模型的后验分析、诊断、比较和可视化，常与 PyMC、NumPyro 搭配使用。</td></tr><tr data-category='Data Science' data-type='R'><td>27</td><td><code>@dplyr</code><br><small>dplyr</small></td><td><strong>R 语言数据整理与变换包</strong></td><td><span class='tag'>数据科学与统计</span><br><small>Data Science</small></td><td><span class='type r'>R 包</span></td><td>用于 R 中的数据筛选、分组、汇总、连接和管道式数据处理，是 tidyverse 核心包之一。</td></tr><tr data-category='Data Science' data-type='R'><td>28</td><td><code>@tidyr</code><br><small>tidyr</small></td><td><strong>R 语言整洁数据转换包</strong></td><td><span class='tag'>数据科学与统计</span><br><small>Data Science</small></td><td><span class='type r'>R 包</span></td><td>用于宽表/长表转换、缺失值补齐和嵌套数据整理，帮助构建 tidy data 分析格式。</td></tr><tr data-category='Docking' data-type='CLI'><td>29</td><td><code>@AutoDock Vina</code><br><small>AutoDock Vina</small></td><td><strong>快速分子对接工具</strong></td><td><span class='tag'>分子对接</span><br><small>Docking</small></td><td><span class='type cli'>CLI 命令行工具</span></td><td>用于小分子与蛋白受体的分子对接，兼顾速度和准确性，常用于虚拟筛选和结合模式预测。</td></tr><tr data-category='Docking' data-type='CLI'><td>30</td><td><code>@autosite</code><br><small>autosite</small></td><td><strong>配体结合位点自动识别工具</strong></td><td><span class='tag'>分子对接</span><br><small>Docking</small></td><td><span class='type cli'>CLI 命令行工具</span></td><td>自动识别蛋白结构中的潜在配体结合口袋，为分子对接和靶点成药性分析提供位点线索。</td></tr><tr data-category='Docking' data-type='CLI'><td>31</td><td><code>@ADFR</code><br><small>ADFR</small></td><td><strong>柔性受体分子对接工具</strong></td><td><span class='tag'>分子对接</span><br><small>Docking</small></td><td><span class='type cli'>CLI 命令行工具</span></td><td>AutoDockFR 工具，用于考虑受体柔性的分子对接，适合更复杂的结合模式预测。</td></tr><tr data-category='Flow Cytometry' data-type='Python'><td>32</td><td><code>@fcsparser</code><br><small>fcsparser</small></td><td><strong>FCS 流式文件解析库</strong></td><td><span class='tag'>流式细胞术</span><br><small>Flow Cytometry</small></td><td><span class='type python'>Python 包</span></td><td>用于读取和解析流式细胞术 FCS 文件，便于在 Python 中进行流式数据处理和分析。</td></tr><tr data-category='Genomics' data-type='Python'><td>33</td><td><code>@biopython</code><br><small>biopython</small></td><td><strong>Python 生物计算工具包</strong></td><td><span class='tag'>基因组学</span><br><small>Genomics</small></td><td><span class='type python'>Python 包</span></td><td>提供序列处理、格式解析、数据库访问、比对和生物计算工具，是 Python 生信分析基础库。</td></tr><tr data-category='Genomics' data-type='Python'><td>34</td><td><code>@pysam</code><br><small>pysam</small></td><td><strong>SAM/BAM/VCF 文件 Python 接口</strong></td><td><span class='tag'>基因组学</span><br><small>Genomics</small></td><td><span class='type python'>Python 包</span></td><td>用于读写和操作 SAM、BAM、CRAM、VCF 等高通量测序文件。</td></tr><tr data-category='Genomics' data-type='Python'><td>35</td><td><code>@pyfaidx</code><br><small>pyfaidx</small></td><td><strong>FASTA 随机访问工具</strong></td><td><span class='tag'>基因组学</span><br><small>Genomics</small></td><td><span class='type python'>Python 包</span></td><td>提供对 FASTA 文件的高效随机访问，适合按基因组坐标提取序列。</td></tr><tr data-category='Genomics' data-type='Python'><td>36</td><td><code>@pyranges</code><br><small>pyranges</small></td><td><strong>Python 基因组区间处理库</strong></td><td><span class='tag'>基因组学</span><br><small>Genomics</small></td><td><span class='type python'>Python 包</span></td><td>用于高效处理基因组区间，支持 overlap、join、merge 等操作。</td></tr><tr data-category='Genomics' data-type='Python'><td>37</td><td><code>@pybedtools</code><br><small>pybedtools</small></td><td><strong>BEDTools 的 Python 封装库</strong></td><td><span class='tag'>基因组学</span><br><small>Genomics</small></td><td><span class='type python'>Python 包</span></td><td>在 Python 中调用 BEDTools 功能，进行基因组区间计算、重叠分析和注释操作。</td></tr><tr data-category='Genomics' data-type='Python'><td>38</td><td><code>@cyvcf2</code><br><small>cyvcf2</small></td><td><strong>高速 VCF 解析库</strong></td><td><span class='tag'>基因组学</span><br><small>Genomics</small></td><td><span class='type python'>Python 包</span></td><td>基于 Cython 的快速 VCF 文件读取与处理工具，适合大规模变异数据分析。</td></tr><tr data-category='Genomics' data-type='Python'><td>39</td><td><code>@pyliftover</code><br><small>pyliftover</small></td><td><strong>基因组坐标转换库</strong></td><td><span class='tag'>基因组学</span><br><small>Genomics</small></td><td><span class='type python'>Python 包</span></td><td>在不同参考基因组版本之间转换坐标，例如 hg19 到 hg38。</td></tr><tr data-category='Genomics' data-type='Python'><td>40</td><td><code>@gget</code><br><small>gget</small></td><td><strong>基因组数据库高效查询工具</strong></td><td><span class='tag'>基因组学</span><br><small>Genomics</small></td><td><span class='type python'>Python 包</span></td><td>用于高效查询基因、序列、注释和数据库信息，简化常见基因组数据检索任务。</td></tr><tr data-category='Genomics' data-type='Python'><td>41</td><td><code>@GEOparse</code><br><small>GEOparse</small></td><td><strong>GEO 数据下载与解析库</strong></td><td><span class='tag'>基因组学</span><br><small>Genomics</small></td><td><span class='type python'>Python 包</span></td><td>用于下载和解析 GEO 数据集及其元数据，适合公共转录组数据挖掘。</td></tr><tr data-category='Genomics' data-type='Python'><td>42</td><td><code>@gseapy</code><br><small>gseapy</small></td><td><strong>Python GSEA 富集分析库</strong></td><td><span class='tag'>基因组学</span><br><small>Genomics</small></td><td><span class='type python'>Python 包</span></td><td>在 Python 中进行基因集富集分析、GSEA 和 Enrichr 查询，适合通路解释。</td></tr><tr data-category='Genomics' data-type='Python'><td>43</td><td><code>@pydeseq2</code><br><small>pydeseq2</small></td><td><strong>Python 版 DESeq2 差异表达分析库</strong></td><td><span class='tag'>基因组学</span><br><small>Genomics</small></td><td><span class='type python'>Python 包</span></td><td>在 Python 中实现类似 DESeq2 的 RNA-seq 差异表达分析流程。</td></tr><tr data-category='Genomics' data-type='Python'><td>44</td><td><code>@scikit-bio</code><br><small>scikit-bio</small></td><td><strong>Python 生物信息学综合库</strong></td><td><span class='tag'>基因组学</span><br><small>Genomics</small></td><td><span class='type python'>Python 包</span></td><td>提供序列、距离矩阵、系统发育、多样性分析等基础生信功能。</td></tr><tr data-category='Genomics' data-type='Python'><td>45</td><td><code>@biom-format</code><br><small>biom-format</small></td><td><strong>生物观测矩阵格式库</strong></td><td><span class='tag'>基因组学</span><br><small>Genomics</small></td><td><span class='type python'>Python 包</span></td><td>用于读写 BIOM 格式，常见于微生物组和生态数据中的样本—特征矩阵。</td></tr><tr data-category='Genomics' data-type='Python'><td>46</td><td><code>@biotite</code><br><small>biotite</small></td><td><strong>计算生物学综合工具库</strong></td><td><span class='tag'>基因组学</span><br><small>Genomics</small></td><td><span class='type python'>Python 包</span></td><td>提供序列、结构、文件格式和数据库访问功能，适合蛋白和基因组综合分析。</td></tr><tr data-category='Genomics' data-type='Python'><td>47</td><td><code>@biopandas</code><br><small>biopandas</small></td><td><strong>分子结构 DataFrame 工具</strong></td><td><span class='tag'>基因组学</span><br><small>Genomics</small></td><td><span class='type python'>Python 包</span></td><td>将 PDB 等分子结构文件转换为 pandas DataFrame，便于结构数据清洗、筛选和分析。</td></tr><tr data-category='Genomics' data-type='Python'><td>48</td><td><code>@pyBigWig</code><br><small>pyBigWig</small></td><td><strong>bigWig/bigBed 快速访问库</strong></td><td><span class='tag'>基因组学</span><br><small>Genomics</small></td><td><span class='type python'>Python 包</span></td><td>用于快速读取 bigWig 和 bigBed 文件，适合基因组信号轨道和表观组数据分析。</td></tr><tr data-category='Genomics' data-type='Python'><td>49</td><td><code>@arboreto</code><br><small>arboreto</small></td><td><strong>基因调控网络推断库</strong></td><td><span class='tag'>基因组学</span><br><small>Genomics</small></td><td><span class='type python'>Python 包</span></td><td>用于从表达数据推断基因调控网络，常与单细胞调控网络分析流程结合。</td></tr><tr data-category='Genomics' data-type='Python'><td>50</td><td><code>@airr</code><br><small>airr</small></td><td><strong>AIRR 免疫受体数据标准库</strong></td><td><span class='tag'>基因组学</span><br><small>Genomics</small></td><td><span class='type python'>Python 包</span></td><td>支持 AIRR Community 标准数据格式，用于免疫受体组库数据存储、交换和分析。</td></tr><tr data-category='Genomics' data-type='R'><td>51</td><td><code>@DESeq2</code><br><small>DESeq2</small></td><td><strong>RNA-seq 差异表达分析 R 包</strong></td><td><span class='tag'>基因组学</span><br><small>Genomics</small></td><td><span class='type r'>R 包</span></td><td>用于基于负二项分布模型的 RNA-seq 差异表达分析，是 bulk RNA-seq 的经典工具。</td></tr><tr data-category='Genomics' data-type='R'><td>52</td><td><code>@clusterProfiler</code><br><small>clusterProfiler</small></td><td><strong>基因集功能注释与富集分析 R 包</strong></td><td><span class='tag'>基因组学</span><br><small>Genomics</small></td><td><span class='type r'>R 包</span></td><td>用于 GO、KEGG、GSEA 等功能富集分析和基因簇功能解释，适合差异基因后续机制分析。</td></tr><tr data-category='Image Analysis' data-type='Python'><td>53</td><td><code>@scikit-image</code><br><small>scikit-image</small></td><td><strong>Python 图像处理库</strong></td><td><span class='tag'>图像分析</span><br><small>Image Analysis</small></td><td><span class='type python'>Python 包</span></td><td>提供图像滤波、分割、特征提取、形态学操作和图像测量等功能。</td></tr><tr data-category='Image Analysis' data-type='Python'><td>54</td><td><code>@opencv-python</code><br><small>opencv-python</small></td><td><strong>OpenCV Python 计算机视觉库</strong></td><td><span class='tag'>图像分析</span><br><small>Image Analysis</small></td><td><span class='type python'>Python 包</span></td><td>用于图像处理、目标检测、图像变换、视频处理和计算机视觉算法开发。</td></tr><tr data-category='Image Analysis' data-type='Python'><td>55</td><td><code>@imageio</code><br><small>imageio</small></td><td><strong>图像读写库</strong></td><td><span class='tag'>图像分析</span><br><small>Image Analysis</small></td><td><span class='type python'>Python 包</span></td><td>用于读取和写入多种图像、视频和科学图像格式，常作为图像处理流程的 I/O 工具。</td></tr><tr data-category='Machine Learning' data-type='Python'><td>56</td><td><code>@torch</code><br><small>torch</small></td><td><strong>PyTorch 深度学习框架</strong></td><td><span class='tag'>机器学习</span><br><small>Machine Learning</small></td><td><span class='type python'>Python 包</span></td><td>用于构建、训练和部署深度学习模型，广泛应用于图像、文本、结构预测和组学建模。</td></tr><tr data-category='Machine Learning' data-type='Python'><td>57</td><td><code>@jax</code><br><small>jax</small></td><td><strong>JAX 高性能数值计算框架</strong></td><td><span class='tag'>机器学习</span><br><small>Machine Learning</small></td><td><span class='type python'>Python 包</span></td><td>支持自动微分、JIT 编译和 GPU/TPU 加速，适合高性能机器学习和科学计算。</td></tr><tr data-category='Machine Learning' data-type='Python'><td>58</td><td><code>@flax</code><br><small>flax</small></td><td><strong>JAX 神经网络库</strong></td><td><span class='tag'>机器学习</span><br><small>Machine Learning</small></td><td><span class='type python'>Python 包</span></td><td>基于 JAX 构建神经网络模型，适合研究型深度学习模型开发。</td></tr><tr data-category='Machine Learning' data-type='Python'><td>59</td><td><code>@transformers</code><br><small>transformers</small></td><td><strong>Hugging Face 预训练模型库</strong></td><td><span class='tag'>机器学习</span><br><small>Machine Learning</small></td><td><span class='type python'>Python 包</span></td><td>提供先进 NLP 和机器学习模型，适合文本挖掘、序列建模、多模态分析和大模型调用。</td></tr><tr data-category='Machine Learning' data-type='Python'><td>60</td><td><code>@faiss-cpu</code><br><small>faiss-cpu</small></td><td><strong>高效相似度搜索与聚类库</strong></td><td><span class='tag'>机器学习</span><br><small>Machine Learning</small></td><td><span class='type python'>Python 包</span></td><td>用于大规模向量相似度检索和聚类，适合嵌入检索、细胞相似性搜索和知识库召回。</td></tr><tr data-category='Machine Learning' data-type='Python'><td>61</td><td><code>@umap-learn</code><br><small>umap-learn</small></td><td><strong>UMAP 降维算法库</strong></td><td><span class='tag'>机器学习</span><br><small>Machine Learning</small></td><td><span class='type python'>Python 包</span></td><td>用于非线性降维和可视化，常见于单细胞、组学和高维特征数据分析。</td></tr><tr data-category='Machine Learning' data-type='Python'><td>62</td><td><code>@hmmlearn</code><br><small>hmmlearn</small></td><td><strong>隐马尔可夫模型库</strong></td><td><span class='tag'>机器学习</span><br><small>Machine Learning</small></td><td><span class='type python'>Python 包</span></td><td>用于构建和训练 HMM 模型，适合序列状态建模和时间序列分析。</td></tr><tr data-category='Machine Learning' data-type='Python'><td>63</td><td><code>@annoy</code><br><small>annoy</small></td><td><strong>近似最近邻搜索库</strong></td><td><span class='tag'>机器学习</span><br><small>Machine Learning</small></td><td><span class='type python'>Python 包</span></td><td>用于高维向量的快速近似最近邻搜索，适合推荐、聚类和嵌入检索。</td></tr><tr data-category='Machine Learning' data-type='Python'><td>64</td><td><code>@pynndescent</code><br><small>pynndescent</small></td><td><strong>快速近似最近邻搜索库</strong></td><td><span class='tag'>机器学习</span><br><small>Machine Learning</small></td><td><span class='type python'>Python 包</span></td><td>用于构建近似最近邻图，常作为 UMAP 和单细胞邻域图计算的底层工具。</td></tr><tr data-category='Mass Spec' data-type='Python'><td>65</td><td><code>@pymassspec</code><br><small>pymassspec</small></td><td><strong>质谱数据处理库</strong></td><td><span class='tag'>质谱分析</span><br><small>Mass Spec</small></td><td><span class='type python'>Python 包</span></td><td>用于质谱数据处理、峰检测和分析，适合代谢组或质谱原始数据处理。</td></tr><tr data-category='Mass Spec' data-type='Python'><td>66</td><td><code>@pymzml</code><br><small>pymzml</small></td><td><strong>mzML 质谱文件接口库</strong></td><td><span class='tag'>质谱分析</span><br><small>Mass Spec</small></td><td><span class='type python'>Python 包</span></td><td>用于读取和解析 mzML 格式质谱数据，支持质谱峰和谱图级分析。</td></tr><tr data-category='Metabolic' data-type='Python'><td>67</td><td><code>@cobra</code><br><small>cobra</small></td><td><strong>约束型代谢建模库</strong></td><td><span class='tag'>代谢建模</span><br><small>Metabolic</small></td><td><span class='type python'>Python 包</span></td><td>用于构建、分析和模拟代谢网络模型，支持通量平衡分析等系统生物学方法。</td></tr><tr data-category='Metabolic' data-type='Python'><td>68</td><td><code>@optlang</code><br><small>optlang</small></td><td><strong>优化求解器统一接口库</strong></td><td><span class='tag'>代谢建模</span><br><small>Metabolic</small></td><td><span class='type python'>Python 包</span></td><td>为不同优化求解器提供统一接口，常用于代谢模型、线性规划和数学优化任务。</td></tr><tr data-category='Metabolic' data-type='Python'><td>69</td><td><code>@python-libsbml</code><br><small>python-libsbml</small></td><td><strong>SBML Python 接口</strong></td><td><span class='tag'>代谢建模</span><br><small>Metabolic</small></td><td><span class='type python'>Python 包</span></td><td>用于读写和操作 SBML 模型文件，适合代谢网络和系统生物学模型交换。</td></tr><tr data-category='Networks' data-type='Python'><td>70</td><td><code>@igraph</code><br><small>igraph</small></td><td><strong>网络分析与可视化库</strong></td><td><span class='tag'>网络分析</span><br><small>Networks</small></td><td><span class='type python'>Python 包</span></td><td>用于构建、分析和可视化复杂网络，适合蛋白互作、基因网络和知识图谱分析。</td></tr><tr data-category='Networks' data-type='Python'><td>71</td><td><code>@networkx</code><br><small>networkx</small></td><td><strong>Python 网络分析库</strong></td><td><span class='tag'>网络分析</span><br><small>Networks</small></td><td><span class='type python'>Python 包</span></td><td>用于图结构建模、网络指标计算、路径分析和图算法实验，适合中小规模网络分析。</td></tr><tr data-category='Phylogenetics' data-type='Python'><td>72</td><td><code>@tskit</code><br><small>tskit</small></td><td><strong>遗传谱系树序列工具包</strong></td><td><span class='tag'>系统发育</span><br><small>Phylogenetics</small></td><td><span class='type python'>Python 包</span></td><td>用于处理 tree sequence 数据，适合群体遗传学、遗传谱系和进化模拟分析。</td></tr><tr data-category='Phylogenetics' data-type='Python'><td>73</td><td><code>@phykit</code><br><small>phykit</small></td><td><strong>系统发育基因组命令行风格工具集</strong></td><td><span class='tag'>系统发育</span><br><small>Phylogenetics</small></td><td><span class='type python'>Python 包</span></td><td>提供类 UNIX shell 风格的系统发育基因组分析工具，用于树、比对和系统发育统计分析。</td></tr><tr data-category='Search' data-type='CLI'><td>74</td><td><code>@blast</code><br><small>blast</small></td><td><strong>BLAST 局部序列比对搜索工具</strong></td><td><span class='tag'>序列搜索</span><br><small>Search</small></td><td><span class='type cli'>CLI 命令行工具</span></td><td>用于核酸或蛋白序列的局部相似性搜索，是同源序列查找和功能注释的经典工具。</td></tr><tr data-category='Single Cell' data-type='Python'><td>75</td><td><code>@scanpy</code><br><small>scanpy</small></td><td><strong>Python 单细胞 RNA-seq 综合分析工具</strong></td><td><span class='tag'>单细胞与空间组学</span><br><small>Single Cell</small></td><td><span class='type python'>Python 包</span></td><td>用于 scRNA-seq 数据质控、归一化、降维、聚类、差异分析和细胞注释，是 Python 单细胞分析核心框架。</td></tr><tr data-category='Single Cell' data-type='Python'><td>76</td><td><code>@anndata</code><br><small>anndata</small></td><td><strong>单细胞注释矩阵数据结构库</strong></td><td><span class='tag'>单细胞与空间组学</span><br><small>Single Cell</small></td><td><span class='type python'>Python 包</span></td><td>提供 AnnData 数据结构，用于存储表达矩阵、细胞/基因注释、降维结果和多层数据。</td></tr><tr data-category='Single Cell' data-type='Python'><td>77</td><td><code>@mudata</code><br><small>mudata</small></td><td><strong>多模态组学 AnnData 扩展格式</strong></td><td><span class='tag'>单细胞与空间组学</span><br><small>Single Cell</small></td><td><span class='type python'>Python 包</span></td><td>用于存储和管理多模态单细胞数据，例如 RNA、ATAC、蛋白和空间信息。</td></tr><tr data-category='Single Cell' data-type='Python'><td>78</td><td><code>@muon</code><br><small>muon</small></td><td><strong>Python 多组学数据分析库</strong></td><td><span class='tag'>单细胞与空间组学</span><br><small>Single Cell</small></td><td><span class='type python'>Python 包</span></td><td>用于多模态单细胞和多组学数据分析，扩展 Scanpy/AnnData 生态。</td></tr><tr data-category='Single Cell' data-type='Python'><td>79</td><td><code>@scvi-tools</code><br><small>scvi-tools</small></td><td><strong>单细胞深度概率建模工具</strong></td><td><span class='tag'>单细胞与空间组学</span><br><small>Single Cell</small></td><td><span class='type python'>Python 包</span></td><td>基于深度生成模型进行单细胞批次校正、整合、注释和差异表达分析。</td></tr><tr data-category='Single Cell' data-type='Python'><td>80</td><td><code>@scvelo</code><br><small>scvelo</small></td><td><strong>单细胞 RNA velocity 分析库</strong></td><td><span class='tag'>单细胞与空间组学</span><br><small>Single Cell</small></td><td><span class='type python'>Python 包</span></td><td>用于估计 RNA velocity，推断细胞状态变化方向和动态轨迹。</td></tr><tr data-category='Single Cell' data-type='Python'><td>81</td><td><code>@scrublet</code><br><small>scrublet</small></td><td><strong>单细胞双细胞检测工具</strong></td><td><span class='tag'>单细胞与空间组学</span><br><small>Single Cell</small></td><td><span class='type python'>Python 包</span></td><td>用于检测 scRNA-seq 数据中的 doublets，提高单细胞数据质量。</td></tr><tr data-category='Single Cell' data-type='Python'><td>82</td><td><code>@pyscenic</code><br><small>pyscenic</small></td><td><strong>Python 版 SCENIC 调控网络分析工具</strong></td><td><span class='tag'>单细胞与空间组学</span><br><small>Single Cell</small></td><td><span class='type python'>Python 包</span></td><td>用于基因调控网络推断和转录因子活性分析，常用于单细胞调控机制研究。</td></tr><tr data-category='Single Cell' data-type='Python'><td>83</td><td><code>@pertpy</code><br><small>pertpy</small></td><td><strong>单细胞扰动实验分析库</strong></td><td><span class='tag'>单细胞与空间组学</span><br><small>Single Cell</small></td><td><span class='type python'>Python 包</span></td><td>用于单细胞扰动数据分析，例如 CRISPR screen、药物扰动和 Perturb-seq。</td></tr><tr data-category='Single Cell' data-type='Python'><td>84</td><td><code>@decoupler</code><br><small>decoupler</small></td><td><strong>组学功能活性推断库</strong></td><td><span class='tag'>单细胞与空间组学</span><br><small>Single Cell</small></td><td><span class='type python'>Python 包</span></td><td>根据表达数据推断通路、转录因子和细胞功能活性，适合机制解释和细胞状态分析。</td></tr><tr data-category='Single Cell' data-type='Python'><td>85</td><td><code>@harmony-pytorch</code><br><small>harmony-pytorch</small></td><td><strong>PyTorch 快速批次校正工具</strong></td><td><span class='tag'>单细胞与空间组学</span><br><small>Single Cell</small></td><td><span class='type python'>Python 包</span></td><td>基于 PyTorch 实现 Harmony 批次校正，用于快速整合多批次单细胞数据。</td></tr><tr data-category='Single Cell' data-type='Python'><td>86</td><td><code>@cellxgene-census</code><br><small>cellxgene-census</small></td><td><strong>CZI Cell Census 数据访问库</strong></td><td><span class='tag'>单细胞与空间组学</span><br><small>Single Cell</small></td><td><span class='type python'>Python 包</span></td><td>用于访问 CZI Cell Census 单细胞参考数据，支持参考映射和大规模单细胞数据查询。</td></tr><tr data-category='Single Cell' data-type='Python'><td>87</td><td><code>@squidpy</code><br><small>squidpy</small></td><td><strong>空间单细胞分析库</strong></td><td><span class='tag'>单细胞与空间组学</span><br><small>Single Cell</small></td><td><span class='type python'>Python 包</span></td><td>用于空间转录组和空间单细胞数据分析，包括空间邻域、空间可变基因和组织结构分析。</td></tr><tr data-category='Single Cell' data-type='Python'><td>88</td><td><code>@spatialdata</code><br><small>spatialdata</small></td><td><strong>空间组学数据框架</strong></td><td><span class='tag'>单细胞与空间组学</span><br><small>Single Cell</small></td><td><span class='type python'>Python 包</span></td><td>用于组织和分析空间组学数据，统一图像、形状、表格和分子数据。</td></tr><tr data-category='Single Cell' data-type='Python'><td>89</td><td><code>@loompy</code><br><small>loompy</small></td><td><strong>loom 文件 Python 接口</strong></td><td><span class='tag'>单细胞与空间组学</span><br><small>Single Cell</small></td><td><span class='type python'>Python 包</span></td><td>用于读写 loom 格式文件，常用于单细胞表达矩阵和 RNA velocity 数据交换。</td></tr><tr data-category='Utilities' data-type='Python'><td>90</td><td><code>@tqdm</code><br><small>tqdm</small></td><td><strong>Python 进度条工具</strong></td><td><span class='tag'>通用工具</span><br><small>Utilities</small></td><td><span class='type python'>Python 包</span></td><td>为循环和迭代任务显示快速、可扩展的进度条，常用于长流程分析可视化进度。</td></tr><tr data-category='Utilities' data-type='Python'><td>91</td><td><code>@joblib</code><br><small>joblib</small></td><td><strong>轻量级流水线与并行计算库</strong></td><td><span class='tag'>通用工具</span><br><small>Utilities</small></td><td><span class='type python'>Python 包</span></td><td>用于缓存、并行执行和轻量级任务调度，常用于机器学习模型训练和批量计算。</td></tr><tr data-category='Utilities' data-type='Python'><td>92</td><td><code>@requests</code><br><small>requests</small></td><td><strong>Python HTTP 请求库</strong></td><td><span class='tag'>通用工具</span><br><small>Utilities</small></td><td><span class='type python'>Python 包</span></td><td>用于发送 HTTP 请求和访问 Web API，是数据抓取和接口调用的基础工具。</td></tr><tr data-category='Utilities' data-type='Python'><td>93</td><td><code>@httpx</code><br><small>httpx</small></td><td><strong>现代 Python HTTP 客户端</strong></td><td><span class='tag'>通用工具</span><br><small>Utilities</small></td><td><span class='type python'>Python 包</span></td><td>支持同步和异步 HTTP 请求，适合 API 调用、爬取和现代 Web 服务集成。</td></tr><tr data-category='Utilities' data-type='Python'><td>94</td><td><code>@pypdf</code><br><small>pypdf</small></td><td><strong>Python PDF 工具包</strong></td><td><span class='tag'>通用工具</span><br><small>Utilities</small></td><td><span class='type python'>Python 包</span></td><td>用于读取、拆分、合并、提取和处理 PDF 文件，适合文献和报告自动化处理。</td></tr><tr data-category='Utilities' data-type='CLI'><td>95</td><td><code>@samtools</code><br><small>samtools</small></td><td><strong>HTS 测序文件处理工具集</strong></td><td><span class='tag'>通用工具</span><br><small>Utilities</small></td><td><span class='type cli'>CLI 命令行工具</span></td><td>用于操作 SAM、BAM、CRAM 文件，包括排序、索引、统计、提取和格式转换。</td></tr><tr data-category='Utilities' data-type='CLI'><td>96</td><td><code>@bedtools</code><br><small>bedtools</small></td><td><strong>基因组区间运算瑞士军刀</strong></td><td><span class='tag'>通用工具</span><br><small>Utilities</small></td><td><span class='type cli'>CLI 命令行工具</span></td><td>用于 BED、GFF、VCF 等基因组区间的交集、并集、覆盖度和注释操作。</td></tr><tr data-category='Utilities' data-type='CLI'><td>97</td><td><code>@plink</code><br><small>plink</small></td><td><strong>全基因组关联分析工具集</strong></td><td><span class='tag'>通用工具</span><br><small>Utilities</small></td><td><span class='type cli'>CLI 命令行工具</span></td><td>用于基因型数据管理、质量控制、GWAS、群体结构和遗传统计分析。</td></tr><tr data-category='Utilities' data-type='CLI'><td>98</td><td><code>@plink2</code><br><small>plink2</small></td><td><strong>第二代 PLINK 遗传分析工具</strong></td><td><span class='tag'>通用工具</span><br><small>Utilities</small></td><td><span class='type cli'>CLI 命令行工具</span></td><td>PLINK 的增强版本，支持更大规模基因型数据、更快计算和更多文件格式。</td></tr><tr data-category='Utilities' data-type='CLI'><td>99</td><td><code>@ripgrep</code><br><small>ripgrep</small></td><td><strong>高速文本搜索工具</strong></td><td><span class='tag'>通用工具</span><br><small>Utilities</small></td><td><span class='type cli'>CLI 命令行工具</span></td><td>用于快速按行搜索文本内容，适合日志、代码、报告和大文件中的关键词检索。</td></tr><tr data-category='Variant Calling' data-type='CLI'><td>100</td><td><code>@gatk</code><br><small>gatk</small></td><td><strong>GATK 基因组变异分析工具包</strong></td><td><span class='tag'>变异检测</span><br><small>Variant Calling</small></td><td><span class='type cli'>CLI 命令行工具</span></td><td>用于变异发现、联合分型、质量控制和变异过滤，是人类基因组变异分析经典工具链。</td></tr><tr data-category='Visualization' data-type='Python'><td>101</td><td><code>@matplotlib</code><br><small>matplotlib</small></td><td><strong>Python 综合绘图库</strong></td><td><span class='tag'>数据可视化</span><br><small>Visualization</small></td><td><span class='type python'>Python 包</span></td><td>用于创建静态、动态图和基础科学可视化，是 Python 绘图生态的底层工具。</td></tr><tr data-category='Visualization' data-type='Python'><td>102</td><td><code>@seaborn</code><br><small>seaborn</small></td><td><strong>Python 统计数据可视化库</strong></td><td><span class='tag'>数据可视化</span><br><small>Visualization</small></td><td><span class='type python'>Python 包</span></td><td>基于 matplotlib 提供更便捷的统计图绘制能力，适合箱线图、热图、分布图和回归图。</td></tr><tr data-category='Visualization' data-type='Python'><td>103</td><td><code>@altair</code><br><small>altair</small></td><td><strong>声明式统计可视化库</strong></td><td><span class='tag'>数据可视化</span><br><small>Visualization</small></td><td><span class='type python'>Python 包</span></td><td>基于 Vega-Lite 的声明式可视化工具，适合交互式统计图和数据探索。</td></tr><tr data-category='Visualization' data-type='Python'><td>104</td><td><code>@bokeh</code><br><small>bokeh</small></td><td><strong>现代浏览器交互式可视化库</strong></td><td><span class='tag'>数据可视化</span><br><small>Visualization</small></td><td><span class='type python'>Python 包</span></td><td>用于构建 Web 端交互式图表、仪表板和数据探索界面。</td></tr><tr data-category='Visualization' data-type='Python'><td>105</td><td><code>@datashader</code><br><small>datashader</small></td><td><strong>大规模数据渲染库</strong></td><td><span class='tag'>数据可视化</span><br><small>Visualization</small></td><td><span class='type python'>Python 包</span></td><td>用于准确渲染百万级到十亿级点数据，适合大规模空间、单细胞和高维嵌入可视化。</td></tr><tr data-category='Visualization' data-type='Python'><td>106</td><td><code>@reportlab</code><br><small>reportlab</small></td><td><strong>PDF 与图形生成库</strong></td><td><span class='tag'>数据可视化</span><br><small>Visualization</small></td><td><span class='type python'>Python 包</span></td><td>用于通过 Python 生成 PDF、图形和自动化报告。</td></tr><tr data-category='Visualization' data-type='R'><td>107</td><td><code>@ggplot2</code><br><small>ggplot2</small></td><td><strong>R 语言图形语法绘图库</strong></td><td><span class='tag'>数据可视化</span><br><small>Visualization</small></td><td><span class='type r'>R 包</span></td><td>基于 Grammar of Graphics 构建统计图形，是 R 语言最常用的数据可视化包之一。</td></tr></tbody>
+    </table>
+    <h2 class="section-title">典型分析场景地图</h2>
+  <div class="map">
+    <div class="map-item">
+      <h3>一、测序数据预处理与比对</h3>
+      <p>质控和修剪可用 <code>@fastqc</code>、<code>@trimmomatic</code>；短读长比对可用 <code>@bwa</code>；多序列比对可用 <code>@mafft</code>；HTS 文件处理可用 <code>@samtools</code>。</p>
+    </div>
+    <div class="map-item">
+      <h3>二、基因组区间、变异与 GWAS</h3>
+      <p>区间运算可用 <code>@bedtools</code>、<code>@pybedtools</code>、<code>@pyranges</code>；变异文件处理可用 <code>@pysam</code>、<code>@cyvcf2</code>、<code>@gatk</code>；遗传分析可用 <code>@plink</code>、<code>@plink2</code>。</p>
+    </div>
+    <div class="map-item">
+      <h3>三、RNA-seq 与功能富集</h3>
+      <p>差异表达可用 <code>@DESeq2</code> 或 <code>@pydeseq2</code>；富集分析可用 <code>@clusterProfiler</code>、<code>@gseapy</code>；公共数据可用 <code>@GEOparse</code>。</p>
+    </div>
+    <div class="map-item">
+      <h3>四、单细胞与空间组学</h3>
+      <p>单细胞主流程可用 <code>@scanpy</code>、<code>@anndata</code>；深度建模可用 <code>@scvi-tools</code>；RNA velocity 可用 <code>@scvelo</code>；空间分析可用 <code>@squidpy</code>、<code>@spatialdata</code>。</p>
+    </div>
+    <div class="map-item">
+      <h3>五、药物发现与化学信息学</h3>
+      <p>分子处理可用 <code>@rdkit</code>、<code>@openbabel</code>；虚拟筛选可用 <code>@pyscreener</code>、<code>@AutoDock Vina</code>；DTI 和性质预测可用 <code>@DeepPurpose</code>。</p>
+    </div>
+    <div class="map-item">
+      <h3>六、机器学习与高维数据建模</h3>
+      <p>传统机器学习可用 <code>@scikit-learn</code>；深度学习可用 <code>@torch</code>、<code>@jax</code>、<code>@flax</code>；降维和邻域搜索可用 <code>@umap-learn</code>、<code>@faiss-cpu</code>、<code>@pynndescent</code>。</p>
+    </div>
+    <div class="map-item">
+      <h3>七、数据格式、大数据与自动化</h3>
+      <p>大型矩阵和多维数据可用 <code>@h5py</code>、<code>@zarr</code>、<code>@xarray</code>；并行计算可用 <code>@dask</code>、<code>@joblib</code>；API 和文件处理可用 <code>@requests</code>、<code>@httpx</code>、<code>@pypdf</code>。</p>
+    </div>
+    <div class="map-item">
+      <h3>八、可视化与报告生成</h3>
+      <p>Python 绘图可用 <code>@matplotlib</code>、<code>@seaborn</code>、<code>@altair</code>、<code>@bokeh</code>；大数据渲染可用 <code>@datashader</code>；R 可视化可用 <code>@ggplot2</code>。</p>
+    </div>
+  </div>
+  </div>
+
+  <div class="section" id="sec-tools">
+    <div class="section-header">
+      <h2>Biomni 生物信息学工具中文索引</h2>
+      <p class="subtitle">保留原始工具英文名，并补充中文名、HPC 标记、工具用途与所属领域，方便在聊天中通过 <code>@工具名</code> 调用。</p>
+      <div class="meta">共整理 <strong>79</strong> 个工具 ｜ 其中 <strong>46</strong> 个支持 HPC 加速 ｜ 覆盖比对、注释、组装、结构预测、变异检测、克隆设计、实验方案等方向</div>
+    </div>
+    <div class="intro"><strong>使用方式：</strong><strong>使用方式：</strong>这份索引可以理解为 Biomni 的“生物信息学工具箱”。英文名用于 <code>@</code> 引用和实际调用，中文名帮助科研人员与培训学员快速理解，HPC 标记表示该工具可在 GPU 加速或高性能计算基础设施上运行。典型流程可以像流水线一样组合：测序数据先用 <code>@FastQC</code> 类质控工具思路检查，再用 <code>@STAR</code>、<code>@HISAT2</code> 或 <code>@minimap2</code> 比对；组装任务进入 <code>@Flye</code>、<code>@SPAdes</code>、<code>@hifiasm</code>；结构任务则进入 <code>@AlphaFold</code>、<code>@RFDiffusion</code>、<code>@ProteinMPNN</code> 等工具。</div>
+    <div class="cards"><div class='card'><div class='num'>11</div><div class='label'>基因组/转录组组装</div><div class='en'>Assembly</div></div><div class='card'><div class='num'>10</div><div class='label'>结构预测与蛋白设计</div><div class='en'>Structure Prediction</div></div><div class='card'><div class='num'>8</div><div class='label'>变异检测</div><div class='en'>Variant Calling</div></div><div class='card'><div class='num'>7</div><div class='label'>实验方案</div><div class='en'>Lab Protocols</div></div><div class='card'><div class='num'>5</div><div class='label'>基因组注释与质控</div><div class='en'>Annotation</div></div><div class='card'><div class='num'>5</div><div class='label'>PCR 与克隆</div><div class='en'>PCR &amp; Cloning</div></div><div class='card'><div class='num'>4</div><div class='label'>序列比对</div><div class='en'>Alignment</div></div><div class='card'><div class='num'>4</div><div class='label'>数据库集成</div><div class='en'>Database Integrations</div></div><div class='card'><div class='num'>4</div><div class='label'>Golden Gate 组装</div><div class='en'>Golden Gate Assembly</div></div><div class='card'><div class='num'>4</div><div class='label'>引物设计</div><div class='en'>Primer Design</div></div><div class='card'><div class='num'>4</div><div class='label'>转录组学</div><div class='en'>Transcriptomics</div></div><div class='card'><div class='num'>3</div><div class='label'>序列分析</div><div class='en'>Sequence Analysis</div></div><div class='card'><div class='num'>2</div><div class='label'>CRISPR 实验设计</div><div class='en'>CRISPR</div></div><div class='card'><div class='num'>2</div><div class='label'>Gateway 克隆</div><div class='en'>Gateway Cloning</div></div><div class='card'><div class='num'>2</div><div class='label'>序列搜索</div><div class='en'>Search</div></div><div class='card'><div class='num'>2</div><div class='label'>单细胞</div><div class='en'>Single Cell</div></div><div class='card'><div class='num'>1</div><div class='label'>药物发现</div><div class='en'>Drug Discovery</div></div><div class='card'><div class='num'>1</div><div class='label'>Gibson 组装</div><div class='en'>Gibson Assembly</div></div></div>
+    <div class="toolbar">
+      <input id="qTools" placeholder="搜索工具：英文名、中文名、领域或用途..." />
+      <select id="catTools">
+        <option value="">全部领域</option>
+        <option value="">全部领域</option>
+      <option value="Alignment">序列比对 / Alignment</option><option value="Annotation">基因组注释与质控 / Annotation</option><option value="Assembly">基因组/转录组组装 / Assembly</option><option value="CRISPR">CRISPR 实验设计 / CRISPR</option><option value="Database Integrations">数据库集成 / Database Integrations</option><option value="Drug Discovery">药物发现 / Drug Discovery</option><option value="Gateway Cloning">Gateway 克隆 / Gateway Cloning</option><option value="Gibson Assembly">Gibson 组装 / Gibson Assembly</option><option value="Golden Gate Assembly">Golden Gate 组装 / Golden Gate Assembly</option><option value="Lab Protocols">实验方案 / Lab Protocols</option><option value="PCR &amp; Cloning">PCR 与克隆 / PCR &amp; Cloning</option><option value="Primer Design">引物设计 / Primer Design</option><option value="Search">序列搜索 / Search</option><option value="Sequence Analysis">序列分析 / Sequence Analysis</option><option value="Single Cell">单细胞 / Single Cell</option><option value="Structure Prediction">结构预测与蛋白设计 / Structure Prediction</option><option value="Transcriptomics">转录组学 / Transcriptomics</option><option value="Variant Calling">变异检测 / Variant Calling</option>
+      </select>
+      <select id="hpcTools">
+        <option value="">全部运行类型</option>
+        <option value="">全部运行类型</option>
+      <option value="yes">仅看 HPC 工具</option>
+      <option value="no">仅看非 HPC 工具</option>
+      </select>
+    </div>
+    <div class="no-results" id="noTools">没有匹配的工具。</div>
+    <table id="toolTable">
+      <thead>
+        <tr><th>序号</th><th>工具英文名 / @引用名</th><th>工具中文名</th><th>领域</th><th>类型</th><th>工具用途</th></tr>
+      </thead>
+      <tbody><tr data-category='Alignment' data-hpc='yes'><td>1</td><td><code>@minimap2</code><br><small>minimap2</small></td><td><strong>长读长快速比对工具</strong></td><td><span class='tag'>序列比对</span><br><small>Alignment</small></td><td><span class='hpc'>HPC</span></td><td>快速、通用的成对序列比对工具，特别适合 PacBio、Nanopore 等长读长数据与参考基因组的比对，也常用于组装结果比对。</td></tr><tr data-category='Alignment' data-hpc='yes'><td>2</td><td><code>@HISAT2</code><br><small>HISAT2</small></td><td><strong>剪接感知型 RNA-seq 比对工具</strong></td><td><span class='tag'>序列比对</span><br><small>Alignment</small></td><td><span class='hpc'>HPC</span></td><td>快速、敏感地将 RNA-seq reads 比对到参考基因组，能够处理剪接位点，适合转录组测序比对。</td></tr><tr data-category='Alignment' data-hpc='yes'><td>3</td><td><code>@STAR</code><br><small>STAR</small></td><td><strong>高速转录组剪接比对工具</strong></td><td><span class='tag'>序列比对</span><br><small>Alignment</small></td><td><span class='hpc'>HPC</span></td><td>将转录本 reads 比对到参考基因组，擅长 RNA-seq 剪接比对，是表达定量、融合基因检测等流程的常用前置工具。</td></tr><tr data-category='Alignment' data-hpc='yes'><td>4</td><td><code>@bowtie2</code><br><small>bowtie2</small></td><td><strong>短读长快速精准比对工具</strong></td><td><span class='tag'>序列比对</span><br><small>Alignment</small></td><td><span class='hpc'>HPC</span></td><td>用于短读长测序数据与参考序列的快速、准确比对，常见于 DNA-seq、ChIP-seq、ATAC-seq、宏基因组等流程。</td></tr><tr data-category='Annotation' data-hpc='yes'><td>5</td><td><code>@Bakta</code><br><small>Bakta</small></td><td><strong>细菌基因组快速标准化注释工具</strong></td><td><span class='tag'>基因组注释与质控</span><br><small>Annotation</small></td><td><span class='hpc'>HPC</span></td><td>对细菌基因组进行快速、标准化注释，识别 CDS、rRNA、tRNA、功能基因和注释信息，适合微生物基因组分析。</td></tr><tr data-category='Annotation' data-hpc='yes'><td>6</td><td><code>@CheckM2</code><br><small>CheckM2</small></td><td><strong>基因组 bin 质量评估工具</strong></td><td><span class='tag'>基因组注释与质控</span><br><small>Annotation</small></td><td><span class='hpc'>HPC</span></td><td>使用机器学习评估宏基因组组装 bin 或微生物基因组的完整度和污染度，适合 MAG 质量控制。</td></tr><tr data-category='Annotation' data-hpc='yes'><td>7</td><td><code>@Prokka</code><br><small>Prokka</small></td><td><strong>原核基因组快速注释工具</strong></td><td><span class='tag'>基因组注释与质控</span><br><small>Annotation</small></td><td><span class='hpc'>HPC</span></td><td>快速完成细菌、古菌等原核生物基因组注释，输出标准化基因、蛋白和功能注释文件。</td></tr><tr data-category='Annotation' data-hpc='yes'><td>8</td><td><code>@QUAST</code><br><small>QUAST</small></td><td><strong>基因组组装质量评估工具</strong></td><td><span class='tag'>基因组注释与质控</span><br><small>Annotation</small></td><td><span class='hpc'>HPC</span></td><td>评估基因组组装质量，包括 contig 数量、N50、错配、缺口和参考对齐表现，是组装流程中的质检工具。</td></tr><tr data-category='Annotation' data-hpc='yes'><td>9</td><td><code>@MultiQC</code><br><small>MultiQC</small></td><td><strong>多样本生信结果汇总报告工具</strong></td><td><span class='tag'>基因组注释与质控</span><br><small>Annotation</small></td><td><span class='hpc'>HPC</span></td><td>汇总多个生物信息学工具和多个样本的质控结果，生成统一报告，适合批量测序项目的结果审阅。</td></tr><tr data-category='Assembly' data-hpc='yes'><td>10</td><td><code>@Canu</code><br><small>Canu</small></td><td><strong>长读长基因组组装工具</strong></td><td><span class='tag'>基因组/转录组组装</span><br><small>Assembly</small></td><td><span class='hpc'>HPC</span></td><td>用于 PacBio 和 Nanopore 长读长数据的基因组组装，适合较复杂基因组和高错误率长读长的纠错与组装。</td></tr><tr data-category='Assembly' data-hpc='yes'><td>11</td><td><code>@Flye</code><br><small>Flye</small></td><td><strong>基于重复图的长读长从头组装工具</strong></td><td><span class='tag'>基因组/转录组组装</span><br><small>Assembly</small></td><td><span class='hpc'>HPC</span></td><td>使用 repeat graph 方法进行长读长 de novo 组装，适合微生物、宏基因组和较大基因组组装。</td></tr><tr data-category='Assembly' data-hpc='yes'><td>12</td><td><code>@hifiasm</code><br><small>hifiasm</small></td><td><strong>HiFi 长读长单倍型分辨组装工具</strong></td><td><span class='tag'>基因组/转录组组装</span><br><small>Assembly</small></td><td><span class='hpc'>HPC</span></td><td>面向高准确度长读长进行单倍型分辨组装，适合 PacBio HiFi 数据和高质量基因组构建。</td></tr><tr data-category='Assembly' data-hpc='yes'><td>13</td><td><code>@MEGAHIT</code><br><small>MEGAHIT</small></td><td><strong>超快速宏基因组组装工具</strong></td><td><span class='tag'>基因组/转录组组装</span><br><small>Assembly</small></td><td><span class='hpc'>HPC</span></td><td>用于宏基因组数据的快速组装，适合大规模复杂微生物群落样本。</td></tr><tr data-category='Assembly' data-hpc='yes'><td>14</td><td><code>@NextDenovo</code><br><small>NextDenovo</small></td><td><strong>快速准确长读长基因组组装工具</strong></td><td><span class='tag'>基因组/转录组组装</span><br><small>Assembly</small></td><td><span class='hpc'>HPC</span></td><td>针对长读长测序数据进行快速、准确的基因组组装，常用于 Nanopore 和 PacBio 数据。</td></tr><tr data-category='Assembly' data-hpc='yes'><td>15</td><td><code>@Raven</code><br><small>Raven</small></td><td><strong>未纠错长读长从头组装工具</strong></td><td><span class='tag'>基因组/转录组组装</span><br><small>Assembly</small></td><td><span class='hpc'>HPC</span></td><td>对未纠错长读长数据进行 de novo 基因组组装，强调速度和较低资源消耗。</td></tr><tr data-category='Assembly' data-hpc='yes'><td>16</td><td><code>@SPAdes</code><br><small>SPAdes</small></td><td><strong>小基因组与宏基因组组装工具</strong></td><td><span class='tag'>基因组/转录组组装</span><br><small>Assembly</small></td><td><span class='hpc'>HPC</span></td><td>用于小型基因组、细菌基因组、单细胞基因组和宏基因组组装，是短读长组装的常用工具。</td></tr><tr data-category='Assembly' data-hpc='yes'><td>17</td><td><code>@Trinity</code><br><small>Trinity</small></td><td><strong>RNA-seq 转录组从头组装工具</strong></td><td><span class='tag'>基因组/转录组组装</span><br><small>Assembly</small></td><td><span class='hpc'>HPC</span></td><td>从 RNA-seq reads 中 de novo 重建转录本，适合无参考基因组或参考质量较弱的转录组研究。</td></tr><tr data-category='Assembly' data-hpc='yes'><td>18</td><td><code>@Unicycler</code><br><small>Unicycler</small></td><td><strong>细菌基因组混合组装流程</strong></td><td><span class='tag'>基因组/转录组组装</span><br><small>Assembly</small></td><td><span class='hpc'>HPC</span></td><td>整合短读长和长读长数据进行细菌基因组混合组装，适合获得闭环或高连续性的微生物基因组。</td></tr><tr data-category='Assembly' data-hpc='yes'><td>19</td><td><code>@Verkko</code><br><small>Verkko</small></td><td><strong>二倍体基因组 T2T 组装工具</strong></td><td><span class='tag'>基因组/转录组组装</span><br><small>Assembly</small></td><td><span class='hpc'>HPC</span></td><td>用于二倍体基因组端粒到端粒级别组装，适合结合高质量长读长和辅助数据构建高连续性基因组。</td></tr><tr data-category='Assembly' data-hpc='yes'><td>20</td><td><code>@wtdbg2</code><br><small>wtdbg2</small></td><td><strong>长读长快速组装工具</strong></td><td><span class='tag'>基因组/转录组组装</span><br><small>Assembly</small></td><td><span class='hpc'>HPC</span></td><td>面向长读长测序的快速、准确基因组组装工具，适合大基因组和高通量组装任务。</td></tr><tr data-category='CRISPR' data-hpc='no'><td>21</td><td><code>@compare_knockout_cas_systems</code><br><small>compare_knockout_cas_systems</small></td><td><strong>CRISPR/Cas 敲除系统比较工具</strong></td><td><span class='tag'>CRISPR 实验设计</span><br><small>CRISPR</small></td><td><span class='std'>Biomni</span></td><td>比较不同 CRISPR/Cas 系统在基因敲除中的效率、特异性和适用场景，帮助选择 Cas9、Cas12a 等实验系统。</td></tr><tr data-category='CRISPR' data-hpc='no'><td>22</td><td><code>@compare_delivery_methods</code><br><small>compare_delivery_methods</small></td><td><strong>CRISPR 递送方式比较工具</strong></td><td><span class='tag'>CRISPR 实验设计</span><br><small>CRISPR</small></td><td><span class='std'>Biomni</span></td><td>比较病毒递送和非病毒递送等 CRISPR 递送方式的优缺点、效率、安全性和实验适配性。</td></tr><tr data-category='Database Integrations' data-hpc='no'><td>23</td><td><code>@search_plasmids</code><br><small>search_plasmids</small></td><td><strong>Addgene 质粒搜索工具</strong></td><td><span class='tag'>数据库集成</span><br><small>Database Integrations</small></td><td><span class='std'>Biomni</span></td><td>根据名称、基因、物种、提交者或其他条件搜索 Addgene 质粒目录，适合实验材料初筛。</td></tr><tr data-category='Database Integrations' data-hpc='no'><td>24</td><td><code>@get_plasmid</code><br><small>get_plasmid</small></td><td><strong>Addgene 质粒详情获取工具</strong></td><td><span class='tag'>数据库集成</span><br><small>Database Integrations</small></td><td><span class='std'>Biomni</span></td><td>根据 Addgene 质粒 ID 获取指定质粒的详细信息，包括用途、载体、插入片段和提交信息。</td></tr><tr data-category='Database Integrations' data-hpc='no'><td>25</td><td><code>@get_plasmid_with_sequences</code><br><small>get_plasmid_with_sequences</small></td><td><strong>含序列的 Addgene 质粒信息获取工具</strong></td><td><span class='tag'>数据库集成</span><br><small>Database Integrations</small></td><td><span class='std'>Biomni</span></td><td>获取质粒信息以及完整核苷酸序列和注释，适合后续引物设计、克隆方案设计和序列验证。</td></tr><tr data-category='Database Integrations' data-hpc='no'><td>26</td><td><code>@get_addgene_sequence_files</code><br><small>get_addgene_sequence_files</small></td><td><strong>Addgene 序列文件下载链接获取工具</strong></td><td><span class='tag'>数据库集成</span><br><small>Database Integrations</small></td><td><span class='std'>Biomni</span></td><td>获取可下载的 GenBank .gbk 和 SnapGene .dna 序列文件 URL，便于在分子克隆软件中继续编辑。</td></tr><tr data-category='Drug Discovery' data-hpc='no'><td>27</td><td><code>@predict_admet_properties</code><br><small>predict_admet_properties</small></td><td><strong>化合物 ADMET 性质预测工具</strong></td><td><span class='tag'>药物发现</span><br><small>Drug Discovery</small></td><td><span class='std'>Biomni</span></td><td>使用 DeepPurpose 机器学习模型预测化合物吸收、分布、代谢、排泄和毒性属性，支持药物发现早期筛选。</td></tr><tr data-category='Gateway Cloning' data-hpc='no'><td>28</td><td><code>@perform_gateway_lr_reaction</code><br><small>perform_gateway_lr_reaction</small></td><td><strong>Gateway LR 克隆反应模拟工具</strong></td><td><span class='tag'>Gateway 克隆</span><br><small>Gateway Cloning</small></td><td><span class='std'>Biomni</span></td><td>模拟 Gateway LR 克隆反应，将 insert 从 entry clone 转移到 destination vector，并预测最终构建体序列。</td></tr><tr data-category='Gateway Cloning' data-hpc='no'><td>29</td><td><code>@get_gateway_lr_protocol</code><br><small>get_gateway_lr_protocol</small></td><td><strong>Gateway LR 克隆实验方案生成工具</strong></td><td><span class='tag'>Gateway 克隆</span><br><small>Gateway Cloning</small></td><td><span class='std'>Biomni</span></td><td>生成定制化 Gateway LR 克隆实验 protocol，帮助设计反应体系、步骤和注意事项。</td></tr><tr data-category='Gibson Assembly' data-hpc='no'><td>30</td><td><code>@design_complete_gibson_assembly</code><br><small>design_complete_gibson_assembly</small></td><td><strong>Gibson Assembly 完整设计工具</strong></td><td><span class='tag'>Gibson 组装</span><br><small>Gibson Assembly</small></td><td><span class='std'>Biomni</span></td><td>完成 Gibson Assembly 全流程设计，包括线性化 backbone、设计引物和预测组装结果。</td></tr><tr data-category='Golden Gate Assembly' data-hpc='no'><td>31</td><td><code>@design_golden_gate_insert_oligos</code><br><small>design_golden_gate_insert_oligos</small></td><td><strong>Golden Gate 插入片段寡核苷酸设计工具</strong></td><td><span class='tag'>Golden Gate 组装</span><br><small>Golden Gate Assembly</small></td><td><span class='std'>Biomni</span></td><td>识别 backbone overhang 并为 Golden Gate 组装设计插入片段 oligos。</td></tr><tr data-category='Golden Gate Assembly' data-hpc='no'><td>32</td><td><code>@get_golden_gate_protocol</code><br><small>get_golden_gate_protocol</small></td><td><strong>Golden Gate 克隆实验方案生成工具</strong></td><td><span class='tag'>Golden Gate 组装</span><br><small>Golden Gate Assembly</small></td><td><span class='std'>Biomni</span></td><td>根据组装需求返回定制化 Golden Gate assembly protocol，包含酶切连接流程和实验条件。</td></tr><tr data-category='Golden Gate Assembly' data-hpc='no'><td>33</td><td><code>@perform_golden_gate_assembly</code><br><small>perform_golden_gate_assembly</small></td><td><strong>Golden Gate 组装模拟工具</strong></td><td><span class='tag'>Golden Gate 组装</span><br><small>Golden Gate Assembly</small></td><td><span class='std'>Biomni</span></td><td>模拟 Golden Gate assembly，预测最终构建体序列，帮助提前检查 overhang 和片段顺序。</td></tr><tr data-category='Golden Gate Assembly' data-hpc='no'><td>34</td><td><code>@get_oligo_annealing_protocol</code><br><small>get_oligo_annealing_protocol</small></td><td><strong>寡核苷酸退火实验方案工具</strong></td><td><span class='tag'>Golden Gate 组装</span><br><small>Golden Gate Assembly</small></td><td><span class='std'>Biomni</span></td><td>返回标准 oligo annealing protocol，用于双链寡核苷酸制备和后续克隆。</td></tr><tr data-category='Lab Protocols' data-hpc='no'><td>35</td><td><code>@assemble_overlapping_oligos</code><br><small>assemble_overlapping_oligos</small></td><td><strong>重叠寡核苷酸拼接工具</strong></td><td><span class='tag'>实验方案</span><br><small>Lab Protocols</small></td><td><span class='std'>Biomni</span></td><td>将两个带有重叠区域的 DNA 序列拼接成带 overhang 的 oligo，用于克隆和合成片段设计。</td></tr><tr data-category='Lab Protocols' data-hpc='no'><td>36</td><td><code>@get_transformation_protocol</code><br><small>get_transformation_protocol</small></td><td><strong>细菌转化实验方案工具</strong></td><td><span class='tag'>实验方案</span><br><small>Lab Protocols</small></td><td><span class='std'>Biomni</span></td><td>返回标准 bacterial transformation protocol，适用于质粒转化、感受态细胞操作和阳性克隆获得。</td></tr><tr data-category='Lab Protocols' data-hpc='no'><td>37</td><td><code>@get_transfection_protocol</code><br><small>get_transfection_protocol</small></td><td><strong>化学转染实验方案工具</strong></td><td><span class='tag'>实验方案</span><br><small>Lab Protocols</small></td><td><span class='std'>Biomni</span></td><td>返回化学转染标准 protocol，用于将质粒、RNA 或其他核酸递送到细胞中。</td></tr><tr data-category='Lab Protocols' data-hpc='no'><td>38</td><td><code>@get_lentivirus_production_protocol</code><br><small>get_lentivirus_production_protocol</small></td><td><strong>慢病毒包装实验方案工具</strong></td><td><span class='tag'>实验方案</span><br><small>Lab Protocols</small></td><td><span class='std'>Biomni</span></td><td>返回使用 HEK293T 细胞进行慢病毒生产的标准 protocol，适合稳定表达、shRNA、CRISPR 等实验前置准备。</td></tr><tr data-category='Lab Protocols' data-hpc='no'><td>39</td><td><code>@get_facs_sorting_protocol</code><br><small>get_facs_sorting_protocol</small></td><td><strong>流式细胞分选实验方案工具</strong></td><td><span class='tag'>实验方案</span><br><small>Lab Protocols</small></td><td><span class='std'>Biomni</span></td><td>返回荧光激活细胞分选 FACS 的标准 protocol，适合细胞亚群分选、报告基因筛选和免疫细胞分析。</td></tr><tr data-category='Lab Protocols' data-hpc='no'><td>40</td><td><code>@get_gene_editing_amplicon_pcr_protocol</code><br><small>get_gene_editing_amplicon_pcr_protocol</small></td><td><strong>基因编辑扩增子 PCR 实验方案工具</strong></td><td><span class='tag'>实验方案</span><br><small>Lab Protocols</small></td><td><span class='std'>Biomni</span></td><td>返回用于基因编辑结果下游分析的 amplicon PCR protocol，适合测序验证 indel 或编辑效率。</td></tr><tr data-category='Lab Protocols' data-hpc='no'><td>41</td><td><code>@get_western_blot_protocol</code><br><small>get_western_blot_protocol</small></td><td><strong>Western blot 蛋白检测实验方案工具</strong></td><td><span class='tag'>实验方案</span><br><small>Lab Protocols</small></td><td><span class='std'>Biomni</span></td><td>返回 Western blot 标准实验 protocol，用于蛋白表达、蛋白大小和抗体验证。</td></tr><tr data-category='PCR &amp; Cloning' data-hpc='no'><td>42</td><td><code>@run_pcr_reaction</code><br><small>run_pcr_reaction</small></td><td><strong>PCR 扩增模拟工具</strong></td><td><span class='tag'>PCR 与克隆</span><br><small>PCR &amp; Cloning</small></td><td><span class='std'>Biomni</span></td><td>根据给定引物和序列模拟 PCR 扩增，预测扩增片段，帮助检查引物是否能得到目标产物。</td></tr><tr data-category='PCR &amp; Cloning' data-hpc='no'><td>43</td><td><code>@run_multi_primer_pcr</code><br><small>run_multi_primer_pcr</small></td><td><strong>多引物 PCR 扩增模拟工具</strong></td><td><span class='tag'>PCR 与克隆</span><br><small>PCR &amp; Cloning</small></td><td><span class='std'>Biomni</span></td><td>在多组引物之间考虑所有组合并模拟 PCR 扩增，适合多重 PCR 或批量引物检查。</td></tr><tr data-category='PCR &amp; Cloning' data-hpc='no'><td>44</td><td><code>@find_specific_restriction_sites</code><br><small>find_specific_restriction_sites</small></td><td><strong>指定限制性酶切位点识别工具</strong></td><td><span class='tag'>PCR 与克隆</span><br><small>PCR &amp; Cloning</small></td><td><span class='std'>Biomni</span></td><td>在 DNA 序列中识别指定限制性内切酶位点，用于克隆、酶切验证和载体设计。</td></tr><tr data-category='PCR &amp; Cloning' data-hpc='no'><td>45</td><td><code>@find_all_common_restriction_sites</code><br><small>find_all_common_restriction_sites</small></td><td><strong>常用限制性酶切位点扫描工具</strong></td><td><span class='tag'>PCR 与克隆</span><br><small>PCR &amp; Cloning</small></td><td><span class='std'>Biomni</span></td><td>从常见限制性内切酶列表中扫描 DNA 序列的酶切位点，便于选择克隆策略。</td></tr><tr data-category='PCR &amp; Cloning' data-hpc='no'><td>46</td><td><code>@digest_with_restriction_enzymes</code><br><small>digest_with_restriction_enzymes</small></td><td><strong>限制性内切酶消化模拟工具</strong></td><td><span class='tag'>PCR 与克隆</span><br><small>PCR &amp; Cloning</small></td><td><span class='std'>Biomni</span></td><td>用指定限制性内切酶模拟 DNA 消化并返回片段结果，用于预测酶切图谱和验证构建体。</td></tr><tr data-category='Primer Design' data-hpc='no'><td>47</td><td><code>@align_primers_to_sequence</code><br><small>align_primers_to_sequence</small></td><td><strong>引物与目标序列比对工具</strong></td><td><span class='tag'>引物设计</span><br><small>Primer Design</small></td><td><span class='std'>Biomni</span></td><td>将短序列引物比对到较长 DNA 序列上，用于检查引物位置、方向和潜在非特异性结合。</td></tr><tr data-category='Primer Design' data-hpc='no'><td>48</td><td><code>@design_simple_primer</code><br><small>design_simple_primer</small></td><td><strong>单条引物设计工具</strong></td><td><span class='tag'>引物设计</span><br><small>Primer Design</small></td><td><span class='std'>Biomni</span></td><td>在给定序列窗口内设计一条引物，适合简单测序、克隆或局部扩增准备。</td></tr><tr data-category='Primer Design' data-hpc='no'><td>49</td><td><code>@design_pcr_primers_with_overhangs</code><br><small>design_pcr_primers_with_overhangs</small></td><td><strong>带 overhang 的 PCR 引物设计工具</strong></td><td><span class='tag'>引物设计</span><br><small>Primer Design</small></td><td><span class='std'>Biomni</span></td><td>设计一对用于扩增目标序列的 PCR 引物，并可加入可选 overhang，适合 Gibson、Golden Gate 或其他克隆策略。</td></tr><tr data-category='Primer Design' data-hpc='no'><td>50</td><td><code>@design_sanger_verification_primers</code><br><small>design_sanger_verification_primers</small></td><td><strong>Sanger 验证引物设计工具</strong></td><td><span class='tag'>引物设计</span><br><small>Primer Design</small></td><td><span class='std'>Biomni</span></td><td>为质粒中特定区域设计 Sanger sequencing 验证引物，用于确认插入片段、突变或克隆连接位点。</td></tr><tr data-category='Search' data-hpc='yes'><td>51</td><td><code>@DIAMOND</code><br><small>DIAMOND</small></td><td><strong>超快速蛋白和翻译 DNA 序列比对工具</strong></td><td><span class='tag'>序列搜索</span><br><small>Search</small></td><td><span class='hpc'>HPC</span></td><td>用于蛋白序列和翻译 DNA 的超快速序列比对，适合大规模同源搜索、功能注释和宏基因组蛋白分析。</td></tr><tr data-category='Search' data-hpc='yes'><td>52</td><td><code>@MMseqs2</code><br><small>MMseqs2</small></td><td><strong>快速敏感序列搜索与聚类工具</strong></td><td><span class='tag'>序列搜索</span><br><small>Search</small></td><td><span class='hpc'>HPC</span></td><td>用于大规模序列搜索、聚类和同源关系识别，在蛋白组、宏基因组和数据库构建中非常常用。</td></tr><tr data-category='Sequence Analysis' data-hpc='no'><td>53</td><td><code>@find_open_reading_frames</code><br><small>find_open_reading_frames</small></td><td><strong>开放阅读框识别工具</strong></td><td><span class='tag'>序列分析</span><br><small>Sequence Analysis</small></td><td><span class='std'>Biomni</span></td><td>在 DNA 序列中寻找所有 Open Reading Frames，帮助识别潜在编码序列和翻译产物。</td></tr><tr data-category='Sequence Analysis' data-hpc='no'><td>54</td><td><code>@compare_sequences_for_mutations</code><br><small>compare_sequences_for_mutations</small></td><td><strong>序列突变比较工具</strong></td><td><span class='tag'>序列分析</span><br><small>Sequence Analysis</small></td><td><span class='std'>Biomni</span></td><td>将 query 序列与 reference 序列比较，识别突变、插入、缺失或替换，适合编辑验证和克隆质控。</td></tr><tr data-category='Sequence Analysis' data-hpc='no'><td>55</td><td><code>@fetch_gene_coding_sequence</code><br><small>fetch_gene_coding_sequence</small></td><td><strong>基因编码序列获取工具</strong></td><td><span class='tag'>序列分析</span><br><small>Sequence Analysis</small></td><td><span class='std'>Biomni</span></td><td>从 NCBI Entrez 数据库检索指定基因的编码序列，用于引物设计、克隆、sgRNA 设计或序列分析前置准备。</td></tr><tr data-category='Single Cell' data-hpc='yes'><td>56</td><td><code>@CellBender</code><br><small>CellBender</small></td><td><strong>单细胞环境 RNA 去除工具</strong></td><td><span class='tag'>单细胞</span><br><small>Single Cell</small></td><td><span class='hpc'>HPC</span></td><td>从单细胞数据中去除 ambient RNA 背景污染，提高表达矩阵质量和后续细胞类型分析准确性。</td></tr><tr data-category='Single Cell' data-hpc='yes'><td>57</td><td><code>@Cellpose</code><br><small>Cellpose</small></td><td><strong>深度学习细胞分割工具</strong></td><td><span class='tag'>单细胞</span><br><small>Single Cell</small></td><td><span class='hpc'>HPC</span></td><td>使用深度学习进行细胞图像分割，适合显微图像、空间组学图像和细胞形态定量。</td></tr><tr data-category='Structure Prediction' data-hpc='yes'><td>58</td><td><code>@AlphaFold</code><br><small>AlphaFold</small></td><td><strong>AI 蛋白结构预测工具</strong></td><td><span class='tag'>结构预测与蛋白设计</span><br><small>Structure Prediction</small></td><td><span class='hpc'>HPC</span></td><td>基于 AI 预测蛋白质三维结构，能够提供接近原子级精度的结构模型，是结构生物学和药物发现的重要工具。</td></tr><tr data-category='Structure Prediction' data-hpc='yes'><td>59</td><td><code>@Boltz-2</code><br><small>Boltz-2</small></td><td><strong>新一代蛋白结构预测模型</strong></td><td><span class='tag'>结构预测与蛋白设计</span><br><small>Structure Prediction</small></td><td><span class='hpc'>HPC</span></td><td>用于蛋白结构预测的新一代模型，适合更复杂分子结构预测和结构建模任务。</td></tr><tr data-category='Structure Prediction' data-hpc='yes'><td>60</td><td><code>@BoltzGen</code><br><small>BoltzGen</small></td><td><strong>蛋白结构生成式设计模型</strong></td><td><span class='tag'>结构预测与蛋白设计</span><br><small>Structure Prediction</small></td><td><span class='hpc'>HPC</span></td><td>用于蛋白结构设计的生成式模型，可辅助从目标功能或结构约束出发生成候选蛋白结构。</td></tr><tr data-category='Structure Prediction' data-hpc='yes'><td>61</td><td><code>@Chai-1</code><br><small>Chai-1</small></td><td><strong>多模态分子结构预测基础模型</strong></td><td><span class='tag'>结构预测与蛋白设计</span><br><small>Structure Prediction</small></td><td><span class='hpc'>HPC</span></td><td>用于分子结构预测的多模态基础模型，适合蛋白、复合物或更广义分子结构建模任务。</td></tr><tr data-category='Structure Prediction' data-hpc='yes'><td>62</td><td><code>@ImmuneBuilder</code><br><small>ImmuneBuilder</small></td><td><strong>抗体与 TCR 结构预测工具</strong></td><td><span class='tag'>结构预测与蛋白设计</span><br><small>Structure Prediction</small></td><td><span class='hpc'>HPC</span></td><td>使用深度学习预测抗体和 TCR 结构，适合免疫受体建模、抗体工程和结合位点分析。</td></tr><tr data-category='Structure Prediction' data-hpc='yes'><td>63</td><td><code>@RFAntibody</code><br><small>RFAntibody</small></td><td><strong>RoseTTAFold 抗体结构预测工具</strong></td><td><span class='tag'>结构预测与蛋白设计</span><br><small>Structure Prediction</small></td><td><span class='hpc'>HPC</span></td><td>基于 RoseTTAFold 体系进行抗体结构预测，用于抗体建模、亲和力优化和结构分析前期准备。</td></tr><tr data-category='Structure Prediction' data-hpc='yes'><td>64</td><td><code>@RFDiffusion</code><br><small>RFDiffusion</small></td><td><strong>从头蛋白设计扩散模型</strong></td><td><span class='tag'>结构预测与蛋白设计</span><br><small>Structure Prediction</small></td><td><span class='hpc'>HPC</span></td><td>使用扩散模型进行 de novo protein design，可用于生成新蛋白骨架、结合蛋白或功能蛋白候选结构。</td></tr><tr data-category='Structure Prediction' data-hpc='yes'><td>65</td><td><code>@ProteinMPNN</code><br><small>ProteinMPNN</small></td><td><strong>蛋白序列设计深度学习工具</strong></td><td><span class='tag'>结构预测与蛋白设计</span><br><small>Structure Prediction</small></td><td><span class='hpc'>HPC</span></td><td>基于给定蛋白骨架设计蛋白序列，适合蛋白工程、稳定性优化和功能蛋白设计。</td></tr><tr data-category='Structure Prediction' data-hpc='yes'><td>66</td><td><code>@ThermoMPNN</code><br><small>ThermoMPNN</small></td><td><strong>蛋白稳定性预测与设计工具</strong></td><td><span class='tag'>结构预测与蛋白设计</span><br><small>Structure Prediction</small></td><td><span class='hpc'>HPC</span></td><td>用于预测和设计蛋白稳定性，帮助评估突变对热稳定性或结构稳定性的影响。</td></tr><tr data-category='Structure Prediction' data-hpc='yes'><td>67</td><td><code>@Foldseek</code><br><small>Foldseek</small></td><td><strong>快速蛋白结构搜索工具</strong></td><td><span class='tag'>结构预测与蛋白设计</span><br><small>Structure Prediction</small></td><td><span class='hpc'>HPC</span></td><td>快速、准确地进行蛋白结构搜索，适合结构相似性检索、远缘同源发现和结构功能注释。</td></tr><tr data-category='Transcriptomics' data-hpc='yes'><td>68</td><td><code>@Kallisto</code><br><small>Kallisto</small></td><td><strong>RNA-seq 快速转录本定量工具</strong></td><td><span class='tag'>转录组学</span><br><small>Transcriptomics</small></td><td><span class='hpc'>HPC</span></td><td>使用近似最优的概率方法进行 RNA-seq 转录本定量，速度快，适合大批量表达定量任务。</td></tr><tr data-category='Transcriptomics' data-hpc='yes'><td>69</td><td><code>@Salmon</code><br><small>Salmon</small></td><td><strong>偏差校正型转录本快速定量工具</strong></td><td><span class='tag'>转录组学</span><br><small>Transcriptomics</small></td><td><span class='hpc'>HPC</span></td><td>快速完成转录本表达定量，并考虑测序偏差校正，适合 RNA-seq 表达矩阵构建。</td></tr><tr data-category='Transcriptomics' data-hpc='yes'><td>70</td><td><code>@StringTie</code><br><small>StringTie</small></td><td><strong>转录本组装与表达定量工具</strong></td><td><span class='tag'>转录组学</span><br><small>Transcriptomics</small></td><td><span class='hpc'>HPC</span></td><td>基于比对结果进行转录本组装和表达定量，适合新转录本发现、isoform 分析和表达估计。</td></tr><tr data-category='Transcriptomics' data-hpc='yes'><td>71</td><td><code>@STAR-Fusion</code><br><small>STAR-Fusion</small></td><td><strong>RNA-seq 融合转录本检测工具</strong></td><td><span class='tag'>转录组学</span><br><small>Transcriptomics</small></td><td><span class='hpc'>HPC</span></td><td>从 RNA-seq 数据中检测融合转录本，适合肿瘤转录组分析、融合基因发现和分子诊断研究。</td></tr><tr data-category='Variant Calling' data-hpc='yes'><td>72</td><td><code>@BCFtools</code><br><small>BCFtools</small></td><td><strong>变异检测与 VCF 文件处理工具集</strong></td><td><span class='tag'>变异检测</span><br><small>Variant Calling</small></td><td><span class='hpc'>HPC</span></td><td>用于变异检测、VCF/BCF 文件处理、过滤、合并和统计，是变异分析流程中的基础工具箱。</td></tr><tr data-category='Variant Calling' data-hpc='yes'><td>73</td><td><code>@Clair3</code><br><small>Clair3</small></td><td><strong>长读长深度学习变异检测工具</strong></td><td><span class='tag'>变异检测</span><br><small>Variant Calling</small></td><td><span class='hpc'>HPC</span></td><td>基于深度学习从长读长数据中进行 SNP 和 indel 变异检测，适合 Nanopore 和 PacBio 数据。</td></tr><tr data-category='Variant Calling' data-hpc='yes'><td>74</td><td><code>@FreeBayes</code><br><small>FreeBayes</small></td><td><strong>贝叶斯单倍型遗传变异检测工具</strong></td><td><span class='tag'>变异检测</span><br><small>Variant Calling</small></td><td><span class='hpc'>HPC</span></td><td>基于贝叶斯单倍型模型发现遗传多态性，适合多样本、群体和复杂样本的变异检测。</td></tr><tr data-category='Variant Calling' data-hpc='yes'><td>75</td><td><code>@Longshot</code><br><small>Longshot</small></td><td><strong>长读长二倍体变异检测工具</strong></td><td><span class='tag'>变异检测</span><br><small>Variant Calling</small></td><td><span class='hpc'>HPC</span></td><td>从长读长数据中进行二倍体小变异检测，适合人类基因组或其他二倍体物种分析。</td></tr><tr data-category='Variant Calling' data-hpc='yes'><td>76</td><td><code>@NanoCaller</code><br><small>NanoCaller</small></td><td><strong>Nanopore 深度学习变异检测工具</strong></td><td><span class='tag'>变异检测</span><br><small>Variant Calling</small></td><td><span class='hpc'>HPC</span></td><td>面向 Nanopore 测序数据的深度学习变异检测工具，用于识别 SNP 和 indel。</td></tr><tr data-category='Variant Calling' data-hpc='yes'><td>77</td><td><code>@PEPPER-DeepVariant</code><br><small>PEPPER-DeepVariant</small></td><td><strong>长读长高准确度变异检测流程</strong></td><td><span class='tag'>变异检测</span><br><small>Variant Calling</small></td><td><span class='hpc'>HPC</span></td><td>结合 PEPPER 和 DeepVariant 进行长读长高准确度变异检测，适合高质量 SNP/indel calling。</td></tr><tr data-category='Variant Calling' data-hpc='yes'><td>78</td><td><code>@Sniffles</code><br><small>Sniffles</small></td><td><strong>长读长结构变异检测工具</strong></td><td><span class='tag'>变异检测</span><br><small>Variant Calling</small></td><td><span class='hpc'>HPC</span></td><td>从长读长数据中检测结构变异，包括插入、缺失、倒位、重复和易位等。</td></tr><tr data-category='Variant Calling' data-hpc='yes'><td>79</td><td><code>@Strelka2</code><br><small>Strelka2</small></td><td><strong>快速准确变异检测工具</strong></td><td><span class='tag'>变异检测</span><br><small>Variant Calling</small></td><td><span class='hpc'>HPC</span></td><td>用于快速、准确检测小变异，适合胚系和体细胞变异分析流程。</td></tr></tbody>
+    </table>
+    <h2 class="section-title">生物信息学任务场景地图</h2>
+  <div class="map">
+    <div class="map-item">
+      <h3>一、测序 reads 比对</h3>
+      <p>短读长可用 <code>@bowtie2</code>，RNA-seq 可用 <code>@STAR</code> 或 <code>@HISAT2</code>，长读长可用 <code>@minimap2</code>。这一步相当于把测序碎片“归位到基因组地图”。</p>
+    </div>
+    <div class="map-item">
+      <h3>二、基因组与转录组组装</h3>
+      <p>长读长组装可选 <code>@Canu</code>、<code>@Flye</code>、<code>@hifiasm</code>、<code>@Verkko</code>；微生物和宏基因组可选 <code>@SPAdes</code>、<code>@MEGAHIT</code>、<code>@Unicycler</code>；转录组从头组装可用 <code>@Trinity</code>。</p>
+    </div>
+    <div class="map-item">
+      <h3>三、基因组注释与质量控制</h3>
+      <p>细菌注释可用 <code>@Bakta</code>、<code>@Prokka</code>；组装质量可用 <code>@QUAST</code>；MAG 质量可用 <code>@CheckM2</code>；多样本结果汇总可用 <code>@MultiQC</code>。</p>
+    </div>
+    <div class="map-item">
+      <h3>四、变异检测与结构变异分析</h3>
+      <p>通用 VCF 处理可用 <code>@BCFtools</code>；长读长小变异可用 <code>@Clair3</code>、<code>@Longshot</code>、<code>@PEPPER-DeepVariant</code>；结构变异可用 <code>@Sniffles</code>。</p>
+    </div>
+    <div class="map-item">
+      <h3>五、RNA-seq 表达定量与融合基因</h3>
+      <p>转录本定量可用 <code>@Kallisto</code>、<code>@Salmon</code>；转录本组装与定量可用 <code>@StringTie</code>；肿瘤融合转录本检测可用 <code>@STAR-Fusion</code>。</p>
+    </div>
+    <div class="map-item">
+      <h3>六、结构预测与蛋白设计</h3>
+      <p>结构预测可用 <code>@AlphaFold</code>、<code>@Boltz-2</code>、<code>@Chai-1</code>；抗体/TCR 可用 <code>@ImmuneBuilder</code>、<code>@RFAntibody</code>；从头设计与序列设计可用 <code>@RFDiffusion</code>、<code>@ProteinMPNN</code>。</p>
+    </div>
+    <div class="map-item">
+      <h3>七、分子克隆与实验设计</h3>
+      <p>引物设计可用 <code>@design_pcr_primers_with_overhangs</code>、<code>@design_sanger_verification_primers</code>；克隆可用 Gibson、Golden Gate、Gateway 相关工具；质粒信息可用 Addgene 集成工具。</p>
+    </div>
+    <div class="map-item">
+      <h3>八、实验 protocol 与验证分析</h3>
+      <p>转化、转染、慢病毒包装、FACS、Western blot、基因编辑 amplicon PCR 等可通过对应 protocol 工具生成标准化流程，适合把湿实验步骤变成可复用的操作资产。</p>
+    </div>
+  </div>
+  </div>
+
+  <div class="section" id="sec-databases">
+    <div class="section-header">
+      <h2>Biomni 数据库中文索引</h2>
+      <p class="subtitle">保留原始数据库英文名，并补充中文名、数据库用途与所属领域，方便在聊天中通过 <code>@数据库名</code> 引用。</p>
+      <div class="meta">共整理 <strong>56</strong> 个数据库 ｜ 覆盖肿瘤、疾病、药物、基因组、单细胞、结构生物学、通路、调控、文献和蛋白组等方向</div>
+    </div>
+    <div class="intro"><strong>使用方式：</strong><strong>使用方式：</strong>这份索引可以理解为 Biomni 的“科研数据源地图”。英文名用于系统查询和 <code>@</code> 引用，中文名用于培训和业务理解，数据库用途用于判断在研究流程中的位置。例如，肿瘤项目可以从 <code>@TCGA</code>、<code>@cBioPortal</code>、<code>@DepMap</code> 建立分子证据；靶点发现可以组合 <code>@OpenTargets</code>、<code>@GWAS Catalog</code>、<code>@GTEx</code>、<code>@Human Protein Atlas</code>；药物再定位可以联动 <code>@ChEMBL</code>、<code>@PubChem</code>、<code>@Broad Repurposing Hub</code>、<code>@ClinicalTrials.gov</code>。</div>
+    <div class="cards"><div class='card'><div class='num'>12</div><div class='label'>基因组学</div><div class='en'>Genomics</div></div><div class='card'><div class='num'>6</div><div class='label'>疾病</div><div class='en'>Disease</div></div><div class='card'><div class='num'>6</div><div class='label'>药物</div><div class='en'>Drugs</div></div><div class='card'><div class='num'>4</div><div class='label'>分子互作</div><div class='en'>Interactions</div></div><div class='card'><div class='num'>4</div><div class='label'>其他</div><div class='en'>Other</div></div><div class='card'><div class='num'>4</div><div class='label'>结构生物学</div><div class='en'>Structures</div></div><div class='card'><div class='num'>3</div><div class='label'>肿瘤</div><div class='en'>Cancer</div></div><div class='card'><div class='num'>3</div><div class='label'>通路</div><div class='en'>Pathways</div></div><div class='card'><div class='num'>3</div><div class='label'>调控元件</div><div class='en'>Regulatory</div></div><div class='card'><div class='num'>3</div><div class='label'>单细胞</div><div class='en'>Single Cell</div></div><div class='card'><div class='num'>2</div><div class='label'>机器学习预测</div><div class='en'>ML Predictions</div></div><div class='card'><div class='num'>2</div><div class='label'>分子生物学</div><div class='en'>Molecular Biology</div></div><div class='card'><div class='num'>1</div><div class='label'>免疫学</div><div class='en'>Immunology</div></div><div class='card'><div class='num'>1</div><div class='label'>文献</div><div class='en'>Literature</div></div><div class='card'><div class='num'>1</div><div class='label'>模式生物</div><div class='en'>Model Organisms</div></div><div class='card'><div class='num'>1</div><div class='label'>蛋白质组学</div><div class='en'>Proteomics</div></div></div>
+    <div class="toolbar">
+      <input id="qDatabases" placeholder="搜索数据库：英文名、中文名、领域或用途..." />
+      <select id="catDatabases">
+        <option value="">全部领域</option>
+        <option value="">全部领域</option>
+      <option value="Cancer">肿瘤 / Cancer</option><option value="Disease">疾病 / Disease</option><option value="Drugs">药物 / Drugs</option><option value="Genomics">基因组学 / Genomics</option><option value="Immunology">免疫学 / Immunology</option><option value="Interactions">分子互作 / Interactions</option><option value="Literature">文献 / Literature</option><option value="ML Predictions">机器学习预测 / ML Predictions</option><option value="Model Organisms">模式生物 / Model Organisms</option><option value="Molecular Biology">分子生物学 / Molecular Biology</option><option value="Other">其他 / Other</option><option value="Pathways">通路 / Pathways</option><option value="Proteomics">蛋白质组学 / Proteomics</option><option value="Regulatory">调控元件 / Regulatory</option><option value="Single Cell">单细胞 / Single Cell</option><option value="Structures">结构生物学 / Structures</option>
+      </select>
+    </div>
+    <div class="no-results" id="noDatabases">没有匹配的数据库。</div>
+    <table id="dbTable">
+      <thead>
+        <tr><th>序号</th><th>数据库英文名 / @引用名</th><th>数据库中文名</th><th>领域</th><th>数据库用途</th></tr>
+      </thead>
+      <tbody><tr data-category='Cancer'><td>1</td><td><code>@TCGA</code><br><small>TCGA</small></td><td><strong>癌症基因组图谱</strong></td><td><span class='tag'>肿瘤</span><br><small>Cancer</small></td><td>提供多癌种的大规模基因组、转录组、表观组和临床数据，是肿瘤分子分型、预后模型、突变景观和多组学整合分析的核心数据源。</td></tr><tr data-category='Cancer'><td>2</td><td><code>@cBioPortal</code><br><small>cBioPortal</small></td><td><strong>癌症基因组可视化分析平台</strong></td><td><span class='tag'>肿瘤</span><br><small>Cancer</small></td><td>用于探索和分析癌症基因组数据，支持突变、拷贝数变异、表达、临床结局和患者队列的交互式分析。</td></tr><tr data-category='Cancer'><td>3</td><td><code>@DepMap</code><br><small>DepMap</small></td><td><strong>癌症依赖性图谱</strong></td><td><span class='tag'>肿瘤</span><br><small>Cancer</small></td><td>提供癌细胞系中的基因依赖性、药物敏感性和分子特征数据，用于寻找癌症治疗靶点和合成致死机会。</td></tr><tr data-category='Disease'><td>4</td><td><code>@DISGENET</code><br><small>DISGENET</small></td><td><strong>基因—疾病关联数据库</strong></td><td><span class='tag'>疾病</span><br><small>Disease</small></td><td>汇集基因、变异与疾病之间的关联证据，适合疾病机制研究、候选基因筛选和靶点优先级排序。</td></tr><tr data-category='Disease'><td>5</td><td><code>@GWAS Catalog</code><br><small>GWAS Catalog</small></td><td><strong>全基因组关联研究目录</strong></td><td><span class='tag'>疾病</span><br><small>Disease</small></td><td>收录已发表 GWAS 研究中的性状、位点、SNP 和关联结果，用于遗传风险、因果基因和疾病易感性分析。</td></tr><tr data-category='Disease'><td>6</td><td><code>@OpenTargets</code><br><small>OpenTargets</small></td><td><strong>Open Targets 靶点识别平台</strong></td><td><span class='tag'>疾病</span><br><small>Disease</small></td><td>系统整合遗传、药物、疾病、通路和文献证据，用于药物靶点发现、靶点—疾病关联评估和优先级排序。</td></tr><tr data-category='Disease'><td>7</td><td><code>@Monarch</code><br><small>Monarch</small></td><td><strong>基因—疾病—表型综合知识图谱</strong></td><td><span class='tag'>疾病</span><br><small>Disease</small></td><td>整合基因、疾病、表型和模型生物信息，适合跨物种疾病机制研究和罕见病表型匹配。</td></tr><tr data-category='Disease'><td>8</td><td><code>@HPO</code><br><small>HPO</small></td><td><strong>人类表型本体</strong></td><td><span class='tag'>疾病</span><br><small>Disease</small></td><td>提供标准化的人类异常表型词表，用于疾病表型描述、罕见病诊断、基因筛选和临床表型计算。</td></tr><tr data-category='Disease'><td>9</td><td><code>@ClinPGx</code><br><small>ClinPGx</small></td><td><strong>临床药物基因组学数据库</strong></td><td><span class='tag'>疾病</span><br><small>Disease</small></td><td>提供药物—基因相互作用和药物基因组学证据，支持个体化用药、药物反应预测和临床用药决策。</td></tr><tr data-category='Drugs'><td>10</td><td><code>@ChEMBL</code><br><small>ChEMBL</small></td><td><strong>药物样活性分子数据库</strong></td><td><span class='tag'>药物</span><br><small>Drugs</small></td><td>收录小分子、靶点、生物活性和药理实验数据，用于药物发现、化合物筛选和靶点活性分析。</td></tr><tr data-category='Drugs'><td>11</td><td><code>@PubChem</code><br><small>PubChem</small></td><td><strong>化学分子与生物活性数据库</strong></td><td><span class='tag'>药物</span><br><small>Drugs</small></td><td>提供化学结构、分子性质、生物测定和化合物注释，是化合物检索和药物化学分析的基础数据库。</td></tr><tr data-category='Drugs'><td>12</td><td><code>@Broad Repurposing Hub</code><br><small>Broad Repurposing Hub</small></td><td><strong>Broad 药物再利用资源库</strong></td><td><span class='tag'>药物</span><br><small>Drugs</small></td><td>收录 FDA 批准药物和临床阶段化合物，用于老药新用、药物再定位和候选药物筛选。</td></tr><tr data-category='Drugs'><td>13</td><td><code>@OpenFDA</code><br><small>OpenFDA</small></td><td><strong>FDA 药品与医疗器械开放数据平台</strong></td><td><span class='tag'>药物</span><br><small>Drugs</small></td><td>提供 FDA 药品、器械、不良事件、标签和监管相关数据，用于药物安全性、标签信息和监管数据分析。</td></tr><tr data-category='Drugs'><td>14</td><td><code>@ClinicalTrials.gov</code><br><small>ClinicalTrials.gov</small></td><td><strong>全球临床试验数据库</strong></td><td><span class='tag'>药物</span><br><small>Drugs</small></td><td>收录全球临床研究登记信息，用于疾病领域临床试验格局、药物研发进展、适应症布局和竞品分析。</td></tr><tr data-category='Drugs'><td>15</td><td><code>@DailyMed</code><br><small>DailyMed</small></td><td><strong>FDA 药品标签说明书数据库</strong></td><td><span class='tag'>药物</span><br><small>Drugs</small></td><td>提供 FDA 药品标签、说明书、适应症、剂量、不良反应和警示信息，用于药品信息查询和合规分析。</td></tr><tr data-category='Genomics'><td>16</td><td><code>@Ensembl</code><br><small>Ensembl</small></td><td><strong>Ensembl 脊椎动物基因组浏览器</strong></td><td><span class='tag'>基因组学</span><br><small>Genomics</small></td><td>提供基因组注释、基因结构、同源基因、变异和比较基因组信息，是基因注释和跨物种分析的重要来源。</td></tr><tr data-category='Genomics'><td>17</td><td><code>@NCBI Gene</code><br><small>NCBI Gene</small></td><td><strong>NCBI 基因信息数据库</strong></td><td><span class='tag'>基因组学</span><br><small>Genomics</small></td><td>提供以基因为中心的序列、染色体位置、通路、表型和文献等信息，用于基因基础注释和功能查询。</td></tr><tr data-category='Genomics'><td>18</td><td><code>@NCBI Protein</code><br><small>NCBI Protein</small></td><td><strong>NCBI 蛋白序列数据库</strong></td><td><span class='tag'>基因组学</span><br><small>Genomics</small></td><td>收录来自 GenBank、RefSeq 等来源的蛋白序列，用于蛋白序列检索、同源分析和功能预测。</td></tr><tr data-category='Genomics'><td>19</td><td><code>@NCBI Taxonomy</code><br><small>NCBI Taxonomy</small></td><td><strong>NCBI 物种分类数据库</strong></td><td><span class='tag'>基因组学</span><br><small>Genomics</small></td><td>提供生物物种分类和命名体系，用于样本物种识别、序列注释和跨物种数据整理。</td></tr><tr data-category='Genomics'><td>20</td><td><code>@GEO</code><br><small>GEO</small></td><td><strong>基因表达综合数据库</strong></td><td><span class='tag'>基因组学</span><br><small>Genomics</small></td><td>提供功能基因组学数据，包括表达谱、芯片、测序和扰动实验数据，是公共转录组和单细胞数据挖掘的重要入口。</td></tr><tr data-category='Genomics'><td>21</td><td><code>@dbSNP</code><br><small>dbSNP</small></td><td><strong>单核苷酸多态性数据库</strong></td><td><span class='tag'>基因组学</span><br><small>Genomics</small></td><td>收录 SNP 和其他遗传变异信息，用于变异注释、遗传研究和人群多态性分析。</td></tr><tr data-category='Genomics'><td>22</td><td><code>@ClinVar</code><br><small>ClinVar</small></td><td><strong>临床变异解释数据库</strong></td><td><span class='tag'>基因组学</span><br><small>Genomics</small></td><td>归档人类遗传变异与表型、疾病之间的临床解释关系，用于变异致病性评估和临床遗传解读。</td></tr><tr data-category='Genomics'><td>23</td><td><code>@SRA</code><br><small>SRA</small></td><td><strong>测序原始数据存档库</strong></td><td><span class='tag'>基因组学</span><br><small>Genomics</small></td><td>保存高通量测序原始数据，适合重新分析 RNA-seq、WGS、WES、单细胞和宏基因组等测序项目。</td></tr><tr data-category='Genomics'><td>24</td><td><code>@gnomAD</code><br><small>gnomAD</small></td><td><strong>基因组聚合数据库</strong></td><td><span class='tag'>基因组学</span><br><small>Genomics</small></td><td>提供大规模外显子组和全基因组人群变异频率数据，用于罕见变异过滤和致病性证据判断。</td></tr><tr data-category='Genomics'><td>25</td><td><code>@UCSC Genome Browser</code><br><small>UCSC Genome Browser</small></td><td><strong>UCSC 基因组浏览器</strong></td><td><span class='tag'>基因组学</span><br><small>Genomics</small></td><td>提供参考基因组组装、注释轨道和可视化浏览能力，用于基因组区域、调控元件和多组学信号查看。</td></tr><tr data-category='Genomics'><td>26</td><td><code>@GTEx</code><br><small>GTEx</small></td><td><strong>基因型—组织表达数据库</strong></td><td><span class='tag'>基因组学</span><br><small>Genomics</small></td><td>提供人类多组织基因表达和 eQTL 信息，用于组织特异性表达、调控变异和疾病靶点组织定位分析。</td></tr><tr data-category='Genomics'><td>27</td><td><code>@GeneBass</code><br><small>GeneBass</small></td><td><strong>UK Biobank 外显子关联统计数据库</strong></td><td><span class='tag'>基因组学</span><br><small>Genomics</small></td><td>提供基于 UK Biobank 外显子测序的基因—表型关联统计，用于遗传证据、靶点验证和人群遗传学分析。</td></tr><tr data-category='Immunology'><td>28</td><td><code>@McPAS-TCR</code><br><small>McPAS-TCR</small></td><td><strong>病理相关 TCR 序列数据库</strong></td><td><span class='tag'>免疫学</span><br><small>Immunology</small></td><td>收录与感染、肿瘤、自身免疫等病理状态相关的 T 细胞受体序列，用于免疫识别、TCR 特异性和免疫组库分析。</td></tr><tr data-category='Interactions'><td>29</td><td><code>@STRING</code><br><small>STRING</small></td><td><strong>蛋白互作与功能关联网络数据库</strong></td><td><span class='tag'>分子互作</span><br><small>Interactions</small></td><td>提供蛋白—蛋白互作和功能关联网络，并支持功能富集分析，用于机制解释和候选基因网络分析。</td></tr><tr data-category='Interactions'><td>30</td><td><code>@BioGRID</code><br><small>BioGRID</small></td><td><strong>生物互作数据综合库</strong></td><td><span class='tag'>分子互作</span><br><small>Interactions</small></td><td>收录蛋白、基因和遗传互作数据，适合构建分子互作网络、机制链路和功能模块。</td></tr><tr data-category='Interactions'><td>31</td><td><code>@Human Protein Atlas</code><br><small>Human Protein Atlas</small></td><td><strong>人类蛋白图谱</strong></td><td><span class='tag'>分子互作</span><br><small>Interactions</small></td><td>提供人类蛋白在组织、细胞和亚细胞水平的表达与定位信息，用于靶点表达、安全性和组织特异性分析。</td></tr><tr data-category='Interactions'><td>32</td><td><code>@PrimeKG</code><br><small>PrimeKG</small></td><td><strong>精准医学知识图谱</strong></td><td><span class='tag'>分子互作</span><br><small>Interactions</small></td><td>整合疾病、药物、基因、通路和表型关系，用于药物再利用、疾病机制和精准医学知识推理。</td></tr><tr data-category='Literature'><td>33</td><td><code>@PubMed</code><br><small>PubMed</small></td><td><strong>生物医学文献数据库</strong></td><td><span class='tag'>文献</span><br><small>Literature</small></td><td>收录 3500 万篇以上生物医学文献引用，用于论文检索、证据追踪、研究综述和文献知识抽取。</td></tr><tr data-category='ML Predictions'><td>34</td><td><code>@TxGNN</code><br><small>TxGNN</small></td><td><strong>基于图神经网络的治疗靶点预测资源</strong></td><td><span class='tag'>机器学习预测</span><br><small>ML Predictions</small></td><td>利用图神经网络进行治疗靶点和疾病相关预测，适合药物发现和知识图谱推理场景。</td></tr><tr data-category='ML Predictions'><td>35</td><td><code>@P-HIPSTer</code><br><small>P-HIPSTer</small></td><td><strong>宿主—病原体蛋白互作预测库</strong></td><td><span class='tag'>机器学习预测</span><br><small>ML Predictions</small></td><td>提供预测的宿主—病原体蛋白互作关系，用于感染机制、病原体致病性和抗感染靶点研究。</td></tr><tr data-category='Model Organisms'><td>36</td><td><code>@MouseMine</code><br><small>MouseMine</small></td><td><strong>小鼠基因组整合数据库</strong></td><td><span class='tag'>模式生物</span><br><small>Model Organisms</small></td><td>整合 MGI 小鼠基因组、表型、等位基因和模型信息，用于疾病模型、基因功能和跨物种验证。</td></tr><tr data-category='Molecular Biology'><td>37</td><td><code>@Addgene</code><br><small>Addgene</small></td><td><strong>质粒与 CRISPR 试剂资源库</strong></td><td><span class='tag'>分子生物学</span><br><small>Molecular Biology</small></td><td>全球非营利质粒库，提供 CRISPR、表达载体和实验试剂信息，用于分子克隆和功能验证实验设计。</td></tr><tr data-category='Molecular Biology'><td>38</td><td><code>@LINCS L1000</code><br><small>LINCS L1000</small></td><td><strong>LINCS L1000 细胞扰动表达谱数据库</strong></td><td><span class='tag'>分子生物学</span><br><small>Molecular Biology</small></td><td>提供药物、基因扰动后的基因表达签名数据，用于药物机制、扰动响应和老药新用分析。</td></tr><tr data-category='Pathways'><td>39</td><td><code>@Reactome</code><br><small>Reactome</small></td><td><strong>Reactome 生物通路知识库</strong></td><td><span class='tag'>通路</span><br><small>Pathways</small></td><td>提供人工整理的生物通路和反应知识，用于通路富集、机制解释和信号网络分析。</td></tr><tr data-category='Pathways'><td>40</td><td><code>@Gene Ontology</code><br><small>Gene Ontology</small></td><td><strong>基因本体数据库</strong></td><td><span class='tag'>通路</span><br><small>Pathways</small></td><td>用标准化词表描述基因产物的分子功能、细胞组分和生物过程，是功能注释和富集分析的基础资源。</td></tr><tr data-category='Pathways'><td>41</td><td><code>@MSigDB</code><br><small>MSigDB</small></td><td><strong>分子特征基因集数据库</strong></td><td><span class='tag'>通路</span><br><small>Pathways</small></td><td>提供用于 GSEA 的通路、转录因子靶基因、免疫签名和疾病相关基因集，适合功能富集和表达签名解释。</td></tr><tr data-category='Proteomics'><td>42</td><td><code>@PRIDE</code><br><small>PRIDE</small></td><td><strong>蛋白质组鉴定数据存储库</strong></td><td><span class='tag'>蛋白质组学</span><br><small>Proteomics</small></td><td>收录质谱蛋白组实验数据，用于蛋白组公共数据检索、复分析和蛋白表达证据挖掘。</td></tr><tr data-category='Regulatory'><td>43</td><td><code>@ENCODE SCREEN</code><br><small>ENCODE SCREEN</small></td><td><strong>ENCODE 候选顺式调控元件注册库</strong></td><td><span class='tag'>调控元件</span><br><small>Regulatory</small></td><td>提供候选顺式调控元件集合，用于增强子、启动子、开放染色质和调控区域注释。</td></tr><tr data-category='Regulatory'><td>44</td><td><code>@JASPAR</code><br><small>JASPAR</small></td><td><strong>转录因子结合模型数据库</strong></td><td><span class='tag'>调控元件</span><br><small>Regulatory</small></td><td>提供转录因子 DNA 结合位点矩阵和 motif 信息，用于转录调控分析、motif 富集和调控元件解释。</td></tr><tr data-category='Regulatory'><td>45</td><td><code>@ENCODE</code><br><small>ENCODE</small></td><td><strong>DNA 功能元件百科全书</strong></td><td><span class='tag'>调控元件</span><br><small>Regulatory</small></td><td>提供人类和模型生物的功能基因组学数据，包括转录因子结合、染色质状态、开放区域和表观标记。</td></tr><tr data-category='Single Cell'><td>46</td><td><code>@CZI Cell Census</code><br><small>CZI Cell Census</small></td><td><strong>CZI 单细胞参考数据集</strong></td><td><span class='tag'>单细胞</span><br><small>Single Cell</small></td><td>提供大规模参考单细胞数据集合，用于细胞类型注释、参考映射和跨数据集对照分析。</td></tr><tr data-category='Single Cell'><td>47</td><td><code>@Human Cell Atlas</code><br><small>Human Cell Atlas</small></td><td><strong>人类细胞图谱</strong></td><td><span class='tag'>单细胞</span><br><small>Single Cell</small></td><td>构建人类细胞参考图谱，提供组织、细胞类型和发育状态信息，用于单细胞研究和细胞身份识别。</td></tr><tr data-category='Single Cell'><td>48</td><td><code>@CellMarker 2.0</code><br><small>CellMarker 2.0</small></td><td><strong>细胞标志物数据库</strong></td><td><span class='tag'>单细胞</span><br><small>Single Cell</small></td><td>收录细胞类型 marker 基因，用于单细胞聚类后的细胞类型注释和组织细胞组成解释。</td></tr><tr data-category='Structures'><td>49</td><td><code>@PDB</code><br><small>PDB</small></td><td><strong>蛋白质结构数据库</strong></td><td><span class='tag'>结构生物学</span><br><small>Structures</small></td><td>保存生物大分子三维实验结构，包括蛋白、核酸和复合物结构，用于结构生物学、药物设计和机制分析。</td></tr><tr data-category='Structures'><td>50</td><td><code>@AlphaFold DB</code><br><small>AlphaFold DB</small></td><td><strong>AlphaFold 蛋白结构预测数据库</strong></td><td><span class='tag'>结构生物学</span><br><small>Structures</small></td><td>提供 AlphaFold 预测的蛋白三维结构，用于缺乏实验结构时的结构推断、功能分析和药物设计前期评估。</td></tr><tr data-category='Structures'><td>51</td><td><code>@UniProt</code><br><small>UniProt</small></td><td><strong>通用蛋白资源库</strong></td><td><span class='tag'>结构生物学</span><br><small>Structures</small></td><td>提供蛋白序列、功能、结构域、翻译后修饰、定位和疾病注释，是蛋白功能解释的核心数据库。</td></tr><tr data-category='Structures'><td>52</td><td><code>@InterPro</code><br><small>InterPro</small></td><td><strong>蛋白家族、结构域与功能位点数据库</strong></td><td><span class='tag'>结构生物学</span><br><small>Structures</small></td><td>整合蛋白家族、结构域、motif 和功能位点信息，用于蛋白功能预测、结构域注释和进化分析。</td></tr><tr data-category='Other'><td>53</td><td><code>@RummaGEO</code><br><small>RummaGEO</small></td><td><strong>GEO 基因表达签名搜索引擎</strong></td><td><span class='tag'>其他</span><br><small>Other</small></td><td>用于搜索 GEO 中的基因表达签名，适合快速寻找与疾病、药物或扰动相关的表达数据集。</td></tr><tr data-category='Other'><td>54</td><td><code>@QuickGO</code><br><small>QuickGO</small></td><td><strong>EMBL-EBI Gene Ontology 浏览器</strong></td><td><span class='tag'>其他</span><br><small>Other</small></td><td>提供 GO 术语、注释和浏览能力，用于基因功能解释、GO 查询和注释追踪。</td></tr><tr data-category='Other'><td>55</td><td><code>@UniChem</code><br><small>UniChem</small></td><td><strong>化学结构跨数据库映射工具</strong></td><td><span class='tag'>其他</span><br><small>Other</small></td><td>在多个化学数据库之间进行化学结构和化合物 ID 交叉引用，支持化合物数据整合和去重。</td></tr><tr data-category='Other'><td>56</td><td><code>@EMDB</code><br><small>EMDB</small></td><td><strong>电子显微镜三维密度图数据库</strong></td><td><span class='tag'>其他</span><br><small>Other</small></td><td>保存三维电子显微镜密度图，用于冷冻电镜结构研究、复合物解析和结构验证。</td></tr></tbody>
+    </table>
+    <h2 class="section-title">科研任务场景地图</h2>
+  <div class="map">
+    <div class="map-item">
+      <h3>一、肿瘤靶点与分子分型</h3>
+      <p>优先使用 <code>@TCGA</code>、<code>@cBioPortal</code>、<code>@DepMap</code>。前者像“肿瘤分子档案馆”，后两者更适合做癌症基因组浏览、依赖性分析和治疗机会发现。</p>
+    </div>
+    <div class="map-item">
+      <h3>二、疾病机制与遗传证据</h3>
+      <p>可组合 <code>@DISGENET</code>、<code>@GWAS Catalog</code>、<code>@OpenTargets</code>、<code>@Monarch</code>、<code>@HPO</code>。适合从疾病、表型、变异和基因证据出发，建立候选靶点证据链。</p>
+    </div>
+    <div class="map-item">
+      <h3>三、药物发现与老药新用</h3>
+      <p>可使用 <code>@ChEMBL</code>、<code>@PubChem</code>、<code>@Broad Repurposing Hub</code>、<code>@OpenFDA</code>、<code>@DailyMed</code> 与 <code>@ClinicalTrials.gov</code>，覆盖化合物、生物活性、临床进展和安全标签。</p>
+    </div>
+    <div class="map-item">
+      <h3>四、基因组注释与公共测序数据</h3>
+      <p>基础注释可用 <code>@Ensembl</code>、<code>@NCBI Gene</code>、<code>@NCBI Protein</code>；公共数据可查 <code>@GEO</code>、<code>@SRA</code>；变异解释可用 <code>@dbSNP</code>、<code>@ClinVar</code>、<code>@gnomAD</code>。</p>
+    </div>
+    <div class="map-item">
+      <h3>五、通路、互作与机制解释</h3>
+      <p>可联动 <code>@STRING</code>、<code>@BioGRID</code>、<code>@Reactome</code>、<code>@Gene Ontology</code>、<code>@MSigDB</code>。这些数据库像“分子关系交通图”，帮助把基因列表解释成通路和网络。</p>
+    </div>
+    <div class="map-item">
+      <h3>六、单细胞与细胞身份注释</h3>
+      <p>可使用 <code>@CZI Cell Census</code>、<code>@Human Cell Atlas</code>、<code>@CellMarker 2.0</code>。适合单细胞参考映射、细胞类型识别和组织细胞组成解释。</p>
+    </div>
+    <div class="map-item">
+      <h3>七、蛋白结构与功能域分析</h3>
+      <p>结构研究可用 <code>@PDB</code>、<code>@AlphaFold DB</code>、<code>@UniProt</code>、<code>@InterPro</code>、<code>@EMDB</code>，覆盖实验结构、预测结构、蛋白功能和结构域信息。</p>
+    </div>
+    <div class="map-item">
+      <h3>八、调控元件与转录调控</h3>
+      <p>可使用 <code>@ENCODE</code>、<code>@ENCODE SCREEN</code>、<code>@JASPAR</code>。适合增强子、启动子、转录因子 motif、染色质开放和候选调控元件分析。</p>
+    </div>
+  </div>
+  </div>
+
+  <div class="section" id="sec-skills">
+    <div class="section-header">
+      <h2>社区 Biomni Skills 中文索引</h2>
+      <p class="subtitle">保留原始 Skill 英文名，并补充中文名、所属领域与典型用途，便于培训、选型和任务分发。</p>
+      <div class="meta">共整理 <strong>39</strong> 个社区 skills ｜ 适用于生物信息学、药物发现、转录组、单细胞、多组学、实验设计等场景</div>
+    </div>
+    <div class="intro"><strong>使用方式：</strong><strong>使用方式：</strong>可以把这份索引理解为“生物科研 AI Agent 的工具货架”。英文名是系统调用或社区检索时的原始名称，中文名帮助业务和科研人员快速理解， “用途”用于判断它适合放在哪类分析流程中。例如，立项早期先用 <code>omics-dataset-retrieval</code> 找数据源，再用 <code>scrnaseq-seurat-core-analysis</code> 或 <code>bulk-rnaseq-differential-expression-multi-method</code> 做基础分析，最后用 <code>functional-enrichment-from-degs</code>、<code>Open Targets Platform (GraphQL API)</code> 等进入机制解释与靶点优先级排序。</div>
+    <div class="cards"><div class='card'><div class='num'>10</div><div class='label'>转录组学</div><div class='en'>Transcriptomics</div></div><div class='card'><div class='num'>8</div><div class='label'>通用工具</div><div class='en'>General</div></div><div class='card'><div class='num'>6</div><div class='label'>多组学</div><div class='en'>Multi-omics</div></div><div class='card'><div class='num'>4</div><div class='label'>基因组与遗传学</div><div class='en'>Genomics &amp; Genetics</div></div><div class='card'><div class='num'>3</div><div class='label'>表观基因组学</div><div class='en'>Epigenomics</div></div><div class='card'><div class='num'>2</div><div class='label'>实验设计</div><div class='en'>Experimental Design</div></div><div class='card'><div class='num'>2</div><div class='label'>文献与临床试验</div><div class='en'>Literature</div></div><div class='card'><div class='num'>1</div><div class='label'>药物发现</div><div class='en'>Drug Discovery</div></div><div class='card'><div class='num'>1</div><div class='label'>功能分析</div><div class='en'>Functional Analysis</div></div><div class='card'><div class='num'>1</div><div class='label'>分子设计</div><div class='en'>Molecular Design</div></div><div class='card'><div class='num'>1</div><div class='label'>蛋白组与代谢组</div><div class='en'>Proteomics &amp; Metabolomics</div></div></div>
+    <div class="toolbar">
+      <input id="qSkills" placeholder="搜索 Skills：英文名、中文名、领域或用途..." />
+      <select id="catSkills">
+        <option value="">全部领域</option>
+        <option value="">全部领域</option>
+      <option value="Drug Discovery">药物发现 / Drug Discovery</option><option value="Epigenomics">表观基因组学 / Epigenomics</option><option value="Experimental Design">实验设计 / Experimental Design</option><option value="Functional Analysis">功能分析 / Functional Analysis</option><option value="General">通用工具 / General</option><option value="Genomics &amp; Genetics">基因组与遗传学 / Genomics &amp; Genetics</option><option value="Literature">文献与临床试验 / Literature</option><option value="Molecular Design">分子设计 / Molecular Design</option><option value="Multi-omics">多组学 / Multi-omics</option><option value="Proteomics &amp; Metabolomics">蛋白组与代谢组 / Proteomics &amp; Metabolomics</option><option value="Transcriptomics">转录组学 / Transcriptomics</option>
+      </select>
+    </div>
+    <div class="no-results" id="noSkills">没有匹配的 Skills。</div>
+    <table id="skillTable">
+      <thead>
+        <tr><th>序号</th><th>Skill 英文名</th><th>Skill 中文名</th><th>领域</th><th>用途说明</th></tr>
+      </thead>
+      <tbody><tr data-category='Multi-omics'><td>1</td><td><code>bulk-omics-clustering</code></td><td><strong>批量组学聚类分析</strong></td><td><span class='tag'>多组学</span><br><small>Multi-omics</small></td><td>对 bulk 转录组、蛋白组或代谢组数据中的样本或特征进行聚类，用于发现样本分型、分子亚型、异常样本和特征群组。</td></tr><tr data-category='Transcriptomics'><td>2</td><td><code>bulk-rnaseq-counts-to-de-deseq2</code></td><td><strong>RNA-seq 原始计数差异表达分析（DESeq2）</strong></td><td><span class='tag'>转录组学</span><br><small>Transcriptomics</small></td><td>基于 RNA-seq 原始 count 矩阵，使用 DESeq2 完成差异表达基因分析，适合处理处理组/对照组、疾病/健康、KO/WT 等比较。</td></tr><tr data-category='Transcriptomics'><td>3</td><td><code>cell-cell-communication</code></td><td><strong>单细胞细胞间通讯分析</strong></td><td><span class='tag'>转录组学</span><br><small>Transcriptomics</small></td><td>使用 CellChat v2 的配体—受体互作分析，推断并可视化 scRNA-seq 数据中的细胞间通讯网络。</td></tr><tr data-category='Epigenomics'><td>4</td><td><code>chip-atlas-diff-analysis</code></td><td><strong>ChIP-Atlas 差异峰/差异甲基化分析</strong></td><td><span class='tag'>表观基因组学</span><br><small>Epigenomics</small></td><td>通过 ChIP-Atlas API 比较两组 ChIP-seq、ATAC-seq、DNase-seq 或 Bisulfite-seq 实验，识别差异峰区域 DPR 或差异甲基化区域 DMR。</td></tr><tr data-category='Epigenomics'><td>5</td><td><code>chip-atlas-peak-enrichment</code></td><td><strong>ChIP-Atlas 峰富集分析</strong></td><td><span class='tag'>表观基因组学</span><br><small>Epigenomics</small></td><td>基于 ChIP-Atlas 中 43 万多个公共实验，分析输入峰区域在转录因子结合、表观调控或染色质开放区域中的富集情况。</td></tr><tr data-category='Epigenomics'><td>6</td><td><code>chip-atlas-target-genes</code></td><td><strong>ChIP-Atlas 转录因子靶基因查询</strong></td><td><span class='tag'>表观基因组学</span><br><small>Epigenomics</small></td><td>从 ChIP-Atlas 公共 ChIP-seq 数据中检索任意转录因子的预计算靶基因，用于调控网络和候选靶点分析。</td></tr><tr data-category='Literature'><td>7</td><td><code>clinicaltrials-landscape</code></td><td><strong>ClinicalTrials.gov 临床试验格局分析</strong></td><td><span class='tag'>文献与临床试验</span><br><small>Literature</small></td><td>查询 ClinicalTrials.gov API v2，按疾病领域、作用机制、研究阶段和申办方绘制临床试验全景图。</td></tr><tr data-category='Transcriptomics'><td>8</td><td><code>coexpression-network</code></td><td><strong>基因共表达网络分析</strong></td><td><span class='tag'>转录组学</span><br><small>Transcriptomics</small></td><td>从 RNA-seq 数据构建基因共表达网络，识别共表达模块、核心 hub 基因和潜在调控结构。</td></tr><tr data-category='Multi-omics'><td>9</td><td><code>disease-progression-longitudinal</code></td><td><strong>纵向组学疾病进展轨迹重建</strong></td><td><span class='tag'>多组学</span><br><small>Multi-omics</small></td><td>基于纵向患者组学数据重建疾病进展轨迹，用于理解疾病演化、分期转换和治疗反应路径。</td></tr><tr data-category='Experimental Design'><td>10</td><td><code>experimental-design-statistics</code></td><td><strong>基因组实验设计与统计功效分析</strong></td><td><span class='tag'>实验设计</span><br><small>Experimental Design</small></td><td>面向组学实验进行功效分析、样本量估计、批次设计和多重检验校正，帮助在实验前降低统计风险。</td></tr><tr data-category='Functional Analysis'><td>11</td><td><code>functional-enrichment-from-degs</code></td><td><strong>差异基因功能富集分析</strong></td><td><span class='tag'>功能分析</span><br><small>Functional Analysis</small></td><td>使用 clusterProfiler 对差异表达结果进行 GSEA 和 ORA 富集分析，解释通路、GO、KEGG 等功能机制。</td></tr><tr data-category='Genomics &amp; Genetics'><td>12</td><td><code>genetic-variant-annotation</code></td><td><strong>遗传变异功能注释</strong></td><td><span class='tag'>基因组与遗传学</span><br><small>Genomics &amp; Genetics</small></td><td>对 VCF 文件中的基因组变异进行功能影响、临床意义和致病性预测注释，适合突变解读和候选变异筛选。</td></tr><tr data-category='Transcriptomics'><td>13</td><td><code>grn-pyscenic</code></td><td><strong>单细胞转录因子调控网络推断（pySCENIC）</strong></td><td><span class='tag'>转录组学</span><br><small>Transcriptomics</small></td><td>从 scRNA-seq 数据推断转录因子调控网络，并计算细胞层面的 TF 活性，用于识别关键调控因子。</td></tr><tr data-category='Genomics &amp; Genetics'><td>14</td><td><code>gwas-to-function-twas</code></td><td><strong>GWAS 到功能基因解析（TWAS）</strong></td><td><span class='tag'>基因组与遗传学</span><br><small>Genomics &amp; Genetics</small></td><td>使用转录组关联分析从 GWAS 结果中识别可能的因果基因和治疗靶点，连接遗传信号与功能机制。</td></tr><tr data-category='Multi-omics'><td>15</td><td><code>lasso-biomarker-panel</code></td><td><strong>LASSO 最小生物标志物组合筛选</strong></td><td><span class='tag'>多组学</span><br><small>Multi-omics</small></td><td>通过 LASSO 正则化、嵌套交叉验证、稳定性选择和独立队列验证，筛选最小化、可验证的生物标志物组合。</td></tr><tr data-category='Literature'><td>16</td><td><code>literature-preclinical</code></td><td><strong>靶点—疾病临床前文献结构化检索</strong></td><td><span class='tag'>文献与临床试验</span><br><small>Literature</small></td><td>检索某靶点在某疾病中的临床前研究，并从论文中提取体外实验、体内实验和关键实验设计信息。</td></tr><tr data-category='Genomics &amp; Genetics'><td>17</td><td><code>mendelian-randomization-twosamplemr</code></td><td><strong>两样本孟德尔随机化分析</strong></td><td><span class='tag'>基因组与遗传学</span><br><small>Genomics &amp; Genetics</small></td><td>使用 GWAS 汇总统计和遗传工具变量评估性状之间的潜在因果关系，适合流行病学和靶点因果验证。</td></tr><tr data-category='Multi-omics'><td>18</td><td><code>multi-omics-integration</code></td><td><strong>多组学整合分析（MOFA+）</strong></td><td><span class='tag'>多组学</span><br><small>Multi-omics</small></td><td>整合两种及以上组学层，使用 MOFA+ 识别解释跨组学变化的潜在因子，并进行方差分解和因子解释。</td></tr><tr data-category='General'><td>19</td><td><code>omics-dataset-retrieval</code></td><td><strong>公共组学数据集检索与相关性审计</strong></td><td><span class='tag'>通用工具</span><br><small>General</small></td><td>围绕疾病、表型、基因或生物过程，从公共数据库检索、编目并审核可用组学数据集；适合数据盘点和研究立项前的数据源调研。</td></tr><tr data-category='Drug Discovery'><td>20</td><td><code>Open Targets Platform (GraphQL API)</code></td><td><strong>Open Targets 靶点—疾病关联查询</strong></td><td><span class='tag'>药物发现</span><br><small>Drug Discovery</small></td><td>通过 Open Targets Platform GraphQL API 查询靶点—疾病关联、证据类型和注释信息，支持药物靶点识别与优先级排序。</td></tr><tr data-category='Molecular Design'><td>21</td><td><code>pcr-primer-design</code></td><td><strong>PCR/qPCR/TaqMan/测序引物设计</strong></td><td><span class='tag'>分子设计</span><br><small>Molecular Design</small></td><td>设计并验证 PCR、qPCR、TaqMan 和测序相关引物，辅助分子实验设计。</td></tr><tr data-category='General'><td>22</td><td><code>phylo-create-skill</code></td><td><strong>Biomni/Phylo 可复用 Skill 创建</strong></td><td><span class='tag'>通用工具</span><br><small>General</small></td><td>为 Phylo 的 Biomni 平台和生物信息流程创建、测试、打包和展示可复用 skills。</td></tr><tr data-category='Genomics &amp; Genetics'><td>23</td><td><code>polygenic-risk-score-prs-catalog</code></td><td><strong>多基因风险评分计算（PGS Catalog）</strong></td><td><span class='tag'>基因组与遗传学</span><br><small>Genomics &amp; Genetics</small></td><td>使用 PGS Catalog 中的预计算权重，为单个或多个性状计算多基因风险评分，并进行人群比较。</td></tr><tr data-category='Transcriptomics'><td>24</td><td><code>pooled-crispr-screens</code></td><td><strong>单细胞读出的 pooled CRISPR 筛选分析</strong></td><td><span class='tag'>转录组学</span><br><small>Transcriptomics</small></td><td>分析带有 scRNA-seq readout 的 pooled CRISPR 筛选数据，例如 Perturb-seq 或 CROP-seq。</td></tr><tr data-category='Proteomics &amp; Metabolomics'><td>25</td><td><code>proteomics-diff-exp</code></td><td><strong>质谱蛋白组差异表达分析</strong></td><td><span class='tag'>蛋白组与代谢组</span><br><small>Proteomics &amp; Metabolomics</small></td><td>基于质谱蛋白组数据使用 limma 和 DEqMS 进行差异蛋白表达分析，并利用 PSM 信息改进方差估计。</td></tr><tr data-category='Transcriptomics'><td>26</td><td><code>scrna-disease-drug-discovery</code></td><td><strong>疾病单细胞组学与药物靶点发现</strong></td><td><span class='tag'>转录组学</span><br><small>Transcriptomics</small></td><td>面向疾病研究的端到端 scRNA-seq 分析，结合遗传证据进行多组学药物靶点优先级排序。</td></tr><tr data-category='Transcriptomics'><td>27</td><td><code>scrna-trajectory-inference</code></td><td><strong>单细胞轨迹推断与 RNA velocity 分析</strong></td><td><span class='tag'>转录组学</span><br><small>Transcriptomics</small></td><td>从 scRNA-seq 数据推断分化轨迹、伪时间顺序、RNA velocity 和细胞命运概率。</td></tr><tr data-category='Transcriptomics'><td>28</td><td><code>scrnaseq-scanpy-core-analysis</code></td><td><strong>Scanpy 单细胞 RNA-seq 核心分析流程</strong></td><td><span class='tag'>转录组学</span><br><small>Transcriptomics</small></td><td>使用 Scanpy 完成从原始数据到细胞类型注释的 scRNA-seq 全流程分析，包括质控、聚类、降维和可视化。</td></tr><tr data-category='Transcriptomics'><td>29</td><td><code>scrnaseq-seurat-core-analysis</code></td><td><strong>Seurat 单细胞 RNA-seq 核心分析流程</strong></td><td><span class='tag'>转录组学</span><br><small>Transcriptomics</small></td><td>使用 Seurat 完成从原始数据到细胞类型注释的 scRNA-seq 全流程分析，包括质控、聚类、降维和可视化。</td></tr><tr data-category='Transcriptomics'><td>30</td><td><code>spatial-transcriptomics</code></td><td><strong>10x Visium 空间转录组分析</strong></td><td><span class='tag'>转录组学</span><br><small>Transcriptomics</small></td><td>分析 10x Visium 空间转录组数据，从质控到空间域识别、空间可变基因和邻域富集分析。</td></tr><tr data-category='Multi-omics'><td>31</td><td><code>survival-analysis-clinical</code></td><td><strong>临床生存分析与风险分层</strong></td><td><span class='tag'>多组学</span><br><small>Multi-omics</small></td><td>基于临床 time-to-event 数据进行 Kaplan-Meier、Cox 比例风险回归和风险分层分析。</td></tr><tr data-category='Multi-omics'><td>32</td><td><code>upstream-regulator-analysis</code></td><td><strong>上游调控因子综合分析</strong></td><td><span class='tag'>多组学</span><br><small>Multi-omics</small></td><td>整合 ChIP-Atlas 转录因子结合数据与 RNA-seq 差异表达结果，识别驱动转录组变化的上游调控因子。</td></tr><tr data-category='General'><td>33</td><td><code>bulk-rnaseq-differential-expression-multi-method</code></td><td><strong>bulk RNA-seq 多方法差异表达分析</strong></td><td><span class='tag'>通用工具</span><br><small>General</small></td><td>面向 bulk RNA-seq count 矩阵自动评估 DESeq2、edgeR 和 limma-voom 的适用性，并在用户确认后生成标准化差异表达结果、QC 图和显著基因列表。</td></tr><tr data-category='General'><td>34</td><td><code>celegans-rnai</code></td><td><strong>秀丽隐杆线虫 L4440 饲喂 RNAi 设计与评估</strong></td><td><span class='tag'>通用工具</span><br><small>General</small></td><td>针对 C. elegans 基因自动检索序列，设计带限制性内切酶接头的 L4440 克隆引物；也可评估已有 RNAi 靶序列或引物质量。</td></tr><tr data-category='Experimental Design'><td>35</td><td><code>microplate-layout-design</code></td><td><strong>微孔板实验布局优化设计</strong></td><td><span class='tag'>实验设计</span><br><small>Experimental Design</small></td><td>设计随机化、降低边缘效应并平衡协变量的微孔板布局，提高高通量实验的可靠性。</td></tr><tr data-category='General'><td>36</td><td><code>phylogenetics-toolkit</code></td><td><strong>系统发育分析工具包</strong></td><td><span class='tag'>通用工具</span><br><small>General</small></td><td>完成序列检索、结构域提取、多序列比对、系统发育树推断、祖先序列重建、分子钟分析、motif 匹配和报告生成。</td></tr><tr data-category='General'><td>37</td><td><code>protein-human-mouse-struct-collector</code></td><td><strong>人/鼠蛋白结构数据收集器</strong></td><td><span class='tag'>通用工具</span><br><small>General</small></td><td>收集任意蛋白在人和小鼠中的 UniProt、PDB 实验结构和 AlphaFold 预测结构，生成 Excel、Markdown 报告、可复现 Notebook 和 AF3 输入 JSON。</td></tr><tr data-category='General'><td>38</td><td><code>serum-proteomics-treatment-response</code></td><td><strong>血清/血浆蛋白组治疗反应分析</strong></td><td><span class='tag'>通用工具</span><br><small>General</small></td><td>面向纵向治疗反应研究的 DIA-MS 血清/血浆蛋白组分析，覆盖 MNAR 蛋白检测、差异表达、混合效应模型、临床轨迹聚类和候选验证标志物排序。</td></tr><tr data-category='General'><td>39</td><td><code>sgrna-design</code></td><td><strong>CRISPR sgRNA 设计与检索</strong></td><td><span class='tag'>通用工具</span><br><small>General</small></td><td>为 KO、CRISPRa、CRISPRi 或筛选实验查找或设计 sgRNA，结合已验证序列、Broad CRISPick 设计和 de-novo 规则。</td></tr></tbody>
+    </table>
+    <h2 class="section-title">场景选择地图</h2>
+  <div class="map">
+    <div class="map-item">
+      <h3>一、找数据与看格局</h3>
+      <p>优先使用 <code>omics-dataset-retrieval</code>、<code>clinicaltrials-landscape</code>、<code>literature-preclinical</code>。适合项目立项、竞品调研、疾病领域扫描和证据地图构建。</p>
+    </div>
+    <div class="map-item">
+      <h3>二、做基础组学分析</h3>
+      <p>bulk RNA-seq 可选 <code>bulk-rnaseq-counts-to-de-deseq2</code> 或 <code>bulk-rnaseq-differential-expression-multi-method</code>；单细胞可选 Scanpy、Seurat、轨迹推断、细胞通讯和空间转录组 skills。</p>
+    </div>
+    <div class="map-item">
+      <h3>三、解释机制与调控关系</h3>
+      <p>可组合使用 <code>functional-enrichment-from-degs</code>、<code>coexpression-network</code>、<code>grn-pyscenic</code>、<code>chip-atlas-target-genes</code> 和 <code>upstream-regulator-analysis</code>。</p>
+    </div>
+    <div class="map-item">
+      <h3>四、靶点发现与验证</h3>
+      <p>遗传证据可用 GWAS/TWAS、孟德尔随机化、PRS 和 Open Targets；实验验证可衔接 PCR 引物设计、sgRNA 设计、C. elegans RNAi、蛋白结构收集等 skills。</p>
+    </div>
+    <div class="map-item">
+      <h3>五、标志物与临床转化</h3>
+      <p>可使用 <code>lasso-biomarker-panel</code>、<code>survival-analysis-clinical</code>、<code>serum-proteomics-treatment-response</code>，从候选分子走向风险分层、疗效预测和验证面板。</p>
+    </div>
+    <div class="map-item">
+      <h3>六、实验设计与流程资产化</h3>
+      <p>实验前用 <code>experimental-design-statistics</code> 和 <code>microplate-layout-design</code> 控制统计风险与实验偏差；团队沉淀可用 <code>phylo-create-skill</code> 把流程封装成可复用 skill。</p>
+    </div>
+  </div>
+  </div>
+
+  <footer>
+    注：本页根据用户提供的 Biomni 软件包、工具、数据库与 Skills 清单整理。中文名为便于教学、培训和场景选型的解释性命名；实际调用与 @ 引用建议仍以英文原名为准。
+  </footer>
+</div>
+
+<script>
+// Tab switching
+const navButtons = document.querySelectorAll('#topNav button');
+const sections = document.querySelectorAll('.section');
+
+navButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = btn.dataset.section;
+    navButtons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    sections.forEach(sec => {
+      if (target === 'all') {
+        sec.classList.add('active');
+      } else {
+        sec.classList.toggle('active', sec.id === 'sec-' + target);
+      }
+    });
+  });
+});
+
+// --- Packages filter ---
+const qPackages = document.getElementById('qPackages');
+const catPackages = document.getElementById('catPackages');
+const typePackages = document.getElementById('typePackages');
+const pkgRows = Array.from(document.querySelectorAll('#pkgTable tbody tr'));
+const noPackages = document.getElementById('noPackages');
+
+function filterPackages() {
+  const kw = qPackages.value.trim().toLowerCase();
+  const cat = catPackages.value;
+  const typ = typePackages.value;
+  let visible = 0;
+  pkgRows.forEach(row => {
+    const text = row.innerText.toLowerCase();
+    const matchKw = !kw || text.includes(kw);
+    const matchCat = !cat || row.dataset.category === cat;
+    const matchType = !typ || row.dataset.type === typ;
+    const show = matchKw && matchCat && matchType;
+    row.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  noPackages.style.display = visible === 0 ? 'block' : 'none';
+}
+qPackages.addEventListener('input', filterPackages);
+catPackages.addEventListener('change', filterPackages);
+typePackages.addEventListener('change', filterPackages);
+
+// --- Tools filter ---
+const qTools = document.getElementById('qTools');
+const catTools = document.getElementById('catTools');
+const hpcTools = document.getElementById('hpcTools');
+const toolRows = Array.from(document.querySelectorAll('#toolTable tbody tr'));
+const noTools = document.getElementById('noTools');
+
+function filterTools() {
+  const kw = qTools.value.trim().toLowerCase();
+  const cat = catTools.value;
+  const hpc = hpcTools.value;
+  let visible = 0;
+  toolRows.forEach(row => {
+    const text = row.innerText.toLowerCase();
+    const matchKw = !kw || text.includes(kw);
+    const matchCat = !cat || row.dataset.category === cat;
+    const matchHpc = !hpc || row.dataset.hpc === hpc;
+    const show = matchKw && matchCat && matchHpc;
+    row.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  noTools.style.display = visible === 0 ? 'block' : 'none';
+}
+qTools.addEventListener('input', filterTools);
+catTools.addEventListener('change', filterTools);
+hpcTools.addEventListener('change', filterTools);
+
+// --- Databases filter ---
+const qDatabases = document.getElementById('qDatabases');
+const catDatabases = document.getElementById('catDatabases');
+const dbRows = Array.from(document.querySelectorAll('#dbTable tbody tr'));
+const noDatabases = document.getElementById('noDatabases');
+
+function filterDatabases() {
+  const kw = qDatabases.value.trim().toLowerCase();
+  const cat = catDatabases.value;
+  let visible = 0;
+  dbRows.forEach(row => {
+    const text = row.innerText.toLowerCase();
+    const matchKw = !kw || text.includes(kw);
+    const matchCat = !cat || row.dataset.category === cat;
+    const show = matchKw && matchCat;
+    row.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  noDatabases.style.display = visible === 0 ? 'block' : 'none';
+}
+qDatabases.addEventListener('input', filterDatabases);
+catDatabases.addEventListener('change', filterDatabases);
+
+// --- Skills filter ---
+const qSkills = document.getElementById('qSkills');
+const catSkills = document.getElementById('catSkills');
+const skillRows = Array.from(document.querySelectorAll('#skillTable tbody tr'));
+const noSkills = document.getElementById('noSkills');
+
+function filterSkills() {
+  const kw = qSkills.value.trim().toLowerCase();
+  const cat = catSkills.value;
+  let visible = 0;
+  skillRows.forEach(row => {
+    const text = row.innerText.toLowerCase();
+    const matchKw = !kw || text.includes(kw);
+    const matchCat = !cat || row.dataset.category === cat;
+    const show = matchKw && matchCat;
+    row.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  noSkills.style.display = visible === 0 ? 'block' : 'none';
+}
+qSkills.addEventListener('input', filterSkills);
+catSkills.addEventListener('change', filterSkills);
+
+// --- Global search ---
+const globalQ = document.getElementById('globalQ');
+globalQ.addEventListener('input', () => {
+  const kw = globalQ.value.trim().toLowerCase();
+  if (!kw) {
+    // Reset all: show all rows, clear local filters
+    pkgRows.forEach(r => r.style.display = '');
+    toolRows.forEach(r => r.style.display = '');
+    dbRows.forEach(r => r.style.display = '');
+    skillRows.forEach(r => r.style.display = '');
+    noPackages.style.display = 'none';
+    noTools.style.display = 'none';
+    noDatabases.style.display = 'none';
+    noSkills.style.display = 'none';
+    return;
+  }
+  // When global search is active, switch to "all" view and filter all tables
+  navButtons.forEach(b => b.classList.toggle('active', b.dataset.section === 'all'));
+  sections.forEach(s => s.classList.add('active'));
+  
+  let vPkg = 0, vTool = 0, vDb = 0, vSkill = 0;
+  pkgRows.forEach(row => {
+    const show = row.innerText.toLowerCase().includes(kw);
+    row.style.display = show ? '' : 'none';
+    if (show) vPkg++;
+  });
+  toolRows.forEach(row => {
+    const show = row.innerText.toLowerCase().includes(kw);
+    row.style.display = show ? '' : 'none';
+    if (show) vTool++;
+  });
+  dbRows.forEach(row => {
+    const show = row.innerText.toLowerCase().includes(kw);
+    row.style.display = show ? '' : 'none';
+    if (show) vDb++;
+  });
+  skillRows.forEach(row => {
+    const show = row.innerText.toLowerCase().includes(kw);
+    row.style.display = show ? '' : 'none';
+    if (show) vSkill++;
+  });
+  noPackages.style.display = vPkg === 0 ? 'block' : 'none';
+  noTools.style.display = vTool === 0 ? 'block' : 'none';
+  noDatabases.style.display = vDb === 0 ? 'block' : 'none';
+  noSkills.style.display = vSkill === 0 ? 'block' : 'none';
+});
+</script>
+</body>
+</html>

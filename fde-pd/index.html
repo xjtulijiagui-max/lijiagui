@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>上海电信FDE产品经理实战练习页面</title>
+  <style>
+    :root {
+      --brand-blue: #0052cc;
+      --brand-red: #d71920;
+      --ink: #182230;
+      --muted: #667085;
+      --line: #d9e2ef;
+      --bg: #f5f7fb;
+      --panel: #ffffff;
+      --panel-soft: #f8fbff;
+      --code-bg: #101828;
+      --code-text: #e6edf8;
+      --accent: #009e96;
+      --shadow: 0 14px 34px rgba(16, 24, 40, 0.08);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: linear-gradient(180deg, #eef4ff 0, #f7f9fc 360px, var(--bg) 100%);
+      font-family: "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", Arial, sans-serif;
+      line-height: 1.65;
+    }
+    a { color: inherit; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 0 32px;
+      border-bottom: 1px solid rgba(217, 226, 239, 0.9);
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(14px);
+    }
+    .brand { display: flex; align-items: center; gap: 12px; min-width: 0; font-weight: 800; }
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: linear-gradient(135deg, var(--brand-blue), var(--brand-red));
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 900;
+    }
+    .brand-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .top-actions { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 13px; white-space: nowrap; }
+    .submit-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 0 16px;
+      border-radius: 8px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--brand-red), var(--brand-blue));
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 800;
+      box-shadow: 0 10px 22px rgba(0, 82, 204, 0.18);
+    }
+    .top-actions .submit-link {
+      min-height: 34px;
+      padding: 0 12px;
+      font-size: 13px;
+    }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px rgba(0, 158, 150, 0.12); }
+    .hero {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 46px 24px 24px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+      gap: 28px;
+      align-items: stretch;
+    }
+    .hero-copy {
+      padding: 34px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: linear-gradient(135deg, #ffffff 0%, #f7fbff 100%);
+      box-shadow: var(--shadow);
+    }
+    .eyebrow { margin: 0 0 12px; color: var(--brand-red); font-size: 13px; font-weight: 800; }
+    h1 { margin: 0; font-size: 42px; line-height: 1.18; font-weight: 900; }
+    .hero-copy p { margin: 18px 0 0; max-width: 720px; color: var(--muted); font-size: 16px; }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .hero-panel { padding: 22px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); box-shadow: var(--shadow); }
+    .hero-panel h2 { margin: 0 0 16px; font-size: 18px; line-height: 1.35; }
+    .stage-list { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+    .stage-list li { display: grid; grid-template-columns: 42px 1fr; gap: 12px; align-items: start; padding: 12px; border: 1px solid #e8eef7; border-radius: 8px; background: var(--panel-soft); }
+    .stage-list span { display: grid; place-items: center; width: 42px; height: 32px; border-radius: 8px; color: #fff; background: var(--brand-blue); font-weight: 900; font-size: 13px; }
+    .stage-list strong { display: block; font-size: 14px; line-height: 1.4; }
+    .stage-list em { display: block; margin-top: 2px; color: var(--muted); font-style: normal; font-size: 12px; line-height: 1.45; }
+    .layout {
+      max-width: 1180px;
+      margin: 0 auto 72px;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+    .sidebar { position: sticky; top: 78px; display: grid; gap: 14px; }
+    .chapter-nav, .prompt-nav { padding: 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); box-shadow: var(--shadow); }
+    .chapter-nav h2, .prompt-nav h2 { margin: 0 0 10px; font-size: 15px; }
+    .chapter-link { display: grid; grid-template-columns: 34px 1fr; gap: 10px; padding: 10px 0; text-decoration: none; border-top: 1px solid #eef2f7; }
+    .chapter-link:first-of-type { border-top: 0; }
+    .chapter-num { display: grid; place-items: center; width: 34px; height: 28px; border-radius: 8px; color: #fff; background: var(--brand-red); font-size: 12px; font-weight: 900; }
+    .chapter-link div { min-width: 0; }
+    .chapter-link strong { display: block; font-size: 13px; line-height: 1.35; }
+    .chapter-link em { display: block; margin-top: 4px; color: var(--muted); font-style: normal; font-size: 12px; line-height: 1.45; }
+    .prompt-nav { max-height: calc(100vh - 310px); overflow: auto; }
+    .prompt-nav a { display: grid; grid-template-columns: 28px 1fr; gap: 8px; align-items: start; padding: 8px 0; border-top: 1px solid #eef2f7; color: var(--ink); text-decoration: none; font-size: 12px; line-height: 1.4; }
+    .prompt-nav a:first-of-type { border-top: 0; }
+    .prompt-nav span { display: grid; place-items: center; min-width: 28px; height: 24px; border-radius: 6px; color: var(--brand-blue); background: #edf4ff; font-weight: 900; }
+    .content { min-width: 0; }
+    .chapter-heading { margin: 24px 0 14px; padding: 22px; border: 1px solid var(--line); border-left: 5px solid var(--brand-blue); border-radius: 8px; background: var(--panel); box-shadow: var(--shadow); }
+    .chapter-heading:first-child { margin-top: 0; }
+    .chapter-kicker { color: var(--brand-red); font-size: 12px; font-weight: 900; }
+    .chapter-heading h2 { margin: 6px 0 6px; font-size: 24px; line-height: 1.35; }
+    .chapter-heading p { margin: 0; color: var(--muted); font-size: 14px; }
+    .prompt-card { margin: 14px 0; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); box-shadow: var(--shadow); overflow: hidden; }
+    .card-head { display: flex; justify-content: space-between; gap: 18px; padding: 20px 20px 16px; border-bottom: 1px solid #edf2f7; background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%); }
+    .meta-line { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+    .meta-line span { display: inline-flex; align-items: center; min-height: 24px; padding: 3px 8px; border: 1px solid #dbe7f5; border-radius: 6px; color: var(--muted); background: #f8fbff; font-size: 12px; font-weight: 700; }
+    .meta-line span:first-child { color: #fff; border-color: var(--brand-blue); background: var(--brand-blue); }
+    .prompt-card h3 { margin: 0; font-size: 20px; line-height: 1.35; }
+    .prompt-card p { margin: 8px 0 0; color: var(--muted); font-size: 13px; }
+    .copy-btn { flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; height: 38px; padding: 0 14px; border: 1px solid var(--brand-blue); border-radius: 8px; color: #fff; background: var(--brand-blue); cursor: pointer; font-weight: 800; font-family: inherit; }
+    .copy-btn.copied { border-color: var(--accent); background: var(--accent); }
+    pre { margin: 0; max-height: 620px; overflow: auto; background: var(--code-bg); }
+    code { display: block; padding: 20px; color: var(--code-text); white-space: pre-wrap; word-break: break-word; font-family: "Cascadia Code", Consolas, "SFMono-Regular", monospace; font-size: 13px; line-height: 1.72; }
+    .footer { margin-top: 22px; padding: 18px; border: 1px solid var(--line); border-radius: 8px; color: var(--muted); background: var(--panel); text-align: center; font-size: 13px; }
+    @media (max-width: 980px) {
+      .topbar { padding: 0 18px; }
+      .hero { grid-template-columns: 1fr; padding: 28px 16px 18px; }
+      h1 { font-size: 32px; }
+      .layout { grid-template-columns: 1fr; padding: 0 16px; }
+      .sidebar { position: static; grid-template-columns: 1fr; }
+      .prompt-nav { max-height: none; }
+    }
+    @media (max-width: 640px) {
+      .hero-copy, .hero-panel { padding: 18px; }
+      h1 { font-size: 28px; }
+      .hero-actions .submit-link { width: 100%; }
+      .card-head { flex-direction: column; }
+      .copy-btn { width: 100%; }
+      pre { max-height: none; }
+      code { font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">FDE</div>
+      <div class="brand-text">上海电信FDE产品经理实战练习</div>
+    </div>
+    <div class="top-actions">
+      <span class="status-dot"></span>
+      <span>需求识别、需求确认、需求实现</span>
+      <a class="submit-link" href="https://lijiagui.feishu.cn/share/base/form/shrcnMkBslP2LPyHayR6pWK51he" target="_blank" rel="noopener noreferrer">作业提交</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">上海电信 FDE 产品实战</p>
+      <h1>把AI能力从可演示变成可验证，再变成可运营</h1>
+      <p>本页面根据《FDE模式下的AI产品经理实战练习》刷新，围绕客户现场AI系统交付，按PPT章节顺序整理提示词：现场场景识别筛选、现场需求设计与确认、现场需求实现与验证。</p>
+      <div class="hero-actions">
+        <a class="submit-link" href="https://lijiagui.feishu.cn/share/base/form/shrcnMkBslP2LPyHayR6pWK51he" target="_blank" rel="noopener noreferrer">作业提交</a>
+      </div>
+    </div>
+    <aside class="hero-panel" aria-label="章节概览">
+      <h2>章节路径</h2>
+      <ul class="stage-list">
+        <li><span>01</span><div><strong>现场场景识别筛选</strong><em>流程挖掘、AI机会、场景湖、高ROI排序</em></div></li>
+        <li><span>02</span><div><strong>现场需求设计与确认</strong><em>需求方向、需求澄清、PRD设计、评审优化</em></div></li>
+        <li><span>03</span><div><strong>现场需求实现与验证</strong><em>高保真原型、测试用例、软件系统实现</em></div></li>
+      </ul>
+    </aside>
+  </section>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <nav class="chapter-nav" aria-label="章节导航">
+        <h2>章节</h2>
+      <a href="#chapter-identify" class="chapter-link">
+        <span class="chapter-num">01</span>
+        <div>
+          <strong>现场场景识别筛选</strong>
+          <em>从客户真实流程出发，完成流程挖掘、AI改造机会识别、场景湖沉淀和高ROI排序。</em>
+        </div>
+      </a>
+      <a href="#chapter-confirm" class="chapter-link">
+        <span class="chapter-num">02</span>
+        <div>
+          <strong>现场需求设计与确认</strong>
+          <em>把高价值场景转成可评审、可开发、可验收的需求表达，先确认问题，再组织PRD。</em>
+        </div>
+      </a>
+      <a href="#chapter-verify" class="chapter-link">
+        <span class="chapter-num">03</span>
+        <div>
+          <strong>现场需求实现与验证</strong>
+          <em>用高保真原型、测试用例和代码智能体，把需求从可演示推进到可验证、可运营。</em>
+        </div>
+      </a>
+      </nav>
+      <nav class="prompt-nav" aria-label="提示词导航">
+        <h2>提示词</h2>
+      <a href="#prompt-1"><span>01</span>现场流程挖掘：先找出一条完整流程</a>
+      <a href="#prompt-2"><span>02</span>AI改造机会点：用SCAMPER重绘流程</a>
+      <a href="#prompt-3"><span>03</span>场景湖沉淀：把共创录音刷新为场景清单</a>
+      <a href="#prompt-4"><span>04</span>高ROI试评：按评分表排序候选场景</a>
+      <a href="#prompt-5"><span>05</span>需求方向：从Top场景收敛产品方向</a>
+      <a href="#prompt-6"><span>06</span>需求澄清：形成客户确认问题清单</a>
+      <a href="#prompt-7"><span>07</span>PRD背景与范围：固定结构输出</a>
+      <a href="#prompt-8"><span>08</span>竞品分析：比较机制而不是只比功能</a>
+      <a href="#prompt-9"><span>09</span>PRD审查与优化：让AI当严格评审人</a>
+      <a href="#prompt-10"><span>10</span>完整PRD设计：把FDE场景转成可评审需求文档</a>
+      <a href="#prompt-11"><span>11</span>高保真原型设计：从PRD生成可演示HTML</a>
+      <a href="#prompt-12"><span>12</span>测试用例生成：把演示原型变成可验证证据</a>
+      <a href="#prompt-13"><span>13</span>软件系统实现：让代码智能体按Spec落地MVP</a>
+      </nav>
+    </aside>
+
+    <div class="content">
+    <section class="chapter-heading" id="chapter-identify">
+      <div class="chapter-kicker">CHAPTER 01</div>
+      <h2>现场场景识别筛选</h2>
+      <p>从客户真实流程出发，完成流程挖掘、AI改造机会识别、场景湖沉淀和高ROI排序。</p>
+    </section>
+
+    <section class="prompt-card" id="prompt-1">
+      <div class="card-head">
+        <div>
+          <div class="meta-line">
+            <span>Prompt 01</span>
+            <span>场景识别筛选</span>
+            <span>DeepSeek</span>
+          </div>
+          <h3>现场流程挖掘：先找出一条完整流程</h3>
+          <p>与PPT第48页提示词保持一致。</p>
+        </div>
+        <button class="copy-btn" type="button" data-target="code-01" aria-label="复制现场流程挖掘：先找出一条完整流程"><span>复制</span></button>
+      </div>
+      <pre><code id="code-01">提示词：一个中国企业在印尼投资海域养虾场，需要走哪些流程，包括国内的资本出去的流程，印尼的各类政府流程，请搜索补充完整，输出位mermaid格式（工具：deepseek）</code></pre>
+    </section>
+
+    <section class="prompt-card" id="prompt-2">
+      <div class="card-head">
+        <div>
+          <div class="meta-line">
+            <span>Prompt 02</span>
+            <span>场景识别筛选</span>
+            <span>DeepSeek</span>
+          </div>
+          <h3>AI改造机会点：用SCAMPER重绘流程</h3>
+          <p>与PPT第49页提示词保持一致。</p>
+        </div>
+        <button class="copy-btn" type="button" data-target="code-02" aria-label="复制AI改造机会点：用SCAMPER重绘流程"><span>复制</span></button>
+      </div>
+      <pre><code id="code-02">提示词：以上流程哪些AI可以介入，从而大幅提升投资效率（方法论是scamper），输出一个新的mermaid，AI介入节点用另一种颜色标注（工具：deepseek）</code></pre>
+    </section>
+
+    <section class="prompt-card" id="prompt-3">
+      <div class="card-head">
+        <div>
+          <div class="meta-line">
+            <span>Prompt 03</span>
+            <span>场景识别筛选</span>
+            <span>小浣熊</span>
+          </div>
+          <h3>场景湖沉淀：把共创录音刷新为场景清单</h3>
+          <p>与PPT第50页提示词保持一致。</p>
+        </div>
+        <button class="copy-btn" type="button" data-target="code-03" aria-label="复制场景湖沉淀：把共创录音刷新为场景清单"><span>复制</span></button>
+      </div>
+      <pre><code id="code-03">提示词：按照上述格式（场景湖的示例表格），请根据我们讨论的录音内容刷新我们组的场景湖清单，输出为xls（工具：小浣熊）</code></pre>
+    </section>
+
+    <section class="prompt-card" id="prompt-4">
+      <div class="card-head">
+        <div>
+          <div class="meta-line">
+            <span>Prompt 04</span>
+            <span>场景识别筛选</span>
+            <span>小浣熊</span>
+          </div>
+          <h3>高ROI试评：按评分表排序候选场景</h3>
+          <p>与PPT第51页提示词保持一致。</p>
+        </div>
+        <button class="copy-btn" type="button" data-target="code-04" aria-label="复制高ROI试评：按评分表排序候选场景"><span>复制</span></button>
+      </div>
+      <pre><code id="code-04">提示词：请根据三丰集团业务场景湖的场景的内容试着填入到高ROI场景评分表（5分制），按ROI场景评分表填入评分，然后返回xls（工具：小浣熊）</code></pre>
+    </section>
+
+    <section class="chapter-heading" id="chapter-confirm">
+      <div class="chapter-kicker">CHAPTER 02</div>
+      <h2>现场需求设计与确认</h2>
+      <p>把高价值场景转成可评审、可开发、可验收的需求表达，先确认问题，再组织PRD。</p>
+    </section>
+
+    <section class="prompt-card" id="prompt-5">
+      <div class="card-head">
+        <div>
+          <div class="meta-line">
+            <span>Prompt 05</span>
+            <span>需求设计与确认</span>
+            <span>ChatGPT / Claude / DeepSeek</span>
+          </div>
+          <h3>需求方向：从Top场景收敛产品方向</h3>
+          <p>基于PPT第53页“先判断问题是否真实，再降低表达成本”的原则刷新。</p>
+        </div>
+        <button class="copy-btn" type="button" data-target="code-05" aria-label="复制需求方向：从Top场景收敛产品方向"><span>复制</span></button>
+      </div>
+      <pre><code id="code-05">你是一名上海电信FDE现场AI产品经理和客户共创主持人。请基于我提供的【高ROI场景清单】【客户真实流程】【业务痛点】【Owner与成功指标】，帮助我把候选场景收敛为一个清晰的产品需求方向。
+
+请严格区分“需求判断”和“文档表达”：不要因为AI可以写文档，就默认需求成立。请先判断问题是否真实、是否值得做、是否可以验证。
+
+输入材料：
+【客户流程】&lt;&lt;&lt;在这里粘贴流程或Mermaid&gt;&gt;&gt;
+【场景湖/高ROI清单】&lt;&lt;&lt;在这里粘贴场景表&gt;&gt;&gt;
+【客户访谈或会议纪要】&lt;&lt;&lt;在这里粘贴纪要&gt;&gt;&gt;
+【约束条件】&lt;&lt;&lt;数据、系统、权限、合规、周期、预算等&gt;&gt;&gt;
+
+输出格式：
+1. 推荐需求方向：用一句话说明要做什么，不超过30字。
+2. 真实问题判断：说明问题证据、影响范围、现有处理方式和不做的损失。
+3. 目标用户与关键角色：业务Owner、操作用户、审核用户、技术协同方。
+4. 业务价值：按降本、增效、提质、增收、控险拆分，可量化则给出指标口径。
+5. 可行性判断：流程成熟度、数据/知识可得性、系统接口、人工兜底、风险边界。
+6. MVP范围：建议6到12周内可验证的最小闭环。
+7. 不建议进入本期的内容：说明原因。
+8. 待客户确认项：只列必须确认的问题，不写空话。
+
+要求：结论要适合上海电信FDE客户现场汇报，语言专业、克制、可落地。</code></pre>
+    </section>
+
+    <section class="prompt-card" id="prompt-6">
+      <div class="card-head">
+        <div>
+          <div class="meta-line">
+            <span>Prompt 06</span>
+            <span>需求设计与确认</span>
+            <span>ChatGPT / Claude / DeepSeek</span>
+          </div>
+          <h3>需求澄清：形成客户确认问题清单</h3>
+          <p>基于PPT第45页流程打透、问题标注和隐性痛点补充刷新。</p>
+        </div>
+        <button class="copy-btn" type="button" data-target="code-06" aria-label="复制需求澄清：形成客户确认问题清单"><span>复制</span></button>
+      </div>
+      <pre><code id="code-06">你是一名上海电信FDE项目的需求澄清专家。请基于我提供的客户流程、访谈纪要和初步产品方向，生成一份可用于客户现场确认的需求澄清清单。
+
+输入材料：
+【初步产品方向】&lt;&lt;&lt;在这里粘贴&gt;&gt;&gt;
+【现状流程】&lt;&lt;&lt;触发点、角色、输入输出、耗时、系统&gt;&gt;&gt;
+【痛点记录】&lt;&lt;&lt;滞点、返工、人为判断、重复录入、合规风险&gt;&gt;&gt;
+【客户限制】&lt;&lt;&lt;数据、系统、组织、权限、上线窗口&gt;&gt;&gt;
+
+请按以下结构输出：
+1. 流程澄清：每个关键步骤的责任人、输入、输出、耗时、异常情况。
+2. 用户澄清：谁发起、谁处理、谁审核、谁验收、谁承担结果。
+3. 数据澄清：数据源、字段、样本量、更新频率、质量问题、授权边界。
+4. 规则澄清：业务规则、审批规则、评分规则、人工兜底规则。
+5. AI能力澄清：识别、推荐、生成、校验、编排、预测分别能做什么，不能做什么。
+6. 成功指标澄清：MVP成功标准、AB测试口径、验收证据、失败退出机制。
+7. 风险澄清：隐私、安全、合规、模型幻觉、误判、审计留痕。
+8. 客户确认表：用表格输出“问题 / 推荐默认答案 / 必须由谁确认 / 未确认影响”。
+
+要求：不要替客户拍板；信息不足时列为“待确认”，并说明不确认会影响PRD的哪一部分。</code></pre>
+    </section>
+
+    <section class="prompt-card" id="prompt-7">
+      <div class="card-head">
+        <div>
+          <div class="meta-line">
+            <span>Prompt 07</span>
+            <span>需求设计与确认</span>
+            <span>ChatGPT / Claude / DeepSeek</span>
+          </div>
+          <h3>PRD背景与范围：固定结构输出</h3>
+          <p>与PPT第54页提示词保持一致。</p>
+        </div>
+        <button class="copy-btn" type="button" data-target="code-07" aria-label="复制PRD背景与范围：固定结构输出"><span>复制</span></button>
+      </div>
+      <pre><code id="code-07">PROMPT 02 / 背景与范围
+
+请把下面的需求池整理为 PRD 的“背景与范围”页。
+
+输入包含：
+【问题列表】【目标用户】【成功指标】【约束条件】
+
+输出格式固定为：
+1. 问题定义
+2. 目标用户与核心场景
+3. 业务目标与成功指标
+4. 本期范围
+5. 明确非目标
+6. 主要依赖与风险
+7. 关键待确认项
+
+要求：
+不写空话；信息不足时，不要猜，单独列“待确认项”。</code></pre>
+    </section>
+
+    <section class="prompt-card" id="prompt-8">
+      <div class="card-head">
+        <div>
+          <div class="meta-line">
+            <span>Prompt 08</span>
+            <span>需求设计与确认</span>
+            <span>ChatGPT / Claude / DeepSeek</span>
+          </div>
+          <h3>竞品分析：比较机制而不是只比功能</h3>
+          <p>与PPT第55页提示词保持一致。</p>
+        </div>
+        <button class="copy-btn" type="button" data-target="code-08" aria-label="复制竞品分析：比较机制而不是只比功能"><span>复制</span></button>
+      </div>
+      <pre><code id="code-08">PROMPT 05 / 竞品分析
+
+请围绕【竞品A/B/C】【目标功能】【目标用户】做对比。
+
+不要只比较页面功能，还要比较：
+1. 触发机制
+2. 默认值与默认路径
+3. 关键流程
+4. 权限与角色
+5. 异常处理
+6. 提醒策略
+7. 指标假设
+
+输出三栏结论：
+可借鉴 / 不建议照搬 / 待验证。
+
+输入：
+【竞品名称或链接】
+【目标功能】
+【我们当前约束】</code></pre>
+    </section>
+
+    <section class="prompt-card" id="prompt-9">
+      <div class="card-head">
+        <div>
+          <div class="meta-line">
+            <span>Prompt 09</span>
+            <span>需求设计与确认</span>
+            <span>ChatGPT / Claude / DeepSeek</span>
+          </div>
+          <h3>PRD审查与优化：让AI当严格评审人</h3>
+          <p>与PPT第56页提示词保持一致。</p>
+        </div>
+        <button class="copy-btn" type="button" data-target="code-09" aria-label="复制PRD审查与优化：让AI当严格评审人"><span>复制</span></button>
+      </div>
+      <pre><code id="code-09">PROMPT 06 / PRD审查与优化
+
+请扮演“严格但建设性”的 PRD 评审人，审查下面草稿。
+
+请按以下维度输出审校报告：
+1. 信息缺口
+2. 逻辑冲突
+3. 范围漂移
+4. 不可开发点
+5. 不可测试点
+6. 表达含糊点
+7. 遗漏风险
+8. 建议重写段落
+
+最后请给出一版修订稿。
+
+输入：【PRD草稿】【团队角色视角，可选】</code></pre>
+    </section>
+
+    <section class="prompt-card" id="prompt-10">
+      <div class="card-head">
+        <div>
+          <div class="meta-line">
+            <span>Prompt 10</span>
+            <span>需求设计与确认</span>
+            <span>ChatGPT / Claude / DeepSeek</span>
+          </div>
+          <h3>完整PRD设计：把FDE场景转成可评审需求文档</h3>
+          <p>基于PPT第53-58页重新组织，用于上海电信FDE现场需求确认。</p>
+        </div>
+        <button class="copy-btn" type="button" data-target="code-10" aria-label="复制完整PRD设计：把FDE场景转成可评审需求文档"><span>复制</span></button>
+      </div>
+      <pre><code id="code-10">你是一名资深AI产品经理、企业级SaaS产品架构师和上海电信FDE现场交付顾问。请基于我提供的场景资料，生成一份可用于客户评审、研发沟通、测试验收和后续高保真原型设计的完整PRD。
+
+请牢记：PRD不是把文档写完整，而是把真实问题、方案设计、流程数据权限和验收标准说清楚。AI可以降低表达成本，但不能替代需求判断。
+
+输入材料：
+【目标客户/业务部门】&lt;&lt;&lt;例如上海电信某业务线、政企客户、客服中心、营销团队等&gt;&gt;&gt;
+【高ROI场景立项表】&lt;&lt;&lt;场景名称、业务目标、流程位置、AI动作、数据知识、验证指标、风险边界、复制路径&gt;&gt;&gt;
+【需求方向与澄清结果】&lt;&lt;&lt;粘贴上一步输出&gt;&gt;&gt;
+【现状流程与AI改造流程】&lt;&lt;&lt;Mermaid或文字说明&gt;&gt;&gt;
+【竞品/样板信息】&lt;&lt;&lt;可选&gt;&gt;&gt;
+【约束条件】&lt;&lt;&lt;周期、系统、数据、权限、合规、安全、资源&gt;&gt;&gt;
+
+请输出Markdown格式PRD，必须包含：
+1. 文档信息：文档名称、产品名称、版本、作者、更新日期、适用对象、状态。
+2. 背景与范围：问题定义、目标用户、业务目标、成功指标、本期范围、明确非目标、依赖风险、待确认项。
+3. 用户与角色：业务Owner、操作员、审核员、管理员、技术支持、管理层视角及权限边界。
+4. 核心业务场景：至少3个，写清触发条件、用户动作、系统响应、AI动作、人工确认点、预期结果。
+5. 产品流程设计：主流程、子流程、异常流、状态流转；必要时输出Mermaid流程图。
+6. 功能需求：按模块拆解，每个模块包含入口、前置条件、操作步骤、系统规则、输出结果、优先级P0/P1/P2、验收标准。
+7. 页面需求：工作台、场景/任务列表、详情页、生成页、审核页、数据看板、设置页的信息结构和关键操作。
+8. 业务规则：评分、分级、审批、通知、导出、归档、回滚、人工兜底、审计留痕。
+9. AI能力设计：输入材料、处理逻辑、提示词模板、知识库/RAG要求、智能体/工作流建议、质量标准、人工复核机制。
+10. 数据与系统集成：数据源、字段建议、接口建议、日志要求、权限与脱敏策略。
+11. 非功能需求：性能、安全、合规、可用性、扩展性、兼容性。
+12. 异常与边界：输入不足、AI结果质量低、权限不足、审核不通过、重复场景合并、导出失败、系统超时。
+13. 验收标准与测试用例：功能、数据、AI质量、权限、性能、典型场景验收。
+14. 版本规划：V1.0 MVP、V1.1增强、V1.2自动化、V2.0智能体协同。
+15. 设计假设：仅列你为了补齐信息做出的合理假设。
+
+要求：不要反问；信息不足时基于合理产品假设补齐，并在“设计假设”中说明。所有内容都要贴合上海电信FDE客户现场AI系统交付语境。</code></pre>
+    </section>
+
+    <section class="chapter-heading" id="chapter-verify">
+      <div class="chapter-kicker">CHAPTER 03</div>
+      <h2>现场需求实现与验证</h2>
+      <p>用高保真原型、测试用例和代码智能体，把需求从可演示推进到可验证、可运营。</p>
+    </section>
+
+    <section class="prompt-card" id="prompt-11">
+      <div class="card-head">
+        <div>
+          <div class="meta-line">
+            <span>Prompt 11</span>
+            <span>需求实现与验证</span>
+            <span>Claude / ChatGPT / Codex / Cursor</span>
+          </div>
+          <h3>高保真原型设计：从PRD生成可演示HTML</h3>
+          <p>基于PPT第59页与第69-72页刷新，强调从需求方向到高保真原型的可演示闭环。</p>
+        </div>
+        <button class="copy-btn" type="button" data-target="code-11" aria-label="复制高保真原型设计：从PRD生成可演示HTML"><span>复制</span></button>
+      </div>
+      <pre><code id="code-11">你是一名资深AI产品经理、交互设计专家和前端工程师。请基于我提供的PRD，为上海电信FDE项目生成一个可直接在浏览器打开的高保真HTML产品原型，用于客户评审、方案汇报和研发沟通。
+
+输入材料：
+【PRD全文】&lt;&lt;&lt;在这里粘贴完整PRD&gt;&gt;&gt;
+【客户/行业语境】&lt;&lt;&lt;上海电信FDE、运营商客户现场AI系统交付、具体业务部门&gt;&gt;&gt;
+【演示重点】&lt;&lt;&lt;例如工作台、AI生成、审核流、数据看板、异常处理&gt;&gt;&gt;
+【视觉约束】&lt;&lt;&lt;如需贴近上海电信品牌，可说明主色、风格、屏幕比例&gt;&gt;&gt;
+
+请先输出“原型设计要点”，再输出完整HTML代码。
+
+原型设计要点必须包含：
+1. 产品定位与核心用户。
+2. 核心页面结构。
+3. 关键业务流程。
+4. 关键数据指标。
+5. 人工审核与AI生成之间的关系。
+6. 演示时最能说明价值的交互路径。
+
+HTML要求：
+1. 输出单文件HTML，包含HTML、CSS和少量必要JavaScript。
+2. 不依赖后端接口，不引用外部图片、外部字体或外部JS库。
+3. 页面不是线框图，要接近真实企业级SaaS产品界面。
+4. 至少包含顶部导航、侧边菜单、工作台、核心功能区、列表/表格、详情或弹窗、数据看板、设置或规则区。
+5. 页面内容必须使用贴近PRD的真实业务数据，不要写空洞的“示例数据”。
+6. 体现AI动作：识别、推荐、生成、校验、编排、预测中的相关能力。
+7. 体现人工确认：审核、退回、改写、发布、导出、留痕。
+8. 加入轻量交互：菜单切换、Tab切换、表格hover、按钮反馈、弹窗打开关闭、筛选状态变化。
+9. 适合16:9大屏演示，也适合普通浏览器查看；中文文本不能溢出或遮挡。
+10. 最终代码必须可以保存为.html并直接运行。
+
+输出格式：
+第一部分：原型设计要点
+第二部分：完整HTML代码，放在html代码块中。</code></pre>
+    </section>
+
+    <section class="prompt-card" id="prompt-12">
+      <div class="card-head">
+        <div>
+          <div class="meta-line">
+            <span>Prompt 12</span>
+            <span>需求实现与验证</span>
+            <span>ChatGPT / Claude / Codex</span>
+          </div>
+          <h3>测试用例生成：把演示原型变成可验证证据</h3>
+          <p>基于PPT第64页“给出明确验证方式、截图/测试/期望输出”和第73页刷新。</p>
+        </div>
+        <button class="copy-btn" type="button" data-target="code-12" aria-label="复制测试用例生成：把演示原型变成可验证证据"><span>复制</span></button>
+      </div>
+      <pre><code id="code-12">你是一名上海电信FDE项目测试负责人和AI产品验收顾问。请基于PRD和高保真原型，生成一份可执行的测试用例与验收计划，目标是证明该AI场景不是只可演示，而是可验证、可上线评估。
+
+输入材料：
+【PRD全文】&lt;&lt;&lt;粘贴PRD&gt;&gt;&gt;
+【高保真原型说明或HTML】&lt;&lt;&lt;粘贴原型说明/关键页面&gt;&gt;&gt;
+【MVP成功指标】&lt;&lt;&lt;例如效率提升、准确率、转化率、满意度、风险下降&gt;&gt;&gt;
+【上线约束】&lt;&lt;&lt;数据、权限、系统、合规、安全、周期&gt;&gt;&gt;
+
+请输出：
+1. 测试范围：本次测什么、不测什么。
+2. 验收指标：业务指标、产品指标、AI质量指标、系统指标、运营指标。
+3. 测试数据准备：样本来源、字段、脱敏要求、正例/反例/边界样本。
+4. 功能测试用例：按页面和模块列出用例，包含前置条件、操作步骤、期望结果、优先级。
+5. AI质量测试用例：准确性、一致性、可解释性、引用依据、幻觉控制、人工复核。
+6. 权限与安全测试：角色权限、数据隔离、日志审计、敏感信息脱敏。
+7. 异常与边界测试：输入缺失、低质量数据、接口失败、超时、重复任务、审核退回。
+8. UAT验收脚本：客户现场演示步骤、截图点、验收证据、通过/不通过标准。
+9. AB测试或灰度验证方案：实验组/对照组、样本量建议、周期、指标口径。
+10. 缺陷记录模板：缺陷描述、复现步骤、影响范围、优先级、责任人、修复验证。
+
+要求：用表格输出核心用例；不要只写原则，要能直接交给测试、研发和客户代表执行。</code></pre>
+    </section>
+
+    <section class="prompt-card" id="prompt-13">
+      <div class="card-head">
+        <div>
+          <div class="meta-line">
+            <span>Prompt 13</span>
+            <span>需求实现与验证</span>
+            <span>Claude Code / Codex / Cursor</span>
+          </div>
+          <h3>软件系统实现：让代码智能体按Spec落地MVP</h3>
+          <p>基于PPT第61-68页Claude Code工作法和第74-75页业务代码实战刷新。</p>
+        </div>
+        <button class="copy-btn" type="button" data-target="code-13" aria-label="复制软件系统实现：让代码智能体按Spec落地MVP"><span>复制</span></button>
+      </div>
+      <pre><code id="code-13">你是一名资深全栈工程师和代码智能体执行负责人。请基于我提供的PRD、高保真原型和测试用例，为上海电信FDE项目实现一个可运行、可测试、可演示的MVP系统原型。
+
+输入材料：
+【PRD全文】&lt;&lt;&lt;粘贴PRD&gt;&gt;&gt;
+【高保真HTML原型】&lt;&lt;&lt;粘贴或说明关键页面&gt;&gt;&gt;
+【测试用例与验收标准】&lt;&lt;&lt;粘贴测试计划&gt;&gt;&gt;
+【技术栈约束】&lt;&lt;&lt;例如React/Vue/原生HTML、Node/Python、数据库、是否需要离线单文件&gt;&gt;&gt;
+【当前代码库说明】&lt;&lt;&lt;如已有项目，请粘贴目录结构、README、启动命令&gt;&gt;&gt;
+
+执行要求：
+1. 先探索：阅读项目结构、README、依赖、启动/测试/构建命令；不要直接大改。
+2. 先规划：生成spec.md级别的实现说明，包含需求理解、技术方案、数据模型、页面结构、接口/状态设计、里程碑。
+3. 再拆Todo：按可审计小步骤输出任务清单，每一步都说明要改哪些文件、如何验证。
+4. 再执行：按优先级实现P0闭环，优先跑通核心流程，不做无关炫技。
+5. 保持上下文清洁：长日志、全仓探索、重复测试结果只保留摘要；必要时把项目规则沉淀到CLAUDE.md或README。
+6. 代码质量：遵循现有代码风格；组件命名清晰；状态、数据、校验、异常处理有边界；不要留下占位文案。
+7. 测试验证：实现后运行lint、test、build或项目约定命令；如果没有测试，补充关键路径测试或手工验收脚本。
+8. 评审自己：最后用“严格代码评审人”视角检查逻辑bug、安全风险、权限遗漏、AI输出不可控点。
+
+MVP必须包含：
+1. 可运行入口和启动说明。
+2. 与PRD一致的核心页面和关键交互。
+3. 贴近业务的模拟数据或可配置数据源。
+4. AI生成/推荐/校验结果的展示与人工确认机制。
+5. 任务状态流转、操作日志或审计留痕。
+6. 异常状态和空状态。
+7. 导出、提交、审核或发布中的至少一个闭环动作。
+8. 验证报告：已完成能力、运行命令、测试结果、未完成项、风险与下一步。
+
+输出格式：
+1. 实现计划
+2. 文件改动清单
+3. 关键代码或提交说明
+4. 运行与测试命令
+5. 验证结果
+6. 遗留风险与下一步建议</code></pre>
+    </section>
+      <div class="footer">上海电信FDE产品经理实战练习页面 · 客户现场AI系统交付 · AI Store沉淀 · 运营商场景化落地</div>
+    </div>
+  </main>
+
+  <script>
+    document.querySelectorAll('.copy-btn').forEach(function(button) {
+      button.addEventListener('click', async function() {
+        var target = document.getElementById(button.dataset.target);
+        var text = target ? target.innerText : '';
+        var label = button.querySelector('span');
+        try {
+          await navigator.clipboard.writeText(text);
+          button.classList.add('copied');
+          if (label) label.textContent = '已复制';
+          setTimeout(function() {
+            button.classList.remove('copied');
+            if (label) label.textContent = '复制';
+          }, 1400);
+        } catch (error) {
+          var range = document.createRange();
+          range.selectNodeContents(target);
+          var selection = window.getSelection();
+          selection.removeAllRanges();
+          selection.addRange(range);
+          var copied = false;
+          try {
+            copied = document.execCommand('copy');
+          } catch (fallbackError) {
+            copied = false;
+          }
+          if (copied) {
+            button.classList.add('copied');
+            if (label) label.textContent = '已复制';
+            setTimeout(function() {
+              button.classList.remove('copied');
+              if (label) label.textContent = '复制';
+            }, 1400);
+          } else if (label) {
+            label.textContent = '按Ctrl+C';
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

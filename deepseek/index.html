@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DeepSeek 业务落地练习库</title>
+  <style>
+    :root {
+      --bg: #f4f8fc;
+      --paper: #fbfdff;
+      --ink: #102033;
+      --muted: #5f7085;
+      --line: #d9e5f2;
+      --blue-900: #063b76;
+      --blue-700: #0d64b8;
+      --blue-600: #1976d2;
+      --blue-100: #e8f2ff;
+      --cyan: #11a3b8;
+      --green: #2e9b69;
+      --amber: #c17a16;
+      --shadow: 0 18px 48px rgba(20, 64, 110, 0.12);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "HarmonyOS Sans SC", "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+      background:
+        linear-gradient(90deg, rgba(13, 100, 184, 0.05) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(13, 100, 184, 0.05) 1px, transparent 1px),
+        linear-gradient(135deg, #f8fbff 0%, #eef6fd 44%, #f6fbf9 100%);
+      background-size: 28px 28px, 28px 28px, auto;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 28px 0 56px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 0 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      color: #f8fbff;
+      background: linear-gradient(145deg, var(--blue-900), var(--blue-600));
+      border-radius: 8px;
+      box-shadow: 0 12px 28px rgba(13, 100, 184, 0.22);
+      flex: 0 0 auto;
+    }
+
+    .brand strong {
+      display: block;
+      font-size: 1rem;
+      letter-spacing: 0;
+    }
+
+    .brand span {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .nav-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 7px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: #23415f;
+      background: rgba(251, 253, 255, 0.78);
+      font-size: 0.86rem;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+      gap: clamp(22px, 4vw, 48px);
+      align-items: stretch;
+      padding: clamp(28px, 5vw, 58px);
+      border: 1px solid rgba(13, 100, 184, 0.16);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(239, 247, 255, 0.9)),
+        linear-gradient(120deg, rgba(17, 163, 184, 0.12), rgba(46, 155, 105, 0.08));
+      box-shadow: var(--shadow);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 5px;
+      background: linear-gradient(90deg, var(--blue-900), var(--blue-600), var(--cyan), var(--green));
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--blue-700);
+      font-weight: 700;
+      font-size: 0.88rem;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 22px;
+      height: 2px;
+      background: var(--blue-700);
+    }
+
+    h1 {
+      margin: 14px 0 16px;
+      max-width: 760px;
+      font-size: clamp(2rem, 4.8vw, 4.4rem);
+      line-height: 1.02;
+      letter-spacing: 0;
+      color: #092645;
+    }
+
+    .hero-copy {
+      max-width: 740px;
+      color: #38546e;
+      font-size: clamp(1rem, 1.6vw, 1.15rem);
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    .blueprint {
+      display: grid;
+      align-content: space-between;
+      gap: 18px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.74);
+    }
+
+    .blueprint h2 {
+      margin: 0 0 12px;
+      font-size: 1rem;
+      color: #0f3964;
+    }
+
+    .route {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .route li {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 12px 0;
+      border-top: 1px solid #e3edf7;
+    }
+
+    .route li:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .step-num {
+      display: grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      color: #f8fbff;
+      background: var(--blue-700);
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+
+    .route strong {
+      display: block;
+      font-size: 0.94rem;
+      color: #173755;
+    }
+
+    .route span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.55;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: end;
+      margin: 42px 0 16px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      color: #0d2d50;
+      font-size: clamp(1.35rem, 2.4vw, 2rem);
+      letter-spacing: 0;
+    }
+
+    .section-title p {
+      margin: 0;
+      max-width: 520px;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 0.95rem;
+      text-align: right;
+    }
+
+    .exercises {
+      display: grid;
+      gap: 18px;
+    }
+
+    .exercise {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr) 210px;
+      gap: 18px;
+      align-items: stretch;
+      padding: 18px;
+      border: 1px solid rgba(13, 100, 184, 0.14);
+      border-radius: var(--radius);
+      background: rgba(251, 253, 255, 0.92);
+      box-shadow: 0 12px 34px rgba(28, 68, 105, 0.08);
+    }
+
+    .exercise-head {
+      padding: 6px 2px 2px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 16px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      color: #0d508f;
+      background: var(--blue-100);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .tag::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--cyan);
+    }
+
+    .exercise h3 {
+      margin: 0;
+      color: #0d2d50;
+      font-size: 1.35rem;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    .exercise-desc {
+      margin: 12px 0 0;
+      color: var(--muted);
+      line-height: 1.72;
+      font-size: 0.92rem;
+    }
+
+    .prompt-wrap {
+      position: relative;
+      display: grid;
+      min-width: 0;
+    }
+
+    textarea.prompt {
+      width: 100%;
+      min-height: 258px;
+      resize: vertical;
+      padding: 18px 18px 48px;
+      border: 1px solid #cfdeec;
+      border-radius: var(--radius);
+      color: #132c45;
+      background: #fafdff;
+      font: 0.94rem/1.72 "Microsoft YaHei", "PingFang SC", sans-serif;
+      outline: none;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+    }
+
+    textarea.prompt:focus {
+      border-color: var(--blue-600);
+      box-shadow: 0 0 0 4px rgba(25, 118, 210, 0.13);
+    }
+
+    .prompt-foot {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: 11px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      pointer-events: none;
+    }
+
+    .prompt-foot span {
+      padding: 4px 8px;
+      border-radius: 999px;
+      color: #48627a;
+      background: rgba(232, 242, 255, 0.9);
+      font-size: 0.76rem;
+    }
+
+    .actions {
+      display: grid;
+      align-content: start;
+      gap: 10px;
+    }
+
+    .artifact-meta {
+      padding: 14px;
+      border: 1px solid #dce7f1;
+      border-radius: var(--radius);
+      background: #f7fbff;
+    }
+
+    .artifact-meta strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #173755;
+      font-size: 0.95rem;
+    }
+
+    .artifact-meta span {
+      display: block;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 0.82rem;
+    }
+
+    .action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 42px;
+      padding: 10px 13px;
+      border: 1px solid #bfd0df;
+      border-radius: 8px;
+      color: #173755;
+      background: #ffffff;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease, color 160ms ease;
+    }
+
+    .action:hover {
+      transform: translateY(-1px);
+      border-color: var(--blue-600);
+      color: var(--blue-700);
+      background: #f4f9ff;
+    }
+
+    .action.primary {
+      border-color: var(--blue-700);
+      color: #f8fbff;
+      background: linear-gradient(135deg, var(--blue-900), var(--blue-600));
+    }
+
+    .action.primary:hover {
+      color: #ffffff;
+      background: linear-gradient(135deg, #052f60, #0f6fcf);
+    }
+
+    .action.ghost {
+      background: transparent;
+    }
+
+    .action svg {
+      width: 17px;
+      height: 17px;
+      stroke-width: 2.2;
+      flex: 0 0 auto;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-top: 34px;
+      padding: 20px 0 0;
+      color: #5d7185;
+      border-top: 1px solid rgba(13, 100, 184, 0.14);
+      font-size: 0.9rem;
+    }
+
+    .toast {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      z-index: 20;
+      min-width: 190px;
+      padding: 13px 15px;
+      border: 1px solid rgba(46, 155, 105, 0.32);
+      border-radius: 8px;
+      color: #174b34;
+      background: #f1fbf6;
+      box-shadow: 0 18px 40px rgba(20, 64, 110, 0.16);
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: opacity 180ms ease, transform 180ms ease;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .exercise {
+        grid-template-columns: 1fr;
+      }
+
+      .section-title {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .section-title p {
+        text-align: left;
+      }
+
+      .actions {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        width: min(100% - 24px, 1180px);
+        padding-top: 14px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .hero {
+        padding: 24px 18px;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 12vw, 3.2rem);
+      }
+
+      .actions {
+        grid-template-columns: 1fr;
+      }
+
+      .exercise {
+        padding: 14px;
+      }
+
+      textarea.prompt {
+        min-height: 330px;
+        font-size: 0.9rem;
+      }
+
+      .footer {
+        font-size: 0.82rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar" aria-label="页面导航">
+      <a class="brand" href="#top" aria-label="返回顶部">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span>
+          <strong>DeepSeek 业务落地练习库</strong>
+          <span>提示词复制 · HTML 下载 · 脱敏示例</span>
+        </span>
+      </a>
+      <nav class="nav-pills" aria-label="练习目录">
+        <a class="pill" href="#org">组织发文</a>
+        <a class="pill" href="#quote">自动报价</a>
+        <a class="pill" href="#pmo">项目看板</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="page-title">
+        <div>
+          <div class="eyebrow">业务场景到网页原型</div>
+          <h1 id="page-title">把工作里的真实问题，练成可运行的 HTML 页面</h1>
+          <p class="hero-copy">
+            这里整理了 3 个适合业务同事练习的 DeepSeek 提示词案例。先复制提示词，再观察对应 HTML 示例，
+            学会把组织管理、报价规则、项目统筹这些具体业务需求，转化成可演示、可迭代的网页工具。
+          </p>
+          <div class="hero-actions">
+            <button class="action primary" type="button" data-copy-all>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M8 8h10v12H8z" stroke="currentColor" stroke-linejoin="round"/>
+                <path d="M6 16H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1" stroke="currentColor" stroke-linecap="round"/>
+              </svg>
+              复制全部提示词
+            </button>
+            <a class="action" href="#cases">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 5v14m0 0 6-6m-6 6-6-6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              查看练习案例
+            </a>
+          </div>
+        </div>
+
+        <aside class="blueprint" aria-label="练习路径">
+          <div>
+            <h2>练习路径</h2>
+            <ol class="route">
+              <li>
+                <span class="step-num">1</span>
+                <span><strong>复制提示词</strong><span>把业务目标、字段、规则、输出格式说清楚。</span></span>
+              </li>
+              <li>
+                <span class="step-num">2</span>
+                <span><strong>生成 HTML</strong><span>让 DeepSeek 输出单文件网页，便于演示和传阅。</span></span>
+              </li>
+              <li>
+                <span class="step-num">3</span>
+                <span><strong>对照改写</strong><span>下载示例，替换为自己的部门、产品、流程和审批规则。</span></span>
+              </li>
+            </ol>
+          </div>
+          <div class="artifact-meta">
+            <strong>发布说明</strong>
+            <span>页面与下载文件均使用 XX 占位符脱敏，可作为内部学习参考素材。</span>
+          </div>
+        </aside>
+      </section>
+
+      <section class="section-title" id="cases">
+        <div>
+          <div class="eyebrow">Prompt Gallery</div>
+          <h2>三组可复制练习</h2>
+        </div>
+        <p>每个案例都配有完整提示词、示例 HTML 下载和在线打开入口，适合边学边改。</p>
+      </section>
+
+      <section class="exercises" aria-label="业务落地练习案例">
+        <article class="exercise" id="org">
+          <div class="exercise-head">
+            <span class="tag">组织管理</span>
+            <h3>组织干部发文生成器</h3>
+            <p class="exercise-desc">练习把干部信息表单和正式发文模板连接起来，适合学习“字段映射到正式文本”的提示词写法。</p>
+          </div>
+          <div class="prompt-wrap">
+            <textarea class="prompt" id="prompt-org" readonly>帮我做一个组织干部发文生成器，html格式。
+页面左边是干部基本信息：
+组织：
+姓名：
+岗位：
+级别：
+职级：
+系列：
+类型：
+上传履历附件：
+述职结果：
+生效时间：
+
+右侧是正式文件内容：
+例如：关于XXX同志晋升的决定
+
+根据海外派遣人员管理相关规定，XX企业XX事业群组织了对“组织”，“姓名”同志的“类型”述职评议会议，述职评议结论为 “述职结果”，经研究决定：
+一、由“岗位”（“级别”，“职级”），晋升至“岗位”（“级别”，“职级”）。
+二、生效时间为“生效时间”。
+
+要求页面美观，体现蓝色科技企业的文化，操作按钮美观。</textarea>
+            <div class="prompt-foot"><span>可直接复制到 DeepSeek</span><span>HTML 单文件</span></div>
+          </div>
+          <div class="actions">
+            <button class="action primary" type="button" data-copy="prompt-org">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M8 8h10v12H8z" stroke="currentColor" stroke-linejoin="round"/>
+                <path d="M6 16H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1" stroke="currentColor" stroke-linecap="round"/>
+              </svg>
+              复制提示词
+            </button>
+            <a class="action" href="downloads/org-document-generator.html" download>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 4v10m0 0 4-4m-4 4-4-4M5 20h14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              下载 HTML
+            </a>
+            <a class="action ghost" href="downloads/org-document-generator.html" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              打开示例
+            </a>
+          </div>
+        </article>
+
+        <article class="exercise" id="quote">
+          <div class="exercise-head">
+            <span class="tag">经营报价</span>
+            <h3>产品自动报价生成器</h3>
+            <p class="exercise-desc">练习把基准价、加价百分比、历史记录和附件上传组合成一个可复用的小工具。</p>
+          </div>
+          <div class="prompt-wrap">
+            <textarea class="prompt" id="prompt-quote" readonly>我要做一个产品自动报价生成器，报价的规则是勾选不同产品（XX系列30kW/60kW/120kW/160kW/180kW/240kW），首次填写不同产品的基准价，后续自动记录，填写不同的加价百分比，自动计算生成最终的产品售价，最后需要上传加价百分比的评审记录截屏，请帮我设计，界面要简约清爽。生成格式为html。</textarea>
+            <div class="prompt-foot"><span>规则计算型案例</span><span>HTML 单文件</span></div>
+          </div>
+          <div class="actions">
+            <button class="action primary" type="button" data-copy="prompt-quote">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M8 8h10v12H8z" stroke="currentColor" stroke-linejoin="round"/>
+                <path d="M6 16H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1" stroke="currentColor" stroke-linecap="round"/>
+              </svg>
+              复制提示词
+            </button>
+            <a class="action" href="downloads/product-quote-generator.html" download>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 4v10m0 0 4-4m-4 4-4-4M5 20h14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              下载 HTML
+            </a>
+            <a class="action ghost" href="downloads/product-quote-generator.html" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              打开示例
+            </a>
+          </div>
+        </article>
+
+        <article class="exercise" id="pmo">
+          <div class="exercise-head">
+            <span class="tag">项目统筹</span>
+            <h3>XX产品项目管理看板</h3>
+            <p class="exercise-desc">练习让 AI 将 PMO 的统筹视角变成可视化看板，重点覆盖合同、团队、里程碑、风险和问题闭环。</p>
+          </div>
+          <div class="prompt-wrap">
+            <textarea class="prompt" id="prompt-pmo" readonly>你是项目管理的PMO，你需要设计一款XX领域的XX产品项目管理看板管理页面，需要涵盖合同的关键信息，项目组成员，项目管理中的KOM，PIM，厂验，售后服务，项目风险和问题分析等关键内容，用于你统筹管理正在执行中的项目。以html的格式生成。
+
+要求：
+1. 所有组织、客户、项目、地点和产品名称使用“XX”占位符脱敏；
+2. 页面要适合业务落地练习，能够让团队快速理解项目管理看板应该包含哪些模块；
+3. 视觉风格简约清爽，体现蓝色科技企业的专业感。</textarea>
+            <div class="prompt-foot"><span>脱敏项目案例</span><span>HTML 单文件</span></div>
+          </div>
+          <div class="actions">
+            <button class="action primary" type="button" data-copy="prompt-pmo">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M8 8h10v12H8z" stroke="currentColor" stroke-linejoin="round"/>
+                <path d="M6 16H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1" stroke="currentColor" stroke-linecap="round"/>
+              </svg>
+              复制提示词
+            </button>
+            <a class="action" href="downloads/project-pmo-dashboard.html" download>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 4v10m0 0 4-4m-4 4-4-4M5 20h14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              下载 HTML
+            </a>
+            <a class="action ghost" href="downloads/project-pmo-dashboard.html" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              打开示例
+            </a>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>用于 DeepSeek 与业务场景结合的学习参考。</span>
+      <span>下载文件已做示例脱敏，请按本单位规范二次确认后使用。</span>
+    </footer>
+  </div>
+
+  <div class="toast" role="status" aria-live="polite">已复制到剪贴板</div>
+
+  <script>
+    const toast = document.querySelector(".toast");
+    let toastTimer;
+
+    function showToast(text) {
+      toast.textContent = text;
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove("show"), 1800);
+    }
+
+    async function copyText(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast("已复制到剪贴板");
+      } catch (error) {
+        const helper = document.createElement("textarea");
+        helper.value = text;
+        helper.setAttribute("readonly", "");
+        helper.style.position = "fixed";
+        helper.style.opacity = "0";
+        document.body.appendChild(helper);
+        helper.select();
+        document.execCommand("copy");
+        helper.remove();
+        showToast("已复制到剪贴板");
+      }
+    }
+
+    document.querySelectorAll("[data-copy]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const target = document.getElementById(button.dataset.copy);
+        copyText(target.value.trim());
+      });
+    });
+
+    document.querySelector("[data-copy-all]").addEventListener("click", () => {
+      const prompts = Array.from(document.querySelectorAll("textarea.prompt"))
+        .map((item, index) => `【练习${index + 1}】\n${item.value.trim()}`)
+        .join("\n\n");
+      copyText(prompts);
+    });
+  </script>
+</body>
+</html>
