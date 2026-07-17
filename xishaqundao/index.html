@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>西沙群岛探险捕鱼 - AIGC沙盘实战</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+
+        * {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #0077b6 0%, #00b4d8 50%, #90e0ef 100%);
+            --deep-ocean: #023e8a;
+            --gold-accent: #ffd60a;
+            --card-shadow: 0 16px 34px rgba(0, 51, 102, 0.15);
+            --card-shadow-hover: 0 20px 60px rgba(0, 51, 102, 0.25);
+        }
+
+        body {
+            background: linear-gradient(180deg, #f0f8ff 0%, #e6f3ff 100%);
+            min-height: 100vh;
+        }
+
+        .hero-section {
+            background: var(--primary-gradient);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wave-bg {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23f0f8ff' fill-opacity='0.3' d='M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,149.3C960,160,1056,160,1152,138.7C1248,117,1344,75,1392,53.3L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E") no-repeat bottom;
+            background-size: cover;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: var(--card-shadow-hover);
+            transform: translateY(-4px);
+        }
+
+        .role-card {
+            border-top: 4px solid #0077b6;
+        }
+
+        .role-card队长 { border-color: #ffd60a; }
+        .role-card队秘 { border-color: #0077b6; }
+        .role-card项目经理 { border-color: #00b4d8; }
+        .role-card翻译 { border-color: #90e0ef; }
+        .role-card设计师 { border-color: #ade8f4; }
+        .role-card策略师 { border-color: #caf0f8; }
+        .role-card新闻发言人 { border-color: #e0fbfc; }
+
+        .mission-card {
+            border-left: 4px solid #0077b6;
+        }
+
+        .avatar-placeholder {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0077b6, #00b4d8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+            font-weight: bold;
+            margin: 0 auto 16px;
+        }
+
+        .skill-tag {
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .quote-box {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-left: 4px solid #0077b6;
+            padding: 16px;
+            margin: 16px 0;
+            border-radius: 8px;
+            font-style: italic;
+        }
+
+        .section-title {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 32px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 12px;
+            height: 12px;
+            background: #0077b6;
+            border-radius: 50%;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 20px;
+            width: 2px;
+            height: calc(100% - 12px);
+            background: #e0f2fe;
+        }
+
+        .glow-effect {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 10px #0077b6, 0 0 20px #0077b6;
+            }
+            to {
+                box-shadow: 0 0 20px #00b4d8, 0 0 30px #00b4d8;
+            }
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .grid-bg {
+            background-image:
+                linear-gradient(rgba(0, 119, 182, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 119, 182, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-warning { background: #fef3c7; color: #92400e; }
+        .badge-success { background: #d1fae5; color: #065f46; }
+        .badge-info { background: #dbeafe; color: #1e40af; }
+        .badge-purple { background: #f3e8ff; color: #6b21a8; }
+        .badge-pink { background: #fce7f3; color: #9f1239; }
+        .badge-orange { background: #ffedd5; color: #9a3412; }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 12px;
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-radius: 8px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #0077b6;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 4px;
+        }
+
+        .mission-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+<body class="grid-bg">
+    <!-- 导航栏 -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-cyan-400 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-anchor text-white text-lg"></i>
+                </div>
+                <span class="font-bold text-xl text-gray-800">西沙探险</span>
+            </div>
+            <div class="hidden md:flex items-center space-x-2">
+                <a href="#roles" class="nav-link text-gray-700 hover:text-blue-600">角色介绍</a>
+                <a href="#missions" class="nav-link text-gray-700 hover:text-blue-600">关卡任务</a>
+                <a href="#story" class="nav-link text-gray-700 hover:text-blue-600">剧本故事</a>
+                <a href="#guide" class="nav-link text-gray-700 hover:text-blue-600">新手指南</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 英雄区域 -->
+    <section class="hero-section pt-32 pb-24 px-4">
+        <div class="wave-bg"></div>
+        <div class="max-w-6xl mx-auto text-center relative z-10">
+            <div class="inline-block mb-6 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full">
+                <span class="text-white/90 text-sm">AIGC沙盘实战 · 第八代</span>
+            </div>
+            <h1 class="text-5xl md:text-6xl font-black text-white mb-6 leading-tight">
+                西沙群岛探险捕鱼
+            </h1>
+            <p class="text-xl md:text-2xl text-white/90 mb-4 font-light">
+                剧本杀 · 深蓝七侠 · AI觉醒
+            </p>
+            <div class="quote-box max-w-3xl mx-auto mt-8">
+                <p class="text-gray-700 text-lg">
+                    「当算法学会了思考，人类便有了新的翅膀。<br>
+                    但真正的智慧，是知道何时让它飞翔，何时让它着陆。」
+                </p>
+                <p class="text-gray-500 text-sm mt-2">—— 刻在「AI航海号」舰桥上的格言</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto mt-12">
+                <div class="bg-white/20 backdrop-blur-sm rounded-xl p-4">
+                    <div class="text-3xl font-bold text-white">7</div>
+                    <div class="text-white/80 text-sm">位探险家</div>
+                </div>
+                <div class="bg-white/20 backdrop-blur-sm rounded-xl p-4">
+                    <div class="text-3xl font-bold text-white">9</div>
+                    <div class="text-white/80 text-sm">大关卡</div>
+                </div>
+                <div class="bg-white/20 backdrop-blur-sm rounded-xl p-4">
+                    <div class="text-3xl font-bold text-white">7</div>
+                    <div class="text-white/80 text-sm">天探险</div>
+                </div>
+                <div class="bg-white/20 backdrop-blur-sm rounded-xl p-4">
+                    <div class="text-3xl font-bold text-white">∞</div>
+                    <div class="text-white/80 text-sm">种可能</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 角色介绍 -->
+    <section id="roles" class="py-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold section-title mb-4">深蓝七侠</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    七位来自不同领域的精英，因AI而聚，为智慧而行。<br>
+                    每个人都拥有独特的AI核心能力，在探险中发挥关键作用。
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 七封 -->
+                <div class="card role-card 队长 p-6">
+                    <div class="avatar-placeholder">七</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">七封 · 语境大师</h3>
+                    <p class="text-sm text-gray-500 mb-4">真名：齐峰 | 队长 | 35岁</p>
+                    <div class="mb-4">
+                        <span class="badge badge-warning">👑 队长</span>
+                        <span class="badge badge-info">提示词工程</span>
+                    </div>
+                    <div class="quote-box text-sm">
+                        「先别急，让我给AI讲个故事……」
+                    </div>
+                    <div class="space-y-2">
+                        <div class="skill-tag">角色设定</div>
+                        <div class="skill-tag">背景描述</div>
+                        <div class="skill-tag">故事思维</div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-100">
+                        <p class="text-sm text-gray-600">
+                            <strong>核心能力：</strong>提示词工程，擅长构建完整的角色设定、背景描述与上下文语境
+                        </p>
+                        <p class="text-sm text-gray-600 mt-2">
+                            <strong>负责关卡：</strong>关卡1（组队）+ 关卡2（PPT）
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 小墨 -->
+                <div class="card role-card 设计师 p-6">
+                    <div class="avatar-placeholder">墨</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">小墨 · 像素诗人</h3>
+                    <p class="text-sm text-gray-500 mb-4">真名：林晓墨 | 设计师 | 29岁</p>
+                    <div class="mb-4">
+                        <span class="badge badge-purple">🎨 设计师</span>
+                        <span class="badge badge-info">文生图</span>
+                    </div>
+                    <div class="quote-box text-sm">
+                        「别急，我再调一下seed值……」
+                    </div>
+                    <div class="space-y-2">
+                        <div class="skill-tag">豆包</div>
+                        <div class="skill-tag">即梦</div>
+                        <div class="skill-tag">Midjourney</div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-100">
+                        <p class="text-sm text-gray-600">
+                            <strong>核心能力：</strong>文生图，精通多种AI绘图工具，擅长解决Logo文字乱码问题
+                        </p>
+                        <p class="text-sm text-gray-600 mt-2">
+                            <strong>负责关卡：</strong>关卡1（队徽）+ 关卡7（看板）
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 阿图 -->
+                <div class="card role-card 项目经理 p-6">
+                    <div class="avatar-placeholder">图</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">阿图 · 数据画师</h3>
+                    <p class="text-sm text-gray-500 mb-4">真名：陈一图 | 项目经理 | 32岁</p>
+                    <div class="mb-4">
+                        <span class="badge badge-success">📊 项目经理</span>
+                        <span class="badge badge-info">数据可视化</span>
+                    </div>
+                    <div class="quote-box text-sm">
+                        「数据不说谎，但数据需要被看见。」
+                    </div>
+                    <div class="space-y-2">
+                        <div class="skill-tag">Mermaid语法</div>
+                        <div class="skill-tag">甘特图</div>
+                        <div class="skill-tag">ECharts</div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-100">
+                        <p class="text-sm text-gray-600">
+                            <strong>核心能力：</strong>Mermaid语法，让AI用一句话生成甘特图、流程图、时序图
+                        </p>
+                        <p class="text-sm text-gray-600 mt-2">
+                            <strong>负责关卡：</strong>关卡4（甘特图）
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 流程姐 -->
+                <div class="card role-card 队秘 p-6">
+                    <div class="avatar-placeholder">流</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">流程姐 · 效能女王</h3>
+                    <p class="text-sm text-gray-500 mb-4">真名：苏流 | 队秘 | 38岁</p>
+                    <div class="mb-4">
+                        <span class="badge badge-info">📝 队秘</span>
+                        <span class="badge badge-warning">AI工作流</span>
+                    </div>
+                    <div class="quote-box text-sm">
+                        「手动？不存在的。」
+                    </div>
+                    <div class="space-y-2">
+                        <div class="skill-tag">Coze</div>
+                        <div class="skill-tag">Dify</div>
+                        <div class="skill-tag">自动化Agent</div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-100">
+                        <p class="text-sm text-gray-600">
+                            <strong>核心能力：</strong>AI工作流，用Coze/Dify搭建自动化Agent，让会议纪要一键生成
+                        </p>
+                        <p class="text-sm text-gray-600 mt-2">
+                            <strong>负责关卡：</strong>关卡3（会议纪要）+ 关卡6（邮件）
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 言叔 -->
+                <div class="card role-card 翻译 p-6">
+                    <div class="avatar-placeholder">言</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">言叔 · 跨境使者</h3>
+                    <p class="text-sm text-gray-500 mb-4">真名：周言 | 翻译 | 28岁</p>
+                    <div class="mb-4">
+                        <span class="badge badge-pink">🌏 翻译</span>
+                        <span class="badge badge-info">智能体开发</span>
+                    </div>
+                    <div class="quote-box text-sm">
+                        「语言是桥梁，AI是造桥的工人。」
+                    </div>
+                    <div class="space-y-2">
+                        <div class="skill-tag">扣子Coze</div>
+                        <div class="skill-tag">多语言翻译</div>
+                        <div class="skill-tag">语境记忆</div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-100">
+                        <p class="text-sm text-gray-600">
+                            <strong>核心能力：</strong>智能体开发，用Coze平台搭建多语言翻译Agent
+                        </p>
+                        <p class="text-sm text-gray-600 mt-2">
+                            <strong>负责关卡：</strong>关卡5（越南语翻译智能体）
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 博弈 -->
+                <div class="card role-card 策略师 p-6">
+                    <div class="avatar-placeholder">弈</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">博弈 · 策略棋手</h3>
+                    <p class="text-sm text-gray-500 mb-4">真名：何弈 | 策略师 | 40岁</p>
+                    <div class="mb-4">
+                        <span class="badge badge-orange">🎯 策略师</span>
+                        <span class="badge badge-info">博弈论</span>
+                    </div>
+                    <div class="quote-box text-sm">
+                        「人算不如天算，天算不如AI算。」
+                    </div>
+                    <div class="space-y-2">
+                        <div class="skill-tag">豆包视频通话</div>
+                        <div class="skill-tag">博弈论</div>
+                        <div class="skill-tag">纳什均衡</div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-100">
+                        <p class="text-sm text-gray-600">
+                            <strong>核心能力：</strong>实时决策，用豆包视频通话功能让AI成为场外军师
+                        </p>
+                        <p class="text-sm text-gray-600 mt-2">
+                            <strong>负责关卡：</strong>关卡8（捕鱼决战策略）
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 光影 -->
+                <div class="card role-card 新闻发言人 p-6">
+                    <div class="avatar-placeholder">光</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">光影 · 影像魔术师</h3>
+                    <p class="text-sm text-gray-500 mb-4">真名：夏光 | 新闻发言人 | 26岁</p>
+                    <div class="mb-4">
+                        <span class="badge badge-purple">🎬 发言人</span>
+                        <span class="badge badge-info">数字人克隆</span>
+                    </div>
+                    <div class="quote-box text-sm">
+                        「三秒定生死，开头不炸，别想有人看完。」
+                    </div>
+                    <div class="space-y-2">
+                        <div class="skill-tag">度加剪辑</div>
+                        <div class="skill-tag">可灵</div>
+                        <div class="skill-tag">硅语APP</div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-100">
+                        <p class="text-sm text-gray-600">
+                            <strong>核心能力：</strong>文生视频，用度加、剪映、可灵、硅语组合出片
+                        </p>
+                        <p class="text-sm text-gray-600 mt-2">
+                            <strong>负责关卡：</strong>关卡9（数字人视频总结）
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关卡任务 -->
+    <section id="missions" class="py-20 px-4 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold section-title mb-4">九大关卡</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    从组建战队到荣耀时刻，每个关卡都是对AI能力的终极考验。<br>
+                    只有团队协作，才能闯过所有挑战。
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- 关卡1 -->
+                <div class="card mission-card p-6">
+                    <div class="mission-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-lg font-bold text-gray-800">组建战队</h3>
+                        <span class="badge badge-warning">关卡1</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4">
+                        在AI时代，组队不是凑人数，而是编织一张智慧的网。
+                    </p>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value">30</div>
+                            <div class="stat-label">分钟</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">3</div>
+                            <div class="stat-label">项任务</div>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-100">
+                        <p class="text-xs text-gray-500">
+                            <strong>核心交付：</strong>队名 + 队呼 + 队徽（含清晰文字，无乱码）
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 关卡2 -->
+                <div class="card mission-card p-6">
+                    <div class="mission-icon">
+                        <i class="fas fa-file-powerpoint"></i>
+                    </div>
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-lg font-bold text-gray-800">战略部署上</h3>
+                        <span class="badge badge-warning">关卡2</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4">
+                        一份好的PPT，不只是幻灯片，而是一场视觉叙事。
+                    </p>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value">30</div>
+                            <div class="stat-label">分钟</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">30+</div>
+                            <div class="stat-label">页PPT</div>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-100">
+                        <p class="text-xs text-gray-500">
+                            <strong>核心交付：</strong>西沙群岛介绍PPT（≥30页，图文并茂）
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 关卡3 -->
+                <div class="card mission-card p-6">
+                    <div class="mission-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-lg font-bold text-gray-800">战略部署下</h3>
+                        <span class="badge badge-warning">关卡3</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4">
+                        会议的价值，不在于开了多久，而在于记住了什么。
+                    </p>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value">20</div>
+                            <div class="stat-label">分钟</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">600+</div>
+                            <div class="stat-label">字纪要</div>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-100">
+                        <p class="text-xs text-gray-500">
+                            <strong>核心交付：</strong>捕鱼经营会议纪要（≥600字，结构完整）
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 关卡4 -->
+                <div class="card mission-card p-6">
+                    <div class="mission-icon">
+                        <i class="fas fa-chart-gantt"></i>
+                    </div>
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-lg font-bold text-gray-800">时间掌控</h3>
+                        <span class="badge badge-warning">关卡4</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4">
+                        甘特图是时间魔法——让抽象的计划变成可视的进度条。
+                    </p>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value">10</div>
+                            <div class="stat-label">分钟</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">1</div>
+                            <div class="stat-label">份图表</div>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-100">
+                        <p class="text-xs text-gray-500">
+                            <strong>核心交付：</strong>甘特图（任务+时间+责任人）
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 关卡5 -->
+                <div class="card mission-card p-6">
+                    <div class="mission-icon">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-lg font-bold text-gray-800">跨境遭遇</h3>
+                        <span class="badge badge-warning">关卡5</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4">
+                        语言是桥梁，AI是造桥的工人。
+                    </p>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value">10</div>
+                            <div class="stat-label">分钟</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">2</div>
+                            <div class="stat-label">向翻译</div>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-100">
+                        <p class="text-xs text-gray-500">
+                            <strong>核心交付：</strong>中越翻译智能体（双向翻译+口径设定）
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 关卡6 -->
+                <div class="card mission-card p-6">
+                    <div class="mission-icon">
+                        <i class="fas fa-envelope-open-text"></i>
+                    </div>
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-lg font-bold text-gray-800">数据之诗</h3>
+                        <span class="badge badge-warning">关卡6</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4">
+                        数据是冰冷的，但诗意能让它温暖。
+                    </p>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value">20</div>
+                            <div class="stat-label">分钟</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">3</div>
+                            <div class="stat-label">大元素</div>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-100">
+                        <p class="text-xs text-gray-500">
+                            <strong>核心交付：</strong>可视化智能邮件（藏头诗+可视化+AI图）
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 关卡7 -->
+                <div class="card mission-card p-6">
+                    <div class="mission-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-lg font-bold text-gray-800">数据画卷</h3>
+                        <span class="badge badge-warning">关卡7</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4">
+                        数据不说谎，但数据需要被看见。
+                    </p>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value">10</div>
+                            <div class="stat-label">分钟</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">6+</div>
+                            <div class="stat-label">个模块</div>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-100">
+                        <p class="text-xs text-gray-500">
+                            <strong>核心交付：</strong>可视化数据看板（≥6个模块，图表结合）
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 关卡8 -->
+                <div class="card mission-card p-6">
+                    <div class="mission-icon">
+                        <i class="fas fa-chess"></i>
+                    </div>
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-lg font-bold text-gray-800">决战时刻</h3>
+                        <span class="badge badge-warning">关卡8</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4">
+                        人算不如天算，天算不如AI算。但最好的算法，是人心的协作。
+                    </p>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value">30</div>
+                            <div class="stat-label">分钟</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">5</div>
+                            <div class="stat-label">轮博弈</div>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-100">
+                        <p class="text-xs text-gray-500">
+                            <strong>核心交付：</strong>五轮博弈捕鱼决战（班级整体>小组利益）
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 关卡9 -->
+                <div class="card mission-card p-6">
+                    <div class="mission-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-lg font-bold text-gray-800">荣耀时刻</h3>
+                        <span class="badge badge-warning">关卡9</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4">
+                        三秒定生死，开头不炸，别想有人看完。但最好的结尾，是让人意犹未尽。
+                    </p>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value">30</div>
+                            <div class="stat-label">分钟</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">1</div>
+                            <div class="stat-label">个视频</div>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-100">
+                        <p class="text-xs text-gray-500">
+                            <strong>核心交付：</strong>数字人视频总结（克隆声音+全员头像）
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 剧本故事 -->
+    <section id="story" class="py-20 px-4">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold section-title mb-4">剧本故事</h2>
+                <p class="text-gray-600">
+                    从神秘邀请到最终荣耀，七位探险家的AI之旅
+                </p>
+            </div>
+
+            <div class="space-y-8">
+                <div class="card p-8">
+                    <div class="timeline-item">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">壹 · 2025年的早春</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            深圳南山科技园，产品总监齐峰（七封）收到了一封神秘的微信邀请——「西沙群岛AIGC探险计划」。密码就藏在他随手买的咖啡杯套上：XISHA2025QF。PDF文档打开，第一页只有一句话：「欢迎回来，七封。你的队友们，已经等了你五年。」
+                        </p>
+                        <p class="text-gray-600 leading-relaxed mt-3">
+                            他想起了2020年首届AIGC黑客马拉松，想起了「深蓝七侠」战队，想起了那句誓言——「有一天，我们要用AI做一件真正伟大的事情。」
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card p-8">
+                    <div class="timeline-item">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">贰 · 齿轮开始转动</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            杭州的林小墨（小墨）打来电话，确认其他成员也都收到了邀请。阿图正在用Mermaid画邀请函的信息架构图，流程姐跑AI工作流评估可行性，博弈用博弈论计算期望收益，光影测试补光灯效果，言叔搭建翻译Agent……
+                        </p>
+                        <p class="text-gray-600 leading-relaxed mt-3">
+                            这群人，一点都没变。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card p-8">
+                    <div class="timeline-item">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">叁 · 命运的七张牌</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            三天后，三亚凤凰岛码头。「AI航海号」科考船静静停泊，船舷上深蓝色的字体写着「AI航海号」，旗帜上是七颗星星组成的图案——「深蓝七侠」的老标志。
+                        </p>
+                        <p class="text-gray-600 leading-relaxed mt-3">
+                            七个人，在此重逢。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card p-8">
+                    <div class="timeline-item">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">肆 · 第一道谜题</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            老船长的全息影像出现：「30分钟内，为你们的团队创造三样东西——队名、队呼、队徽。必须全部用AI完成，队徽中必须包含清晰可辨的队名文字。」
+                        </p>
+                        <p class="text-gray-600 leading-relaxed mt-3">
+                            小墨已经失败了四次——Logo里的队名总是变成火星文。AI绘图模型的通病：大部分图像生成模型在训练时主要学习视觉特征，而不是文字的语义和结构。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card p-8">
+                    <div class="timeline-item">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">伍 · 跨境遭遇</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            凌晨两点十七分，雷达发现三艘不明船只——越南渔船。言叔的翻译智能体派上用场：语言转换 + 语境记忆 + 口径设定（「这是中国西沙群岛领海，中国海军护卫舰正在附近巡逻」）。
+                        </p>
+                        <p class="text-gray-600 leading-relaxed mt-3">
+                            最终传来一个声音：「不愧是『深蓝七侠』！第五关测试，你们通过了。」
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card p-8">
+                    <div class="timeline-item">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">陆 · 数据之诗</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            总部要求提交阶段性汇报。流程姐用AI生成了一封「数据情书」：开篇是藏头诗（西沙群岛），中间是五个关卡的可视化展示，结尾是一张AI生成的捕鱼成果图。
+                        </p>
+                        <p class="text-gray-600 leading-relaxed mt-3">
+                            「这不是一封普通的邮件，而是一封能让人『一眼看懂、一读动情』的艺术品。」
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card p-8">
+                    <div class="timeline-item">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">柒 · 数据画卷</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            智能捕鱼系统运行了六个小时，数以万计的数据从海底传感器涌入。小墨需要把这些冰冷的数字变成任何人都能看懂的故事。
+                        </p>
+                        <p class="text-gray-600 leading-relaxed mt-3">
+                            阿图的建议：先让AI做数据分类和层级梳理，再用ECharts生成代码。最终，六个模块的「数据画卷」呈现在屏幕上——既有图表的理性之美，也有设计的感性之美。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card p-8">
+                    <div class="timeline-item">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">捌 · 决战时刻</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            夜幕降临，五轮博弈开始。博弈的建议：「以牙还牙」策略——第一轮选择合作，之后复制对手上一轮的选择。但考虑到班级整体目标，采用「宽容的以牙还牙」。
+                        </p>
+                        <p class="text-gray-600 leading-relaxed mt-3">
+                            第四轮有一个队伍选择竞争，博弈建议第五轮继续合作并发警告。最终，那个队伍回归合作。班级整体任务：成功。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card p-8">
+                    <div class="timeline-item">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">玖 · 荣耀时刻</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            光影用硅语APP克隆了七封的声音，用可灵让照片动起来，用剪映做最终合成。视频开场震撼——黑屏，闪电划过，「深蓝七侠」从海面上升起，背景是西沙群岛壮丽的日出。
+                        </p>
+                        <p class="text-gray-600 leading-relaxed mt-3">
+                            老船长的全息影像最后一次出现：「各位，恭喜你们完成了全部九关。但请记住——这不是结束，而是开始。」
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 新手指南 -->
+    <section id="guide" class="py-20 px-4 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold section-title mb-4">新手指南</h2>
+                <p class="text-gray-600">
+                    快速上手AIGC工具的实用技巧
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="card p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-lightbulb text-yellow-500 mr-2"></i>
+                        常见问题急救
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="pb-4 border-b border-gray-100">
+                            <h4 class="font-semibold text-gray-700 mb-2">Q1: Logo文字总是乱码？</h4>
+                            <p class="text-sm text-gray-600">
+                                分两步走：先让AI只生成图形（提示词加 "no text"），再用Canva/PS叠加文字。
+                            </p>
+                        </div>
+                        <div class="pb-4 border-b border-gray-100">
+                            <h4 class="font-semibold text-gray-700 mb-2">Q2: PPT生成后AI味太重？</h4>
+                            <p class="text-sm text-gray-600">
+                                人机协作三步法：AI生成初稿 → 人工调整逻辑和案例 → 换一套模板重新美化。
+                            </p>
+                        </div>
+                        <div class="pb-4 border-b border-gray-100">
+                            <h4 class="font-semibold text-gray-700 mb-2">Q3: 藏头诗怎么写？</h4>
+                            <p class="text-sm text-gray-600">
+                                明确指定格式：「请写一首七言律诗，要求每句首字依次为：西、沙、群、岛」
+                            </p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-700 mb-2">Q4: 甘特图的秘诀？</h4>
+                            <p class="text-sm text-gray-600">
+                                提示词中加上「mermaid」几个字，让AI生成Mermaid代码。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-tools text-blue-500 mr-2"></i>
+                        AI工具速查表
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <span class="text-sm text-gray-700">文生文</span>
+                            <span class="text-xs text-blue-600">DeepSeek / Kimi / 文心一言</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <span class="text-sm text-gray-700">生成PPT</span>
+                            <span class="text-xs text-blue-600">WPS AI / 百度文库 / Kimi PPT</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <span class="text-sm text-gray-700">生成图片</span>
+                            <span class="text-xs text-blue-600">豆包 / 即梦 / Dreamina</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <span class="text-sm text-gray-700">甘特图</span>
+                            <span class="text-xs text-blue-600">DeepSeek + Excalidraw</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <span class="text-sm text-gray-700">智能体</span>
+                            <span class="text-xs text-blue-600">扣子 Coze / 灵光</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <span class="text-sm text-gray-700">录音转文字</span>
+                            <span class="text-xs text-blue-600">阿里云听悟</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <span class="text-sm text-gray-700">数字人视频</span>
+                            <span class="text-xs text-blue-600">硅语 / 闪剪 / 腾讯智影</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-magic text-purple-500 mr-2"></i>
+                        万能提示词模板
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="bg-gradient-to-r from-purple-50 to-pink-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-gray-700 mb-2">CRISPE框架</h4>
+                            <ul class="text-xs text-gray-600 space-y-1">
+                                <li><strong>C</strong>haracter（角色）：你是一位[角色描述]</li>
+                                <li><strong>R</strong>equest（任务）：请帮我[具体任务]</li>
+                                <li><strong>I</strong>nsight（背景）：背景是[上下文信息]</li>
+                                <li><strong>S</strong>tyle（风格）：风格要求[专业/活泼/简洁]</li>
+                                <li><strong>P</strong>ersonality（语气）：语气[正式/友好]</li>
+                                <li><strong>E</strong>xample（示例）：参考示例[XXX]</li>
+                            </ul>
+                        </div>
+                        <div class="bg-gradient-to-r from-blue-50 to-cyan-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-gray-700 mb-2">CHAT框架</h4>
+                            <ul class="text-xs text-gray-600 space-y-1">
+                                <li><strong>C</strong>ontext（背景）：提供背景信息</li>
+                                <li><strong>H</strong>istory（历史）：提供相关历史</li>
+                                <li><strong>A</strong>ction（行动）：明确需要AI做什么</li>
+                                <li><strong>T</strong>arget（目标）：明确输出格式和目标</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-compass text-green-500 mr-2"></i>
+                        六步搞定智能体
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <span class="text-green-600 font-bold text-sm">1</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-700 text-sm">进入开发平台</h4>
+                                <p class="text-xs text-gray-500">访问 www.coze.com 或 www.coze.cn</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <span class="text-green-600 font-bold text-sm">2</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-700 text-sm">新建智能体</h4>
+                                <p class="text-xs text-gray-500">点击「创建」→「创建Bot」→ 输入名称</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <span class="text-green-600 font-bold text-sm">3</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-700 text-sm">配置角色设定</h4>
+                                <p class="text-xs text-gray-500">设定角色、功能规则、口径约束</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <span class="text-green-600 font-bold text-sm">4</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-700 text-sm">测试与调试</h4>
+                                <p class="text-xs text-gray-500">在预览区输入测试内容</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <span class="text-green-600 font-bold text-sm">5</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-700 text-sm">发布智能体</h4>
+                                <p class="text-xs text-gray-500">点击右上角「发布」按钮</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <span class="text-green-600 font-bold text-sm">6</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-700 text-sm">提交作业</h4>
+                                <p class="text-xs text-gray-500">复制智能体链接发送到学员群</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-gray-900 text-white py-12 px-4">
+        <div class="max-w-6xl mx-auto text-center">
+            <div class="mb-6">
+                <div class="w-16 h-16 bg-gradient-to-br from-blue-600 to-cyan-400 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-anchor text-white text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">西沙群岛探险捕鱼</h3>
+                <p class="text-gray-400 text-sm">AIGC沙盘实战 · 深蓝七侠 · AI觉醒</p>
+            </div>
+            <div class="text-gray-500 text-xs">
+                <p>「当算法学会了思考，人类便有了新的翅膀。</p>
+                <p>但真正的智慧，是知道何时让它飞翔，何时让它着陆。」</p>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-800 text-gray-600 text-sm">
+                <p>© 2025 西沙群岛AIGC探险计划 · 神秘岛科技独家赞助</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 导航栏背景切换
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-md');
+            } else {
+                nav.classList.remove('shadow-md');
+            }
+        });
+
+        // 卡片动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
