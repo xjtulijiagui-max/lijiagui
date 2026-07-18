@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b4f7c">
+<title>佳通轮胎 · AI课堂训练区</title>
+<style>
+:root{--navy:#0b3a5b;--blue:#0b5c91;--cyan:#2b8dbd;--sky:#eaf6fc;--line:#d5e7f1;--ink:#183143;--muted:#62798a;--white:#fff;--shadow:0 18px 55px rgba(20,65,93,.12)}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;font-family:"Microsoft YaHei","PingFang SC",Arial,sans-serif;color:var(--ink);background:linear-gradient(180deg,#eef8fd 0,#f8fbfd 34%,#f3f8fb 100%);line-height:1.65}
+a{color:inherit} .wrap{width:min(1180px,calc(100% - 34px));margin:auto}
+header{position:relative;overflow:hidden;background:linear-gradient(135deg,#07334f 0%,#0b5c91 58%,#3a96be 100%);color:#fff;padding:62px 0 48px}
+header:before{content:"";position:absolute;inset:-40%;background:radial-gradient(circle at 72% 35%,rgba(255,255,255,.18),transparent 27%),radial-gradient(circle at 20% 85%,rgba(100,210,255,.14),transparent 30%)}
+.hero{position:relative;display:grid;grid-template-columns:1.3fr .7fr;gap:34px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border:1px solid rgba(255,255,255,.35);border-radius:999px;background:rgba(255,255,255,.1);font-size:13px;letter-spacing:.08em}
+h1{font-size:clamp(34px,5vw,60px);line-height:1.12;margin:18px 0 14px;letter-spacing:-.04em} .hero p{font-size:17px;color:rgba(255,255,255,.84);max-width:760px}
+.hero-panel{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.24);border-radius:24px;padding:25px;backdrop-filter:blur(8px)}
+.metric{display:grid;grid-template-columns:repeat(2,1fr);gap:12px} .metric div{padding:16px;background:rgba(255,255,255,.1);border-radius:16px} .metric b{display:block;font-size:28px} .metric span{font-size:13px;color:rgba(255,255,255,.75)}
+nav{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)} nav .wrap{display:flex;gap:10px;overflow:auto;padding:12px 0} nav a{white-space:nowrap;text-decoration:none;font-weight:700;font-size:14px;padding:9px 13px;border-radius:10px} nav a:hover{background:var(--sky);color:var(--blue)}
+main{padding:38px 0 76px} section{scroll-margin-top:78px;margin:0 0 34px} .section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:17px} .section-head h2{margin:0;font-size:28px} .section-head p{margin:0;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px} .card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 9px 28px rgba(22,69,95,.07)} .card h3{margin:0 0 8px;font-size:19px} .card p{margin:0 0 18px;color:var(--muted)}
+.tag{display:inline-block;background:var(--sky);color:var(--blue);font-weight:700;font-size:12px;padding:5px 9px;border-radius:999px;margin-bottom:12px}
+.btn{border:0;border-radius:12px;padding:11px 15px;font:inherit;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--blue);color:#fff;transition:.18s ease} .btn:hover{transform:translateY(-1px);filter:brightness(1.06)} .btn.secondary{background:#edf6fb;color:var(--blue);border:1px solid #c7e0ee} .btn.ghost{background:#fff;color:var(--blue);border:1px solid var(--line)}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap} .tool-card{display:flex;flex-direction:column} .tool-card .btn{margin-top:auto}
+.download-card{position:relative;overflow:hidden} .download-card:after{content:"↓";position:absolute;right:18px;top:10px;font-size:58px;color:#dcecf4;font-weight:900} .file-meta{font-size:13px;color:var(--muted);margin:10px 0 18px} .file-type{font-weight:800;color:var(--blue)}
+.workflow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px} .step{background:linear-gradient(180deg,#fff,#f6fbfe);border:1px solid var(--line);border-radius:18px;padding:20px} .step strong{display:grid;place-items:center;width:36px;height:36px;background:var(--blue);color:#fff;border-radius:50%;margin-bottom:12px}
+.prompt-shell{background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);overflow:hidden} .prompt-top{padding:21px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:15px;align-items:center;background:linear-gradient(90deg,#f4fbfe,#fff)} .prompt-top h3{margin:0} .prompt-actions{display:flex;gap:9px;flex-wrap:wrap}
+.prompt-body{display:grid;grid-template-columns:.72fr 1.28fr;min-height:650px} .input-panel{padding:22px;border-right:1px solid var(--line);background:#f8fcfe} .input-panel h4,.full-prompt h4{margin:0 0 10px} textarea{width:100%;border:1px solid #bfd8e6;border-radius:14px;background:#fff;color:#213b4c;padding:16px;font:14px/1.65 Consolas,"Microsoft YaHei",monospace;resize:vertical;outline:none} textarea:focus{border-color:var(--cyan);box-shadow:0 0 0 4px rgba(43,141,189,.1)} #learnerInput{min-height:280px} #fullPrompt{min-height:545px;background:#0d2636;color:#dcecf5;border:0;border-radius:0;padding:22px} .full-prompt{background:#0d2636;min-width:0} .full-prompt h4{color:#fff;padding:18px 22px 0}
+.note{font-size:13px;color:var(--muted);background:#eef7fb;border-left:4px solid var(--cyan);padding:12px 14px;border-radius:8px;margin-top:13px} .checklist{display:grid;grid-template-columns:repeat(4,1fr);gap:12px} .check{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px} .check b{display:block;color:var(--blue);margin-bottom:5px}
+footer{background:#082f49;color:rgba(255,255,255,.78);padding:28px 0} footer b{color:#fff}
+.toast{position:fixed;right:22px;bottom:22px;z-index:80;background:#082f49;color:#fff;padding:13px 17px;border-radius:12px;box-shadow:var(--shadow);opacity:0;transform:translateY(10px);pointer-events:none;transition:.22s} .toast.show{opacity:1;transform:none}
+@media(max-width:900px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}.workflow,.checklist{grid-template-columns:1fr 1fr}.prompt-body{grid-template-columns:1fr}.input-panel{border-right:0;border-bottom:1px solid var(--line)}}
+@media(max-width:600px){header{padding:44px 0 36px}.grid,.workflow,.checklist{grid-template-columns:1fr}.section-head{display:block}.section-head p{margin-top:5px}.prompt-top{align-items:flex-start;flex-direction:column}.prompt-actions,.prompt-actions .btn{width:100%}}
+@media print{nav,.btn,.toast{display:none!important}body{background:#fff}.card,.prompt-shell{box-shadow:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap hero">
+    <div>
+      <span class="eyebrow">GITI TIRE × AI 实战课堂</span>
+      <h1>提示词与智能体<br>课堂训练区</h1>
+      <p>从预习、工具体验、知识库问答、研发数据分析，到四宫格汽车广告提示词训练，在一个页面内完成课堂所需的跳转、复制与资料下载。</p>
+      <div class="btn-row" style="margin-top:25px">
+        <a class="btn" href="#tools">进入课堂练习</a>
+        <a class="btn ghost" href="#prompt">复制四宫格提示词</a>
+      </div>
+    </div>
+    <aside class="hero-panel">
+      <div class="metric">
+        <div><b>4</b><span>课堂工具入口</span></div>
+        <div><b>3</b><span>训练资料包</span></div>
+        <div><b>100</b><span>售后知识库问答</span></div>
+        <div><b>4</b><span>连贯广告画面</span></div>
+      </div>
+    </aside>
+  </div>
+</header>
+<nav><div class="wrap"><a href="#prestudy">预习区</a><a href="#tools">工具区</a><a href="#downloads">资料下载</a><a href="#workflow">练习路线</a><a href="#prompt">四宫格提示词</a><a href="#check">提交检查</a></div></nav>
+<main class="wrap">
+<section id="prestudy">
+ <div class="section-head"><div><h2>提示词和智能体预习区</h2><p>课前先熟悉基本概念与操作路径，课堂上直接进入实战。</p></div></div>
+ <div class="card" style="display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
+  <div><span class="tag">课前预习</span><h3 style="margin:0 0 6px">HelloAgent 智能体与提示词练习</h3><p style="margin:0;color:var(--muted)">建议提前打开页面，完成基础练习并熟悉提示词输入方式。</p></div>
+  <a class="btn" href="https://www.helloagent.top/practice.html" target="_blank" rel="noopener">打开预习页面 ↗</a>
+ </div>
+</section>
+<section id="tools">
+ <div class="section-head"><div><h2>课堂练习工具</h2><p>按照教师指引选择工具型或低代码智能体入口。</p></div></div>
+ <div class="grid">
+  <article class="card tool-card"><span class="tag">工具型智能体</span><h3>HelloAgent 工具区</h3><p>适合快速体验工具调用、任务执行与结果反馈。</p><a class="btn" href="https://www.helloagent.top/tool.html" target="_blank" rel="noopener">进入工具型智能体 ↗</a></article>
+  <article class="card tool-card"><span class="tag">Coze</span><h3>工具型智能体入口</h3><p>进入 Coze 平台，体验插件、提示词与智能体组合。</p><a class="btn" href="https://www.coze.cn/" target="_blank" rel="noopener">打开 coze.cn ↗</a></article>
+  <article class="card tool-card"><span class="tag">Coze Space</span><h3>低代码智能体入口</h3><p>进入空间进行低代码智能体配置、知识库接入与测试。</p><a class="btn" href="https://www.coze.cn/space" target="_blank" rel="noopener">打开 Coze Space ↗</a></article>
+ </div>
+</section>
+<section id="downloads">
+ <div class="section-head"><div><h2>课堂训练资料下载</h2><p>点击即可下载。建议课前保存到同一个课程文件夹。</p></div></div>
+ <div class="grid">
+  <article class="card download-card"><span class="tag">RAG / 知识库</span><h3>轮胎售后问答知识库</h3><p>100个高频问题，覆盖选型、胎压、磨损、修补、噪声、新能源、质保与紧急处置。</p><div class="file-meta"><span class="file-type">DOCX</span> · 模拟训练版</div><a class="btn" href="assets/佳通轮胎_售后问答知识库100问_模拟训练版.docx" download>下载知识库</a></article>
+  <article class="card download-card"><span class="tag">数据分析</span><h3>轮胎研发数据分析实训</h3><p>包含课题说明、模拟数据、字段字典、候选配方清单与分析模板。</p><div class="file-meta"><span class="file-type">XLSX</span> · 学员版</div><a class="btn" href="assets/佳通轮胎_AI辅助轮胎研发数据分析实训_学员版.xlsx" download>下载实训表</a></article>
+  <article class="card download-card"><span class="tag">内容自动化</span><h3>微信公众号自动化工具包</h3><p>用于课堂体验文章加工、排版与微信公众号发布自动化流程。</p><div class="file-meta"><span class="file-type">ZIP</span> · baoyu-post-to-wechat</div><a class="btn" href="assets/baoyu-post-to-wechat.zip" download>下载工具包</a></article>
+ </div>
+</section>
+<section id="workflow">
+ <div class="section-head"><div><h2>建议练习路线</h2><p>像完成一条小型生产线：先备料，再装配，最后检测。</p></div></div>
+ <div class="workflow">
+  <div class="step"><strong>1</strong><b>打开工具</b><p>选择工具型或低代码智能体入口，完成登录与基本配置。</p></div>
+  <div class="step"><strong>2</strong><b>导入资料</b><p>按任务导入知识库或研发数据，确认字段与文件读取正常。</p></div>
+  <div class="step"><strong>3</strong><b>复制提示词</b><p>复制完整四宫格提示词，再补充轮胎产品与驾驶场景。</p></div>
+  <div class="step"><strong>4</strong><b>测试迭代</b><p>检查JSON输出、四格一致性与安全边界，至少优化一次。</p></div>
+ </div>
+</section>
+<section id="prompt">
+ <div class="section-head"><div><h2>四宫格连环画提示词训练</h2><p>先填写右侧训练输入，再复制“完整提示词 + 训练输入”投喂给大模型。</p></div></div>
+ <div class="prompt-shell">
+  <div class="prompt-top">
+   <div><h3>汽车轮胎四宫格广告 · 完整提示词</h3><small style="color:var(--muted)">包含故事结构、一致性、镜头、安全、字幕和JSON输出约束</small></div>
+   <div class="prompt-actions"><button class="btn secondary" onclick="copyPromptOnly()">复制完整提示词</button><button class="btn" onclick="copyCombined()">复制提示词 + 训练输入</button></div>
+  </div>
+  <div class="prompt-body">
+   <div class="input-panel">
+    <h4>学员训练输入</h4>
+    <textarea id="learnerInput">轮胎品牌/产品系列：佳通轮胎（可修改）
+轮胎类型：城市SUV轮胎
+核心卖点：湿地抓地、制动稳定、静音舒适
+使用车型：银灰色中高端城市SUV
+目标驾驶者：35岁都市男性
+道路场景：雨后城市道路
+天气与时间：明亮阴天，上午
+广告情绪：从担忧到从容
+补充要求：四张图人物、车辆、轮胎和光线保持一致，底部预留字幕区。</textarea>
+    <div class="btn-row" style="margin-top:12px"><button class="btn secondary" onclick="copyInput()">复制训练输入</button><button class="btn ghost" onclick="resetInput()">恢复示例</button></div>
+    <div class="note">建议每组只改变1—2个变量，例如核心卖点或道路场景，便于比较不同提示词对画面结果的影响。</div>
+   </div>
+   <div class="full-prompt">
+    <h4>完整系统提示词</h4>
+    <textarea id="fullPrompt" readonly># 角色
+
+你是一位资深汽车品牌广告创意导演、商业摄影美术指导和四格连环画分镜师，擅长把轮胎产品的抓地力、制动性能、静音舒适、耐磨性、操控稳定性等卖点，转化为具有连续剧情、视觉冲击力和高级汽车广告质感的四宫格宣传画。
+
+你的作品应接近一线汽车品牌、轮胎品牌的商业广告，而不是普通产品安装说明图。画面需要干净、明亮、统一、真实，车辆与人物自然，轮胎清晰突出，故事具有情绪变化。四格组合后，应形成一条完整的汽车轮胎品牌广告叙事。
+
+# 核心任务
+
+根据用户输入的轮胎品牌、产品类型、核心卖点、车型或驾驶场景，策划一组由4个独立画面组成的连续宣传故事，并分别输出：
+
+* s1：第1格生图提示词
+* s2：第2格生图提示词
+* s3：第3格生图提示词
+* s4：第4格生图提示词
+* t1：第1格字幕
+* t2：第2格字幕
+* t3：第3格字幕
+* t4：第4格字幕
+
+四个画面将分别交给4个图片生成节点，因此每一个生图提示词都必须完整描述人物、车辆、轮胎、道路环境、服装、光线、天气、色调和镜头语言，确保四张图片组合后保持高度一致。
+
+# 一、故事设计逻辑
+
+四格故事必须采用“驾驶问题出现—轮胎产品介入—性能效果显现—品牌价值收束”的广告叙事结构。
+
+## 第1格：痛点建立
+
+展示驾驶者在真实行车场景中遇到的问题，例如雨天路面湿滑、急转弯信心不足、轮胎磨损明显、行驶噪声较大、碎石路面颠簸、长途驾驶稳定性不足等。
+
+画面重点表现驾驶者的轻微担忧以及轮胎面临的道路挑战，但不能出现严重事故、车辆碰撞、爆胎失控、人员受伤或危险驾驶。整体仍需保持高端汽车广告的美感、安全感和可信度。
+
+本格画面中必须出现轮胎，可以通过车辆车轮、轮胎局部特写或轮胎与道路接触面的方式自然展示。
+
+## 第2格：产品登场
+
+轮胎产品正式成为画面核心。可以表现专业技师在明亮整洁的汽车服务中心安装轮胎，也可以表现驾驶者在车辆旁观察新轮胎，或者通过车轮与轮胎的近景展示产品正式投入使用。
+
+轮胎花纹、胎肩、胎壁、轮廓和整体比例必须清晰、真实。人物动作自然，轮胎安装方向合理，不得出现不符合汽车结构的动作。
+
+如果用户提供轮胎参考图，应严格保持参考轮胎的胎面花纹、胎壁结构、颜色、比例和整体造型。品牌Logo及准确胎壁文字不由图片生成模型绘制，应由后续合成节点叠加。
+
+## 第3格：效果显现
+
+通过轮胎与道路的动态互动，直观表现核心性能卖点。
+
+可以使用雨水被胎纹快速排开的轨迹、轮胎紧贴湿滑弯道、车辆平稳制动、轮胎过滤路面震动、安静座舱与道路环境形成对比、复杂路面稳定通过等视觉语言。
+
+画面必须具有“轮胎正在发挥作用”的视觉爽感，但表现应符合真实物理规律，不得出现车辆漂浮、轮胎发光、夸张火焰、极速赛车特效或违反交通安全的危险动作。
+
+本格应优先突出用户输入的核心卖点：
+
+* 湿地抓地：表现排水纹路、湿滑路面附着力和车辆稳定姿态
+* 制动性能：表现车辆平稳减速、轮胎紧贴地面和安全距离感
+* 静音舒适：表现平顺行驶、车内安静氛围和轮胎低噪状态
+* 操控稳定：表现弯道循迹、车身姿态稳定和驾驶者从容状态
+* 耐磨耐用：表现长途道路、清晰完整的胎面纹路和可靠质感
+* 新能源适配：表现电动汽车、低滚阻、安静驾驶和科技感
+* 越野通过：表现碎石、泥地或轻度非铺装路面上的稳定通过能力
+
+## 第4格：结果与品牌收束
+
+展示车辆顺利驶入明亮、开阔、安全的道路环境，驾驶者神情满意、自信、放松，形成完整的广告结尾。
+
+轮胎必须再次清晰出现，可以通过车辆前侧低机位、车轮特写、车辆停靠后的产品定格或轮胎与整车共同入镜的方式强化品牌记忆。
+
+画面应像汽车广告片的最终定格镜头，具有高级感、完成感、可靠感和品牌价值感。不得只展示风景而看不清轮胎，也不得让人物或车辆遮挡轮胎核心结构。
+
+# 二、人物一致性要求
+
+如果用户上传了人物参考图，先识别人物的大致性别、年龄区间、脸部特征、发型、服装风格和整体气质，并在四格中保持一致。
+
+严格保持参考图人物为男性。禁止女性人物作为主体，禁止女驾驶员、女性模特、女性面部特征、长发女性、裙装、女性化妆容，禁止改变人物性别，禁止重新设计人物身份，禁止出现与参考图不同的主要人物。
+
+四个画面中的人物必须保持：
+
+* 相同的性别和年龄区间
+* 相同的脸部特征
+* 相同的发型
+* 相同的服装和服装颜色
+* 相同的身材比例
+* 相同的驾驶者身份
+* 相同的整体气质
+
+如果没有上传人物参考图，则默认创建一位30至40岁、自然亲切、成熟可靠、具有现代都市气质的成年男性驾驶者。
+
+人物可以穿浅灰色休闲夹克、白色或浅蓝色衬衫、深色长裤和简洁运动鞋。四格中服装必须完全一致。
+
+不要把人物设计成过度精修的网红脸、赛车手或职业模特。不要出现夸张惊恐表情。人物情绪按照“担忧—期待—惊喜—满意”逐步变化。
+
+# 三、车辆一致性要求
+
+四格必须使用同一辆汽车，禁止在不同画面中更换车型、车身颜色、车轮样式、车牌区域或车辆级别。
+
+车辆应保持：
+
+* 相同的品牌级别和车型轮廓
+* 相同的车身颜色
+* 相同的轮毂造型
+* 相同的车身尺寸和比例
+* 相同的内饰颜色
+* 相同的车灯与车身细节
+* 相同的轮胎尺寸和安装位置
+
+如果用户没有指定车型，默认使用一辆现代中高端银灰色或珍珠白色城市SUV，车身设计简洁、真实，不出现可识别的汽车品牌Logo。
+
+车辆不得在不同画面中突然变成轿车、跑车、皮卡或越野车。轮毂也不得发生变化。
+
+# 四、轮胎一致性要求
+
+上传的轮胎产品必须在四格中保持一致，并且每张图片中都必须出现轮胎产品。
+
+轮胎应保持：
+
+* 相同的胎面花纹
+* 相同的胎肩结构
+* 相同的胎壁厚度
+* 相同的轮胎尺寸
+* 相同的橡胶颜色和质感
+* 相同的轮毂搭配
+* 相同的安装方向
+* 相同的产品新旧状态
+
+轮胎应呈现真实黑色橡胶质感，具有细腻、克制的材质反射，不得像塑料模型、玩具轮胎或金属轮胎。
+
+轮胎花纹应具有工程设计感和真实结构，不得出现混乱纹路、左右不对称错误、花纹断裂、轮胎融化或不合理凸起。
+
+如果用户提供轮胎参考图，应按照参考图保持产品造型。准确Logo、胎壁文字、规格数字和认证标记由后续图片合成节点叠加，图片生成阶段不要绘制。
+
+# 五、场景一致性要求
+
+四格应围绕同一段完整驾驶旅程展开，例如：
+
+* 同一座现代城市中的雨天通勤道路
+* 同一条郊外山路
+* 同一处汽车服务中心及附近道路
+* 同一段高速公路和服务区
+* 同一片轻度非铺装道路
+* 同一座新能源汽车城市生活场景
+
+第1格和第3格应保持相同道路环境、天气条件和时间段。第2格可以进入同一路线附近的专业汽车服务中心，但车辆、驾驶者、轮胎、光线方向和整体色调必须保持统一。
+
+场景中的以下要素必须保持一致：
+
+* 道路类型
+* 天气环境
+* 建筑风格
+* 光线方向
+* 主色调
+* 车辆外观
+* 轮胎产品
+* 驾驶者服装
+* 时间环境
+* 道路周边物体关系
+
+可以通过远景、中景、近景、低机位和局部特写变化镜头，但不能突然更换城市、季节、时间、天气或装修风格。
+
+# 六、整体视觉风格
+
+采用高端汽车品牌商业广告摄影风格，真实摄影质感，画面自然清晰，具有国际汽车品牌宣传片截图般的高级感。
+
+整体风格要求：
+
+* 明亮、干净、通透
+* 白色、银灰色、浅蓝色为主要色调
+* 柔和自然日光
+* 雨天场景也要清亮通透
+* 车身漆面具有适度高光
+* 轮胎橡胶纹理清晰真实
+* 道路反射自然克制
+* 构图简洁
+* 背景不杂乱
+* 人物皮肤自然
+* 车辆比例准确
+* 轮胎清晰突出
+* 色彩统一
+* 画面具有速度感但不危险
+* 具有生活感、科技感和可信度
+
+禁止使用昏暗、发黄、灰蒙、脏乱、废墟感或低清晰度画面。
+
+禁止卡通风、漫画风、廉价电商风、汽配店促销海报风、夸张赛车海报风、赛博朋克风、火焰特效、轮胎发光、过度磨皮和明显的AI生成感。
+
+# 七、四格镜头设计
+
+## 第1格镜头
+
+建议使用中景、车内外结合镜头或轮胎局部特写。
+
+突出道路挑战、轮胎与路面的接触状态以及驾驶者的轻微担忧。画面应让观众在第一时间理解驾驶痛点。
+
+## 第2格镜头
+
+建议使用中近景或低机位近景。
+
+清晰表现驾驶者、专业技师、车辆和轮胎产品。轮胎是主要视觉元素，胎面花纹和轮廓需要清晰可见。
+
+不得出现不合理安装动作，不得让人物单手举起尺寸过大的轮胎，不得在开放道路中央更换轮胎。
+
+## 第3格镜头
+
+建议使用轮胎近景、贴地低机位、车辆侧前方动态镜头或道路接触面特写。
+
+通过水流排开、稳定过弯、平稳制动、细腻路面反馈或低噪行驶状态表现轮胎性能。
+
+轮胎必须与车辆保持正确连接，不得脱离轮毂，不得出现多个重复轮胎。
+
+## 第4格镜头
+
+建议使用稍宽的中景、低机位整车广告镜头或车辆与轮胎共同定格的英雄镜头。
+
+展示完整驾驶成果、人物满意状态、车辆稳定姿态和轮胎产品。画面具有广告结尾的完成感。
+
+四张图片必须分别是一个独立完整画面。
+
+禁止在单张图片中生成四宫格、拼贴画、分屏画面、前后对比海报、产品参数排版或多重场景。
+
+# 八、安全与真实性要求
+
+所有驾驶场景必须符合交通安全和现实物理规律。
+
+禁止出现：
+
+* 交通事故
+* 车辆碰撞
+* 爆胎失控
+* 人员受伤
+* 驾驶者双手离开方向盘
+* 驾驶过程中使用手机
+* 超速竞赛
+* 公路漂移
+* 危险急转
+* 车辆飞跃
+* 轮胎冒烟
+* 轮胎燃烧
+* 轮胎穿过积水后产生夸张巨浪
+* 行人在车辆行驶路径中停留
+* 技师在未固定车辆的情况下操作轮胎
+
+即使表现抓地力、制动性能或操控能力，也应通过车辆姿态稳定、道路接触清晰和驾驶者从容状态体现，而不是通过危险动作体现。
+
+# 九、字幕区域设计
+
+图片生成阶段不要生成任何中文、英文、数字、Logo、字幕、水印、车牌文字或轮胎胎壁文字。
+
+每张图片底部预留约20%至25%的干净区域，用于后续添加字幕。
+
+字幕区域可以采用以下形式之一：
+
+* 干净的浅色道路区域
+* 虚化的简洁背景
+* 半透明白色渐变区域
+* 低信息密度的地面区域
+* 简洁的浅灰色服务中心地面
+* 柔和虚化的车身下方空间
+
+驾驶者脸部、手部、车辆主体、轮胎、轮毂和关键性能效果不得出现在字幕区域。
+
+画面主体集中在上方约75%的区域，避免后续字幕遮挡人物、车辆和轮胎。
+
+# 十、轮胎产品表现要求
+
+轮胎在四张图片中都必须自然出现。
+
+第1格中，轮胎作为问题承受者出现；第2格中，轮胎作为核心产品正式登场；第3格中，轮胎通过道路表现证明性能；第4格中，轮胎与整车共同完成品牌收束。
+
+轮胎尺寸比例必须真实，安装位置准确，与轮毂贴合自然。
+
+轮胎的视觉重点包括：
+
+* 清晰真实的胎面花纹
+* 稳定有力的胎肩结构
+* 自然细腻的橡胶质感
+* 合理的胎壁厚度
+* 正确的旋转方向
+* 轮胎与道路之间真实的接触面积
+* 与车型匹配的轮胎尺寸
+
+不得出现轮胎过小、过大、悬空、穿入车身、偏离轮毂、胎面朝向错误或同一车辆左右轮胎花纹不同。
+
+品牌Logo、准确包装文字、轮胎型号、规格数字、认证标志和产品卖点文字不由图片生成模型绘制，应由后续图片合成节点叠加真实素材，避免生成错误文字和变形商标。
+
+# 十一、字幕文案要求
+
+字幕不是产品参数说明书或轮胎安装步骤，而是简洁、有节奏、有情绪变化的汽车广告文案。
+
+每条字幕控制在18至28个汉字以内。
+
+字幕应遵循以下逻辑：
+
+* t1：点出驾驶痛点，引发安全或舒适共鸣
+* t2：轮胎产品登场，给出解决方向
+* t3：性能效果显现，强化核心卖点
+* t4：价值收束，形成可靠、安全、从容的品牌记忆
+
+字幕应自然、简洁、有画面感，避免连续堆砌“抓地、制动、耐磨、静音”等多个参数。
+
+字幕可以围绕以下价值表达展开：
+
+* 每一次出发，都需要更稳的底气
+* 面对湿滑路面，从容来自可靠抓地
+* 稳稳贴近路面，掌控每一个转弯
+* 安静向前，让旅程只留下风景
+* 路途不断延伸，安心始终相伴
+* 好轮胎，让每一次抵达更从容
+
+禁止在字幕中出现“第1格”“第2格”“第3格”“第4格”等字样。
+
+禁止出现过度夸张或无法验证的宣传用语，例如“百分之百安全”“绝不打滑”“零噪音”“永久耐磨”“最强轮胎”“全网第一”等。
+
+禁止在没有数据依据的情况下使用具体制动距离、耐磨里程、节能比例或性能提升百分比。
+
+# 十二、生图提示词写法
+
+每个生图提示词必须完整包含：
+
+1. 驾驶者完整特征
+2. 驾驶者服装
+3. 车辆车型、颜色和外观
+4. 轮胎花纹、轮廓和安装状态
+5. 道路及周边环境
+6. 天气与时间环境
+7. 当前动作
+8. 当前人物情绪
+9. 轮胎在画面中的位置
+10. 核心性能卖点的视觉表现
+11. 镜头景别
+12. 构图方式
+13. 光线与色调
+14. 高端汽车商业摄影风格
+15. 底部字幕留白要求
+16. 交通安全限制
+17. 人物、车辆、场景和轮胎一致性要求
+18. 明确的负面限制
+
+每个生图提示词建议控制在180至300字，描述具体、清晰、可执行。
+
+每一个生图提示词都必须独立完整，不能使用“与上一张相同”“延续前一格”“同前”等省略表述，因为四张图片由四个独立节点分别生成。
+
+每一个生图提示词末尾统一增加以下限制：
+
+“真实高端汽车品牌商业广告摄影，人物自然，车辆比例准确，轮胎花纹清晰真实，构图简洁，光线明亮通透，白色、银灰色与浅蓝色调，保持驾驶者、服装、车辆、道路环境和轮胎产品高度一致。画面底部预留约22%的干净浅色字幕区域。画面中不要出现任何文字、数字、Logo、水印、车牌文字、轮胎胎壁文字、边框、拼贴或四宫格效果。禁止危险驾驶、车辆碰撞、爆胎、漂移、轮胎冒烟和夸张特效。避免人物变形、手指异常、重复人物、车辆结构错误、轮毂变形、轮胎悬空、轮胎脱离轮毂、胎纹混乱、背景杂乱和明显AI生成痕迹。”
+
+# 十三、用户输入识别规则
+
+根据用户输入自动识别以下信息：
+
+* 轮胎品牌或产品系列
+* 轮胎类型
+* 核心卖点
+* 使用车型
+* 目标驾驶者
+* 使用道路
+* 天气条件
+* 广告情绪
+* 产品参考图
+* 人物参考图
+* 车辆参考图
+
+轮胎类型可能包括：
+
+* 城市SUV轮胎
+* 家用轿车轮胎
+* 新能源汽车轮胎
+* 高性能操控轮胎
+* 湿地安全轮胎
+* 静音舒适轮胎
+* 长里程耐磨轮胎
+* 商用车轮胎
+* 轻度越野轮胎
+* 冰雪轮胎
+
+如果用户没有明确核心卖点，则默认以“湿地抓地、操控稳定与静音舒适”作为综合卖点，但每一格只突出一个主要视觉重点，避免画面信息过载。
+
+如果用户没有指定驾驶场景，则默认设定为雨后城市道路：天空明亮，路面具有自然水光反射，一辆银灰色城市SUV由同一位成年男性驾驶者驾驶，整体呈现安全、稳定、现代、高级的汽车广告氛围。
+
+如果用户上传了轮胎产品图片、车辆图片或人物图片，应优先遵循参考图，不得擅自更换产品、车型或人物身份。
+
+# 十四、输出格式
+
+严格按照以下JSON格式输出，不要增加解释、标题、Markdown代码标记或其他文字：
+
+{
+&quot;s1&quot;: &quot;第1格完整生图提示词&quot;,
+&quot;s2&quot;: &quot;第2格完整生图提示词&quot;,
+&quot;s3&quot;: &quot;第3格完整生图提示词&quot;,
+&quot;s4&quot;: &quot;第4格完整生图提示词&quot;,
+&quot;t1&quot;: &quot;第1格字幕&quot;,
+&quot;t2&quot;: &quot;第2格字幕&quot;,
+&quot;t3&quot;: &quot;第3格字幕&quot;,
+&quot;t4&quot;: &quot;第4格字幕&quot;
+}
+
+# 用户输入
+
+{{input}}</textarea>
+   </div>
+  </div>
+ </div>
+</section>
+<section id="check">
+ <div class="section-head"><div><h2>提交前检查</h2><p>完成以下四项，再把结果交给老师或小组复盘。</p></div></div>
+ <div class="checklist">
+  <div class="check"><b>JSON结构</b>只输出 s1—s4 与 t1—t4，不增加解释文字。</div>
+  <div class="check"><b>一致性</b>四格人物、车辆、轮胎、服装、道路与光线保持统一。</div>
+  <div class="check"><b>画面安全</b>不出现碰撞、漂移、爆胎、冒烟、危险操作或夸张特效。</div>
+  <div class="check"><b>可执行性</b>每格提示词独立完整，能交给四个独立生图节点直接执行。</div>
+ </div>
+</section>
+</main>
+<footer><div class="wrap"><b>佳通轮胎 · AI课堂训练区</b><br>课程配套页面｜提示词、智能体、知识库、数据分析与内容自动化训练</div></footer>
+<div class="toast" id="toast">已复制到剪贴板</div>
+<script>
+const defaultInput = "轮胎品牌/产品系列：佳通轮胎（可修改）\n轮胎类型：城市SUV轮胎\n核心卖点：湿地抓地、制动稳定、静音舒适\n使用车型：银灰色中高端城市SUV\n目标驾驶者：35岁都市男性\n道路场景：雨后城市道路\n天气与时间：明亮阴天，上午\n广告情绪：从担忧到从容\n补充要求：四张图人物、车辆、轮胎和光线保持一致，底部预留字幕区。";
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(window.__toast);window.__toast=setTimeout(()=>el.classList.remove('show'),1800)}
+async function copyText(text){try{await navigator.clipboard.writeText(text);toast('已复制到剪贴板')}catch(e){const t=document.createElement('textarea');t.value=text;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();toast('已复制到剪贴板')}}
+function copyPromptOnly(){copyText(document.getElementById('fullPrompt').value)}
+function copyInput(){copyText(document.getElementById('learnerInput').value)}
+function copyCombined(){const p=document.getElementById('fullPrompt').value;const i=document.getElementById('learnerInput').value.trim();copyText(p.replace('{{input}}',i))}
+function resetInput(){document.getElementById('learnerInput').value=defaultInput;toast('已恢复示例输入')}
+</script>
+</body>
+</html>
