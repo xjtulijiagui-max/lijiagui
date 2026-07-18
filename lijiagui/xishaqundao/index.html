@@ -1,1141 +1,1701 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>西沙群岛探险捕鱼 - AIGC沙盘实战</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>西沙群岛探险捕鱼 · NPC指挥中心 | AIGC沙盘实战</title>
+<meta name="description" content="西沙群岛探险捕鱼AIGC沙盘实战：九大关卡攻略、AI工具舱、每关初始提示词与过关诀窍，深蓝七侠集结启航。">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+:root{
+  --abyss:#020b1a;
+  --deep:#041e3a;
+  --ocean:#0a3d62;
+  --wave:#0e7490;
+  --cyan:#22d3ee;
+  --sky:#38bdf8;
+  --gold:#c5a059;
+  --gold2:#e8c87a;
+  --foam:#eaf6ff;
+  --muted:#8fb3cc;
+  --glass:rgba(7,28,54,.72);
+  --glass2:rgba(10,42,78,.55);
+  --line:rgba(125,211,252,.16);
+  --line2:rgba(197,160,89,.35);
+  --shadow:0 18px 50px rgba(0,0,0,.45);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;
+  color:var(--foam);
+  background:
+    radial-gradient(1100px 600px at 85% -5%,rgba(14,116,144,.28),transparent 60%),
+    radial-gradient(900px 500px at -10% 30%,rgba(10,61,98,.5),transparent 55%),
+    linear-gradient(180deg,#030f22 0%,#041e3a 38%,#02101f 100%);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+#sea-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
+::selection{background:rgba(34,211,238,.35)}
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:#031224}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#0e7490,#0a3d62);border-radius:8px}
 
-        * {
-            font-family: 'Noto Sans SC', sans-serif;
-        }
+/* ============ 左侧导航 ============ */
+.sidebar{
+  position:fixed;left:0;top:0;bottom:0;width:264px;z-index:60;
+  background:linear-gradient(180deg,rgba(3,15,34,.96),rgba(4,25,48,.96));
+  border-right:1px solid var(--line);
+  backdrop-filter:blur(14px);
+  display:flex;flex-direction:column;
+  padding:22px 14px 16px;
+  overflow-y:auto;
+}
+.sidebar::-webkit-scrollbar{width:6px}
+.brand{display:flex;align-items:center;gap:12px;padding:4px 10px 18px;border-bottom:1px dashed rgba(125,211,252,.2);margin-bottom:14px}
+.brand .compass{
+  width:44px;height:44px;border-radius:50%;flex:0 0 auto;
+  display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle at 35% 30%,#155e86,#06233f);
+  border:1px solid var(--line2);
+  color:var(--gold2);font-size:20px;
+  animation:spin 24s linear infinite;
+  box-shadow:0 0 22px rgba(197,160,89,.25);
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.brand b{display:block;font-size:16px;letter-spacing:.06em;color:var(--gold2)}
+.brand small{color:var(--muted);font-size:11px;letter-spacing:.18em}
+.nav-group{font-size:11px;letter-spacing:.22em;color:var(--muted);margin:14px 10px 8px}
+.nav-link{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 12px;margin:3px 0;border-radius:12px;
+  color:var(--foam);text-decoration:none;font-size:14px;
+  border:1px solid transparent;
+  transition:all .25s ease;
+}
+.nav-link i{width:18px;text-align:center;color:var(--sky);font-size:13px}
+.nav-link .num{
+  font-family:Consolas,monospace;font-size:12px;color:var(--gold);
+  border:1px solid rgba(197,160,89,.4);border-radius:6px;
+  padding:1px 6px;min-width:30px;text-align:center;
+}
+.nav-link:hover{background:rgba(34,211,238,.08);transform:translateX(3px)}
+.nav-link.active{
+  background:linear-gradient(90deg,rgba(34,211,238,.16),rgba(197,160,89,.10));
+  border-color:rgba(34,211,238,.3);
+  box-shadow:inset 0 0 18px rgba(34,211,238,.08);
+}
+.sidebar-note{
+  margin-top:auto;padding:14px;border-radius:14px;font-size:12px;line-height:1.8;color:var(--muted);
+  background:rgba(197,160,89,.08);border:1px dashed rgba(197,160,89,.35);
+}
+.sidebar-note b{color:var(--gold2)}
+.menu-toggle{
+  display:none;position:fixed;top:14px;left:14px;z-index:80;
+  width:46px;height:46px;border-radius:12px;border:1px solid var(--line);
+  background:rgba(4,25,48,.9);color:var(--foam);font-size:18px;cursor:pointer;
+}
 
-        :root {
-            --primary-gradient: linear-gradient(135deg, #0077b6 0%, #00b4d8 50%, #90e0ef 100%);
-            --deep-ocean: #023e8a;
-            --gold-accent: #ffd60a;
-            --card-shadow: 0 16px 34px rgba(0, 51, 102, 0.15);
-            --card-shadow-hover: 0 20px 60px rgba(0, 51, 102, 0.25);
-        }
+/* ============ 下潜深度计 ============ */
+.depth-meter{
+  position:fixed;right:22px;top:50%;transform:translateY(-50%);z-index:55;
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+}
+.depth-track{width:5px;height:180px;border-radius:6px;background:rgba(125,211,252,.12);position:relative;overflow:hidden}
+.depth-fill{position:absolute;top:0;left:0;width:100%;height:0%;background:linear-gradient(180deg,var(--cyan),var(--gold));border-radius:6px;transition:height .2s}
+.depth-num{
+  writing-mode:vertical-rl;font-size:12px;letter-spacing:.15em;color:var(--sky);
+  font-family:Consolas,monospace;
+}
+.depth-label{writing-mode:vertical-rl;font-size:10px;color:var(--muted);letter-spacing:.3em}
+@media(max-width:1500px){.depth-meter{display:none}}
 
-        body {
-            background: linear-gradient(180deg, #f0f8ff 0%, #e6f3ff 100%);
-            min-height: 100vh;
-        }
+/* ============ 主内容区 ============ */
+.content{position:relative;z-index:2;margin-left:264px}
+.section{padding:84px 48px 30px;max-width:1280px;margin:0 auto}
+.sec-head{margin-bottom:38px}
+.kicker{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:7px 16px;border-radius:999px;font-size:13px;letter-spacing:.18em;
+  color:var(--gold2);border:1px solid var(--line2);background:rgba(197,160,89,.08);
+}
+.sec-head h2{
+  margin:18px 0 12px;font-size:clamp(28px,3.4vw,44px);letter-spacing:.04em;
+  background:linear-gradient(92deg,#fff 20%,var(--gold2) 60%,var(--cyan));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.sec-head p{color:var(--muted);max-width:760px;line-height:1.9;font-size:15px}
 
-        .hero-section {
-            background: var(--primary-gradient);
-            position: relative;
-            overflow: hidden;
-        }
+/* ============ HERO ============ */
+.hero{
+  position:relative;min-height:100vh;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;padding:80px 40px 140px;overflow:hidden;
+}
+.hero::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 45% at 50% 0%,rgba(34,211,238,.12),transparent 70%);
+}
+.hero-kicker{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:9px 20px;border-radius:999px;font-size:14px;letter-spacing:.25em;
+  color:var(--cyan);border:1px solid rgba(34,211,238,.35);
+  background:rgba(34,211,238,.07);backdrop-filter:blur(6px);
+  animation:floaty 5s ease-in-out infinite;
+}
+.hero h1{
+  margin:30px 0 8px;font-size:clamp(42px,7vw,88px);font-weight:900;letter-spacing:.08em;
+  background:linear-gradient(180deg,#ffffff 30%,#7dd3fc 65%,#c5a059 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 0 80px rgba(34,211,238,.25);
+}
+.hero .sub{
+  font-size:clamp(16px,2vw,22px);color:var(--foam);letter-spacing:.35em;margin-bottom:8px;
+}
+.hero .en{color:var(--muted);font-size:13px;letter-spacing:.3em;text-transform:uppercase}
+.captain-quote{
+  margin:34px auto 0;max-width:640px;padding:22px 28px;border-radius:18px;
+  background:var(--glass2);border:1px solid var(--line);backdrop-filter:blur(10px);
+  color:var(--foam);font-size:15px;line-height:2;text-align:left;position:relative;
+}
+.captain-quote::before{
+  content:"“";position:absolute;top:-24px;left:18px;font-size:72px;color:var(--gold);opacity:.7;font-family:Georgia,serif;
+}
+.captain-quote b{color:var(--gold2)}
+.captain-quote .who{display:block;margin-top:10px;color:var(--muted);font-size:12px;letter-spacing:.2em;text-align:right}
+.hero-cta{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-top:36px}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;text-decoration:none;cursor:pointer;border:0;
+  padding:15px 32px;border-radius:999px;font-size:15px;font-weight:700;letter-spacing:.08em;
+  transition:all .3s ease;
+}
+.btn-gold{background:linear-gradient(135deg,var(--gold),#a67c2e);color:#08131f;box-shadow:0 10px 30px rgba(197,160,89,.35)}
+.btn-gold:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 16px 40px rgba(197,160,89,.5)}
+.btn-ghost{background:rgba(34,211,238,.08);color:var(--cyan);border:1px solid rgba(34,211,238,.4)}
+.btn-ghost:hover{background:rgba(34,211,238,.18);transform:translateY(-3px)}
+.hero-stats{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:52px;
+}
+.hstat{
+  min-width:132px;padding:16px 22px;border-radius:16px;text-align:center;
+  background:var(--glass2);border:1px solid var(--line);backdrop-filter:blur(8px);
+}
+.hstat b{display:block;font-size:26px;color:var(--gold2);font-family:Georgia,serif}
+.hstat span{font-size:12px;color:var(--muted);letter-spacing:.12em}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 
-        .wave-bg {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 100px;
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23f0f8ff' fill-opacity='0.3' d='M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,149.3C960,160,1056,160,1152,138.7C1248,117,1344,75,1392,53.3L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E") no-repeat bottom;
-            background-size: cover;
-        }
+/* 海浪 */
+.waves{position:absolute;bottom:0;left:0;width:100%;height:120px;overflow:hidden;pointer-events:none}
+.wave{position:absolute;bottom:0;left:0;width:200%;height:100%;background-repeat:repeat-x;background-size:50% 100%}
+.wave.w1{background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 120" preserveAspectRatio="none"><path d="M0 60 Q100 20 200 60 T400 60 T600 60 T800 60 V120 H0 Z" fill="rgba(14,116,144,0.25)"/></svg>');animation:waveMove 9s linear infinite}
+.wave.w2{background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 120" preserveAspectRatio="none"><path d="M0 70 Q120 110 240 70 T480 70 T720 70 T960 70 V120 H0 Z" fill="rgba(4,30,58,0.55)"/></svg>');animation:waveMove 6s linear infinite reverse}
+@keyframes waveMove{to{transform:translateX(-50%)}}
 
-        .card {
-            background: white;
-            border-radius: 16px;
-            box-shadow: var(--card-shadow);
-            transition: all 0.3s ease;
-        }
+/* ============ 航海图 ============ */
+.map-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.island{
+  position:relative;display:block;text-decoration:none;color:var(--foam);
+  background:var(--glass2);border:1px solid var(--line);border-radius:20px;
+  padding:22px;backdrop-filter:blur(8px);overflow:hidden;
+  transition:all .3s ease;
+}
+.island::after{
+  content:"";position:absolute;right:-30px;bottom:-30px;width:110px;height:110px;border-radius:50%;
+  background:radial-gradient(circle,rgba(34,211,238,.14),transparent 70%);
+}
+.island:hover{transform:translateY(-6px);border-color:rgba(197,160,89,.5);box-shadow:0 20px 44px rgba(0,0,0,.5)}
+.island .no{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:38px;height:38px;border-radius:12px;font-weight:900;font-size:15px;
+  background:linear-gradient(135deg,var(--gold),#8a6a25);color:#0a1420;
+}
+.island.special .no{background:linear-gradient(135deg,#f472b6,#a21caf);color:#fff}
+.island h3{margin:14px 0 6px;font-size:18px;letter-spacing:.04em}
+.island .deliver{color:var(--sky);font-size:13px;margin-bottom:10px;min-height:36px;line-height:1.5}
+.island .meta{display:flex;gap:8px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.island .meta span{border:1px solid var(--line);border-radius:8px;padding:3px 9px}
+.island .go{position:absolute;top:20px;right:18px;color:var(--gold);opacity:0;transition:.3s}
+.island:hover .go{opacity:1;transform:translateX(3px)}
 
-        .card:hover {
-            box-shadow: var(--card-shadow-hover);
-            transform: translateY(-4px);
-        }
+/* ============ 工具舱 ============ */
+.tool-cat{margin:44px 0 20px;display:flex;align-items:center;gap:14px}
+.tool-cat h3{font-size:20px;letter-spacing:.06em;color:var(--foam);white-space:nowrap}
+.tool-cat .bar{flex:1;height:1px;background:linear-gradient(90deg,rgba(197,160,89,.5),transparent)}
+.tool-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:16px}
+.tool-card{
+  background:var(--glass2);border:1px solid var(--line);border-radius:18px;
+  padding:20px;backdrop-filter:blur(8px);transition:all .3s ease;
+  display:flex;flex-direction:column;gap:10px;
+}
+.tool-card:hover{transform:translateY(-5px);border-color:rgba(34,211,238,.45);box-shadow:0 18px 40px rgba(0,0,0,.5)}
+.tool-top{display:flex;align-items:center;gap:12px}
+.tool-ico{
+  width:46px;height:46px;border-radius:14px;flex:0 0 auto;
+  display:flex;align-items:center;justify-content:center;font-size:20px;
+  background:linear-gradient(135deg,rgba(34,211,238,.2),rgba(10,61,98,.6));
+  border:1px solid var(--line);color:var(--cyan);
+}
+.tool-card h4{font-size:16px;letter-spacing:.03em}
+.tool-card .scene{font-size:12px;color:var(--muted)}
+.tool-url{
+  font-family:Consolas,monospace;font-size:12.5px;color:var(--sky);
+  background:rgba(2,16,31,.6);border:1px solid var(--line);border-radius:9px;padding:6px 10px;
+  word-break:break-all;
+}
+.tool-levels{display:flex;flex-wrap:wrap;gap:6px}
+.lv-chip{
+  font-size:11px;padding:3px 9px;border-radius:999px;
+  border:1px solid rgba(197,160,89,.45);color:var(--gold2);
+  background:rgba(197,160,89,.07);
+}
+.tool-card .visit{
+  margin-top:auto;display:inline-flex;align-items:center;gap:8px;justify-content:center;
+  padding:10px;border-radius:12px;text-decoration:none;font-size:13px;font-weight:700;
+  color:#06121f;background:linear-gradient(135deg,var(--cyan),#0ea5b7);
+  transition:all .25s ease;
+}
+.tool-card .visit:hover{box-shadow:0 8px 22px rgba(34,211,238,.35);transform:scale(1.02)}
+.tool-card .visit.plain{background:rgba(34,211,238,.1);color:var(--cyan);border:1px solid rgba(34,211,238,.35)}
 
-        .role-card {
-            border-top: 4px solid #0077b6;
-        }
+/* ============ 关卡攻略卡 ============ */
+.level-card{
+  scroll-margin-top:30px;
+  position:relative;margin-bottom:34px;border-radius:24px;overflow:hidden;
+  background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(12px);
+  box-shadow:var(--shadow);
+}
+.level-card::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:5px;
+  background:linear-gradient(180deg,var(--gold),var(--cyan));
+}
+.level-card.special::before{background:linear-gradient(180deg,#f472b6,#a21caf)}
+.lc-head{
+  display:flex;flex-wrap:wrap;align-items:center;gap:14px;
+  padding:26px 30px 20px;border-bottom:1px dashed rgba(125,211,252,.18);
+  background:linear-gradient(135deg,rgba(34,211,238,.06),rgba(197,160,89,.05));
+}
+.lc-no{
+  font-family:Georgia,serif;font-size:34px;font-weight:900;color:var(--gold2);
+  border:2px solid var(--line2);border-radius:16px;width:64px;height:64px;flex:0 0 auto;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(197,160,89,.08);
+}
+.level-card.special .lc-no{color:#f9a8d4;border-color:rgba(244,114,182,.4);background:rgba(244,114,182,.08)}
+.lc-title{flex:1;min-width:220px}
+.lc-title .stage{font-size:12px;letter-spacing:.22em;color:var(--sky)}
+.lc-title h3{font-size:clamp(20px,2.4vw,28px);margin-top:6px;letter-spacing:.04em}
+.lc-tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{
+  display:inline-flex;align-items:center;gap:6px;font-size:12.5px;
+  padding:6px 13px;border-radius:999px;border:1px solid var(--line);
+  background:rgba(2,16,31,.5);color:var(--foam);
+}
+.tag i{color:var(--cyan)}
+.tag.gold{border-color:var(--line2);color:var(--gold2)}
+.tag.gold i{color:var(--gold)}
+.lc-body{padding:26px 30px 30px}
+.lc-brief{
+  padding:16px 20px;border-radius:14px;margin-bottom:24px;
+  background:rgba(34,211,238,.06);border-left:3px solid var(--cyan);
+  color:#d7ecfa;line-height:1.9;font-size:14.5px;
+}
+.lc-brief b{color:var(--cyan)}
+.lc-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:8px}
+@media(max-width:900px){.lc-grid{grid-template-columns:1fr}}
+.lc-panel{
+  border:1px solid var(--line);border-radius:16px;padding:20px;
+  background:rgba(2,16,31,.35);
+}
+.lc-panel h4{
+  display:flex;align-items:center;gap:10px;font-size:15px;letter-spacing:.1em;
+  color:var(--gold2);margin-bottom:14px;
+}
+.lc-panel h4 i{color:var(--gold)}
+.lc-panel h4.cyan{color:var(--cyan)}
+.lc-panel h4.cyan i{color:var(--cyan)}
+.lc-tools{display:flex;flex-direction:column;gap:10px}
+.lc-tool{
+  display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;
+  background:rgba(10,42,78,.5);border:1px solid var(--line);
+}
+.lc-tool i{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;
+  background:rgba(34,211,238,.14);color:var(--cyan);font-size:13px;flex:0 0 auto}
+.lc-tool .tn{flex:1;font-size:14px}
+.lc-tool .tn small{display:block;color:var(--muted);font-size:11.5px;margin-top:2px}
+.lc-tool a{
+  display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-size:12px;font-weight:700;
+  color:var(--cyan);border:1px solid rgba(34,211,238,.4);border-radius:999px;padding:6px 13px;
+  transition:.25s;white-space:nowrap;
+}
+.lc-tool a:hover{background:rgba(34,211,238,.15);box-shadow:0 4px 14px rgba(34,211,238,.2)}
+.lc-tips{list-style:none;counter-reset:tip}
+.lc-tips li{
+  counter-increment:tip;position:relative;padding:9px 0 9px 40px;
+  color:#d7ecfa;font-size:14px;line-height:1.8;border-bottom:1px dashed rgba(125,211,252,.12);
+}
+.lc-tips li:last-child{border-bottom:0}
+.lc-tips li::before{
+  content:counter(tip);position:absolute;left:0;top:11px;
+  width:26px;height:26px;border-radius:8px;font-size:12px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,rgba(197,160,89,.9),rgba(138,106,37,.9));color:#0a1420;
+}
+.lc-tips b{color:var(--gold2)}
+.prompt-block{
+  position:relative;margin-top:20px;border-radius:16px;overflow:hidden;
+  border:1px solid rgba(34,211,238,.28);
+}
+.prompt-block .pb-head{
+  display:flex;align-items:center;gap:10px;padding:11px 16px;
+  background:linear-gradient(90deg,#06203c,#04162c);
+  border-bottom:1px solid rgba(34,211,238,.2);
+}
+.pb-dot{width:10px;height:10px;border-radius:50%}
+.pb-dot.r{background:#f87171}.pb-dot.y{background:#fbbf24}.pb-dot.g{background:#34d399}
+.pb-title{flex:1;font-size:12.5px;letter-spacing:.14em;color:var(--sky);font-family:Consolas,monospace}
+.copy-btn{
+  display:inline-flex;align-items:center;gap:7px;cursor:pointer;
+  border:1px solid rgba(197,160,89,.5);border-radius:9px;
+  background:rgba(197,160,89,.1);color:var(--gold2);
+  font-size:12px;font-weight:700;padding:6px 13px;transition:.25s;
+}
+.copy-btn:hover{background:rgba(197,160,89,.22)}
+.copy-btn.copied{background:#059669;border-color:#059669;color:#fff}
+.prompt-block pre{
+  margin:0;padding:20px 22px;white-space:pre-wrap;word-break:break-word;
+  background:#02101f;color:#9adcff;
+  font-family:"Microsoft YaHei","PingFang SC",sans-serif;
+  font-size:14px;line-height:1.95;
+}
+.prompt-block pre b{color:var(--gold2)}
+.lc-check{
+  margin-top:20px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+  padding:14px 18px;border-radius:14px;
+  background:rgba(5,150,105,.07);border:1px dashed rgba(52,211,153,.4);
+}
+.lc-check .lab{font-size:13px;color:#6ee7b7;font-weight:700;letter-spacing:.1em;display:flex;align-items:center;gap:8px}
+.chk{
+  display:inline-flex;align-items:center;gap:7px;font-size:13px;color:#b9e8d4;
+  border:1px solid rgba(52,211,153,.25);border-radius:999px;padding:6px 13px;cursor:pointer;
+  transition:.2s;user-select:none;
+}
+.chk:hover{background:rgba(52,211,153,.1)}
+.chk input{accent-color:#10b981;cursor:pointer}
+.chk.done{opacity:.55;text-decoration:line-through}
+.lc-warn{
+  margin-top:16px;padding:13px 18px;border-radius:14px;font-size:13.5px;line-height:1.8;
+  background:rgba(251,191,36,.06);border:1px dashed rgba(251,191,36,.4);color:#fde68a;
+}
+.lc-warn b{color:#fbbf24}
 
-        .role-card队长 { border-color: #ffd60a; }
-        .role-card队秘 { border-color: #0077b6; }
-        .role-card项目经理 { border-color: #00b4d8; }
-        .role-card翻译 { border-color: #90e0ef; }
-        .role-card设计师 { border-color: #ade8f4; }
-        .role-card策略师 { border-color: #caf0f8; }
-        .role-card新闻发言人 { border-color: #e0fbfc; }
+/* ============ 锦囊 ============ */
+.frame-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:40px}
+.frame-card{
+  border-radius:20px;padding:24px;border:1px solid var(--line2);
+  background:linear-gradient(160deg,rgba(197,160,89,.1),rgba(4,25,48,.6));
+  backdrop-filter:blur(8px);
+}
+.frame-card h4{color:var(--gold2);font-size:17px;margin-bottom:6px;letter-spacing:.05em}
+.frame-card .en{color:var(--muted);font-size:11.5px;letter-spacing:.2em;margin-bottom:14px}
+.frame-card ul{list-style:none}
+.frame-card li{padding:7px 0;font-size:13.5px;color:#e6d9bd;line-height:1.75;border-bottom:1px dashed rgba(197,160,89,.2)}
+.frame-card li:last-child{border:0}
+.frame-card li b{color:var(--gold2);font-family:Georgia,serif;margin-right:6px}
+.faq{margin-bottom:44px}
+.faq-item{border:1px solid var(--line);border-radius:16px;margin-bottom:12px;overflow:hidden;background:var(--glass2)}
+.faq-q{
+  width:100%;display:flex;align-items:center;gap:14px;text-align:left;cursor:pointer;
+  padding:18px 22px;background:none;border:0;color:var(--foam);font-size:15.5px;font-weight:700;
+}
+.faq-q .qn{
+  flex:0 0 auto;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+  background:rgba(34,211,238,.14);color:var(--cyan);font-size:13px;font-family:Consolas,monospace;
+}
+.faq-q .arr{margin-left:auto;color:var(--gold);transition:transform .3s}
+.faq-item.open .faq-q .arr{transform:rotate(180deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.faq-a .inner{padding:4px 22px 22px 70px;color:#c9e4f5;font-size:14px;line-height:2}
+.faq-a b{color:var(--cyan)}
+.faq-a code{
+  background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.25);
+  border-radius:6px;padding:2px 8px;color:var(--gold2);font-family:Consolas,monospace;font-size:12.5px;
+}
+.secret-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.secret{
+  display:flex;gap:14px;padding:18px;border-radius:16px;align-items:flex-start;
+  background:var(--glass2);border:1px solid var(--line);transition:.3s;
+}
+.secret:hover{border-color:rgba(197,160,89,.5);transform:translateY(-3px)}
+.secret .n{
+  flex:0 0 auto;width:34px;height:34px;border-radius:50%;font-family:Georgia,serif;font-weight:900;
+  display:flex;align-items:center;justify-content:center;color:#0a1420;
+  background:linear-gradient(135deg,var(--gold),#8a6a25);
+}
+.secret p{font-size:13.5px;line-height:1.8;color:#d7ecfa}
+.secret p b{color:var(--gold2);display:block;margin-bottom:3px;font-size:14px}
 
-        .mission-card {
-            border-left: 4px solid #0077b6;
-        }
+/* ============ 深蓝七侠 ============ */
+.crew-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.crew-card{
+  position:relative;border-radius:20px;padding:24px;overflow:hidden;
+  background:linear-gradient(160deg,rgba(10,42,78,.7),rgba(3,15,34,.85));
+  border:1px solid var(--line);transition:.3s;
+}
+.crew-card:hover{transform:translateY(-5px);box-shadow:0 20px 46px rgba(0,0,0,.55);border-color:rgba(34,211,238,.4)}
+.crew-top{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.crew-ava{
+  width:56px;height:56px;border-radius:16px;flex:0 0 auto;font-size:26px;
+  display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle at 30% 25%,rgba(34,211,238,.3),rgba(4,25,48,.9));
+  border:1px solid var(--line2);
+}
+.crew-card h4{font-size:17px;letter-spacing:.03em}
+.crew-card .role{font-size:12px;color:var(--gold2);letter-spacing:.12em;margin-top:3px}
+.crew-card .desc{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:12px}
+.crew-card .ability{
+  font-size:13px;line-height:1.8;color:#c9e4f5;padding:10px 14px;border-radius:12px;
+  background:rgba(34,211,238,.06);border-left:3px solid var(--cyan);margin-bottom:12px;
+}
+.crew-card .ability b{color:var(--cyan)}
+.crew-card .quote{
+  font-size:12.5px;color:var(--gold2);font-style:italic;
+  padding:8px 14px;border-radius:10px;background:rgba(197,160,89,.07);
+}
+.crew-card .lv{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
 
-        .avatar-placeholder {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #0077b6, #00b4d8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 48px;
-            font-weight: bold;
-            margin: 0 auto 16px;
-        }
+/* ============ 页脚 ============ */
+.footer{
+  margin-top:70px;padding:56px 48px 40px;text-align:center;
+  border-top:1px solid var(--line);
+  background:linear-gradient(180deg,transparent,rgba(2,11,26,.8));
+}
+.footer .motto{
+  font-size:clamp(16px,2vw,22px);color:var(--gold2);font-style:italic;line-height:2;max-width:640px;margin:0 auto 20px;
+}
+.footer p{color:var(--muted);font-size:13px;line-height:2}
+.footer .links{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:18px 0}
+.footer .links a{
+  color:var(--sky);text-decoration:none;font-size:12.5px;
+  border:1px solid var(--line);border-radius:999px;padding:6px 14px;transition:.25s;
+}
+.footer .links a:hover{background:rgba(34,211,238,.12)}
 
-        .skill-tag {
-            background: #e0f2fe;
-            color: #0369a1;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
-        }
+/* ============ 动效 ============ */
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+}
 
-        .quote-box {
-            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
-            border-left: 4px solid #0077b6;
-            padding: 16px;
-            margin: 16px 0;
-            border-radius: 8px;
-            font-style: italic;
-        }
-
-        .section-title {
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nav-link {
-            color: white;
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .nav-link:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .timeline-item {
-            position: relative;
-            padding-left: 32px;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 8px;
-            width: 12px;
-            height: 12px;
-            background: #0077b6;
-            border-radius: 50%;
-        }
-
-        .timeline-item::after {
-            content: '';
-            position: absolute;
-            left: 5px;
-            top: 20px;
-            width: 2px;
-            height: calc(100% - 12px);
-            background: #e0f2fe;
-        }
-
-        .glow-effect {
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes glow {
-            from {
-                box-shadow: 0 0 10px #0077b6, 0 0 20px #0077b6;
-            }
-            to {
-                box-shadow: 0 0 20px #00b4d8, 0 0 30px #00b4d8;
-            }
-        }
-
-        .floating {
-            animation: floating 3s ease-in-out infinite;
-        }
-
-        @keyframes floating {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .grid-bg {
-            background-image:
-                linear-gradient(rgba(0, 119, 182, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 119, 182, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .badge-warning { background: #fef3c7; color: #92400e; }
-        .badge-success { background: #d1fae5; color: #065f46; }
-        .badge-info { background: #dbeafe; color: #1e40af; }
-        .badge-purple { background: #f3e8ff; color: #6b21a8; }
-        .badge-pink { background: #fce7f3; color: #9f1239; }
-        .badge-orange { background: #ffedd5; color: #9a3412; }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 12px;
-            margin-top: 16px;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 12px;
-            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
-            border-radius: 8px;
-        }
-
-        .stat-value {
-            font-size: 24px;
-            font-weight: bold;
-            color: #0077b6;
-        }
-
-        .stat-label {
-            font-size: 12px;
-            color: #64748b;
-            margin-top: 4px;
-        }
-
-        .mission-icon {
-            width: 48px;
-            height: 48px;
-            background: var(--primary-gradient);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 20px;
-            margin-bottom: 12px;
-        }
-    </style>
+/* ============ 响应式 ============ */
+@media(max-width:1080px){
+  .sidebar{transform:translateX(-100%);transition:transform .35s ease}
+  .sidebar.open{transform:none;box-shadow:30px 0 80px rgba(0,0,0,.6)}
+  .menu-toggle{display:block}
+  .content{margin-left:0}
+  .section{padding:70px 22px 24px}
+  .hero{padding:90px 20px 120px}
+  .lc-head,.lc-body{padding-left:20px;padding-right:20px}
+}
+</style>
 </head>
-<body class="grid-bg">
-    <!-- 导航栏 -->
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-cyan-400 rounded-lg flex items-center justify-center">
-                    <i class="fas fa-anchor text-white text-lg"></i>
-                </div>
-                <span class="font-bold text-xl text-gray-800">西沙探险</span>
-            </div>
-            <div class="hidden md:flex items-center space-x-2">
-                <a href="#roles" class="nav-link text-gray-700 hover:text-blue-600">角色介绍</a>
-                <a href="#missions" class="nav-link text-gray-700 hover:text-blue-600">关卡任务</a>
-                <a href="#story" class="nav-link text-gray-700 hover:text-blue-600">剧本故事</a>
-                <a href="#guide" class="nav-link text-gray-700 hover:text-blue-600">新手指南</a>
-            </div>
+<body>
+<canvas id="sea-canvas"></canvas>
+<!-- 下潜深度计 -->
+<div class="depth-meter">
+  <span class="depth-label">下潜深度</span>
+  <div class="depth-track"><div class="depth-fill" id="depthFill"></div></div>
+  <span class="depth-num" id="depthNum">0m</span>
+</div>
+
+<!-- 移动端菜单按钮 -->
+<button class="menu-toggle" id="menuToggle" aria-label="菜单"><i class="fa-solid fa-bars"></i></button>
+
+<!-- 左侧导航 -->
+<aside class="sidebar" id="sidebar">
+  <div class="brand">
+    <div class="compass"><i class="fa-solid fa-compass"></i></div>
+    <div>
+      <b>西沙指挥中心</b>
+      <small>XISHA COMMAND</small>
+    </div>
+  </div>
+  <nav id="sideNav">
+    <div class="nav-group">航行</div>
+    <a class="nav-link" href="#hero"><i class="fa-solid fa-anchor"></i>启航 · 首页</a>
+    <a class="nav-link" href="#map"><i class="fa-solid fa-map"></i>航海图 · 关卡总览</a>
+    <a class="nav-link" href="#tools"><i class="fa-solid fa-toolbox"></i>工具舱 · 武器库</a>
+    <div class="nav-group">九关攻略</div>
+    <a class="nav-link" href="#lv1"><span class="num">01</span>组建战队</a>
+    <a class="nav-link" href="#lv2"><span class="num">02</span>战略部署 · PPT</a>
+    <a class="nav-link" href="#lv3"><span class="num">03</span>会议纪要</a>
+    <a class="nav-link" href="#lv4"><span class="num">04</span>时间掌控 · 甘特图</a>
+    <a class="nav-link" href="#lv5"><span class="num">05</span>跨境遭遇 · 智能体</a>
+    <a class="nav-link" href="#lv6"><span class="num">06</span>数据之诗 · 邮件</a>
+    <a class="nav-link" href="#lv7"><span class="num">07</span>数据画卷 · 看板</a>
+    <a class="nav-link" href="#lvx"><span class="num">★</span>小剧场 · 汇报</a>
+    <a class="nav-link" href="#lv8"><span class="num">08</span>决战时刻 · 博弈</a>
+    <a class="nav-link" href="#lv9"><span class="num">09</span>荣耀时刻 · 数字人</a>
+    <div class="nav-group">补给</div>
+    <a class="nav-link" href="#tips"><i class="fa-solid fa-lightbulb"></i>锦囊 · 框架与急救</a>
+    <a class="nav-link" href="#crew"><i class="fa-solid fa-users"></i>深蓝七侠 · 角色</a>
+  </nav>
+  <div class="sidebar-note">
+    <b>老船长提示：</b>凡遇问题，先查线索卡。<br>
+    本页所有提示词均可<b>一键复制</b>，直接喂给 AI。
+  </div>
+</aside>
+
+<main class="content">
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="hero">
+  <div class="hero-kicker"><i class="fa-solid fa-satellite-dish"></i>神秘岛科技 · 独家赞助</div>
+  <h1>西沙群岛探险捕鱼</h1>
+  <div class="sub">AIGC 沙盘实战 · NPC 指挥中心</div>
+  <div class="en">Xisha Islands AIGC Expedition</div>
+
+  <div class="captain-quote">
+    欢迎登船，各位探险家。接下来的航程里，你们将穿越<b>九大关卡</b>——每一关都要借助
+    AI 的力量完成。工具已入舱、提示词已装填、诀窍已标注。完成最快、质量最高的团队，
+    将获得下一关的<b>先手优势</b>。现在，扬帆。
+    <span class="who">—— NPC 向导 · 老船长</span>
+  </div>
+
+  <div class="hero-cta">
+    <a class="btn btn-gold" href="#map"><i class="fa-solid fa-map-location-dot"></i>查看航海图</a>
+    <a class="btn btn-ghost" href="#tools"><i class="fa-solid fa-toolbox"></i>进入工具舱</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hstat"><b>9 + 1</b><span>关卡 + 小剧场</span></div>
+    <div class="hstat"><b>15+</b><span>AI 工具入舱</span></div>
+    <div class="hstat"><b>10</b><span>段初始提示词</span></div>
+    <div class="hstat"><b>7</b><span>深蓝七侠角色</span></div>
+    <div class="hstat"><b>6</b><span>急救锦囊 FAQ</span></div>
+  </div>
+
+  <div class="waves">
+    <div class="wave w1"></div>
+    <div class="wave w2"></div>
+  </div>
+</section>
+
+<!-- ================= 航海图 ================= -->
+<section class="section" id="map">
+  <div class="sec-head reveal">
+    <span class="kicker"><i class="fa-solid fa-map"></i>VOYAGE MAP</span>
+    <h2>航海图 · 九大关卡总览</h2>
+    <p>七天的航程，九道考验，外加一场全班汇演的小剧场。每一关都标注了交付物、时限与主责角色——点击任意岛屿，直达该关的完整攻略（工具链接、初始提示词、过关诀窍）。</p>
+  </div>
+  <div class="map-grid">
+    <a class="island reveal" href="#lv1">
+      <span class="go"><i class="fa-solid fa-arrow-right"></i></span>
+      <span class="no">01</span>
+      <h3>组建战队</h3>
+      <div class="deliver">交付：队名 + 队呼 + 队徽（含清晰文字）</div>
+      <div class="meta"><span><i class="fa-regular fa-clock"></i> 30 分钟</span><span>队长 × 设计师</span></div>
+    </a>
+    <a class="island reveal" href="#lv2">
+      <span class="go"><i class="fa-solid fa-arrow-right"></i></span>
+      <span class="no">02</span>
+      <h3>战略部署 · 上</h3>
+      <div class="deliver">交付：≥30 页西沙捕鱼计划 PPT</div>
+      <div class="meta"><span><i class="fa-regular fa-clock"></i> 30 分钟</span><span>队长</span></div>
+    </a>
+    <a class="island reveal" href="#lv3">
+      <span class="go"><i class="fa-solid fa-arrow-right"></i></span>
+      <span class="no">03</span>
+      <h3>战略部署 · 下</h3>
+      <div class="deliver">交付：≥600 字经营会议纪要 + 津贴表</div>
+      <div class="meta"><span><i class="fa-regular fa-clock"></i> 20 分钟</span><span>队秘</span></div>
+    </a>
+    <a class="island reveal" href="#lv4">
+      <span class="go"><i class="fa-solid fa-arrow-right"></i></span>
+      <span class="no">04</span>
+      <h3>时间掌控</h3>
+      <div class="deliver">交付：甘特图（任务 + 时间 + 责任人）</div>
+      <div class="meta"><span><i class="fa-regular fa-clock"></i> 10 分钟</span><span>项目经理</span></div>
+    </a>
+    <a class="island reveal" href="#lv5">
+      <span class="go"><i class="fa-solid fa-arrow-right"></i></span>
+      <span class="no">05</span>
+      <h3>跨境遭遇</h3>
+      <div class="deliver">交付：中越双向翻译智能体（发布链接）</div>
+      <div class="meta"><span><i class="fa-regular fa-clock"></i> 10 分钟</span><span>翻译</span></div>
+    </a>
+    <a class="island reveal" href="#lv6">
+      <span class="go"><i class="fa-solid fa-arrow-right"></i></span>
+      <span class="no">06</span>
+      <h3>数据之诗</h3>
+      <div class="deliver">交付：藏头诗可视化智能邮件</div>
+      <div class="meta"><span><i class="fa-regular fa-clock"></i> 20 分钟</span><span>队秘</span></div>
+    </a>
+    <a class="island reveal" href="#lv7">
+      <span class="go"><i class="fa-solid fa-arrow-right"></i></span>
+      <span class="no">07</span>
+      <h3>数据画卷</h3>
+      <div class="deliver">交付：≥6 模块可视化数据看板</div>
+      <div class="meta"><span><i class="fa-regular fa-clock"></i> 10 分钟</span><span>设计师</span></div>
+    </a>
+    <a class="island special reveal" href="#lvx">
+      <span class="go"><i class="fa-solid fa-arrow-right"></i></span>
+      <span class="no">★</span>
+      <h3>小剧场</h3>
+      <div class="deliver">交付：1—7 关集中展示汇报 PPT（FABE）</div>
+      <div class="meta"><span><i class="fa-regular fa-clock"></i> 40 分钟</span><span>全员</span></div>
+    </a>
+    <a class="island reveal" href="#lv8">
+      <span class="go"><i class="fa-solid fa-arrow-right"></i></span>
+      <span class="no">08</span>
+      <h3>决战时刻</h3>
+      <div class="deliver">交付：五轮博弈 · 班级整体成功</div>
+      <div class="meta"><span><i class="fa-regular fa-clock"></i> 30 分钟</span><span>策略师 + 全员</span></div>
+    </a>
+    <a class="island reveal" href="#lv9">
+      <span class="go"><i class="fa-solid fa-arrow-right"></i></span>
+      <span class="no">09</span>
+      <h3>荣耀时刻</h3>
+      <div class="deliver">交付：数字人视频总结（克隆声音）</div>
+      <div class="meta"><span><i class="fa-regular fa-clock"></i> 30 分钟</span><span>新闻发言人</span></div>
+    </a>
+  </div>
+</section>
+<!-- ================= 工具舱 ================= -->
+<section class="section" id="tools">
+  <div class="sec-head reveal">
+    <span class="kicker"><i class="fa-solid fa-toolbox"></i>ARMORY</span>
+    <h2>工具舱 · 关卡 × 武器对照</h2>
+    <p>每件武器都标注了它最趁手的关卡。点击「发射」直达工具官网；关卡徽章可告诉你这件武器在哪几关能派上用场。记住：没有最强的工具，只有最合适的组合。</p>
+  </div>
+
+  <div class="tool-cat reveal"><h3><i class="fa-solid fa-brain" style="color:var(--cyan)"></i> 文生文 · 大脑中枢</h3><div class="bar"></div></div>
+  <div class="tool-grid">
+    <div class="tool-card reveal">
+      <div class="tool-top">
+        <div class="tool-ico"><i class="fa-solid fa-robot"></i></div>
+        <div><h4>DeepSeek</h4><div class="scene">文案 · 推理 · 代码生成</div></div>
+      </div>
+      <div class="tool-url">chat.deepseek.com</div>
+      <div class="tool-levels"><span class="lv-chip">关卡1</span><span class="lv-chip">关卡3</span><span class="lv-chip">关卡4</span><span class="lv-chip">关卡6</span><span class="lv-chip">关卡7</span><span class="lv-chip">关卡8</span><span class="lv-chip">关卡9</span></div>
+      <a class="visit" href="https://chat.deepseek.com" target="_blank" rel="noopener"><i class="fa-solid fa-rocket"></i>发射</a>
+    </div>
+    <div class="tool-card reveal">
+      <div class="tool-top">
+        <div class="tool-ico"><i class="fa-solid fa-moon"></i></div>
+        <div><h4>Kimi</h4><div class="scene">长文本 · 纪要提炼 · PPT 助手</div></div>
+      </div>
+      <div class="tool-url">kimi.moonshot.cn</div>
+      <div class="tool-levels"><span class="lv-chip">关卡2</span><span class="lv-chip">关卡3</span><span class="lv-chip">小剧场</span></div>
+      <a class="visit" href="https://kimi.moonshot.cn" target="_blank" rel="noopener"><i class="fa-solid fa-rocket"></i>发射</a>
+    </div>
+    <div class="tool-card reveal">
+      <div class="tool-top">
+        <div class="tool-ico"><i class="fa-solid fa-comment-dots"></i></div>
+        <div><h4>豆包</h4><div class="scene">全能助手 · 文生图 · 视频通话军师</div></div>
+      </div>
+      <div class="tool-url">doubao.com</div>
+      <div class="tool-levels"><span class="lv-chip">关卡1</span><span class="lv-chip">关卡6</span><span class="lv-chip">关卡7</span><span class="lv-chip">关卡8</span></div>
+      <a class="visit" href="https://www.doubao.com" target="_blank" rel="noopener"><i class="fa-solid fa-rocket"></i>发射</a>
+    </div>
+    <div class="tool-card reveal">
+      <div class="tool-top">
+        <div class="tool-ico"><i class="fa-solid fa-cube"></i></div>
+        <div><h4>小浣熊</h4><div class="scene">数据分析 · 表格核算</div></div>
+      </div>
+      <div class="tool-url">xiaohuanxiong.com</div>
+      <div class="tool-levels"><span class="lv-chip">关卡3</span></div>
+      <a class="visit" href="https://www.xiaohuanxiong.com" target="_blank" rel="noopener"><i class="fa-solid fa-rocket"></i>发射</a>
+    </div>
+  </div>
+
+  <div class="tool-cat reveal"><h3><i class="fa-solid fa-palette" style="color:var(--cyan)"></i> 文生图 · 画室</h3><div class="bar"></div></div>
+  <div class="tool-grid">
+    <div class="tool-card reveal">
+      <div class="tool-top">
+        <div class="tool-ico"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+        <div><h4>即梦</h4><div class="scene">文生图 · 手绘体 · 图片动态化</div></div>
+      </div>
+      <div class="tool-url">jimeng.jianying.com</div>
+      <div class="tool-levels"><span class="lv-chip">关卡1</span><span class="lv-chip">关卡2</span><span class="lv-chip">关卡6</span><span class="lv-chip">关卡7</span><span class="lv-chip">关卡9</span></div>
+      <a class="visit" href="https://jimeng.jianying.com" target="_blank" rel="noopener"><i class="fa-solid fa-rocket"></i>发射</a>
+    </div>
+    <div class="tool-card reveal">
+      <div class="tool-top">
+        <div class="tool-ico"><i class="fa-solid fa-swatchbook"></i></div>
+        <div><h4>Canva 可画</h4><div class="scene">队徽叠字 · 排版设计</div></div>
+      </div>
+      <div class="tool-url">canva.cn</div>
+      <div class="tool-levels"><span class="lv-chip">关卡1</span><span class="lv-chip">关卡6</span></div>
+      <a class="visit" href="https://www.canva.cn" target="_blank" rel="noopener"><i class="fa-solid fa-rocket"></i>发射</a>
+    </div>
+  </div>
+
+  <div class="tool-cat reveal"><h3><i class="fa-solid fa-briefcase" style="color:var(--cyan)"></i> 办公效率 · 船舱</h3><div class="bar"></div></div>
+  <div class="tool-grid">
+    <div class="tool-card reveal">
+      <div class="tool-top">
+        <div class="tool-ico"><i class="fa-solid fa-file-powerpoint"></i></div>
+        <div><h4>WPS AI</h4><div class="scene">一键生成 PPT</div></div>
+      </div>
+      <div class="tool-url">ai.wps.cn</div>
+      <div class="tool-levels"><span class="lv-chip">关卡2</span><span class="lv-chip">小剧场</span></div>
+      <a class="visit" href="https://ai.wps.cn" target="_blank" rel="noopener"><i class="fa-solid fa-rocket"></i>发射</a>
+    </div>
+    <div class="tool-card reveal">
+      <div class="tool-top">
+        <div class="tool-ico"><i class="fa-solid fa-book-open"></i></div>
+        <div><h4>百度文库</h4><div class="scene">AI 文档助手 · PPT 生成</div></div>
+      </div>
+      <div class="tool-url">wenku.baidu.com</div>
+      <div class="tool-levels"><span class="lv-chip">关卡2</span><span class="lv-chip">小剧场</span></div>
+      <a class="visit" href="https://wenku.baidu.com" target="_blank" rel="noopener"><i class="fa-solid fa-rocket"></i>发射</a>
+    </div>
+    <div class="tool-card reveal">
+      <div class="tool-top">
+        <div class="tool-ico"><i class="fa-solid fa-display"></i></div>
+        <div><h4>AIPPT</h4><div class="scene">大纲秒变 PPT</div></div>
+      </div>
+      <div class="tool-url">aippt.cn</div>
+      <div class="tool-levels"><span class="lv-chip">关卡2</span><span class="lv-chip">小剧场</span></div>
+      <a class="visit" href="https://www.aippt.cn" target="_blank" rel="noopener"><i class="fa-solid fa-rocket"></i>发射</a>
+    </div>
+    <div class="tool-card reveal">
+      <div class="tool-top">
+        <div class="tool-ico"><i class="fa-solid fa-microphone-lines"></i></div>
+        <div><h4>阿里云听悟</h4><div class="scene">录音实时转文字</div></div>
+      </div>
+      <div class="tool-url">tingwu.aliyun.com</div>
+      <div class="tool-levels"><span class="lv-chip">关卡3</span></div>
+      <a class="visit" href="https://tingwu.aliyun.com" target="_blank" rel="noopener"><i class="fa-solid fa-rocket"></i>发射</a>
+    </div>
+    <div class="tool-card reveal">
+      <div class="tool-top">
+        <div class="tool-ico"><i class="fa-solid fa-pen-ruler"></i></div>
+        <div><h4>Excalidraw</h4><div class="scene">Mermaid 渲染 · 手绘白板</div></div>
+      </div>
+      <div class="tool-url">excalidraw.com</div>
+      <div class="tool-levels"><span class="lv-chip">关卡4</span></div>
+      <a class="visit" href="https://excalidraw.com" target="_blank" rel="noopener"><i class="fa-solid fa-rocket"></i>发射</a>
+    </div>
+  </div>
+
+  <div class="tool-cat reveal"><h3><i class="fa-solid fa-satellite" style="color:var(--cyan)"></i> 智能体 · 声呐</h3><div class="bar"></div></div>
+  <div class="tool-grid">
+    <div class="tool-card reveal">
+      <div class="tool-top">
+        <div class="tool-ico"><i class="fa-solid fa-puzzle-piece"></i></div>
+        <div><h4>扣子 Coze（国内版）</h4><div class="scene">零代码搭建翻译智能体</div></div>
+      </div>
+      <div class="tool-url">coze.cn</div>
+      <div class="tool-levels"><span class="lv-chip">关卡5</span></div>
+      <a class="visit" href="https://www.coze.cn" target="_blank" rel="noopener"><i class="fa-solid fa-rocket"></i>发射</a>
+    </div>
+    <div class="tool-card reveal">
+      <div class="tool-top">
+        <div class="tool-ico"><i class="fa-solid fa-globe"></i></div>
+        <div><h4>扣子 Coze（国际版）</h4><div class="scene">海外节点 · 功能更全</div></div>
+      </div>
+      <div class="tool-url">coze.com</div>
+      <div class="tool-levels"><span class="lv-chip">关卡5</span></div>
+      <a class="visit" href="https://www.coze.com" target="_blank" rel="noopener"><i class="fa-solid fa-rocket"></i>发射</a>
+    </div>
+  </div>
+
+  <div class="tool-cat reveal"><h3><i class="fa-solid fa-video" style="color:var(--cyan)"></i> 音视频 · 影像室</h3><div class="bar"></div></div>
+  <div class="tool-grid">
+    <div class="tool-card reveal">
+      <div class="tool-top">
+        <div class="tool-ico"><i class="fa-solid fa-user-astronaut"></i></div>
+        <div><h4>腾讯智影</h4><div class="scene">数字人 · 云端剪辑</div></div>
+      </div>
+      <div class="tool-url">zenvideo.qq.com</div>
+      <div class="tool-levels"><span class="lv-chip">关卡9</span></div>
+      <a class="visit" href="https://zenvideo.qq.com" target="_blank" rel="noopener"><i class="fa-solid fa-rocket"></i>发射</a>
+    </div>
+    <div class="tool-card reveal">
+      <div class="tool-top">
+        <div class="tool-ico"><i class="fa-solid fa-mobile-screen"></i></div>
+        <div><h4>硅语 / 闪剪（App）</h4><div class="scene">声音克隆 · 照片变数字人</div></div>
+      </div>
+      <div class="tool-url">手机应用商店搜索「硅语」「闪剪」</div>
+      <div class="tool-levels"><span class="lv-chip">关卡9</span></div>
+      <a class="visit plain" href="#lv9"><i class="fa-solid fa-anchor"></i>看第九关攻略</a>
+    </div>
+    <div class="tool-card reveal">
+      <div class="tool-top">
+        <div class="tool-ico"><i class="fa-solid fa-photo-film"></i></div>
+        <div><h4>可灵</h4><div class="scene">图片动态化 · 文生视频</div></div>
+      </div>
+      <div class="tool-url">klingai.com</div>
+      <div class="tool-levels"><span class="lv-chip">关卡9</span></div>
+      <a class="visit" href="https://www.klingai.com" target="_blank" rel="noopener"><i class="fa-solid fa-rocket"></i>发射</a>
+    </div>
+    <div class="tool-card reveal">
+      <div class="tool-top">
+        <div class="tool-ico"><i class="fa-solid fa-clapperboard"></i></div>
+        <div><h4>剪映</h4><div class="scene">最终合成 · 字幕特效</div></div>
+      </div>
+      <div class="tool-url">jianying.com</div>
+      <div class="tool-levels"><span class="lv-chip">关卡9</span></div>
+      <a class="visit" href="https://www.jianying.com" target="_blank" rel="noopener"><i class="fa-solid fa-rocket"></i>发射</a>
+    </div>
+    <div class="tool-card reveal">
+      <div class="tool-top">
+        <div class="tool-ico"><i class="fa-solid fa-circle-play"></i></div>
+        <div><h4>度加</h4><div class="scene">AI 成片 · 文字转语音</div></div>
+      </div>
+      <div class="tool-url">aigc.baidu.com</div>
+      <div class="tool-levels"><span class="lv-chip">关卡9</span></div>
+      <a class="visit" href="https://aigc.baidu.com" target="_blank" rel="noopener"><i class="fa-solid fa-rocket"></i>发射</a>
+    </div>
+  </div>
+</section>
+<!-- ================= 九关攻略 ================= -->
+<section class="section" id="levels">
+  <div class="sec-head reveal">
+    <span class="kicker"><i class="fa-solid fa-scroll"></i>NINE GATES</span>
+    <h2>九关攻略 · 提示词与诀窍全装填</h2>
+    <p>每一关：先看任务简报 → 领武器（工具直达）→ 复制初始提示词 → 读过关诀窍 → 提交前逐项自检。提示词只是起点，记得喂给它你们队自己的故事。</p>
+  </div>
+
+  <!-- ============ 关卡 01 ============ -->
+  <article class="level-card reveal" id="lv1">
+    <div class="lc-head">
+      <div class="lc-no">01</div>
+      <div class="lc-title">
+        <div class="stage">第一关 · 组建战队</div>
+        <h3>队名 · 队呼 · 队徽之谜</h3>
+      </div>
+      <div class="lc-tags">
+        <span class="tag gold"><i class="fa-regular fa-clock"></i>30 分钟</span>
+        <span class="tag"><i class="fa-solid fa-user"></i>队长 × 设计师</span>
+        <span class="tag"><i class="fa-solid fa-tv"></i>投屏展示</span>
+      </div>
+    </div>
+    <div class="lc-body">
+      <div class="lc-brief">
+        <b>任务简报：</b>30 分钟内，全部用 AI 产出三件套——从 <b>≥10 个备选</b>中选定队名；6—16 字朗朗上口的队呼；以及一枚<b>包含清晰可辨队名文字、绝无乱码</b>的队徽。身份认同，是团队凝聚力的第一块基石。
+      </div>
+      <div class="lc-grid">
+        <div class="lc-panel">
+          <h4><i class="fa-solid fa-toolbox"></i>推荐武器</h4>
+          <div class="lc-tools">
+            <div class="lc-tool"><i class="fa-solid fa-robot"></i><div class="tn">DeepSeek<small>队名 / 队呼批量生成</small></div><a href="https://chat.deepseek.com" target="_blank" rel="noopener">打开</a></div>
+            <div class="lc-tool"><i class="fa-solid fa-wand-magic-sparkles"></i><div class="tn">即梦<small>队徽图形 · 专业 Logo 场景</small></div><a href="https://jimeng.jianying.com" target="_blank" rel="noopener">打开</a></div>
+            <div class="lc-tool"><i class="fa-solid fa-swatchbook"></i><div class="tn">Canva 可画<small>叠加队名文字 · 精确排版</small></div><a href="https://www.canva.cn" target="_blank" rel="noopener">打开</a></div>
+            <div class="lc-tool"><i class="fa-solid fa-comment-dots"></i><div class="tn">豆包<small>备选生图工具</small></div><a href="https://www.doubao.com" target="_blank" rel="noopener">打开</a></div>
+          </div>
         </div>
-    </nav>
-
-    <!-- 英雄区域 -->
-    <section class="hero-section pt-32 pb-24 px-4">
-        <div class="wave-bg"></div>
-        <div class="max-w-6xl mx-auto text-center relative z-10">
-            <div class="inline-block mb-6 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full">
-                <span class="text-white/90 text-sm">AIGC沙盘实战 · 第八代</span>
-            </div>
-            <h1 class="text-5xl md:text-6xl font-black text-white mb-6 leading-tight">
-                西沙群岛探险捕鱼
-            </h1>
-            <p class="text-xl md:text-2xl text-white/90 mb-4 font-light">
-                剧本杀 · 深蓝七侠 · AI觉醒
-            </p>
-            <div class="quote-box max-w-3xl mx-auto mt-8">
-                <p class="text-gray-700 text-lg">
-                    「当算法学会了思考，人类便有了新的翅膀。<br>
-                    但真正的智慧，是知道何时让它飞翔，何时让它着陆。」
-                </p>
-                <p class="text-gray-500 text-sm mt-2">—— 刻在「AI航海号」舰桥上的格言</p>
-            </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto mt-12">
-                <div class="bg-white/20 backdrop-blur-sm rounded-xl p-4">
-                    <div class="text-3xl font-bold text-white">7</div>
-                    <div class="text-white/80 text-sm">位探险家</div>
-                </div>
-                <div class="bg-white/20 backdrop-blur-sm rounded-xl p-4">
-                    <div class="text-3xl font-bold text-white">9</div>
-                    <div class="text-white/80 text-sm">大关卡</div>
-                </div>
-                <div class="bg-white/20 backdrop-blur-sm rounded-xl p-4">
-                    <div class="text-3xl font-bold text-white">7</div>
-                    <div class="text-white/80 text-sm">天探险</div>
-                </div>
-                <div class="bg-white/20 backdrop-blur-sm rounded-xl p-4">
-                    <div class="text-3xl font-bold text-white">∞</div>
-                    <div class="text-white/80 text-sm">种可能</div>
-                </div>
-            </div>
+        <div class="lc-panel">
+          <h4><i class="fa-solid fa-compass"></i>过关诀窍</h4>
+          <ol class="lc-tips">
+            <li><b>先量后质：</b>队名先要 10 个备选再投票，别指望一发入魂。</li>
+            <li><b>四要素讲故事：</b>角色设定 + 背景描述 + 具体要求 + 输出格式，缺一不可。</li>
+            <li><b>队徽分两步走：</b>先生成<b>纯图形</b>（提示词写明 no text），再用 Canva 叠字——这是治乱码的祖传药方。</li>
+            <li><b>队呼要喊出来：</b>全队齐喊一遍，拗口的直接淘汰。</li>
+            <li><b>多风格再融合：</b>热血 / 诗意 / 幽默各出一版，取各家之长。</li>
+          </ol>
         </div>
-    </section>
+      </div>
+      <div class="prompt-block">
+        <div class="pb-head"><span class="pb-dot r"></span><span class="pb-dot y"></span><span class="pb-dot g"></span><span class="pb-title">PROMPT · 队名生成</span><button class="copy-btn" data-copy><i class="fa-regular fa-copy"></i>复制</button></div>
+        <pre>你是一位创意命名专家。我们是一支 7 人探险团队，即将前往西沙群岛开展 AIGC 实战。请生成 10 个队名备选，要求：体现海洋元素 + 科技感 + 团队精神，每个队名附带一句寓意说明。</pre>
+      </div>
+      <div class="prompt-block">
+        <div class="pb-head"><span class="pb-dot r"></span><span class="pb-dot y"></span><span class="pb-dot g"></span><span class="pb-title">PROMPT · 队呼 + 队徽</span><button class="copy-btn" data-copy><i class="fa-regular fa-copy"></i>复制</button></div>
+        <pre>【队呼】围绕「西沙群岛 + AI 协作 + 七天探险」创作队呼，6—16 个字，朗朗上口、能一口气喊出来。请运用排比、押韵，给出热血型、诗意型、幽默型各 3 条。
 
-    <!-- 角色介绍 -->
-    <section id="roles" class="py-20 px-4">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold section-title mb-4">深蓝七侠</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">
-                    七位来自不同领域的精英，因AI而聚，为智慧而行。<br>
-                    每个人都拥有独特的AI核心能力，在探险中发挥关键作用。
-                </p>
-            </div>
+【队徽】生成一枚圆形徽章：深蓝海洋主题，七颗星辰环绕一艘科考船，海浪与罗盘元素，金色描边，扁平矢量风格，纯图形，不含任何文字（no text）。</pre>
+      </div>
+      <div class="lc-check">
+        <span class="lab"><i class="fa-solid fa-list-check"></i>提交自检</span>
+        <label class="chk"><input type="checkbox" data-key="lv1-1"><span>队名从 10 个备选里选出</span></label>
+        <label class="chk"><input type="checkbox" data-key="lv1-2"><span>队呼 6—16 字能齐喊</span></label>
+        <label class="chk"><input type="checkbox" data-key="lv1-3"><span>队徽文字清晰无乱码</span></label>
+      </div>
+    </div>
+  </article>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- 七封 -->
-                <div class="card role-card 队长 p-6">
-                    <div class="avatar-placeholder">七</div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">七封 · 语境大师</h3>
-                    <p class="text-sm text-gray-500 mb-4">真名：齐峰 | 队长 | 35岁</p>
-                    <div class="mb-4">
-                        <span class="badge badge-warning">👑 队长</span>
-                        <span class="badge badge-info">提示词工程</span>
-                    </div>
-                    <div class="quote-box text-sm">
-                        「先别急，让我给AI讲个故事……」
-                    </div>
-                    <div class="space-y-2">
-                        <div class="skill-tag">角色设定</div>
-                        <div class="skill-tag">背景描述</div>
-                        <div class="skill-tag">故事思维</div>
-                    </div>
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <p class="text-sm text-gray-600">
-                            <strong>核心能力：</strong>提示词工程，擅长构建完整的角色设定、背景描述与上下文语境
-                        </p>
-                        <p class="text-sm text-gray-600 mt-2">
-                            <strong>负责关卡：</strong>关卡1（组队）+ 关卡2（PPT）
-                        </p>
-                    </div>
-                </div>
-
-                <!-- 小墨 -->
-                <div class="card role-card 设计师 p-6">
-                    <div class="avatar-placeholder">墨</div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">小墨 · 像素诗人</h3>
-                    <p class="text-sm text-gray-500 mb-4">真名：林晓墨 | 设计师 | 29岁</p>
-                    <div class="mb-4">
-                        <span class="badge badge-purple">🎨 设计师</span>
-                        <span class="badge badge-info">文生图</span>
-                    </div>
-                    <div class="quote-box text-sm">
-                        「别急，我再调一下seed值……」
-                    </div>
-                    <div class="space-y-2">
-                        <div class="skill-tag">豆包</div>
-                        <div class="skill-tag">即梦</div>
-                        <div class="skill-tag">Midjourney</div>
-                    </div>
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <p class="text-sm text-gray-600">
-                            <strong>核心能力：</strong>文生图，精通多种AI绘图工具，擅长解决Logo文字乱码问题
-                        </p>
-                        <p class="text-sm text-gray-600 mt-2">
-                            <strong>负责关卡：</strong>关卡1（队徽）+ 关卡7（看板）
-                        </p>
-                    </div>
-                </div>
-
-                <!-- 阿图 -->
-                <div class="card role-card 项目经理 p-6">
-                    <div class="avatar-placeholder">图</div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">阿图 · 数据画师</h3>
-                    <p class="text-sm text-gray-500 mb-4">真名：陈一图 | 项目经理 | 32岁</p>
-                    <div class="mb-4">
-                        <span class="badge badge-success">📊 项目经理</span>
-                        <span class="badge badge-info">数据可视化</span>
-                    </div>
-                    <div class="quote-box text-sm">
-                        「数据不说谎，但数据需要被看见。」
-                    </div>
-                    <div class="space-y-2">
-                        <div class="skill-tag">Mermaid语法</div>
-                        <div class="skill-tag">甘特图</div>
-                        <div class="skill-tag">ECharts</div>
-                    </div>
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <p class="text-sm text-gray-600">
-                            <strong>核心能力：</strong>Mermaid语法，让AI用一句话生成甘特图、流程图、时序图
-                        </p>
-                        <p class="text-sm text-gray-600 mt-2">
-                            <strong>负责关卡：</strong>关卡4（甘特图）
-                        </p>
-                    </div>
-                </div>
-
-                <!-- 流程姐 -->
-                <div class="card role-card 队秘 p-6">
-                    <div class="avatar-placeholder">流</div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">流程姐 · 效能女王</h3>
-                    <p class="text-sm text-gray-500 mb-4">真名：苏流 | 队秘 | 38岁</p>
-                    <div class="mb-4">
-                        <span class="badge badge-info">📝 队秘</span>
-                        <span class="badge badge-warning">AI工作流</span>
-                    </div>
-                    <div class="quote-box text-sm">
-                        「手动？不存在的。」
-                    </div>
-                    <div class="space-y-2">
-                        <div class="skill-tag">Coze</div>
-                        <div class="skill-tag">Dify</div>
-                        <div class="skill-tag">自动化Agent</div>
-                    </div>
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <p class="text-sm text-gray-600">
-                            <strong>核心能力：</strong>AI工作流，用Coze/Dify搭建自动化Agent，让会议纪要一键生成
-                        </p>
-                        <p class="text-sm text-gray-600 mt-2">
-                            <strong>负责关卡：</strong>关卡3（会议纪要）+ 关卡6（邮件）
-                        </p>
-                    </div>
-                </div>
-
-                <!-- 言叔 -->
-                <div class="card role-card 翻译 p-6">
-                    <div class="avatar-placeholder">言</div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">言叔 · 跨境使者</h3>
-                    <p class="text-sm text-gray-500 mb-4">真名：周言 | 翻译 | 28岁</p>
-                    <div class="mb-4">
-                        <span class="badge badge-pink">🌏 翻译</span>
-                        <span class="badge badge-info">智能体开发</span>
-                    </div>
-                    <div class="quote-box text-sm">
-                        「语言是桥梁，AI是造桥的工人。」
-                    </div>
-                    <div class="space-y-2">
-                        <div class="skill-tag">扣子Coze</div>
-                        <div class="skill-tag">多语言翻译</div>
-                        <div class="skill-tag">语境记忆</div>
-                    </div>
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <p class="text-sm text-gray-600">
-                            <strong>核心能力：</strong>智能体开发，用Coze平台搭建多语言翻译Agent
-                        </p>
-                        <p class="text-sm text-gray-600 mt-2">
-                            <strong>负责关卡：</strong>关卡5（越南语翻译智能体）
-                        </p>
-                    </div>
-                </div>
-
-                <!-- 博弈 -->
-                <div class="card role-card 策略师 p-6">
-                    <div class="avatar-placeholder">弈</div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">博弈 · 策略棋手</h3>
-                    <p class="text-sm text-gray-500 mb-4">真名：何弈 | 策略师 | 40岁</p>
-                    <div class="mb-4">
-                        <span class="badge badge-orange">🎯 策略师</span>
-                        <span class="badge badge-info">博弈论</span>
-                    </div>
-                    <div class="quote-box text-sm">
-                        「人算不如天算，天算不如AI算。」
-                    </div>
-                    <div class="space-y-2">
-                        <div class="skill-tag">豆包视频通话</div>
-                        <div class="skill-tag">博弈论</div>
-                        <div class="skill-tag">纳什均衡</div>
-                    </div>
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <p class="text-sm text-gray-600">
-                            <strong>核心能力：</strong>实时决策，用豆包视频通话功能让AI成为场外军师
-                        </p>
-                        <p class="text-sm text-gray-600 mt-2">
-                            <strong>负责关卡：</strong>关卡8（捕鱼决战策略）
-                        </p>
-                    </div>
-                </div>
-
-                <!-- 光影 -->
-                <div class="card role-card 新闻发言人 p-6">
-                    <div class="avatar-placeholder">光</div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">光影 · 影像魔术师</h3>
-                    <p class="text-sm text-gray-500 mb-4">真名：夏光 | 新闻发言人 | 26岁</p>
-                    <div class="mb-4">
-                        <span class="badge badge-purple">🎬 发言人</span>
-                        <span class="badge badge-info">数字人克隆</span>
-                    </div>
-                    <div class="quote-box text-sm">
-                        「三秒定生死，开头不炸，别想有人看完。」
-                    </div>
-                    <div class="space-y-2">
-                        <div class="skill-tag">度加剪辑</div>
-                        <div class="skill-tag">可灵</div>
-                        <div class="skill-tag">硅语APP</div>
-                    </div>
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <p class="text-sm text-gray-600">
-                            <strong>核心能力：</strong>文生视频，用度加、剪映、可灵、硅语组合出片
-                        </p>
-                        <p class="text-sm text-gray-600 mt-2">
-                            <strong>负责关卡：</strong>关卡9（数字人视频总结）
-                        </p>
-                    </div>
-                </div>
-            </div>
+  <!-- ============ 关卡 02 ============ -->
+  <article class="level-card reveal" id="lv2">
+    <div class="lc-head">
+      <div class="lc-no">02</div>
+      <div class="lc-title">
+        <div class="stage">第二关 · 战略部署（上）</div>
+        <h3>队长的 30 页 PPT</h3>
+      </div>
+      <div class="lc-tags">
+        <span class="tag gold"><i class="fa-regular fa-clock"></i>30 分钟</span>
+        <span class="tag"><i class="fa-solid fa-user"></i>队长</span>
+        <span class="tag"><i class="fa-solid fa-box-archive"></i>存档备查</span>
+      </div>
+    </div>
+    <div class="lc-body">
+      <div class="lc-brief">
+        <b>任务简报：</b>制作<b>不少于 30 页</b>的西沙群岛捕鱼计划 PPT，涵盖地理环境、历史文化、海洋生态与鱼种、实施步骤、策略与风险五大板块；<b>至少一页手绘体</b>；首页含队名 / 队呼 / 队徽；终极目标——<b>减少 AI 味，达到商用水准</b>。
+      </div>
+      <div class="lc-grid">
+        <div class="lc-panel">
+          <h4><i class="fa-solid fa-toolbox"></i>推荐武器</h4>
+          <div class="lc-tools">
+            <div class="lc-tool"><i class="fa-solid fa-file-powerpoint"></i><div class="tn">WPS AI<small>大纲一键成稿 · 首选</small></div><a href="https://ai.wps.cn" target="_blank" rel="noopener">打开</a></div>
+            <div class="lc-tool"><i class="fa-solid fa-moon"></i><div class="tn">Kimi PPT<small>长文档理解与排版</small></div><a href="https://kimi.moonshot.cn" target="_blank" rel="noopener">打开</a></div>
+            <div class="lc-tool"><i class="fa-solid fa-book-open"></i><div class="tn">百度文库 / AIPPT<small>备选 PPT 生产线</small></div><a href="https://wenku.baidu.com" target="_blank" rel="noopener">打开</a></div>
+            <div class="lc-tool"><i class="fa-solid fa-wand-magic-sparkles"></i><div class="tn">即梦<small>手绘体页面专用</small></div><a href="https://jimeng.jianying.com" target="_blank" rel="noopener">打开</a></div>
+          </div>
         </div>
-    </section>
-
-    <!-- 关卡任务 -->
-    <section id="missions" class="py-20 px-4 bg-white">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold section-title mb-4">九大关卡</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">
-                    从组建战队到荣耀时刻，每个关卡都是对AI能力的终极考验。<br>
-                    只有团队协作，才能闯过所有挑战。
-                </p>
-            </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- 关卡1 -->
-                <div class="card mission-card p-6">
-                    <div class="mission-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="flex items-center justify-between mb-3">
-                        <h3 class="text-lg font-bold text-gray-800">组建战队</h3>
-                        <span class="badge badge-warning">关卡1</span>
-                    </div>
-                    <p class="text-sm text-gray-600 mb-4">
-                        在AI时代，组队不是凑人数，而是编织一张智慧的网。
-                    </p>
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <div class="stat-value">30</div>
-                            <div class="stat-label">分钟</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">3</div>
-                            <div class="stat-label">项任务</div>
-                        </div>
-                    </div>
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <p class="text-xs text-gray-500">
-                            <strong>核心交付：</strong>队名 + 队呼 + 队徽（含清晰文字，无乱码）
-                        </p>
-                    </div>
-                </div>
-
-                <!-- 关卡2 -->
-                <div class="card mission-card p-6">
-                    <div class="mission-icon">
-                        <i class="fas fa-file-powerpoint"></i>
-                    </div>
-                    <div class="flex items-center justify-between mb-3">
-                        <h3 class="text-lg font-bold text-gray-800">战略部署上</h3>
-                        <span class="badge badge-warning">关卡2</span>
-                    </div>
-                    <p class="text-sm text-gray-600 mb-4">
-                        一份好的PPT，不只是幻灯片，而是一场视觉叙事。
-                    </p>
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <div class="stat-value">30</div>
-                            <div class="stat-label">分钟</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">30+</div>
-                            <div class="stat-label">页PPT</div>
-                        </div>
-                    </div>
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <p class="text-xs text-gray-500">
-                            <strong>核心交付：</strong>西沙群岛介绍PPT（≥30页，图文并茂）
-                        </p>
-                    </div>
-                </div>
-
-                <!-- 关卡3 -->
-                <div class="card mission-card p-6">
-                    <div class="mission-icon">
-                        <i class="fas fa-file-alt"></i>
-                    </div>
-                    <div class="flex items-center justify-between mb-3">
-                        <h3 class="text-lg font-bold text-gray-800">战略部署下</h3>
-                        <span class="badge badge-warning">关卡3</span>
-                    </div>
-                    <p class="text-sm text-gray-600 mb-4">
-                        会议的价值，不在于开了多久，而在于记住了什么。
-                    </p>
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <div class="stat-value">20</div>
-                            <div class="stat-label">分钟</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">600+</div>
-                            <div class="stat-label">字纪要</div>
-                        </div>
-                    </div>
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <p class="text-xs text-gray-500">
-                            <strong>核心交付：</strong>捕鱼经营会议纪要（≥600字，结构完整）
-                        </p>
-                    </div>
-                </div>
-
-                <!-- 关卡4 -->
-                <div class="card mission-card p-6">
-                    <div class="mission-icon">
-                        <i class="fas fa-chart-gantt"></i>
-                    </div>
-                    <div class="flex items-center justify-between mb-3">
-                        <h3 class="text-lg font-bold text-gray-800">时间掌控</h3>
-                        <span class="badge badge-warning">关卡4</span>
-                    </div>
-                    <p class="text-sm text-gray-600 mb-4">
-                        甘特图是时间魔法——让抽象的计划变成可视的进度条。
-                    </p>
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <div class="stat-value">10</div>
-                            <div class="stat-label">分钟</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">1</div>
-                            <div class="stat-label">份图表</div>
-                        </div>
-                    </div>
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <p class="text-xs text-gray-500">
-                            <strong>核心交付：</strong>甘特图（任务+时间+责任人）
-                        </p>
-                    </div>
-                </div>
-
-                <!-- 关卡5 -->
-                <div class="card mission-card p-6">
-                    <div class="mission-icon">
-                        <i class="fas fa-language"></i>
-                    </div>
-                    <div class="flex items-center justify-between mb-3">
-                        <h3 class="text-lg font-bold text-gray-800">跨境遭遇</h3>
-                        <span class="badge badge-warning">关卡5</span>
-                    </div>
-                    <p class="text-sm text-gray-600 mb-4">
-                        语言是桥梁，AI是造桥的工人。
-                    </p>
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <div class="stat-value">10</div>
-                            <div class="stat-label">分钟</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">2</div>
-                            <div class="stat-label">向翻译</div>
-                        </div>
-                    </div>
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <p class="text-xs text-gray-500">
-                            <strong>核心交付：</strong>中越翻译智能体（双向翻译+口径设定）
-                        </p>
-                    </div>
-                </div>
-
-                <!-- 关卡6 -->
-                <div class="card mission-card p-6">
-                    <div class="mission-icon">
-                        <i class="fas fa-envelope-open-text"></i>
-                    </div>
-                    <div class="flex items-center justify-between mb-3">
-                        <h3 class="text-lg font-bold text-gray-800">数据之诗</h3>
-                        <span class="badge badge-warning">关卡6</span>
-                    </div>
-                    <p class="text-sm text-gray-600 mb-4">
-                        数据是冰冷的，但诗意能让它温暖。
-                    </p>
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <div class="stat-value">20</div>
-                            <div class="stat-label">分钟</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">3</div>
-                            <div class="stat-label">大元素</div>
-                        </div>
-                    </div>
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <p class="text-xs text-gray-500">
-                            <strong>核心交付：</strong>可视化智能邮件（藏头诗+可视化+AI图）
-                        </p>
-                    </div>
-                </div>
-
-                <!-- 关卡7 -->
-                <div class="card mission-card p-6">
-                    <div class="mission-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <div class="flex items-center justify-between mb-3">
-                        <h3 class="text-lg font-bold text-gray-800">数据画卷</h3>
-                        <span class="badge badge-warning">关卡7</span>
-                    </div>
-                    <p class="text-sm text-gray-600 mb-4">
-                        数据不说谎，但数据需要被看见。
-                    </p>
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <div class="stat-value">10</div>
-                            <div class="stat-label">分钟</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">6+</div>
-                            <div class="stat-label">个模块</div>
-                        </div>
-                    </div>
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <p class="text-xs text-gray-500">
-                            <strong>核心交付：</strong>可视化数据看板（≥6个模块，图表结合）
-                        </p>
-                    </div>
-                </div>
-
-                <!-- 关卡8 -->
-                <div class="card mission-card p-6">
-                    <div class="mission-icon">
-                        <i class="fas fa-chess"></i>
-                    </div>
-                    <div class="flex items-center justify-between mb-3">
-                        <h3 class="text-lg font-bold text-gray-800">决战时刻</h3>
-                        <span class="badge badge-warning">关卡8</span>
-                    </div>
-                    <p class="text-sm text-gray-600 mb-4">
-                        人算不如天算，天算不如AI算。但最好的算法，是人心的协作。
-                    </p>
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <div class="stat-value">30</div>
-                            <div class="stat-label">分钟</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">5</div>
-                            <div class="stat-label">轮博弈</div>
-                        </div>
-                    </div>
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <p class="text-xs text-gray-500">
-                            <strong>核心交付：</strong>五轮博弈捕鱼决战（班级整体>小组利益）
-                        </p>
-                    </div>
-                </div>
-
-                <!-- 关卡9 -->
-                <div class="card mission-card p-6">
-                    <div class="mission-icon">
-                        <i class="fas fa-video"></i>
-                    </div>
-                    <div class="flex items-center justify-between mb-3">
-                        <h3 class="text-lg font-bold text-gray-800">荣耀时刻</h3>
-                        <span class="badge badge-warning">关卡9</span>
-                    </div>
-                    <p class="text-sm text-gray-600 mb-4">
-                        三秒定生死，开头不炸，别想有人看完。但最好的结尾，是让人意犹未尽。
-                    </p>
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <div class="stat-value">30</div>
-                            <div class="stat-label">分钟</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">1</div>
-                            <div class="stat-label">个视频</div>
-                        </div>
-                    </div>
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <p class="text-xs text-gray-500">
-                            <strong>核心交付：</strong>数字人视频总结（克隆声音+全员头像）
-                        </p>
-                    </div>
-                </div>
-            </div>
+        <div class="lc-panel">
+          <h4><i class="fa-solid fa-compass"></i>过关诀窍</h4>
+          <ol class="lc-tips">
+            <li><b>先大纲后填充：</b>一条提示词出不来 30 页，先要大纲，再逐章展开。</li>
+            <li><b>标题统一字数：</b>每章标题都是 6 个字，视觉韵律立刻拉满。</li>
+            <li><b>去 AI 味三步法：</b>AI 出初稿 → 人工调逻辑和案例 → 换套模板重新美化。</li>
+            <li><b>手绘页交给即梦：</b>用锦囊区的「手绘体提示词」，别用普通生图凑数。</li>
+            <li><b>首页就是门面：</b>队名、队呼、队徽一个不能少。</li>
+          </ol>
         </div>
-    </section>
+      </div>
+      <div class="prompt-block">
+        <div class="pb-head"><span class="pb-dot r"></span><span class="pb-dot y"></span><span class="pb-dot g"></span><span class="pb-title">PROMPT · 30 页 PPT 大纲</span><button class="copy-btn" data-copy><i class="fa-regular fa-copy"></i>复制</button></div>
+        <pre>你是一位资深商业演示顾问。请为「西沙群岛智能捕鱼探险计划」设计一份 30 页 PPT 大纲。要求：
+① 涵盖五大板块——地理位置与自然环境、历史背景与文化底蕴、海洋生态与鱼种资源、实施步骤与时间节点、策略方向与风险预案；
+② 每个章节标题统一为 6 个字，朗朗上口、结构工整；
+③ 每页给出：页面标题 + 3—5 个要点 + 配图建议；
+④ 其中安排一页手绘笔记风格页面；
+⑤ 第一页为封面，预留队名、队呼、队徽位置。</pre>
+      </div>
+      <div class="lc-check">
+        <span class="lab"><i class="fa-solid fa-list-check"></i>提交自检</span>
+        <label class="chk"><input type="checkbox" data-key="lv2-1"><span>≥30 页且五大板块齐全</span></label>
+        <label class="chk"><input type="checkbox" data-key="lv2-2"><span>章节标题字数统一</span></label>
+        <label class="chk"><input type="checkbox" data-key="lv2-3"><span>含手绘体页面</span></label>
+        <label class="chk"><input type="checkbox" data-key="lv2-4"><span>首页三件套齐全</span></label>
+      </div>
+    </div>
+  </article>
 
-    <!-- 剧本故事 -->
-    <section id="story" class="py-20 px-4">
-        <div class="max-w-4xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold section-title mb-4">剧本故事</h2>
-                <p class="text-gray-600">
-                    从神秘邀请到最终荣耀，七位探险家的AI之旅
-                </p>
-            </div>
-
-            <div class="space-y-8">
-                <div class="card p-8">
-                    <div class="timeline-item">
-                        <h3 class="text-xl font-bold text-gray-800 mb-3">壹 · 2025年的早春</h3>
-                        <p class="text-gray-600 leading-relaxed">
-                            深圳南山科技园，产品总监齐峰（七封）收到了一封神秘的微信邀请——「西沙群岛AIGC探险计划」。密码就藏在他随手买的咖啡杯套上：XISHA2025QF。PDF文档打开，第一页只有一句话：「欢迎回来，七封。你的队友们，已经等了你五年。」
-                        </p>
-                        <p class="text-gray-600 leading-relaxed mt-3">
-                            他想起了2020年首届AIGC黑客马拉松，想起了「深蓝七侠」战队，想起了那句誓言——「有一天，我们要用AI做一件真正伟大的事情。」
-                        </p>
-                    </div>
-                </div>
-
-                <div class="card p-8">
-                    <div class="timeline-item">
-                        <h3 class="text-xl font-bold text-gray-800 mb-3">贰 · 齿轮开始转动</h3>
-                        <p class="text-gray-600 leading-relaxed">
-                            杭州的林小墨（小墨）打来电话，确认其他成员也都收到了邀请。阿图正在用Mermaid画邀请函的信息架构图，流程姐跑AI工作流评估可行性，博弈用博弈论计算期望收益，光影测试补光灯效果，言叔搭建翻译Agent……
-                        </p>
-                        <p class="text-gray-600 leading-relaxed mt-3">
-                            这群人，一点都没变。
-                        </p>
-                    </div>
-                </div>
-
-                <div class="card p-8">
-                    <div class="timeline-item">
-                        <h3 class="text-xl font-bold text-gray-800 mb-3">叁 · 命运的七张牌</h3>
-                        <p class="text-gray-600 leading-relaxed">
-                            三天后，三亚凤凰岛码头。「AI航海号」科考船静静停泊，船舷上深蓝色的字体写着「AI航海号」，旗帜上是七颗星星组成的图案——「深蓝七侠」的老标志。
-                        </p>
-                        <p class="text-gray-600 leading-relaxed mt-3">
-                            七个人，在此重逢。
-                        </p>
-                    </div>
-                </div>
-
-                <div class="card p-8">
-                    <div class="timeline-item">
-                        <h3 class="text-xl font-bold text-gray-800 mb-3">肆 · 第一道谜题</h3>
-                        <p class="text-gray-600 leading-relaxed">
-                            老船长的全息影像出现：「30分钟内，为你们的团队创造三样东西——队名、队呼、队徽。必须全部用AI完成，队徽中必须包含清晰可辨的队名文字。」
-                        </p>
-                        <p class="text-gray-600 leading-relaxed mt-3">
-                            小墨已经失败了四次——Logo里的队名总是变成火星文。AI绘图模型的通病：大部分图像生成模型在训练时主要学习视觉特征，而不是文字的语义和结构。
-                        </p>
-                    </div>
-                </div>
-
-                <div class="card p-8">
-                    <div class="timeline-item">
-                        <h3 class="text-xl font-bold text-gray-800 mb-3">伍 · 跨境遭遇</h3>
-                        <p class="text-gray-600 leading-relaxed">
-                            凌晨两点十七分，雷达发现三艘不明船只——越南渔船。言叔的翻译智能体派上用场：语言转换 + 语境记忆 + 口径设定（「这是中国西沙群岛领海，中国海军护卫舰正在附近巡逻」）。
-                        </p>
-                        <p class="text-gray-600 leading-relaxed mt-3">
-                            最终传来一个声音：「不愧是『深蓝七侠』！第五关测试，你们通过了。」
-                        </p>
-                    </div>
-                </div>
-
-                <div class="card p-8">
-                    <div class="timeline-item">
-                        <h3 class="text-xl font-bold text-gray-800 mb-3">陆 · 数据之诗</h3>
-                        <p class="text-gray-600 leading-relaxed">
-                            总部要求提交阶段性汇报。流程姐用AI生成了一封「数据情书」：开篇是藏头诗（西沙群岛），中间是五个关卡的可视化展示，结尾是一张AI生成的捕鱼成果图。
-                        </p>
-                        <p class="text-gray-600 leading-relaxed mt-3">
-                            「这不是一封普通的邮件，而是一封能让人『一眼看懂、一读动情』的艺术品。」
-                        </p>
-                    </div>
-                </div>
-
-                <div class="card p-8">
-                    <div class="timeline-item">
-                        <h3 class="text-xl font-bold text-gray-800 mb-3">柒 · 数据画卷</h3>
-                        <p class="text-gray-600 leading-relaxed">
-                            智能捕鱼系统运行了六个小时，数以万计的数据从海底传感器涌入。小墨需要把这些冰冷的数字变成任何人都能看懂的故事。
-                        </p>
-                        <p class="text-gray-600 leading-relaxed mt-3">
-                            阿图的建议：先让AI做数据分类和层级梳理，再用ECharts生成代码。最终，六个模块的「数据画卷」呈现在屏幕上——既有图表的理性之美，也有设计的感性之美。
-                        </p>
-                    </div>
-                </div>
-
-                <div class="card p-8">
-                    <div class="timeline-item">
-                        <h3 class="text-xl font-bold text-gray-800 mb-3">捌 · 决战时刻</h3>
-                        <p class="text-gray-600 leading-relaxed">
-                            夜幕降临，五轮博弈开始。博弈的建议：「以牙还牙」策略——第一轮选择合作，之后复制对手上一轮的选择。但考虑到班级整体目标，采用「宽容的以牙还牙」。
-                        </p>
-                        <p class="text-gray-600 leading-relaxed mt-3">
-                            第四轮有一个队伍选择竞争，博弈建议第五轮继续合作并发警告。最终，那个队伍回归合作。班级整体任务：成功。
-                        </p>
-                    </div>
-                </div>
-
-                <div class="card p-8">
-                    <div class="timeline-item">
-                        <h3 class="text-xl font-bold text-gray-800 mb-3">玖 · 荣耀时刻</h3>
-                        <p class="text-gray-600 leading-relaxed">
-                            光影用硅语APP克隆了七封的声音，用可灵让照片动起来，用剪映做最终合成。视频开场震撼——黑屏，闪电划过，「深蓝七侠」从海面上升起，背景是西沙群岛壮丽的日出。
-                        </p>
-                        <p class="text-gray-600 leading-relaxed mt-3">
-                            老船长的全息影像最后一次出现：「各位，恭喜你们完成了全部九关。但请记住——这不是结束，而是开始。」
-                        </p>
-                    </div>
-                </div>
-            </div>
+  <!-- ============ 关卡 03 ============ -->
+  <article class="level-card reveal" id="lv3">
+    <div class="lc-head">
+      <div class="lc-no">03</div>
+      <div class="lc-title">
+        <div class="stage">第三关 · 战略部署（下）</div>
+        <h3>队秘的会议纪要</h3>
+      </div>
+      <div class="lc-tags">
+        <span class="tag gold"><i class="fa-regular fa-clock"></i>20 分钟</span>
+        <span class="tag"><i class="fa-solid fa-user"></i>队秘</span>
+        <span class="tag"><i class="fa-solid fa-microphone"></i>需真实开会录音</span>
+      </div>
+    </div>
+    <div class="lc-body">
+      <div class="lc-brief">
+        <b>任务简报：</b>真开一场「西沙捕鱼经营会议」并录音，产出 <b>≥600 字</b>结构化纪要：讨论要点、五大策略细节、结论与行动项，外加一张<b>按代号统计</b>的加班津贴表（9:00—18:00 之外算加班，只取整数小时）。纪要与录音必须一致。
+      </div>
+      <div class="lc-grid">
+        <div class="lc-panel">
+          <h4><i class="fa-solid fa-toolbox"></i>推荐武器</h4>
+          <div class="lc-tools">
+            <div class="lc-tool"><i class="fa-solid fa-microphone-lines"></i><div class="tn">阿里云听悟<small>录音 → 文字一键转写</small></div><a href="https://tingwu.aliyun.com" target="_blank" rel="noopener">打开</a></div>
+            <div class="lc-tool"><i class="fa-solid fa-robot"></i><div class="tn">DeepSeek / Kimi<small>转写稿 → 结构化纪要</small></div><a href="https://chat.deepseek.com" target="_blank" rel="noopener">打开</a></div>
+            <div class="lc-tool"><i class="fa-solid fa-cube"></i><div class="tn">小浣熊<small>津贴数据核算</small></div><a href="https://www.xiaohuanxiong.com" target="_blank" rel="noopener">打开</a></div>
+          </div>
         </div>
-    </section>
-
-    <!-- 新手指南 -->
-    <section id="guide" class="py-20 px-4 bg-white">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold section-title mb-4">新手指南</h2>
-                <p class="text-gray-600">
-                    快速上手AIGC工具的实用技巧
-                </p>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="card p-6">
-                    <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
-                        <i class="fas fa-lightbulb text-yellow-500 mr-2"></i>
-                        常见问题急救
-                    </h3>
-                    <div class="space-y-4">
-                        <div class="pb-4 border-b border-gray-100">
-                            <h4 class="font-semibold text-gray-700 mb-2">Q1: Logo文字总是乱码？</h4>
-                            <p class="text-sm text-gray-600">
-                                分两步走：先让AI只生成图形（提示词加 "no text"），再用Canva/PS叠加文字。
-                            </p>
-                        </div>
-                        <div class="pb-4 border-b border-gray-100">
-                            <h4 class="font-semibold text-gray-700 mb-2">Q2: PPT生成后AI味太重？</h4>
-                            <p class="text-sm text-gray-600">
-                                人机协作三步法：AI生成初稿 → 人工调整逻辑和案例 → 换一套模板重新美化。
-                            </p>
-                        </div>
-                        <div class="pb-4 border-b border-gray-100">
-                            <h4 class="font-semibold text-gray-700 mb-2">Q3: 藏头诗怎么写？</h4>
-                            <p class="text-sm text-gray-600">
-                                明确指定格式：「请写一首七言律诗，要求每句首字依次为：西、沙、群、岛」
-                            </p>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-gray-700 mb-2">Q4: 甘特图的秘诀？</h4>
-                            <p class="text-sm text-gray-600">
-                                提示词中加上「mermaid」几个字，让AI生成Mermaid代码。
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card p-6">
-                    <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
-                        <i class="fas fa-tools text-blue-500 mr-2"></i>
-                        AI工具速查表
-                    </h3>
-                    <div class="space-y-3">
-                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                            <span class="text-sm text-gray-700">文生文</span>
-                            <span class="text-xs text-blue-600">DeepSeek / Kimi / 文心一言</span>
-                        </div>
-                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                            <span class="text-sm text-gray-700">生成PPT</span>
-                            <span class="text-xs text-blue-600">WPS AI / 百度文库 / Kimi PPT</span>
-                        </div>
-                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                            <span class="text-sm text-gray-700">生成图片</span>
-                            <span class="text-xs text-blue-600">豆包 / 即梦 / Dreamina</span>
-                        </div>
-                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                            <span class="text-sm text-gray-700">甘特图</span>
-                            <span class="text-xs text-blue-600">DeepSeek + Excalidraw</span>
-                        </div>
-                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                            <span class="text-sm text-gray-700">智能体</span>
-                            <span class="text-xs text-blue-600">扣子 Coze / 灵光</span>
-                        </div>
-                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                            <span class="text-sm text-gray-700">录音转文字</span>
-                            <span class="text-xs text-blue-600">阿里云听悟</span>
-                        </div>
-                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                            <span class="text-sm text-gray-700">数字人视频</span>
-                            <span class="text-xs text-blue-600">硅语 / 闪剪 / 腾讯智影</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card p-6">
-                    <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
-                        <i class="fas fa-magic text-purple-500 mr-2"></i>
-                        万能提示词模板
-                    </h3>
-                    <div class="space-y-4">
-                        <div class="bg-gradient-to-r from-purple-50 to-pink-50 p-4 rounded-lg">
-                            <h4 class="font-semibold text-gray-700 mb-2">CRISPE框架</h4>
-                            <ul class="text-xs text-gray-600 space-y-1">
-                                <li><strong>C</strong>haracter（角色）：你是一位[角色描述]</li>
-                                <li><strong>R</strong>equest（任务）：请帮我[具体任务]</li>
-                                <li><strong>I</strong>nsight（背景）：背景是[上下文信息]</li>
-                                <li><strong>S</strong>tyle（风格）：风格要求[专业/活泼/简洁]</li>
-                                <li><strong>P</strong>ersonality（语气）：语气[正式/友好]</li>
-                                <li><strong>E</strong>xample（示例）：参考示例[XXX]</li>
-                            </ul>
-                        </div>
-                        <div class="bg-gradient-to-r from-blue-50 to-cyan-50 p-4 rounded-lg">
-                            <h4 class="font-semibold text-gray-700 mb-2">CHAT框架</h4>
-                            <ul class="text-xs text-gray-600 space-y-1">
-                                <li><strong>C</strong>ontext（背景）：提供背景信息</li>
-                                <li><strong>H</strong>istory（历史）：提供相关历史</li>
-                                <li><strong>A</strong>ction（行动）：明确需要AI做什么</li>
-                                <li><strong>T</strong>arget（目标）：明确输出格式和目标</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card p-6">
-                    <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
-                        <i class="fas fa-compass text-green-500 mr-2"></i>
-                        六步搞定智能体
-                    </h3>
-                    <div class="space-y-3">
-                        <div class="flex items-start space-x-3">
-                            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                <span class="text-green-600 font-bold text-sm">1</span>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-gray-700 text-sm">进入开发平台</h4>
-                                <p class="text-xs text-gray-500">访问 www.coze.com 或 www.coze.cn</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start space-x-3">
-                            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                <span class="text-green-600 font-bold text-sm">2</span>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-gray-700 text-sm">新建智能体</h4>
-                                <p class="text-xs text-gray-500">点击「创建」→「创建Bot」→ 输入名称</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start space-x-3">
-                            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                <span class="text-green-600 font-bold text-sm">3</span>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-gray-700 text-sm">配置角色设定</h4>
-                                <p class="text-xs text-gray-500">设定角色、功能规则、口径约束</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start space-x-3">
-                            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                <span class="text-green-600 font-bold text-sm">4</span>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-gray-700 text-sm">测试与调试</h4>
-                                <p class="text-xs text-gray-500">在预览区输入测试内容</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start space-x-3">
-                            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                <span class="text-green-600 font-bold text-sm">5</span>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-gray-700 text-sm">发布智能体</h4>
-                                <p class="text-xs text-gray-500">点击右上角「发布」按钮</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start space-x-3">
-                            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                <span class="text-green-600 font-bold text-sm">6</span>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-gray-700 text-sm">提交作业</h4>
-                                <p class="text-xs text-gray-500">复制智能体链接发送到学员群</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="lc-panel">
+          <h4><i class="fa-solid fa-compass"></i>过关诀窍</h4>
+          <ol class="lc-tips">
+            <li><b>工作流四步：</b>录音 → 听悟转写 → AI 提炼 → 人工润色。手动？不存在的。</li>
+            <li><b>隐私红线：</b>津贴表只用代号，绝不出现真名。</li>
+            <li><b>津贴让 AI 算、人来核：</b>打卡记录喂给 AI，但规则（9—18 点外算加班、取整）必须人工复核一遍。</li>
+            <li><b>一致性命门：</b>纪要与录音对不上，直接不合格。</li>
+            <li><b>600 字是底线：</b>像人写的、能商用，才是终点。</li>
+          </ol>
         </div>
-    </section>
-
-    <!-- 页脚 -->
-    <footer class="bg-gray-900 text-white py-12 px-4">
-        <div class="max-w-6xl mx-auto text-center">
-            <div class="mb-6">
-                <div class="w-16 h-16 bg-gradient-to-br from-blue-600 to-cyan-400 rounded-xl flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-anchor text-white text-2xl"></i>
-                </div>
-                <h3 class="text-xl font-bold mb-2">西沙群岛探险捕鱼</h3>
-                <p class="text-gray-400 text-sm">AIGC沙盘实战 · 深蓝七侠 · AI觉醒</p>
-            </div>
-            <div class="text-gray-500 text-xs">
-                <p>「当算法学会了思考，人类便有了新的翅膀。</p>
-                <p>但真正的智慧，是知道何时让它飞翔，何时让它着陆。」</p>
-            </div>
-            <div class="mt-8 pt-8 border-t border-gray-800 text-gray-600 text-sm">
-                <p>© 2025 西沙群岛AIGC探险计划 · 神秘岛科技独家赞助</p>
-            </div>
+      </div>
+      <div class="prompt-block">
+        <div class="pb-head"><span class="pb-dot r"></span><span class="pb-dot y"></span><span class="pb-dot g"></span><span class="pb-title">PROMPT · 转写稿 → 结构化纪要</span><button class="copy-btn" data-copy><i class="fa-regular fa-copy"></i>复制</button></div>
+        <pre>你是一位专业会议秘书。以下是我们「西沙群岛捕鱼经营会议」的录音转写文本，请整理为结构化会议纪要：
+① 会议名称 / 时间 / 地点 / 出席人员（一律使用代号）；
+② 团队讨论要点（市场、运营、技术、财务、人力五个维度）；
+③ 五大策略的制定细节；
+④ 会议结论与行动项；
+⑤ 加班津贴公示表：根据文末打卡记录计算，规则为 9:00—18:00 之外算加班、只取整数小时，按代号统计。
+语言正式、可直接商用，不少于 600 字。
+【在此粘贴转写文本与打卡记录】</pre>
+      </div>
+      <div class="lc-check">
+        <span class="lab"><i class="fa-solid fa-list-check"></i>提交自检</span>
+        <label class="chk"><input type="checkbox" data-key="lv3-1"><span>有原始录音文件</span></label>
+        <label class="chk"><input type="checkbox" data-key="lv3-2"><span>纪要与录音一致 ≥600 字</span></label>
+        <label class="chk"><input type="checkbox" data-key="lv3-3"><span>津贴按代号、规则算对</span></label>
+      </div>
+    </div>
+  </article>
+<!-- ============ 关卡 04 ============ -->
+  <article class="level-card reveal" id="lv4">
+    <div class="lc-head">
+      <div class="lc-no">04</div>
+      <div class="lc-title">
+        <div class="stage">第四关 · 时间掌控</div>
+        <h3>项目经理的甘特图</h3>
+      </div>
+      <div class="lc-tags">
+        <span class="tag gold"><i class="fa-regular fa-clock"></i>10 分钟</span>
+        <span class="tag"><i class="fa-solid fa-user"></i>项目经理</span>
+        <span class="tag"><i class="fa-solid fa-chart-gantt"></i>Mermaid 魔法</span>
+      </div>
+    </div>
+    <div class="lc-body">
+      <div class="lc-brief">
+        <b>任务简报：</b>把第三关的会议纪要变成一张甘特图——<b>任务、时间、责任人</b>一目了然，还要有依赖关系和进度配色。时限只有 10 分钟，手动画图？来不及。让 AI 写 Mermaid 代码，再一键渲染。
+      </div>
+      <div class="lc-grid">
+        <div class="lc-panel">
+          <h4><i class="fa-solid fa-toolbox"></i>推荐武器</h4>
+          <div class="lc-tools">
+            <div class="lc-tool"><i class="fa-solid fa-robot"></i><div class="tn">DeepSeek<small>纪要 → Mermaid 代码</small></div><a href="https://chat.deepseek.com" target="_blank" rel="noopener">打开</a></div>
+            <div class="lc-tool"><i class="fa-solid fa-pen-ruler"></i><div class="tn">Excalidraw<small>粘贴代码 · 一键渲染成图</small></div><a href="https://excalidraw.com" target="_blank" rel="noopener">打开</a></div>
+          </div>
         </div>
-    </footer>
+        <div class="lc-panel">
+          <h4><i class="fa-solid fa-compass"></i>过关诀窍</h4>
+          <ol class="lc-tips">
+            <li><b>核心秘诀一句话：</b>提示词里<b>加上「Mermaid」几个字</b>，AI 立刻心领神会。</li>
+            <li><b>先喂纪要再要图：</b>上下文越完整，任务拆解越准。</li>
+            <li><b>五要素缺一不可：</b>任务清单、时间跨度、责任人、依赖关系、进度颜色。</li>
+            <li><b>渲染零门槛：</b>代码粘进 Excalidraw（或任意 Mermaid 在线编辑器）即成图。</li>
+          </ol>
+        </div>
+      </div>
+      <div class="prompt-block">
+        <div class="pb-head"><span class="pb-dot r"></span><span class="pb-dot y"></span><span class="pb-dot g"></span><span class="pb-title">PROMPT · 纪要 → Mermaid 甘特图</span><button class="copy-btn" data-copy><i class="fa-regular fa-copy"></i>复制</button></div>
+        <pre>你是项目管理专家。请根据以下会议纪要，输出一段 Mermaid 语法的甘特图代码（gantt），要求：
+① 覆盖纪要中的所有行动项；
+② 每项任务标注开始 / 结束时间与责任人（用代号）；
+③ 用 section 按「市场、运营、技术、财务、人力」五大策略分组；
+④ 体现任务之间的依赖关系。
+直接输出可复制渲染的 mermaid 代码块，不要多余解释。
+【在此粘贴第三关会议纪要】</pre>
+      </div>
+      <div class="lc-check">
+        <span class="lab"><i class="fa-solid fa-list-check"></i>提交自检</span>
+        <label class="chk"><input type="checkbox" data-key="lv4-1"><span>任务 + 时间 + 责任人齐全</span></label>
+        <label class="chk"><input type="checkbox" data-key="lv4-2"><span>依赖关系与配色清晰</span></label>
+        <label class="chk"><input type="checkbox" data-key="lv4-3"><span>渲染成品清晰可读</span></label>
+      </div>
+    </div>
+  </article>
 
-    <script>
-        // 平滑滚动
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
+  <!-- ============ 关卡 05 ============ -->
+  <article class="level-card reveal" id="lv5">
+    <div class="lc-head">
+      <div class="lc-no">05</div>
+      <div class="lc-title">
+        <div class="stage">第五关 · 跨境遭遇</div>
+        <h3>中越翻译智能体</h3>
+      </div>
+      <div class="lc-tags">
+        <span class="tag gold"><i class="fa-regular fa-clock"></i>10 分钟</span>
+        <span class="tag"><i class="fa-solid fa-user"></i>翻译</span>
+        <span class="tag"><i class="fa-solid fa-link"></i>发布链接交群</span>
+        <span class="tag"><i class="fa-solid fa-star"></i>数据问答 +10 分</span>
+      </div>
+    </div>
+    <div class="lc-body">
+      <div class="lc-brief">
+        <b>任务简报：</b>深夜，三艘「越南渔船」逼近。你需要在扣子上搭一个智能体：<b>中→越、越→中双向实时翻译</b>，并且每次输出都自带沟通口径——「中国渔民在自己领海合法作业，附近有解放军保护」。发布后把链接发到学员群。
+      </div>
+      <div class="lc-grid">
+        <div class="lc-panel">
+          <h4><i class="fa-solid fa-toolbox"></i>推荐武器</h4>
+          <div class="lc-tools">
+            <div class="lc-tool"><i class="fa-solid fa-puzzle-piece"></i><div class="tn">扣子 Coze 国内版<small>零代码 · 首选</small></div><a href="https://www.coze.cn" target="_blank" rel="noopener">打开</a></div>
+            <div class="lc-tool"><i class="fa-solid fa-globe"></i><div class="tn">扣子 Coze 国际版<small>模型选择更多</small></div><a href="https://www.coze.com" target="_blank" rel="noopener">打开</a></div>
+          </div>
+        </div>
+        <div class="lc-panel">
+          <h4><i class="fa-solid fa-compass"></i>过关诀窍</h4>
+          <ol class="lc-tips">
+            <li><b>三要素缺一不可：</b>语言转换 + 语境记忆 + 口径设定。</li>
+            <li><b>口径写进人设：</b>把口径写进「角色设定」，而不是每次对话临时提醒。</li>
+            <li><b>六步搭建：</b>进平台 → 新建 Bot → 配人设 → 双向测试 → 发布 → 交链接。</li>
+            <li><b>两个方向都要测：</b>中→越、越→中各测三轮，别只测一头。</li>
+            <li><b>加分彩蛋：</b>把下发的捕鱼数据做成知识库挂上，随时回答「类别6 指标_005」。 </li>
+          </ol>
+        </div>
+      </div>
+      <div class="prompt-block">
+        <div class="pb-head"><span class="pb-dot r"></span><span class="pb-dot y"></span><span class="pb-dot g"></span><span class="pb-title">PROMPT · 智能体角色设定（粘进扣子人设区）</span><button class="copy-btn" data-copy><i class="fa-regular fa-copy"></i>复制</button></div>
+        <pre>你是一个专业的中越双语翻译助手，主要服务于中国渔民与越南渔民之间的海上沟通。
+【语言规则】用户输入中文时，你输出对应的越南语翻译；用户输入越南语时，你输出对应的中文翻译。自动识别语言方向，无需询问。
+【语境记忆】记住对话上下文，保证代词、船名、数据指代准确连贯。
+【沟通口径】所有输出必须体现：这里是中国西沙群岛领海，中国渔民在自己国家的海域合法作业。每次翻译后，在末尾加上一句：「附近有中国海军巡逻保护，请放心作业。」（越南语输出时同样附加越南语版本）</pre>
+      </div>
+      <div class="lc-check">
+        <span class="lab"><i class="fa-solid fa-list-check"></i>提交自检</span>
+        <label class="chk"><input type="checkbox" data-key="lv5-1"><span>双向翻译都测过</span></label>
+        <label class="chk"><input type="checkbox" data-key="lv5-2"><span>每次输出自带口径</span></label>
+        <label class="chk"><input type="checkbox" data-key="lv5-3"><span>链接已发布并发到群里</span></label>
+      </div>
+    </div>
+  </article>
 
-        // 导航栏背景切换
-        window.addEventListener('scroll', function() {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 50) {
-                nav.classList.add('shadow-md');
-            } else {
-                nav.classList.remove('shadow-md');
-            }
-        });
+  <!-- ============ 关卡 06 ============ -->
+  <article class="level-card reveal" id="lv6">
+    <div class="lc-head">
+      <div class="lc-no">06</div>
+      <div class="lc-title">
+        <div class="stage">第六关 · 数据之诗</div>
+        <h3>队秘的智能汇报邮件</h3>
+      </div>
+      <div class="lc-tags">
+        <span class="tag gold"><i class="fa-regular fa-clock"></i>20 分钟</span>
+        <span class="tag"><i class="fa-solid fa-user"></i>队秘</span>
+        <span class="tag"><i class="fa-solid fa-envelope"></i>发送至总部邮箱</span>
+      </div>
+    </div>
+    <div class="lc-body">
+      <div class="lc-brief">
+        <b>任务简报：</b>给总部写一封「一眼看懂、一读动情」的汇报邮件：开头一首<b>藏头「西沙群岛」的七言律诗</b>，中间前五关成果的可视化展示（≥3 种字体、≥3 种颜色、正文可复制），结尾一张含<b>堡礁、彩虹、鱼群、打捞场面</b>的 AI 图。发送至总部邮箱 <b>190135539@qq.com</b>。
+      </div>
+      <div class="lc-grid">
+        <div class="lc-panel">
+          <h4><i class="fa-solid fa-toolbox"></i>推荐武器</h4>
+          <div class="lc-tools">
+            <div class="lc-tool"><i class="fa-solid fa-robot"></i><div class="tn">DeepSeek<small>藏头诗 + HTML 邮件排版</small></div><a href="https://chat.deepseek.com" target="_blank" rel="noopener">打开</a></div>
+            <div class="lc-tool"><i class="fa-solid fa-wand-magic-sparkles"></i><div class="tn">即梦 / 豆包<small>结尾丰收图</small></div><a href="https://jimeng.jianying.com" target="_blank" rel="noopener">打开</a></div>
+            <div class="lc-tool"><i class="fa-solid fa-swatchbook"></i><div class="tn">Canva<small>图上叠字</small></div><a href="https://www.canva.cn" target="_blank" rel="noopener">打开</a></div>
+          </div>
+        </div>
+        <div class="lc-panel">
+          <h4><i class="fa-solid fa-compass"></i>过关诀窍</h4>
+          <ol class="lc-tips">
+            <li><b>藏头必须写死：</b>明确「每句首字依次为西、沙、群、岛」，否则 AI 会自作聪明藏错位置。</li>
+            <li><b>三版各取所长：</b>豪放的开篇、婉约的结尾、现代的科技感，融合出终极版。</li>
+            <li><b>排版秘诀：</b>提示词里<b>加上「HTML」几个字</b>，多字体多颜色全自动。</li>
+            <li><b>正文必须可复制：</b>纯图片邮件直接判负，图表用 HTML 元素画。</li>
+            <li><b>结尾图老规矩：</b>先 no text 生图，再叠文字——队徽的坑别踩第二次。</li>
+          </ol>
+        </div>
+      </div>
+      <div class="prompt-block">
+        <div class="pb-head"><span class="pb-dot r"></span><span class="pb-dot y"></span><span class="pb-dot g"></span><span class="pb-title">PROMPT · 藏头诗</span><button class="copy-btn" data-copy><i class="fa-regular fa-copy"></i>复制</button></div>
+        <pre>你是一位精通中国古典诗词的文学大师。请为一支在西沙群岛进行 AIGC 探险的团队创作一首七言律诗。要求：前四句的每句首字依次为「西」「沙」「群」「岛」，后四句自由发挥，但需与前四句意境呼应。诗作需体现海洋的壮阔、AI 的智慧、团队的协作三重意象。请提供 3 个风格版本：豪放版、婉约版、现代版。</pre>
+      </div>
+      <div class="prompt-block">
+        <div class="pb-head"><span class="pb-dot r"></span><span class="pb-dot y"></span><span class="pb-dot g"></span><span class="pb-title">PROMPT · HTML 邮件 + 结尾图</span><button class="copy-btn" data-copy><i class="fa-regular fa-copy"></i>复制</button></div>
+        <pre>【邮件排版】请将以下汇报内容排版为一封 HTML 格式邮件：开头藏头诗居中、金色大字；中间用进度条 + 卡片式布局展示前五关成果（任务进度、协作亮点、学习收获）；全文至少 3 种字体、3 种颜色；正文为真实文本（非图片）、可直接复制。整体风格：深海蓝 + 科技金。
 
-        // 卡片动画
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+【结尾配图】生成一张丰收主题插画：南海堡礁为背景，一道彩虹横跨海面，鱼群跃出水面，渔船正在起网打捞，朝阳金光铺海，史诗感构图，纯画面不含文字（no text）。</pre>
+      </div>
+      <div class="lc-check">
+        <span class="lab"><i class="fa-solid fa-list-check"></i>提交自检</span>
+        <label class="chk"><input type="checkbox" data-key="lv6-1"><span>藏头诗首字正确</span></label>
+        <label class="chk"><input type="checkbox" data-key="lv6-2"><span>≥3 字体 ≥3 颜色</span></label>
+        <label class="chk"><input type="checkbox" data-key="lv6-3"><span>正文可复制非图片</span></label>
+        <label class="chk"><input type="checkbox" data-key="lv6-4"><span>结尾图四要素齐全</span></label>
+        <label class="chk"><input type="checkbox" data-key="lv6-5"><span>已发送总部并截图存档</span></label>
+      </div>
+    </div>
+  </article>
+<!-- ============ 关卡 07 ============ -->
+  <article class="level-card reveal" id="lv7">
+    <div class="lc-head">
+      <div class="lc-no">07</div>
+      <div class="lc-title">
+        <div class="stage">第七关 · 数据画卷</div>
+        <h3>设计师的可视化看板</h3>
+      </div>
+      <div class="lc-tags">
+        <span class="tag gold"><i class="fa-regular fa-clock"></i>10 分钟</span>
+        <span class="tag"><i class="fa-solid fa-user"></i>设计师</span>
+        <span class="tag"><i class="fa-solid fa-tv"></i>投屏展示</span>
+      </div>
+    </div>
+    <div class="lc-body">
+      <div class="lc-brief">
+        <b>任务简报：</b>智能捕鱼系统 6 小时涌入了洋流、鱼群、捕捞、收益、成本、团队六大类数据。把它们变成<b>至少 6 个模块</b>的可视化看板——有图有表，任何人 3 秒看懂你们的丰收。
+      </div>
+      <div class="lc-grid">
+        <div class="lc-panel">
+          <h4><i class="fa-solid fa-toolbox"></i>推荐武器</h4>
+          <div class="lc-tools">
+            <div class="lc-tool"><i class="fa-solid fa-robot"></i><div class="tn">DeepSeek<small>信息架构 + ECharts 代码 + HTML</small></div><a href="https://chat.deepseek.com" target="_blank" rel="noopener">打开</a></div>
+            <div class="lc-tool"><i class="fa-solid fa-wand-magic-sparkles"></i><div class="tn">即梦 / 豆包<small>看板背景与图标元素</small></div><a href="https://jimeng.jianying.com" target="_blank" rel="noopener">打开</a></div>
+          </div>
+        </div>
+        <div class="lc-panel">
+          <h4><i class="fa-solid fa-compass"></i>过关诀窍</h4>
+          <ol class="lc-tips">
+            <li><b>先架构后画图：</b>先让 AI 把数据分成 6 个模块并各起一个有诗意的名字，分类永远先于设计。</li>
+            <li><b>一句出整页：</b>要求「合并为一个可直接打开的 HTML」，看板一步到位。</li>
+            <li><b>图表各司其职：</b>仪表盘测环境、气泡图看鱼群、堆叠柱记捕捞、环形算收益、瀑布拆成本、雷达评团队。</li>
+            <li><b>配色即氛围：</b>海洋蓝主色 + 金色点缀，核心指标放最大。</li>
+            <li><b>真实数据手动录：</b>团队贡献度没有真数据？让 AI 先生成一个录入表单。</li>
+          </ol>
+        </div>
+      </div>
+      <div class="prompt-block">
+        <div class="pb-head"><span class="pb-dot r"></span><span class="pb-dot y"></span><span class="pb-dot g"></span><span class="pb-title">PROMPT · 架构 → ECharts → HTML 看板</span><button class="copy-btn" data-copy><i class="fa-regular fa-copy"></i>复制</button></div>
+        <pre>你是数据可视化专家。我们是一艘在西沙群岛连续作业 6 小时的智能捕鱼船，产生了六大类数据：环境（洋流温度 / 盐度 / 溶解氧 / 能见度）、鱼群分布、捕捞产量、收益 ROI、成本结构、团队贡献。请分三步输出：
+① 信息架构：为看板设计 6 个模块，各起一个有诗意的名字（如「海洋脉搏」「黄金收益」），并用一句话说明其价值；
+② 图表代码：用 ECharts 分别为 6 个模块生成图表——仪表盘组合、气泡图、堆叠柱状图、环形饼图、瀑布图、雷达图，海洋蓝主色、金色点缀；
+③ 合并输出为一个可直接在浏览器打开的完整 HTML 文件，核心指标字号最大，数据可用示例数据填充。</pre>
+      </div>
+      <div class="lc-check">
+        <span class="lab"><i class="fa-solid fa-list-check"></i>提交自检</span>
+        <label class="chk"><input type="checkbox" data-key="lv7-1"><span>≥6 个模块</span></label>
+        <label class="chk"><input type="checkbox" data-key="lv7-2"><span>既有图也有表</span></label>
+        <label class="chk"><input type="checkbox" data-key="lv7-3"><span>3 秒能看懂核心成果</span></label>
+      </div>
+    </div>
+  </article>
 
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
+  <!-- ============ 小剧场 ============ -->
+  <article class="level-card special reveal" id="lvx">
+    <div class="lc-head">
+      <div class="lc-no">★</div>
+      <div class="lc-title">
+        <div class="stage">中场加演 · 小剧场</div>
+        <h3>1—7 关集中展示汇报</h3>
+      </div>
+      <div class="lc-tags">
+        <span class="tag gold"><i class="fa-regular fa-clock"></i>40 分钟</span>
+        <span class="tag"><i class="fa-solid fa-users"></i>全员协作</span>
+        <span class="tag"><i class="fa-solid fa-tv"></i>全班展示 · 每组 5 分钟</span>
+      </div>
+    </div>
+    <div class="lc-body">
+      <div class="lc-brief">
+        <b>任务简报：</b>15 分钟组内互讲各关心得 → 20 分钟协作产出 <b>≥12 页汇报 PPT</b> → 每组 5 分钟全班投屏。这不是走过场——它是关卡 1—7 的<b>综合评分依据</b>。用 FABE 原则，把台下观众当成要说服的客户。
+      </div>
+      <div class="lc-grid">
+        <div class="lc-panel">
+          <h4><i class="fa-solid fa-toolbox"></i>推荐武器</h4>
+          <div class="lc-tools">
+            <div class="lc-tool"><i class="fa-solid fa-file-powerpoint"></i><div class="tn">WPS AI / Kimi PPT<small>20 分钟出 12 页</small></div><a href="https://ai.wps.cn" target="_blank" rel="noopener">打开</a></div>
+            <div class="lc-tool"><i class="fa-solid fa-book-open"></i><div class="tn">百度文库 / AIPPT<small>备选产线</small></div><a href="https://wenku.baidu.com" target="_blank" rel="noopener">打开</a></div>
+          </div>
+          <div class="lc-warn" style="margin-top:14px"><b>FABE：</b>Feature 用了什么工具和提示词 → Advantage 好在哪 → Benefit 省了多少时间 → Evidence 成果与翻车证据。</div>
+        </div>
+        <div class="lc-panel">
+          <h4><i class="fa-solid fa-compass"></i>过关诀窍</h4>
+          <ol class="lc-tips">
+            <li><b>结构公式：</b>开场 1 页 + 每关 1 页（工具 + 提示词 + 成果截图）+ 精彩瞬间 2—3 页 + 经验 1 页 + 致谢 1 页。</li>
+            <li><b>翻车比成功更动人：</b>乱码的队徽、跑偏的诗——讲出来，全场都会记住你。</li>
+            <li><b>先排练再上台：</b>5 分钟很短，掐表走一遍。</li>
+            <li><b>人人有台词：</b>汇报是 7 个人的戏，别让队长一个人扛。</li>
+          </ol>
+        </div>
+      </div>
+      <div class="prompt-block">
+        <div class="pb-head"><span class="pb-dot r"></span><span class="pb-dot y"></span><span class="pb-dot g"></span><span class="pb-title">PROMPT · FABE 汇报大纲</span><button class="copy-btn" data-copy><i class="fa-regular fa-copy"></i>复制</button></div>
+        <pre>你是一位汇报策划专家。请基于我们前 7 关的成果清单【粘贴成果列表】，用 FABE 原则设计一份 12 页汇报 PPT 大纲：每关一页，写清 F（用了什么 AI 工具、提示词怎么写）、A（比其他方法好在哪里）、B（为团队节省了多少时间）、E（实际成果截图位与翻车教训）；另有开场页、2—3 页精彩瞬间、一页经验总结（三个最有用的技巧）和致谢页。标题要短、有记忆点。</pre>
+      </div>
+      <div class="lc-check">
+        <span class="lab"><i class="fa-solid fa-list-check"></i>提交自检</span>
+        <label class="chk"><input type="checkbox" data-key="lvx-1"><span>组内 7 关心得互讲完</span></label>
+        <label class="chk"><input type="checkbox" data-key="lvx-2"><span>PPT ≥12 页含 FABE</span></label>
+        <label class="chk"><input type="checkbox" data-key="lvx-3"><span>5 分钟排练过一遍</span></label>
+      </div>
+    </div>
+  </article>
 
-        document.querySelectorAll('.card').forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(card);
-        });
-    </script>
+  <!-- ============ 关卡 08 ============ -->
+  <article class="level-card reveal" id="lv8">
+    <div class="lc-head">
+      <div class="lc-no">08</div>
+      <div class="lc-title">
+        <div class="stage">第八关 · 决战时刻</div>
+        <h3>五轮博弈捕鱼决战</h3>
+      </div>
+      <div class="lc-tags">
+        <span class="tag gold"><i class="fa-regular fa-clock"></i>30 分钟</span>
+        <span class="tag"><i class="fa-solid fa-user"></i>策略师主导 · 全员参战</span>
+        <span class="tag"><i class="fa-solid fa-chess"></i>班级整体 &gt; 小组利益</span>
+      </div>
+    </div>
+    <div class="lc-body">
+      <div class="lc-brief">
+        <b>任务简报：</b>五轮博弈，每轮各队选择「合作」或「竞争」。全员合作则班级总收益最大；有人偷跑竞争则独吞额外收益；全员竞争则<b>班级任务失败、满盘皆输</b>。记住铁律：班级整体的成功，才是真正的胜利。
+      </div>
+      <div class="lc-grid">
+        <div class="lc-panel">
+          <h4><i class="fa-solid fa-toolbox"></i>推荐武器</h4>
+          <div class="lc-tools">
+            <div class="lc-tool"><i class="fa-solid fa-comment-dots"></i><div class="tn">豆包视频通话<small>场外军师 · 实时分析局势</small></div><a href="https://www.doubao.com" target="_blank" rel="noopener">打开</a></div>
+            <div class="lc-tool"><i class="fa-solid fa-robot"></i><div class="tn">DeepSeek<small>博弈模型推演 · 策略沙盘</small></div><a href="https://chat.deepseek.com" target="_blank" rel="noopener">打开</a></div>
+          </div>
+        </div>
+        <div class="lc-panel">
+          <h4><i class="fa-solid fa-compass"></i>过关诀窍</h4>
+          <ol class="lc-tips">
+            <li><b>第一轮先示好：</b>用合作建立信任，背叛者第二轮就会暴露。</li>
+            <li><b>宽容的以牙还牙：</b>对手一次偷跑，先警告再给机会，别立刻全面对抗。</li>
+            <li><b>沟通、沟通、再沟通：</b>开磋商会是全班成功的一半。</li>
+            <li><b>领先落后两套打法：</b>领先者稳守，落后者谋变，别用同一套策略。</li>
+            <li><b>友谊第一：</b>这是学习游戏，不是零和赌局。</li>
+          </ol>
+        </div>
+      </div>
+      <div class="prompt-block">
+        <div class="pb-head"><span class="pb-dot r"></span><span class="pb-dot y"></span><span class="pb-dot g"></span><span class="pb-title">PROMPT · 博弈策略军师</span><button class="copy-btn" data-copy><i class="fa-regular fa-copy"></i>复制</button></div>
+        <pre>你是一位博弈论专家。我们正在参加一场 5 轮重复博弈：每轮各队可选「合作」或「竞争」；全部合作则班级总收益最大；若个别队竞争而其他队合作，竞争者获得额外收益；若多数队竞争，班级任务失败、所有人受罚。请分析：
+① 纳什均衡与囚徒困境在本场景中的适用性；
+② 推荐的逐轮策略（含我方领先、落后两种情形分别怎么打）；
+③ 如何向其他队发起一次有效的集中磋商，给出具体话术。</pre>
+      </div>
+      <div class="lc-check">
+        <span class="lab"><i class="fa-solid fa-list-check"></i>提交自检</span>
+        <label class="chk"><input type="checkbox" data-key="lv8-1"><span>五轮决策全部完成</span></label>
+        <label class="chk"><input type="checkbox" data-key="lv8-2"><span>班级整体任务达成</span></label>
+        <label class="chk"><input type="checkbox" data-key="lv8-3"><span>过程与策略已记录复盘</span></label>
+      </div>
+    </div>
+  </article>
+
+  <!-- ============ 关卡 09 ============ -->
+  <article class="level-card reveal" id="lv9">
+    <div class="lc-head">
+      <div class="lc-no">09</div>
+      <div class="lc-title">
+        <div class="stage">第九关 · 荣耀时刻</div>
+        <h3>数字人视频总结</h3>
+      </div>
+      <div class="lc-tags">
+        <span class="tag gold"><i class="fa-regular fa-clock"></i>30 分钟</span>
+        <span class="tag"><i class="fa-solid fa-user"></i>新闻发言人</span>
+        <span class="tag"><i class="fa-solid fa-tv"></i>投屏展示 · 荣耀收官</span>
+      </div>
+    </div>
+    <div class="lc-body">
+      <div class="lc-brief">
+        <b>任务简报：</b>用一段数字人视频为七天探险收官：包含<b>全员真实头像</b>、至少 1 位成员的<b>克隆声音</b>解说，回顾九个关卡的高光时刻。开头 3 秒定生死，结尾让人意犹未尽。
+      </div>
+      <div class="lc-grid">
+        <div class="lc-panel">
+          <h4><i class="fa-solid fa-toolbox"></i>推荐武器 · 组合拳</h4>
+          <div class="lc-tools">
+            <div class="lc-tool"><i class="fa-solid fa-robot"></i><div class="tn">DeepSeek<small>① 解说词撰稿</small></div><a href="https://chat.deepseek.com" target="_blank" rel="noopener">打开</a></div>
+            <div class="lc-tool"><i class="fa-solid fa-mobile-screen"></i><div class="tn">硅语 / 闪剪 App<small>② 声音克隆 ③ 照片变数字人</small></div><a href="https://zenvideo.qq.com" target="_blank" rel="noopener">智影</a></div>
+            <div class="lc-tool"><i class="fa-solid fa-photo-film"></i><div class="tn">可灵 / 即梦<small>④ 静态图片动起来</small></div><a href="https://www.klingai.com" target="_blank" rel="noopener">打开</a></div>
+            <div class="lc-tool"><i class="fa-solid fa-clapperboard"></i><div class="tn">剪映 / 度加<small>⑤ 合成 · 字幕 · 特效</small></div><a href="https://www.jianying.com" target="_blank" rel="noopener">打开</a></div>
+          </div>
+        </div>
+        <div class="lc-panel">
+          <h4><i class="fa-solid fa-compass"></i>过关诀窍</h4>
+          <ol class="lc-tips">
+            <li><b>组合拳五步走：</b>写词 → 克隆声音 → 生成数字人 → 图片动态化 → 剪映合成。别指望一键出片。</li>
+            <li><b>30 秒音频即可克隆：</b>让被克隆者自然、清晰、有节奏地念一段话。</li>
+            <li><b>开头 3 秒定生死：</b>闪电、海浪、大字——先炸再说。</li>
+            <li><b>素材提前备：</b>全员合影 + 各关成果截图，动手前先归档。</li>
+            <li><b>金句收尾：</b>用舰桥格言收束全片，余韵拉满。</li>
+          </ol>
+        </div>
+      </div>
+      <div class="prompt-block">
+        <div class="pb-head"><span class="pb-dot r"></span><span class="pb-dot y"></span><span class="pb-dot g"></span><span class="pb-title">PROMPT · 90 秒数字人解说词</span><button class="copy-btn" data-copy><i class="fa-regular fa-copy"></i>复制</button></div>
+        <pre>你是一位金牌纪录片撰稿人。请为我们 7 人团队 7 天的「西沙群岛 AIGC 探险」写一段 90 秒视频解说词：
+① 前 3 秒高能开场，制造悬念或冲突，先抓住观众；
+② 按九个关卡快速回顾高光时刻（组队、PPT、纪要、甘特图、跨境翻译、诗意邮件、数据看板、博弈决战、数字人）；
+③ 以团队合影与一句金句收尾。
+要求：语气热血而深情，适合数字人口播；句子要短、有节奏感；总字数约 260 字。</pre>
+      </div>
+      <div class="lc-check">
+        <span class="lab"><i class="fa-solid fa-list-check"></i>提交自检</span>
+        <label class="chk"><input type="checkbox" data-key="lv9-1"><span>全员真实头像入镜</span></label>
+        <label class="chk"><input type="checkbox" data-key="lv9-2"><span>解说为成员克隆声音</span></label>
+        <label class="chk"><input type="checkbox" data-key="lv9-3"><span>前 3 秒足够炸</span></label>
+      </div>
+    </div>
+  </article>
+</section>
+<!-- ================= 锦囊 ================= -->
+<section class="section" id="tips">
+  <div class="sec-head reveal">
+    <span class="kicker"><i class="fa-solid fa-lightbulb"></i>FIELD GUIDE</span>
+    <h2>锦囊 · 框架、急救与秘笈</h2>
+    <p>凡遇问题，先查线索卡。三套万能提示词框架打底，六个高频急救场景兜底，八条通关秘笈压舱。</p>
+  </div>
+
+  <div class="frame-grid">
+    <div class="frame-card reveal">
+      <h4><i class="fa-solid fa-crown"></i> 四要素法</h4>
+      <div class="en">七封的拿手好戏 · 一切提示词的底座</div>
+      <ul>
+        <li><b>①角色设定</b>它是谁——命名专家？会议秘书？博弈论大师？</li>
+        <li><b>②背景描述</b>我们在哪、要去做什么、为什么出发。</li>
+        <li><b>③具体要求</b>数量、字数、风格、禁区，全部写死。</li>
+        <li><b>④输出格式</b>表格？代码块？分版本？先说清楚。</li>
+      </ul>
+    </div>
+    <div class="frame-card reveal">
+      <h4><i class="fa-solid fa-layer-group"></i> CRISPE 框架</h4>
+      <div class="en">六件套 · 复杂任务的完整配方</div>
+      <ul>
+        <li><b>C</b>haracter 角色：你是一位……</li>
+        <li><b>R</b>equest 任务：请帮我……</li>
+        <li><b>I</b>nsight 背景：上下文是……</li>
+        <li><b>S</b>tyle 风格：专业 / 活泼 / 简洁</li>
+        <li><b>P</b>ersonality 语气：正式 / 友好</li>
+        <li><b>E</b>xample 示例：参考这段……</li>
+      </ul>
+    </div>
+    <div class="frame-card reveal">
+      <h4><i class="fa-solid fa-comments"></i> CHAT 情境提问</h4>
+      <div class="en">博弈同款 · 向 AI 请教策略的姿势</div>
+      <ul>
+        <li><b>讲清处境</b>把规则、轮次、收益矩阵一次性说透。</li>
+        <li><b>亮明目标</b>我要的是班级整体赢，还是小组多拿分？</li>
+        <li><b>限定场景</b>领先怎么打、落后怎么打，分开问。</li>
+        <li><b>要可执行</b>别要大道理，要逐轮策略和话术。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sec-head reveal">
+    <span class="kicker"><i class="fa-solid fa-kit-medical"></i>EMERGENCY</span>
+    <h2 style="font-size:clamp(22px,2.6vw,32px)">卡关急救室</h2>
+  </div>
+  <div class="faq reveal">
+    <div class="faq-item">
+      <button class="faq-q"><span class="qn">Q1</span>Logo 文字总是乱码怎么办？<i class="fa-solid fa-chevron-down arr"></i></button>
+      <div class="faq-a"><div class="inner"><b>分两步走：</b>① 先让 AI 只生成图形，提示词加上 <code>no text / 纯图形不含文字</code>；② 再用 Canva 或 PS 把队名叠上去。或者直接换用对文字处理更稳的专业 Logo 工具。文字由你来排版，永远比交给生图模型可靠。</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q"><span class="qn">Q2</span>PPT 生成后 AI 味太重？<i class="fa-solid fa-chevron-down arr"></i></button>
+      <div class="faq-a"><div class="inner"><b>人机协作三步法：</b>① AI 先生成初稿框架；② 人工调整逻辑、换掉空泛的套话、补真实案例；③ 换一套模板重新美化。AI 负责快，你负责对。</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q"><span class="qn">Q3</span>藏头诗怎么保证藏对位置？<i class="fa-solid fa-chevron-down arr"></i></button>
+      <div class="faq-a"><div class="inner"><b>把格式写死：</b>提示词里明确写 <code>每句首字依次为：西、沙、群、岛</code>，再要 3 个风格版本。不写清楚，AI 会把字藏到句中、句尾，甚至自己发明四个字。</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q"><span class="qn">Q4</span>智能体的口径怎么设定？<i class="fa-solid fa-chevron-down arr"></i></button>
+      <div class="faq-a"><div class="inner"><b>三要素设定法：</b>① <b>角色设定</b>——你是专业的中越双语翻译助手；② <b>功能规则</b>——自动识别输入语言，输出对应翻译；③ <b>口径约束</b>——所有输出强调中国领海主权与海军保护。写进人设区，一劳永逸。</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q"><span class="qn">Q5</span>甘特图的秘诀？<i class="fa-solid fa-chevron-down arr"></i></button>
+      <div class="faq-a"><div class="inner">就一句话：提示词里<b>加上「Mermaid」几个字</b>。让 AI 输出 mermaid 甘特图代码，粘到 Excalidraw 或任意 Mermaid 编辑器，一键渲染。</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q"><span class="qn">Q6</span>数据可视化 / 邮件排版的秘诀？<i class="fa-solid fa-chevron-down arr"></i></button>
+      <div class="faq-a"><div class="inner">同样一句话：提示词里<b>加上「HTML」几个字</b>。要求输出完整 HTML 文件，字体、颜色、图表、布局一次到位，浏览器直接打开就能用。</div></div>
+    </div>
+  </div>
+
+  <div class="sec-head reveal">
+    <span class="kicker"><i class="fa-solid fa-gem"></i>SECRETS</span>
+    <h2 style="font-size:clamp(22px,2.6vw,32px)">通关秘笈 · 八条铁律</h2>
+  </div>
+  <div class="secret-grid">
+    <div class="secret reveal"><div class="n">1</div><p><b>速度与质量并重</b>两者都计分，别为赶工交残次品，也别为打磨超时。</p></div>
+    <div class="secret reveal"><div class="n">2</div><p><b>先读后做</b>通读任务要求再动手，审题错误是最大的时间黑洞。</p></div>
+    <div class="secret reveal"><div class="n">3</div><p><b>分工明确</b>每人专注自己的角色任务，别扎堆抢同一关。</p></div>
+    <div class="secret reveal"><div class="n">4</div><p><b>沟通畅通</b>第八关是全班级别的协作，提前建好在班上的沟通频道。</p></div>
+    <div class="secret reveal"><div class="n">5</div><p><b>及时复盘</b>每关结束花两分钟记一句经验，小剧场全靠这些素材。</p></div>
+    <div class="secret reveal"><div class="n">6</div><p><b>备选充足</b>第一关至少备 10 个队名，方案 B 永远比重来快。</p></div>
+    <div class="secret reveal"><div class="n">7</div><p><b>友谊第一</b>这是学习游戏，不是零和博弈。</p></div>
+    <div class="secret reveal"><div class="n">8</div><p><b>查线索卡</b>遇事不决，先查线索卡——你现在就在线索卡上。</p></div>
+  </div>
+</section>
+<!-- ================= 深蓝七侠 ================= -->
+<section class="section" id="crew">
+  <div class="sec-head reveal">
+    <span class="kicker"><i class="fa-solid fa-users"></i>DEEP BLUE SEVEN</span>
+    <h2>深蓝七侠 · 角色档案</h2>
+    <p>七个人，七种 AI 绝技。认领你的角色，守住你的关卡。</p>
+  </div>
+  <div class="crew-grid">
+    <div class="crew-card reveal">
+      <div class="crew-top"><div class="crew-ava">👑</div><div><h4>七封 · 语境大师</h4><div class="role">队长 · 齐峰 35 岁</div></div></div>
+      <div class="desc">互联网大厂产品总监，业余科幻作家。冷静理性，善用故事思维拆解世界。</div>
+      <div class="ability"><b>提示词工程</b> · 角色 + 背景 + 要求 + 格式，四要素缺一不可</div>
+      <div class="quote">「先别急，让我给 AI 讲个故事……」</div>
+      <div class="lv"><span class="lv-chip">关卡1</span><span class="lv-chip">关卡2</span></div>
+    </div>
+    <div class="crew-card reveal">
+      <div class="crew-top"><div class="crew-ava">📝</div><div><h4>流程姐 · 效能女王</h4><div class="role">队秘 · 苏流 38 岁</div></div></div>
+      <div class="desc">前麦肯锡顾问，现企业 AI 效能教练。雷厉风行，效率至上。</div>
+      <div class="ability"><b>AI 工作流</b> · 录音 → 转写 → 提炼 → 结构化文档，一键成型</div>
+      <div class="quote">「手动？不存在的。」</div>
+      <div class="lv"><span class="lv-chip">关卡3</span><span class="lv-chip">关卡6</span></div>
+    </div>
+    <div class="crew-card reveal">
+      <div class="crew-top"><div class="crew-ava">📊</div><div><h4>阿图 · 数据画师</h4><div class="role">项目经理 · 陈一图 32 岁</div></div></div>
+      <div class="desc">数据可视化工程师，Apache ECharts 核心贡献者，强迫症晚期。</div>
+      <div class="ability"><b>Mermaid 语法</b> · 一句话让 AI 生成甘特图、流程图、时序图</div>
+      <div class="quote">「数据不说谎，但数据需要被看见。」</div>
+      <div class="lv"><span class="lv-chip">关卡4</span></div>
+    </div>
+    <div class="crew-card reveal">
+      <div class="crew-top"><div class="crew-ava">🌏</div><div><h4>言叔 · 跨境使者</h4><div class="role">翻译 · 周言 28 岁</div></div></div>
+      <div class="desc">同声传译员，联合国亚太区签约译者，精通八国语言，内敛沉稳。</div>
+      <div class="ability"><b>智能体开发</b> · 语言转换 + 语境记忆 + 口径设定三要素</div>
+      <div class="quote">「语言是桥梁，AI 是造桥的工人。」</div>
+      <div class="lv"><span class="lv-chip">关卡5</span></div>
+    </div>
+    <div class="crew-card reveal">
+      <div class="crew-top"><div class="crew-ava">🎨</div><div><h4>小墨 · 像素诗人</h4><div class="role">设计师 · 林晓墨 29 岁</div></div></div>
+      <div class="desc">自由插画师，前游戏公司美术总监，B 站粉丝 50 万+，完美主义者。</div>
+      <div class="ability"><b>文生图</b> · Logo 分两步走，乱码克星；看板美学担当</div>
+      <div class="quote">「别急，我再调一下 seed 值……」</div>
+      <div class="lv"><span class="lv-chip">关卡1</span><span class="lv-chip">关卡7</span></div>
+    </div>
+    <div class="crew-card reveal">
+      <div class="crew-top"><div class="crew-ava">🎯</div><div><h4>博弈 · 策略棋手</h4><div class="role">游戏策略师 · 何弈 40 岁</div></div></div>
+      <div class="desc">前职业德扑选手，现对冲基金策略分析师，概率的信徒。</div>
+      <div class="ability"><b>实时决策</b> · 博弈论 + AI 场外军师，重复博弈的最优解</div>
+      <div class="quote">「人算不如天算，天算不如 AI 算。」</div>
+      <div class="lv"><span class="lv-chip">关卡8</span></div>
+    </div>
+    <div class="crew-card reveal">
+      <div class="crew-top"><div class="crew-ava">🎬</div><div><h4>光影 · 影像魔术师</h4><div class="role">新闻发言人 · 夏光 26 岁</div></div></div>
+      <div class="desc">短视频导演，数字人技术研究者，全网粉丝 200 万+，创意永动机。</div>
+      <div class="ability"><b>文生视频</b> · 一张照片 + 一段音频 = 你的 AI 分身</div>
+      <div class="quote">「三秒定生死，开头不炸，别想有人看完。」</div>
+      <div class="lv"><span class="lv-chip">关卡9</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 页脚 ================= -->
+<footer class="footer">
+  <div class="motto">「当算法学会了思考，人类便有了新的翅膀。<br>但真正的智慧，是知道何时让它飞翔，何时让它着陆。」</div>
+  <p>—— 刻在「AI航海号」舰桥上的格言 ——</p>
+  <div class="links">
+    <a href="#hero"><i class="fa-solid fa-anchor"></i> 回到甲板</a>
+    <a href="#tools"><i class="fa-solid fa-toolbox"></i> 工具舱</a>
+    <a href="#tips"><i class="fa-solid fa-lightbulb"></i> 锦囊</a>
+  </div>
+  <p>西沙群岛探险捕鱼 · AIGC 沙盘实战 ｜ NPC 指挥中心 ｜ 神秘岛科技 · 独家赞助</p>
+</footer>
+</main>
+
+<script>
+/* ============ 海洋粒子：星光 + 气泡 ============ */
+(function(){
+  const cv=document.getElementById('sea-canvas'),ctx=cv.getContext('2d');
+  let W,H,stars=[],bubbles=[];
+  function resize(){W=cv.width=innerWidth;H=cv.height=innerHeight;}
+  resize();addEventListener('resize',resize);
+  for(let i=0;i<90;i++)stars.push({x:Math.random(),y:Math.random()*0.6,r:Math.random()*1.4+0.3,p:Math.random()*Math.PI*2,s:Math.random()*0.02+0.005});
+  for(let i=0;i<36;i++)bubbles.push({x:Math.random(),y:Math.random(),r:Math.random()*3+1,v:Math.random()*0.35+0.12,drift:Math.random()*0.4-0.2,p:Math.random()*Math.PI*2});
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(const s of stars){
+      s.p+=s.s;
+      const a=0.25+0.55*Math.abs(Math.sin(s.p));
+      ctx.beginPath();ctx.arc(s.x*W,s.y*H,s.r,0,7);
+      ctx.fillStyle='rgba(186,230,253,'+a+')';ctx.fill();
+    }
+    for(const b of bubbles){
+      b.y-=b.v/H*2;b.p+=0.02;b.x+=Math.sin(b.p)*0.0004+b.drift*0.0003;
+      if(b.y<-0.02){b.y=1.02;b.x=Math.random();}
+      ctx.beginPath();ctx.arc(b.x*W,b.y*H,b.r,0,7);
+      ctx.strokeStyle='rgba(103,232,249,0.28)';ctx.lineWidth=1;ctx.stroke();
+      ctx.beginPath();ctx.arc(b.x*W-b.r*0.3,b.y*H-b.r*0.3,b.r*0.25,0,7);
+      ctx.fillStyle='rgba(186,230,253,0.25)';ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  if(!reduced)draw();
+})();
+
+/* ============ 滚动显现 ============ */
+(function(){
+  const io=new IntersectionObserver(es=>{
+    es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});
+  },{threshold:0.08});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+})();
+
+/* ============ 侧边栏滚动侦测 ============ */
+(function(){
+  const links=[...document.querySelectorAll('#sideNav a[href^="#"]')];
+  const map=new Map();
+  links.forEach(a=>{const t=document.querySelector(a.getAttribute('href'));if(t)map.set(t,a);});
+  const io=new IntersectionObserver(es=>{
+    es.forEach(e=>{
+      if(e.isIntersecting){
+        links.forEach(l=>l.classList.remove('active'));
+        const a=map.get(e.target);if(a)a.classList.add('active');
+      }
+    });
+  },{rootMargin:'-30% 0px -60% 0px'});
+  map.forEach((a,t)=>io.observe(t));
+})();
+
+/* ============ 复制提示词 ============ */
+document.querySelectorAll('[data-copy]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const pre=btn.closest('.prompt-block').querySelector('pre');
+    const text=pre.innerText;
+    const done=()=>{
+      btn.classList.add('copied');
+      btn.innerHTML='<i class="fa-solid fa-check"></i>已复制';
+      setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='<i class="fa-regular fa-copy"></i>复制';},1800);
+    };
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done).catch(()=>{fallback();});
+    }else fallback();
+    function fallback(){
+      const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);
+      ta.select();try{document.execCommand('copy');done();}catch(e){}
+      document.body.removeChild(ta);
+    }
+  });
+});
+
+/* ============ 自检清单（本地记忆） ============ */
+document.querySelectorAll('.chk input[type=checkbox]').forEach(cb=>{
+  const key='xisha-chk-'+cb.dataset.key;
+  try{
+    if(localStorage.getItem(key)==='1'){cb.checked=true;cb.closest('.chk').classList.add('done');}
+  }catch(e){}
+  cb.addEventListener('change',()=>{
+    cb.closest('.chk').classList.toggle('done',cb.checked);
+    try{localStorage.setItem(key,cb.checked?'1':'0');}catch(e){}
+  });
+});
+
+/* ============ FAQ 手风琴 ============ */
+document.querySelectorAll('.faq-item').forEach(item=>{
+  const q=item.querySelector('.faq-q'),a=item.querySelector('.faq-a');
+  q.addEventListener('click',()=>{
+    const open=item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(o=>{o.classList.remove('open');o.querySelector('.faq-a').style.maxHeight='0';});
+    if(!open){item.classList.add('open');a.style.maxHeight=a.scrollHeight+'px';}
+  });
+});
+
+/* ============ 下潜深度计 ============ */
+(function(){
+  const fill=document.getElementById('depthFill'),num=document.getElementById('depthNum');
+  if(!fill)return;
+  function update(){
+    const max=document.documentElement.scrollHeight-innerHeight;
+    const p=max>0?Math.min(1,scrollY/max):0;
+    fill.style.height=(p*100)+'%';
+    num.textContent=Math.round(p*1500)+'m';
+  }
+  addEventListener('scroll',update,{passive:true});update();
+})();
+
+/* ============ 移动端菜单 ============ */
+(function(){
+  const btn=document.getElementById('menuToggle'),sb=document.getElementById('sidebar');
+  btn.addEventListener('click',()=>sb.classList.toggle('open'));
+  sb.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>sb.classList.remove('open')));
+  document.addEventListener('click',e=>{
+    if(innerWidth>1080)return;
+    if(!sb.contains(e.target)&&!btn.contains(e.target))sb.classList.remove('open');
+  });
+})();
+</script>
 </body>
 </html>
