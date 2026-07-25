@@ -59,6 +59,10 @@
 - **Structure**: 两轮提示词、复制操作、岗位替换说明。
 - **States**: 默认、hover、focus、复制成功。
 - **Accessibility**: 每轮操作为原生 button，复制结果复用页面 `aria-live` 反馈。
+### Expert Prompt
+- **Structure**: 专家角色说明、完整系统提示词与单一复制操作。
+- **States**: 默认、hover、focus、复制成功；长文本在固定高度内滚动阅读。
+- **Accessibility**: 原生 button 触发复制，完整文本保留在语义化 `pre` 中，并复用页面 `aria-live` 反馈。
 
 ## 6. Motion & Interaction
 

@@ -87,4 +87,5 @@ grid.addEventListener('click', (event) => {
 });
 document.querySelector('#copy-starter').addEventListener('click', () => copyText(skills.find(([id]) => id === 'S03')[6]));
 document.querySelectorAll('[data-flow-copy]').forEach((button) => button.addEventListener('click', () => copyText(workflowPrompts[button.dataset.flowCopy])));
+document.querySelector('[data-expert-copy]').addEventListener('click', () => copyText(document.querySelector('#expert-prompt-text').textContent.trim()));
 draw();
