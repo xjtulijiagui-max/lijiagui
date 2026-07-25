@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="银盛支付 WorkBuddy 练习台：复制提示词、下载练习资料和独立 Skill。">
+  <meta name="theme-color" content="#08090a">
+  <title>银盛支付 WorkBuddy｜Skill 练习台</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <div class="shell">
+    <aside class="rail" aria-label="练习导航">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">WB</span>
+        <div><strong>银盛支付 WorkBuddy</strong><span>Skill 练习资料台</span></div>
+      </div>
+      <div class="rail-progress"><span>17 个独立 Skill</span><strong>从数据到工作台</strong></div>
+      <nav aria-label="Skill 分类">
+        <p class="nav-label">练习导航</p>
+        <div class="nav-list" id="nav-list"></div>
+      </nav>
+      <section class="rail-resources" aria-labelledby="resource-title">
+        <p class="nav-label" id="resource-title">练习资料</p>
+        <a href="downloads/%E5%9F%B9%E8%AE%AD%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.md" download>培训使用说明 <span>↓</span></a>
+        <a href="downloads/Skill%E7%9B%AE%E5%BD%95.md" download>Skill 目录 <span>↓</span></a>
+        <a class="all-download" href="downloads/%E9%93%B6%E7%9B%9B%E6%94%AF%E4%BB%98_WorkBuddy_17%E4%B8%AA%E7%8B%AC%E7%AB%8BSkill%E5%8C%85.zip" download>下载完整练习包 <span>↓</span></a>
+      </section>
+      <p class="rail-note">涉及资金、准入、法律、税务、合规、对外发送或生产写入时，必须人工确认。</p>
+    </aside>
+
+    <main id="main">
+      <header class="hero">
+        <div class="eyebrow"><span></span>支付业务 AI 实训</div>
+        <div class="hero-copy">
+          <div>
+            <h1>把练习资料，变成<br>可以马上开始的工作流。</h1>
+            <p>选择一个业务场景，复制推荐提示词，下载独立 Skill 或完整练习包。每个 Skill 都附带明确的输出标准与人工复核边界。</p>
+          </div>
+          <div class="hero-actions">
+            <button class="button primary" type="button" id="copy-starter">复制统一演示提示词</button>
+            <a class="button" href="#skills">浏览 17 个 Skill</a>
+          </div>
+        </div>
+        <div class="metric-strip" aria-label="资料包概览">
+          <div><strong>17</strong><span>独立 Skill</span></div>
+          <div><strong>8</strong><span>入门练习</span></div>
+          <div><strong>8</strong><span>进阶练习</span></div>
+          <div><strong>1</strong><span>个人工作台</span></div>
+        </div>
+      </header>
+
+      <section class="practice-guide" aria-labelledby="guide-title">
+        <div class="section-kicker">推荐路径</div>
+        <h2 id="guide-title">先用 S03 演示，再按岗位深入。</h2>
+        <div class="path">
+          <p><span>01</span>统一完成一次「输入—调用 Skill—校验—纠偏」</p>
+          <p><span>02</span>按岗位选择 1 个基础 Skill 与 1 个支付业务 Skill</p>
+          <p><span>03</span>用 S17 组合自己的 AI 工作台</p>
+        </div>
+      </section>
+
+      <section class="skills-section" id="skills" aria-labelledby="skills-title">
+        <div class="section-head">
+          <div><div class="section-kicker">Skill 清单</div><h2 id="skills-title">从业务问题开始练</h2></div>
+          <p id="skill-count" aria-live="polite"></p>
+        </div>
+        <div class="skill-grid" id="skill-grid"></div>
+      </section>
+    </main>
+  </div>
+  <div class="toast" id="toast" aria-live="polite" role="status"></div>
+  <script src="skills.js"></script>
+</body>
+</html>
