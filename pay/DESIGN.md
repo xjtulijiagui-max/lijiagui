@@ -55,6 +55,11 @@
 - **States**: 默认、hover、focus。
 - **Accessibility**: 链接文字包含文件用途。
 
+### Workflow Lab
+- **Structure**: 两轮提示词、复制操作、岗位替换说明。
+- **States**: 默认、hover、focus、复制成功。
+- **Accessibility**: 每轮操作为原生 button，复制结果复用页面 `aria-live` 反馈。
+
 ## 6. Motion & Interaction
 
 - 微交互：160ms `ease-out`，仅使用 `transform` 与 `opacity`。

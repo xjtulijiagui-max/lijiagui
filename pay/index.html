@@ -20,6 +20,7 @@
       <nav aria-label="Skill 分类">
         <p class="nav-label">练习导航</p>
         <div class="nav-list" id="nav-list"></div>
+        <a class="workflow-nav" href="#workflow-lab"><span class="nav-number">05</span><span>流程优化实战</span><span>→</span></a>
       </nav>
       <section class="rail-resources" aria-labelledby="resource-title">
         <p class="nav-label" id="resource-title">练习资料</p>
@@ -60,6 +61,31 @@
           <p><span>02</span>按岗位选择 1 个基础 Skill 与 1 个支付业务 Skill</p>
           <p><span>03</span>用 S17 组合自己的 AI 工作台</p>
         </div>
+      </section>
+
+      <section class="workflow-lab" id="workflow-lab" aria-labelledby="workflow-title">
+        <div class="section-head">
+          <div><div class="section-kicker">流程优化实战</div><h2 id="workflow-title">把业务流程做成可讨论、可迭代的 AI 工作流。</h2></div>
+          <p>工具：DeepSeek ／ WorkBuddy</p>
+        </div>
+        <div class="workflow-stages">
+          <article class="workflow-stage">
+            <div class="workflow-stage-head"><span>第一轮</span><strong>补全现有流程</strong></div>
+            <p>先用真实业务流程作为输入，补齐节点、分支、材料与人工审核环节。</p>
+            <blockquote class="workflow-prompt">{{银盛支付商户入网审核流程}}，请搜索并补充完整，输出为 Mermaid 流程图。</blockquote>
+            <button class="button" type="button" data-flow-copy="discovery">复制第一轮提示词</button>
+          </article>
+          <article class="workflow-stage workflow-stage-ai">
+            <div class="workflow-stage-head"><span>第二轮</span><strong>引入 AI 重新设计</strong></div>
+            <p>识别适合 AI 介入的环节，再以 SCAMPER 方法重新设计整个流程。</p>
+            <blockquote class="workflow-prompt">分析以上流程中哪些环节可以引入AI，并运用SCAMPER方法重新设计流程，输出一张新的Mermaid流程图；其中，AI介入节点请使用另一种颜色标注。</blockquote>
+            <button class="button primary" type="button" data-flow-copy="redesign">复制第二轮提示词</button>
+          </article>
+        </div>
+        <aside class="workflow-note">
+          <strong>从演示案例到你的岗位</strong>
+          <p>除“银盛支付商户入网审核流程”外，也可替换为客户支付与收款、退款处理、商户对账与结算、异常交易处理、客户投诉处理或商户风险审核等流程。基于 AI 生成的内容，结合实际流程、数据边界与 AI 能力开会讨论，并通过多轮对话持续修改。</p>
+        </aside>
       </section>
 
       <section class="skills-section" id="skills" aria-labelledby="skills-title">

@@ -26,6 +26,10 @@ const nav = document.querySelector('#nav-list');
 const grid = document.querySelector('#skill-grid');
 const count = document.querySelector('#skill-count');
 const toast = document.querySelector('#toast');
+const workflowPrompts = {
+  discovery: '{{银盛支付商户入网审核流程}}，请搜索并补充完整，输出为 Mermaid 流程图。',
+  redesign: '分析以上流程中哪些环节可以引入AI，并运用SCAMPER方法重新设计流程，输出一张新的Mermaid流程图；其中，AI介入节点请使用另一种颜色标注。',
+};
 
 const inCategory = (skill, category) => category === 'all'
   || (category === 'entry' && skill[4] === '入门')
@@ -82,4 +86,5 @@ grid.addEventListener('click', (event) => {
   copyText(skill[6]);
 });
 document.querySelector('#copy-starter').addEventListener('click', () => copyText(skills.find(([id]) => id === 'S03')[6]));
+document.querySelectorAll('[data-flow-copy]').forEach((button) => button.addEventListener('click', () => copyText(workflowPrompts[button.dataset.flowCopy])));
 draw();
