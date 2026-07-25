@@ -41,7 +41,9 @@
 
 ## 5. Components
 
-### Domain filter
+### Domain navigation
+
+Desktop uses a selectable, sticky left-side domain navigation with search above the domain choices. The selected domain is filled with `--accent`; hover and focus use the existing border and accent tokens. At 768px and below, the sidebar becomes a normal-flow search-and-horizontal-choice strip so the catalog remains one-column and reachable.
 - **Structure**：按钮组 + 计数。
 - **States**：默认、hover、active、focus；键盘可达。
 - **Motion**：150ms 色彩与边框过渡。
