@@ -46,7 +46,7 @@
 - **Accessibility**: `nav` landmark，当前项使用 `aria-current`。
 
 ### Skill Card
-- **Structure**: 序号、难度/时长、标题、适用对象、提示词、下载操作。
+- **Structure**: 序号、难度/时长、标题、适用对象、提示词、Skill 下载；S03–S07 额外提供对应模拟数据下载。
 - **States**: 默认、hover、focus、复制成功。
 - **Accessibility**: 操作均为原生 button 或 anchor；复制反馈使用 `aria-live`。
 
