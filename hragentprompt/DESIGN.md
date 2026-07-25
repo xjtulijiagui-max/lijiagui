@@ -43,7 +43,9 @@
 
 ### Domain navigation
 
-Desktop uses a selectable, sticky left-side domain navigation with search above the domain choices. The selected domain is filled with `--accent`; hover and focus use the existing border and accent tokens. At 768px and below, the sidebar becomes a normal-flow search-and-horizontal-choice strip so the catalog remains one-column and reachable.
+Desktop and tablet use a selectable, sticky left-side domain navigation with search above the domain choices. The selected domain is filled with `--accent`; hover and focus use the existing border and accent tokens. Below 640px, the sidebar becomes a normal-flow search-and-horizontal-choice strip so the catalog remains one-column and reachable.
+
+CJK display and card titles use neutral letter spacing (`0`) to keep Chinese glyphs clear and avoid unnatural wrapping. The sidebar stays left-aligned through tablet widths and changes to the horizontal mobile strip below 640px.
 - **Structure**：按钮组 + 计数。
 - **States**：默认、hover、active、focus；键盘可达。
 - **Motion**：150ms 色彩与边框过渡。
