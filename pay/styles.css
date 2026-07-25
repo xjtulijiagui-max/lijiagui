@@ -35,4 +35,5 @@ main { min-width: 0; }.hero { padding: clamp(48px, 8vw, 100px) clamp(0px, 3vw, 4
 @media (max-width: 620px) { .hero-copy, .path { grid-template-columns: 1fr; }.hero h1 { font-size: 38px; }.metric-strip { grid-template-columns: repeat(2, 1fr); }.metric-strip div:nth-child(2) { border-right: 0; }.metric-strip div:nth-child(-n + 2) { border-bottom: 1px solid var(--line); }.rail-resources { grid-template-columns: 1fr; }.section-head { align-items: start; flex-direction: column; }.card-actions { grid-template-columns: 1fr; } }
 .card-actions:not(.with-data) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .card-actions.with-data { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 620px) { .card-actions:not(.with-data), .card-actions.with-data { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }
