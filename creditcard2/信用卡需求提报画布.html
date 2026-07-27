@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a5fc6" />
+  <title>信用卡需求提报画布</title>
+  <style>
+    :root {
+      --blue-900: #064c9c;
+      --blue-800: #0a5fc6;
+      --blue-700: #1672dc;
+      --blue-100: #eaf3ff;
+      --blue-050: #f5f9ff;
+      --border: #b9d5f6;
+      --text: #172033;
+      --muted: #5f6d84;
+      --success: #16865a;
+      --danger: #b83535;
+      --shadow: 0 10px 28px rgba(22, 76, 140, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 0%, rgba(31, 122, 224, .08), transparent 26rem),
+        linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+      font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif;
+      min-height: 100vh;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: linear-gradient(100deg, var(--blue-900), var(--blue-800));
+      color: #fff;
+      border-bottom: 4px solid #dbeaff;
+      box-shadow: 0 4px 16px rgba(0, 64, 140, .18);
+    }
+
+    .header-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 18px 28px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .title-wrap h1 {
+      margin: 0;
+      font-size: clamp(22px, 2.2vw, 34px);
+      line-height: 1.25;
+      letter-spacing: .04em;
+      font-family: "STKaiti", "KaiTi", "华文楷体", serif;
+      font-weight: 700;
+    }
+
+    .title-wrap p {
+      margin: 7px 0 0;
+      font-size: 14px;
+      opacity: .88;
+    }
+
+    .header-meta {
+      text-align: right;
+      min-width: 190px;
+    }
+
+    .progress-label {
+      font-size: 14px;
+      margin-bottom: 8px;
+      white-space: nowrap;
+    }
+
+    .progress-track {
+      width: 190px;
+      height: 8px;
+      background: rgba(255,255,255,.24);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      width: 0%;
+      height: 100%;
+      background: #fff;
+      border-radius: inherit;
+      transition: width .25s ease;
+    }
+
+    main {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 32px 28px 44px;
+    }
+
+    .toolbar {
+      margin-bottom: 22px;
+      padding: 14px 16px;
+      background: rgba(255,255,255,.92);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #90a2ba;
+      box-shadow: 0 0 0 4px rgba(144,162,186,.15);
+    }
+
+    .status-dot.saved {
+      background: var(--success);
+      box-shadow: 0 0 0 4px rgba(22,134,90,.14);
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    button, .file-label {
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--blue-900);
+      border-radius: 9px;
+      padding: 9px 14px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+      user-select: none;
+    }
+
+    button:hover, .file-label:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(10,95,198,.12);
+      background: var(--blue-050);
+    }
+
+    button.primary {
+      color: #fff;
+      background: var(--blue-800);
+      border-color: var(--blue-800);
+    }
+
+    button.danger {
+      color: var(--danger);
+      border-color: #efc6c6;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .card {
+      position: relative;
+      min-height: 300px;
+      background: rgba(255,255,255,.96);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 20px 16px;
+      box-shadow: var(--shadow);
+      transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+    }
+
+    .card:focus-within {
+      transform: translateY(-2px);
+      border-color: var(--blue-700);
+      box-shadow: 0 14px 34px rgba(22, 76, 140, .13);
+    }
+
+    .card.completed {
+      border-color: #86cfb1;
+      background: linear-gradient(180deg, #fff, #f7fffb);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      min-height: 56px;
+    }
+
+    .number {
+      flex: 0 0 auto;
+      width: 38px;
+      height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--blue-900), var(--blue-700));
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .05em;
+    }
+
+    .card h2 {
+      margin: 0;
+      font-size: 20px;
+      color: var(--blue-900);
+    }
+
+    .question {
+      margin: 4px 0 0;
+      color: var(--text);
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .done-badge {
+      margin-left: auto;
+      display: none;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #e7f7ef;
+      color: var(--success);
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .card.completed .done-badge {
+      display: inline-flex;
+    }
+
+    .hint {
+      margin: 13px 0 11px;
+      min-height: 42px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 140px;
+      resize: vertical;
+      border: 1px solid #cbdcf0;
+      border-radius: 10px;
+      padding: 12px 13px;
+      font: inherit;
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--text);
+      background: #fbfdff;
+      outline: none;
+      transition: border-color .2s ease, background .2s ease, box-shadow .2s ease;
+    }
+
+    textarea:focus {
+      border-color: var(--blue-700);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(22,114,220,.11);
+    }
+
+    textarea::placeholder {
+      color: #9aa9bc;
+    }
+
+    .char-count {
+      margin-top: 7px;
+      text-align: right;
+      color: #8b98aa;
+      font-size: 12px;
+    }
+
+    .principle {
+      margin-top: 28px;
+      border: 1px solid #9fc5f0;
+      background: linear-gradient(90deg, #eaf3ff, #f7fbff);
+      border-radius: 12px;
+      padding: 16px 18px;
+      font-size: 15px;
+      line-height: 1.75;
+      color: #23334d;
+    }
+
+    .principle strong {
+      color: var(--blue-900);
+    }
+
+    .footer-note {
+      margin-top: 14px;
+      text-align: center;
+      color: #8290a3;
+      font-size: 12px;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 28px;
+      transform: translate(-50%, 18px);
+      background: rgba(18, 31, 52, .94);
+      color: #fff;
+      padding: 11px 16px;
+      border-radius: 9px;
+      font-size: 14px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s ease, transform .2s ease;
+      z-index: 50;
+      box-shadow: 0 12px 30px rgba(0,0,0,.18);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    @media (max-width: 1024px) {
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 720px) {
+      .header-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 16px 18px;
+      }
+      .header-meta {
+        width: 100%;
+        text-align: left;
+      }
+      .progress-track { width: 100%; }
+      main { padding: 22px 16px 36px; }
+      .grid { grid-template-columns: 1fr; }
+      .card { min-height: auto; }
+      .toolbar { align-items: stretch; }
+      .actions { width: 100%; }
+      button, .file-label { flex: 1 1 auto; text-align: center; }
+    }
+
+    @media print {
+      header { position: static; }
+      .toolbar, .footer-note { display: none !important; }
+      body { background: #fff; }
+      main { max-width: none; padding: 16px; }
+      .grid { gap: 12px; }
+      .card {
+        box-shadow: none;
+        break-inside: avoid;
+        min-height: 260px;
+      }
+      textarea {
+        border: none;
+        background: transparent;
+        padding: 0;
+        resize: none;
+        overflow: visible;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="title-wrap">
+        <h1>需求提报画布：提交信用卡需求前先填满这九格</h1>
+        <p>将模糊想法转化为可评估、可研发、可验收的业务需求。</p>
+      </div>
+      <div class="header-meta">
+        <div class="progress-label">完成度：<strong id="completedCount">0</strong>/9</div>
+        <div class="progress-track" aria-label="填写进度">
+          <div id="progressBar" class="progress-bar"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="toolbar">
+      <div class="status">
+        <span id="statusDot" class="status-dot"></span>
+        <span id="saveStatus">内容会自动保存在当前浏览器</span>
+      </div>
+      <div class="actions">
+        <button id="saveBtn" class="primary" type="button">立即保存</button>
+        <button id="snapshotBtn" type="button">下载填写版HTML</button>
+        <button id="exportBtn" type="button">导出JSON</button>
+        <label class="file-label" for="importFile">导入JSON</label>
+        <input id="importFile" type="file" accept=".json,application/json" />
+        <button id="printBtn" type="button">打印 / PDF</button>
+        <button id="clearBtn" class="danger" type="button">清空画布</button>
+      </div>
+    </div>
+
+    <div class="grid">
+
+      <section class="card" data-field="background">
+        <div class="card-top">
+          <span class="number">01</span>
+          <div>
+            <h2>背景</h2>
+            <p class="question">为什么现在要做？</p>
+          </div>
+          <span class="done-badge" aria-label="已填写">已填写</span>
+        </div>
+        <p class="hint">可从经营目标、客诉、风险、监管驱动等角度说明。</p>
+        <textarea id="background" name="background" placeholder="例如：近三个月信用卡激活率持续下降；监管要求强化营销合规审查；客诉集中在分期说明不清……" aria-label="背景"></textarea>
+        <div class="char-count"><span>0</span> 字</div>
+      </section>
+
+      <section class="card" data-field="role">
+        <div class="card-top">
+          <span class="number">02</span>
+          <div>
+            <h2>角色</h2>
+            <p class="question">谁使用？谁决策？</p>
+          </div>
+          <span class="done-badge" aria-label="已填写">已填写</span>
+        </div>
+        <p class="hint">明确主持人、运营、客服、风控、合规等角色及责任。</p>
+        <textarea id="role" name="role" placeholder="例如：主要使用人为信用卡运营经理；决策人为业务负责人；风控与合规负责规则审查……" aria-label="角色"></textarea>
+        <div class="char-count"><span>0</span> 字</div>
+      </section>
+
+      <section class="card" data-field="scenario">
+        <div class="card-top">
+          <span class="number">03</span>
+          <div>
+            <h2>场景</h2>
+            <p class="question">发生在哪个业务节点？</p>
+          </div>
+          <span class="done-badge" aria-label="已填写">已填写</span>
+        </div>
+        <p class="hint">申请、激活、账单、分期、还款、权益等节点均可。</p>
+        <textarea id="scenario" name="scenario" placeholder="例如：客户完成开卡后7天内未激活；账单日前3天触达；客户进入分期申请页面时……" aria-label="场景"></textarea>
+        <div class="char-count"><span>0</span> 字</div>
+      </section>
+
+      <section class="card" data-field="pain">
+        <div class="card-top">
+          <span class="number">04</span>
+          <div>
+            <h2>痛点</h2>
+            <p class="question">问题有多严重？</p>
+          </div>
+          <span class="done-badge" aria-label="已填写">已填写</span>
+        </div>
+        <p class="hint">描述问题频率、影响客群、损失规模及当前处理成本。</p>
+        <textarea id="pain" name="pain" placeholder="例如：每月约2.4万名客户未激活；人工外呼转化率低；重复咨询占客服进线量18%……" aria-label="痛点"></textarea>
+        <div class="char-count"><span>0</span> 字</div>
+      </section>
+
+      <section class="card" data-field="goal">
+        <div class="card-top">
+          <span class="number">05</span>
+          <div>
+            <h2>目标</h2>
+            <p class="question">希望改善哪些指标？</p>
+          </div>
+          <span class="done-badge" aria-label="已填写">已填写</span>
+        </div>
+        <p class="hint">可填写激活率、转化率、逾期率、AHT、NPS等指标。</p>
+        <textarea id="goal" name="goal" placeholder="例如：激活率提升5个百分点；分期转化率提升8%；平均处理时长AHT下降20%……" aria-label="目标"></textarea>
+        <div class="char-count"><span>0</span> 字</div>
+      </section>
+
+      <section class="card" data-field="scope">
+        <div class="card-top">
+          <span class="number">06</span>
+          <div>
+            <h2>方案边界</h2>
+            <p class="question">做什么 / 不做什么？</p>
+          </div>
+          <span class="done-badge" aria-label="已填写">已填写</span>
+        </div>
+        <p class="hint">明确本次建设范围、排除项以及人工兜底边界。</p>
+        <textarea id="scope" name="scope" placeholder="例如：本期仅支持存量客户的激活提醒，不涉及授信审批；高风险客户必须转人工复核……" aria-label="方案边界"></textarea>
+        <div class="char-count"><span>0</span> 字</div>
+      </section>
+
+      <section class="card" data-field="priority">
+        <div class="card-top">
+          <span class="number">07</span>
+          <div>
+            <h2>优先级</h2>
+            <p class="question">为什么要优先做？</p>
+          </div>
+          <span class="done-badge" aria-label="已填写">已填写</span>
+        </div>
+        <p class="hint">可使用M/S/C/W或按业务影响、紧急程度排序。</p>
+        <textarea id="priority" name="priority" placeholder="例如：M（必须做）；涉及监管整改，需在本季度完成；预计可覆盖80%高频问题……" aria-label="优先级"></textarea>
+        <div class="char-count"><span>0</span> 字</div>
+      </section>
+
+      <section class="card" data-field="dependency">
+        <div class="card-top">
+          <span class="number">08</span>
+          <div>
+            <h2>依赖</h2>
+            <p class="question">落地需要哪些条件？</p>
+          </div>
+          <span class="done-badge" aria-label="已填写">已填写</span>
+        </div>
+        <p class="hint">账务、风控、营销、短信、外呼、数据、权限等均需考虑。</p>
+        <textarea id="dependency" name="dependency" placeholder="例如：需要客户标签、交易流水、短信平台、外呼接口、营销授权记录及数据权限……" aria-label="依赖"></textarea>
+        <div class="char-count"><span>0</span> 字</div>
+      </section>
+
+      <section class="card" data-field="acceptance">
+        <div class="card-top">
+          <span class="number">09</span>
+          <div>
+            <h2>验收</h2>
+            <p class="question">如何判断已经完成？</p>
+          </div>
+          <span class="done-badge" aria-label="已填写">已填写</span>
+        </div>
+        <p class="hint">从页面、规则、口径、数据指标、稳定性等维度定义。</p>
+        <textarea id="acceptance" name="acceptance" placeholder="例如：核心规则100%通过测试；页面流程可完整闭环；上线后30天激活率提升≥5个百分点……" aria-label="验收"></textarea>
+        <div class="char-count"><span>0</span> 字</div>
+      </section>
+
+    </div>
+
+    <div class="principle">
+      <strong>提交原则：</strong>
+      一格讲不清，说明需求还没有准备好；九格能讲清，研发和产品才更可能少返工。
+    </div>
+    <div class="footer-note">本页面为单文件离线网页，不依赖外部网络；状态默认保存在浏览器本地。</div>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const STORAGE_KEY = "credit-card-requirement-canvas-v1";
+    const FIELD_IDS = ["background", "role", "scenario", "pain", "goal", "scope", "priority", "dependency", "acceptance"];
+    const FIELD_META = {"background": {"title": "背景"}, "role": {"title": "角色"}, "scenario": {"title": "场景"}, "pain": {"title": "痛点"}, "goal": {"title": "目标"}, "scope": {"title": "方案边界"}, "priority": {"title": "优先级"}, "dependency": {"title": "依赖"}, "acceptance": {"title": "验收"}};
+    const SNAPSHOT_STATE = null;
+
+    const els = Object.fromEntries(FIELD_IDS.map(id => [id, document.getElementById(id)]));
+    const completedCount = document.getElementById("completedCount");
+    const progressBar = document.getElementById("progressBar");
+    const saveStatus = document.getElementById("saveStatus");
+    const statusDot = document.getElementById("statusDot");
+    const toast = document.getElementById("toast");
+    let saveTimer = null;
+
+    function nowText() {
+      return new Intl.DateTimeFormat("zh-CN", {
+        year: "numeric", month: "2-digit", day: "2-digit",
+        hour: "2-digit", minute: "2-digit", second: "2-digit"
+      }).format(new Date());
+    }
+
+    function collectState() {
+      const values = {};
+      FIELD_IDS.forEach(id => values[id] = els[id].value);
+      return {
+        version: 1,
+        title: "信用卡需求提报画布",
+        updatedAt: new Date().toISOString(),
+        values
+      };
+    }
+
+    function applyState(state) {
+      if (!state || typeof state !== "object") return;
+      const values = state.values || state;
+      FIELD_IDS.forEach(id => {
+        if (typeof values[id] === "string") els[id].value = values[id];
+      });
+      updateUI();
+    }
+
+    function saveState(showMessage = false) {
+      const state = collectState();
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        saveStatus.textContent = "已自动保存 · " + nowText();
+        statusDot.classList.add("saved");
+        if (showMessage) showToast("画布已保存");
+      } catch (err) {
+        saveStatus.textContent = "浏览器禁止本地保存，请使用“导出JSON”";
+        statusDot.classList.remove("saved");
+        if (showMessage) showToast("本地保存失败，请导出JSON备份");
+      }
+    }
+
+    function loadState() {
+      let loaded = false;
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          applyState(JSON.parse(raw));
+          loaded = true;
+        }
+      } catch (err) {
+        console.warn("读取本地状态失败", err);
+      }
+      if (!loaded && SNAPSHOT_STATE && typeof SNAPSHOT_STATE === "object") {
+        applyState(SNAPSHOT_STATE);
+      }
+      updateUI();
+    }
+
+    function updateUI() {
+      let complete = 0;
+      FIELD_IDS.forEach(id => {
+        const text = els[id].value.trim();
+        const card = els[id].closest(".card");
+        const counter = card.querySelector(".char-count span");
+        counter.textContent = els[id].value.length;
+        const isDone = text.length > 0;
+        card.classList.toggle("completed", isDone);
+        if (isDone) complete++;
+      });
+      completedCount.textContent = complete;
+      progressBar.style.width = (complete / FIELD_IDS.length * 100) + "%";
+    }
+
+    function scheduleSave() {
+      statusDot.classList.remove("saved");
+      saveStatus.textContent = "正在记录修改……";
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(() => saveState(false), 450);
+    }
+
+    function downloadBlob(filename, content, mime) {
+      const blob = new Blob([content], { type: mime });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    function fileDate() {
+      const d = new Date();
+      const p = n => String(n).padStart(2, "0");
+      return `${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}`;
+    }
+
+    function exportJSON() {
+      const state = collectState();
+      downloadBlob(
+        `信用卡需求画布_${fileDate()}.json`,
+        JSON.stringify(state, null, 2),
+        "application/json;charset=utf-8"
+      );
+      showToast("JSON备份已导出");
+    }
+
+    function downloadSnapshotHTML() {
+      saveState(false);
+      const state = collectState();
+      let source = document.documentElement.outerHTML;
+      const marker = "const SNAPSHOT_STATE = ";
+      const start = source.indexOf(marker);
+      if (start === -1) {
+        showToast("生成填写版HTML失败");
+        return;
+      }
+      const valueStart = start + marker.length;
+      const end = source.indexOf(";", valueStart);
+      const embedded = JSON.stringify(state).replace(/</g, "\\u003c");
+      source = source.slice(0, valueStart) + embedded + source.slice(end);
+      source = "<!DOCTYPE html>\n" + source;
+      downloadBlob(
+        `信用卡需求画布_填写版_${fileDate()}.html`,
+        source,
+        "text/html;charset=utf-8"
+      );
+      showToast("已下载可独立打开的填写版HTML");
+    }
+
+    function importJSON(file) {
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const state = JSON.parse(reader.result);
+          applyState(state);
+          saveState(false);
+          showToast("JSON状态已导入");
+        } catch (err) {
+          showToast("导入失败：文件格式不正确");
+        }
+      };
+      reader.readAsText(file, "utf-8");
+    }
+
+    function clearCanvas() {
+      const hasContent = FIELD_IDS.some(id => els[id].value.trim());
+      if (hasContent && !confirm("确定清空九格内容吗？此操作会覆盖当前浏览器中的已保存状态。")) return;
+      FIELD_IDS.forEach(id => els[id].value = "");
+      updateUI();
+      saveState(false);
+      showToast("画布已清空");
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => toast.classList.remove("show"), 2200);
+    }
+
+    FIELD_IDS.forEach(id => {
+      els[id].addEventListener("input", () => {
+        updateUI();
+        scheduleSave();
+      });
+    });
+
+    document.getElementById("saveBtn").addEventListener("click", () => saveState(true));
+    document.getElementById("exportBtn").addEventListener("click", exportJSON);
+    document.getElementById("snapshotBtn").addEventListener("click", downloadSnapshotHTML);
+    document.getElementById("importFile").addEventListener("change", event => {
+      importJSON(event.target.files[0]);
+      event.target.value = "";
+    });
+    document.getElementById("clearBtn").addEventListener("click", clearCanvas);
+    document.getElementById("printBtn").addEventListener("click", () => window.print());
+    window.addEventListener("beforeunload", () => saveState(false));
+
+    loadState();
+  </script>
+</body>
+</html>
