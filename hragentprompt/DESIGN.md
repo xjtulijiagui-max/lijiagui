@@ -52,7 +52,8 @@ CJK display and card titles use neutral letter spacing (`0`) to keep Chinese gly
 
 ### Resource card
 - **Structure**：领域标签、编号、标题、简介、资源标识、操作区。
-- **Variants**：`legacy`（历史提示词）与 `matrix`（Skill + 制作提示词）。
+- **Variants**：`legacy`（历史提示词）、`matrix`（Skill + 制作提示词）与 `data-analysis`（提示词 + 数据集 + 作业提交）。数据分析卡片的三个操作均在同一操作区内换行排列；下载资源使用 `download`，外部作业表单使用新窗口与 `noopener`。
+- **Typography**：数据分析卡片标题使用 18px，以确保平板双列和手机单列中的中文词组不产生单字孤行；移动端首屏标题使用 32px、1.12 行高，品牌名称保持单行。
 - **States**：默认、hover、focus-within、筛选隐藏。
 - **Accessibility**：卡片标题为 h3，下载按钮清晰说明文件类型。
 
