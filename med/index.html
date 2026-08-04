@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="惠泰医疗 AI 场景与实战训练操作台：六步提示词、医疗模拟数据集、深度报告、HTML 驾驶舱与 AI 数据分析练习。" />
+  <title>惠泰医疗课堂 · AI 场景与实战训练操作台</title>
+  <style>
+    :root{
+      --canvas:#f3f6f2;--paper:#fefffc;--ink:#102a43;--muted:#617489;
+      --teal:#087e78;--teal-dark:#05645f;--mint:#ddf4ed;--mint-strong:#b9e3d8;
+      --blue:#2563a9;--amber:#c77a18;--amber-soft:#fff1d6;--line:#d9e3e4;
+      --night:#0c2434;--danger:#a73b35;--shadow:0 18px 50px rgba(16,42,67,.10);
+      --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:20px;--s6:24px;--s8:32px;
+      --s10:40px;--s12:48px;--s16:64px;--s20:80px;--ease:cubic-bezier(.16,1,.3,1);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--canvas);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;line-height:1.65}
+    button,a,textarea{font:inherit}
+    button,a{touch-action:manipulation}
+    a{color:inherit}
+    .topline{height:6px;background:linear-gradient(90deg,var(--teal) 0 58%,var(--mint-strong) 58% 100%)}
+    .shell{width:min(1440px,calc(100% - 48px));margin:auto}
+    .topnav{height:72px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);gap:24px}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-weight:800}
+    .brand-mark{display:grid;place-items:center;width:36px;height:36px;border-radius:50% 50% 50% 8px;background:var(--teal);color:var(--paper);font-size:13px}
+    .top-links{display:flex;gap:24px;font-size:14px;color:var(--muted)}
+    .top-links a{text-decoration:none}
+    .top-links a:hover,.top-links a:focus-visible{color:var(--teal)}
+    .hero{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:clamp(32px,7vw,112px);align-items:end;padding:clamp(56px,8vw,112px) 0 64px}
+    .eyebrow{font-size:12px;font-weight:800;letter-spacing:.13em;color:var(--teal);text-transform:uppercase}
+    .hero h1{font-size:clamp(42px,5.5vw,76px);line-height:1.05;letter-spacing:-.055em;margin:14px 0 20px;max-width:900px}
+    .hero h1 span{color:var(--teal)}
+    .hero .lead{font-size:18px;color:var(--muted);max-width:720px;margin:0}
+    .hero-note{padding:20px 0 4px 24px;border-left:1px solid var(--line)}
+    .hero-note strong{display:block;font-size:46px;line-height:1;color:var(--teal);letter-spacing:-.06em;margin-bottom:10px}
+    .hero-note p{margin:0;color:var(--muted);font-size:14px}
+    .prepbar{background:var(--night);color:var(--paper)}
+    .prepbar-inner{min-height:92px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+    .prepbar p{margin:0;color:#d5e4e8;font-size:14px}
+    .prep-btn{border:1px solid #446271;background:transparent;color:var(--paper);padding:11px 18px;border-radius:999px;cursor:pointer}
+    .prep-btn:hover,.prep-btn:focus-visible{background:#193b4b;outline:3px solid rgba(185,227,216,.4);outline-offset:2px}
+    .prep-btn.ready{background:var(--teal);border-color:var(--teal)}
+    .workspace{display:grid;grid-template-columns:250px minmax(0,1fr);gap:clamp(32px,5vw,80px);padding:64px 0 112px}
+    .sidebar{position:sticky;top:24px;align-self:start}
+    .side-title{font-size:15px;font-weight:800;margin-bottom:4px}
+    .side-copy{font-size:12px;color:var(--muted);margin:0 0 18px}
+    .side-nav{list-style:none;padding:0;margin:0;border-top:1px solid var(--line)}
+    .side-nav a{display:grid;grid-template-columns:32px 1fr;gap:10px;padding:12px 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--muted);font-size:13px}
+    .side-nav a span:first-child{color:var(--teal);font-weight:800}
+    .side-nav a:hover,.side-nav a:focus-visible{color:var(--ink)}
+    .side-progress{margin-top:24px;padding:18px;background:var(--mint);border-radius:18px}
+    .side-progress strong{font-size:30px;line-height:1;letter-spacing:-.05em}
+    .side-progress p{font-size:12px;color:#315f5a;margin:6px 0 12px}
+    progress{appearance:none;width:100%;height:7px;border:0;border-radius:99px;overflow:hidden}
+    progress::-webkit-progress-bar{background:#badbd2}
+    progress::-webkit-progress-value{background:var(--teal)}
+    .content{min-width:0}
+    .section-intro{display:flex;justify-content:space-between;gap:32px;align-items:end;margin-bottom:32px}
+    .section-intro h2{font-size:clamp(30px,4vw,52px);line-height:1.12;letter-spacing:-.045em;margin:8px 0 0}
+    .section-intro p{max-width:430px;color:var(--muted);font-size:14px;margin:0}
+    .bulk-actions{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px}
+    .button{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:999px;padding:11px 17px;font-size:14px;font-weight:800;cursor:pointer;text-decoration:none;transition:transform 160ms var(--ease),background 160ms var(--ease),color 160ms var(--ease)}
+    .button:active{transform:scale(.98)}
+    .button.primary{background:var(--teal);color:var(--paper)}
+    .button.primary:hover,.button.primary:focus-visible{background:var(--teal-dark);outline:3px solid var(--mint-strong);outline-offset:2px}
+    .button.secondary{background:var(--paper);color:var(--ink);border:1px solid var(--line)}
+    .button.secondary:hover,.button.secondary:focus-visible{border-color:var(--teal);color:var(--teal);outline:none}
+    .button.text{background:transparent;color:var(--muted);padding-inline:10px}
+    .button.text:hover,.button.text:focus-visible{color:var(--teal);outline:none}
+    .prompt-list{display:grid;gap:18px}
+    .prompt-card{background:var(--paper);border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:0 1px 0 rgba(16,42,67,.03);scroll-margin-top:24px}
+    .prompt-card.completed{border-color:var(--teal);box-shadow:0 0 0 2px var(--mint)}
+    .prompt-head{display:grid;grid-template-columns:58px minmax(0,1fr) auto;gap:18px;align-items:center;padding:22px 24px;border-bottom:1px solid var(--line)}
+    .step-no{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--mint);color:var(--teal);font-weight:900;font-size:13px}
+    .prompt-head h3{font-size:21px;line-height:1.3;margin:2px 0 4px}
+    .prompt-head p{margin:0;color:var(--muted);font-size:13px}
+    .prompt-meta{font-size:11px;letter-spacing:.1em;font-weight:900;color:var(--teal)}
+    .prompt-tools{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
+    .prompt-tools a{font-size:12px;color:var(--blue);text-decoration:none;border-bottom:1px solid transparent}
+    .prompt-tools a:hover,.prompt-tools a:focus-visible{border-color:currentColor;outline:none}
+    .prompt-body{padding:24px}
+    .prompt-guidance{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+    .guidance-block{padding:14px 16px;border-radius:14px;background:var(--canvas);font-size:13px;color:var(--muted)}
+    .guidance-block strong{display:block;color:var(--ink);margin-bottom:4px}
+    .editor-label{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:12px;font-weight:800;color:var(--muted);margin:0 0 8px}
+    textarea{display:block;width:100%;min-height:280px;resize:vertical;border:1px solid var(--line);border-radius:16px;padding:18px;background:#fbfcf9;color:var(--ink);font-size:14px;line-height:1.7;outline:none}
+    textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px var(--mint)}
+    textarea.modified{border-color:var(--amber);background:#fffdf8}
+    .editor-actions{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-top:14px}
+    .action-group{display:flex;flex-wrap:wrap;gap:8px}
+    .status-text{font-size:12px;color:var(--muted);align-self:center}
+    .status-text.changed{color:var(--amber);font-weight:800}
+    .studio{padding-top:112px}
+    .studio-card{background:var(--paper);border:1px solid var(--line);border-radius:26px;overflow:hidden;margin-bottom:24px;scroll-margin-top:24px}
+    .studio-card .prompt-head{background:linear-gradient(90deg,var(--mint),var(--paper) 62%)}
+    .studio-grid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:24px;padding:24px}
+    .dataset-card{align-self:start;border:1px solid var(--line);border-radius:18px;padding:18px;background:var(--canvas)}
+    .file-type{display:inline-block;font-size:11px;font-weight:900;letter-spacing:.1em;color:var(--teal);margin-bottom:10px}
+    .dataset-card h4{font-size:17px;line-height:1.4;margin:0 0 8px}
+    .dataset-card p{font-size:13px;color:var(--muted);margin:0 0 14px}
+    .dataset-card .button{width:100%}
+    .dataset-note{margin-top:12px;padding-top:12px;border-top:1px solid var(--line);font-size:11px;color:var(--muted)}
+    .task-goals{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+    .task-goals div{padding:12px 14px;background:var(--canvas);border-radius:13px;font-size:12px;color:var(--muted)}
+    .task-goals strong{display:block;color:var(--ink);font-size:13px;margin-bottom:3px}
+    .notice{margin-top:32px;padding:24px;border:1px solid var(--mint-strong);background:var(--mint);border-radius:20px}
+    .notice h3{font-size:18px;margin:0 0 6px}
+    .notice p{margin:0;color:#315f5a;font-size:13px}
+    .footer{background:var(--night);color:var(--paper);padding:40px 0}
+    .footer-inner{display:flex;align-items:flex-end;justify-content:space-between;gap:24px}
+    .footer p{margin:0;color:#b9cdd2;font-size:13px}
+    .toast{position:fixed;right:24px;bottom:24px;z-index:10;max-width:360px;padding:14px 18px;border-radius:14px;background:var(--night);color:var(--paper);font-size:14px;box-shadow:0 18px 50px rgba(12,36,52,.24);opacity:0;transform:translateY(14px);pointer-events:none;transition:opacity 220ms var(--ease),transform 220ms var(--ease)}
+    .toast.show{opacity:1;transform:translateY(0)}
+    @media(max-width:980px){
+      .hero{grid-template-columns:1fr}.hero-note{border-left:0;border-top:1px solid var(--line);padding:20px 0 0}
+      .workspace{grid-template-columns:1fr}.sidebar{position:static}.side-nav{display:grid;grid-template-columns:repeat(3,1fr);gap:0 18px}.side-progress{display:none}
+      .studio-grid{grid-template-columns:1fr}.dataset-card{display:grid;grid-template-columns:1fr auto;gap:10px 24px;align-items:center}.dataset-card .button{width:auto;grid-column:2;grid-row:1/4}.dataset-note{grid-column:1/-1}
+    }
+    @media(max-width:720px){
+      .shell{width:min(100% - 28px,1440px)}.top-links{display:none}.hero{padding:56px 0 48px}.hero h1{font-size:42px;word-break:break-all}.prepbar-inner{padding:18px 0;align-items:flex-start;flex-direction:column}.prep-btn{width:100%}
+      .workspace{padding-top:48px}.side-nav{grid-template-columns:1fr 1fr}.section-intro{display:block}.section-intro p{margin-top:12px}.prompt-head{grid-template-columns:46px minmax(0,1fr)}.prompt-tools{grid-column:2;justify-content:flex-start}.prompt-guidance,.task-goals{grid-template-columns:1fr}.prompt-body{padding:18px}.editor-actions{display:block}.action-group+.action-group{margin-top:8px}.studio{padding-top:80px}.studio-grid{padding:18px}.dataset-card{display:block}.dataset-card .button{width:100%}.footer-inner{align-items:flex-start;flex-direction:column}
+    }
+    @media(max-width:430px){
+      .side-nav{grid-template-columns:1fr}.prompt-head{padding:18px 16px}.prompt-body{padding:16px}.button{width:100%}.bulk-actions .button{width:100%}.action-group{display:grid;width:100%}.toast{left:14px;right:14px;bottom:14px}
+    }
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition-duration:.01ms!important}}
+  </style>
+</head>
+<body>
+  <div class="topline"></div>
+  <header class="shell topnav">
+    <a class="brand" href="#top" aria-label="惠泰医疗课堂首页">
+      <span class="brand-mark" aria-hidden="true">HT</span>
+      <span>惠泰医疗课堂</span>
+    </a>
+    <nav class="top-links" aria-label="页面导航">
+      <a href="#scene">六步场景篇</a>
+      <a href="#studio">实战篇</a>
+      <a href="#downloads">数据集</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="shell hero">
+      <div>
+        <div class="eyebrow">AI PRACTICE WORKBENCH · 2026</div>
+        <h1>把提示词改成<span>惠泰医疗</span>，把练习做成真实业务。</h1>
+        <p class="lead">六步完成场景创新、PRD 与高保真原型；再以长沙为现场，生成深度报告、项目驾驶舱和 AI 数据分析洞察。</p>
+      </div>
+      <aside class="hero-note">
+        <strong>6 + 3</strong>
+        <p>6 个场景提示词可直接编辑复制，3 个实战任务均附医疗模拟数据集。</p>
+      </aside>
+    </section>
+
+    <section class="prepbar">
+      <div class="shell prepbar-inner">
+        <p id="prepText">课前准备：请先下载并打开 WorkBuddy，再从 Step 1 开始。</p>
+        <button class="prep-btn" id="prepButton" type="button">我已准备 WorkBuddy</button>
+      </div>
+    </section>
+
+    <div class="shell workspace">
+      <aside class="sidebar" aria-label="步骤导航">
+        <div class="side-title">训练步骤</div>
+        <p class="side-copy">先修改变量，再复制提示词。</p>
+        <ol class="side-nav" id="sideNav"></ol>
+        <div class="side-progress">
+          <strong id="progressCount">0 / 9</strong>
+          <p>完成状态保存在当前浏览器</p>
+          <progress id="progressBar" max="9" value="0">0 / 9</progress>
+        </div>
+      </aside>
+
+      <div class="content">
+        <section id="scene" aria-labelledby="sceneTitle">
+          <div class="section-intro">
+            <div>
+              <div class="eyebrow">PART 01 · 场景篇</div>
+              <h2 id="sceneTitle">六步把场景做深、做实</h2>
+            </div>
+            <p>Step 1—4 对应场景创新参考页；Step 5—6 衔接 PRD 与高保真原型。每个文本框都可直接修改。</p>
+          </div>
+          <div class="bulk-actions">
+            <button class="button primary" id="copyAllScene" type="button">复制六个提示词</button>
+            <button class="button secondary" id="resetAllScene" type="button">恢复六步默认内容</button>
+          </div>
+          <div class="prompt-list" id="scenePromptList"></div>
+        </section>
+
+        <section class="studio" id="studio" aria-labelledby="studioTitle">
+          <div class="section-intro">
+            <div>
+              <div class="eyebrow">PART 02 · 实战篇</div>
+              <h2 id="studioTitle">提示词与数据，放在同一关</h2>
+            </div>
+            <p>参考“终端剧本杀”的复制与下载机制，全部替换为惠泰医疗、长沙区域与医疗器械项目场景。</p>
+          </div>
+          <div id="studioList"></div>
+          <div class="notice">
+            <h3>数据使用说明</h3>
+            <p>三份数据均为课堂模拟数据，不包含真实患者身份信息、真实医院经营数据或惠泰医疗商业秘密。练习输出不得反向解读为真实经营结论。</p>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="shell footer-inner">
+      <div class="brand"><span class="brand-mark" aria-hidden="true">HT</span><span>惠泰医疗 AI 实战课堂</span></div>
+      <p>场景创新 · PRD · 高保真原型 · 深度报告 · HTML 驾驶舱 · AI 数据分析</p>
+    </div>
+  </footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const scenePrompts = [
+      {
+        id:"scene-1", no:"01", meta:"STEP 1 · 流程生成", title:"补完整医疗业务流程",
+        summary:"先生成现状流程，再用 Mermaid 把角色、材料、审批、风险和产出讲清楚。",
+        target:"获得第一张可讨论的医疗业务流程图。",
+        input:"把花括号内容换成你所在部门的真实主题。",
+        tools:[["DeepSeek","https://chat.deepseek.com"],["豆包","https://www.doubao.com"]],
+        prompt:`{我是惠泰医疗长沙区域的一名业务负责人，现在需要优化“电生理介入产品从医院需求识别、术者培训、院内准入、备货配送到术后服务”的完整业务流程。请学员根据本组任务修改为真实部门或业务主题}，需要经过哪些流程？
+
+请搜索并补充完整，输出为 Mermaid 格式，并满足：
+1. 按需求洞察、方案评估、合规准入、资源准备、临床支持、服务复盘划分阶段，不同阶段使用不同颜色。
+2. 每个阶段内部自上而下排布，各阶段横向排列。
+3. 用不同形状区分开始/结束、判断、审批、材料、执行、风险提示和数据产出。
+4. 每个节点标明主要角色、输入材料、输出结果和关键风险。
+5. 涉及患者或临床信息时，只描述脱敏字段与授权边界，不生成真实个人信息。
+6. Mermaid 代码应可直接复制到 Mermaid 或 draw.io 渲染。`
+      },
+      {
+        id:"scene-2", no:"02", meta:"STEP 2 · AI 介入", title:"找到 AI 改造节点",
+        summary:"保留原流程主线，识别能提升效率、降低风险或创造新价值的 AI 节点。",
+        target:"得到 AI 介入前后可比较的新流程图。",
+        input:"粘贴 Step 1 的 Mermaid 代码并补充本组场景。",
+        tools:[["DeepSeek","https://chat.deepseek.com"],["豆包","https://www.doubao.com"]],
+        prompt:`请基于上一步生成的 {医疗业务流程 Mermaid 代码} 和 {本组惠泰医疗业务场景}，分析哪些节点可以由 AI 介入，从而提升效率、降低合规与交付风险，或形成新的业务价值。
+
+请使用 SCAMPER、SWOT、价值链分析等方法补充思考，并输出新的 Mermaid 流程图。
+
+要求：
+1. 保留原流程主线，不得为了 AI 化删除必要的人工确认、医学审核或合规审批节点。
+2. AI 介入节点使用另一种颜色，并在节点名称中标明“AI 介入”。
+3. 每个 AI 节点写清：输入数据、AI 处理动作、输出结果、人工复核人、预计节省时间或降低的风险。
+4. 对不适合 AI 介入的节点，说明必须保留人工或审批的原因。
+5. 单独列出数据授权、隐私、偏差、幻觉与可追溯性风险。
+6. Mermaid 代码必须可直接复制渲染。`
+      },
+      {
+        id:"scene-3", no:"03", meta:"STEP 3 · 场景湖", title:"生成惠泰医疗场景湖",
+        summary:"把讨论纪要、AI 流程和业务目标整理为一张可排序的场景清单。",
+        target:"输出可在 Excel 中继续筛选的场景湖。",
+        input:"上传本组纪要、Step 2 Mermaid 代码与课堂数据。",
+        tools:[["小浣熊","https://xiaohuanxiong.om"]],
+        prompt:`请根据 {惠泰医疗本组讨论的会议纪要/录音转写/多人对话内容}，结合 {Step 2 输出的 AI 改造 Mermaid 代码}，生成“惠泰医疗 AI 场景湖清单”，并输出为 xlsx。
+
+每条场景至少包含：
+1. 场景编号、业务环节、场景名称、使用者、核心痛点。
+2. 当前做法、AI 介入方式、所需数据、数据敏感等级与授权要求。
+3. 预期业务价值、可量化指标、人工复核点、潜在风险。
+4. 实施复杂度、依赖条件、建议试点部门与建议优先级。
+5. 不得写入患者姓名、身份证号、住院号等个人身份信息。
+
+请先检查相似场景并合并重复项，再按“业务价值×可行性”进行初步排序。`
+      },
+      {
+        id:"scene-4", no:"04", meta:"STEP 4 · ROI 评分", title:"筛选高 ROI 场景",
+        summary:"在同一对话中继续评分，让优先级有理由、有口径、可复核。",
+        target:"输出含评分理由和建议试点顺序的 Excel。",
+        input:"上传 Step 3 场景湖，并确认评分维度。",
+        tools:[["小浣熊","https://xiaohuanxiong.om"]],
+        prompt:`请根据 {Step 3 输出的惠泰医疗 AI 场景湖清单}，使用 5 分制完成高 ROI 场景评分，并返回 xlsx。
+
+评分维度：
+1. 业务价值：收入增长、成本降低、效率提升、服务质量与风险降低。
+2. 用户价值：业务人员、临床合作方或管理者的痛点改善程度。
+3. 数据可得性：字段完整度、授权可行性、质量与更新频率。
+4. 实施可行性：技术难度、流程改造、资源投入与依赖条件。
+5. 合规与安全：隐私、医学审核、可解释性与人工复核要求。
+
+输出要求：
+- 每个维度给出分值与评分理由，不得只给总分。
+- 列出总分、关键假设、主要风险、建议试点范围和 90 天验证指标。
+- 标出 Top 5 场景，并说明暂不优先场景的原因。
+- 缺少依据的评分标注“待业务确认”，不得虚构事实。`
+      },
+      {
+        id:"scene-5", no:"05", meta:"STEP 5 · PRD", title:"生成医疗场景 PRD",
+        summary:"把高优先级场景变成业务、产品、研发、合规都能共同评审的需求文档。",
+        target:"获得结构完整、验收口径明确的 PRD。",
+        input:"粘贴 Top 场景、用户故事、流程图和约束条件。",
+        tools:[["WorkBuddy","#top"],["DeepSeek","https://chat.deepseek.com"]],
+        prompt:`你是一位医疗器械数字化产品负责人。请基于以下材料，为惠泰医疗生成一份可供业务、产品、研发、质量法规共同评审的 PRD：
+
+【目标场景】{粘贴 Step 4 选出的高 ROI 场景}
+【现状流程】{粘贴 Step 1 流程}
+【AI 改造流程】{粘贴 Step 2 流程}
+【用户故事】{粘贴角色、任务与价值}
+【数据与合规约束】{粘贴数据字段、授权和人工复核要求}
+
+PRD 必须包含：
+1. 背景、问题、产品目标、非目标与成功指标。
+2. 用户角色、核心用户故事、主流程、边界场景与异常处理。
+3. 功能清单、优先级、每项功能的输入/处理/输出与验收标准。
+4. 数据字典、数据来源、权限、留痕、脱敏与保存周期。
+5. AI 能力说明：模型任务、提示词变量、人工复核、错误与降级策略。
+6. 合规、安全、性能、可用性和审计要求。
+7. 里程碑、依赖、风险、待确认问题和 90 天试点方案。
+
+未知信息统一写“待确认”，不要自行编造法规结论、临床判断或真实业务数据。`
+      },
+      {
+        id:"scene-6", no:"06", meta:"STEP 6 · 高保真原型", title:"生成可演示的高保真原型",
+        summary:"以 PRD 为唯一输入，完成可打开、可点击、可评审的单文件网页原型。",
+        target:"获得覆盖主流程、边界和异常状态的 HTML 原型。",
+        input:"把 Step 5 生成的 PRD 完整粘贴给工具。",
+        tools:[["WorkBuddy","#top"],["豆包","https://www.doubao.com"]],
+        prompt:`请基于上一步生成的惠泰医疗 PRD，设计并实现一套高保真网页原型。
+
+要求：
+1. 先输出页面清单，说明每个页面的使用者、目标和进入条件。
+2. 按 PRD 核心模块完成关键页面，明确标题、字段、按钮、列表、状态提示、图表与帮助文案。
+3. 覆盖主流程、空状态、加载状态、权限不足、数据缺失、AI 置信不足、审核退回和系统异常。
+4. AI 生成内容必须显示来源、时间、人工复核状态和“不得用于直接临床决策”的适用提示。
+5. 使用惠泰医疗课堂的暖白、深墨蓝与医疗青绿色；信息层级清晰、中文不截断、桌面和手机均可用。
+6. 输出单文件 HTML，CSS 与 JavaScript 内嵌；不依赖本地不存在的图片、字体或数据文件。
+7. 所有交互按钮都应可操作，表单应有校验与可见反馈。
+8. 最后列出页面跳转链路、测试场景与验收清单。`
+      }
+    ];
+
+    const studioTasks = [
+      {
+        id:"studio-report", no:"01", meta:"实战 01 · DEEP REPORT", title:"战略部署 · 签发长沙终端突围令",
+        summary:"用长沙区域模拟数据生成管理层可快速审阅的深度报告。",
+        target:"完整 Word 报告", input:"区域市场、医院分层、术者覆盖、目标例数与配送数据",
+        deliverable:"执行摘要 + 六大模块 + 行动路线图",
+        tools:[["DeepSeek","https://chat.deepseek.com"],["豆包","https://www.doubao.com"]],
+        file:"outputs/huatai-practice/惠泰医疗-关卡02-长沙区域战略数据.xlsx",
+        fileName:"惠泰医疗-关卡02-长沙区域战略数据.xlsx",
+        fileCopy:"12 家长沙模拟医院，含科室、术者覆盖、目标例数、配送周期与账户策略。",
+        prompt:`Role：医疗器械战略顾问、区域市场分析师、商业文档专家和记忆策略专家
+
+Background：
+惠泰医疗计划围绕长沙区域的电生理与血管介入业务开展终端突破。管理层需要一份基于模拟数据的正式深度报告，用于判断市场机会、医院分层、术者覆盖、服务保障、资源投入和 90 天行动计划。
+
+Task：
+请读取上传的《惠泰医疗-关卡02-长沙区域战略数据.xlsx》，生成《长沙终端突围战略部署报告》。
+
+Goals：
+1. 回答为什么做、做什么、怎么做、投入什么、如何验收。
+2. 形成市场洞察、医院分层、术者教育、供应服务、组织协同、落地规划六大模块。
+3. 识别标杆、深耕、重点突破和培育账户的差异化策略。
+4. 给出 30/60/90 天行动路线图、责任人与管理层待决策事项。
+
+Constraints：
+- 所有数字只能来自上传的数据集，不得推测真实医院表现。
+- 地点固定为长沙；数据均为课堂模拟数据。
+- 缺失信息写“待补充”，不得编造临床结论、法规结论或市场份额。
+- 报告必须区分事实、分析判断和建议。
+- 统一金额、比例、例数和时间口径，并说明数据来源。
+
+Output Format：
+一、封面与一句话战略主张
+二、管理层执行摘要
+三、数据口径与质量检查
+四、长沙区域机会地图
+五、医院分层与账户策略
+六、术者覆盖与医学教育计划
+七、供应服务与配送改善
+八、组织协同与资源测算
+九、30/60/90 天行动路线图
+十、主要风险、待补充信息与管理层决策清单
+
+每章提供：核心问题、数据证据、核心结论、建议行动。最后输出可直接复制到 Word 的完整正文与表格。`
+      },
+      {
+        id:"studio-dashboard", no:"02", meta:"实战 02 · HTML", title:"战情中枢 · 构建项目驾驶舱",
+        summary:"用同一份数据生成单文件 HTML 驾驶舱，以及口径一致的日报、周报和月报。",
+        target:"可直接打开的 HTML", input:"任务、KPI、里程碑、预算、风险与待决策事项",
+        deliverable:"驾驶舱 + 日报 + 周报 + 月报",
+        tools:[["WorkBuddy","#top"],["DeepSeek","https://chat.deepseek.com"]],
+        file:"outputs/huatai-practice/惠泰医疗-关卡04-项目驾驶舱数据.xlsx",
+        fileName:"惠泰医疗-关卡04-项目驾驶舱数据.xlsx",
+        fileCopy:"4 个工作表：项目任务、KPI 与里程碑、风险与决策、数据字典。",
+        prompt:`Role：医疗器械企业 PMO 负责人、数据治理专家、管理驾驶舱设计师和前端可视化工程师
+
+Background：
+惠泰医疗“AI 临床协同试点项目”的任务、预算、进度、KPI、风险和责任信息分散在不同表格中。请基于上传的课堂模拟数据建立唯一可信的项目驾驶舱。
+
+Task：
+读取《惠泰医疗-关卡04-项目驾驶舱数据.xlsx》，生成可直接打开的单文件 HTML 项目驾驶舱，并用同一数据源生成日报、周报和月报摘要。
+
+驾驶舱必须回答：
+1. 项目目标完成得怎样；
+2. 当前进度是否正常；
+3. 风险与延期在哪里；
+4. 下一步由谁采取什么行动；
+5. 哪些事项需要管理层决策。
+
+必须包含：
+- 项目总览、健康度、KPI、工作流、里程碑、计划与实际进度；
+- 团队责任、预算执行、风险问题、行动项、待决策事项；
+- 管理层 Top 3 关注事项；
+- 数据字典、更新时间、数据来源与计算口径。
+
+Constraints：
+- 所有数字只能来自上传工作簿；缺失项标“原始数据未提供”。
+- 计算进度偏差、预算执行率等指标时展示公式与字段来源。
+- 建议阈值必须标“待管理层确认”。
+- 驾驶舱、日报、周报、月报必须同源且数字一致。
+- HTML 为单文件，CSS 与 JavaScript 内嵌，不依赖外部图片或字体。
+- 页面需要响应式、中文不截断、按钮可用、表格可横向查看。
+
+Output：
+先输出数据质量检查和信息架构，再给完整 HTML 代码；随后输出日报、周报、月报与跨成果一致性校验表。`
+      },
+      {
+        id:"studio-analysis", no:"03", meta:"实战 03 · DATA ANALYSIS", title:"AI 数据分析 · 找到增长与风险信号",
+        summary:"对区域、产品、服务成本、培训、客诉、配送和库存进行交叉分析。",
+        target:"HTML 洞察报告", input:"区域 × 月份 × 产品的 24 条经营服务记录",
+        deliverable:"数据清洗 + 洞察 + 建议 + 可视化网页",
+        tools:[["WorkBuddy","#top"],["Kimi","https://www.kimi.com"]],
+        file:"outputs/huatai-practice/惠泰医疗-AI数据分析练习数据.xlsx",
+        fileName:"惠泰医疗-AI数据分析练习数据.xlsx",
+        fileCopy:"长沙、株洲、湘潭、衡阳四地的产品使用、服务成本、培训、客诉、配送和库存模拟数据。",
+        prompt:`Role：医疗器械经营分析师、数据质量专家和 HTML 数据故事设计师
+
+Task：
+读取《惠泰医疗-AI数据分析练习数据.xlsx》，完成数据清洗、趋势分析、异常识别和管理建议，并生成单文件 HTML 洞察报告。
+
+分析问题：
+1. 哪些区域与产品的实际使用量持续低于目标，差距有多大？
+2. 培训场次、覆盖医院数与实际使用量之间是否存在可解释的关系？
+3. 哪些记录同时出现配送率下降、库存周转延长或客诉升高？
+4. 哪些区域的单例服务成本偏高，可能的业务原因是什么？
+5. 哪些异常来自数据质量，哪些可能代表真实经营问题？
+
+分析要求：
+- 先给数据字典、缺失值、重复值、异常值和口径检查。
+- 分区域、月份、产品进行汇总和对比。
+- 所有结论必须能追溯到数据表中的字段与记录编号。
+- 区分事实、相关性和因果假设，不得把相关性写成因果。
+- 不得推断真实医院或患者情况；数据均为课堂模拟。
+- 建议必须包含责任角色、下一步动作、验证指标和时间窗口。
+
+HTML 报告结构：
+执行摘要、数据质量、核心指标、区域对比、产品对比、异常清单、风险信号、行动建议、数据来源与免责声明。
+页面需响应式，图表有文字结论和表格降级，不依赖外部字体或本地图片。`
+      }
+    ];
+
+    const storageKey = "huatai-practice-v2";
+    const saved = JSON.parse(localStorage.getItem(storageKey) || "{}");
+    const edits = saved.edits || {};
+    const completed = new Set(saved.completed || []);
+    const toast = document.querySelector("#toast");
+
+    function persist(){
+      localStorage.setItem(storageKey, JSON.stringify({edits, completed:[...completed], prepared:document.querySelector("#prepButton").classList.contains("ready")}));
+    }
+
+    function showToast(text){
+      toast.textContent = text;
+      toast.classList.add("show");
+      clearTimeout(window.htToastTimer);
+      window.htToastTimer = setTimeout(()=>toast.classList.remove("show"),2400);
+    }
+
+    async function copyText(text){
+      try{
+        await navigator.clipboard.writeText(text);
+        return true;
+      }catch(error){
+        const helper = document.createElement("textarea");
+        helper.value = text;
+        helper.style.position = "fixed";
+        helper.style.opacity = "0";
+        document.body.appendChild(helper);
+        helper.select();
+        const ok = document.execCommand("copy");
+        helper.remove();
+        return ok;
+      }
+    }
+
+    function toolLinks(items){
+      return items.map(([label,url])=>`<a href="${url}" ${url.startsWith("http") ? 'target="_blank" rel="noreferrer"' : ""}>${label}</a>`).join("");
+    }
+
+    function sceneCard(item){
+      const value = edits[item.id] ?? item.prompt;
+      return `<article class="prompt-card ${completed.has(item.id) ? "completed" : ""}" id="${item.id}">
+        <header class="prompt-head">
+          <span class="step-no">${item.no}</span>
+          <div><div class="prompt-meta">${item.meta}</div><h3>${item.title}</h3><p>${item.summary}</p></div>
+          <div class="prompt-tools" aria-label="${item.title}工具入口">${toolLinks(item.tools)}</div>
+        </header>
+        <div class="prompt-body">
+          <div class="prompt-guidance">
+            <div class="guidance-block"><strong>练习目标</strong>${item.target}</div>
+            <div class="guidance-block"><strong>修改位置</strong>${item.input}</div>
+          </div>
+          <label class="editor-label" for="${item.id}-editor"><span>可编辑提示词</span><span class="status-text ${edits[item.id] ? "changed" : ""}" data-status="${item.id}">${edits[item.id] ? "已修改并保存" : "默认医疗场景"}</span></label>
+          <textarea id="${item.id}-editor" data-editor="${item.id}" spellcheck="false">${value}</textarea>
+          <div class="editor-actions">
+            <div class="action-group">
+              <button class="button primary" type="button" data-copy="${item.id}">复制当前提示词</button>
+              <button class="button secondary" type="button" data-reset="${item.id}">恢复默认</button>
+            </div>
+            <div class="action-group">
+              <button class="button text" type="button" data-complete="${item.id}">${completed.has(item.id) ? "取消完成" : "标记完成"}</button>
+            </div>
+          </div>
+        </div>
+      </article>`;
+    }
+
+    function studioCard(item){
+      const value = edits[item.id] ?? item.prompt;
+      return `<article class="studio-card ${completed.has(item.id) ? "completed" : ""}" id="${item.id}">
+        <header class="prompt-head">
+          <span class="step-no">${item.no}</span>
+          <div><div class="prompt-meta">${item.meta}</div><h3>${item.title}</h3><p>${item.summary}</p></div>
+          <div class="prompt-tools">${toolLinks(item.tools)}</div>
+        </header>
+        <div class="studio-grid">
+          <div>
+            <div class="task-goals">
+              <div><strong>任务目标</strong>${item.target}</div>
+              <div><strong>输入材料</strong>${item.input}</div>
+              <div><strong>交付成果</strong>${item.deliverable}</div>
+            </div>
+            <label class="editor-label" for="${item.id}-editor"><span>可编辑提示词</span><span class="status-text ${edits[item.id] ? "changed" : ""}" data-status="${item.id}">${edits[item.id] ? "已修改并保存" : "惠泰医疗默认版"}</span></label>
+            <textarea id="${item.id}-editor" data-editor="${item.id}" spellcheck="false">${value}</textarea>
+            <div class="editor-actions">
+              <div class="action-group">
+                <button class="button primary" type="button" data-copy="${item.id}">复制当前提示词</button>
+                <button class="button secondary" type="button" data-reset="${item.id}">恢复默认</button>
+              </div>
+              <button class="button text" type="button" data-complete="${item.id}">${completed.has(item.id) ? "取消完成" : "标记完成"}</button>
+            </div>
+          </div>
+          <aside class="dataset-card" id="${item.id === "studio-report" ? "downloads" : ""}">
+            <span class="file-type">XLSX · 课堂模拟数据</span>
+            <h4>${item.fileName}</h4>
+            <p>${item.fileCopy}</p>
+            <a class="button primary" href="${item.file}" download>下载练习数据集</a>
+            <div class="dataset-note">不含真实患者身份信息、真实医院经营数据或商业秘密。</div>
+          </aside>
+        </div>
+      </article>`;
+    }
+
+    function render(){
+      document.querySelector("#scenePromptList").innerHTML = scenePrompts.map(sceneCard).join("");
+      document.querySelector("#studioList").innerHTML = studioTasks.map(studioCard).join("");
+      document.querySelector("#sideNav").innerHTML = [
+        ...scenePrompts.map(item=>`<li><a href="#${item.id}"><span>${item.no}</span><span>${item.title}</span></a></li>`),
+        ...studioTasks.map(item=>`<li><a href="#${item.id}"><span>${item.no}</span><span>${item.title}</span></a></li>`)
+      ].join("");
+      updateProgress();
+      bindEditors();
+    }
+
+    function bindEditors(){
+      document.querySelectorAll("[data-editor]").forEach(editor=>{
+        if(edits[editor.dataset.editor]) editor.classList.add("modified");
+        editor.addEventListener("input",()=>{
+          const id = editor.dataset.editor;
+          edits[id] = editor.value;
+          editor.classList.add("modified");
+          const status = document.querySelector(`[data-status="${id}"]`);
+          status.textContent = "已修改并保存";
+          status.classList.add("changed");
+          persist();
+        });
+      });
+
+      document.querySelectorAll("[data-copy]").forEach(button=>button.addEventListener("click",async()=>{
+        const id = button.dataset.copy;
+        const editor = document.querySelector(`[data-editor="${id}"]`);
+        const ok = await copyText(editor.value);
+        showToast(ok ? "提示词已复制，可粘贴到 WorkBuddy 或课堂工具。" : "复制未成功，请在文本框中全选后复制。");
+      }));
+
+      document.querySelectorAll("[data-reset]").forEach(button=>button.addEventListener("click",()=>{
+        const id = button.dataset.reset;
+        const source = [...scenePrompts,...studioTasks].find(item=>item.id===id);
+        delete edits[id];
+        const editor = document.querySelector(`[data-editor="${id}"]`);
+        editor.value = source.prompt;
+        editor.classList.remove("modified");
+        const status = document.querySelector(`[data-status="${id}"]`);
+        status.textContent = id.startsWith("scene") ? "默认医疗场景" : "惠泰医疗默认版";
+        status.classList.remove("changed");
+        persist();
+        showToast("已恢复默认提示词。");
+      }));
+
+      document.querySelectorAll("[data-complete]").forEach(button=>button.addEventListener("click",()=>{
+        const id = button.dataset.complete;
+        completed.has(id) ? completed.delete(id) : completed.add(id);
+        persist();
+        render();
+        document.querySelector(`#${id}`).scrollIntoView({block:"center"});
+        showToast(completed.has(id) ? "已标记完成。" : "已取消完成状态。");
+      }));
+    }
+
+    function updateProgress(){
+      document.querySelector("#progressCount").textContent = `${completed.size} / 9`;
+      document.querySelector("#progressBar").value = completed.size;
+    }
+
+    document.querySelector("#copyAllScene").addEventListener("click",async()=>{
+      const combined = scenePrompts.map(item=>`【${item.meta}｜${item.title}】\n${edits[item.id] ?? item.prompt}`).join("\n\n====================\n\n");
+      const ok = await copyText(combined);
+      showToast(ok ? "六个提示词已全部复制。" : "批量复制未成功，请逐条复制。");
+    });
+
+    document.querySelector("#resetAllScene").addEventListener("click",()=>{
+      scenePrompts.forEach(item=>delete edits[item.id]);
+      persist();
+      render();
+      showToast("六步提示词已恢复默认医疗场景。");
+    });
+
+    const prepButton = document.querySelector("#prepButton");
+    if(saved.prepared){
+      prepButton.classList.add("ready");
+      prepButton.textContent = "WorkBuddy 已准备";
+      document.querySelector("#prepText").textContent = "课前准备已完成：从 Step 1 修改提示词开始。";
+    }
+    prepButton.addEventListener("click",()=>{
+      prepButton.classList.toggle("ready");
+      const ready = prepButton.classList.contains("ready");
+      prepButton.textContent = ready ? "WorkBuddy 已准备" : "我已准备 WorkBuddy";
+      document.querySelector("#prepText").textContent = ready ? "课前准备已完成：从 Step 1 修改提示词开始。" : "课前准备：请先下载并打开 WorkBuddy，再从 Step 1 开始。";
+      persist();
+      showToast(ready ? "准备状态已更新。" : "已恢复为待准备状态。");
+    });
+
+    render();
+  </script>
+</body>
+</html>
