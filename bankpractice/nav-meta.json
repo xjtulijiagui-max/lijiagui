@@ -1,0 +1,13 @@
+{
+  "id": "bankpractice",
+  "title": "江城银行 AI 实战训练台",
+  "shortTitle": "江城银行",
+  "category": "金融保险与支付",
+  "description": "银行办公报告、制度知识库、会议纪要与经营数据分析四类 AI 实战练习，配套资料可直接下载。",
+  "path": "bankpractice/",
+  "tags": ["银行", "知识库", "会议纪要", "数据分析"],
+  "type": "行业练习",
+  "client": "江城银行",
+  "featured": true,
+  "order": 205
+}
