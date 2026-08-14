@@ -1,0 +1,1096 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI 战略布局与工具落地实战｜总裁班练习台</title>
+  <meta name="description" content="面向企业决策者的 AI 战略规划、六步场景创新与 AI 落地 PPT 课堂练习台。">
+  <meta name="theme-color" content="#0C2434">
+  <meta property="og:title" content="AI 战略布局与工具落地实战｜总裁班练习台">
+  <meta property="og:description" content="从战略选择到场景原型，再到 90 天落地汇报，一企一案现场拿结果。">
+  <meta property="og:type" content="website">
+  <style>
+    :root {
+      --surface-primary: #F3F6F2;
+      --surface-secondary: #FEFFFC;
+      --surface-elevated: #FBFCF9;
+      --surface-dark: #0C2434;
+      --surface-dark-soft: #123349;
+      --text-primary: #102A43;
+      --text-secondary: #617489;
+      --text-inverse: #FEFFFC;
+      --border-default: #D9E3E4;
+      --border-strong: #446271;
+      --accent-primary: #087E78;
+      --accent-hover: #066D68;
+      --accent-soft: #DDF4ED;
+      --accent-blue: #2563A9;
+      --status-success: #1B7F5A;
+      --status-warning: #8A641A;
+      --status-error: #B33A3A;
+      --hero-glow: rgba(8,126,120,.22);
+      --hero-grid: rgba(254,255,252,.08);
+      --focus-ring: rgba(8,126,120,.24);
+      --shadow-card: 0 1px 0 rgba(16,42,67,.03);
+      --shadow-floating: 0 18px 50px rgba(12,36,52,.24);
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+      --space-16: 64px;
+      --space-20: 80px;
+      --space-24: 96px;
+      --radius-sm: 13px;
+      --radius-md: 16px;
+      --radius-lg: 22px;
+      --radius-pill: 999px;
+      --content: 1240px;
+      --font-sans: "Microsoft YaHei", "PingFang SC", "Noto Sans SC", system-ui, sans-serif;
+      --font-mono: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+    body {
+      margin: 0;
+      color: var(--text-primary);
+      background: var(--surface-primary);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    button, textarea, input { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    a { color: inherit; }
+    img, svg { display: block; }
+    .skip-link {
+      position: fixed;
+      z-index: 999;
+      top: var(--space-3);
+      left: var(--space-3);
+      padding: var(--space-2) var(--space-4);
+      color: var(--text-inverse);
+      background: var(--accent-primary);
+      border-radius: var(--radius-pill);
+      transform: translateY(-160%);
+      transition: transform 140ms ease-out;
+    }
+    .skip-link:focus { transform: translateY(0); }
+
+    .topbar {
+      position: sticky;
+      z-index: 30;
+      top: 0;
+      border-bottom: 1px solid var(--border-default);
+      background: color-mix(in srgb, var(--surface-primary) 92%, transparent);
+      backdrop-filter: blur(16px);
+    }
+    .topbar__inner {
+      width: min(calc(100% - 48px), var(--content));
+      min-height: 68px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-6);
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-weight: 800;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .brand__mark {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      color: var(--text-inverse);
+      background: var(--surface-dark);
+      border-radius: 50% 50% 50% var(--space-2);
+      font-size: 12px;
+      letter-spacing: .08em;
+    }
+    .topnav { display: flex; align-items: center; gap: var(--space-6); }
+    .topnav a {
+      color: var(--text-secondary);
+      font-size: 14px;
+      text-decoration: none;
+      transition: color 140ms ease-out;
+    }
+    .topnav a:hover, .topnav a:focus-visible { color: var(--accent-primary); }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      color: var(--text-inverse);
+      background:
+        radial-gradient(circle at 82% 22%, var(--hero-glow), transparent 34%),
+        linear-gradient(var(--hero-grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--hero-grid) 1px, transparent 1px),
+        var(--surface-dark);
+      background-size: auto, 48px 48px, 48px 48px, auto;
+    }
+    .hero__inner {
+      width: min(calc(100% - 48px), var(--content));
+      min-height: 620px;
+      margin: 0 auto;
+      padding: var(--space-24) 0 var(--space-20);
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(300px, .65fr);
+      align-items: end;
+      gap: var(--space-20);
+    }
+    .eyebrow {
+      margin: 0 0 var(--space-3);
+      color: var(--accent-soft);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .hero h1 {
+      max-width: 920px;
+      margin: 0;
+      font-size: 62px;
+      line-height: 1.05;
+      letter-spacing: 0;
+      text-wrap: balance;
+    }
+    .hero-line { display: block; white-space: nowrap; }
+    .hero-phrase { display: inline; }
+    .hero__lead {
+      max-width: 760px;
+      margin: var(--space-6) 0 0;
+      color: color-mix(in srgb, var(--text-inverse) 76%, transparent);
+      font-size: 18px;
+      line-height: 1.7;
+    }
+    .hero__actions, .action-row, .tool-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    .hero__actions { margin-top: var(--space-8); }
+    .hero__score {
+      padding: var(--space-6) 0 var(--space-2) var(--space-6);
+      border-left: 1px solid var(--border-strong);
+    }
+    .hero__score strong {
+      display: block;
+      font-size: 86px;
+      line-height: .95;
+      letter-spacing: 0;
+    }
+    .hero__score p { margin: var(--space-4) 0 0; color: color-mix(in srgb, var(--text-inverse) 72%, transparent); }
+    .hero__facts {
+      margin: var(--space-8) 0 0;
+      padding: 0;
+      display: grid;
+      gap: var(--space-3);
+      list-style: none;
+    }
+    .hero__facts li { display: flex; gap: var(--space-3); align-items: flex-start; font-size: 14px; }
+    .hero__facts svg { flex: 0 0 18px; margin-top: 3px; color: var(--accent-soft); }
+
+    .button {
+      min-height: 44px;
+      padding: var(--space-2) var(--space-4);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      border: 1px solid transparent;
+      border-radius: var(--radius-pill);
+      font-weight: 700;
+      line-height: 1.2;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 140ms ease-out, opacity 140ms ease-out, color 140ms ease-out, background-color 140ms ease-out, border-color 140ms ease-out;
+    }
+    .button svg { width: 18px; height: 18px; }
+    .button:hover { transform: translateY(-1px); }
+    .button:active { transform: translateY(0); }
+    .button:focus-visible, textarea:focus-visible, input:focus-visible, .step-link:focus-visible {
+      outline: 3px solid var(--focus-ring);
+      outline-offset: 2px;
+    }
+    .button--primary { color: var(--text-inverse); background: var(--accent-primary); }
+    .button--primary:hover { background: var(--accent-hover); }
+    .button--inverse { color: var(--surface-dark); background: var(--text-inverse); }
+    .button--ghost { color: var(--text-primary); background: transparent; border-color: var(--border-default); }
+    .button--ghost:hover { color: var(--accent-primary); border-color: var(--accent-primary); }
+    .hero .button--ghost { color: var(--text-inverse); border-color: var(--border-strong); }
+    .hero .button--ghost:hover { color: var(--accent-soft); border-color: var(--accent-soft); }
+    .button--tool { color: var(--accent-blue); background: color-mix(in srgb, var(--accent-blue) 8%, transparent); border-color: color-mix(in srgb, var(--accent-blue) 25%, transparent); }
+    .button--download { color: var(--text-primary); background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent-primary) 24%, transparent); }
+    .button--complete.is-complete { color: var(--text-inverse); background: var(--status-success); border-color: var(--status-success); }
+    .button[disabled] { opacity: .55; cursor: not-allowed; transform: none; }
+
+    .layout {
+      width: min(calc(100% - 48px), var(--content));
+      min-width: 0;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      align-items: start;
+      gap: var(--space-16);
+    }
+    .rail {
+      position: sticky;
+      top: 92px;
+      margin-top: var(--space-16);
+      padding: var(--space-6);
+      background: var(--surface-secondary);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+    }
+    .rail__label { color: var(--text-secondary); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .rail__intro { margin: var(--space-2) 0 var(--space-5); color: var(--text-secondary); font-size: 14px; }
+    .step-list { margin: 0; padding: 0; display: grid; gap: var(--space-1); list-style: none; }
+    .step-link {
+      padding: var(--space-2) var(--space-2);
+      display: grid;
+      grid-template-columns: 30px minmax(0, 1fr);
+      align-items: center;
+      gap: var(--space-2);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-size: 13px;
+      text-decoration: none;
+      transition: transform 140ms ease-out, color 140ms ease-out, background-color 140ms ease-out;
+    }
+    .step-link:hover { color: var(--text-primary); background: var(--surface-primary); transform: translateX(2px); }
+    .step-link__num {
+      width: 26px;
+      height: 26px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--border-default);
+      border-radius: 50%;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .step-link.is-complete { color: var(--status-success); font-weight: 700; }
+    .step-link.is-complete .step-link__num { color: var(--text-inverse); background: var(--status-success); border-color: var(--status-success); }
+    .rail__progress { margin-top: var(--space-5); padding-top: var(--space-5); border-top: 1px solid var(--border-default); }
+    .rail__progress-row { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3); }
+    .rail__progress strong { font-size: 24px; }
+    .rail__progress span { color: var(--text-secondary); font-size: 12px; }
+    progress { width: 100%; height: 8px; margin-top: var(--space-3); overflow: hidden; border: 0; border-radius: var(--radius-pill); background: var(--border-default); }
+    progress::-webkit-progress-bar { background: var(--border-default); border-radius: var(--radius-pill); }
+    progress::-webkit-progress-value { background: var(--accent-primary); border-radius: var(--radius-pill); transition: transform 300ms ease-in-out; }
+    progress::-moz-progress-bar { background: var(--accent-primary); border-radius: var(--radius-pill); }
+
+    main { min-width: 0; }
+    .part { padding: var(--space-20) 0 0; }
+    .part:last-of-type { padding-bottom: var(--space-24); }
+    .section-header {
+      margin-bottom: var(--space-10);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: var(--space-8);
+    }
+    .section-header h2 {
+      max-width: 840px;
+      margin: 0;
+      font-size: 52px;
+      line-height: 1.12;
+      letter-spacing: 0;
+      text-wrap: balance;
+    }
+    .section-header__lead { max-width: 780px; margin: var(--space-4) 0 0; color: var(--text-secondary); font-size: 18px; }
+
+    .exercise-card {
+      position: relative;
+      overflow: hidden;
+      margin-bottom: var(--space-6);
+      background: var(--surface-secondary);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+    }
+    .exercise-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: var(--space-1);
+      background: var(--accent-primary);
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform 240ms ease-in-out;
+    }
+    .exercise-card:focus-within::before, .exercise-card.is-complete::before { transform: scaleY(1); }
+    .exercise-card.is-complete { border-color: color-mix(in srgb, var(--status-success) 38%, var(--border-default)); }
+    .exercise-card__header {
+      padding: var(--space-8);
+      display: grid;
+      grid-template-columns: 62px minmax(0, 1fr);
+      gap: var(--space-6);
+      border-bottom: 1px solid var(--border-default);
+    }
+    .exercise-card__num {
+      width: 62px;
+      height: 62px;
+      display: grid;
+      place-items: center;
+      color: var(--accent-primary);
+      background: var(--accent-soft);
+      border-radius: 50% 50% 50% var(--radius-sm);
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+    .exercise-card__kicker { margin: 0 0 var(--space-1); color: var(--accent-primary); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .exercise-card h3 { margin: 0; font-size: 21px; line-height: 1.35; }
+    .exercise-card__summary { margin: var(--space-2) 0 0; color: var(--text-secondary); }
+    .exercise-card__body { padding: var(--space-8); }
+    .meta-grid { margin-bottom: var(--space-6); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-3); }
+    .meta-item { padding: var(--space-4); background: var(--surface-primary); border-radius: var(--radius-md); }
+    .meta-item strong { display: block; margin-bottom: var(--space-1); color: var(--text-secondary); font-size: 12px; }
+    .meta-item span { font-size: 14px; }
+    .path {
+      margin: 0 0 var(--space-6);
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-3);
+      list-style: none;
+      counter-reset: path;
+    }
+    .path li {
+      min-height: 86px;
+      padding: var(--space-4);
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      counter-increment: path;
+      font-size: 14px;
+    }
+    .path li::before { content: "0" counter(path); display: block; margin-bottom: var(--space-2); color: var(--accent-primary); font-size: 11px; font-weight: 800; }
+    .tool-row { margin-bottom: var(--space-6); }
+    .prompt-shell { background: var(--surface-elevated); border: 1px solid var(--border-default); border-radius: var(--radius-md); overflow: hidden; }
+    .prompt-shell__bar { padding: var(--space-3) var(--space-4); display: flex; justify-content: space-between; gap: var(--space-3); color: var(--text-secondary); background: var(--surface-primary); border-bottom: 1px solid var(--border-default); font-size: 12px; font-weight: 700; }
+    .prompt-shell textarea {
+      width: 100%;
+      min-height: 330px;
+      padding: var(--space-5);
+      display: block;
+      resize: vertical;
+      color: var(--text-primary);
+      background: transparent;
+      border: 0;
+      outline: 0;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      line-height: 1.72;
+    }
+    .prompt-actions { margin-top: var(--space-4); display: flex; flex-wrap: wrap; gap: var(--space-3); }
+
+    .strategy-canvas { margin-bottom: var(--space-8); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
+    .canvas-field { display: grid; gap: var(--space-2); }
+    .canvas-field--wide { grid-column: 1 / -1; }
+    .canvas-field label { font-size: 14px; font-weight: 700; }
+    .canvas-field span { color: var(--text-secondary); font-size: 12px; }
+    .canvas-field textarea {
+      min-height: 126px;
+      padding: var(--space-4);
+      color: var(--text-primary);
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      resize: vertical;
+      line-height: 1.65;
+      transition: border-color 140ms ease-out, background-color 140ms ease-out;
+    }
+    .canvas-field textarea:focus { border-color: var(--accent-primary); background: var(--surface-secondary); }
+    .canvas-field textarea::placeholder { color: color-mix(in srgb, var(--text-secondary) 70%, transparent); }
+
+    .download-grid { margin-top: var(--space-8); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
+    .download-card {
+      padding: var(--space-5);
+      display: grid;
+      grid-template-columns: 52px minmax(0, 1fr);
+      gap: var(--space-4);
+      align-items: start;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      transition: transform 140ms ease-out, border-color 140ms ease-out;
+    }
+    .download-card:hover { transform: translateY(-1px); border-color: var(--accent-primary); }
+    .file-badge {
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      color: var(--accent-primary);
+      background: var(--accent-soft);
+      border-radius: var(--radius-sm);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .download-card h4 { margin: 0; font-size: 16px; line-height: 1.4; }
+    .download-card p { margin: var(--space-1) 0 var(--space-3); color: var(--text-secondary); font-size: 13px; }
+    .download-card a { color: var(--accent-primary); font-size: 14px; font-weight: 700; }
+
+    .notice {
+      margin: var(--space-8) 0 0;
+      padding: var(--space-5) var(--space-6);
+      display: grid;
+      grid-template-columns: 24px minmax(0, 1fr);
+      gap: var(--space-3);
+      color: var(--status-warning);
+      background: color-mix(in srgb, var(--status-warning) 8%, var(--surface-secondary));
+      border-radius: var(--radius-md);
+      font-size: 14px;
+    }
+    .notice svg { width: 24px; height: 24px; }
+    .notice strong { display: block; color: var(--text-primary); }
+    .notice p { margin: var(--space-1) 0 0; }
+
+    .ppt-map { margin: 0 0 var(--space-8); padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-3); list-style: none; }
+    .ppt-map li { padding: var(--space-4); background: var(--surface-primary); border-radius: var(--radius-md); font-size: 13px; }
+    .ppt-map strong { display: block; margin-bottom: var(--space-1); color: var(--accent-primary); font-size: 12px; }
+
+    .final-cta {
+      margin-top: var(--space-10);
+      padding: var(--space-10);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: var(--space-8);
+      color: var(--text-inverse);
+      background: var(--surface-dark);
+      border-radius: var(--radius-lg);
+    }
+    .final-cta h3 { margin: 0; font-size: 30px; line-height: 1.2; }
+    .final-cta p { max-width: 720px; margin: var(--space-3) 0 0; color: color-mix(in srgb, var(--text-inverse) 72%, transparent); }
+
+    footer { padding: var(--space-10) 0; color: var(--text-inverse); background: var(--surface-dark); }
+    .footer__inner { width: min(calc(100% - 48px), var(--content)); margin: 0 auto; display: flex; justify-content: space-between; gap: var(--space-6); color: color-mix(in srgb, var(--text-inverse) 70%, transparent); font-size: 13px; }
+    .footer__inner strong { color: var(--text-inverse); }
+
+    .toast {
+      position: fixed;
+      z-index: 90;
+      right: var(--space-6);
+      bottom: var(--space-6);
+      max-width: min(420px, calc(100% - 48px));
+      padding: var(--space-3) var(--space-4);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      color: var(--text-inverse);
+      background: var(--surface-dark);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-floating);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(var(--space-4));
+      transition: transform 220ms ease-in-out, opacity 220ms ease-in-out;
+    }
+    .toast.is-visible { opacity: 1; transform: translateY(0); }
+    .toast svg { width: 18px; height: 18px; color: var(--accent-soft); }
+
+    @media (max-width: 1023px) {
+      [data-task] { scroll-margin-top: 156px; }
+      .hero h1 { font-size: 48px; }
+      .hero__score strong { font-size: 72px; }
+      .section-header h2 { font-size: 42px; }
+      .hero__inner { min-height: auto; grid-template-columns: 1fr; gap: var(--space-12); }
+      .layout { grid-template-columns: 1fr; gap: 0; }
+      .rail { position: sticky; z-index: 20; top: 68px; margin-top: var(--space-6); padding: var(--space-3); border-radius: var(--radius-md); }
+      .rail { min-width: 0; max-width: 100%; overflow: hidden; }
+      .rail__label, .rail__intro, .rail__progress { display: none; }
+      .step-list { min-width: 0; max-width: 100%; display: flex; overflow-x: auto; overflow-y: hidden; scrollbar-width: thin; }
+      .step-link { min-width: max-content; grid-template-columns: 26px auto; }
+      .section-header { grid-template-columns: 1fr; align-items: start; }
+      .meta-grid, .path { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .ppt-map { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 767px) {
+      .topbar__inner, .hero__inner, .layout, .footer__inner { width: min(calc(100% - 32px), var(--content)); }
+      .topnav { display: none; }
+      .hero__inner { padding: var(--space-16) 0 var(--space-12); }
+      .hero h1 { font-size: 32px; line-height: 1.1; }
+      .hero__score strong { font-size: 54px; }
+      .section-header h2 { font-size: 34px; }
+      .hero-line { display: block; white-space: nowrap; }
+      .hero__actions { align-items: stretch; }
+      .hero__actions .button { width: 100%; }
+      .hero__score { padding-left: var(--space-5); }
+      .part { padding-top: var(--space-16); }
+      .exercise-card__header { padding: var(--space-6); grid-template-columns: 48px minmax(0, 1fr); gap: var(--space-4); }
+      .exercise-card__num { width: 48px; height: 48px; }
+      .exercise-card__body { padding: var(--space-6); }
+      .meta-grid, .path, .strategy-canvas, .download-grid, .ppt-map { grid-template-columns: 1fr; }
+      .canvas-field--wide { grid-column: auto; }
+      .path li { min-height: auto; }
+      .prompt-shell textarea { min-height: 420px; }
+      .final-cta { padding: var(--space-8); grid-template-columns: 1fr; }
+      .footer__inner { flex-direction: column; }
+      .toast { right: var(--space-4); bottom: var(--space-4); max-width: calc(100% - 32px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body id="top">
+  <a class="skip-link" href="#main">跳到主要练习</a>
+  <header class="topbar">
+    <div class="topbar__inner">
+      <a class="brand" href="#top" aria-label="返回练习台顶部">
+        <span class="brand__mark" aria-hidden="true">AI</span>
+        <span>总裁班实战课堂</span>
+      </a>
+      <nav class="topnav" aria-label="页面导航">
+        <a href="#strategy">战略规划</a>
+        <a href="#scene">六步场景</a>
+        <a href="#presentation">落地汇报</a>
+        <a href="#downloads">资料下载</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero__inner">
+      <div>
+        <p class="eyebrow">Executive AI Practice Workbench · 2026</p>
+        <h1 id="hero-title"><span class="hero-line">AI 不只停在讨论，</span><span class="hero-line">这 90 天，</span><span class="hero-line">干出一个可验收成果。</span></h1>
+        <p class="hero__lead">以华岳精工装备集团为教学模拟企业，用三大部分完成战略选择、六步场景创新与管理层落地汇报。每一步都能修改、复制、下载，并自动保存在当前浏览器。</p>
+        <div class="hero__actions">
+          <a class="button button--inverse" href="#strategy">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            开始一企一案
+          </a>
+          <button class="button button--ghost" type="button" data-export>
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"/></svg>
+            导出我的课堂成果
+          </button>
+        </div>
+      </div>
+      <aside class="hero__score" aria-label="课程成果概览">
+        <strong>3 × 8</strong>
+        <p>3 个成果模块，8 个可独立完成的关键任务。</p>
+        <ul class="hero__facts">
+          <li><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6"/></svg><span>形成 1—3 条 AI 战略主线与 KPI</span></li>
+          <li><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6"/></svg><span>跑通场景湖、ROI、PRD 与可演示原型</span></li>
+          <li><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6"/></svg><span>带走 AI 落地 PPT 模板与 90 天作战方案</span></li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <div class="layout">
+    <aside class="rail" aria-label="练习进度">
+      <span class="rail__label">训练步骤</span>
+      <p class="rail__intro">先换成自己的企业，再复制提示词。</p>
+      <ol class="step-list">
+        <li><a class="step-link" href="#task-strategy" data-step-link="task-strategy"><span class="step-link__num">S</span><span>AI 战略规划</span></a></li>
+        <li><a class="step-link" href="#scene-1" data-step-link="scene-1"><span class="step-link__num">1</span><span>补全现状流程</span></a></li>
+        <li><a class="step-link" href="#scene-2" data-step-link="scene-2"><span class="step-link__num">2</span><span>找到 AI 节点</span></a></li>
+        <li><a class="step-link" href="#scene-3" data-step-link="scene-3"><span class="step-link__num">3</span><span>生成场景湖</span></a></li>
+        <li><a class="step-link" href="#scene-4" data-step-link="scene-4"><span class="step-link__num">4</span><span>筛选高 ROI</span></a></li>
+        <li><a class="step-link" href="#scene-5" data-step-link="scene-5"><span class="step-link__num">5</span><span>生成场景 PRD</span></a></li>
+        <li><a class="step-link" href="#scene-6" data-step-link="scene-6"><span class="step-link__num">6</span><span>生成高保真原型</span></a></li>
+        <li><a class="step-link" href="#task-ppt" data-step-link="task-ppt"><span class="step-link__num">P</span><span>AI 落地 PPT</span></a></li>
+      </ol>
+      <div class="rail__progress">
+        <div class="rail__progress-row"><strong data-progress-count>0 / 8</strong><span>保存在当前浏览器</span></div>
+        <progress data-progress max="8" value="0">0 / 8</progress>
+      </div>
+    </aside>
+
+    <main id="main">
+      <section class="part" id="strategy" aria-labelledby="strategy-title">
+        <header class="section-header">
+          <div>
+            <p class="eyebrow" style="color:var(--accent-primary)">Part 01 · AI Strategic Planning</p>
+            <h2 id="strategy-title">先决定 AI 投哪里，再决定用什么工具。</h2>
+            <p class="section-header__lead">从五维机会洞察出发，明确未来 12 个月 AI 要改变的经营能力、主线举措与可量化指标。总裁班不以“上线一个 Agent”为战略成果。</p>
+          </div>
+          <a class="button button--download" href="assets/01_AI战略规划资料包.zip" download>下载战略资料包</a>
+        </header>
+
+        <article class="exercise-card" id="task-strategy" data-task="task-strategy">
+          <header class="exercise-card__header">
+            <div class="exercise-card__num" aria-hidden="true">S</div>
+            <div>
+              <p class="exercise-card__kicker">任务 S · 战略蓝图</p>
+              <h3>完成一页式 AI 战略画布</h3>
+              <p class="exercise-card__summary">你是华岳精工装备集团总经理，需要在经营会上明确 AI 主战场、资源取舍和 12 个月验收口径。</p>
+            </div>
+          </header>
+          <div class="exercise-card__body">
+            <div class="meta-grid">
+              <div class="meta-item"><strong>练习目标</strong><span>1 句 AI 愿景 + 1—3 条主线</span></div>
+              <div class="meta-item"><strong>输入材料</strong><span>案例简报 + 五维洞察画布</span></div>
+              <div class="meta-item"><strong>最终交付</strong><span>AI 战略蓝图 + KPI + 不做清单</span></div>
+            </div>
+            <ol class="path" aria-label="战略规划操作路径">
+              <li>下载并阅读企业简报</li><li>填写五维机会判断</li><li>让 AI 生成战略备选</li><li>经营者做最终取舍</li>
+            </ol>
+            <div class="strategy-canvas" aria-label="AI 战略画布">
+              <div class="canvas-field"><label for="strategy-tech">看技术</label><span>哪些 AI 能力已能重构核心流程？</span><textarea id="strategy-tech" data-store="strategy-tech" placeholder="例如：多文档理解、知识检索、数据分析、工作流编排……"></textarea></div>
+              <div class="canvas-field"><label for="strategy-market">看竞对</label><span>速度、成本或体验会被怎样改写？</span><textarea id="strategy-market" data-store="strategy-market" placeholder="例如：同行把方案报价从周级压缩到天级……"></textarea></div>
+              <div class="canvas-field"><label for="strategy-user">看用户</label><span>客户愿意为哪些改善买单？</span><textarea id="strategy-user" data-store="strategy-user" placeholder="例如：更快得到可比较方案、降低停机时间……"></textarea></div>
+              <div class="canvas-field"><label for="strategy-self">看自己</label><span>哪些数据、知识和流程构成独特优势？</span><textarea id="strategy-self" data-store="strategy-self" placeholder="例如：历史方案、BOM、工单、资深员工经验……"></textarea></div>
+              <div class="canvas-field canvas-field--wide"><label for="strategy-choice">看战略：未来 12 个月的取舍</label><span>写下 1 句 AI 愿景、1—3 条主线、对应 KPI，以及明确不做什么。</span><textarea id="strategy-choice" data-store="strategy-choice" placeholder="AI 愿景：……&#10;主线 1：…… KPI：……&#10;主线 2：…… KPI：……&#10;不做清单：……"></textarea></div>
+            </div>
+            <div class="tool-row" aria-label="战略规划工具入口">
+              <a class="button button--tool" href="https://chatgpt.com/" target="_blank" rel="noopener">打开 WorkBuddy / ChatGPT</a>
+              <a class="button button--tool" href="https://chat.deepseek.com/" target="_blank" rel="noopener">打开 DeepSeek</a>
+              <a class="button button--tool" href="https://www.coze.cn/space" target="_blank" rel="noopener">打开 Coze</a>
+            </div>
+            <div class="prompt-shell">
+              <div class="prompt-shell__bar"><span>可编辑提示词</span><span>设备制造企业默认版</span></div>
+              <textarea aria-label="AI 战略规划提示词" data-prompt data-store="prompt-strategy"># 角色
+你是一名服务于工业设备制造企业董事会的 AI 战略顾问、经营分析师与组织变革顾问。
+
+# 任务背景
+我将上传《华岳精工案例企业简报》或本企业脱敏材料，并补充五维机会洞察。管理层需要在未来 12 个月只选择 1—3 条 AI 主线，避免“大而全”和工具堆砌。
+
+# 输入资料
+1. 企业经营目标、核心流程与主要问题；
+2. 五维洞察：看技术、看竞对、看用户、看自己、看战略；
+3. 已有系统、数据、知识与组织约束；
+4. 我填写的课堂战略画布内容。
+
+# 任务目标
+生成一份可供董事长、总经理和核心管理团队讨论的一页式 AI 战略蓝图。
+
+# 处理要求
+1. 先提取事实，并把信息分为“材料明确”“合理推断”“待管理层确认”。
+2. 围绕增长、降本、提效、风控、创新提出不超过 5 条战略备选，再推荐 1—3 条主线。
+3. 每条主线写清：经营问题、目标用户、AI 能力、需要的数据知识、业务 Owner、12 个月业务 KPI、90 天先导指标、主要风险。
+4. KPI 必须是业务结果，不得把“上线 Agent、调用次数、生成文档数量”直接当作最终成果。
+5. 明确“不做清单”：价值难量化、数据不可得、无法人工兜底、风险高于收益的事项暂不进入首批。
+6. 对外报价、合同承诺、设计放行、安全处置必须保留人工确认。
+
+# 输出格式
+一、经营问题与战略窗口
+二、AI 愿景（一句话）
+三、1—3 条 AI 主线（表格）
+四、业务 KPI 与 90 天先导指标
+五、人员/知识/流程/技术四维基础
+六、主要风险与管理层待决策事项
+七、不做清单
+八、30/60/90 天启动建议
+
+# 约束
+所有数字只能来自上传材料；缺失信息写“待确认”，不得虚构市场份额、ROI 或成功案例。</textarea>
+            </div>
+            <div class="prompt-actions">
+              <button class="button button--primary" type="button" data-copy>复制战略提示词</button>
+              <button class="button button--ghost" type="button" data-reset>恢复默认</button>
+              <button class="button button--ghost button--complete" type="button" data-complete>标记完成</button>
+            </div>
+            <div class="download-grid" id="downloads">
+              <div class="download-card"><span class="file-badge">MD</span><div><h4>华岳精工案例企业简报</h4><p>经营目标、核心流程、数据基础与管理层待决策事项。</p><a href="assets/00_华岳精工案例企业简报.md" download>下载企业简报</a></div></div>
+              <div class="download-card"><span class="file-badge">CSV</span><div><h4>AI 战略五维洞察画布</h4><p>可用 Excel 打开，填写五维判断、AI 愿景、主线与 KPI。</p><a href="assets/01_AI战略五维洞察画布.csv" download>下载战略画布</a></div></div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="part" id="scene" aria-labelledby="scene-title">
+        <header class="section-header">
+          <div>
+            <p class="eyebrow" style="color:var(--accent-primary)">Part 02 · Six-step Scene Innovation</p>
+            <h2 id="scene-title">六步把“AI 想法”，做成能投、能试、能验收的场景。</h2>
+            <p class="section-header__lead">延续 med 场景创新链路，但把默认案例替换为设备制造企业“客户询盘 → 方案报价”流程。每一步的输出都是下一步的输入。</p>
+          </div>
+          <div class="action-row">
+            <button class="button button--primary" type="button" data-copy-group="scene">复制六个提示词</button>
+            <a class="button button--download" href="assets/02_场景创新资料包.zip" download>下载场景资料包</a>
+          </div>
+        </header>
+
+        <article class="exercise-card" id="scene-1" data-task="scene-1" data-group="scene">
+          <header class="exercise-card__header"><div class="exercise-card__num">01</div><div><p class="exercise-card__kicker">Step 1 · As-Is Flow</p><h3>补全“客户询盘到方案报价”的现状流程</h3><p class="exercise-card__summary">先把角色、材料、审批、等待、返工、风险和产出画完整，避免直接跳到 AI。</p></div></header>
+          <div class="exercise-card__body">
+            <div class="meta-grid"><div class="meta-item"><strong>练习目标</strong><span>可讨论的 As-Is 流程图</span></div><div class="meta-item"><strong>修改位置</strong><span>替换花括号中的企业与流程</span></div><div class="meta-item"><strong>交付成果</strong><span>Mermaid + 问题清单</span></div></div>
+            <div class="tool-row"><a class="button button--tool" href="https://chat.deepseek.com/" target="_blank" rel="noopener">DeepSeek</a><a class="button button--tool" href="https://chatgpt.com/" target="_blank" rel="noopener">WorkBuddy / ChatGPT</a></div>
+            <div class="prompt-shell"><div class="prompt-shell__bar"><span>可编辑提示词</span><span>设备制造默认场景</span></div><textarea aria-label="步骤一提示词" data-prompt data-store="prompt-scene-1">{我是华岳精工装备集团的一名业务负责人，现在需要优化“从客户询盘、需求澄清、方案选型、技术评审、BOM测算、商务报价、审批到客户反馈”的完整业务流程。请学员根据本组任务替换为自己的企业与真实流程。}
+
+请读取我上传的企业简报与流程资料，搜索并补全现状业务流程，输出 Mermaid 格式，并满足：
+1. 按需求进入、需求澄清、方案设计、成本测算、风险评审、报价审批、客户反馈划分阶段，不同阶段使用可区分的样式。
+2. 每个节点标明主要角色、输入材料、输出结果、平均等待或处理时间、关键风险。
+3. 用不同形状区分开始/结束、判断、审批、材料、执行、系统操作和异常处理。
+4. 标出反复沟通、重复录入、依赖个人经验、跨系统搬运、等待审批和容易出错的位置。
+5. 对资料中没有依据的信息标注“待业务确认”，不得虚构流程时长或制度。
+6. 另附一张问题清单：问题、影响、发生频率、责任环节、需要补充的证据。
+7. Mermaid 代码应可直接复制渲染。</textarea></div>
+            <div class="prompt-actions"><button class="button button--primary" type="button" data-copy>复制当前提示词</button><button class="button button--ghost" type="button" data-reset>恢复默认</button><button class="button button--ghost button--complete" type="button" data-complete>标记完成</button></div>
+          </div>
+        </article>
+
+        <article class="exercise-card" id="scene-2" data-task="scene-2" data-group="scene">
+          <header class="exercise-card__header"><div class="exercise-card__num">02</div><div><p class="exercise-card__kicker">Step 2 · AI Intervention</p><h3>找到 AI 改造节点并画出 To-Be 流程</h3><p class="exercise-card__summary">保留经营主线与必要控制，把 AI 放到最能提升速度、质量和复用率的位置。</p></div></header>
+          <div class="exercise-card__body">
+            <div class="meta-grid"><div class="meta-item"><strong>练习目标</strong><span>AI 介入前后可比较</span></div><div class="meta-item"><strong>输入材料</strong><span>Step 1 Mermaid 与问题清单</span></div><div class="meta-item"><strong>交付成果</strong><span>To-Be 流程 + 人机分工</span></div></div>
+            <div class="tool-row"><a class="button button--tool" href="https://chat.deepseek.com/" target="_blank" rel="noopener">DeepSeek</a><a class="button button--tool" href="https://www.doubao.com/" target="_blank" rel="noopener">豆包</a></div>
+            <div class="prompt-shell"><div class="prompt-shell__bar"><span>可编辑提示词</span><span>设备制造默认场景</span></div><textarea aria-label="步骤二提示词" data-prompt data-store="prompt-scene-2">请基于上一步生成的 {现状流程 Mermaid 代码}、{问题清单} 和 {华岳精工案例简报或本企业资料}，识别哪些节点适合由 AI 介入，从而提升效率、降低错误与交付风险，或形成新的客户价值。
+
+要求：
+1. 综合使用 SCAMPER、价值链分析和用户痛点视角，但不要为了“AI 化”增加无价值节点。
+2. 保留原流程主线；不得删除对外报价、合同承诺、设计放行、安全处置、例外审批等必要人工节点。
+3. 每个 AI 节点写清：输入数据/知识、AI 处理动作、输出、人工复核人、失败或低置信时的降级路径、可量化价值假设。
+4. 把任务分成三类：AI 可直接完成、AI + 工具后可完成、必须人工判断。
+5. 对不适合 AI 的节点，说明保留人工或审批的原因。
+6. 单独列出权限、客户机密、知识版本、幻觉、数据偏差、可追溯性与系统集成风险。
+7. 输出新的 Mermaid To-Be 流程图，AI 节点使用独立样式，并附“人机分工表”和“待确认假设表”。</textarea></div>
+            <div class="prompt-actions"><button class="button button--primary" type="button" data-copy>复制当前提示词</button><button class="button button--ghost" type="button" data-reset>恢复默认</button><button class="button button--ghost button--complete" type="button" data-complete>标记完成</button></div>
+          </div>
+        </article>
+
+        <article class="exercise-card" id="scene-3" data-task="scene-3" data-group="scene">
+          <header class="exercise-card__header"><div class="exercise-card__num">03</div><div><p class="exercise-card__kicker">Step 3 · Scene Lake</p><h3>生成设备制造企业 AI 场景湖</h3><p class="exercise-card__summary">把战略目标、流程问题和各组讨论整理成一张可合并、可筛选的场景清单。</p></div></header>
+          <div class="exercise-card__body">
+            <div class="meta-grid"><div class="meta-item"><strong>练习目标</strong><span>形成全量场景池</span></div><div class="meta-item"><strong>输入材料</strong><span>战略主线 + To-Be + 讨论纪要</span></div><div class="meta-item"><strong>交付成果</strong><span>可在 Excel 筛选的场景湖</span></div></div>
+            <div class="tool-row"><a class="button button--tool" href="https://chatgpt.com/" target="_blank" rel="noopener">WorkBuddy / ChatGPT</a><a class="button button--tool" href="https://www.kimi.com/" target="_blank" rel="noopener">Kimi</a></div>
+            <div class="prompt-shell"><div class="prompt-shell__bar"><span>可编辑提示词</span><span>设备制造默认场景</span></div><textarea aria-label="步骤三提示词" data-prompt data-store="prompt-scene-3">请根据 {本组讨论纪要/录音转写/多人对话内容}、{AI 战略主线}、{Step 2 的 To-Be Mermaid 代码} 和 {企业简报}，生成“{企业名称} AI 场景湖清单”，输出为可下载的 xlsx。
+
+每条场景至少包含：
+1. 场景编号、战略主线、价值链环节、场景名称、主要使用者、触发条件、核心痛点。
+2. 当前做法、AI 介入方式、输入、处理、输出、人工确认点、异常降级方式。
+3. 所需数据/知识、来源系统、质量现状、敏感等级、授权要求、更新责任人。
+4. 预期经营价值、可量化指标、价值假设、潜在风险和不做的边界。
+5. 实施复杂度、系统依赖、建议试点部门、建议 90 天验证指标。
+
+处理要求：
+- 先合并重复或高度相似场景，不要用不同名字重复包装同一任务。
+- 场景要具体到“谁在什么触发下，用哪些输入，得到什么输出”，禁止只写“智能销售、智慧生产”等空泛名称。
+- 不得写入客户机密、真实价格、员工隐私；材料缺失处标“待确认”。
+- 先按战略主线聚类，再按“经营价值 × 可行性”初步排序。
+- 请同时参考我上传的《AI场景湖与ROI评分.csv》字段结构。</textarea></div>
+            <div class="prompt-actions"><button class="button button--primary" type="button" data-copy>复制当前提示词</button><button class="button button--ghost" type="button" data-reset>恢复默认</button><button class="button button--ghost button--complete" type="button" data-complete>标记完成</button></div>
+          </div>
+        </article>
+
+        <article class="exercise-card" id="scene-4" data-task="scene-4" data-group="scene">
+          <header class="exercise-card__header"><div class="exercise-card__num">04</div><div><p class="exercise-card__kicker">Step 4 · ROI Portfolio</p><h3>筛选高 ROI 小场景池</h3><p class="exercise-card__summary">让优先级有分值、有证据、有假设，并把“价值高但暂时不可做”与“可以马上试”分开。</p></div></header>
+          <div class="exercise-card__body">
+            <div class="meta-grid"><div class="meta-item"><strong>练习目标</strong><span>选出 Top 3 与首个试点</span></div><div class="meta-item"><strong>输入材料</strong><span>Step 3 场景湖</span></div><div class="meta-item"><strong>交付成果</strong><span>评分表 + 投资组合矩阵</span></div></div>
+            <div class="tool-row"><a class="button button--tool" href="https://chatgpt.com/" target="_blank" rel="noopener">WorkBuddy / ChatGPT</a><a class="button button--tool" href="https://chat.deepseek.com/" target="_blank" rel="noopener">DeepSeek</a></div>
+            <div class="prompt-shell"><div class="prompt-shell__bar"><span>可编辑提示词</span><span>设备制造默认场景</span></div><textarea aria-label="步骤四提示词" data-prompt data-store="prompt-scene-4">请读取 {Step 3 输出的 AI 场景湖}，使用 5 分制完成场景组合评分，并返回带公式和评分理由的 xlsx。
+
+评分维度与建议权重：
+1. 业务价值 25%：增长、降本、提效、风控、创新的可量化程度。
+2. 数据/知识成熟度 20%：可得性、质量、授权、版本与更新机制。
+3. 实施可行性 20%：模型能力、流程改造、系统依赖、资源和周期。
+4. 可复制性 15%：跨产品、部门、区域或客户的复用潜力。
+5. 组织阻力 10%：角色调整、使用习惯、责任与激励；阻力越低分越高。
+6. 合规与安全 10%：权限、机密、人工兜底、审计与异常处置。
+
+输出要求：
+- 每个维度给出分值、证据、关键假设、置信度和待确认项，不能只给总分。
+- 计算加权总分，绘制“业务价值 × 实施可行性”矩阵。
+- 划分四类：立即试点、补基础后试点、持续观察、暂不投入。
+- 推荐 Top 3，并只选 1 个 90 天首个试点；说明为什么不是其他场景。
+- 给出首个试点的基线指标、30/60/90 天目标、继续/调整/停止条件。
+- 没有材料依据的分数标“待业务确认”，不得虚构 ROI。</textarea></div>
+            <div class="prompt-actions"><button class="button button--primary" type="button" data-copy>复制当前提示词</button><button class="button button--ghost" type="button" data-reset>恢复默认</button><button class="button button--ghost button--complete" type="button" data-complete>标记完成</button></div>
+          </div>
+        </article>
+
+        <article class="exercise-card" id="scene-5" data-task="scene-5" data-group="scene">
+          <header class="exercise-card__header"><div class="exercise-card__num">05</div><div><p class="exercise-card__kicker">Step 5 · PRD</p><h3>把 Top 场景写成可共同评审的 PRD</h3><p class="exercise-card__summary">让业务、产品、研发、数据、IT、安全和使用者对同一个场景达成共同语言。</p></div></header>
+          <div class="exercise-card__body">
+            <div class="meta-grid"><div class="meta-item"><strong>练习目标</strong><span>从想法变成可实施需求</span></div><div class="meta-item"><strong>输入材料</strong><span>Top 场景 + 流程 + 约束</span></div><div class="meta-item"><strong>交付成果</strong><span>PRD + 测试与验收口径</span></div></div>
+            <div class="tool-row"><a class="button button--tool" href="https://chatgpt.com/" target="_blank" rel="noopener">WorkBuddy / ChatGPT</a><a class="button button--tool" href="https://chat.deepseek.com/" target="_blank" rel="noopener">DeepSeek</a></div>
+            <div class="prompt-shell"><div class="prompt-shell__bar"><span>可编辑提示词</span><span>设备制造默认场景</span></div><textarea aria-label="步骤五提示词" data-prompt data-store="prompt-scene-5">你是一名工业设备制造企业的 AI 产品负责人。请基于以下材料生成一份可供业务、产品、研发、数据、IT、安全和一线用户共同评审的 PRD：
+
+【目标场景】{粘贴 Step 4 选出的 90 天首个试点}
+【现状流程】{粘贴 Step 1 As-Is 流程}
+【AI 改造流程】{粘贴 Step 2 To-Be 流程}
+【战略目标与 KPI】{粘贴 Part 1 战略画布}
+【数据/知识/系统约束】{粘贴场景湖中的相关字段}
+
+PRD 必须包含：
+1. 背景、经营问题、产品目标、非目标、基线指标与成功指标。
+2. 用户角色、核心用户故事、主流程、边界场景和异常处理。
+3. 功能清单、优先级、每项功能的输入/处理/输出/人工确认点/验收标准。
+4. 数据字典、知识来源、权限、脱敏、版本、留痕、保存周期与责任人。
+5. AI 能力说明：模型任务、提示词变量、知识引用、置信度、人工复核、错误和降级策略。
+6. 对外报价、合同承诺、设计放行、安全处置等高风险动作的强制人工控制。
+7. 性能、可用性、审计、安全、系统集成和可观测性要求。
+8. 测试用例：正常、空数据、数据冲突、低置信、权限不足、人工退回、系统异常。
+9. 30/60/90 天里程碑、Owner、依赖、风险、待确认问题和继续/停止条件。
+
+未知信息统一写“待确认”；不虚构制度、价格、客户数据、系统接口或模型效果。</textarea></div>
+            <div class="prompt-actions"><button class="button button--primary" type="button" data-copy>复制当前提示词</button><button class="button button--ghost" type="button" data-reset>恢复默认</button><button class="button button--ghost button--complete" type="button" data-complete>标记完成</button></div>
+          </div>
+        </article>
+
+        <article class="exercise-card" id="scene-6" data-task="scene-6" data-group="scene">
+          <header class="exercise-card__header"><div class="exercise-card__num">06</div><div><p class="exercise-card__kicker">Step 6 · Prototype</p><h3>生成可演示、可点击、可评审的高保真原型</h3><p class="exercise-card__summary">以 PRD 为唯一输入，让管理层和一线用户在投资前看到流程、边界、异常与人工兜底。</p></div></header>
+          <div class="exercise-card__body">
+            <div class="meta-grid"><div class="meta-item"><strong>练习目标</strong><span>验证场景而非展示特效</span></div><div class="meta-item"><strong>输入材料</strong><span>Step 5 完整 PRD</span></div><div class="meta-item"><strong>交付成果</strong><span>单文件 HTML 高保真原型</span></div></div>
+            <div class="tool-row"><a class="button button--tool" href="https://chatgpt.com/" target="_blank" rel="noopener">WorkBuddy / ChatGPT</a><a class="button button--tool" href="https://www.doubao.com/" target="_blank" rel="noopener">豆包</a></div>
+            <div class="prompt-shell"><div class="prompt-shell__bar"><span>可编辑提示词</span><span>设备制造默认场景</span></div><textarea aria-label="步骤六提示词" data-prompt data-store="prompt-scene-6">请基于上一步生成的完整 PRD，设计并实现一套供业务与管理层评审的高保真网页原型。
+
+要求：
+1. 先输出页面/状态清单，说明每个页面的使用者、目标、进入条件与退出条件。
+2. 覆盖 PRD 核心模块，明确标题、字段、按钮、列表、状态、数据来源、更新时间与帮助文案。
+3. 覆盖主流程、空状态、加载状态、权限不足、数据缺失、数据冲突、AI 低置信、人工退回和系统异常。
+4. AI 输出必须显示：使用的来源、生成时间、置信或风险提示、人工复核状态和可追溯记录。
+5. 涉及报价、合同、设计放行或安全处置时，必须显示人工确认与权限边界，不允许一键自动对外执行。
+6. 采用适合工业设备制造企业的稳重、清晰、高信息密度风格；中文不截断，桌面、平板和手机均可用。
+7. 输出单文件 HTML，CSS 与 JavaScript 内嵌，不依赖本地不存在的图片、字体或数据文件。
+8. 所有交互按钮都应可操作，表单有校验和可见反馈；尊重键盘操作、焦点状态与减少动画设置。
+9. 最后列出页面跳转链路、测试场景、验收清单，以及哪些数据仍为模拟或待确认。</textarea></div>
+            <div class="prompt-actions"><button class="button button--primary" type="button" data-copy>复制当前提示词</button><button class="button button--ghost" type="button" data-reset>恢复默认</button><button class="button button--ghost button--complete" type="button" data-complete>标记完成</button></div>
+            <div class="download-grid">
+              <div class="download-card"><span class="file-badge">CSV</span><div><h4>AI 场景湖与 ROI 评分样表</h4><p>12 个设备制造模拟场景，包含价值、数据、实施、风险和 90 天指标。</p><a href="assets/02_AI场景湖与ROI评分.csv" download>下载场景样表</a></div></div>
+              <div class="download-card"><span class="file-badge">CSV</span><div><h4>30/60/90 天行动计划</h4><p>从场景定义、受控试点到业务验收的管理动作与退出条件。</p><a href="assets/03_30-60-90天行动计划.csv" download>下载行动计划</a></div></div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="part" id="presentation" aria-labelledby="presentation-title">
+        <header class="section-header">
+          <div>
+            <p class="eyebrow" style="color:var(--accent-primary)">Part 03 · Executive AI Rollout Deck</p>
+            <h2 id="presentation-title">把课堂成果装进管理层能决策的 AI 落地 PPT。</h2>
+            <p class="section-header__lead">沿用提供的 29 页汇报模板与八步结构，把“战略—场景—流程—组织—知识—技术—上线—运营”压缩成一份可以签资源、定 Owner、批 90 天试点的作战方案。</p>
+          </div>
+          <a class="button button--download" href="assets/03_PPT汇报资料包.zip" download>下载 PPT 资料包</a>
+        </header>
+
+        <article class="exercise-card" id="task-ppt" data-task="task-ppt">
+          <header class="exercise-card__header"><div class="exercise-card__num">P</div><div><p class="exercise-card__kicker">任务 P · 管理层汇报</p><h3>生成《企业 AI 战略与落地作战方案》</h3><p class="exercise-card__summary">不是把所有课堂输出堆进 PPT，而是用结论式标题回答管理层的十个关键问题。</p></div></header>
+          <div class="exercise-card__body">
+            <div class="meta-grid"><div class="meta-item"><strong>练习目标</strong><span>10 分钟讲清为什么做、做什么、怎么验收</span></div><div class="meta-item"><strong>输入材料</strong><span>战略画布 + 场景成果 + 90 天计划</span></div><div class="meta-item"><strong>交付成果</strong><span>PPTX + 讲稿 + 管理层问答</span></div></div>
+            <ol class="ppt-map" aria-label="PPT 八步结构">
+              <li><strong>01 明确目标</strong>经营问题、基线与 KPI</li><li><strong>02 场景识别</strong>场景湖、ROI、Top 3</li><li><strong>03 重塑流程</strong>As-Is / To-Be、人机分工</li><li><strong>04 组织变革</strong>Sponsor、Owner、RACI</li><li><strong>05 数据知识治理</strong>资产、权限、责任田</li><li><strong>06 IT 产品落地</strong>五层架构与 MVP</li><li><strong>07 AI 融入业务</strong>测试、灰度、上线</li><li><strong>08 持续运营</strong>指标、复盘、规模化</li>
+            </ol>
+            <div class="tool-row"><a class="button button--tool" href="https://chatgpt.com/" target="_blank" rel="noopener">WorkBuddy / ChatGPT</a><a class="button button--tool" href="https://www.kimi.com/" target="_blank" rel="noopener">Kimi</a></div>
+            <div class="prompt-shell"><div class="prompt-shell__bar"><span>可编辑提示词</span><span>管理层汇报默认版</span></div><textarea aria-label="AI 落地 PPT 生成提示词" data-prompt data-store="prompt-ppt"># 角色
+你是一名企业 AI 战略顾问、管理咨询顾问、产品负责人和高管汇报设计师。
+
+# 任务背景
+我们是一家工业设备制造企业，已完成 AI 战略规划、高价值场景创新、ROI 评分、核心场景 PRD/原型设计和 30/60/90 天落地计划。现在需要基于我上传的全部课堂成果，按照《AI落地PPT汇报模版》生成一份供董事长、总经理和核心管理团队决策的正式汇报。
+
+# 输入资料
+我将上传：企业简报、AI 战略画布、场景湖与 ROI 表、Top 场景流程/PRD/原型、人员知识流程技术方案、90 天计划和 PPT 模板。
+
+# 任务目标
+严格沿用模板的版式体系、标题层级、配色与页面结构，生成《{企业名称} AI 战略与落地作战方案》。
+
+# 处理要求
+1. 先列出缺失、冲突和待确认信息；未知信息写“待确认”，不得编造。
+2. 回答为什么现在做、聚焦哪里、首个场景是什么、如何落地、投入与回报如何、谁负责、90 天如何验收。
+3. 把事实、分析判断和建议分开；所有数字注明来源或“课堂模拟”。
+4. AI 成果必须映射到增长、降本、提效、风控、创新，不能只写工具或 Agent。
+5. 对外报价、合同承诺、设计放行和安全处置保留人工确认。
+6. 每页只表达一个管理问题；标题使用结论句；优先图表、流程、矩阵和大数字。
+7. 不改变模板主题与母版；内容超出时优先精简，不缩成难以阅读的小字。
+
+# 输出格式
+1. 资料检查表。
+2. PPT 页面映射表：页码、结论式标题、模板页、核心证据、建议视觉。
+3. 完整 PPTX；如工具不能直接生成 PPTX，则输出逐页可复制文案和占位区域说明。
+4. 10 分钟汇报讲稿。
+5. 管理层可能追问的 5 个问题及回答。
+
+# 约束
+不虚构客户、市场份额、ROI、法规结论、技术性能或成功案例；没有基线就不承诺百分比改善；关键决策不得交给 AI 自动完成。</textarea></div>
+            <div class="prompt-actions"><button class="button button--primary" type="button" data-copy>复制 PPT 提示词</button><button class="button button--ghost" type="button" data-reset>恢复默认</button><button class="button button--ghost button--complete" type="button" data-complete>标记完成</button></div>
+            <div class="download-grid">
+              <div class="download-card"><span class="file-badge">PPTX</span><div><h4>AI 落地 PPT 汇报模板</h4><p>29 页、八步结构，可直接下载并替换课堂成果。</p><a href="assets/04_AI落地PPT汇报模版.pptx" download>下载 PPT 模板</a></div></div>
+              <div class="download-card"><span class="file-badge">TXT</span><div><h4>AI 落地 PPT 生成提示词</h4><p>完整独立版本，可与模板和课堂成果一起上传给 AI。</p><a href="assets/05_AI落地PPT生成提示词.txt" download>下载 PPT 提示词</a></div></div>
+            </div>
+            <div class="notice">
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4m0 4h.01M10.3 3.7 2.6 17a2 2 0 0 0 1.7 3h15.4a2 2 0 0 0 1.7-3L13.7 3.7a2 2 0 0 0-3.4 0Z"/></svg>
+              <div><strong>课堂模拟数据声明</strong><p>本页面中的企业、人员、客户、金额、项目、流程时长与经营指标均为教学模拟。学员替换为本企业资料时，应使用公开或脱敏材料，并遵守所在企业的数据权限与安全要求。</p></div>
+            </div>
+          </div>
+        </article>
+
+        <div class="final-cta">
+          <div><h3>结业不是“做出漂亮 Demo”，而是能签发一个 90 天试点。</h3><p>请确认业务问题清楚、流程完整、责任明确、原型可运行、指标可验收，并由管理层决定继续、调整或停止。</p></div>
+          <button class="button button--inverse" type="button" data-export>导出完整练习记录</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer__inner"><div><strong>AI 战略布局与工具落地实战</strong><br>总裁班一企一案练习台</div><div>战略规划 · 六步场景创新 · AI 落地 PPT</div></div>
+  </footer>
+
+  <div class="toast" role="status" aria-live="polite" aria-atomic="true" data-toast>
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6"/></svg>
+    <span data-toast-text>已完成</span>
+  </div>
+
+  <script>
+    (() => {
+      'use strict';
+      const prefix = 'mba-ai-practice-';
+      const tasks = [...document.querySelectorAll('[data-task]')];
+      const editable = [...document.querySelectorAll('[data-store]')];
+      const toast = document.querySelector('[data-toast]');
+      const toastText = document.querySelector('[data-toast-text]');
+      let toastTimer;
+
+      const showToast = (message) => {
+        toastText.textContent = message;
+        toast.classList.add('is-visible');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove('is-visible'), 2200);
+      };
+
+      const setStored = (key, value) => {
+        try { localStorage.setItem(prefix + key, value); }
+        catch { showToast('当前浏览器无法保存，建议导出课堂成果'); }
+      };
+
+      const getStored = (key) => {
+        try { return localStorage.getItem(prefix + key); }
+        catch { return null; }
+      };
+
+      editable.forEach((field) => {
+        field.dataset.defaultValue = field.value;
+        const saved = getStored(field.dataset.store);
+        if (saved !== null) field.value = saved;
+        field.addEventListener('input', () => setStored(field.dataset.store, field.value));
+      });
+
+      const updateProgress = () => {
+        const completed = tasks.filter((task) => getStored('complete-' + task.dataset.task) === '1');
+        tasks.forEach((task) => {
+          const done = getStored('complete-' + task.dataset.task) === '1';
+          task.classList.toggle('is-complete', done);
+          const button = task.querySelector('[data-complete]');
+          if (button) {
+            button.classList.toggle('is-complete', done);
+            button.textContent = done ? '已完成，可取消' : '标记完成';
+            button.setAttribute('aria-pressed', String(done));
+          }
+          const link = document.querySelector(`[data-step-link="${task.dataset.task}"]`);
+          if (link) link.classList.toggle('is-complete', done);
+        });
+        document.querySelectorAll('[data-progress-count]').forEach((el) => { el.textContent = `${completed.length} / ${tasks.length}`; });
+        document.querySelectorAll('[data-progress]').forEach((el) => { el.max = tasks.length; el.value = completed.length; el.textContent = `${completed.length} / ${tasks.length}`; });
+      };
+
+      const copyText = async (text, message) => {
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch {
+          const helper = document.createElement('textarea');
+          helper.value = text;
+          helper.setAttribute('readonly', '');
+          helper.style.position = 'fixed';
+          helper.style.opacity = '0';
+          document.body.appendChild(helper);
+          helper.select();
+          document.execCommand('copy');
+          helper.remove();
+        }
+        showToast(message);
+      };
+
+      document.addEventListener('click', (event) => {
+        const copyButton = event.target.closest('[data-copy]');
+        if (copyButton) {
+          const card = copyButton.closest('[data-task]');
+          const prompt = card?.querySelector('[data-prompt]');
+          if (prompt) copyText(prompt.value, '提示词已复制');
+          return;
+        }
+
+        const resetButton = event.target.closest('[data-reset]');
+        if (resetButton) {
+          const prompt = resetButton.closest('[data-task]')?.querySelector('[data-prompt]');
+          if (prompt) {
+            prompt.value = prompt.dataset.defaultValue;
+            setStored(prompt.dataset.store, prompt.value);
+            showToast('已恢复默认提示词');
+          }
+          return;
+        }
+
+        const completeButton = event.target.closest('[data-complete]');
+        if (completeButton) {
+          const task = completeButton.closest('[data-task]');
+          const key = 'complete-' + task.dataset.task;
+          const next = getStored(key) === '1' ? '0' : '1';
+          setStored(key, next);
+          updateProgress();
+          showToast(next === '1' ? '已记录完成状态' : '已取消完成状态');
+          return;
+        }
+
+        const copyGroup = event.target.closest('[data-copy-group]');
+        if (copyGroup) {
+          const group = copyGroup.dataset.copyGroup;
+          const blocks = [...document.querySelectorAll(`[data-group="${group}"]`)].map((card, index) => {
+            const title = card.querySelector('h3')?.textContent.trim() || `步骤 ${index + 1}`;
+            const value = card.querySelector('[data-prompt]')?.value || '';
+            return `# ${index + 1}. ${title}\n\n${value}`;
+          });
+          copyText(blocks.join('\n\n---\n\n'), '六个场景提示词已复制');
+        }
+      });
+
+      const exportResults = () => {
+        const lines = [
+          '# AI 战略布局与工具落地实战｜课堂成果记录',
+          '',
+          `导出时间：${new Date().toLocaleString('zh-CN')}`,
+          '',
+          '## 完成状态',
+          ...tasks.map((task) => `- ${getStored('complete-' + task.dataset.task) === '1' ? '[已完成]' : '[未完成]'} ${task.querySelector('h3')?.textContent.trim() || task.dataset.task}`),
+          '',
+          '## AI 战略画布',
+          ...[...document.querySelectorAll('.canvas-field')].flatMap((field) => {
+            const label = field.querySelector('label')?.textContent.trim() || '未命名';
+            const value = field.querySelector('textarea')?.value.trim() || '未填写';
+            return [`### ${label}`, value, ''];
+          }),
+          '## 已编辑提示词',
+          ...tasks.flatMap((task, index) => {
+            const title = task.querySelector('h3')?.textContent.trim() || `任务 ${index + 1}`;
+            const value = task.querySelector('[data-prompt]')?.value.trim();
+            return value ? [`### ${title}`, value, ''] : [];
+          }),
+          '---',
+          '声明：页面中的华岳精工企业与经营数据为课堂教学模拟。'
+        ];
+        const blob = new Blob([lines.join('\n')], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'AI总裁班_课堂成果记录.txt';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+        showToast('课堂成果已导出');
+      };
+
+      document.querySelectorAll('[data-export]').forEach((button) => button.addEventListener('click', exportResults));
+      updateProgress();
+    })();
+  </script>
+</body>
+</html>
