@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="基于零售银行真实工作链路设计的 WorkBuddy 实战练习：资料盘点、IPO 到 SOP、Skill 封装与测试。">
+  <meta name="theme-color" content="#0b3a7e">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="WorkBuddy × 零售银行｜从一次任务到一套能力">
+  <meta property="og:description" content="三个连续任务，把资料盘点、IPO、SOP 与 Skill 闭环真正跑一遍。">
+  <meta property="og:url" content="https://xjtulijiagui-max.github.io/lijiagui/workbuddy/">
+  <link rel="canonical" href="https://xjtulijiagui-max.github.io/lijiagui/workbuddy/">
+  <title>WorkBuddy × 零售银行｜实战练习台</title>
+  <style>
+    :root{
+      --wb-canvas:#ffffff;--wb-surface-soft:#f4f4f4;--wb-surface-info:#edf5ff;
+      --wb-ink:#161616;--wb-muted:#525252;--wb-border:#c6c6c6;
+      --wb-navy:#0b3a7e;--wb-accent:#0f62fe;--wb-accent-hover:#0043ce;--wb-accent-active:#002d9c;
+      --wb-success:#198038;--wb-warning:#8e6a00;--wb-warning-surface:#fff8d6;--wb-error:#da1e28;
+      --wb-overlay:rgba(0,0,0,.24);
+      --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;
+      --space-6:24px;--space-8:32px;--space-10:40px;--space-12:48px;--space-16:64px;--space-20:80px;
+      --page-max:1200px;--font-sans:"IBM Plex Sans","Noto Sans SC","Microsoft YaHei UI",system-ui,sans-serif;
+      --font-mono:"IBM Plex Mono",Consolas,"Microsoft YaHei UI",monospace;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:96px}
+    body{margin:0;background:var(--wb-canvas);color:var(--wb-ink);font-family:var(--font-sans);font-size:16px;line-height:1.65}
+    a{color:var(--wb-accent)}
+    a:hover{color:var(--wb-accent-hover)}
+    button,a{touch-action:manipulation}
+    button{font:inherit}
+    svg{display:block}
+    .skip-link{position:absolute;left:var(--space-4);top:-64px;background:var(--wb-canvas);color:var(--wb-ink);padding:var(--space-3) var(--space-4);z-index:50}
+    .skip-link:focus{top:var(--space-4)}
+    .wrap{width:min(var(--page-max),calc(100% - 32px));margin:0 auto}
+    .masthead{min-height:48px;background:var(--wb-navy);color:var(--wb-canvas)}
+    .masthead-inner{min-height:48px;display:flex;align-items:center;justify-content:space-between;gap:var(--space-4)}
+    .brand{display:flex;align-items:center;gap:var(--space-3);font-weight:600;color:var(--wb-canvas);text-decoration:none}
+    .brand-mark{width:24px;height:24px;border:2px solid currentColor;display:grid;place-items:center;font-size:12px}
+    .masthead-links{display:flex;align-items:center;gap:var(--space-5)}
+    .masthead-links a{color:var(--wb-canvas);font-size:14px;text-decoration:none}
+    .masthead-links a:hover{text-decoration:underline}
+    .hero{border-bottom:1px solid var(--wb-border)}
+    .hero-grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(320px,5fr);min-height:560px}
+    .hero-copy{padding:var(--space-20) var(--space-12) var(--space-20) 0;display:flex;flex-direction:column;justify-content:center}
+    .eyebrow{margin:0 0 var(--space-4);color:var(--wb-accent);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+    h1,h2,h3,p{overflow-wrap:break-word}
+    .keep{white-space:nowrap}
+    h1{font-size:clamp(2rem,5vw,3.75rem);font-weight:300;line-height:1.15;letter-spacing:-.025em;text-wrap:balance;margin:0;max-width:780px}
+    .hero-lead{font-size:18px;color:var(--wb-muted);max-width:720px;margin:var(--space-6) 0 0}
+    .hero-actions{display:flex;flex-wrap:wrap;gap:var(--space-3);margin-top:var(--space-8)}
+    .button{min-height:48px;border:1px solid transparent;border-radius:0;padding:0 var(--space-4);display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);font-weight:600;text-decoration:none;cursor:pointer;transition:background-color 120ms ease-out,color 120ms ease-out,transform 120ms ease-out}
+    .button-primary{background:var(--wb-accent);color:var(--wb-canvas)}
+    .button-primary:hover{background:var(--wb-accent-hover);color:var(--wb-canvas)}
+    .button-primary:active{background:var(--wb-accent-active);transform:translateY(1px)}
+    .button-secondary{background:var(--wb-ink);color:var(--wb-canvas)}
+    .button-secondary:hover{background:var(--wb-muted);color:var(--wb-canvas)}
+    .button-ghost{background:transparent;border-color:var(--wb-accent);color:var(--wb-accent)}
+    .button-ghost:hover{background:var(--wb-surface-info);color:var(--wb-accent-hover)}
+    .button:focus-visible,.task-nav a:focus-visible,.download-row:focus-visible{outline:3px solid var(--wb-accent);outline-offset:3px}
+    .hero-meta{display:flex;flex-wrap:wrap;gap:var(--space-8);margin:var(--space-10) 0 0;padding:var(--space-6) 0 0;border-top:1px solid var(--wb-border)}
+    .metric{min-width:112px}.metric strong{display:block;font-size:24px;font-weight:400}.metric span{font-size:12px;color:var(--wb-muted)}
+    .hero-rail{background:var(--wb-surface-soft);padding:var(--space-20) var(--space-12);display:flex;align-items:center}
+    .loop{width:100%;list-style:none;margin:0;padding:0;background:var(--wb-border);display:grid;gap:1px}
+    .loop li{background:var(--wb-canvas);display:grid;grid-template-columns:48px 1fr;gap:var(--space-4);padding:var(--space-5)}
+    .loop .loop-index{color:var(--wb-accent);font-family:var(--font-mono);font-size:14px;font-weight:600}
+    .loop strong{display:block;font-size:18px;font-weight:600}.loop small{display:block;color:var(--wb-muted);margin-top:var(--space-1)}
+    .task-nav{position:sticky;top:0;z-index:20;background:var(--wb-canvas);border-bottom:1px solid var(--wb-border)}
+    .task-nav-inner{display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:thin}
+    .task-nav a{min-height:64px;display:flex;align-items:center;gap:var(--space-2);padding:0 var(--space-5);color:var(--wb-muted);text-decoration:none;white-space:nowrap;border-bottom:3px solid transparent}
+    .task-nav a:hover,.task-nav a[aria-current="true"]{color:var(--wb-ink);background:var(--wb-surface-info);border-bottom-color:var(--wb-accent)}
+    .intro{padding:var(--space-16) 0;display:grid;grid-template-columns:minmax(0,8fr) minmax(280px,4fr);gap:var(--space-12);align-items:start}
+    .section-label{color:var(--wb-accent);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin:0 0 var(--space-3)}
+    h2{font-size:32px;font-weight:400;line-height:1.25;letter-spacing:-.015em;text-wrap:balance;margin:0 0 var(--space-5)}
+    h3{font-size:20px;font-weight:600;line-height:1.4;margin:0 0 var(--space-3)}
+    .intro p{margin:0 0 var(--space-4)}
+    .story{background:var(--wb-surface-info);border-left:4px solid var(--wb-accent);padding:var(--space-6)}
+    .story strong{display:block;margin-bottom:var(--space-2)}
+    .task{padding:var(--space-16) 0;border-top:1px solid var(--wb-border)}
+    .task:nth-of-type(even){background:var(--wb-surface-soft)}
+    .task-head{display:grid;grid-template-columns:minmax(0,8fr) minmax(280px,4fr);gap:var(--space-12);align-items:end;margin-bottom:var(--space-12)}
+    .task-number{font-family:var(--font-mono);font-size:14px;color:var(--wb-accent);font-weight:600;margin:0 0 var(--space-3)}
+    .task-head p{margin:0;color:var(--wb-muted);font-size:18px}
+    .output-box{border-top:4px solid var(--wb-ink);padding-top:var(--space-4)}
+    .output-box span{font-size:12px;color:var(--wb-muted)}.output-box strong{display:block;font-size:18px;margin-top:var(--space-2)}
+    .task-layout{display:grid;grid-template-columns:minmax(280px,4fr) minmax(0,8fr);gap:var(--space-12);align-items:start}
+    .task-side{display:grid;gap:var(--space-8)}
+    .step-list{counter-reset:step;list-style:none;margin:0;padding:0;background:var(--wb-border);display:grid;gap:1px}
+    .step-list li{counter-increment:step;background:var(--wb-canvas);display:grid;grid-template-columns:40px 1fr;gap:var(--space-3);padding:var(--space-4)}
+    .task:nth-of-type(even) .step-list li{background:var(--wb-canvas)}
+    .step-list li::before{content:counter(step,decimal-leading-zero);color:var(--wb-accent);font-family:var(--font-mono);font-weight:600}
+    .notice{padding:var(--space-4);background:var(--wb-warning-surface);border-left:4px solid var(--wb-warning);font-size:14px}
+    .notice strong{display:block;margin-bottom:var(--space-1)}
+    .task-main{display:grid;gap:var(--space-10)}
+    .downloads{background:var(--wb-border);display:grid;gap:1px}
+    .download-row{min-height:72px;background:var(--wb-canvas);color:var(--wb-ink);display:grid;grid-template-columns:1fr auto;gap:var(--space-4);align-items:center;padding:var(--space-4);text-decoration:none}
+    .download-row:hover{background:var(--wb-surface-info);color:var(--wb-ink)}
+    .file-name{display:block;font-weight:600}.file-use{display:block;color:var(--wb-muted);font-size:14px;margin-top:var(--space-1)}
+    .file-type{font-family:var(--font-mono);font-size:12px;color:var(--wb-accent);white-space:nowrap}
+    .download-all{margin-top:var(--space-3)}
+    .prompt-panel{background:var(--wb-ink);color:var(--wb-canvas)}
+    .prompt-head{min-height:64px;display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);padding:var(--space-3) var(--space-4);border-bottom:1px solid var(--wb-muted)}
+    .prompt-head strong{font-weight:600}.prompt-head small{display:block;color:var(--wb-border);margin-top:var(--space-1)}
+    .copy-button{min-height:40px;border:1px solid var(--wb-canvas);background:transparent;color:var(--wb-canvas);padding:0 var(--space-3);cursor:pointer;font-weight:600}
+    .copy-button:hover{background:var(--wb-canvas);color:var(--wb-ink)}
+    .copy-button:focus-visible{outline:3px solid var(--wb-accent);outline-offset:3px}
+    pre{margin:0;padding:var(--space-6);white-space:pre-wrap;overflow-wrap:anywhere;font:14px/1.75 var(--font-mono);tab-size:2}
+    .task-actions{display:flex;flex-wrap:wrap;gap:var(--space-3)}
+    .closing{background:var(--wb-navy);color:var(--wb-canvas);padding:var(--space-16) 0}
+    .closing-grid{display:grid;grid-template-columns:minmax(0,8fr) minmax(280px,4fr);gap:var(--space-12);align-items:end}
+    .closing h2{font-size:clamp(2rem,4vw,3rem);margin-bottom:var(--space-4)}.closing p{color:var(--wb-border);max-width:720px;margin:0}
+    .closing .button-secondary{background:var(--wb-canvas);color:var(--wb-navy)}
+    .closing .button-secondary:hover{background:var(--wb-surface-info);color:var(--wb-navy)}
+    footer{padding:var(--space-6) 0;color:var(--wb-muted);font-size:12px;border-top:1px solid var(--wb-border)}
+    .footer-inner{display:flex;justify-content:space-between;gap:var(--space-4);flex-wrap:wrap}
+    .toast{position:fixed;right:var(--space-4);bottom:var(--space-4);z-index:40;background:var(--wb-ink);color:var(--wb-canvas);padding:var(--space-3) var(--space-4);box-shadow:0 2px 6px var(--wb-overlay);transform:translateY(24px);opacity:0;pointer-events:none;transition:transform 240ms ease-in-out,opacity 240ms ease-in-out}
+    .toast.show{transform:translateY(0);opacity:1}
+    .reveal{animation:reveal 480ms cubic-bezier(.16,1,.3,1) both}
+    @keyframes reveal{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+    @media(max-width:900px){
+      .hero-grid,.intro,.task-head,.task-layout,.closing-grid{grid-template-columns:1fr}
+      .hero-grid{min-height:0}.hero-copy{padding:var(--space-16) 0}.hero-rail{padding:var(--space-12) var(--space-6);margin:0 -16px}
+      .intro,.task{padding-top:var(--space-12);padding-bottom:var(--space-12)}.task-head{gap:var(--space-6)}.task-layout{gap:var(--space-10)}
+    }
+    @media(max-width:640px){
+      .masthead-inner{align-items:flex-start;padding:var(--space-3) 0}.masthead-links{display:none}
+      h2{font-size:28px}.hero-actions,.task-actions{align-items:stretch}.hero-actions .button,.task-actions .button{width:100%}
+      .hero-meta{gap:var(--space-5)}.loop li{grid-template-columns:40px 1fr;padding:var(--space-4)}
+      .task-nav a{min-height:56px;padding:0 var(--space-4)}.download-row{grid-template-columns:1fr}.prompt-head{align-items:flex-start;flex-direction:column;padding:var(--space-4)}.copy-button{width:100%}
+      pre{padding:var(--space-4);font-size:13px}.closing{padding:var(--space-12) 0}.footer-inner{display:block}
+    }
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{animation:none}.toast,.button{transition:none}}
+    @media print{.masthead,.task-nav,.hero-actions,.task-actions,.copy-button,.toast{display:none!important}.hero-grid,.intro,.task-head,.task-layout,.closing-grid{display:block}.hero-copy,.hero-rail,.task,.closing{padding:24px 0}.hero-rail,.task:nth-of-type(even){background:transparent}.prompt-panel{border:1px solid var(--wb-border);background:var(--wb-canvas);color:var(--wb-ink)}.prompt-head{border-bottom-color:var(--wb-border)}.prompt-head small{color:var(--wb-muted)}}
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"LearningResource",
+    "name":"WorkBuddy 在零售银行领域的实战练习",
+    "description":"三个连续任务，把资料盘点、IPO 到 SOP、Skill 封装与测试真正跑一遍。",
+    "learningResourceType":"Practice",
+    "inLanguage":"zh-CN",
+    "url":"https://xjtulijiagui-max.github.io/lijiagui/workbuddy/"
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到练习内容</a>
+  <header class="masthead">
+    <div class="wrap masthead-inner">
+      <a class="brand" href="https://xjtulijiagui-max.github.io/lijiagui/list/" aria-label="返回 AI 实战训练导航">
+        <span class="brand-mark" aria-hidden="true">WB</span>
+        <span>零售银行 × WorkBuddy</span>
+      </a>
+      <nav class="masthead-links" aria-label="页头导航">
+        <a href="#overview">练习说明</a>
+        <a href="#task-1">开始任务</a>
+        <a href="https://xjtulijiagui-max.github.io/lijiagui/list/">训练导航</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-copy reveal">
+          <p class="eyebrow">WorkBuddy 实战练习 · 零售银行</p>
+          <h1>从一次任务，走到<span class="keep">一套可复用</span>的经营能力</h1>
+          <p class="hero-lead">你将扮演虚构银行的分行零售运营经理，沿着“资料盘点 → IPO → SOP → Skill”完成一条可复核、可追溯的业务闭环。</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#task-1">开始任务 01 <span aria-hidden="true">→</span></a>
+            <a class="button button-ghost" href="downloads/WorkBuddy零售银行实战练习_全部资料.zip" download>下载全部资料 <span aria-hidden="true">↓</span></a>
+          </div>
+          <div class="hero-meta" aria-label="练习信息">
+            <div class="metric"><strong>45–60</strong><span>建议用时 / 分钟</span></div>
+            <div class="metric"><strong>3</strong><span>连续实战任务</span></div>
+            <div class="metric"><strong>15</strong><span>可下载模拟文件</span></div>
+          </div>
+        </div>
+        <aside class="hero-rail" aria-label="能力闭环">
+          <ol class="loop">
+            <li><span class="loop-index">01</span><span><strong>资料</strong><small>只读盘点、字段映射、质量闸门</small></span></li>
+            <li><span class="loop-index">02</span><span><strong>IPO</strong><small>把输入、处理与输出写到字段级</small></span></li>
+            <li><span class="loop-index">03</span><span><strong>SOP</strong><small>九步动作、责任角色、人工关卡</small></span></li>
+            <li><span class="loop-index">04</span><span><strong>Skill</strong><small>触发、停止条件、测试与反馈</small></span></li>
+          </ol>
+        </aside>
+      </div>
+    </section>
+
+    <nav class="task-nav" aria-label="任务导航">
+      <div class="wrap task-nav-inner">
+        <a href="#overview" data-section="overview">练习说明</a>
+        <a href="#task-1" data-section="task-1">01 资料资产盘点</a>
+        <a href="#task-2" data-section="task-2">02 IPO 到 SOP</a>
+        <a href="#task-3" data-section="task-3">03 Skill 封装测试</a>
+      </div>
+    </nav>
+
+    <section id="overview" class="wrap intro" data-observe>
+      <div>
+        <p class="section-label">用户故事</p>
+        <h2>你是海岳银行分行零售运营经理</h2>
+        <p>本周需要把三家支行的聚合经营周报，转成可执行的网点行动。问题是：文件字段不统一，其中一份周次不一致，还有一条记录缺少责任人。你不能跳过这些问题，也不能让 AI 猜测补齐。</p>
+        <p>最终交付不是一份孤立报告，而是一条能重复运行的闭环：资料先通过质量闸门，再形成 IPO、九步 SOP，最后封装为可测试的 Skill。</p>
+      </div>
+      <aside class="story" role="note">
+        <strong>教学模拟声明</strong>
+        页面中的银行、网点、人员、客群与金额均为虚构聚合数据，不代表真实银行业务。练习不涉及个人级客户信息，也不替代授信、适当性、风险或合规判断。
+      </aside>
+    </section>
+
+    <section id="task-1" class="task" data-observe>
+      <div class="wrap">
+        <div class="task-head">
+          <div>
+            <p class="task-number">TASK 01 / WORKSPACE</p>
+            <h2>只读盘点：先找到问题，再谈汇总</h2>
+            <p>读取三家支行周报、字段字典、数据边界和资源表，生成资料资产地图与质量问题清单。</p>
+          </div>
+          <div class="output-box"><span>任务产出</span><strong>资料资产地图 + 字段映射 + 质量报告</strong></div>
+        </div>
+        <div class="task-layout">
+          <aside class="task-side">
+            <div>
+              <h3>练习路径</h3>
+              <ol class="step-list">
+                <li>下载任务 01 全部资料并解压</li>
+                <li>在 WorkBuddy 新建任务，选择该资料文件夹为工作空间</li>
+                <li>复制提示词并执行只读检查</li>
+                <li>确认阻断项后再决定是否进入任务 02</li>
+              </ol>
+            </div>
+            <div class="notice" role="note"><strong>本任务故意设置了两个阻断项</strong>不要直接修复源文件。先让 WorkBuddy 指出文件、行号、证据和需要谁确认。</div>
+          </aside>
+          <div class="task-main">
+            <div>
+              <h3>模拟资料下载</h3>
+              <div class="downloads">
+                <a class="download-row" href="downloads/task1/01_支行周报字段字典.md" download><span><span class="file-name">01_支行周报字段字典.md</span><span class="file-use">统一字段口径、别名、合法范围与质量闸门</span></span><span class="file-type">MD ↓</span></a>
+                <a class="download-row" href="downloads/task1/02_城南支行周报.csv" download><span><span class="file-name">02_城南支行周报.csv</span><span class="file-use">标准字段格式的网点聚合数据</span></span><span class="file-type">CSV ↓</span></a>
+                <a class="download-row" href="downloads/task1/03_高新支行周报.csv" download><span><span class="file-name">03_高新支行周报.csv</span><span class="file-use">使用英文别名字段，检验映射能力</span></span><span class="file-type">CSV ↓</span></a>
+                <a class="download-row" href="downloads/task1/04_曲江支行周报.csv" download><span><span class="file-name">04_曲江支行周报.csv</span><span class="file-use">包含需要业务确认的周次与责任人问题</span></span><span class="file-type">CSV ↓</span></a>
+                <a class="download-row" href="downloads/task1/05_零售业务数据边界.md" download><span><span class="file-name">05_零售业务数据边界.md</span><span class="file-use">规定敏感数据、业务判断与文件操作边界</span></span><span class="file-type">MD ↓</span></a>
+                <a class="download-row" href="downloads/task1/06_活动与服务资源.csv" download><span><span class="file-name">06_活动与服务资源.csv</span><span class="file-use">后续行动匹配需要的容量与禁止动作</span></span><span class="file-type">CSV ↓</span></a>
+              </div>
+              <div class="download-all"><a class="button button-ghost" href="downloads/任务1_资料资产盘点.zip" download>下载任务 01 资料包</a></div>
+            </div>
+            <div class="prompt-panel">
+              <div class="prompt-head"><span><strong>任务 01 提示词</strong><small>工作空间只读盘点与数据质量检查</small></span><button class="copy-button" type="button" data-copy="prompt-1">复制提示词</button></div>
+              <pre id="prompt-1"><code># 角色
+你是海岳银行分行零售运营经理的数据质量助手。
+
+# 任务背景
+我需要汇总 2026-W32 三家支行的聚合经营周报，但文件字段不统一，且可能存在周次、责任人、口径或敏感数据问题。所有资料均为教学模拟。
+
+# 输入资料
+请读取当前工作空间中的：
+1. 《01_支行周报字段字典.md》
+2. 三家支行周报 CSV
+3. 《05_零售业务数据边界.md》
+4. 《06_活动与服务资源.csv》
+
+# 任务目标
+在不修改任何源文件的前提下，生成资料资产地图、字段映射表和数据质量报告，并判断能否进入下一步汇总。
+
+# 处理要求
+1. 先列出全部文件、用途、格式、数据责任人和是否齐套。
+2. 按字段字典映射不同列名，同时保留原字段名与来源文件。
+3. 检查必填字段、周次、单位、空值、重复、日期和“可经营 ≥ 已联系 ≥ 预约 / 有效沟通”的数量关系。
+4. 检查是否出现个人姓名、完整手机号、证件号、银行卡号、精确地址或其他不应进入练习的敏感数据。
+5. 每个问题都写明证据：文件名、行号或记录定位、违反的规则、影响范围。
+6. 将问题分为“阻断项”和“非阻断项”。存在阻断项时停止，不汇总、不改源文件。
+7. 对需要人工判断的内容，只生成待确认问题，并标注应由运营、网点负责人或风险人员中的谁确认。
+
+# 输出要求
+依次输出：
+A. 资料资产地图
+B. 字段映射表
+C. 数据质量报告
+D. 阻断项与非阻断项清单
+E. 待确认问题
+F. 是否允许进入任务 02 的结论与理由
+
+# 边界
+本轮只读。未经确认不得移动、改名、删除、覆盖或上传文件；不得推断敏感属性，不得给出授信、购买、适当性或客户风险结论。</code></pre>
+            </div>
+            <div class="task-actions"><a class="button button-primary" href="https://cloud.tencent.cn/act/pro/workbuddy" target="_blank" rel="noopener">打开 WorkBuddy 官方页 <span aria-hidden="true">↗</span></a><button class="button button-secondary" type="button" data-copy="prompt-1">复制并开始任务 01</button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="task-2" class="task" data-observe>
+      <div class="wrap">
+        <div class="task-head">
+          <div>
+            <p class="task-number">TASK 02 / PLAN + IPO + SOP</p>
+            <h2>把已确认资料写成 IPO，再落到九步 SOP</h2>
+            <p>先用 Plan 模式列清依赖与人工关卡，确认后再生成字段级 IPO 和可执行 SOP。</p>
+          </div>
+          <div class="output-box"><span>任务产出</span><strong>IPO 工作表 + 九步 SOP + 待确认清单</strong></div>
+        </div>
+        <div class="task-layout">
+          <aside class="task-side">
+            <div>
+              <h3>练习路径</h3>
+              <ol class="step-list">
+                <li>对照任务 01 输出与示例质量摘要</li>
+                <li>在 WorkBuddy 切换 Plan 模式</li>
+                <li>复制提示词，先只生成计划并等待确认</li>
+                <li>确认后生成 IPO、九步 SOP 与异常桌面演练</li>
+              </ol>
+            </div>
+            <div class="notice" role="note"><strong>不要绕过人工关卡</strong>任务 02 只有在周次与责任人问题得到明确确认后才能继续。计划中必须保留数据质量、业务策略与风险复核三个关卡。</div>
+          </aside>
+          <div class="task-main">
+            <div>
+              <h3>模拟资料下载</h3>
+              <div class="downloads">
+                <a class="download-row" href="downloads/task2/00_任务1质量检查示例摘要.md" download><span><span class="file-name">00_任务1质量检查示例摘要.md</span><span class="file-use">提供两个阻断项的课堂确认结果</span></span><span class="file-type">MD ↓</span></a>
+                <a class="download-row" href="downloads/task2/01_IPO工作表.md" download><span><span class="file-name">01_IPO工作表.md</span><span class="file-use">把输入、处理和输出写到字段级</span></span><span class="file-type">MD ↓</span></a>
+                <a class="download-row" href="downloads/task2/02_九步SOP模板.md" download><span><span class="file-name">02_九步SOP模板.md</span><span class="file-use">固定九步动作、角色、产出与质量闸门</span></span><span class="file-type">MD ↓</span></a>
+                <a class="download-row" href="downloads/task2/03_本周经营资源表.csv" download><span><span class="file-name">03_本周经营资源表.csv</span><span class="file-use">约束行动资源、容量、责任人与禁止动作</span></span><span class="file-type">CSV ↓</span></a>
+                <a class="download-row" href="downloads/task2/04_风险与外发规则.md" download><span><span class="file-name">04_风险与外发规则.md</span><span class="file-use">规定人工复核与不可自动执行事项</span></span><span class="file-type">MD ↓</span></a>
+              </div>
+              <div class="download-all"><a class="button button-ghost" href="downloads/任务2_IPO到SOP.zip" download>下载任务 02 资料包</a></div>
+            </div>
+            <div class="prompt-panel">
+              <div class="prompt-head"><span><strong>任务 02 提示词</strong><small>Plan 模式下完成 IPO 与九步 SOP</small></span><button class="copy-button" type="button" data-copy="prompt-2">复制提示词</button></div>
+              <pre id="prompt-2"><code># 角色
+你是海岳银行分行零售运营流程设计顾问，负责把已确认的聚合周报处理要求转成可复核的业务流程。
+
+# 任务背景
+任务 01 已完成只读盘点。请读取我上传的任务 02 资料，以及我提供的任务 01 质量报告（如有）。所有资料均为教学模拟。
+
+# 第一阶段：只制定计划，不执行
+请先在 Plan 模式输出：
+1. 输入文件与口径依赖
+2. 处理阶段与先后关系
+3. 需要使用的 WorkBuddy 能力
+4. 数据质量、业务策略、风险复核三个强制关卡
+5. 每阶段产物、责任角色、验收人和失败回退
+6. 仍需我决策的问题
+
+输出计划后停止，等待我回复“确认执行”。
+
+# 第二阶段：收到“确认执行”后再执行
+1. 按《01_IPO工作表.md》梳理“支行存量客户经营周闭环”的 Input、Process、Output。
+2. Input 必须写明文件、字段、来源角色、频率、敏感等级、必需/可选、质量标准和缺失处理。
+3. Process 必须写明规则、WorkBuddy 能力、责任角色、前置条件、异常分支、人工决策点和过程记录。
+4. Output 必须写明使用者、格式、字段、频率、复核人、质量标准和下游动作。
+5. 按《02_九步SOP模板.md》生成九步 SOP：建任务、校验数据、统一口径、形成客群、识别机会、匹配动作、生成材料、风险复核、回收结果。
+6. 每一步写清责任角色、输入、具体动作、WorkBuddy 能力、输出、质量闸门、异常处理和预计时长。
+7. 用“缺报、字段冲突、敏感信息、无证据机会”四类异常做桌面演练，写明在哪个闸门停止、由谁确认、保留什么记录。
+
+# 输出要求
+A. 已确认口径与版本
+B. IPO 工作表
+C. 九步 SOP
+D. 四类异常桌面演练
+E. 待确认问题与责任角色
+
+# 边界
+不得新增材料中没有依据的流程；不得把相关性写成因果；不得自动生成客户名单或自动触达客户；AI 只产出内部草稿，所有对客动作、业务策略和风险判断由人工确认。</code></pre>
+            </div>
+            <div class="task-actions"><a class="button button-primary" href="https://cloud.tencent.cn/act/pro/workbuddy" target="_blank" rel="noopener">打开 WorkBuddy 官方页 <span aria-hidden="true">↗</span></a><button class="button button-secondary" type="button" data-copy="prompt-2">复制并进入 Plan 模式</button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="task-3" class="task" data-observe>
+      <div class="wrap">
+        <div class="task-head">
+          <div>
+            <p class="task-number">TASK 03 / SKILL CREATOR</p>
+            <h2>把 SOP 封装成 Skill，并用 9 类样本证明它会停</h2>
+            <p>固定触发语、输入、输出、停止条件与人工确认点，再运行正常、边界和错误样本。</p>
+          </div>
+          <div class="output-box"><span>任务产出</span><strong>“存量客户经营周闭环”Skill + 测试记录</strong></div>
+        </div>
+        <div class="task-layout">
+          <aside class="task-side">
+            <div>
+              <h3>练习路径</h3>
+              <ol class="step-list">
+                <li>下载 SOP、输入输出规格和测试样本</li>
+                <li>在 WorkBuddy 中唤起 Skill Creator</li>
+                <li>复制提示词，创建并检查 Skill 目录与边界</li>
+                <li>运行 3 个正常、2 个边界、4 个错误样本</li>
+                <li>记录失败原因，只提出版本更新建议</li>
+              </ol>
+            </div>
+            <div class="notice" role="note"><strong>错误样本的正确结果是“停止”</strong>一个可靠 Skill 不只会成功生成文件，还必须能在文件缺失、口径冲突或敏感信息出现时拒绝继续。</div>
+          </aside>
+          <div class="task-main">
+            <div>
+              <h3>模拟资料下载</h3>
+              <div class="downloads">
+                <a class="download-row" href="downloads/task3/01_存量客户经营周闭环SOP_v1.md" download><span><span class="file-name">01_存量客户经营周闭环SOP_v1.md</span><span class="file-use">九步流程、质量闸门与人工确认点</span></span><span class="file-type">MD ↓</span></a>
+                <a class="download-row" href="downloads/task3/02_Skill输入输出规格.md" download><span><span class="file-name">02_Skill输入输出规格.md</span><span class="file-use">触发语、目录、输出文件和停止条件</span></span><span class="file-type">MD ↓</span></a>
+                <a class="download-row" href="downloads/task3/03_测试样本集.csv" download><span><span class="file-name">03_测试样本集.csv</span><span class="file-use">3 个正常、2 个边界、4 个错误场景</span></span><span class="file-type">CSV ↓</span></a>
+                <a class="download-row" href="downloads/task3/04_测试记录模板.csv" download><span><span class="file-name">04_测试记录模板.csv</span><span class="file-use">记录预期、实际、闸门与复核人</span></span><span class="file-type">CSV ↓</span></a>
+              </div>
+              <div class="download-all"><a class="button button-ghost" href="downloads/任务3_Skill封装与测试.zip" download>下载任务 03 资料包</a></div>
+            </div>
+            <div class="prompt-panel">
+              <div class="prompt-head"><span><strong>任务 03 提示词</strong><small>Skill Creator 封装、测试与版本边界</small></span><button class="copy-button" type="button" data-copy="prompt-3">复制提示词</button></div>
+              <pre id="prompt-3"><code># 角色
+你是 Skill Creator。请把《01_存量客户经营周闭环SOP_v1.md》封装为“存量客户经营周闭环”Skill。
+
+# 任务背景
+这个 Skill 用于处理海岳银行三家支行的脱敏聚合经营周报。它必须先校验，再分析；必须保留人工关卡；错误样本的正确行为是停止。所有资料均为教学模拟。
+
+# 输入资料
+请读取：
+1. 《01_存量客户经营周闭环SOP_v1.md》
+2. 《02_Skill输入输出规格.md》
+3. 《03_测试样本集.csv》
+4. 《04_测试记录模板.csv》
+
+# 创建要求
+1. 触发语：生成周行动、复盘存量客户、制作网点经营作战包。
+2. 必需输入：00_规则、01_输入、02_过程、03_模板；缺一类先报错。
+3. 严格按 SOP 九步运行，每个质量闸门通过后才能进入下一步，并保存中间检查记录。
+4. 输出质量报告、标准明细、机会清单、行动台账、沟通提纲、风险清单、管理摘要、反馈模板和运行日志。
+5. 停止条件必须覆盖：未脱敏信息、文件缺失、字段含义或单位冲突、无规则依据、要求自动联系客户、要求授信或购买结论。
+6. 人工确认点必须覆盖：字段映射、更正记录、经营机会、行动台账、对客话术和最终外发。
+7. 不得覆盖原文件，不得自动发送、拨打或修改客户标签。
+
+# 测试要求
+1. 按《03_测试样本集.csv》运行 3 个正常、2 个边界、4 个错误场景。
+2. 每个场景记录输入版本、预期行为、实际行为、到达的质量闸门、是否通过和停止原因。
+3. 错误样本只允许输出质量报告与停止日志，不得继续生成行动台账。
+4. 如果实际结果与预期不一致，先修正 Skill，再重新运行该场景；保留修正记录。
+
+# 最终输出
+A. Skill 目录与文件说明
+B. 触发、输入、输出、停止条件与人工确认点清单
+C. 9 个场景的测试记录
+D. 未通过项、修正记录和剩余风险
+E. 版本更新建议
+
+# 版本边界
+只提出下一版建议。未经业务负责人和风险人员共同批准，不得把测试中的临时修正直接作为正式业务规则。</code></pre>
+            </div>
+            <div class="task-actions"><a class="button button-primary" href="https://cloud.tencent.cn/act/pro/workbuddy" target="_blank" rel="noopener">打开 WorkBuddy 官方页 <span aria-hidden="true">↗</span></a><button class="button button-secondary" type="button" data-copy="prompt-3">复制并创建 Skill</button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing">
+      <div class="wrap closing-grid">
+        <div>
+          <p class="section-label">练习结束时</p>
+          <h2>你交付的不只是结果，而是一套<span class="keep">知道何时继续</span>、<span class="keep">何时停下</span>的能力。</h2>
+          <p>资料通过质量闸门，IPO 说明业务对象，SOP 规定动作，Skill 负责稳定执行，反馈再回到下一轮输入。</p>
+        </div>
+        <a class="button button-secondary" href="downloads/WorkBuddy零售银行实战练习_全部资料.zip" download>下载全部练习资料</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner"><span>李家贵 · WorkBuddy 零售银行实战练习</span><span>版本 2026-08-14 · 教学模拟数据</span></div>
+  </footer>
+  <div class="toast" id="toast" role="status" aria-live="polite">提示词已复制</div>
+  <script>
+    (() => {
+      const toast = document.querySelector('#toast');
+      const copyText = async (id, button) => {
+        const source = document.getElementById(id);
+        if (!source) return;
+        const text = source.innerText.trim();
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch {
+          const textarea = document.createElement('textarea');
+          textarea.value = text;
+          textarea.setAttribute('readonly', '');
+          textarea.style.position = 'fixed';
+          textarea.style.opacity = '0';
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand('copy');
+          textarea.remove();
+        }
+        const original = button.textContent;
+        button.textContent = '已复制';
+        toast.classList.add('show');
+        window.setTimeout(() => {
+          button.textContent = original;
+          toast.classList.remove('show');
+        }, 1400);
+      };
+
+      document.addEventListener('click', (event) => {
+        const button = event.target.closest('[data-copy]');
+        if (button) copyText(button.dataset.copy, button);
+      });
+
+      const links = [...document.querySelectorAll('.task-nav a[data-section]')];
+      const sections = [...document.querySelectorAll('[data-observe]')];
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+          const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+          if (!visible) return;
+          links.forEach((link) => link.setAttribute('aria-current', String(link.dataset.section === visible.target.id)));
+        }, { rootMargin: '-20% 0px -65% 0px', threshold: [0, 0.25, 0.5] });
+        sections.forEach((section) => observer.observe(section));
+      }
+    })();
+  </script>
+</body>
+</html>

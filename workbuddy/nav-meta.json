@@ -1,0 +1,16 @@
+{
+  "id": "workbuddy",
+  "title": "WorkBuddy 在零售银行领域的实战练习",
+  "shortTitle": "零售银行 WorkBuddy",
+  "category": "金融保险与支付",
+  "description": "三个连续任务，把资料盘点、IPO 到 SOP、Skill 封装与测试真正跑一遍。",
+  "path": "workbuddy/",
+  "url": "https://xjtulijiagui-max.github.io/lijiagui/workbuddy/",
+  "tags": ["零售银行", "WorkBuddy", "IPO", "SOP", "Skill"],
+  "type": "行业练习",
+  "client": "通用",
+  "featured": true,
+  "order": 225,
+  "status": "正常",
+  "updated": "2026-08-14"
+}
