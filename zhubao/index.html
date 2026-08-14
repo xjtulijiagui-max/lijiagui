@@ -1,0 +1,1796 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="按课程章节整理的珠宝 AI 提示词索引与双关大作业练习台。">
+  <meta name="theme-color" content="#071A2E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23071A2E'/%3E%3Cpath d='M16 24l8-10h16l8 10-16 28z' fill='%231262A3' stroke='%23D8B56B' stroke-width='3'/%3E%3C/svg%3E">
+  <link rel="canonical" href="https://xjtulijiagui-max.github.io/lijiagui/zhubao/">
+  <title>珠宝 AI 工具赋能实战｜提示词与双关大作业</title>
+  <style>
+    :root {
+      --surface-primary: #F7F8FA;
+      --surface-canvas: #FFFFFF;
+      --surface-soft: #EEF2F7;
+      --surface-dark: #071A2E;
+      --surface-dark-elevated: #102B47;
+      --surface-deep: #04111F;
+      --text-primary: #102033;
+      --text-secondary: #5C6978;
+      --text-inverse: #F7FBFF;
+      --text-inverse-muted: #B7C7D9;
+      --accent-primary: #1262A3;
+      --accent-hover: #0A4C82;
+      --accent-gold: #B58A43;
+      --accent-gold-strong: #D8B56B;
+      --accent-gold-readable: #765217;
+      --accent-gold-soft: #F4E9D2;
+      --border-subtle: #DCE3EA;
+      --border-inverse: #29445E;
+      --status-success: #147A5B;
+      --status-warning: #956019;
+      --focus-ring: #4EA5E0;
+      --code-text: #D8E9F8;
+      --gem-a: #8ED0FF;
+      --gem-b: #1262A3;
+      --gem-c: #071A2E;
+      --gold-light: #F8E2AF;
+      --gold-dark: #8C6428;
+      --overlay-soft: rgba(255, 255, 255, 0.08);
+      --overlay-mid: rgba(255, 255, 255, 0.16);
+      --overlay-gold: rgba(181, 138, 67, 0.22);
+      --hero-blue-glow: rgba(18, 98, 163, 0.36);
+      --gem-blue-glow: rgba(142, 208, 255, 0.16);
+      --gem-drop-shadow: rgba(0, 0, 0, 0.36);
+      --shadow-soft: 0 12px 40px rgba(7, 26, 46, 0.08);
+      --shadow-deep: 0 28px 80px rgba(0, 0, 0, 0.28);
+      --inset-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+      --space-16: 64px;
+      --space-20: 80px;
+      --space-24: 96px;
+      --radius-xs: 8px;
+      --radius-sm: 12px;
+      --radius-md: 18px;
+      --radius-lg: 28px;
+      --radius-xl: 36px;
+      --radius-pill: 999px;
+      --line: 1px;
+      --tap: 44px;
+      --content-max: 1200px;
+      --reading-max: 760px;
+      --prompt-height: 340px;
+      --display: 5rem;
+      --h1: 3.5rem;
+      --h2: 2.25rem;
+      --h3: 1.25rem;
+      --body-lg: 1.125rem;
+      --body: 1rem;
+      --body-sm: 0.875rem;
+      --caption: 0.75rem;
+      --motion-micro: 160ms;
+      --motion-standard: 260ms;
+      --motion-hero: 560ms;
+      --ease-micro: cubic-bezier(0.2, 0.8, 0.2, 1);
+      --ease-hero: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: var(--space-24);
+    }
+
+    body {
+      margin: 0;
+      background: var(--surface-primary);
+      color: var(--text-primary);
+      font-family: "Noto Sans SC", "Microsoft YaHei UI", "PingFang SC", sans-serif;
+      font-size: var(--body);
+      line-height: 1.7;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    svg {
+      display: block;
+    }
+
+    :focus-visible {
+      outline: var(--space-1) solid var(--focus-ring);
+      outline-offset: var(--space-1);
+    }
+
+    .progress-track {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 20;
+      height: var(--space-1);
+      background: var(--overlay-soft);
+      transform-origin: left center;
+    }
+
+    .progress-track::after {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-primary), var(--accent-gold-strong));
+      transform: scaleX(var(--course-progress, 0));
+      transform-origin: left center;
+      transition: transform var(--motion-micro) var(--ease-micro);
+    }
+
+    .hero {
+      position: relative;
+      min-height: 82dvh;
+      overflow: hidden;
+      color: var(--text-inverse);
+      background:
+        radial-gradient(circle at 78% 24%, var(--overlay-gold), transparent 28%),
+        radial-gradient(circle at 72% 64%, var(--hero-blue-glow), transparent 34%),
+        linear-gradient(145deg, var(--surface-deep), var(--surface-dark) 58%, var(--surface-dark-elevated));
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -12% -48% 32%;
+      height: 72%;
+      border-radius: 50%;
+      background: linear-gradient(115deg, transparent, var(--overlay-soft), transparent);
+      transform: rotate(-8deg);
+      pointer-events: none;
+    }
+
+    .hero-inner,
+    .page-shell,
+    .footer-inner {
+      width: min(calc(100% - (var(--space-8) * 2)), var(--content-max));
+      margin-inline: auto;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+      gap: var(--space-16);
+      align-items: center;
+      min-height: 82dvh;
+      padding-block: var(--space-24);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      min-height: var(--space-8);
+      padding-inline: var(--space-3);
+      border: var(--line) solid var(--border-inverse);
+      border-radius: var(--radius-pill);
+      color: var(--accent-gold-strong);
+      font-size: var(--caption);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow-dot {
+      width: var(--space-2);
+      height: var(--space-2);
+      border-radius: 50%;
+      background: var(--accent-gold-strong);
+      box-shadow: 0 0 0 var(--space-1) var(--overlay-gold);
+    }
+
+    .hero h1 {
+      max-width: 12ch;
+      margin: var(--space-6) 0 var(--space-5);
+      font-family: "Noto Serif SC", "Songti SC", STSong, serif;
+      font-size: var(--display);
+      font-weight: 650;
+      line-height: 1.02;
+      letter-spacing: 0;
+      text-wrap: balance;
+    }
+
+    .hero-lead {
+      max-width: 34em;
+      margin: 0;
+      color: var(--text-inverse-muted);
+      font-size: var(--body-lg);
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      margin-top: var(--space-8);
+    }
+
+    .meta-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: var(--tap);
+      padding-inline: var(--space-4);
+      border-radius: var(--radius-pill);
+      background: var(--overlay-soft);
+      box-shadow: var(--inset-highlight);
+      color: var(--text-inverse);
+      font-size: var(--body-sm);
+    }
+
+    .hero-art-shell {
+      padding: var(--space-2);
+      border: var(--line) solid var(--border-inverse);
+      border-radius: var(--radius-xl);
+      background: var(--overlay-soft);
+      box-shadow: var(--shadow-deep);
+      transform: translateY(var(--space-3));
+      opacity: 0;
+      animation: hero-in var(--motion-hero) var(--ease-hero) forwards;
+    }
+
+    .hero-art {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 460px;
+      overflow: hidden;
+      border-radius: calc(var(--radius-xl) - var(--space-2));
+      background:
+        radial-gradient(circle at center, var(--gem-blue-glow), transparent 42%),
+        linear-gradient(155deg, var(--surface-dark-elevated), var(--surface-deep));
+      box-shadow: var(--inset-highlight);
+    }
+
+    .hero-art svg {
+      width: min(86%, 420px);
+      height: auto;
+      filter: drop-shadow(0 28px 40px var(--gem-drop-shadow));
+    }
+
+    .chapter-orbit {
+      position: absolute;
+      inset: var(--space-8);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-content: space-between;
+      pointer-events: none;
+    }
+
+    .chapter-orbit span {
+      color: var(--text-inverse-muted);
+      font-size: var(--caption);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .chapter-orbit span:nth-child(even) {
+      text-align: right;
+    }
+
+    @keyframes hero-in {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .chapter-nav-shell {
+      position: sticky;
+      top: var(--space-3);
+      z-index: 12;
+      width: min(calc(100% - (var(--space-4) * 2)), var(--content-max));
+      margin: calc(var(--space-6) * -1) auto var(--space-12);
+      padding: var(--space-2);
+      border: var(--line) solid var(--border-subtle);
+      border-radius: var(--radius-pill);
+      background: var(--surface-canvas);
+      box-shadow: var(--shadow-soft);
+      scrollbar-width: none;
+    }
+
+    .chapter-nav-shell::-webkit-scrollbar {
+      display: none;
+    }
+
+    .chapter-nav {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-2);
+    }
+
+    .chapter-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      min-height: var(--tap);
+      padding-inline: var(--space-3);
+      border-radius: var(--radius-pill);
+      color: var(--text-secondary);
+      font-size: var(--body-sm);
+      font-weight: 650;
+      text-decoration: none;
+      transition: color var(--motion-micro) var(--ease-micro), background var(--motion-micro) var(--ease-micro), transform var(--motion-micro) var(--ease-micro);
+    }
+
+    .chapter-link:hover {
+      color: var(--accent-primary);
+      background: var(--surface-soft);
+    }
+
+    .chapter-link[aria-current="true"] {
+      color: var(--text-inverse);
+      background: var(--surface-dark);
+    }
+
+    .chapter-link:active {
+      transform: scale(0.98);
+    }
+
+    .chapter-link strong {
+      color: var(--accent-gold-readable);
+      font-size: var(--caption);
+      letter-spacing: 0.08em;
+    }
+
+    .chapter-link[aria-current="true"] strong {
+      color: var(--accent-gold-strong);
+    }
+
+    .page-shell {
+      padding-bottom: var(--space-20);
+    }
+
+    .chapter {
+      padding-block: var(--space-20);
+    }
+
+    .chapter + .chapter {
+      border-top: var(--line) solid var(--border-subtle);
+    }
+
+    .chapter-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.28fr) minmax(0, 0.72fr);
+      gap: var(--space-8);
+      align-items: start;
+      margin-bottom: var(--space-12);
+    }
+
+    .chapter-index {
+      color: var(--accent-gold-readable);
+      font-size: var(--caption);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .chapter-dark .chapter-index {
+      color: var(--accent-gold-strong);
+    }
+
+    .prompt-reference {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-6);
+      margin-bottom: var(--space-8);
+      padding: var(--space-5) var(--space-6);
+      border: var(--line) solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      background: var(--surface-canvas);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .prompt-reference strong {
+      display: block;
+      margin-bottom: var(--space-1);
+      color: var(--text-primary);
+    }
+
+    .prompt-reference p {
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: var(--body-sm);
+    }
+
+    .chapter-copy h2,
+    .chapter-dark h2 {
+      max-width: 14ch;
+      margin: 0 0 var(--space-4);
+      font-family: "Noto Serif SC", "Songti SC", STSong, serif;
+      font-size: var(--h1);
+      font-weight: 650;
+      line-height: 1.08;
+      letter-spacing: 0;
+      text-wrap: balance;
+    }
+
+    .title-line {
+      display: block;
+      white-space: nowrap;
+    }
+
+    .nowrap {
+      white-space: nowrap;
+    }
+
+    .chapter-copy p {
+      max-width: var(--reading-max);
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: var(--body-lg);
+    }
+
+    .prompt-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-6);
+    }
+
+    .panel-shell {
+      padding: var(--space-1);
+      border-radius: var(--radius-lg);
+      background: var(--surface-soft);
+      border: var(--line) solid var(--border-subtle);
+    }
+
+    .panel {
+      height: 100%;
+      padding: var(--space-8);
+      border-radius: calc(var(--radius-lg) - var(--space-1));
+      background: var(--surface-canvas);
+    }
+
+    .prompt-card {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .prompt-topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+
+    .prompt-label,
+    .time-badge,
+    .task-badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: var(--space-8);
+      padding-inline: var(--space-3);
+      border-radius: var(--radius-pill);
+      color: var(--accent-primary);
+      background: var(--surface-soft);
+      font-size: var(--caption);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .prompt-card h3,
+    .assignment-card h3,
+    .builder h3,
+    .empty-state h3 {
+      margin: 0;
+      font-size: var(--h3);
+      line-height: 1.35;
+      text-wrap: balance;
+    }
+
+    .prompt-note {
+      margin: var(--space-3) 0 var(--space-5);
+      color: var(--text-secondary);
+      font-size: var(--body-sm);
+    }
+
+    pre {
+      flex: 1;
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+      max-height: var(--prompt-height);
+      margin: 0;
+      padding: var(--space-5);
+      overflow: auto;
+      border-radius: var(--radius-md);
+      color: var(--code-text);
+      background: var(--surface-dark);
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: var(--body-sm);
+      line-height: 1.7;
+      white-space: pre-wrap;
+      overflow-wrap: normal;
+      word-break: keep-all;
+      scrollbar-color: var(--accent-gold) var(--surface-dark-elevated);
+    }
+
+    .button-row,
+    .download-list,
+    .tool-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      margin-top: var(--space-5);
+    }
+
+    .button,
+    .button-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      min-height: var(--tap);
+      padding: var(--space-3) var(--space-4);
+      border: 0;
+      border-radius: var(--radius-pill);
+      color: var(--text-inverse);
+      background: var(--accent-primary);
+      font-size: var(--body-sm);
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background var(--motion-micro) var(--ease-micro), color var(--motion-micro) var(--ease-micro), transform var(--motion-micro) var(--ease-micro);
+    }
+
+    .button:hover,
+    .button-link:hover {
+      background: var(--accent-hover);
+    }
+
+    .button:active,
+    .button-link:active {
+      transform: scale(0.98);
+    }
+
+    .button svg,
+    .button-link svg {
+      width: var(--space-4);
+      height: var(--space-4);
+    }
+
+    .button.secondary,
+    .button-link.secondary {
+      color: var(--text-primary);
+      background: var(--surface-soft);
+    }
+
+    .button.secondary:hover,
+    .button-link.secondary:hover {
+      color: var(--accent-primary);
+      background: var(--accent-gold-soft);
+    }
+
+    .button.success {
+      background: var(--status-success);
+    }
+
+    .empty-state {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: var(--space-6);
+      align-items: center;
+      padding: var(--space-8);
+      border-radius: var(--radius-lg);
+      color: var(--text-inverse);
+      background: linear-gradient(135deg, var(--surface-dark), var(--surface-dark-elevated));
+      box-shadow: var(--inset-highlight);
+    }
+
+    .empty-state-icon {
+      display: grid;
+      place-items: center;
+      width: var(--space-12);
+      height: var(--space-12);
+      border-radius: 50%;
+      color: var(--accent-gold-strong);
+      background: var(--overlay-soft);
+    }
+
+    .empty-state-icon svg {
+      width: var(--space-6);
+      height: var(--space-6);
+    }
+
+    .empty-state p {
+      margin: var(--space-2) 0 0;
+      color: var(--text-inverse-muted);
+    }
+
+    .builder {
+      margin-top: var(--space-6);
+    }
+
+    .builder-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-4);
+      margin-top: var(--space-6);
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: var(--space-2);
+      color: var(--text-secondary);
+      font-size: var(--body-sm);
+      font-weight: 650;
+    }
+
+    .field input {
+      width: 100%;
+      min-height: var(--tap);
+      padding: var(--space-3) var(--space-4);
+      border: var(--line) solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      background: var(--surface-primary);
+    }
+
+    .builder-output {
+      display: none;
+      margin-top: var(--space-5);
+    }
+
+    .builder-output.is-ready {
+      display: block;
+    }
+
+    .chapter-dark-wrap {
+      width: 100%;
+      color: var(--text-inverse);
+      background:
+        radial-gradient(circle at 92% 8%, var(--overlay-gold), transparent 20%),
+        linear-gradient(145deg, var(--surface-dark), var(--surface-deep));
+    }
+
+    .chapter-dark {
+      width: min(calc(100% - (var(--space-8) * 2)), var(--content-max));
+      margin-inline: auto;
+      padding-block: var(--space-24);
+    }
+
+    .chapter-dark .chapter-head {
+      margin-bottom: var(--space-16);
+    }
+
+    .chapter-dark .chapter-copy p {
+      color: var(--text-inverse-muted);
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-3);
+      margin: 0 0 var(--space-12);
+      padding: 0;
+      list-style: none;
+    }
+
+    .timeline li {
+      padding: var(--space-5);
+      border: var(--line) solid var(--border-inverse);
+      border-radius: var(--radius-md);
+      background: var(--overlay-soft);
+      box-shadow: var(--inset-highlight);
+    }
+
+    .timeline strong,
+    .timeline span {
+      display: block;
+    }
+
+    .timeline strong {
+      color: var(--accent-gold-strong);
+      font-size: var(--body-sm);
+    }
+
+    .timeline span {
+      margin-top: var(--space-2);
+      color: var(--text-inverse-muted);
+      font-size: var(--body-sm);
+    }
+
+    .assignment-stack {
+      display: grid;
+      gap: var(--space-8);
+    }
+
+    .assignment-shell {
+      min-width: 0;
+      padding: var(--space-2);
+      border: var(--line) solid var(--border-inverse);
+      border-radius: var(--radius-xl);
+      background: var(--overlay-soft);
+    }
+
+    .assignment-card {
+      min-width: 0;
+      padding: var(--space-10);
+      border-radius: calc(var(--radius-xl) - var(--space-2));
+      background: var(--surface-dark-elevated);
+      box-shadow: var(--inset-highlight);
+    }
+
+    .assignment-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-6);
+      margin-bottom: var(--space-8);
+    }
+
+    .assignment-number {
+      color: var(--accent-gold-strong);
+      font-family: "Noto Serif SC", "Songti SC", STSong, serif;
+      font-size: var(--h1);
+      line-height: 1;
+    }
+
+    .assignment-intro {
+      max-width: var(--reading-max);
+      margin: var(--space-3) 0 0;
+      color: var(--text-inverse-muted);
+    }
+
+    .assignment-grid {
+      display: grid;
+      min-width: 0;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: var(--space-6);
+      align-items: start;
+    }
+
+    .assignment-grid > * {
+      min-width: 0;
+    }
+
+    .assignment-block {
+      padding: var(--space-6);
+      border-radius: var(--radius-md);
+      background: var(--overlay-soft);
+    }
+
+    .assignment-block + .assignment-block {
+      margin-top: var(--space-4);
+    }
+
+    .assignment-block h4 {
+      margin: 0 0 var(--space-3);
+      color: var(--accent-gold-strong);
+      font-size: var(--body-sm);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .assignment-block p,
+    .assignment-block ul,
+    .assignment-block ol {
+      margin-block: 0;
+      color: var(--text-inverse-muted);
+      font-size: var(--body-sm);
+    }
+
+    .assignment-block ul,
+    .assignment-block ol {
+      padding-left: var(--space-5);
+    }
+
+    .assignment-block li + li {
+      margin-top: var(--space-2);
+    }
+
+    .assignment-card pre {
+      max-height: 520px;
+      background: var(--surface-deep);
+    }
+
+    .assignment-card .button.secondary,
+    .assignment-card .button-link.secondary {
+      color: var(--text-inverse);
+      background: var(--overlay-mid);
+    }
+
+    .assignment-card .button.secondary:hover,
+    .assignment-card .button-link.secondary:hover {
+      color: var(--surface-dark);
+      background: var(--accent-gold-soft);
+    }
+
+    .handoff {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--space-8);
+      align-items: center;
+      margin-top: var(--space-12);
+      padding: var(--space-8);
+      border-radius: var(--radius-lg);
+      color: var(--text-primary);
+      background: var(--accent-gold-soft);
+    }
+
+    .handoff h3 {
+      margin: 0 0 var(--space-2);
+      font-size: var(--h3);
+    }
+
+    .handoff p {
+      margin: 0;
+      color: var(--text-secondary);
+    }
+
+    .footer {
+      color: var(--text-inverse-muted);
+      background: var(--surface-deep);
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-8);
+      padding-block: var(--space-10);
+      font-size: var(--body-sm);
+    }
+
+    .footer strong {
+      color: var(--text-inverse);
+    }
+
+    .toast {
+      position: fixed;
+      right: var(--space-6);
+      bottom: var(--space-6);
+      z-index: 30;
+      max-width: min(360px, calc(100% - (var(--space-8) * 2)));
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-pill);
+      color: var(--text-inverse);
+      background: var(--status-success);
+      box-shadow: var(--shadow-soft);
+      transform: translateY(var(--space-4));
+      opacity: 0;
+      pointer-events: none;
+      transition: transform var(--motion-standard) var(--ease-hero), opacity var(--motion-standard) var(--ease-hero);
+    }
+
+    .toast.is-visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    @media (max-width: 900px) {
+      :root {
+        --display: 4rem;
+        --h1: 3rem;
+        --h2: 2rem;
+      }
+
+      .hero-inner,
+      .chapter-head,
+      .assignment-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-inner {
+        gap: var(--space-8);
+        padding-block: var(--space-16) var(--space-20);
+      }
+
+      .hero-art {
+        min-height: 380px;
+      }
+
+      .chapter-head {
+        gap: var(--space-3);
+      }
+
+      .builder-grid,
+      .timeline {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 700px) {
+      :root {
+        --display: 2.75rem;
+        --h1: 2rem;
+        --h2: 1.5rem;
+      }
+
+      .hero-inner,
+      .page-shell,
+      .chapter-dark,
+      .footer-inner {
+        width: min(calc(100% - (var(--space-4) * 2)), var(--content-max));
+      }
+
+      .hero {
+        min-height: auto;
+      }
+
+      .hero-inner {
+        min-height: auto;
+      }
+
+      .hero h1 {
+        max-width: 10ch;
+      }
+
+      .hero-art {
+        min-height: 320px;
+      }
+
+      .chapter-nav-shell {
+        overflow: visible;
+        border-radius: var(--radius-md);
+      }
+
+      .chapter-nav {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+      }
+
+      .chapter-link {
+        min-width: 0;
+      }
+
+      .chapter,
+      .chapter-dark {
+        padding-block: var(--space-16);
+      }
+
+      .prompt-grid,
+      .builder-grid,
+      .timeline {
+        grid-template-columns: 1fr;
+      }
+
+      .empty-state,
+      .prompt-reference,
+      .handoff,
+      .footer-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .prompt-reference {
+        display: grid;
+        align-items: start;
+      }
+
+      .empty-state {
+        text-align: left;
+      }
+
+      .assignment-card,
+      .panel {
+        padding: var(--space-5);
+      }
+
+      pre {
+        padding: var(--space-4);
+        font-size: 0.8125rem;
+      }
+
+      .assignment-head {
+        flex-direction: column-reverse;
+      }
+
+      .handoff {
+        display: grid;
+      }
+
+      .footer-inner {
+        display: grid;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 1ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 1ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress-track" aria-hidden="true"></div>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span>Jewelry AI Practice Lab</div>
+        <h1><span class="title-line">珠宝 AI</span><span class="title-line">工具赋能实战</span></h1>
+        <p class="hero-lead">前三章只收录课程中可直接复制的<span class="nowrap">提示词</span>；<span class="nowrap">最后一章</span>用 <span class="nowrap">120 分钟</span>完成“<span class="nowrap">组建战队</span> + <span class="nowrap">人才集结</span>”双关大作业。</p>
+        <div class="hero-meta" aria-label="课程信息">
+          <span class="meta-chip">4 个课程章节</span>
+          <span class="meta-chip">11 组可复制提示词</span>
+          <span class="meta-chip">2 项大作业</span>
+        </div>
+      </div>
+
+      <div class="hero-art-shell" aria-hidden="true">
+        <div class="hero-art">
+          <div class="chapter-orbit">
+            <span>01 Case</span><span>02 Tool</span>
+            <span>03 Prompt</span><span>04 Practice</span>
+          </div>
+          <svg viewBox="0 0 420 420" role="img" aria-label="四章课程围绕珠宝切面形成闭环">
+            <defs>
+              <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="var(--gold-light)"/>
+                <stop offset="1" stop-color="var(--gold-dark)"/>
+              </linearGradient>
+              <linearGradient id="gem1" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="var(--gem-a)"/>
+                <stop offset="0.52" stop-color="var(--gem-b)"/>
+                <stop offset="1" stop-color="var(--gem-c)"/>
+              </linearGradient>
+              <linearGradient id="gem2" x1="1" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="var(--gem-a)" stop-opacity="0.86"/>
+                <stop offset="1" stop-color="var(--gem-b)" stop-opacity="0.24"/>
+              </linearGradient>
+            </defs>
+            <circle cx="210" cy="210" r="152" fill="none" stroke="url(#gold)" stroke-width="2" opacity="0.68"/>
+            <circle cx="210" cy="210" r="132" fill="none" stroke="var(--gem-a)" stroke-width="1" opacity="0.26"/>
+            <g fill="var(--surface-deep)" stroke="url(#gold)" stroke-width="2">
+              <circle cx="210" cy="58" r="15"/>
+              <circle cx="362" cy="210" r="15"/>
+              <circle cx="210" cy="362" r="15"/>
+              <circle cx="58" cy="210" r="15"/>
+            </g>
+            <g font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle" fill="var(--gold-light)">
+              <text x="210" y="62">01</text>
+              <text x="362" y="214">02</text>
+              <text x="210" y="366">03</text>
+              <text x="58" y="214">04</text>
+            </g>
+            <path d="M210 104 L292 164 L260 286 L160 286 L128 164 Z" fill="url(#gem1)" stroke="var(--gem-a)" stroke-width="2"/>
+            <path d="M210 104 L128 164 L210 198 Z" fill="url(#gem2)" opacity="0.9"/>
+            <path d="M210 104 L292 164 L210 198 Z" fill="var(--gem-a)" opacity="0.38"/>
+            <path d="M128 164 L160 286 L210 198 Z" fill="var(--gem-b)" opacity="0.58"/>
+            <path d="M292 164 L260 286 L210 198 Z" fill="var(--gem-c)" opacity="0.72"/>
+            <path d="M160 286 L260 286 L210 198 Z" fill="var(--gem-a)" opacity="0.22"/>
+            <path d="M128 164 L292 164 M160 286 L260 286 M210 104 L210 198 L210 286" fill="none" stroke="var(--gem-a)" stroke-width="1" opacity="0.58"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="chapter-nav-shell">
+    <nav class="chapter-nav" aria-label="课程章节">
+      <a class="chapter-link" href="#chapter-1" data-nav="chapter-1" aria-current="true"><strong>01</strong>案例提示词</a>
+      <a class="chapter-link" href="#chapter-2" data-nav="chapter-2"><strong>02</strong>工具提示词</a>
+      <a class="chapter-link" href="#chapter-3" data-nav="chapter-3"><strong>03</strong>提示词方法</a>
+      <a class="chapter-link" href="#chapter-4" data-nav="chapter-4"><strong>04</strong>双关大作业</a>
+    </nav>
+  </div>
+
+  <main>
+    <div class="page-shell">
+      <section class="chapter" id="chapter-1" aria-labelledby="chapter-1-title">
+        <header class="chapter-head">
+          <div class="chapter-index">Chapter 01 · Case</div>
+          <div class="chapter-copy">
+            <h2 id="chapter-1-title">案例章节，只留可复制提示词</h2>
+            <p>从后台、中台、前台各保留一条能直接开练的珠宝业务 Prompt。变量用大括号标注，替换后即可使用。</p>
+          </div>
+        </header>
+
+        <div class="prompt-grid">
+          <article class="panel-shell prompt-card">
+            <div class="panel prompt-card">
+              <div class="prompt-topline"><span class="prompt-label">后台 · 经营分析</span></div>
+              <h3>经营简报：先查口径，再下结论</h3>
+              <p class="prompt-note">适合门店、品类、会员、库存等<span class="nowrap">经营数据初筛</span>。</p>
+              <pre id="prompt-case-1"># 角色
+你是一名珠宝零售经营分析助手。
+
+# 输入资料
+我将提供{门店销售数据 / 品类数据 / 会员数据 / 库存数据}，统计周期为{周期}。
+
+# 任务目标
+请先检查输入，再形成一份可用于周会的经营简报。
+
+# 处理要求
+1. 先检查字段、缺失值、异常值与统计口径，并列出需要确认的问题；
+2. 分析本周期增长与下滑的门店、品类和关键指标；
+3. 区分“数据能够证明的事实”与“需要业务人员确认的原因”；
+4. 不得自行补齐缺失数据，不得把相关性写成因果关系；
+5. 涉及金额、客户、财务和库存信息时，只使用已脱敏材料。
+
+# 输出格式
+按“数据检查—核心结论—异常清单—原因假设—行动建议—人工确认项”输出；每条结论注明对应字段或数据范围。</pre>
+              <div class="button-row">
+                <button class="button copy-button" type="button" data-copy-target="prompt-case-1">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
+                  复制提示词
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="panel-shell prompt-card">
+            <div class="panel prompt-card">
+              <div class="prompt-topline"><span class="prompt-label">中台 · 产品内容</span></div>
+              <h3>产品故事：一份资料，多渠道改写</h3>
+              <p class="prompt-note">把同一产品材料转成详情页、小红书、导购和直播口播。</p>
+              <pre id="prompt-case-2"># 角色
+你是一名珠宝产品内容策划。
+
+# 输入资料
+产品名称：{名称}
+材质与工艺：{已核验信息}
+设计灵感：{背景}
+目标客群：{客群}
+使用场景：{场景}
+可核验卖点：{卖点}
+禁用表达：{禁用词 / 合规边界}
+
+# 任务目标
+提炼一个核心产品故事和 3 个可核验卖点，并改写为不同渠道版本。
+
+# 输出要求
+1. 电商详情页：标题 + 核心故事 + 3 个卖点 + 购买提示；
+2. 小红书：1 个标题 + 300 字以内正文 + 5 个话题建议；
+3. 门店导购：30 秒口语化介绍 + 3 个追问问题；
+4. 直播口播：60 秒脚本，包含开场、卖点、场景和行动引导。
+
+# 约束
+不得补写材料中没有的材质、工艺、证书、功效、价格与品牌承诺；缺失信息标注“待确认”。</pre>
+              <div class="button-row">
+                <button class="button copy-button" type="button" data-copy-target="prompt-case-2">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
+                  复制提示词
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="panel-shell prompt-card">
+            <div class="panel prompt-card">
+              <div class="prompt-topline"><span class="prompt-label">前台 · 会员运营</span></div>
+              <h3>会员触达：围绕重要节点个性化沟通</h3>
+              <p class="prompt-note">适合生日、纪念日、婚嫁、以旧换新和新品偏好等节点。</p>
+              <pre id="prompt-case-3"># 角色
+你是一名珠宝会员运营顾问。
+
+# 输入资料
+会员阶段：{阶段}
+重要日期：{日期与类型}
+偏好品类：{已知偏好}
+最近互动：{行为摘要}
+本次可用权益：{已核验权益}
+触达渠道：{短信 / 企业微信 / 电话 / 社群}
+
+# 任务目标
+生成 3 版会员触达文案：温暖关怀型、专业顾问型、轻促销型。
+
+# 处理要求
+1. 每版说明适用场景与建议发送时间；
+2. 表达尊重、克制，不制造焦虑，不虚构稀缺；
+3. 权益、价格、活动时间和门店信息必须完全基于输入；
+4. 不展示或推断敏感个人信息；
+5. 给出一个可由人工继续追问的问题。
+
+# 输出格式
+用表格输出“版本—适用场景—文案—建议时间—人工确认项”。</pre>
+              <div class="button-row">
+                <button class="button copy-button" type="button" data-copy-target="prompt-case-3">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
+                  复制提示词
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="panel-shell prompt-card">
+            <div class="panel prompt-card">
+              <div class="prompt-topline"><span class="prompt-label">前台 · AI 搜索</span></div>
+              <h3>GEO 问答矩阵：回答客户真正会问的问题</h3>
+              <p class="prompt-note">围绕购买场景组织内容，不从品牌自说自话开始。</p>
+              <pre id="prompt-case-4"># 角色
+你是一名珠宝行业 GEO 内容策划。
+
+# 输入资料
+目标客户：{客群}
+购买场景：{婚嫁 / 送礼 / 自购 / 纪念日 / 保值咨询等}
+核心品类：{品类}
+门店或服务优势：{可核验优势}
+常见顾虑：{顾虑}
+
+# 任务目标
+设计 10 个用户可能会直接向 AI 提问的问题，并为每个问题提供一份可被理解、核验和引用的回答框架。
+
+# 输出要求
+用表格输出：用户问题、真实意图、建议回答结构、必须提供的证据、适合发布的平台、风险与人工确认项。
+
+# 约束
+不得使用无法核验的排名、销量、认证、专家背书、保值承诺或绝对化表达；信息不足时列出补充材料清单。</pre>
+              <div class="button-row">
+                <button class="button copy-button" type="button" data-copy-target="prompt-case-4">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
+                  复制提示词
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="chapter" id="chapter-2" aria-labelledby="chapter-2-title">
+        <header class="chapter-head">
+          <div class="chapter-index">Chapter 02 · Tool</div>
+          <div class="chapter-copy">
+            <h2 id="chapter-2-title"><span class="title-line">工具章节，</span><span class="title-line">不额外制造提示词</span></h2>
+            <p>原章节用于建立工具能力地图，没有独立可复制 Prompt。按你的要求，本页不展开工具介绍，只保留快速入口<span class="nowrap">供练习时使用</span>。</p>
+          </div>
+        </header>
+
+        <div class="empty-state">
+          <div class="empty-state-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7h16M7 4v6M17 4v6M5 14h6v6H5zM15 14h4v6h-4z"/></svg>
+          </div>
+          <div>
+            <h3>本章无独立提示词</h3>
+            <p>文案与分析用通用大模型，调研用 AI 搜索，视觉用<span class="nowrap">生图与排版工具</span>。<span class="nowrap">最后一章</span>会给出对应入口。</p>
+          </div>
+          <a class="button-link" href="#chapter-3">进入提示词方法
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </section>
+
+      <section class="chapter" id="chapter-3" aria-labelledby="chapter-3-title">
+        <header class="chapter-head">
+          <div class="chapter-index">Chapter 03 · Prompt</div>
+          <div class="chapter-copy">
+            <h2 id="chapter-3-title">提示词章节，保留三种可复用方法</h2>
+            <p>想不清楚时先让 AI 反问；经验不足时用一个 AI 当教练、另一个 AI 当执行者；<span class="nowrap">最后把</span><span class="nowrap">高频岗位任务</span>沉淀为模板。</p>
+          </div>
+        </header>
+
+        <aside class="prompt-reference" aria-label="提示词案例参考">
+          <div>
+            <strong>案例参考 · AI 应用场景案例库</strong>
+            <p>参考 40+ 实战案例的任务表达与场景拆解方式，再回到本章复制和改写提示词。</p>
+          </div>
+          <a class="button-link secondary" href="https://www.helloagent.top/case2/case.html" target="_blank" rel="noopener noreferrer">打开案例参考
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M14 5h5v5M19 5l-9 9M19 14v5H5V5h5"/></svg>
+          </a>
+        </aside>
+
+        <div class="prompt-grid">
+          <article class="panel-shell prompt-card">
+            <div class="panel prompt-card">
+              <div class="prompt-topline"><span class="prompt-label">方法 01 · 反问法</span></div>
+              <h3>先确认信息，再生成结果</h3>
+              <p class="prompt-note">适合任务刚拿到、输入不完整或业务边界尚不清晰时。</p>
+              <pre id="prompt-method-1">你先不要直接生成结果。
+
+请先判断：为了完成{任务名称}，你还需要向我确认哪些关键信息？
+
+请把问题分成三类：
+1. 必须确认的信息：影响结果准确性，不问清不能继续；
+2. 建议确认的信息：能明显提高结果质量；
+3. 可以先假设的信息：请给出默认假设，并标注可能风险。
+
+每个问题说明“为什么要问”以及“缺失时会影响什么”。等我回答后，再根据完整信息执行任务。</pre>
+              <div class="button-row">
+                <button class="button copy-button" type="button" data-copy-target="prompt-method-1">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
+                  复制提示词
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="panel-shell prompt-card">
+            <div class="panel prompt-card">
+              <div class="prompt-topline"><span class="prompt-label">方法 02 · 教练 AI</span></div>
+              <h3>先让 AI 帮你理解任务</h3>
+              <p class="prompt-note">第一个 AI 不直接交作业，而是拆任务、讲错误和判断标准。</p>
+              <pre id="prompt-method-2">你先担任我的任务教练，不要直接替我完成最终成果。
+
+我要完成的任务是：{任务名称}
+业务背景是：{背景}
+我目前拥有的材料是：{材料}
+
+请回答：
+1. 这个任务通常应该怎么拆解？
+2. 最容易犯的 5 个错误是什么？
+3. 一个好成果的判断标准是什么？
+4. 你建议我提供哪些材料给执行 AI？
+5. 哪些事实、数字、制度或品牌信息必须由人工确认？
+
+最后请输出一份“执行任务简报”，供第二个 AI 直接读取。</pre>
+              <div class="button-row">
+                <button class="button copy-button" type="button" data-copy-target="prompt-method-2">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
+                  复制提示词
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="panel-shell prompt-card">
+            <div class="panel prompt-card">
+              <div class="prompt-topline"><span class="prompt-label">方法 03 · 执行 AI</span></div>
+              <h3>把教练框架变成可交付成果</h3>
+              <p class="prompt-note">第二个 AI 严格读取任务简报，按要求执行并列出待确认项。</p>
+              <pre id="prompt-method-3">你现在担任任务执行助手。
+
+下面是任务教练生成的《执行任务简报》：
+{粘贴任务简报}
+
+我提供的原始材料是：
+{粘贴内容或上传文件}
+
+请严格按照任务简报执行：
+1. 先复述目标、输入与输出要求，确认你理解无误；
+2. 只使用原始材料中可核验的信息；
+3. 缺失信息标注“待补充”，不得自行猜测；
+4. 不同材料冲突时，单独列出“冲突与待确认项”；
+5. 按任务简报指定的格式输出完整成果；
+6. 结尾附上“人工复核清单”。</pre>
+              <div class="button-row">
+                <button class="button copy-button" type="button" data-copy-target="prompt-method-3">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
+                  复制提示词
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="panel-shell prompt-card">
+            <div class="panel prompt-card">
+              <div class="prompt-topline"><span class="prompt-label">方法 04 · 坏提示词改造</span></div>
+              <h3>把“帮我写一下”改造成 CHAT 任务</h3>
+              <p class="prompt-note">Character、History、Ask、Template 四个要素一次补齐。</p>
+              <pre id="prompt-method-4">请把下面这条模糊提示词改写为可执行的 CHAT 提示词：
+
+原提示词：{粘贴原始提示词}
+
+改写要求：
+1. Character：明确 AI 的角色、行业视角和责任边界；
+2. History：补齐任务背景、目标对象、已知材料和使用场景；
+3. Ask：把任务拆成必要步骤，避免空泛要求；
+4. Template：明确输出结构、长度、语气、质量标准和人工确认项；
+5. 所有待补充信息用 {变量} 标注；
+6. 不得编造原任务中没有的事实。
+
+请先输出“需要我补充的问题”，再输出“可直接复制的最终提示词”。</pre>
+              <div class="button-row">
+                <button class="button copy-button" type="button" data-copy-target="prompt-method-4">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
+                  复制提示词
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <section class="panel-shell builder" aria-labelledby="builder-title">
+          <div class="panel">
+            <div class="prompt-topline"><span class="prompt-label">个人练习</span></div>
+            <h3 id="builder-title">生成一条自己的岗位 Prompt</h3>
+            <p class="prompt-note">填写三个字段，页面会生成一条带角色、背景、任务、输出和边界的可复制模板。</p>
+            <div class="builder-grid">
+              <div class="field">
+                <label for="builder-role">你的岗位</label>
+                <input id="builder-role" type="text" placeholder="例如：门店运营经理" autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="builder-task">最高频任务</label>
+                <input id="builder-task" type="text" placeholder="例如：活动复盘报告" autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="builder-output">最终交付物</label>
+                <input id="builder-output" type="text" placeholder="例如：一页经营复盘" autocomplete="off">
+              </div>
+            </div>
+            <div class="button-row">
+              <button class="button" type="button" id="build-prompt">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 3v18M3 12h18"/></svg>
+                生成岗位提示词
+              </button>
+              <a class="button-link secondary" href="materials/珠宝岗位Prompt模板.md" download>下载通用模板
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 3v12m0 0 5-5m-5 5-5-5M5 19h14"/></svg>
+              </a>
+            </div>
+            <div class="builder-output" id="builder-output-wrap">
+              <pre id="builder-result" tabindex="0"></pre>
+              <div class="button-row">
+                <button class="button copy-button" type="button" data-copy-target="builder-result">复制生成结果</button>
+              </div>
+            </div>
+            <p id="builder-error" role="alert" hidden></p>
+          </div>
+        </section>
+      </section>
+    </div>
+
+    <section class="chapter-dark-wrap" id="chapter-4" aria-labelledby="chapter-4-title">
+      <div class="chapter-dark">
+        <header class="chapter-head">
+          <div class="chapter-index">Chapter 04 · Practice</div>
+          <div class="chapter-copy">
+            <h2 id="chapter-4-title"><span class="title-line">最后一章：120 分钟</span><span class="title-line">双关大作业</span></h2>
+            <p>作业完整来自课程方案：第一关建立统一战队身份，第二关承接身份资产，完成“AI 珠宝业务达人”招募海报。</p>
+          </div>
+        </header>
+
+        <ol class="timeline" aria-label="双关实战时间安排">
+          <li><strong>00:00—00:15</strong><span>导览：分工、工具、规则与任务板</span></li>
+          <li><strong>00:15—01:00</strong><span>练习 01：组建战队</span></li>
+          <li><strong>01:00—01:45</strong><span>练习 02：人才集结</span></li>
+          <li><strong>01:45—02:00</strong><span>展示点评：作品、方法与风险纠偏</span></li>
+        </ol>
+
+        <div class="assignment-stack">
+          <article class="assignment-shell">
+            <div class="assignment-card">
+              <header class="assignment-head">
+                <div>
+                  <div class="prompt-topline"><span class="task-badge">练习 01 · 45 分钟</span></div>
+                  <h3>组建战队：建立统一的珠宝创新身份</h3>
+                  <p class="assignment-intro">你是珠宝 AI 业务创新小组成员。团队需要先建立清晰、稳定、可识别的身份，让下一关的招募海报拥有统一视觉语言。</p>
+                </div>
+                <div class="assignment-number" aria-hidden="true">01</div>
+              </header>
+
+              <div class="assignment-grid">
+                <div>
+                  <div class="assignment-block">
+                    <h4>角色与成果</h4>
+                    <p>队长统筹，文案策划负责创意，视觉设计负责队徽与身份卡，业务代表检查珠宝属性和事实边界。</p>
+                    <ul>
+                      <li>队名：不少于 10 个备选，说明寓意。</li>
+                      <li>队呼：6—16 字，至少 3 种方向。</li>
+                      <li>队徽：队名清晰，珠宝元素克制可辨。</li>
+                      <li>身份卡：队名 + 队呼 + 队徽 + 团队使命。</li>
+                    </ul>
+                  </div>
+                  <div class="assignment-block">
+                    <h4>时间路径</h4>
+                    <ol>
+                      <li>5 分钟理解任务与分工。</li>
+                      <li>10 分钟生成并筛选文案。</li>
+                      <li>20 分钟生成视觉与身份卡。</li>
+                      <li>7 分钟检查中文、珠宝元素和识别度。</li>
+                      <li>3 分钟统一命名并提交。</li>
+                    </ol>
+                  </div>
+                  <div class="assignment-block">
+                    <h4>过关标准</h4>
+                    <p>完整、可读、贴合、可复用。中文无乱码，珠宝属性清晰，视觉不过度复杂，能直接进入下一关。</p>
+                  </div>
+                  <div class="download-list">
+                    <a class="button-link" href="downloads/任务01_组建战队资料包.zip" download>下载本关资料包
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 3v12m0 0 5-5m-5 5-5-5M5 19h14"/></svg>
+                    </a>
+                    <a class="button-link secondary" href="materials/task1/02_战队身份卡填写模板.md" download>下载身份卡模板</a>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="prompt-topline"><span class="prompt-label">可直接复制的完整提示词</span></div>
+                  <pre id="prompt-task-1"># 角色
+你是一名珠宝品牌策略与视觉创意顾问，擅长把团队使命转化为清晰、可识别、可延展的品牌符号。
+
+# 任务背景
+我们正在组建一支“珠宝 AI 业务创新战队”。第一关需要完成统一身份，成果将直接用于下一关的招募海报。
+
+# 输入资料
+团队成员与业务方向：{输入}
+希望体现的气质：{品质与信任 / 工匠精神 / 科技创新 / 其他}
+可使用的颜色与视觉规范：{输入}
+明确禁用的表达或元素：{输入}
+
+# 任务目标
+完成队名、队呼、队徽概念和战队身份卡内容。
+
+# 处理要求
+1. 先生成不少于 10 个队名，每个说明寓意，并按“稳重专业 / 热血攻坚 / 科技创新”分类；
+2. 为入选方向各生成 1 条 6—16 字队呼，再推荐最终方案并说明理由；
+3. 为最终方案提供队徽创意：核心图形、珠宝元素、构图、主色、辅助色和小尺寸识别方式；
+4. 生成一条团队使命，并给出“队名 + 队呼 + 队徽 + 使命”的身份卡排版结构；
+5. 再输出一段适用于文生图工具的队徽主视觉提示词；中文队名须预留后期排版区域，不依赖生图工具直接生成准确文字。
+
+# 输出格式
+按“候选队名表—队呼方案—推荐结论—队徽视觉说明—身份卡内容—文生图提示词—人工检查项”输出。
+
+# 边界
+不得仿造真实企业 Logo、商标、奖项或认证；不得虚构品牌历史、产品事实或企业承诺；视觉避免堆叠、俗艳和不可实现的珠宝结构。</pre>
+                  <div class="button-row">
+                    <button class="button copy-button" type="button" data-copy-target="prompt-task-1">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
+                      复制练习 01 提示词
+                    </button>
+                  </div>
+                  <div class="tool-row" aria-label="练习 01 工具入口">
+                    <a class="button-link secondary" href="https://chat.deepseek.com/" target="_blank" rel="noopener noreferrer">打开 DeepSeek</a>
+                    <a class="button-link secondary" href="https://www.kimi.com/" target="_blank" rel="noopener noreferrer">打开 Kimi</a>
+                    <a class="button-link secondary" href="https://jimeng.jianying.com/" target="_blank" rel="noopener noreferrer">打开即梦</a>
+                    <a class="button-link secondary" href="https://www.canva.cn/" target="_blank" rel="noopener noreferrer">打开 Canva 可画</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="assignment-shell">
+            <div class="assignment-card">
+              <header class="assignment-head">
+                <div>
+                  <div class="prompt-topline"><span class="task-badge">练习 02 · 45 分钟</span></div>
+                  <h3>人才集结：招募 AI 珠宝业务达人</h3>
+                  <p class="assignment-intro">战队身份已经建立。你是 HR / 业务代表，要把模糊的用人想法转成一张可理解、可传播、可筛选的招募海报。</p>
+                </div>
+                <div class="assignment-number" aria-hidden="true">02</div>
+              </header>
+
+              <div class="assignment-grid">
+                <div>
+                  <div class="assignment-block">
+                    <h4>承接输入与成果</h4>
+                    <p>直接使用练习 01 的队名、队呼、队徽和团队使命，保持视觉身份一致。</p>
+                    <ul>
+                      <li>岗位画像：使命、职责、能力、协作对象、成果指标。</li>
+                      <li>招募海报：适合企业内部或社群传播。</li>
+                      <li>岗位自测：3—5 个筛选问题与判断要点。</li>
+                    </ul>
+                  </div>
+                  <div class="assignment-block">
+                    <h4>时间路径</h4>
+                    <ol>
+                      <li>8 分钟定义岗位。</li>
+                      <li>12 分钟生成岗位画像与招募文案。</li>
+                      <li>18 分钟生成主视觉并排版。</li>
+                      <li>4 分钟设计筛选题。</li>
+                      <li>3 分钟检查事实、制度和视觉一致性。</li>
+                    </ol>
+                  </div>
+                  <div class="assignment-block">
+                    <h4>过关标准</h4>
+                    <p>岗位需求具体、业务场景真实、表达统一、薪酬与制度不编造，海报可用于内部讨论或二次完善。</p>
+                  </div>
+                  <div class="download-list">
+                    <a class="button-link" href="downloads/任务02_人才集结资料包.zip" download>下载本关资料包
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 3v12m0 0 5-5m-5 5-5-5M5 19h14"/></svg>
+                    </a>
+                    <a class="button-link secondary" href="materials/task2/03_候选人筛选记录表.csv" download>下载筛选记录表</a>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="prompt-topline"><span class="prompt-label">可直接复制的完整提示词</span></div>
+                  <pre id="prompt-task-2"># 角色
+你是一名珠宝零售业务负责人和招聘顾问，熟悉门店运营、客户服务、内容营销、数据分析和 AI 协作。
+
+# 任务背景
+我们的珠宝 AI 业务创新战队已经形成统一身份，现在需要招募一名“AI 珠宝业务达人”，把珠宝业务理解与 AI 工具使用结合起来。
+
+# 承接输入
+战队名称：{输入}
+战队队呼：{输入}
+团队使命：{输入}
+队徽与主色：{输入或上传}
+主要业务任务：{输入}
+服务对象：{输入}
+常用渠道：{门店 / 公众号 / 小红书 / 短视频 / 直播 / 其他}
+协作部门：{输入}
+预期成果：{输入}
+真实薪酬与制度口径：{输入；如无则写“未提供”}
+
+# 任务目标
+形成岗位画像、招募海报内容、主视觉提示词和 3—5 个筛选问题。
+
+# 处理要求
+1. 先定义岗位使命，再输出核心职责、必备能力、加分能力、协作对象和可衡量成果；
+2. 职责必须围绕真实任务与交付物，避免“万能型人才”和空泛形容词；
+3. 招募文案需有清晰层级：岗位名称、使命、核心任务、能力要求、成果期待、申请方式；
+4. 输出一段招募海报主视觉提示词，延续战队队徽、主色和珠宝品质感，同时保留中文后期排版区域；
+5. 设计 3—5 个筛选问题，并写明每题重点观察什么；
+6. 单独列出事实、制度、产品、品牌和合规的人工确认项。
+
+# 输出格式
+按“岗位画像表—招募海报文案—海报主视觉提示词—筛选问题表—人工复核清单”输出。
+
+# 边界
+薪酬、福利、晋升、产品、制度与品牌信息必须基于真实输入；未提供时统一写“面议”或“以公司制度为准”，不得编造具体数字、承诺、认证或合作关系。</pre>
+                  <div class="button-row">
+                    <button class="button copy-button" type="button" data-copy-target="prompt-task-2">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
+                      复制练习 02 提示词
+                    </button>
+                  </div>
+                  <div class="tool-row" aria-label="练习 02 工具入口">
+                    <a class="button-link secondary" href="https://chat.deepseek.com/" target="_blank" rel="noopener noreferrer">打开 DeepSeek</a>
+                    <a class="button-link secondary" href="https://www.kimi.com/" target="_blank" rel="noopener noreferrer">打开 Kimi</a>
+                    <a class="button-link secondary" href="https://jimeng.jianying.com/" target="_blank" rel="noopener noreferrer">打开即梦</a>
+                    <a class="button-link secondary" href="https://ai.wps.cn/" target="_blank" rel="noopener noreferrer">打开 WPS AI</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="handoff">
+          <div>
+            <h3>双关最终提交包</h3>
+            <p>战队身份卡 + 岗位画像 + 招募海报 + 3—5 个筛选问题。所有数据均为教学模拟，真实发布前必须完成人工审校。</p>
+          </div>
+          <a class="button-link" href="downloads/珠宝_AI双关实战全部资料.zip" download>下载全部资料
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 3v12m0 0 5-5m-5 5-5-5M5 19h14"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div><strong>珠宝 AI 工具赋能实战</strong><br>按课程章节整理的提示词与双关练习台</div>
+      <div>本页面及下载资料均为教学模拟，不代表任何企业真实业务、制度或招聘信息。</div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    (() => {
+      const toast = document.querySelector("#toast");
+      const copyButtons = document.querySelectorAll(".copy-button");
+      const sections = [...document.querySelectorAll("main section[id^='chapter-']")];
+      const navLinks = [...document.querySelectorAll("[data-nav]")];
+      let toastTimer;
+
+      const showToast = (message, isError = false) => {
+        window.clearTimeout(toastTimer);
+        toast.textContent = message;
+        toast.style.background = isError ? "var(--status-warning)" : "var(--status-success)";
+        toast.classList.add("is-visible");
+        toastTimer = window.setTimeout(() => toast.classList.remove("is-visible"), 2200);
+      };
+
+      const copyText = async (text) => {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          return;
+        }
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.setAttribute("readonly", "");
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.select();
+        const copied = document.execCommand("copy");
+        textarea.remove();
+        if (!copied) throw new Error("copy failed");
+      };
+
+      copyButtons.forEach((button) => {
+        button.addEventListener("click", async () => {
+          const target = document.getElementById(button.dataset.copyTarget);
+          if (!target) return;
+          const originalMarkup = button.innerHTML;
+          try {
+            await copyText(target.textContent.trim());
+            button.classList.add("success");
+            button.textContent = "已复制";
+            showToast("提示词已复制，可以直接粘贴使用");
+            window.setTimeout(() => {
+              button.classList.remove("success");
+              button.innerHTML = originalMarkup;
+            }, 1800);
+          } catch {
+            showToast("复制失败，请手动选择提示词", true);
+          }
+        });
+      });
+
+      const builderButton = document.querySelector("#build-prompt");
+      builderButton.addEventListener("click", () => {
+        const role = document.querySelector("#builder-role").value.trim();
+        const task = document.querySelector("#builder-task").value.trim();
+        const output = document.querySelector("#builder-output").value.trim();
+        const error = document.querySelector("#builder-error");
+        const outputWrap = document.querySelector("#builder-output-wrap");
+        const result = document.querySelector("#builder-result");
+
+        if (!role || !task || !output) {
+          error.hidden = false;
+          error.textContent = "请先填写岗位、任务和交付物。";
+          outputWrap.classList.remove("is-ready");
+          return;
+        }
+
+        error.hidden = true;
+        result.textContent = `# 角色\n你是一名${role}，熟悉珠宝业务场景与企业事实边界。\n\n# 任务背景\n我需要完成“${task}”。我将提供与该任务相关的原始材料，请先检查材料是否完整。\n\n# 任务目标\n请基于我提供的材料，生成${output}。\n\n# 处理要求\n1. 先检查输入、字段、口径和缺失信息；\n2. 只使用可核验内容，缺失信息标注“待补充”；\n3. 把事实、分析判断和建议明确区分；\n4. 涉及产品、价格、制度、客户、财务或品牌信息时，单独列出人工确认项；\n5. 结果要便于业务人员直接修改、复用和追溯。\n\n# 输出格式\n先给出内容结构，再输出完整的${output}，结尾附“人工复核清单”。\n\n# 边界\n不得编造原始材料中没有的事实、数字、承诺、认证、合作关系或个人信息。`;
+        outputWrap.classList.add("is-ready");
+        result.focus();
+        showToast("岗位提示词已生成");
+      });
+
+      const setActiveNav = (id) => {
+        navLinks.forEach((link) => {
+          const active = link.dataset.nav === id;
+          if (active) {
+            link.setAttribute("aria-current", "true");
+            const shell = link.closest(".chapter-nav-shell");
+            const targetLeft = link.offsetLeft - ((shell.clientWidth - link.offsetWidth) / 2);
+            shell.scrollTo({ left: targetLeft, behavior: "smooth" });
+          }
+          else link.removeAttribute("aria-current");
+        });
+      };
+
+      const updateActiveNav = () => {
+        const marker = window.scrollY + (window.innerHeight * 0.34);
+        let activeId = sections[0]?.id;
+        sections.forEach((section) => {
+          if (section.offsetTop <= marker) activeId = section.id;
+        });
+        if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
+          activeId = sections.at(-1)?.id;
+        }
+        if (activeId) setActiveNav(activeId);
+      };
+
+      const updateProgress = () => {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+        document.documentElement.style.setProperty("--course-progress", progress.toFixed(4));
+      };
+
+      const syncScrollState = () => {
+        updateProgress();
+        updateActiveNav();
+      };
+
+      syncScrollState();
+      window.addEventListener("scroll", syncScrollState, { passive: true });
+      window.addEventListener("resize", syncScrollState, { passive: true });
+    })();
+  </script>
+</body>
+</html>
