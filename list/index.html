@@ -834,7 +834,7 @@ window.NAV_ITEMS = [
     const resultCount = document.querySelector('#resultCount'), sectionTitle = document.querySelector('#sectionTitle');
     let activeCategory='全部';
     const cats=['全部',...new Set(items.map(x=>x.category))];
-    const types=[...new Set(items.map(x=>x.type).filter(Boolean)),
+    const types=[...new Set(items.map(x=>x.type).filter(Boolean))];
 
     const esc=s=>String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
     document.querySelector('#statPages').textContent=items.length;
