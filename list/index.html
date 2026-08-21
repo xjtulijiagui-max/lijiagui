@@ -808,18 +808,7 @@ window.NAV_ITEMS = [
     "featured": true,
     "updated": "2026-08-15"
   }
-];
-
-</script>
-  <script>
-  (()=>{
-    const items = Array.isArray(window.NAV_ITEMS) ? window.NAV_ITEMS : [];
-    const grid = document.querySelector('#grid'), search = document.querySelector('#search');
-    const chips = document.querySelector('#chips'), typeFilter = document.querySelector('#typeFilter');
-    const resultCount = document.querySelector('#resultCount'), sectionTitle = document.querySelector('#sectionTitle');
-    let activeCategory='全部';
-    const cats=['全部',...new Set(items.map(x=>x.category))];
-    const types=[...new Set(items.map(x=>x.type).filter(Boolean)),
+,
   {
     "id": "bank-workbuddy",
     "title": "WorkBuddy 在零售银行领域的实战练习",
@@ -835,6 +824,18 @@ window.NAV_ITEMS = [
     "status": "正常",
     "updated": "2026-08-21"
   }];
+
+</script>
+  <script>
+  (()=>{
+    const items = Array.isArray(window.NAV_ITEMS) ? window.NAV_ITEMS : [];
+    const grid = document.querySelector('#grid'), search = document.querySelector('#search');
+    const chips = document.querySelector('#chips'), typeFilter = document.querySelector('#typeFilter');
+    const resultCount = document.querySelector('#resultCount'), sectionTitle = document.querySelector('#sectionTitle');
+    let activeCategory='全部';
+    const cats=['全部',...new Set(items.map(x=>x.category))];
+    const types=[...new Set(items.map(x=>x.type).filter(Boolean)),
+
     const esc=s=>String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
     document.querySelector('#statPages').textContent=items.length;
     document.querySelector('#statCats').textContent=new Set(items.map(x=>x.category)).size;
