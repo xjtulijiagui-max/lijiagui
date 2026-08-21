@@ -819,7 +819,22 @@ window.NAV_ITEMS = [
     const resultCount = document.querySelector('#resultCount'), sectionTitle = document.querySelector('#sectionTitle');
     let activeCategory='全部';
     const cats=['全部',...new Set(items.map(x=>x.category))];
-    const types=[...new Set(items.map(x=>x.type).filter(Boolean))];
+    const types=[...new Set(items.map(x=>x.type).filter(Boolean)),
+  {
+    "id": "bank-workbuddy",
+    "title": "WorkBuddy 在零售银行领域的实战练习",
+    "shortTitle": "WorkBuddy 零售银行",
+    "category": "银行与金融",
+    "description": "从工作空间、专家、Skill、MCP 到 IPO→SOP→Skill 闭环的 8 个可复制练习场景。",
+    "url": "https://xjtulijiagui-max.github.io/lijiagui/bank-workbuddy/",
+    "tags": ["WorkBuddy", "零售银行", "Skill", "MCP", "提示词"],
+    "type": "实战练习",
+    "client": "通用银行场景",
+    "featured": true,
+    "order": 146,
+    "status": "正常",
+    "updated": "2026-08-21"
+  }];
     const esc=s=>String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
     document.querySelector('#statPages').textContent=items.length;
     document.querySelector('#statCats').textContent=new Set(items.map(x=>x.category)).size;
