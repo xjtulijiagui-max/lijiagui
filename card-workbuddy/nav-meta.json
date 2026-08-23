@@ -1,0 +1,14 @@
+{
+  "id": "card-workbuddy",
+  "title": "WorkBuddy 赋能信用卡业务实战练习",
+  "shortTitle": "信用卡 WorkBuddy",
+  "category": "信用卡与支付",
+  "description": "基于4小时课程大纲的信用卡业务练习，从自然语言办公到Skill、Excel/Python和数字员工自动化。",
+  "tags": ["信用卡业务", "WorkBuddy", "Skill", "数字员工"],
+  "type": "行业练习",
+  "client": "信用卡中心",
+  "featured": true,
+  "order": 147,
+  "updated": "2026-08-23",
+  "url": "https://xjtulijiagui-max.github.io/lijiagui/card-workbuddy/"
+}
