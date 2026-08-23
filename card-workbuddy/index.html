@@ -36,9 +36,11 @@ const task1Files=[
   ['05_季度活动汇报模板.pptx','请用融合结果填充的作战包汇报模板。','materials/task1/05_季度活动汇报模板.pptx'],
   ['06_资料说明与任务指引.md','文件用途、练习提醒和预设待确认项。','materials/task1/06_资料说明与任务指引.md']
 ];
+const rawAssetBase='https://raw.githubusercontent.com/xjtulijiagui-max/lijiagui/main/card-workbuddy/';
+task1Files.forEach(file=>file[2]=rawAssetBase+file[2]);
 const downloadBlock=document.createElement('div');
 downloadBlock.className='block';
-downloadBlock.innerHTML='<h3>下载模拟资料</h3><div class="material-list">'+task1Files.map(f=>'<div class="material"><div><b>'+esc(f[0])+'</b><span>'+esc(f[1])+'</span></div><a class="btn secondary" href="'+f[2]+'" download>下载文件</a></div>').join('')+'</div><div class="tools" style="margin-top:10px"><a class="btn" href="materials/信用卡综合办公材料融合_资料包.zip" download>下载本任务全部资料.zip</a></div>';
+downloadBlock.innerHTML='<h3>下载模拟资料</h3><div class="material-list">'+task1Files.map(f=>'<div class="material"><div><b>'+esc(f[0])+'</b><span>'+esc(f[1])+'</span></div><a class="btn secondary" href="'+f[2]+'" download>下载文件</a></div>').join('')+'</div><div class="tools" style="margin-top:10px"><a class="btn" href="'+rawAssetBase+'materials/信用卡综合办公材料融合_资料包.zip" download>下载本任务全部资料.zip</a></div>';
 const task1Blocks=document.querySelectorAll('#task1 .block');
 task1Blocks[2].insertAdjacentElement('afterend',downloadBlock);
 document.querySelector('#task1 .path .step b').textContent='1. 下载模拟资料包';
