@@ -3,14 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="仁和人寿新员工 AI 实战练习台：材料助手、培训数据报表解读与知识整理问答，含可复制完整提示词和可下载模拟资料。">
+  <link rel="icon" href="data:,">
+  <meta name="description" content="仁和人寿寿险业务 AI 实战练习台：客户需求访谈、家庭保障缺口测算与保单服务问答，含可复制完整提示词和可下载模拟资料。">
   <meta name="theme-color" content="#082b66">
   <link rel="canonical" href="https://xjtulijiagui-max.github.io/lijiagui/renhe/">
-  <meta property="og:title" content="仁和人寿新员工 AI 实战练习台">
-  <meta property="og:description" content="三类场景、三套模拟资料、三段完整提示词，下载后可直接开练。">
+  <meta property="og:title" content="仁和人寿寿险业务 AI 实战练习台">
+  <meta property="og:description" content="三条寿险工作链、三套复杂模拟资料、三段完整提示词，下载后可直接开练。">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://xjtulijiagui-max.github.io/lijiagui/renhe/">
-  <title>仁和人寿新员工 AI 实战练习台</title>
+  <title>仁和人寿寿险业务 AI 实战练习台</title>
   <style>
     :root {
       --brand-deep: #082b66;
@@ -242,6 +243,7 @@
     .file-meta strong { display: block; overflow-wrap: anywhere; }
     .file-meta small { display: block; color: var(--text-secondary); font-size: 12px; line-height: 1.5; }
     .file-action { color: var(--success); font-size: 13px; font-weight: 800; }
+    .mobile-title-break { display: none; }
     .bundle-row { margin-top: var(--space-3); }
 
     .prompt-panel { margin-top: var(--space-8); background: var(--prompt); color: var(--prompt-text); }
@@ -283,6 +285,7 @@
       .task-number { min-height: 48px; justify-content: start; padding-inline: var(--space-4); font-size: 22px; }
       .task-title { padding: var(--space-4); }
       .task-title h2 { font-size: 20px; }
+      .mobile-title-break { display: block; }
       .task-body { padding: var(--space-4); }
       .path { grid-template-columns: 1fr; }
       .file-link { grid-template-columns: 28px minmax(0, 1fr); }
@@ -302,37 +305,37 @@
 
   <header class="hero">
     <div class="wrap hero-inner">
-      <p class="eyebrow">NEW EMPLOYEE PRACTICE LAB · 2026</p>
-      <h1><span class="no-break">仁和人寿新员工</span> <span class="no-break">AI 实战练习台</span></h1>
-      <p class="hero-lead">不只听一次课。用三套教学模拟材料，把材料整理、培训数据解读和带来源的知识问答真正跑一遍。</p>
+      <p class="eyebrow">LIFE INSURANCE PRACTICE LAB · 2026</p>
+      <h1><span class="no-break">仁和人寿寿险业务</span> <span class="no-break">AI 实战练习台</span></h1>
+      <p class="hero-lead">从第一次客户访谈开始，走完需求澄清、保障缺口测算和保单服务问答。每道题都保留真实工作里最麻烦的部分：信息不全、口径冲突、健康待核和不能由 AI 代替的判断。</p>
       <div class="hero-actions">
-        <a class="action-link primary" href="仁和人寿_新员工AI练习网页部署包.zip" download>下载完整练习包</a>
+        <a class="action-link primary" href="仁和人寿_寿险业务AI练习网页部署包.zip" download>下载完整练习包</a>
         <a class="action-link secondary" href="https://www.helloagent.top/tool.html" target="_blank" rel="noopener">打开 AI 工具导航</a>
       </div>
 
-      <nav class="scenario-grid" aria-label="三类训练场景">
+      <nav class="scenario-grid" aria-label="三类寿险业务训练场景">
         <a class="scenario-link" href="#task1">
-          <span class="scenario-bar"><span>01</span> 材料助手</span>
-          <span class="scenario-copy"><strong>把零散培训素材收成一套可发布材料</strong>正式通知、群提醒、培训简讯、冲突与待确认清单。</span>
+          <span class="scenario-bar"><span>01</span> 客户需求访谈</span>
+          <span class="scenario-copy"><strong>先把事实、假设和顾问判断拆开</strong>整理家庭责任、现有保单线索与第二次访谈提纲，不急着推产品。</span>
         </a>
         <a class="scenario-link" href="#task2">
-          <span class="scenario-bar"><span>02</span> 数据报表解读</span>
-          <span class="scenario-copy"><strong>先清洗，再解释</strong>识别重复、缺失、越界和口径冲突，输出能上会的一页摘要。</span>
+          <span class="scenario-bar"><span>02</span> 保障缺口测算</span>
+          <span class="scenario-copy"><strong>不找唯一答案，先看参数怎么变</strong>审计保单有效性，测算低／基准／高情景，再比较预算取舍。</span>
         </a>
         <a class="scenario-link" href="#task3">
-          <span class="scenario-bar"><span>03</span> 知识整理问答</span>
-          <span class="scenario-copy"><strong>每个答案都能回查</strong>基于模拟制度与培训资料回答问题，标注来源并设置人工复核边界。</span>
+          <span class="scenario-bar"><span>03</span> 保单服务问答</span>
+          <span class="scenario-copy"><strong>能答，也知道什么时候必须停</strong>处理告知、等待期、受益人、续期、退保、理赔材料与客户信息安全。</span>
         </a>
       </nav>
-      <div class="disclaimer"><strong>教学模拟：</strong>页面中的人员、部门、数据、制度口径与业务情境均为练习素材，不代表仁和人寿真实信息或正式制度。</div>
+      <div class="disclaimer"><strong>教学模拟：</strong>页面中的客户、健康信息、保单、金额、方案与服务口径均为虚构，不代表仁和人寿真实客户、产品、费率、核保或理赔规则。</div>
     </div>
   </header>
 
   <nav class="sticky-nav" aria-label="页面导航">
     <div class="wrap">
-      <a class="top-link" href="#task1">任务 1 · 材料助手</a>
-      <a class="top-link" href="#task2">任务 2 · 数据报表</a>
-      <a class="top-link" href="#task3">任务 3 · 知识问答</a>
+      <a class="top-link" href="#task1">任务 1 · 需求访谈</a>
+      <a class="top-link" href="#task2">任务 2 · 缺口测算</a>
+      <a class="top-link" href="#task3">任务 3 · 保单服务</a>
       <a class="top-link" href="../list/">返回训练导航</a>
     </div>
   </nav>
@@ -341,11 +344,11 @@
     <section class="intro" aria-labelledby="how-to-start">
       <div>
         <h2 id="how-to-start">先选一题，下载资料，上传后直接复制提示词</h2>
-        <p>每个任务建议 45 至 60 分钟。页面没有隐藏前提：角色、输入、处理要求、输出格式和不能越过的边界都写进了提示词。老师不需要再单独发文件，学员也不必先理解一套复杂工作流。</p>
+        <p>每个任务建议 60 至 90 分钟。提示词把角色、输入、处理顺序、输出格式和边界都写全，但材料里故意没有“标准捷径”。先核事实，再算数字；遇到合同责任、健康告知和正式服务结论，必须停下来找人复核。</p>
       </div>
       <aside class="start-note">
         <strong>开练前只做一件事</strong>
-        先阅读每个资料包里的“教学模拟”说明。不要把练习口径当成真实制度，也不要把真实客户或员工资料上传到公共 AI 工具。
+        只使用下载包里的虚构资料。不要把真实客户姓名、证件、健康、保单、受益人或理赔材料上传到公共 AI 工具。
       </aside>
     </section>
 
@@ -353,8 +356,8 @@
       <header class="task-head">
         <div class="task-number">01</div>
         <div class="task-title">
-          <h2 id="task1-title">材料助手：整理新员工训练营整套沟通材料</h2>
-          <p>训练统一结构、语气、冲突识别和发布前人工复核。</p>
+          <h2 id="task1-title">客户需求访谈：<br class="mobile-title-break">从初访还原家庭责任</h2>
+          <p>训练事实分层、保单线索核验、风险责任地图和二次访谈设计。</p>
         </div>
       </header>
       <div class="task-body">
@@ -362,21 +365,21 @@
           <div>
             <div class="section-block">
               <h3>用户故事</h3>
-              <p class="story">你是新员工训练营的班主任。项目负责人临时把五份零散材料交给你，其中开课日期和场地有冲突，部分表达还涉及合规边界。
+              <p class="story">你是刚开始独立做客户访谈的寿险顾问。周岚夫妻第一次见面只留了 35 分钟，口述的保单名称含糊，夫妻对预算、收入替代年限和长期资金用途也没有达成一致。更麻烦的是，原始笔记里混进了顾问自己的判断。
 
-你要在 45 分钟内整理出一份正式通知、一段班级群提醒、一篇培训简讯，以及一张冲突与待确认清单。内容要自然，不能为了“完整”而编造联系人、场地或领导讲话。</p>
+你要先把“客户已确认的事实、仍要核对的信息、顾问或 AI 的假设”拆开，再画出家庭风险责任地图，设计 12 个第二次访谈问题。此时不能跳到产品推荐。</p>
             </div>
             <div class="section-block">
               <h3>练习目标</h3>
-              <div class="goal">让 AI 真正读材料、找冲突、按模板出稿；同时保留需要项目负责人和责任部门确认的地方。</div>
+              <div class="goal">让 AI 像一名谨慎的寿险需求分析助理：不抢答、不补造，把家庭责任说清，也把健康、保单状态和夫妻分歧留给下一次访谈。</div>
             </div>
             <div class="section-block">
               <h3>练习路径</h3>
               <div class="path">
-                <div class="step"><strong>下载资料</strong>取得五份零散素材。</div>
-                <div class="step"><strong>上传文件</strong>一次上传，不要先自行合并。</div>
-                <div class="step"><strong>复制提示词</strong>生成四项交付物。</div>
-                <div class="step"><strong>人工复核</strong>优先检查日期、场地、合规表达。</div>
+                <div class="step"><strong>读客户原话</strong>先不急着概括需求。</div>
+                <div class="step"><strong>拆事实与假设</strong>标出冲突和待补证据。</div>
+                <div class="step"><strong>画责任地图</strong>说明谁的风险影响谁。</div>
+                <div class="step"><strong>准备二访</strong>问题要能改变分析结论。</div>
               </div>
             </div>
           </div>
@@ -392,81 +395,85 @@
             <div class="section-block">
               <h3>模拟资料下载</h3>
               <div class="file-list">
-                <a class="file-link" href="task1/01_培训项目背景.md" download><span class="file-index">01</span><span class="file-meta"><strong>培训项目背景.md</strong><small>项目参数、学员画像、目标与限制</small></span><span class="file-action">下载</span></a>
-                <a class="file-link" href="task1/02_课程与讲师要求.md" download><span class="file-index">02</span><span class="file-meta"><strong>课程与讲师要求.md</strong><small>五天课程、讲师提交规范、建议结业口径</small></span><span class="file-action">下载</span></a>
-                <a class="file-link" href="task1/03_合规表达边界.md" download><span class="file-index">03</span><span class="file-meta"><strong>合规表达边界.md</strong><small>可以说什么、不能承诺什么</small></span><span class="file-action">下载</span></a>
-                <a class="file-link" href="task1/04_沟通素材草稿.md" download><span class="file-index">04</span><span class="file-meta"><strong>沟通素材草稿.md</strong><small>故意保留日期和场地冲突</small></span><span class="file-action">下载</span></a>
-                <a class="file-link" href="task1/05_输出模板.md" download><span class="file-index">05</span><span class="file-meta"><strong>输出模板.md</strong><small>正式通知、群提醒、简讯、冲突清单</small></span><span class="file-action">下载</span></a>
+                <a class="file-link" href="task1/01_客户家庭档案.md" download><span class="file-index">01</span><span class="file-meta"><strong>客户家庭档案.md</strong><small>家庭成员、收入负债、责任和预算分歧</small></span><span class="file-action">下载</span></a>
+                <a class="file-link" href="task1/02_初访录音整理稿.md" download><span class="file-index">02</span><span class="file-meta"><strong>初访录音整理稿.md</strong><small>客户原话与混入其中的顾问判断</small></span><span class="file-action">下载</span></a>
+                <a class="file-link" href="task1/03_已有保单线索.md" download><span class="file-index">03</span><span class="file-meta"><strong>已有保单线索.md</strong><small>俗称、状态未知与必须核对的合同字段</small></span><span class="file-action">下载</span></a>
+                <a class="file-link" href="task1/04_访谈与合规边界.md" download><span class="file-index">04</span><span class="file-meta"><strong>访谈与合规边界.md</strong><small>事实、假设、健康与人工复核边界</small></span><span class="file-action">下载</span></a>
+                <a class="file-link" href="task1/05_需求分析输出模板.md" download><span class="file-index">05</span><span class="file-meta"><strong>需求分析输出模板.md</strong><small>责任地图、二访提纲与跟进消息</small></span><span class="file-action">下载</span></a>
               </div>
-              <div class="bundle-row"><a class="button download" href="task1/task1_材料助手资料包.zip" download>下载本任务全部资料</a></div>
+              <div class="bundle-row"><a class="button download" href="task1/task1_客户需求访谈资料包.zip" download>下载本任务全部资料</a></div>
             </div>
           </aside>
         </div>
 
         <div class="prompt-panel">
-          <div class="prompt-toolbar"><strong>完整提示词 · 材料助手</strong><button class="copy-button" type="button" data-copy="prompt1">复制提示词</button></div>
+          <div class="prompt-toolbar"><strong>完整提示词 · 客户需求访谈</strong><button class="copy-button" type="button" data-copy="prompt1">复制提示词</button></div>
           <pre id="prompt1"># 角色
-你是一名企业新员工训练营的资深班主任，同时具备培训项目管理、内部沟通写作和合规校对经验。
+你是一名资深寿险客户需求分析教练，擅长把访谈原话拆成事实、待核信息和分析假设。你帮助新人顾问准备第二次客户访谈，但不替客户作决定，也不在资料不足时推荐产品。
 
 # 任务背景
 我将上传 5 份教学模拟材料：
-1. 01_培训项目背景.md
-2. 02_课程与讲师要求.md
-3. 03_合规表达边界.md
-4. 04_沟通素材草稿.md
-5. 05_输出模板.md
+1. 01_客户家庭档案.md
+2. 02_初访录音整理稿.md
+3. 03_已有保单线索.md
+4. 04_访谈与合规边界.md
+5. 05_需求分析输出模板.md
 
-这些材料用于“仁和人寿新员工训练营”课堂练习。材料中的人员、数据、时间、地点和制度口径均为教学模拟，不代表公司真实安排。不同材料里故意保留了日期、场地和表达口径冲突。
+案例中的姓名、职业、健康信息、保单、金额和对话均为虚构，不代表仁和人寿真实客户或产品。材料故意保留了信息缺失、夫妻意见不一致、保单状态未知和顾问过早判断。
 
 # 任务目标
-请先完整阅读全部材料，再形成以下 4 项交付：
-A. 正式培训通知（900-1200 字）
-B. 班级群提醒（280 字以内）
-C. 培训简讯（约 500 字）
-D. 冲突与待确认清单
+请完整阅读全部材料，重建周岚家庭的保障需求事实底稿，输出家庭风险责任地图、二次访谈提纲和会后跟进消息。此阶段只做需求澄清，不做具体产品、费率或投保建议。
 
-# 处理要求
-1. 先提取可确认事实，按“项目背景、对象、时间、地点、课程、课前准备、考勤与结业、信息安全”分类整理。
-2. 对日期、地点、人数、角色、课程安排、结业口径逐项交叉核对。不同材料不一致时，不要自行挑选一个答案；把冲突写进“冲突与待确认清单”。
-3. 所有结论必须来自上传材料。禁止编造联系人、电话号码、会议室、正式制度编号、领导姓名、领导讲话、满意度或培训成果数据。
-4. 正式通知使用清楚、自然、稳重的内部沟通语气；不要写空话，不要连续使用整齐口号。
-5. 班级群提醒只保留第一天签到、携带物品、岗位导师见面、资料安全和待确认事项，语气可以稍口语化。
-6. 培训简讯按“发生了什么 - 学员做了什么 - 形成了什么成果”组织。材料未提供的实际开展结果，使用“计划开展/将完成”，不要写成已经发生。
-7. 涉及产品责任、客户权益、合规判断、信息安全或对外发布的内容，标注“需责任部门人工复核”。
-8. 明确写出“本材料为教学模拟，不代表仁和人寿真实制度或安排”。
+# 处理顺序
+1. 建立“证据台账”：每一项关键内容写明来自哪个文件、哪一段。不得把顾问笔记自动当成客户事实。
+2. 按四层分类：
+   - 已确认事实；
+   - 客户明确表达的担心或偏好；
+   - 仍需证据核对的信息；
+   - 顾问或 AI 暂用的分析假设。
+3. 找出材料中的冲突或张力，至少包括：收入替代年限、预算上限、基金用途、已有保障是否有效、健康信息是否完整。
+4. 对每个假设写出“为什么需要、当前取值、如果改变会影响什么、要问客户哪个问题才能确认”。
+5. 画家庭风险责任地图：分别讨论周岚、陈一帆发生身故、重大疾病、长期停工或医疗支出时，谁会受影响、影响多久、已有资源是否可确认。
+6. 审计 P-01 至 P-05。只根据文件现有证据判断“可确认、待核或不能计入”，不能根据“百万医疗、带储蓄”等俗称推断责任。
+7. 设计 12 个第二次访谈问题，按优先级排序。每个问题后写“为什么问”和“答案会改变哪项分析”。问题要像真人对话，不要堆行业术语。
+8. 纠正初访中顾问对健康告知的轻率回应：只说明需要按正式问卷和流程如实处理，不判断是否承保，也不预测核保结果。
+9. 会后跟进消息控制在 350 字以内，语气稳重、自然，不制造焦虑，不提前放产品结论。
 
 # 输出格式
-请严格按以下顺序输出：
+## 1. 一页结论
+用 6 条以内说明：家庭最重要的责任、当前最大的信息缺口、夫妻分歧和下一步。每条标注“事实/偏好/假设/待确认”。
 
-## 1. 事实核对摘要
-- 已确认事实
-- 发现的冲突
-- 缺失信息
+## 2. 事实与假设分层表
+列：主题｜已确认事实｜客户偏好｜待核信息｜暂用假设｜来源。
 
-## 2. 正式培训通知
-使用小标题，不使用表格堆砌全文。
+## 3. 保单有效性审计
+列：编号｜当前能确认什么｜不能确认什么｜能否计入保障｜需要的证据｜建议确认人。
 
-## 3. 班级群提醒
-控制在 280 字以内。
+## 4. 家庭风险责任地图
+列：风险发生在谁｜影响对象｜持续时间假设｜主要财务责任｜可确认资源｜仍有缺口｜待访谈问题。
 
-## 4. 培训简讯
-约 500 字；未发生的内容不得写成已完成。
+## 5. 第二次访谈提纲
+共 12 题，按 P0 必问、P1 重要、P2 补充排序；每题附“为什么问”和“会改变什么”。
 
-## 5. 冲突与待确认清单
-表格列：冲突项｜材料 A 表述｜材料 B 表述｜建议确认人｜发布前是否必须解决。
+## 6. 会后跟进消息
+350 字以内。
 
-## 6. 发布前人工复核清单
-列出最多 8 项，优先检查日期、场地、合规表达、数据安全和是否误把教学模拟写成正式制度。
+## 7. 人工复核与转交清单
+至少覆盖健康告知、合同责任、保单有效状态、受益人、授权与数据安全。
 
 # 边界
-如果某项信息在材料中找不到，写“待补充”；如果材料冲突，写“待确认”。不得依据常识补齐。</pre>
+- 不得使用真实产品名称、费率或收益演示；
+- 不得承诺核保、理赔、续保或收益结果；
+- 不得替客户确定保障期限、预算、可动用资产比例或受益人；
+- 材料找不到依据时写“当前资料不足”，不能按常识补齐；
+- 所有输出注明“教学模拟，不构成真实投保建议”。</pre>
         </div>
         <div class="section-block">
           <h3>最终提交</h3>
           <ul class="deliverable-list">
-            <li>一份可发布的正式通知与一段班级群提醒。</li>
-            <li>一篇未虚构活动结果的培训简讯。</li>
-            <li>一张能让项目负责人快速拍板的冲突与待确认清单。</li>
+            <li>一份把事实、偏好、假设和待核信息分开的需求底稿。</li>
+            <li>一张家庭风险责任地图与已有保单有效性审计。</li>
+            <li>一组真正能推进下一次会谈的 12 个问题和跟进消息。</li>
           </ul>
         </div>
       </div>
@@ -476,8 +483,8 @@ D. 冲突与待确认清单
       <header class="task-head">
         <div class="task-number">02</div>
         <div class="task-title">
-          <h2 id="task2-title">数据报表解读：先处理异常，再写管理摘要</h2>
-          <p>训练数据清洗、口径说明、分部门对比和行动建议。</p>
+          <h2 id="task2-title">保障缺口测算：<br class="mobile-title-break">三种情景，不拍脑袋</h2>
+          <p>训练保单有效性审计、责任法测算、参数敏感性和预算取舍。</p>
         </div>
       </header>
       <div class="task-body">
@@ -485,21 +492,21 @@ D. 冲突与待确认清单
           <div>
             <div class="section-block">
               <h3>用户故事</h3>
-              <p class="story">你是培训运营岗。新员工训练营刚结束，负责人希望第二天晨会上看到一页管理摘要。
+              <p class="story">第二次会谈前，你拿到一份家庭财务与保单工作簿。表里既有客户口述，也有工作簿假设；P-02 和 P-03 的状态仍不明确，夫妻对基金能否动用也没有一致意见。
 
-你拿到的 Excel 有 40 条原始记录，但里面混有重复编号、缺失成绩、满意度越界、课时异常和部门目标口径不一致。你不能把系统算出来的平均数直接当结论，也不能让 AI 擅自“修好”数据。</p>
+负责人要求你给出低、基准、高三组责任法测算，再比较 A/B/C 三种保障类别组合。你不能把“公式算出来”当成客户已经同意，更不能把教学组合写成真实产品推荐。</p>
             </div>
             <div class="section-block">
               <h3>练习目标</h3>
-              <div class="goal">先建立异常清单与处置规则，再给出清洗前后差异、部门短板和三条可执行建议。</div>
+              <div class="goal">先审计输入和保单证据，再解释每个参数如何改变缺口；最后把保障责任、预算承受和仍未解决的问题放在同一页。</div>
             </div>
             <div class="section-block">
               <h3>练习路径</h3>
               <div class="path">
-                <div class="step"><strong>下载数据</strong>打开 Excel 的五张工作表。</div>
-                <div class="step"><strong>识别异常</strong>区分可计算、需回查和不可自动修正。</div>
-                <div class="step"><strong>统一口径</strong>说明每个指标的分母与排除规则。</div>
-                <div class="step"><strong>写管理摘要</strong>数字、风险和行动建议要连在一起。</div>
+                <div class="step"><strong>审计证据</strong>待确认保单不得计入有效保障。</div>
+                <div class="step"><strong>检查公式</strong>追踪责任、资产与缺口的引用链。</div>
+                <div class="step"><strong>跑三种情景</strong>解释参数敏感性，不只报数字。</div>
+                <div class="step"><strong>比较预算取舍</strong>说清解决什么、还缺什么。</div>
               </div>
             </div>
           </div>
@@ -515,84 +522,84 @@ D. 冲突与待确认清单
             <div class="section-block">
               <h3>模拟资料下载</h3>
               <div class="file-list">
-                <a class="file-link" href="task2/01_新员工培训运营数据.xlsx" download><span class="file-index">01</span><span class="file-meta"><strong>新员工培训运营数据.xlsx</strong><small>40 条原始记录、公式摘要、部门目标、质量清单</small></span><span class="file-action">下载</span></a>
-                <a class="file-link" href="task2/02_字段口径与异常说明.md" download><span class="file-index">02</span><span class="file-meta"><strong>字段口径与异常说明.md</strong><small>指标定义、合理范围和人工判断边界</small></span><span class="file-action">下载</span></a>
-                <a class="file-link" href="task2/03_管理问题清单.txt" download><span class="file-index">03</span><span class="file-meta"><strong>管理问题清单.txt</strong><small>晨会真正关心的七个问题</small></span><span class="file-action">下载</span></a>
+                <a class="file-link" href="task2/01_家庭保障需求与保单数据.xlsx" download><span class="file-index">01</span><span class="file-meta"><strong>家庭保障需求与保单数据.xlsx</strong><small>7 张表、公式缺口、三情景、方案与质量清单</small></span><span class="file-action">下载</span></a>
+                <a class="file-link" href="task2/02_测算口径与异常说明.md" download><span class="file-index">02</span><span class="file-meta"><strong>测算口径与异常说明.md</strong><small>责任法、资产抵扣、预算与异常分级</small></span><span class="file-action">下载</span></a>
+                <a class="file-link" href="task2/03_顾问会前问题清单.txt" download><span class="file-index">03</span><span class="file-meta"><strong>顾问会前问题清单.txt</strong><small>十个会前必须解释清楚的问题</small></span><span class="file-action">下载</span></a>
               </div>
-              <div class="bundle-row"><a class="button download" href="task2/task2_数据报表资料包.zip" download>下载本任务全部资料</a></div>
+              <div class="bundle-row"><a class="button download" href="task2/task2_保障缺口测算资料包.zip" download>下载本任务全部资料</a></div>
             </div>
           </aside>
         </div>
 
         <div class="prompt-panel">
-          <div class="prompt-toolbar"><strong>完整提示词 · 数据报表解读</strong><button class="copy-button" type="button" data-copy="prompt2">复制提示词</button></div>
+          <div class="prompt-toolbar"><strong>完整提示词 · 保障缺口测算</strong><button class="copy-button" type="button" data-copy="prompt2">复制提示词</button></div>
           <pre id="prompt2"># 角色
-你是一名保险企业培训运营数据分析师。你既要把数据算对，也要能向培训负责人解释数字背后的管理问题。
+你是一名寿险家庭保障分析教练，擅长责任法测算、保单有效性审计和预算情景比较。你的工作是让数字可追溯、假设可讨论、边界可复核，不替客户选择产品。
 
 # 输入资料
 我将上传：
-1. 01_新员工培训运营数据.xlsx
-2. 02_字段口径与异常说明.md
-3. 03_管理问题清单.txt
+1. 01_家庭保障需求与保单数据.xlsx
+2. 02_测算口径与异常说明.md
+3. 03_顾问会前问题清单.txt
 
-所有数据均为教学模拟，不代表仁和人寿真实员工、部门或培训结果。
+所有客户、健康信息、保单、金额、方案和费率线索均为教学模拟，不代表仁和人寿真实客户或产品。
 
 # 任务目标
-请完成一次“数据质量核验 - 口径统一 - 指标计算 - 部门对比 - 管理建议”的完整分析，并输出一页管理摘要和可复核的异常清单。
+完成一次“数据质量审计 - 保单有效性核验 - 责任法缺口测算 - 参数敏感性分析 - 预算情景比较”的完整练习，形成可回查的一页家庭保障分析和下一次会谈问题。
 
-# 分析顺序
-1. 先阅读 Excel 中的“使用说明、学员明细、部门目标、管理摘要、数据质量清单”五张工作表。
-2. 不要直接采用“管理摘要”里的原始结果。先检查：
-   - 学员编号是否重复；
-   - 应到课时是否小于等于 0；
-   - 实到课时是否大于应到课时；
-   - 在线完成率、测验、满意度是否缺失或越界；
-   - 部门目标的分母口径是否一致。
-3. 将异常分成三类：
-   A. 可以计算但必须标注；
-   B. 必须回查原始数据；
-   C. 不能由 AI 自动修正。
-4. 对每条异常给出“发现位置、影响指标、建议处置、是否需要人工确认”。禁止擅自删除重复记录、补填缺失成绩或修改课时。
-5. 明确给出清洗后建议口径：
-   - 真实参训人数按唯一学员编号；
-   - 出勤率 = 实到课时 / 应到课时；应到课时为 0 的记录不进入平均值；
-   - 双达标按材料定义执行；
-   - 部门比较前统一分母。
-6. 分别计算并解释：唯一学员数、有效出勤率、在线完成率、测验均分、双达标人数、补考人数、满意度，以及各部门差异。
-7. 所有数字必须标注“原始口径”或“清洗后建议口径”。若无法可靠计算，写出原因和待确认项，不要给出伪精确数字。
-8. 三条行动建议必须写清：对象、动作、完成时点、衡量指标。建议要与发现的数据问题直接对应。
+# 强制分析顺序
+1. 先列出 Excel 的 7 张工作表，并说明每张表是事实输入、假设输入、公式结果还是质量检查。不要直接复制“保障缺口测算”和“方案比较”的结论。
+2. 审计输入：逐项检查收入稳定性、房贷与车贷、应急金、基金可动用比例、教育责任、父母支持、现有保费和保单状态。
+3. 审计 P-01 至 P-06：只有证据支持且状态明确的责任才能计入有效保障。P-02、P-03 等状态未知项不得自行补值。
+4. 把问题分成三类：
+   A. 可计算但必须做情景；
+   B. 必须回查合同或正式记录；
+   C. 涉及健康、核保、理赔或销售建议，AI 不能判断。
+5. 复核工作簿公式链：
+   责任总额 = 收入替代 + 债务责任 + 教育与赡养 + 最终费用；
+   可抵扣资源 = 可动用资产 + 已确认有效身故保额；
+   保障缺口 = MAX(责任总额 - 可抵扣资源, 0)。
+   对周岚和陈一帆分别抽查低、基准、高情景，说明引用了哪些单元格或表中参数。
+6. 解释敏感性：收入替代年限、基金可动用比例、教育责任、父母支持和债务覆盖比例分别如何改变缺口。至少指出两个“看起来合理但必须由客户确认”的假设。
+7. 比较方案 A/B/C。不要按保费从低到高直接排名；每个方案都写清优先解决、仍有缺口、家庭总保费、落在哪个预算情景，以及需要核实的前提。
+8. 发现 Excel 与说明文件口径不一致时，保留两处证据并列为待确认，不静默选择。
+9. 所有金额使用“约”并保留到百元或千元，不制造伪精确。每个结论标明“事实、客户偏好、工作簿假设、公式结果或待确认”。
 
 # 输出格式
-## 1. 结论先行
-用 5 条以内写出最重要结论，每条包含数字、口径和管理含义。
+## 1. 一页结论
+最多 6 条：基准情景主要缺口、最敏感参数、保单证据问题、预算冲突和下一步。
 
-## 2. 数据质量与处置表
-列：异常类型｜记录位置/示例｜影响指标｜建议处置｜AI能否自动修正｜待确认人。
+## 2. 数据质量与保单审计表
+列：编号｜问题｜证据位置｜影响｜当前处理｜AI能否处理｜确认人。
 
-## 3. 清洗前后口径对照
-列：指标｜原始口径结果｜清洗后建议结果｜差异原因｜是否可用于汇报。
+## 3. 责任法复核表
+列：成员｜情景｜收入替代｜债务责任｜教育与赡养｜最终费用｜可抵扣资源｜缺口｜关键假设。
 
-## 4. 分部门对比
-列：部门｜有效人数｜出勤率｜在线完成率｜测验均分｜主要短板｜需注意的口径。
+## 4. 参数敏感性说明
+按参数分别写“低/基准/高取值、缺口变化方向、客户必须确认的问题”。
 
-## 5. 一页管理摘要
-按“现状 - 风险 - 行动”组织，适合晨会直接阅读。
+## 5. 方案 A/B/C 比较
+列：方案｜新增年保费｜家庭总保费｜优先解决｜仍有缺口｜预算判断｜成立前提｜不得承诺的事项。
 
-## 6. 三条下期改进建议
-每条使用“对象｜动作｜时点｜指标”格式。
+## 6. 第二次会谈的 10 个问题
+按优先级排序，每题写明会改变哪项参数或判断。
 
-## 7. 待确认项
-只保留必须由教务、平台或部门负责人确认的事项。
+## 7. 人工复核清单
+覆盖合同状态、健康告知、职业类别、真实产品责任与费率、正式销售建议。
 
 # 边界
-不要把教学模拟数据描述为公司真实经营或人事信息。不要为了形成完整结论而补造任何数值。</pre>
+- 不得创造产品名称、保额、费率、收益或承保条件；
+- 不得承诺核保、理赔、续保或收益；
+- 不得把团体保障当作永久个人保障；
+- 不得替客户决定收入替代年限、可动用资产比例、预算或方案；
+- 输出注明“教学模拟，不构成真实投保建议”。</pre>
         </div>
         <div class="section-block">
           <h3>最终提交</h3>
           <ul class="deliverable-list">
-            <li>一张异常清单，能区分“可计算”和“必须回查”。</li>
-            <li>一页管理摘要，所有数字都写明口径。</li>
-            <li>三条可执行的下期训练改进建议。</li>
+            <li>一张能回到公式与证据的家庭保障缺口复核表。</li>
+            <li>一份解释低／基准／高情景差异的敏感性分析。</li>
+            <li>一页方案取舍与会前问题，不越过健康、核保和正式销售边界。</li>
           </ul>
         </div>
       </div>
@@ -602,8 +609,8 @@ D. 冲突与待确认清单
       <header class="task-head">
         <div class="task-number">03</div>
         <div class="task-title">
-          <h2 id="task3-title">知识整理问答：给答案，也给来源和复核边界</h2>
-          <p>训练多资料检索、证据引用、冲突处理和高风险问题转人工。</p>
+          <h2 id="task3-title">保单服务问答：<br class="mobile-title-break">客户再急，也要守住流程</h2>
+          <p>训练投保告知、理赔材料、保全、续期、退保、受益人与信息保护。</p>
         </div>
       </header>
       <div class="task-body">
@@ -611,9 +618,9 @@ D. 冲突与待确认清单
           <div>
             <div class="section-block">
               <h3>用户故事</h3>
-              <p class="story">你是训练营知识助教。新员工经常问考勤、学习路径、产品沟通、信息安全和 AI 使用边界。
+              <p class="story">你是寿险保单服务岗的新人。一天里，客户连续问到甲状腺结节是否要告知、等待期到底多少天、受益人能否微信修改、没扣款是不是已经失效、退保是不是最省事，以及病历能否直接发群里。
 
-你需要把五份模拟资料作为知识库，回答 24 道测试问题。答案必须能回查；遇到客户权益、产品责任、合规判断、个人信息或资料冲突时，要清楚说明为什么不能只靠 AI 下结论。</p>
+你要用五份模拟知识资料回答 24 道服务情景题。目标不是“什么都敢答”，而是结论有来源、下一步可执行，高风险问题及时停下并转给有权限的人。</p>
             </div>
             <div class="section-block">
               <h3>练习目标</h3>
@@ -622,10 +629,10 @@ D. 冲突与待确认清单
             <div class="section-block">
               <h3>练习路径</h3>
               <div class="path">
-                <div class="step"><strong>建立知识库</strong>上传五份 Markdown 资料。</div>
-                <div class="step"><strong>复制提示词</strong>设定回答、引用和转人工规则。</div>
-                <div class="step"><strong>批量测试</strong>使用 24 道问题检查稳定性。</div>
-                <div class="step"><strong>人工评分</strong>在 Excel 中记录来源与复核意见。</div>
+                <div class="step"><strong>识别服务主题</strong>先判断要查哪份资料。</div>
+                <div class="step"><strong>回答并引用</strong>结论、来源、边界放在一起。</div>
+                <div class="step"><strong>判断风险</strong>健康、合同、授权和隐私要升级。</div>
+                <div class="step"><strong>用 24 题压测</strong>检查改写问题后的稳定性。</div>
               </div>
             </div>
           </div>
@@ -641,53 +648,55 @@ D. 冲突与待确认清单
             <div class="section-block">
               <h3>模拟资料下载</h3>
               <div class="file-list">
-                <a class="file-link" href="task3/01_新员工学习地图.md" download><span class="file-index">01</span><span class="file-meta"><strong>新员工学习地图.md</strong><small>90 天路径与角色分工</small></span><span class="file-action">下载</span></a>
-                <a class="file-link" href="task3/02_培训考勤与结业规则.md" download><span class="file-index">02</span><span class="file-meta"><strong>培训考勤与结业规则.md</strong><small>报备、补学和建议结业口径</small></span><span class="file-action">下载</span></a>
-                <a class="file-link" href="task3/03_保险产品学习与沟通边界.md" download><span class="file-index">03</span><span class="file-meta"><strong>保险产品学习与沟通边界.md</strong><small>客户沟通红线与人工复核</small></span><span class="file-action">下载</span></a>
-                <a class="file-link" href="task3/04_信息安全与数据使用.md" download><span class="file-index">04</span><span class="file-meta"><strong>信息安全与数据使用.md</strong><small>个人信息、内部资料和 AI 上传边界</small></span><span class="file-action">下载</span></a>
-                <a class="file-link" href="task3/05_AI使用与人工复核.md" download><span class="file-index">05</span><span class="file-meta"><strong>AI 使用与人工复核.md</strong><small>来源引用、冲突处理、转人工规则</small></span><span class="file-action">下载</span></a>
-                <a class="file-link" href="task3/06_知识问答测试与评分.xlsx" download><span class="file-index">06</span><span class="file-meta"><strong>知识问答测试与评分.xlsx</strong><small>24 道测试题、评分记录与知识库映射</small></span><span class="file-action">下载</span></a>
+                <a class="file-link" href="task3/01_投保与如实告知.md" download><span class="file-index">01</span><span class="file-meta"><strong>投保与如实告知.md</strong><small>问卷、健康资料、授权与升级处理</small></span><span class="file-action">下载</span></a>
+                <a class="file-link" href="task3/02_等待期责任免除与理赔材料.md" download><span class="file-index">02</span><span class="file-meta"><strong>等待期责任免除与理赔材料.md</strong><small>先查合同，不背统一数字</small></span><span class="file-action">下载</span></a>
+                <a class="file-link" href="task3/03_保全变更与受益人.md" download><span class="file-index">03</span><span class="file-meta"><strong>保全变更与受益人.md</strong><small>身份核验、正式受理与授权边界</small></span><span class="file-action">下载</span></a>
+                <a class="file-link" href="task3/04_续期宽限复效退保与贷款.md" download><span class="file-index">04</span><span class="file-meta"><strong>续期宽限复效退保与贷款.md</strong><small>状态查询、现金价值与决定边界</small></span><span class="file-action">下载</span></a>
+                <a class="file-link" href="task3/05_销售合规与客户信息保护.md" download><span class="file-index">05</span><span class="file-meta"><strong>销售合规与客户信息保护.md</strong><small>对外表达、AI、敏感信息和引用规则</small></span><span class="file-action">下载</span></a>
+                <a class="file-link" href="task3/06_寿险服务问答测试与评分.xlsx" download><span class="file-index">06</span><span class="file-meta"><strong>寿险服务问答测试与评分.xlsx</strong><small>24 道服务情景、人工评分与知识库映射</small></span><span class="file-action">下载</span></a>
               </div>
-              <div class="bundle-row"><a class="button download" href="task3/task3_知识问答资料包.zip" download>下载本任务全部资料</a></div>
+              <div class="bundle-row"><a class="button download" href="task3/task3_保单服务问答资料包.zip" download>下载本任务全部资料</a></div>
             </div>
           </aside>
         </div>
 
         <div class="prompt-panel">
-          <div class="prompt-toolbar"><strong>完整提示词 · 知识整理问答</strong><button class="copy-button" type="button" data-copy="prompt3">复制提示词</button></div>
+          <div class="prompt-toolbar"><strong>完整提示词 · 保单服务问答</strong><button class="copy-button" type="button" data-copy="prompt3">复制提示词</button></div>
           <pre id="prompt3"># 角色
-你是仁和人寿新员工训练营的知识助教。本练习使用的是教学模拟资料，你的职责是帮助新员工快速找到依据，而不是替代公司正式制度、产品文件、合规审核或管理审批。
+你是一名寿险保单服务知识教练。你帮助新人依据知识库形成客户答复草稿，同时识别合同责任、健康告知、授权、理赔、退保和个人信息风险。你不替代身份核验、正式受理、核保、理赔或合规判断。
 
 # 知识库资料
 我将上传：
-1. 01_新员工学习地图.md
-2. 02_培训考勤与结业规则.md
-3. 03_保险产品学习与沟通边界.md
-4. 04_信息安全与数据使用.md
-5. 05_AI使用与人工复核.md
-6. 06_知识问答测试与评分.xlsx（用于测试和记录，不作为制度依据）
+1. 01_投保与如实告知.md
+2. 02_等待期责任免除与理赔材料.md
+3. 03_保全变更与受益人.md
+4. 04_续期宽限复效退保与贷款.md
+5. 05_销售合规与客户信息保护.md
+6. 06_寿险服务问答测试与评分.xlsx（只用于测试和评分，不作为业务依据）
 
 # 任务目标
-根据前五份知识资料回答新员工问题。每个回答必须给出可回查来源；找不到依据、资料冲突或问题风险较高时，明确转人工复核。
+根据前五份知识资料回答寿险客户服务问题。每个回答必须给出可回查来源、适用边界和下一步；找不到依据、资料冲突或问题风险较高时，明确停止下结论并转人工。
 
 # 回答流程
-1. 先判断问题属于：学习安排、培训规则、产品学习、信息安全、AI 使用边界，或“当前知识库之外”。
+1. 先判断问题属于：投保与告知、等待期/责任/理赔材料、保全与受益人、续期/复效/退保/贷款、销售合规与信息保护，或“当前知识库之外”。
 2. 只使用前五份 Markdown 资料作为答案依据。Excel 里的“答案要点”只能用于测试评分，不能反过来当知识来源。
 3. 先给一句直接结论，再解释依据。引用格式统一为：[来源：文件名 - 章节标题]。
-4. 如果没有找到明确依据，直接写：“在当前教学模拟知识库中未找到明确依据”，并建议应该向哪类责任人确认。不得依据常识补写公司制度。
+4. 如果没有找到明确依据，直接写：“当前教学模拟知识库不足以回答”，并说明要查具体合同、正式服务页面或哪类责任人。不得按行业常识补一个数字或结论。
 5. 如果不同资料出现冲突：
    - 分别列出两处来源；
    - 说明能确定和不能确定的部分；
    - 把不能确定的内容放入“待人工确认”；
    - 不得静默选择一个版本。
 6. 以下问题必须标记“需要人工复核”：
-   - 客户权益、产品责任、收益承诺、核保或理赔判断；
-   - 合规结论、对外发布或正式通知；
-   - 个人信息、内部经营数据、内部制度原文；
+   - 健康告知、核保、理赔、责任免除或具体合同责任；
+   - 收益、续保、退保损失、保单贷款或正式销售建议；
+   - 身份核验、签字授权、受益人变更和正式受理结果；
+   - 个人信息、健康资料、保单与理赔材料；
    - 资料之间冲突；
    - 当前知识库没有明确依据。
-7. 如果用户要求上传真实客户或员工资料，先提醒停止上传，建议改用脱敏或模拟数据。
-8. 不要输出看似正式但材料中不存在的制度编号、联系电话、联系人或审批流程。
+7. 客户问题包含姓名、证件、银行卡、健康、保单号、受益人或理赔资料时，不在答复中复述完整信息，并引导到经批准的正式渠道。
+8. 不要输出知识库中不存在的统一等待期、宽限期限、免赔额、给付比例、现金价值、联系电话或办理结果。
+9. 客户用“肯定、一定、是不是就”等问法施压时，仍要保持证据与边界，不为安抚而给确定答案。
 
 # 单题输出格式
 ## 结论
@@ -697,37 +706,42 @@ D. 冲突与待确认清单
 - [来源：文件名 - 章节标题] 对应依据的简要概括
 
 ## 适用边界
-说明这是教学模拟规则，或说明答案不能外推到正式制度/具体客户个案。
+说明需要核对的合同、身份、时间、资料或适用范围，以及当前答案为什么不能外推到具体保单。
 
 ## 人工复核
 - 是否需要：是/否
-- 建议复核角色：培训项目组/岗位导师/直属经理/合规/信息安全/有权限的业务人员
+- 风险级别：低/中/高
+- 建议责任人：保单服务/核保/理赔/合规/信息安全/有权限的业务人员
 - 原因：一句话说明
 
+## 下一步
+给客户一个可执行动作，例如准备哪类资料、通过什么正式渠道查询、下一次由谁联系。不要只写“请咨询专业人士”。
+
 # 批量测试要求
-当我上传 06_知识问答测试与评分.xlsx 并要求“开始测试”时：
-1. 逐题回答“测试问题集”中的 24 道问题；
-2. 输出表格列：题号｜结论摘要｜引用文件｜引用章节｜是否需人工复核｜风险提示；
-3. 对换一种问法的题目保持结论和引用稳定；
-4. 不查看或复述 Excel 中的“答案要点”作为回答依据；
-5. 完成后再给出最多 5 条知识库改进建议，包括缺失主题、容易混淆的边界和需要增加的测试题。
+当我上传 06_寿险服务问答测试与评分.xlsx 并要求“开始测试”时：
+1. 逐题回答“服务情景测试”中的 24 道问题；
+2. 输出表格列：题号｜结论摘要｜引用文件与章节｜风险级别｜是否转人工｜下一步｜禁止承诺；
+3. 对 Q23、Q24 这类换一种问法的题目保持结论、引用与边界稳定；
+4. Excel 中的“答案要点、误答陷阱、通过标准”只供人工评分，不能反过来作为业务依据；
+5. 对每题做一次自检：有没有编统一期限、有没有承诺结果、有没有遗漏身份或隐私、有没有把“正式受理”说成已经成功；
+6. 完成后给出最多 5 条知识库改进建议，优先补缺失证据和高风险边界，不以“让 AI 回答更多”为目标。
 
 # 边界声明
-所有回答均基于教学模拟资料，不代表仁和人寿真实制度、产品文件或正式业务意见。</pre>
+所有回答均基于教学模拟资料，不代表仁和人寿真实合同、产品、服务期限、核保、理赔或正式业务意见。</pre>
         </div>
         <div class="section-block">
           <h3>最终提交</h3>
           <ul class="deliverable-list">
-            <li>24 道问题的批量回答，引用文件与章节完整。</li>
-            <li>一份人工评分记录，能看出哪些题稳定、哪些题必须转人工。</li>
-            <li>最多五条知识库改进建议，不把“回答更多”当成唯一目标。</li>
+            <li>24 道寿险服务情景的批量回答，来源、风险和下一步完整。</li>
+            <li>一份人工评分记录，能看出改写问题后是否仍守住边界。</li>
+            <li>最多五条知识库改进建议，优先补合同证据与升级路径。</li>
           </ul>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="footer">仁和人寿新员工 AI 实战练习台 · 所有材料均为教学模拟 · 2026</footer>
+  <footer class="footer">仁和人寿寿险业务 AI 实战练习台 · 所有客户、保单与数据均为教学模拟 · 2026</footer>
   <div class="toast" id="toast" role="status" aria-live="polite">提示词已复制</div>
   <script>
     (() => {
