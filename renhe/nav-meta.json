@@ -1,0 +1,16 @@
+{
+  "id": "renhe",
+  "title": "仁和人寿新员工 AI 实战练习台",
+  "shortTitle": "仁和人寿新员工训练",
+  "category": "金融保险与支付",
+  "description": "面向新员工的三类 AI 实战练习：材料助手、培训数据报表解读与带来源的知识问答，配套完整提示词和可下载模拟资料。",
+  "url": "https://xjtulijiagui-max.github.io/lijiagui/renhe/",
+  "path": "renhe/",
+  "tags": ["人寿保险", "新员工培训", "材料助手", "数据分析", "知识问答"],
+  "type": "客户项目",
+  "client": "仁和人寿",
+  "featured": true,
+  "order": 208,
+  "status": "正常",
+  "updated": "2026-08-26"
+}

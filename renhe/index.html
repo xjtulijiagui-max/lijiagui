@@ -1,0 +1,786 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="仁和人寿新员工 AI 实战练习台：材料助手、培训数据报表解读与知识整理问答，含可复制完整提示词和可下载模拟资料。">
+  <meta name="theme-color" content="#082b66">
+  <link rel="canonical" href="https://xjtulijiagui-max.github.io/lijiagui/renhe/">
+  <meta property="og:title" content="仁和人寿新员工 AI 实战练习台">
+  <meta property="og:description" content="三类场景、三套模拟资料、三段完整提示词，下载后可直接开练。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://xjtulijiagui-max.github.io/lijiagui/renhe/">
+  <title>仁和人寿新员工 AI 实战练习台</title>
+  <style>
+    :root {
+      --brand-deep: #082b66;
+      --brand-main: #0d66c2;
+      --brand-strong: #0955a5;
+      --brand-pale: #edf5fd;
+      --brand-mist: #f5f9fe;
+      --surface: #fffefd;
+      --surface-soft: #f8fbff;
+      --text-primary: #17253b;
+      --text-secondary: #5c6d84;
+      --text-inverse: #f7fbff;
+      --border: #d8e5f3;
+      --success: #16794d;
+      --success-hover: #10643f;
+      --warning-surface: #fff8e8;
+      --warning-border: #e6c978;
+      --focus: #78aee4;
+      --prompt: #0e1f38;
+      --prompt-text: #e5eef8;
+      --shadow-color: rgba(8, 43, 102, 0.12);
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+      --space-16: 64px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text-primary);
+      background: var(--brand-mist);
+      font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans SC", sans-serif;
+      font-size: 15px;
+      line-height: 1.75;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    .wrap { width: min(100% - var(--space-12), 1180px); margin-inline: auto; }
+    .skip-link {
+      position: fixed;
+      inset: var(--space-3) auto auto var(--space-3);
+      z-index: 100;
+      padding: var(--space-2) var(--space-3);
+      color: var(--text-inverse);
+      background: var(--brand-deep);
+      transform: translateY(-160%);
+    }
+    .skip-link:focus { transform: translateY(0); }
+
+    .hero {
+      color: var(--text-inverse);
+      background:
+        radial-gradient(circle at 82% 12%, rgba(120, 174, 228, 0.28), transparent 26%),
+        linear-gradient(125deg, var(--brand-deep), var(--brand-main));
+      overflow: hidden;
+    }
+    .hero-inner { padding-block: var(--space-12) var(--space-10); }
+    .eyebrow {
+      margin: 0 0 var(--space-3);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      color: var(--text-inverse);
+      opacity: 0.78;
+    }
+    .hero h1 {
+      max-width: 900px;
+      margin: 0;
+      font-family: STKaiti, KaiTi, FangSong, serif;
+      font-size: clamp(32px, 5vw, 52px);
+      line-height: 1.15;
+      text-wrap: balance;
+    }
+    .no-break { white-space: nowrap; }
+    .hero-lead {
+      max-width: 780px;
+      margin: var(--space-4) 0 0;
+      font-size: 18px;
+      line-height: 1.8;
+      color: var(--text-inverse);
+      opacity: 0.88;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }
+    .action-link,
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      min-height: 44px;
+      padding: var(--space-3) var(--space-4);
+      border: 1px solid transparent;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1), background-color 180ms cubic-bezier(0.16, 1, 0.3, 1), border-color 180ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .action-link:hover,
+    .button:hover { transform: translateY(-2px); }
+    .action-link:active,
+    .button:active { transform: translateY(0); }
+    .action-link:focus-visible,
+    .button:focus-visible,
+    .scenario-link:focus-visible,
+    .file-link:focus-visible,
+    .top-link:focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 3px;
+    }
+    .action-link.primary { color: var(--brand-deep); background: var(--surface); }
+    .action-link.secondary { color: var(--text-inverse); border-color: rgba(247, 251, 255, 0.44); background: rgba(247, 251, 255, 0.08); }
+
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-6);
+      margin-top: var(--space-10);
+    }
+    .scenario-link {
+      display: block;
+      color: var(--text-primary);
+      background: var(--surface);
+      border: 1px solid rgba(247, 251, 255, 0.45);
+      transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 180ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .scenario-link:hover { transform: translateY(-4px); box-shadow: 0 12px 28px var(--shadow-color); }
+    .scenario-bar {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      color: var(--text-inverse);
+      background: var(--brand-main);
+      font-family: STKaiti, KaiTi, FangSong, serif;
+      font-size: 20px;
+      font-weight: 800;
+    }
+    .scenario-copy { min-height: 112px; padding: var(--space-4); color: var(--text-secondary); }
+    .scenario-copy strong { display: block; margin-bottom: var(--space-1); color: var(--text-primary); }
+    .disclaimer {
+      margin-top: var(--space-6);
+      padding: var(--space-3) var(--space-4);
+      color: var(--text-primary);
+      background: var(--warning-surface);
+      border: 1px solid var(--warning-border);
+    }
+
+    .sticky-nav { position: sticky; top: 0; z-index: 20; background: rgba(255, 254, 253, 0.96); border-bottom: 1px solid var(--border); }
+    .sticky-nav .wrap { display: flex; gap: var(--space-2); overflow-x: auto; padding-block: var(--space-3); scrollbar-width: thin; }
+    .top-link { flex: none; padding: var(--space-2) var(--space-3); color: var(--brand-deep); font-size: 13px; font-weight: 700; }
+    .top-link:hover { background: var(--brand-pale); }
+
+    main { padding-block: var(--space-10) var(--space-16); }
+    .intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
+      gap: var(--space-8);
+      align-items: start;
+      margin-bottom: var(--space-12);
+    }
+    .intro h2 { margin: 0 0 var(--space-3); color: var(--brand-deep); font-size: 32px; line-height: 1.25; text-wrap: balance; }
+    .intro p { margin: 0; color: var(--text-secondary); }
+    .start-note { padding: var(--space-5); background: var(--brand-pale); border: 1px solid var(--border); }
+    .start-note strong { display: block; margin-bottom: var(--space-2); color: var(--brand-deep); }
+
+    .task { scroll-margin-top: 84px; margin-top: var(--space-12); background: var(--surface); border: 1px solid var(--border); }
+    .task-head { display: grid; grid-template-columns: 96px minmax(0, 1fr); align-items: stretch; background: var(--brand-pale); }
+    .task-number {
+      display: grid;
+      place-items: center;
+      color: var(--text-inverse);
+      background: var(--brand-main);
+      font-family: STKaiti, KaiTi, FangSong, serif;
+      font-size: 32px;
+      font-weight: 800;
+    }
+    .task-title { padding: var(--space-5) var(--space-6); }
+    .task-title h2 { margin: 0; color: var(--brand-deep); font-size: 24px; line-height: 1.35; text-wrap: balance; }
+    .task-title p { margin: var(--space-1) 0 0; color: var(--text-secondary); }
+    .task-body { padding: var(--space-8); }
+    .task-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 0.44fr); gap: var(--space-8); align-items: start; }
+    .section-block + .section-block { margin-top: var(--space-8); }
+    .section-block h3 {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      margin: 0 0 var(--space-3);
+      color: var(--brand-deep);
+      font-size: 17px;
+      line-height: 1.5;
+    }
+    .section-block h3::before { content: ""; width: 20px; height: 3px; background: var(--brand-main); }
+    .story { margin: 0; white-space: pre-line; }
+    .goal { padding: var(--space-4); background: var(--brand-pale); border-left: 4px solid var(--brand-main); }
+    .path { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-3); counter-reset: step; }
+    .step { position: relative; padding: var(--space-4); background: var(--surface-soft); border-top: 3px solid var(--brand-main); counter-increment: step; }
+    .step::before { content: "0" counter(step); display: block; margin-bottom: var(--space-2); color: var(--brand-main); font-size: 12px; font-weight: 800; letter-spacing: 0.08em; }
+    .step strong { display: block; margin-bottom: var(--space-1); }
+
+    .side-panel { position: sticky; top: 80px; }
+    .tool-list { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+    .button { color: var(--text-inverse); background: var(--brand-main); }
+    .button:hover { background: var(--brand-strong); }
+    .button.download { background: var(--success); }
+    .button.download:hover { background: var(--success-hover); }
+    .button.ghost { color: var(--brand-deep); background: var(--surface); border-color: var(--border); }
+    .button.ghost:hover { background: var(--brand-pale); }
+
+    .file-list { display: grid; gap: var(--space-2); }
+    .file-link {
+      display: grid;
+      grid-template-columns: 36px minmax(0, 1fr) auto;
+      gap: var(--space-3);
+      align-items: center;
+      padding: var(--space-3);
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1), border-color 180ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .file-link:hover { transform: translateX(4px); border-color: var(--brand-main); }
+    .file-index { color: var(--brand-main); font-size: 12px; font-weight: 800; }
+    .file-meta strong { display: block; overflow-wrap: anywhere; }
+    .file-meta small { display: block; color: var(--text-secondary); font-size: 12px; line-height: 1.5; }
+    .file-action { color: var(--success); font-size: 13px; font-weight: 800; }
+    .bundle-row { margin-top: var(--space-3); }
+
+    .prompt-panel { margin-top: var(--space-8); background: var(--prompt); color: var(--prompt-text); }
+    .prompt-toolbar { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); padding: var(--space-3) var(--space-4); border-bottom: 1px solid rgba(229, 238, 248, 0.2); }
+    .prompt-toolbar strong { color: var(--text-inverse); }
+    .copy-button { min-height: 44px; padding: var(--space-2) var(--space-3); color: var(--prompt-text); background: transparent; border: 1px solid rgba(229, 238, 248, 0.4); font-weight: 700; cursor: pointer; }
+    .copy-button:hover { color: var(--text-inverse); border-color: var(--text-inverse); }
+    .copy-button:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+    pre { margin: 0; padding: var(--space-5); overflow-x: auto; color: var(--prompt-text); font-family: "Cascadia Code", "Microsoft YaHei", monospace; font-size: 13px; line-height: 1.72; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .deliverable-list { margin: 0; padding-left: var(--space-5); }
+    .deliverable-list li + li { margin-top: var(--space-2); }
+    .footer { padding-block: var(--space-8); color: var(--text-secondary); background: var(--surface); border-top: 1px solid var(--border); text-align: center; font-size: 13px; }
+    .toast { position: fixed; inset: auto var(--space-5) var(--space-5) auto; z-index: 50; padding: var(--space-3) var(--space-4); color: var(--text-inverse); background: var(--brand-deep); box-shadow: 0 12px 28px var(--shadow-color); opacity: 0; transform: translateY(12px); pointer-events: none; transition: opacity 180ms cubic-bezier(0.16, 1, 0.3, 1), transform 180ms cubic-bezier(0.16, 1, 0.3, 1); }
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 1080px) {
+      .task-layout { grid-template-columns: 1fr; }
+      .side-panel { position: static; }
+    }
+    @media (max-width: 840px) {
+      .scenario-grid { grid-template-columns: 1fr; }
+      .scenario-copy { min-height: 0; }
+      .intro { grid-template-columns: 1fr; }
+      .path { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .task-head { grid-template-columns: 72px minmax(0, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .wrap { width: min(100% - var(--space-8), 1180px); }
+      .hero-inner { padding-block: var(--space-10) var(--space-8); }
+      .hero h1 { font-size: 30px; line-height: 1.24; text-wrap: wrap; }
+      .hero-lead { font-size: 16px; }
+      .hero-actions { display: grid; }
+      .action-link { width: 100%; }
+      .sticky-nav { position: static; }
+      main { padding-top: var(--space-8); }
+      .intro h2 { font-size: 24px; }
+      .task { margin-top: var(--space-8); }
+      .task-head { grid-template-columns: 1fr; }
+      .task-number { min-height: 48px; justify-content: start; padding-inline: var(--space-4); font-size: 22px; }
+      .task-title { padding: var(--space-4); }
+      .task-title h2 { font-size: 20px; }
+      .task-body { padding: var(--space-4); }
+      .path { grid-template-columns: 1fr; }
+      .file-link { grid-template-columns: 28px minmax(0, 1fr); }
+      .file-action { grid-column: 2; }
+      .prompt-toolbar { align-items: flex-start; flex-direction: column; }
+      .copy-button { width: 100%; }
+      .toast { inset: auto var(--space-4) var(--space-4); text-align: center; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <header class="hero">
+    <div class="wrap hero-inner">
+      <p class="eyebrow">NEW EMPLOYEE PRACTICE LAB · 2026</p>
+      <h1><span class="no-break">仁和人寿新员工</span> <span class="no-break">AI 实战练习台</span></h1>
+      <p class="hero-lead">不只听一次课。用三套教学模拟材料，把材料整理、培训数据解读和带来源的知识问答真正跑一遍。</p>
+      <div class="hero-actions">
+        <a class="action-link primary" href="仁和人寿_新员工AI练习网页部署包.zip" download>下载完整练习包</a>
+        <a class="action-link secondary" href="https://www.helloagent.top/tool.html" target="_blank" rel="noopener">打开 AI 工具导航</a>
+      </div>
+
+      <nav class="scenario-grid" aria-label="三类训练场景">
+        <a class="scenario-link" href="#task1">
+          <span class="scenario-bar"><span>01</span> 材料助手</span>
+          <span class="scenario-copy"><strong>把零散培训素材收成一套可发布材料</strong>正式通知、群提醒、培训简讯、冲突与待确认清单。</span>
+        </a>
+        <a class="scenario-link" href="#task2">
+          <span class="scenario-bar"><span>02</span> 数据报表解读</span>
+          <span class="scenario-copy"><strong>先清洗，再解释</strong>识别重复、缺失、越界和口径冲突，输出能上会的一页摘要。</span>
+        </a>
+        <a class="scenario-link" href="#task3">
+          <span class="scenario-bar"><span>03</span> 知识整理问答</span>
+          <span class="scenario-copy"><strong>每个答案都能回查</strong>基于模拟制度与培训资料回答问题，标注来源并设置人工复核边界。</span>
+        </a>
+      </nav>
+      <div class="disclaimer"><strong>教学模拟：</strong>页面中的人员、部门、数据、制度口径与业务情境均为练习素材，不代表仁和人寿真实信息或正式制度。</div>
+    </div>
+  </header>
+
+  <nav class="sticky-nav" aria-label="页面导航">
+    <div class="wrap">
+      <a class="top-link" href="#task1">任务 1 · 材料助手</a>
+      <a class="top-link" href="#task2">任务 2 · 数据报表</a>
+      <a class="top-link" href="#task3">任务 3 · 知识问答</a>
+      <a class="top-link" href="../list/">返回训练导航</a>
+    </div>
+  </nav>
+
+  <main id="main" class="wrap">
+    <section class="intro" aria-labelledby="how-to-start">
+      <div>
+        <h2 id="how-to-start">先选一题，下载资料，上传后直接复制提示词</h2>
+        <p>每个任务建议 45 至 60 分钟。页面没有隐藏前提：角色、输入、处理要求、输出格式和不能越过的边界都写进了提示词。老师不需要再单独发文件，学员也不必先理解一套复杂工作流。</p>
+      </div>
+      <aside class="start-note">
+        <strong>开练前只做一件事</strong>
+        先阅读每个资料包里的“教学模拟”说明。不要把练习口径当成真实制度，也不要把真实客户或员工资料上传到公共 AI 工具。
+      </aside>
+    </section>
+
+    <section class="task" id="task1" aria-labelledby="task1-title">
+      <header class="task-head">
+        <div class="task-number">01</div>
+        <div class="task-title">
+          <h2 id="task1-title">材料助手：整理新员工训练营整套沟通材料</h2>
+          <p>训练统一结构、语气、冲突识别和发布前人工复核。</p>
+        </div>
+      </header>
+      <div class="task-body">
+        <div class="task-layout">
+          <div>
+            <div class="section-block">
+              <h3>用户故事</h3>
+              <p class="story">你是新员工训练营的班主任。项目负责人临时把五份零散材料交给你，其中开课日期和场地有冲突，部分表达还涉及合规边界。
+
+你要在 45 分钟内整理出一份正式通知、一段班级群提醒、一篇培训简讯，以及一张冲突与待确认清单。内容要自然，不能为了“完整”而编造联系人、场地或领导讲话。</p>
+            </div>
+            <div class="section-block">
+              <h3>练习目标</h3>
+              <div class="goal">让 AI 真正读材料、找冲突、按模板出稿；同时保留需要项目负责人和责任部门确认的地方。</div>
+            </div>
+            <div class="section-block">
+              <h3>练习路径</h3>
+              <div class="path">
+                <div class="step"><strong>下载资料</strong>取得五份零散素材。</div>
+                <div class="step"><strong>上传文件</strong>一次上传，不要先自行合并。</div>
+                <div class="step"><strong>复制提示词</strong>生成四项交付物。</div>
+                <div class="step"><strong>人工复核</strong>优先检查日期、场地、合规表达。</div>
+              </div>
+            </div>
+          </div>
+          <aside class="side-panel">
+            <div class="section-block">
+              <h3>工具入口</h3>
+              <div class="tool-list">
+                <a class="button" href="https://chat.deepseek.com/" target="_blank" rel="noopener">DeepSeek</a>
+                <a class="button ghost" href="https://www.doubao.com/chat/" target="_blank" rel="noopener">豆包</a>
+                <a class="button ghost" href="https://www.kimi.com/" target="_blank" rel="noopener">Kimi</a>
+              </div>
+            </div>
+            <div class="section-block">
+              <h3>模拟资料下载</h3>
+              <div class="file-list">
+                <a class="file-link" href="task1/01_培训项目背景.md" download><span class="file-index">01</span><span class="file-meta"><strong>培训项目背景.md</strong><small>项目参数、学员画像、目标与限制</small></span><span class="file-action">下载</span></a>
+                <a class="file-link" href="task1/02_课程与讲师要求.md" download><span class="file-index">02</span><span class="file-meta"><strong>课程与讲师要求.md</strong><small>五天课程、讲师提交规范、建议结业口径</small></span><span class="file-action">下载</span></a>
+                <a class="file-link" href="task1/03_合规表达边界.md" download><span class="file-index">03</span><span class="file-meta"><strong>合规表达边界.md</strong><small>可以说什么、不能承诺什么</small></span><span class="file-action">下载</span></a>
+                <a class="file-link" href="task1/04_沟通素材草稿.md" download><span class="file-index">04</span><span class="file-meta"><strong>沟通素材草稿.md</strong><small>故意保留日期和场地冲突</small></span><span class="file-action">下载</span></a>
+                <a class="file-link" href="task1/05_输出模板.md" download><span class="file-index">05</span><span class="file-meta"><strong>输出模板.md</strong><small>正式通知、群提醒、简讯、冲突清单</small></span><span class="file-action">下载</span></a>
+              </div>
+              <div class="bundle-row"><a class="button download" href="task1/task1_材料助手资料包.zip" download>下载本任务全部资料</a></div>
+            </div>
+          </aside>
+        </div>
+
+        <div class="prompt-panel">
+          <div class="prompt-toolbar"><strong>完整提示词 · 材料助手</strong><button class="copy-button" type="button" data-copy="prompt1">复制提示词</button></div>
+          <pre id="prompt1"># 角色
+你是一名企业新员工训练营的资深班主任，同时具备培训项目管理、内部沟通写作和合规校对经验。
+
+# 任务背景
+我将上传 5 份教学模拟材料：
+1. 01_培训项目背景.md
+2. 02_课程与讲师要求.md
+3. 03_合规表达边界.md
+4. 04_沟通素材草稿.md
+5. 05_输出模板.md
+
+这些材料用于“仁和人寿新员工训练营”课堂练习。材料中的人员、数据、时间、地点和制度口径均为教学模拟，不代表公司真实安排。不同材料里故意保留了日期、场地和表达口径冲突。
+
+# 任务目标
+请先完整阅读全部材料，再形成以下 4 项交付：
+A. 正式培训通知（900-1200 字）
+B. 班级群提醒（280 字以内）
+C. 培训简讯（约 500 字）
+D. 冲突与待确认清单
+
+# 处理要求
+1. 先提取可确认事实，按“项目背景、对象、时间、地点、课程、课前准备、考勤与结业、信息安全”分类整理。
+2. 对日期、地点、人数、角色、课程安排、结业口径逐项交叉核对。不同材料不一致时，不要自行挑选一个答案；把冲突写进“冲突与待确认清单”。
+3. 所有结论必须来自上传材料。禁止编造联系人、电话号码、会议室、正式制度编号、领导姓名、领导讲话、满意度或培训成果数据。
+4. 正式通知使用清楚、自然、稳重的内部沟通语气；不要写空话，不要连续使用整齐口号。
+5. 班级群提醒只保留第一天签到、携带物品、岗位导师见面、资料安全和待确认事项，语气可以稍口语化。
+6. 培训简讯按“发生了什么 - 学员做了什么 - 形成了什么成果”组织。材料未提供的实际开展结果，使用“计划开展/将完成”，不要写成已经发生。
+7. 涉及产品责任、客户权益、合规判断、信息安全或对外发布的内容，标注“需责任部门人工复核”。
+8. 明确写出“本材料为教学模拟，不代表仁和人寿真实制度或安排”。
+
+# 输出格式
+请严格按以下顺序输出：
+
+## 1. 事实核对摘要
+- 已确认事实
+- 发现的冲突
+- 缺失信息
+
+## 2. 正式培训通知
+使用小标题，不使用表格堆砌全文。
+
+## 3. 班级群提醒
+控制在 280 字以内。
+
+## 4. 培训简讯
+约 500 字；未发生的内容不得写成已完成。
+
+## 5. 冲突与待确认清单
+表格列：冲突项｜材料 A 表述｜材料 B 表述｜建议确认人｜发布前是否必须解决。
+
+## 6. 发布前人工复核清单
+列出最多 8 项，优先检查日期、场地、合规表达、数据安全和是否误把教学模拟写成正式制度。
+
+# 边界
+如果某项信息在材料中找不到，写“待补充”；如果材料冲突，写“待确认”。不得依据常识补齐。</pre>
+        </div>
+        <div class="section-block">
+          <h3>最终提交</h3>
+          <ul class="deliverable-list">
+            <li>一份可发布的正式通知与一段班级群提醒。</li>
+            <li>一篇未虚构活动结果的培训简讯。</li>
+            <li>一张能让项目负责人快速拍板的冲突与待确认清单。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="task" id="task2" aria-labelledby="task2-title">
+      <header class="task-head">
+        <div class="task-number">02</div>
+        <div class="task-title">
+          <h2 id="task2-title">数据报表解读：先处理异常，再写管理摘要</h2>
+          <p>训练数据清洗、口径说明、分部门对比和行动建议。</p>
+        </div>
+      </header>
+      <div class="task-body">
+        <div class="task-layout">
+          <div>
+            <div class="section-block">
+              <h3>用户故事</h3>
+              <p class="story">你是培训运营岗。新员工训练营刚结束，负责人希望第二天晨会上看到一页管理摘要。
+
+你拿到的 Excel 有 40 条原始记录，但里面混有重复编号、缺失成绩、满意度越界、课时异常和部门目标口径不一致。你不能把系统算出来的平均数直接当结论，也不能让 AI 擅自“修好”数据。</p>
+            </div>
+            <div class="section-block">
+              <h3>练习目标</h3>
+              <div class="goal">先建立异常清单与处置规则，再给出清洗前后差异、部门短板和三条可执行建议。</div>
+            </div>
+            <div class="section-block">
+              <h3>练习路径</h3>
+              <div class="path">
+                <div class="step"><strong>下载数据</strong>打开 Excel 的五张工作表。</div>
+                <div class="step"><strong>识别异常</strong>区分可计算、需回查和不可自动修正。</div>
+                <div class="step"><strong>统一口径</strong>说明每个指标的分母与排除规则。</div>
+                <div class="step"><strong>写管理摘要</strong>数字、风险和行动建议要连在一起。</div>
+              </div>
+            </div>
+          </div>
+          <aside class="side-panel">
+            <div class="section-block">
+              <h3>工具入口</h3>
+              <div class="tool-list">
+                <a class="button" href="https://www.kimi.com/" target="_blank" rel="noopener">Kimi</a>
+                <a class="button ghost" href="https://www.doubao.com/chat/" target="_blank" rel="noopener">豆包</a>
+                <a class="button ghost" href="https://chat.deepseek.com/" target="_blank" rel="noopener">DeepSeek</a>
+              </div>
+            </div>
+            <div class="section-block">
+              <h3>模拟资料下载</h3>
+              <div class="file-list">
+                <a class="file-link" href="task2/01_新员工培训运营数据.xlsx" download><span class="file-index">01</span><span class="file-meta"><strong>新员工培训运营数据.xlsx</strong><small>40 条原始记录、公式摘要、部门目标、质量清单</small></span><span class="file-action">下载</span></a>
+                <a class="file-link" href="task2/02_字段口径与异常说明.md" download><span class="file-index">02</span><span class="file-meta"><strong>字段口径与异常说明.md</strong><small>指标定义、合理范围和人工判断边界</small></span><span class="file-action">下载</span></a>
+                <a class="file-link" href="task2/03_管理问题清单.txt" download><span class="file-index">03</span><span class="file-meta"><strong>管理问题清单.txt</strong><small>晨会真正关心的七个问题</small></span><span class="file-action">下载</span></a>
+              </div>
+              <div class="bundle-row"><a class="button download" href="task2/task2_数据报表资料包.zip" download>下载本任务全部资料</a></div>
+            </div>
+          </aside>
+        </div>
+
+        <div class="prompt-panel">
+          <div class="prompt-toolbar"><strong>完整提示词 · 数据报表解读</strong><button class="copy-button" type="button" data-copy="prompt2">复制提示词</button></div>
+          <pre id="prompt2"># 角色
+你是一名保险企业培训运营数据分析师。你既要把数据算对，也要能向培训负责人解释数字背后的管理问题。
+
+# 输入资料
+我将上传：
+1. 01_新员工培训运营数据.xlsx
+2. 02_字段口径与异常说明.md
+3. 03_管理问题清单.txt
+
+所有数据均为教学模拟，不代表仁和人寿真实员工、部门或培训结果。
+
+# 任务目标
+请完成一次“数据质量核验 - 口径统一 - 指标计算 - 部门对比 - 管理建议”的完整分析，并输出一页管理摘要和可复核的异常清单。
+
+# 分析顺序
+1. 先阅读 Excel 中的“使用说明、学员明细、部门目标、管理摘要、数据质量清单”五张工作表。
+2. 不要直接采用“管理摘要”里的原始结果。先检查：
+   - 学员编号是否重复；
+   - 应到课时是否小于等于 0；
+   - 实到课时是否大于应到课时；
+   - 在线完成率、测验、满意度是否缺失或越界；
+   - 部门目标的分母口径是否一致。
+3. 将异常分成三类：
+   A. 可以计算但必须标注；
+   B. 必须回查原始数据；
+   C. 不能由 AI 自动修正。
+4. 对每条异常给出“发现位置、影响指标、建议处置、是否需要人工确认”。禁止擅自删除重复记录、补填缺失成绩或修改课时。
+5. 明确给出清洗后建议口径：
+   - 真实参训人数按唯一学员编号；
+   - 出勤率 = 实到课时 / 应到课时；应到课时为 0 的记录不进入平均值；
+   - 双达标按材料定义执行；
+   - 部门比较前统一分母。
+6. 分别计算并解释：唯一学员数、有效出勤率、在线完成率、测验均分、双达标人数、补考人数、满意度，以及各部门差异。
+7. 所有数字必须标注“原始口径”或“清洗后建议口径”。若无法可靠计算，写出原因和待确认项，不要给出伪精确数字。
+8. 三条行动建议必须写清：对象、动作、完成时点、衡量指标。建议要与发现的数据问题直接对应。
+
+# 输出格式
+## 1. 结论先行
+用 5 条以内写出最重要结论，每条包含数字、口径和管理含义。
+
+## 2. 数据质量与处置表
+列：异常类型｜记录位置/示例｜影响指标｜建议处置｜AI能否自动修正｜待确认人。
+
+## 3. 清洗前后口径对照
+列：指标｜原始口径结果｜清洗后建议结果｜差异原因｜是否可用于汇报。
+
+## 4. 分部门对比
+列：部门｜有效人数｜出勤率｜在线完成率｜测验均分｜主要短板｜需注意的口径。
+
+## 5. 一页管理摘要
+按“现状 - 风险 - 行动”组织，适合晨会直接阅读。
+
+## 6. 三条下期改进建议
+每条使用“对象｜动作｜时点｜指标”格式。
+
+## 7. 待确认项
+只保留必须由教务、平台或部门负责人确认的事项。
+
+# 边界
+不要把教学模拟数据描述为公司真实经营或人事信息。不要为了形成完整结论而补造任何数值。</pre>
+        </div>
+        <div class="section-block">
+          <h3>最终提交</h3>
+          <ul class="deliverable-list">
+            <li>一张异常清单，能区分“可计算”和“必须回查”。</li>
+            <li>一页管理摘要，所有数字都写明口径。</li>
+            <li>三条可执行的下期训练改进建议。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="task" id="task3" aria-labelledby="task3-title">
+      <header class="task-head">
+        <div class="task-number">03</div>
+        <div class="task-title">
+          <h2 id="task3-title">知识整理问答：给答案，也给来源和复核边界</h2>
+          <p>训练多资料检索、证据引用、冲突处理和高风险问题转人工。</p>
+        </div>
+      </header>
+      <div class="task-body">
+        <div class="task-layout">
+          <div>
+            <div class="section-block">
+              <h3>用户故事</h3>
+              <p class="story">你是训练营知识助教。新员工经常问考勤、学习路径、产品沟通、信息安全和 AI 使用边界。
+
+你需要把五份模拟资料作为知识库，回答 24 道测试问题。答案必须能回查；遇到客户权益、产品责任、合规判断、个人信息或资料冲突时，要清楚说明为什么不能只靠 AI 下结论。</p>
+            </div>
+            <div class="section-block">
+              <h3>练习目标</h3>
+              <div class="goal">不追求“什么都能答”。真正练会的是：找到依据、引用准确、识别不知道、把高风险问题交给人。</div>
+            </div>
+            <div class="section-block">
+              <h3>练习路径</h3>
+              <div class="path">
+                <div class="step"><strong>建立知识库</strong>上传五份 Markdown 资料。</div>
+                <div class="step"><strong>复制提示词</strong>设定回答、引用和转人工规则。</div>
+                <div class="step"><strong>批量测试</strong>使用 24 道问题检查稳定性。</div>
+                <div class="step"><strong>人工评分</strong>在 Excel 中记录来源与复核意见。</div>
+              </div>
+            </div>
+          </div>
+          <aside class="side-panel">
+            <div class="section-block">
+              <h3>工具入口</h3>
+              <div class="tool-list">
+                <a class="button" href="https://www.kimi.com/" target="_blank" rel="noopener">Kimi</a>
+                <a class="button ghost" href="https://www.doubao.com/chat/" target="_blank" rel="noopener">豆包</a>
+                <a class="button ghost" href="https://chat.deepseek.com/" target="_blank" rel="noopener">DeepSeek</a>
+              </div>
+            </div>
+            <div class="section-block">
+              <h3>模拟资料下载</h3>
+              <div class="file-list">
+                <a class="file-link" href="task3/01_新员工学习地图.md" download><span class="file-index">01</span><span class="file-meta"><strong>新员工学习地图.md</strong><small>90 天路径与角色分工</small></span><span class="file-action">下载</span></a>
+                <a class="file-link" href="task3/02_培训考勤与结业规则.md" download><span class="file-index">02</span><span class="file-meta"><strong>培训考勤与结业规则.md</strong><small>报备、补学和建议结业口径</small></span><span class="file-action">下载</span></a>
+                <a class="file-link" href="task3/03_保险产品学习与沟通边界.md" download><span class="file-index">03</span><span class="file-meta"><strong>保险产品学习与沟通边界.md</strong><small>客户沟通红线与人工复核</small></span><span class="file-action">下载</span></a>
+                <a class="file-link" href="task3/04_信息安全与数据使用.md" download><span class="file-index">04</span><span class="file-meta"><strong>信息安全与数据使用.md</strong><small>个人信息、内部资料和 AI 上传边界</small></span><span class="file-action">下载</span></a>
+                <a class="file-link" href="task3/05_AI使用与人工复核.md" download><span class="file-index">05</span><span class="file-meta"><strong>AI 使用与人工复核.md</strong><small>来源引用、冲突处理、转人工规则</small></span><span class="file-action">下载</span></a>
+                <a class="file-link" href="task3/06_知识问答测试与评分.xlsx" download><span class="file-index">06</span><span class="file-meta"><strong>知识问答测试与评分.xlsx</strong><small>24 道测试题、评分记录与知识库映射</small></span><span class="file-action">下载</span></a>
+              </div>
+              <div class="bundle-row"><a class="button download" href="task3/task3_知识问答资料包.zip" download>下载本任务全部资料</a></div>
+            </div>
+          </aside>
+        </div>
+
+        <div class="prompt-panel">
+          <div class="prompt-toolbar"><strong>完整提示词 · 知识整理问答</strong><button class="copy-button" type="button" data-copy="prompt3">复制提示词</button></div>
+          <pre id="prompt3"># 角色
+你是仁和人寿新员工训练营的知识助教。本练习使用的是教学模拟资料，你的职责是帮助新员工快速找到依据，而不是替代公司正式制度、产品文件、合规审核或管理审批。
+
+# 知识库资料
+我将上传：
+1. 01_新员工学习地图.md
+2. 02_培训考勤与结业规则.md
+3. 03_保险产品学习与沟通边界.md
+4. 04_信息安全与数据使用.md
+5. 05_AI使用与人工复核.md
+6. 06_知识问答测试与评分.xlsx（用于测试和记录，不作为制度依据）
+
+# 任务目标
+根据前五份知识资料回答新员工问题。每个回答必须给出可回查来源；找不到依据、资料冲突或问题风险较高时，明确转人工复核。
+
+# 回答流程
+1. 先判断问题属于：学习安排、培训规则、产品学习、信息安全、AI 使用边界，或“当前知识库之外”。
+2. 只使用前五份 Markdown 资料作为答案依据。Excel 里的“答案要点”只能用于测试评分，不能反过来当知识来源。
+3. 先给一句直接结论，再解释依据。引用格式统一为：[来源：文件名 - 章节标题]。
+4. 如果没有找到明确依据，直接写：“在当前教学模拟知识库中未找到明确依据”，并建议应该向哪类责任人确认。不得依据常识补写公司制度。
+5. 如果不同资料出现冲突：
+   - 分别列出两处来源；
+   - 说明能确定和不能确定的部分；
+   - 把不能确定的内容放入“待人工确认”；
+   - 不得静默选择一个版本。
+6. 以下问题必须标记“需要人工复核”：
+   - 客户权益、产品责任、收益承诺、核保或理赔判断；
+   - 合规结论、对外发布或正式通知；
+   - 个人信息、内部经营数据、内部制度原文；
+   - 资料之间冲突；
+   - 当前知识库没有明确依据。
+7. 如果用户要求上传真实客户或员工资料，先提醒停止上传，建议改用脱敏或模拟数据。
+8. 不要输出看似正式但材料中不存在的制度编号、联系电话、联系人或审批流程。
+
+# 单题输出格式
+## 结论
+用 1-3 句话回答。
+
+## 依据
+- [来源：文件名 - 章节标题] 对应依据的简要概括
+
+## 适用边界
+说明这是教学模拟规则，或说明答案不能外推到正式制度/具体客户个案。
+
+## 人工复核
+- 是否需要：是/否
+- 建议复核角色：培训项目组/岗位导师/直属经理/合规/信息安全/有权限的业务人员
+- 原因：一句话说明
+
+# 批量测试要求
+当我上传 06_知识问答测试与评分.xlsx 并要求“开始测试”时：
+1. 逐题回答“测试问题集”中的 24 道问题；
+2. 输出表格列：题号｜结论摘要｜引用文件｜引用章节｜是否需人工复核｜风险提示；
+3. 对换一种问法的题目保持结论和引用稳定；
+4. 不查看或复述 Excel 中的“答案要点”作为回答依据；
+5. 完成后再给出最多 5 条知识库改进建议，包括缺失主题、容易混淆的边界和需要增加的测试题。
+
+# 边界声明
+所有回答均基于教学模拟资料，不代表仁和人寿真实制度、产品文件或正式业务意见。</pre>
+        </div>
+        <div class="section-block">
+          <h3>最终提交</h3>
+          <ul class="deliverable-list">
+            <li>24 道问题的批量回答，引用文件与章节完整。</li>
+            <li>一份人工评分记录，能看出哪些题稳定、哪些题必须转人工。</li>
+            <li>最多五条知识库改进建议，不把“回答更多”当成唯一目标。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">仁和人寿新员工 AI 实战练习台 · 所有材料均为教学模拟 · 2026</footer>
+  <div class="toast" id="toast" role="status" aria-live="polite">提示词已复制</div>
+  <script>
+    (() => {
+      const toast = document.querySelector("#toast");
+      let toastTimer;
+
+      async function copyText(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+          try {
+            await navigator.clipboard.writeText(text);
+            return;
+          } catch {
+            // Continue to the selection-based fallback when clipboard permission is unavailable.
+          }
+        }
+        const area = document.createElement("textarea");
+        area.value = text;
+        area.setAttribute("readonly", "");
+        area.style.position = "fixed";
+        area.style.opacity = "0";
+        document.body.appendChild(area);
+        area.select();
+        const copied = document.execCommand("copy");
+        area.remove();
+        if (!copied) throw new Error("copy failed");
+      }
+
+      function showToast(message) {
+        clearTimeout(toastTimer);
+        toast.textContent = message;
+        toast.classList.add("show");
+        toastTimer = setTimeout(() => toast.classList.remove("show"), 1600);
+      }
+
+      document.addEventListener("click", async (event) => {
+        const button = event.target.closest("[data-copy]");
+        if (!button) return;
+        const prompt = document.getElementById(button.dataset.copy);
+        if (!prompt) {
+          showToast("未找到提示词");
+          return;
+        }
+        try {
+          await copyText(prompt.innerText);
+          const original = button.textContent;
+          button.textContent = "已复制";
+          showToast("提示词已复制，可以直接粘贴使用");
+          setTimeout(() => { button.textContent = original; }, 1600);
+        } catch {
+          showToast("复制失败，请手动选择提示词");
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
