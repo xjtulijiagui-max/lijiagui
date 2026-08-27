@@ -412,6 +412,8 @@ pre:focus-visible {
 .module {
   margin-top: var(--space-16);
   scroll-margin-top: 84px;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 3000px;
 }
 .module + .module {
   padding-top: var(--space-10);
@@ -494,6 +496,7 @@ pre:focus-visible {
   margin-top: var(--space-4);
 }
 .prompt-library--single { grid-template-columns: 1fr; }
+#module3 .prompt-library .prompt-tool:last-child { grid-column: 1 / -1; }
 .prompt-tool {
   display: flex;
   min-width: 0;
@@ -531,6 +534,16 @@ pre:focus-visible {
 }
 .exercise--compact .story { margin-bottom: var(--space-4); }
 .exercise--compact .prompt-panel { margin-top: var(--space-4); }
+.exercise--skill pre { max-height: none; }
+.skill-sample {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+.skill-sample h4 { margin-bottom: var(--space-1); }
+.skill-sample p { margin: 0; color: var(--muted); }
 .completion {
   margin-top: var(--space-4);
   padding: var(--space-4) var(--space-5);
@@ -600,8 +613,13 @@ pre:focus-visible {
   .prompt-tool__head { flex-direction: column; }
   .prompt-tool__head .copy-button { width: 100%; }
   .prompt-tool { padding: var(--space-4); }
+  #module3 .prompt-library .prompt-tool:last-child { grid-column: auto; }
+  .skill-sample { align-items: stretch; flex-direction: column; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; }
+}
+@media print {
+  .module { content-visibility: visible; contain-intrinsic-size: auto; }
 }
