@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="WorkBuddy 业务场景创新练习台：六步场景方法、三个业务案例、可编辑提示词与课堂模拟资料。">
+  <link rel="canonical" href="https://xjtulijiagui-max.github.io/lijiagui/keylogic/">
+  <meta property="og:title" content="WorkBuddy 业务场景创新练习台">
+  <meta property="og:description" content="一张桌、两种脑、三类外援，六步把业务场景做成结果。">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:,">
+  <title>WorkBuddy · 业务场景创新练习台</title>
+  <style>
+    :root{
+      --canvas:#f3f6fa;--paper:#feffff;--ink:#102a43;--muted:#42566d;
+      --accent:#0a4fa8;--accent-dark:#083e85;--accent-pale:#e2eefc;--accent-strong:#bdd4f3;
+      --link:#2563a9;--warning:#b36a12;--line:#d9e3ee;--night:#0c2434;
+      --shadow-subtle:0 1px 0 rgba(16,42,67,.03);--shadow-toast:0 18px 50px rgba(12,36,52,.24);
+      --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:20px;--s6:24px;--s8:32px;
+      --s10:40px;--s12:48px;--s16:64px;--s20:80px;--ease:cubic-bezier(.16,1,.3,1);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--canvas);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;line-height:1.65;word-break:normal}
+    button,a,textarea{font:inherit} button,a{touch-action:manipulation} a{color:inherit}
+    :focus-visible{outline:3px solid var(--accent-strong);outline-offset:3px}
+    .topline{height:6px;background:linear-gradient(90deg,var(--accent) 0 58%,var(--accent-strong) 58% 100%)}
+    .shell{width:min(1440px,calc(100% - 48px));margin:auto}
+    .topnav{min-height:72px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);gap:var(--s6)}
+    .brand{display:flex;align-items:center;gap:var(--s3);text-decoration:none;font-weight:800}
+    .brand-mark{display:grid;place-items:center;width:36px;height:36px;border-radius:50% 50% 50% 8px;background:var(--accent);color:var(--paper);font-size:13px}
+    .top-links{display:flex;flex-wrap:wrap;gap:var(--s6);font-size:14px;color:var(--muted)}
+    .top-links a{text-decoration:none}.top-links a:hover{color:var(--accent)}
+    .hero{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:clamp(32px,7vw,112px);align-items:end;padding:clamp(56px,8vw,112px) 0 var(--s16)}
+    .eyebrow{font-size:12px;font-weight:800;letter-spacing:.13em;color:var(--accent);text-transform:uppercase}
+    .hero h1{font-size:clamp(42px,5.5vw,76px);line-height:1.05;letter-spacing:-.055em;margin:14px 0 var(--s5);max-width:960px;text-wrap:balance}
+    .hero h1 span{color:var(--accent)}
+    .hero .lead{font-size:18px;color:var(--muted);max-width:780px;margin:0}
+    .hero-note{padding:var(--s5) 0 var(--s1) var(--s6);border-left:1px solid var(--line)}
+    .hero-note strong{display:block;font-size:46px;line-height:1;color:var(--accent);letter-spacing:-.06em;margin-bottom:10px}
+    .hero-note p{margin:0;color:var(--muted);font-size:14px}
+    .prepbar{background:var(--night);color:var(--paper)}
+    .prepbar-inner{min-height:92px;display:flex;align-items:center;justify-content:space-between;gap:var(--s6)}
+    .prepbar p{margin:0;color:var(--accent-pale);font-size:14px}
+    .prep-btn{border:1px solid var(--muted);background:transparent;color:var(--paper);padding:11px 18px;border-radius:999px;cursor:pointer}
+    .prep-btn:hover{background:var(--accent-dark)}.prep-btn.ready{background:var(--accent);border-color:var(--accent)}
+    .workspace{display:grid;grid-template-columns:250px minmax(0,1fr);gap:clamp(32px,5vw,80px);padding:var(--s16) 0 112px}
+    .sidebar{position:sticky;top:var(--s6);align-self:start}.side-title{font-size:15px;font-weight:800;margin-bottom:var(--s1)}
+    .side-copy{font-size:12px;color:var(--muted);margin:0 0 18px}.side-nav{list-style:none;padding:0;margin:0;border-top:1px solid var(--line)}
+    .side-nav a{display:grid;grid-template-columns:32px 1fr;gap:10px;padding:var(--s3) 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--muted);font-size:13px}
+    .side-nav a span:first-child{color:var(--accent);font-weight:800}.side-nav a:hover{color:var(--ink)}
+    .side-progress{margin-top:var(--s6);padding:18px;background:var(--accent-pale);border-radius:18px}
+    .side-progress strong{font-size:30px;line-height:1}.side-progress p{font-size:12px;color:var(--muted);margin:6px 0 var(--s3)}
+    progress{appearance:none;width:100%;height:7px;border:0;border-radius:99px;overflow:hidden}progress::-webkit-progress-bar{background:var(--accent-strong)}progress::-webkit-progress-value{background:var(--accent)}
+    .content{min-width:0}.section-intro{display:flex;justify-content:space-between;gap:var(--s8);align-items:end;margin-bottom:var(--s8)}
+    .section-intro h2{font-size:clamp(30px,4vw,52px);line-height:1.12;letter-spacing:-.045em;margin:var(--s2) 0 0;text-wrap:balance}
+    .section-intro p{max-width:460px;color:var(--muted);font-size:14px;margin:0}
+    .bulk-actions{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:var(--s6)}
+    .button{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:999px;padding:11px 17px;font-size:14px;font-weight:800;cursor:pointer;text-decoration:none;transition:transform 160ms var(--ease),background 160ms var(--ease),color 160ms var(--ease)}
+    .button:active{transform:scale(.98)}.button.primary{background:var(--accent);color:var(--paper)}.button.primary:hover{background:var(--accent-dark)}
+    .button.secondary{background:var(--paper);color:var(--ink);border:1px solid var(--line)}.button.secondary:hover{border-color:var(--accent);color:var(--accent)}
+    .button.text{background:transparent;color:var(--muted);padding-inline:10px}.button.text:hover{color:var(--accent)}
+    .prompt-list{display:grid;gap:18px}.prompt-card,.studio-card{background:var(--paper);border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:var(--shadow-subtle);scroll-margin-top:var(--s6)}
+    .prompt-card.completed,.studio-card.completed{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-pale)}
+    .prompt-head{display:grid;grid-template-columns:58px minmax(0,1fr) auto;gap:18px;align-items:center;padding:22px var(--s6);border-bottom:1px solid var(--line)}
+    .step-no{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--accent-pale);color:var(--accent);font-weight:900;font-size:13px}
+    .prompt-head h3{font-size:21px;line-height:1.3;margin:2px 0 var(--s1);text-wrap:balance}.prompt-head p{margin:0;color:var(--muted);font-size:13px}
+    .prompt-meta{font-size:11px;letter-spacing:.1em;font-weight:900;color:var(--accent)}.prompt-tools{display:flex;flex-wrap:wrap;gap:var(--s2);justify-content:flex-end}
+    .prompt-tools a{font-size:12px;color:var(--link);text-decoration:none;border-bottom:1px solid transparent}.prompt-tools a:hover{border-color:currentColor}
+    .prompt-body{padding:var(--s6)}.prompt-guidance{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);margin-bottom:var(--s4)}
+    .guidance-block{padding:14px var(--s4);border-radius:14px;background:var(--canvas);font-size:13px;color:var(--muted)}.guidance-block strong{display:block;color:var(--ink);margin-bottom:var(--s1)}
+    .editor-label{display:flex;align-items:center;justify-content:space-between;gap:var(--s3);font-size:12px;font-weight:800;color:var(--muted);margin:0 0 var(--s2)}
+    textarea{display:block;width:100%;min-height:300px;resize:vertical;border:1px solid var(--line);border-radius:var(--s4);padding:18px;background:var(--paper);color:var(--ink);font-size:14px;line-height:1.7;outline:none}
+    textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-pale)}textarea.modified{border-color:var(--warning)}
+    .editor-actions{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--s3);margin-top:14px}.action-group{display:flex;flex-wrap:wrap;gap:var(--s2)}
+    .status-text{font-size:12px;color:var(--muted);align-self:center}.status-text.changed{color:var(--warning);font-weight:800}
+    .studio{padding-top:112px}.studio-card{border-radius:26px;margin-bottom:var(--s6)}.studio-card .prompt-head{background:linear-gradient(90deg,var(--accent-pale),var(--paper) 62%)}
+    .studio-grid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:var(--s6);padding:var(--s6)}
+    .dataset-card{align-self:start;border:1px solid var(--line);border-radius:18px;padding:18px;background:var(--canvas)}
+    .file-type{display:inline-block;font-size:11px;font-weight:900;letter-spacing:.1em;color:var(--accent);margin-bottom:10px}.dataset-card h4{font-size:17px;line-height:1.4;margin:0 0 var(--s2)}
+    .dataset-card p{font-size:13px;color:var(--muted);margin:0 0 14px}.dataset-card .button{width:100%}.dataset-note{margin-top:var(--s3);padding-top:var(--s3);border-top:1px solid var(--line);font-size:11px;color:var(--muted)}
+    .task-goals{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:var(--s4)}.task-goals div{padding:var(--s3) 14px;background:var(--canvas);border-radius:13px;font-size:12px;color:var(--muted)}
+    .task-goals strong{display:block;color:var(--ink);font-size:13px;margin-bottom:3px}.notice{margin-top:var(--s8);padding:var(--s6);border:1px solid var(--accent-strong);background:var(--accent-pale);border-radius:var(--s5)}
+    .notice h3{font-size:18px;margin:0 0 6px}.notice p{margin:0;color:var(--muted);font-size:13px}.footer{background:var(--night);color:var(--paper);padding:var(--s10) 0}
+    .footer-inner{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--s6)}.footer p{margin:0;color:var(--accent-pale);font-size:13px}.footer a{color:var(--paper)}
+    .toast{position:fixed;right:var(--s6);bottom:var(--s6);z-index:10;max-width:360px;padding:14px 18px;border-radius:14px;background:var(--night);color:var(--paper);font-size:14px;box-shadow:var(--shadow-toast);opacity:0;transform:translateY(14px);pointer-events:none;transition:opacity 220ms var(--ease),transform 220ms var(--ease)}
+    .toast.show{opacity:1;transform:translateY(0)}
+    @media(max-width:980px){.hero{grid-template-columns:1fr}.hero-note{border-left:0;border-top:1px solid var(--line);padding:var(--s5) 0 0}.workspace{grid-template-columns:1fr}.sidebar{position:static}.side-nav{display:grid;grid-template-columns:repeat(3,1fr);gap:0 18px}.side-progress{display:none}.studio-grid{grid-template-columns:1fr}.dataset-card{display:grid;grid-template-columns:1fr auto;gap:10px var(--s6);align-items:center}.dataset-card .button{width:auto;grid-column:2;grid-row:1/4}.dataset-note{grid-column:1/-1}}
+    @media(max-width:720px){.shell{width:min(100% - 28px,1440px)}.top-links{display:none}.hero{padding:56px 0 var(--s12)}.hero h1{font-size:42px;overflow-wrap:anywhere}.prepbar-inner{padding:18px 0;align-items:flex-start;flex-direction:column}.prep-btn{width:100%}.workspace{padding-top:var(--s12)}.side-nav{grid-template-columns:1fr 1fr}.section-intro{display:block}.section-intro p{margin-top:var(--s3)}.prompt-head{grid-template-columns:46px minmax(0,1fr)}.prompt-tools{grid-column:2;justify-content:flex-start}.prompt-guidance,.task-goals{grid-template-columns:1fr}.prompt-body,.studio-grid{padding:18px}.editor-actions{display:block}.action-group+.action-group{margin-top:var(--s2)}.studio{padding-top:var(--s20)}.dataset-card{display:block}.dataset-card .button{width:100%}.footer-inner{align-items:flex-start;flex-direction:column}}
+    @media(max-width:430px){.side-nav{grid-template-columns:1fr}.prompt-head{padding:18px var(--s4)}.prompt-body{padding:var(--s4)}.button{width:100%}.action-group{display:grid;width:100%}.toast{left:14px;right:14px;bottom:14px}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition-duration:.01ms!important}}
+  </style>
+</head>
+<body>
+  <div class="topline"></div>
+  <header class="shell topnav">
+    <a class="brand" href="#top" aria-label="WorkBuddy业务场景创新练习台首页"><span class="brand-mark" aria-hidden="true">WB</span><span>WorkBuddy 场景创新课</span></a>
+    <nav class="top-links" aria-label="页面导航">
+      <a href="#scene">六步场景</a><a href="#studio">业务案例</a><a href="#downloads">模拟资料</a>
+      <a href="https://xjtulijiagui-max.github.io/lijiagui/list/">课程导航</a>
+      <a href="https://www.helloagent.top/lijiagui.html" target="_blank" rel="noopener">作者介绍</a>
+    </nav>
+  </header>
+  <main id="top">
+    <section class="shell hero">
+      <div><div class="eyebrow">AI PRACTICE WORKBENCH · 2026</div><h1>别只会问 AI，<span>让 WorkBuddy 把业务做完。</span></h1><p class="lead">从业务流程出发，六步找到高价值场景；再把 Workspace、Plan、Skill、连接器和专家放进一条可验收的业务生产线。</p></div>
+      <aside class="hero-note"><strong>6 + 3</strong><p>6 个连续提示词完成场景创新，3 个业务案例附可下载的课堂模拟资料。</p></aside>
+    </section>
+    <section class="prepbar"><div class="shell prepbar-inner"><p id="prepText">课前准备：打开 WorkBuddy，建立一个练习 Workspace，再从 Step 1 开始。</p><button class="prep-btn" id="prepButton" type="button">练习 Workspace 已准备</button></div></section>
+    <div class="shell workspace">
+      <aside class="sidebar" aria-label="步骤导航"><div class="side-title">训练步骤</div><p class="side-copy">先替换花括号变量，再复制到 WorkBuddy。</p><ol class="side-nav" id="sideNav"></ol><div class="side-progress"><strong id="progressCount">0 / 9</strong><p>完成状态保存在当前浏览器</p><progress id="progressBar" max="9" value="0">0 / 9</progress></div></aside>
+      <div class="content">
+        <section id="scene" aria-labelledby="sceneTitle"><div class="section-intro"><div><div class="eyebrow">PART 01 · 场景篇</div><h2 id="sceneTitle">六步把场景做成结果</h2></div><p>看流程、找节点、建场景湖、排 ROI、写 PRD、做原型。六步连续衔接，每个文本框都可直接修改。</p></div><div class="bulk-actions"><button class="button primary" id="copyAllScene" type="button">复制六个提示词</button><button class="button secondary" id="resetAllScene" type="button">恢复六步默认内容</button></div><div class="prompt-list" id="scenePromptList"></div></section>
+        <section class="studio" id="studio" aria-labelledby="studioTitle"><div class="section-intro"><div><div class="eyebrow">PART 02 · 实战篇</div><h2 id="studioTitle">三个案例，把方法跑一遍</h2></div><p>客户会议、经营数据、制度问答，分别练习从输入资料到可验收成果的完整链路。</p></div><div id="studioList"></div><div class="notice"><h3>资料使用说明</h3><p>三份资料均为课堂模拟数据，不对应任何真实企业、客户、经营结果或制度。练习结论仅用于学习 WorkBuddy 的场景设计与交付方法。</p></div></section>
+      </div>
+    </div>
+  </main>
+  <footer class="footer"><div class="shell footer-inner"><div class="brand"><span class="brand-mark" aria-hidden="true">WB</span><span>WorkBuddy 业务场景创新练习台</span></div><p>策划整理：<a href="https://www.helloagent.top/lijiagui.html" target="_blank" rel="noopener">李家贵 · 查看作者介绍</a></p></div></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script>
+    const scenePrompts=[
+      {id:"scene-1",no:"01",meta:"STEP 1 · 看流程",title:"补完整一条业务流程",summary:"先看业务怎么流动，再谈 AI 能做什么。",target:"获得包含角色、触发、动作、资料、系统、决策与交付物的现状流程。",input:"替换业务、岗位和流程边界。",tools:[["WorkBuddy","#top"]],prompt:`你是一名业务流程分析顾问。请先不要推荐任何AI工具。
+
+我要分析的业务是：{业务名称}
+流程起点：{触发事件}
+流程终点：{最终交付物或业务结果}
+主要岗位：{岗位或角色}
+
+请通过追问补全现状流程，并输出：
+1. 按时间顺序列出每一步；
+2. 每一步标明执行角色、输入资料、处理动作、使用系统、输出结果；
+3. 标出等待、重复搬运、频繁查找、人工判断、跨部门沟通和容易出错的节点；
+4. 对信息不足的地方写“待确认”，不要自行编造。
+
+最后用表格输出完整流程，并给出一段100字以内的流程瓶颈判断。`},
+      {id:"scene-2",no:"02",meta:"STEP 2 · 找节点",title:"找到 AI 应该接住的劳动",summary:"用查、提、整、写、改、比、判、推识别改造节点。",target:"获得带有人机分工、输入输出和风险边界的 AI 改造流程。",input:"粘贴 Step 1 的流程结果。",tools:[["WorkBuddy","#top"]],prompt:`请基于我提供的现状流程，识别适合AI介入的节点。
+
+【现状流程】
+{粘贴Step 1输出}
+
+请逐节点判断AI可承担的动作：查、提、整、写、改、比、判、推。
+对每个候选节点输出：
+1. 当前人工动作与耗时；
+2. AI可承担的具体动作；
+3. 所需资料、规则、样例和系统；
+4. AI输出形式；
+5. 人工仍需负责的判断、确认与异常处理；
+6. 权限、数据、事实和合规风险。
+
+最后输出一张“现状流程→AI改造流程”对照表。高风险决策不得设计为AI自动放行。`},
+      {id:"scene-3",no:"03",meta:"STEP 3 · 建场景湖",title:"把候选机会放进同一张表",summary:"把零散想法变成可比较、可排序的场景资产。",target:"获得一张至少10项的业务场景湖。",input:"粘贴 Step 2 的 AI 改造节点。",tools:[["WorkBuddy","#top"]],prompt:`请把以下AI改造节点整理为业务场景湖。
+
+【AI改造节点】
+{粘贴Step 2输出}
+
+每个场景必须写清：
+- 场景名称（岗位+任务，不用技术名词）；
+- 使用者与触发条件；
+- 当前痛点与基线数据；
+- 输入资料；
+- AI动作；
+- 输出成果；
+- 人工复核点；
+- 业务价值；
+- 数据与系统依赖；
+- 风险边界；
+- 场景Owner。
+
+请合并重复场景，拆开过大的“全能助手”，输出至少10项场景表。无法从材料确认的内容标“待确认”。`},
+      {id:"scene-4",no:"04",meta:"STEP 4 · 排 ROI",title:"价值与可行性一起评分",summary:"先选高价值、低复杂、能快速验证的窄场景。",target:"选出 TOP3，并确定两周内可验证的 TOP1。",input:"粘贴 Step 3 的场景湖。",tools:[["WorkBuddy","#top"]],prompt:`请对以下业务场景湖进行ROI与试点优先级评估。
+
+【场景湖】
+{粘贴Step 3输出}
+
+评分维度（1—5分）：
+1. 业务价值：频率、耗时、错误成本、增收、控险；
+2. 可行性：输入清晰度、资料完整度、规则稳定度、输出可验收度；
+3. 风险可控：权限、隐私、合规、关键结论人工复核；
+4. 组织准备度：Owner、试用意愿、反馈机制、协同成本。
+
+输出评分依据、总分、关键假设和缺失证据，不允许只给数字。
+最后给出TOP3，并从中选择一个“两周内可验证”的TOP1，说明最小试点范围、验收指标和停止条件。`},
+      {id:"scene-5",no:"05",meta:"STEP 5 · 写 PRD",title:"用 IPO 把场景写成任务",summary:"输入说清、过程拆清、输出验清。",target:"获得可供业务、产品和执行团队共同评审的轻量PRD。",input:"粘贴 TOP1 场景与评分依据。",tools:[["WorkBuddy","#top"]],prompt:`请把以下TOP1场景写成一份可评审的轻量PRD。
+
+【TOP1场景】
+{粘贴Step 4结果}
+
+请按IPO结构输出：
+Input：使用者、触发条件、输入文件/数据、规则、样例、权限与前置条件。
+Process：WorkBuddy的执行步骤、Plan模式检查点、需要调用的Skill/连接器/专家、人工确认点、异常与降级路径。
+Output：交付物格式、字段、事实来源、质量标准、验收人、验收指标与留痕要求。
+
+同时补充：目标与非目标、用户故事、主流程、边界场景、两周试点计划、风险清单、待确认问题。
+未知信息写“待确认”，不得用想象补齐。`},
+      {id:"scene-6",no:"06",meta:"STEP 6 · 做原型",title:"生成可打开、可点击的成果",summary:"用真实交付物验证场景，而不是只做一场演示。",target:"获得可操作原型、测试脚本和迭代清单。",input:"把 Step 5 的 PRD 放入练习 Workspace。",tools:[["WorkBuddy","#top"]],prompt:`请基于我上传的PRD，在当前Workspace中完成一个可评审原型。
+
+先使用Plan模式输出：
+1. 你对业务目标、输入、输出和边界的理解；
+2. 文件与资料缺口；
+3. 实施步骤、将创建或修改的文件；
+4. 验收清单与风险点。
+
+我确认计划后再执行。执行要求：
+- 交付物可直接打开并完成核心任务；
+- 覆盖主流程、空状态、错误状态和人工复核点；
+- 每个结论可追溯到输入资料；
+- 不足信息明确标注，不编造；
+- 输出测试脚本、已知限制和下一轮迭代建议。
+
+最后按“格式、事实、边界、可用性”四项自检，并列出需要我人工确认的内容。`}
+    ];
+    const studioTasks=[
+      {id:"studio-meeting",no:"01",meta:"实战 01 · 客户会议",title:"会议结束，跟进工作才刚开始",summary:"从模拟会议纪要生成机会清单、跟进话术与行动项。",target:"客户画像与机会判断",input:"会议纪要、产品资料、历史沟通",deliverable:"纪要 + 机会清单 + 待办",tools:[["WorkBuddy","#top"]],file:"assets/01_客户会议纪要_模拟.md",fileName:"01_客户会议纪要_模拟.md",fileCopy:"包含会议事实、客户原话、边界要求和待确认事项。",prompt:`你是一名B2B客户成功与销售运营专家。请读取上传的《01_客户会议纪要_模拟.md》。
+
+任务：
+1. 区分事实、客户原话、分析判断和待确认项；
+2. 提取客户目标、痛点、约束、决策角色、时间要求和成功标准；
+3. 生成机会清单，并按价值、紧迫度、证据强度评分；
+4. 输出会后跟进邮件、下一次会议议程和行动项表；
+5. 行动项必须包含负责人、截止时间、依赖和完成标准。
+
+边界：不得替销售承诺价格、合同条款或实施周期；敏感信息与关键承诺必须人工复核。
+输出：执行摘要、客户画像、机会清单、跟进话术、行动项、待确认问题。`},
+      {id:"studio-data",no:"02",meta:"实战 02 · 经营数据",title:"数据不缺，缺的是可执行洞察",summary:"从模拟经营数据找到增长、成本与风险信号。",target:"经营洞察与优先行动",input:"区域×月份×产品经营数据",deliverable:"数据检查 + 洞察 + 看板",tools:[["WorkBuddy","#top"]],file:"assets/02_经营数据_模拟.csv",fileName:"02_经营数据_模拟.csv",fileCopy:"9条区域经营记录，含目标、收入、成本、客诉与回款。",prompt:`你是一名经营分析师。请读取上传的《02_经营数据_模拟.csv》。
+
+先检查字段、缺失值、重复值、异常值与口径，再回答：
+1. 哪些区域连续未达目标，差距如何变化？
+2. 服务成本、客诉数和回款天数是否出现同步恶化？
+3. 哪些结论是事实，哪些只是相关性或待验证假设？
+4. 管理层下周最应该关注哪三件事？
+
+输出：
+- 数据质量说明；
+- 核心指标表和区域趋势；
+- 异常记录与证据；
+- TOP3行动建议（责任角色、动作、指标、时间窗口）；
+- 一个单文件HTML经营看板。
+
+所有数字只能来自上传数据，不得反向解释为真实企业经营结论。`},
+      {id:"studio-policy",no:"03",meta:"实战 03 · 制度问答",title:"答案必须带依据，也要知道何时转人工",summary:"把制度文件变成可追溯、不过度回答的问答助手。",target:"制度问答与人工转接规则",input:"制度文件与版本信息",deliverable:"回答模板 + 测试问题",tools:[["WorkBuddy","#top"]],file:"assets/03_差旅制度_模拟.md",fileName:"03_差旅制度_模拟.md",fileCopy:"包含审批、交通、住宿、报销和例外处理规则。",prompt:`你是一名企业制度服务助手。请读取上传的《03_差旅制度_模拟.md》，并回答以下测试问题：
+
+1. 北京出差住宿600元一晚是否符合标准？
+2. 预算8500元需要谁审批？
+3. 出差结束12个工作日后还能否报销？
+4. 临时购买机票需要补充什么材料？
+5. 外包人员是否适用本制度？
+
+每个回答必须包含：简明结论、适用条件、办理步骤、原文依据、需要补充的信息、是否需要人工复核。
+如果制度没有依据、版本冲突或问题涉及例外，不得猜测，明确转交财务共享中心。
+
+最后输出一套可复用的问答模板，以及10个覆盖正常、边界、冲突和无依据情形的测试问题。`}
+    ];
+    const storageKey="workbuddy-keylogic-v1";
+    let saved={};try{saved=JSON.parse(localStorage.getItem(storageKey)||"{}")}catch(error){saved={}}
+    const edits=saved.edits||{},completed=new Set(saved.completed||[]),toast=document.querySelector("#toast");
+    function persist(){localStorage.setItem(storageKey,JSON.stringify({edits,completed:[...completed],prepared:document.querySelector("#prepButton").classList.contains("ready")}))}
+    function showToast(text){toast.textContent=text;toast.classList.add("show");clearTimeout(window.keylogicToast);window.keylogicToast=setTimeout(()=>toast.classList.remove("show"),2400)}
+    async function copyText(text){try{await navigator.clipboard.writeText(text);return true}catch(error){const helper=document.createElement("textarea");helper.value=text;helper.style.position="fixed";helper.style.opacity="0";document.body.appendChild(helper);helper.select();const ok=document.execCommand("copy");helper.remove();return ok}}
+    function toolLinks(items){return items.map(([label,url])=>`<a href="${url}" ${url.startsWith("http")?'target="_blank" rel="noopener"':""}>${label}</a>`).join("")}
+    function sceneCard(item){const value=edits[item.id]??item.prompt;return `<article class="prompt-card ${completed.has(item.id)?"completed":""}" id="${item.id}"><header class="prompt-head"><span class="step-no">${item.no}</span><div><div class="prompt-meta">${item.meta}</div><h3>${item.title}</h3><p>${item.summary}</p></div><div class="prompt-tools">${toolLinks(item.tools)}</div></header><div class="prompt-body"><div class="prompt-guidance"><div class="guidance-block"><strong>练习目标</strong>${item.target}</div><div class="guidance-block"><strong>修改位置</strong>${item.input}</div></div><label class="editor-label" for="${item.id}-editor"><span>可编辑提示词</span><span class="status-text ${edits[item.id]?"changed":""}" data-status="${item.id}">${edits[item.id]?"已修改并保存":"默认通用场景"}</span></label><textarea id="${item.id}-editor" data-editor="${item.id}" spellcheck="false">${value}</textarea><div class="editor-actions"><div class="action-group"><button class="button primary" type="button" data-copy="${item.id}">复制当前提示词</button><button class="button secondary" type="button" data-reset="${item.id}">恢复默认</button></div><button class="button text" type="button" data-complete="${item.id}">${completed.has(item.id)?"取消完成":"标记完成"}</button></div></div></article>`}
+    function studioCard(item){const value=edits[item.id]??item.prompt;return `<article class="studio-card ${completed.has(item.id)?"completed":""}" id="${item.id}"><header class="prompt-head"><span class="step-no">${item.no}</span><div><div class="prompt-meta">${item.meta}</div><h3>${item.title}</h3><p>${item.summary}</p></div><div class="prompt-tools">${toolLinks(item.tools)}</div></header><div class="studio-grid"><div><div class="task-goals"><div><strong>任务目标</strong>${item.target}</div><div><strong>输入材料</strong>${item.input}</div><div><strong>交付成果</strong>${item.deliverable}</div></div><label class="editor-label" for="${item.id}-editor"><span>可编辑提示词</span><span class="status-text ${edits[item.id]?"changed":""}" data-status="${item.id}">${edits[item.id]?"已修改并保存":"课堂案例默认版"}</span></label><textarea id="${item.id}-editor" data-editor="${item.id}" spellcheck="false">${value}</textarea><div class="editor-actions"><div class="action-group"><button class="button primary" type="button" data-copy="${item.id}">复制当前提示词</button><button class="button secondary" type="button" data-reset="${item.id}">恢复默认</button></div><button class="button text" type="button" data-complete="${item.id}">${completed.has(item.id)?"取消完成":"标记完成"}</button></div></div><aside class="dataset-card" id="${item.id==="studio-meeting"?"downloads":""}"><span class="file-type">课堂模拟资料</span><h4>${item.fileName}</h4><p>${item.fileCopy}</p><a class="button primary" href="${item.file}" download>下载练习资料</a><div class="dataset-note">不对应任何真实企业、客户、经营数据或正式制度。</div></aside></div></article>`}
+    function bindEditors(){document.querySelectorAll("[data-editor]").forEach(editor=>{if(edits[editor.dataset.editor])editor.classList.add("modified");editor.addEventListener("input",()=>{const id=editor.dataset.editor;edits[id]=editor.value;editor.classList.add("modified");const status=document.querySelector(`[data-status="${id}"]`);status.textContent="已修改并保存";status.classList.add("changed");persist()})});document.querySelectorAll("[data-copy]").forEach(button=>button.addEventListener("click",async()=>{const editor=document.querySelector(`[data-editor="${button.dataset.copy}"]`);showToast(await copyText(editor.value)?"提示词已复制，可粘贴到 WorkBuddy。":"复制未成功，请在文本框中全选后复制。") }));document.querySelectorAll("[data-reset]").forEach(button=>button.addEventListener("click",()=>{const id=button.dataset.reset,source=[...scenePrompts,...studioTasks].find(item=>item.id===id);delete edits[id];const editor=document.querySelector(`[data-editor="${id}"]`);editor.value=source.prompt;editor.classList.remove("modified");const status=document.querySelector(`[data-status="${id}"]`);status.textContent=id.startsWith("scene")?"默认通用场景":"课堂案例默认版";status.classList.remove("changed");persist();showToast("已恢复默认提示词。") }));document.querySelectorAll("[data-complete]").forEach(button=>button.addEventListener("click",()=>{const id=button.dataset.complete;completed.has(id)?completed.delete(id):completed.add(id);persist();render();document.querySelector(`#${id}`).scrollIntoView({block:"center"});showToast(completed.has(id)?"已标记完成。":"已取消完成状态。") }))}
+    function updateProgress(){document.querySelector("#progressCount").textContent=`${completed.size} / 9`;document.querySelector("#progressBar").value=completed.size}
+    function render(){document.querySelector("#scenePromptList").innerHTML=scenePrompts.map(sceneCard).join("");document.querySelector("#studioList").innerHTML=studioTasks.map(studioCard).join("");document.querySelector("#sideNav").innerHTML=[...scenePrompts,...studioTasks].map(item=>`<li><a href="#${item.id}"><span>${item.no}</span><span>${item.title}</span></a></li>`).join("");updateProgress();bindEditors()}
+    document.querySelector("#copyAllScene").addEventListener("click",async()=>{const combined=scenePrompts.map(item=>`【${item.meta}｜${item.title}】\n${edits[item.id]??item.prompt}`).join("\n\n====================\n\n");showToast(await copyText(combined)?"六个提示词已全部复制。":"批量复制未成功，请逐条复制。")});
+    document.querySelector("#resetAllScene").addEventListener("click",()=>{scenePrompts.forEach(item=>delete edits[item.id]);persist();render();showToast("六步提示词已恢复默认内容。")});
+    const prepButton=document.querySelector("#prepButton");if(saved.prepared){prepButton.classList.add("ready");prepButton.textContent="Workspace 已准备";document.querySelector("#prepText").textContent="课前准备已完成：从 Step 1 修改提示词开始。"}prepButton.addEventListener("click",()=>{prepButton.classList.toggle("ready");const ready=prepButton.classList.contains("ready");prepButton.textContent=ready?"Workspace 已准备":"练习 Workspace 已准备";document.querySelector("#prepText").textContent=ready?"课前准备已完成：从 Step 1 修改提示词开始。":"课前准备：打开 WorkBuddy，建立一个练习 Workspace，再从 Step 1 开始。";persist();showToast(ready?"准备状态已更新。":"已恢复为待准备状态。")});
+    render();
+  </script>
+</body>
+</html>
