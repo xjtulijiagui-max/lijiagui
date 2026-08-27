@@ -12,16 +12,14 @@
 | Paper | `--paper` | `#FEFFFF` | 卡片、输入区域 |
 | Text primary | `--ink` | `#102A43` | 标题与正文 |
 | Text muted | `--muted` | `#42566D` | 说明与元信息；满足浅色表面正文对比度 |
-| Accent primary | `--teal` | `#0A4FA8` | 主按钮、步骤、进度 |
-| Accent hover | `--teal-dark` | `#083E85` | 主按钮 hover |
-| Accent pale | `--mint` | `#E2EEFC` | 步骤底、完成态 |
-| Accent stronger | `--mint-strong` | `#BDD4F3` | focus ring、顶部分色 |
-| Link | `--blue` | `#2563A9` | 工具与作者链接 |
-| Warning | `--amber` | `#B36A12` | 已编辑状态 |
-| Warning surface | `--amber-soft` | `#FFF1D6` | 修改提示 |
+| Accent primary | `--accent` | `#0A4FA8` | 主按钮、步骤、进度 |
+| Accent hover | `--accent-dark` | `#083E85` | 主按钮 hover |
+| Accent pale | `--accent-pale` | `#E2EEFC` | 步骤底、完成态 |
+| Accent stronger | `--accent-strong` | `#BDD4F3` | focus ring、顶部分色 |
+| Link | `--link` | `#2563A9` | 工具与作者链接 |
+| Warning | `--warning` | `#B36A12` | 已编辑状态 |
 | Border | `--line` | `#D9E3EE` | 卡片和分隔线 |
 | Night | `--night` | `#0C2434` | 准备栏与页脚 |
-| Error | `--danger` | `#A73B35` | 错误反馈 |
 
 颜色仅通过以上 CSS 变量使用；状态不能只靠颜色表达。
 
