@@ -1,8 +1,8 @@
-# 兴业银行三项AI实战练习 Design System
+# 兴业银行营销实战演练 Design System
 
 ## 1. Atmosphere & Identity
 
-这是一个给支行长和业务骨干使用的课堂任务工作台。气质稳、清楚、可信，像一张放在会议桌上的蓝色业务作战卡。页面识别点是深蓝任务轨道：三个任务按“输入材料 → AI处理 → 业务输出”串联，每一段都能直接下载资料、复制提示词并开始练习。
+这是一个给支行长和业务骨干使用的课堂营销作战台。气质稳、清楚、可信，像一组放在会议桌上的蓝色业务作战卡。页面按“智客发现机会 → 智策形成方案 → 智战推进客户 → 智管复盘沉淀”展开，既保留可下载的数据练习，也提供即拿即用的销售提示词。
 
 ## 2. Color
 
@@ -56,14 +56,18 @@
 - **States**：静态；链接具备hover、focus、active。
 - **Accessibility**：唯一H1；背景与白字对比满足AA。
 
-### Task Navigation
-- **Structure**：三个锚点按钮和“返回训练导航”。
-- **States**：default、hover、focus、active；当前任务用`aria-current`更新。
+### Module Navigation
+- **Structure**：模块3至6四个锚点按钮和“返回训练导航”。
+- **States**：default、hover、focus、active；当前模块用`aria-current`更新。
 - **Motion**：120ms颜色与位移反馈，只使用transform与opacity。
 
-### Task Panel
-- **Structure**：任务编号、标题、用户故事、练习目标、四步路径、资料下载、提示词、交付标准。
-- **Variants**：考核、评比、对公商机。
+### Module Header
+- **Structure**：模块编号、智客/智策/智战/智管、时长、核心问题、模块产出。
+- **Responsive**：桌面三段式，平板两列，移动单列。
+
+### Exercise Panel
+- **Structure**：用户故事、练习目标、资料下载、提示词、完成标准。
+- **Variants**：对公商机、分行考核、全国评比。
 - **States**：静态、目标锚点高亮。
 - **Accessibility**：section使用`aria-labelledby`，标题层级连续。
 
@@ -76,6 +80,11 @@
 - **Structure**：提示词标题、代码框、复制按钮。
 - **States**：default、hover、focus、copied、error。
 - **Accessibility**：按钮反馈写入`aria-live`；代码框支持完整选择，也可用键盘聚焦滚动，并带独立区域标签与高对比焦点环。
+
+### Prompt Tool Card
+- **Structure**：工具角色、业务问题、需准备输入、完整提示词、复制按钮。
+- **Variants**：客户/行业洞察、解决方案/战略客户、拜访/赢单、销售SOP。
+- **Layout**：桌面两列，移动单列；长提示词在卡片内独立滚动。
 
 ### Step Track
 - **Structure**：1下载、2上传、3复制、4生成。

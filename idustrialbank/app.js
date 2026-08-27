@@ -1,5 +1,5 @@
 const toast = document.querySelector("#toast");
-const taskLinks = [...document.querySelectorAll("[data-task-link]")];
+const moduleLinks = [...document.querySelectorAll("[data-task-link]")];
 
 function showToast(message) {
   toast.textContent = message;
@@ -10,6 +10,7 @@ function showToast(message) {
 async function copyPrompt(button) {
   const target = document.querySelector(`#${button.dataset.copyTarget}`);
   const text = target.textContent.trim();
+  const defaultLabel = button.textContent;
   try {
     await navigator.clipboard.writeText(text);
   } catch {
@@ -25,7 +26,7 @@ async function copyPrompt(button) {
   }
   button.textContent = "已复制";
   showToast("提示词已复制，可以粘贴到AI工具中");
-  window.setTimeout(() => { button.textContent = "复制提示词"; }, 1600);
+  window.setTimeout(() => { button.textContent = defaultLabel; }, 1600);
 }
 
 document.addEventListener("click", (event) => {
@@ -38,11 +39,11 @@ const observer = new IntersectionObserver((entries) => {
     .filter((entry) => entry.isIntersecting)
     .sort((left, right) => right.intersectionRatio - left.intersectionRatio)[0];
   if (!visible) return;
-  taskLinks.forEach((link) => {
+  moduleLinks.forEach((link) => {
     const active = link.dataset.taskLink === visible.target.id;
     if (active) link.setAttribute("aria-current", "true");
     else link.removeAttribute("aria-current");
   });
 }, { rootMargin: "-20% 0px -65%", threshold: [0.1, 0.35, 0.65] });
 
-document.querySelectorAll("section.task").forEach((section) => observer.observe(section));
+document.querySelectorAll("section.module").forEach((section) => observer.observe(section));
