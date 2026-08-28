@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="WorkBuddy 业务场景创新练习台：六步场景方法、三个业务起点包、可编辑提示词与课堂模拟资料。">
+  <meta name="description" content="WorkBuddy 业务场景创新练习台：六步场景方法、三个业务起点包、可编辑提示词、课堂模拟资料与HTML原型。">
   <link rel="canonical" href="https://xjtulijiagui-max.github.io/lijiagui/keylogic/">
   <meta property="og:title" content="WorkBuddy 业务场景创新练习台">
   <meta property="og:description" content="一张桌、两种脑、三类外援，六步把业务场景做成结果。">
@@ -111,8 +111,8 @@
     <div class="shell workspace">
       <aside class="sidebar" aria-label="步骤导航"><div class="side-title">训练步骤</div><p class="side-copy">先替换花括号变量，再复制到 WorkBuddy。</p><ol class="side-nav" id="sideNav"></ol><div class="side-progress"><strong id="progressCount">0 / 9</strong><p>完成状态保存在当前浏览器</p><progress id="progressBar" max="9" value="0">0 / 9</progress></div></aside>
       <div class="content">
-        <section id="scene" aria-labelledby="sceneTitle"><div class="section-intro"><div><div class="eyebrow">PART 01 · 场景篇</div><h2 id="sceneTitle">六步把场景做成结果</h2></div><p>看流程、找节点、建场景湖、排 ROI、写 PRD、做原型。六步连续衔接，每个文本框都可直接修改。</p></div><div class="bulk-actions"><button class="button primary" id="copyAllScene" type="button">复制六个提示词</button><button class="button secondary" id="resetAllScene" type="button">恢复六步默认内容</button></div><div class="prompt-list" id="scenePromptList"></div></section>
-        <section class="studio" id="studio" aria-labelledby="studioTitle"><div class="section-intro"><div><div class="eyebrow">PART 02 · 实战篇</div><h2 id="studioTitle">三个起点包，<span class="nowrap">用六步法</span>拿到结果</h2></div><p>案例只提供一个待解决的问题、初始提示词和知识材料。不要直接追求答案，从 Step 1 开始把六步完整跑一遍。</p></div><div id="studioList"></div><div class="notice"><h3>练习规则</h3><p>三份资料均为课堂模拟数据。初始提示词故意保持简单，它只是起点；最终成果必须经过流程梳理、节点判断、场景湖、ROI、PRD 与原型六步，并保留事实依据和人工复核边界。</p></div></section>
+        <section id="scene" aria-labelledby="sceneTitle"><div class="section-intro"><div><div class="eyebrow">PART 01 · 场景篇</div><h2 id="sceneTitle">六步把场景做成结果</h2></div><p>看流程、找节点、建场景湖、排 ROI、写 PRD、做 HTML 原型。六步连续衔接，每个文本框都可直接修改。</p></div><div class="bulk-actions"><button class="button primary" id="copyAllScene" type="button">复制六个提示词</button><button class="button secondary" id="resetAllScene" type="button">恢复六步默认内容</button></div><div class="prompt-list" id="scenePromptList"></div></section>
+        <section class="studio" id="studio" aria-labelledby="studioTitle"><div class="section-intro"><div><div class="eyebrow">PART 02 · 实战篇</div><h2 id="studioTitle">三个起点包，<span class="nowrap">用六步法</span>拿到结果</h2></div><p>案例只提供一个待解决的问题、初始提示词和知识材料。不要直接追求答案，从 Step 1 开始把六步完整跑一遍。</p></div><div id="studioList"></div><div class="notice"><h3>练习规则</h3><p>三份资料均为课堂模拟数据。初始提示词故意保持简单，它只是起点；最终成果必须经过流程梳理、节点判断、场景湖、ROI、PRD 与 HTML 原型六步，并保留事实依据和人工复核边界。</p></div></section>
       </div>
     </div>
   </main>
@@ -261,22 +261,31 @@ Output：交付物格式、字段、事实来源、质量标准、验收人、�
 
 同时补充：目标与非目标、用户故事、主流程、边界场景、两周试点计划、风险清单、待确认问题。
 未知信息写“待确认”，不得用想象补齐。`},
-      {id:"scene-6",no:"06",meta:"STEP 6 · 做原型",title:"生成可打开、可点击的成果",summary:"用真实交付物验证场景，而不是只做一场演示。",target:"获得可操作原型、测试脚本和迭代清单。",input:"把 Step 5 的 PRD 放入练习 Workspace。",tools:[["WorkBuddy","#top"]],prompt:`请基于我上传的PRD，在当前Workspace中完成一个可评审原型。
+      {id:"scene-6",no:"06",meta:"STEP 6 · 做原型",title:"生成可用的 HTML 原型",summary:"不是只写方案或画截图，而是生成能打开、能点击的网页。",target:"获得HTML原型、测试记录和迭代项。",input:"把 Step 5 的 PRD 放入练习 Workspace。",tools:[["WorkBuddy","#top"]],prompt:`请基于我上传的PRD，在当前Workspace中完成一个可评审的HTML原型。
 
 先使用Plan模式输出：
-1. 你对业务目标、输入、输出和边界的理解；
+1. 业务目标、输入输出和边界；
 2. 文件与资料缺口；
 3. 实施步骤、将创建或修改的文件；
 4. 验收清单与风险点。
 
 我确认计划后再执行。执行要求：
-- 交付物可直接打开并完成核心任务；
+- 至少生成一个 index.html；
+- 图片、样式和脚本统一放入 assets 目录；
+- 使用 HTML、CSS 和原生 JavaScript，双击 index.html 即可在浏览器打开，不依赖后端服务；
+- 页面必须可点击、可输入、可切换状态，并完成PRD中的核心任务，不能只输出说明文档或静态截图；
+- 兼顾电脑和手机浏览，信息层级、按钮、表单和反馈状态清楚；
 - 覆盖主流程、空状态、错误状态和人工复核点；
 - 每个结论可追溯到输入资料；
 - 不足信息明确标注，不编造；
-- 输出测试脚本、已知限制和下一轮迭代建议。
+- 在本地打开HTML完成一轮测试，输出测试记录、已知限制和下一轮迭代建议。
 
-最后按“格式、事实、边界、可用性”四项自检，并列出需要我人工确认的内容。`}
+最后请交付：
+1. index.html及其资源文件；
+2. 本地打开与核心交互测试记录；
+3. 已知限制、迭代清单和需要我人工确认的内容。
+
+按“HTML可打开、交互可使用、事实可追溯、边界可控制”四项自检。`}
     ];
     const studioTasks=[
       {id:"studio-yogurt",no:"案例 A",meta:"业务起点包 · 新品上市",title:"一个供应商延期，<span class=\"nowrap\">会影响</span>整个上市目标吗？",summary:"把目标、项目、任务、资源和跟进记录放在一起，对比昨天，追出异常如何穿透到上市目标。",target:"项目变化散落在多张表里，局部异常的影响链难以及时看清",input:"5张Excel业务表 + 昨天风险日报 + 风险判断规则",deliverable:"今日风险日报 + 影响链 + 管理决策清单",tools:[["对话来源","https://chatgpt.com/share/6a90d937-64fc-83ea-8d23-a3ca6961d393"],["回到 Step 1","#scene-1"]],fileName:"案例 A · 新品酸奶90天上市项目",fileCopy:"7份相互关联的课堂模拟资料。建议一键下载资料包，解压后全部放进同一个 WorkBuddy Workspace。",bundle:"assets/case-a/案例A_新品酸奶90天上市项目_资料包.zip",files:[
@@ -287,7 +296,7 @@ Output：交付物格式、字段、事实来源、质量标准、验收人、�
         ["跟进记录.xlsx","assets/case-a/跟进记录.xlsx"],
         ["昨天风险日报.md","assets/case-a/昨天风险日报.md"],
         ["风险判断规则.md","assets/case-a/风险判断规则.md"]
-      ],routeNote:"先把7份资料全部放入同一个 Workspace，按“读取—完整性—对比—变化—异常—纵向—横向—定级—动作—日报”跑一遍；再回到 Step 1，用六步法把这套分析做成稳定的场景 PRD 与原型。",prompt:`请在同一个 Workspace 中读取以下7个文件：
+      ],routeNote:"先把7份资料全部放入同一个 Workspace，按“读取—完整性—对比—变化—异常—纵向—横向—定级—动作—日报”跑一遍；再回到 Step 1，用六步法把这套分析做成稳定的场景 PRD 与 HTML 原型。",prompt:`请在同一个 Workspace 中读取以下7个文件：
 《目标表.xlsx》《项目表.xlsx》《任务表.xlsx》《资源表.xlsx》《跟进记录.xlsx》《昨天风险日报.md》《风险判断规则.md》。
 
 你是新品酸奶90天上市项目的风险分析助理。只使用文件中的事实，不补造数据；若字段缺失、ID无法关联或日期冲突，先列入数据质量问题。
@@ -332,7 +341,7 @@ Output：交付物格式、字段、事实来源、质量标准、验收人、�
 7. 证据索引，回指文件、工作表、对象ID或记录ID。
 
 AI可以提出风险和动作建议，但不得自动修改排产、切换供应商、追加预算或更改上市日期。日报完成后，再提醒我回到 Step 1，用六步场景创新法把这次人工分析固化成可复用场景。`},
-      {id:"studio-meeting",no:"案例 B",meta:"业务起点包 · 客户会议",title:"会议结束，跟进工作才刚开始",summary:"先读懂会议材料，再用六步法判断真正值得做的 WorkBuddy 场景。",target:"会后信息多、跟进慢、行动项容易丢",input:"一份课堂模拟客户会议纪要",deliverable:"六步法跑出的场景 PRD 与可演示原型",tools:[["回到 Step 1","#scene-1"]],file:"assets/01_客户会议纪要_模拟.md",fileName:"01_客户会议纪要_模拟.md",fileCopy:"包含会议事实、客户原话、业务边界和待确认事项，是这个案例的知识起点。",prompt:`请读取《01_客户会议纪要_模拟.md》。
+      {id:"studio-meeting",no:"案例 B",meta:"业务起点包 · 客户会议",title:"会议结束，跟进工作才刚开始",summary:"先读懂会议材料，再用六步法判断真正值得做的 WorkBuddy 场景。",target:"会后信息多、跟进慢、行动项容易丢",input:"一份课堂模拟客户会议纪要",deliverable:"六步法跑出的场景 PRD 与可演示 HTML 原型",tools:[["回到 Step 1","#scene-1"]],file:"assets/01_客户会议纪要_模拟.md",fileName:"01_客户会议纪要_模拟.md",fileCopy:"包含会议事实、客户原话、业务边界和待确认事项，是这个案例的知识起点。",prompt:`请读取《01_客户会议纪要_模拟.md》。
 
 先不要直接替我写纪要、邮件或行动项，也不要预设最后要做什么智能体。
 
@@ -341,7 +350,7 @@ AI可以提出风险和动作建议，但不得自动修改排产、切换供应
 2. 列出已知事实、未知信息和必须由人工确认的边界。
 
 完成后停下来，提醒我把这个业务问题带入“六步场景创新法”，从 Step 1 业务流程梳理开始。`},
-      {id:"studio-data",no:"案例 C",meta:"业务起点包 · 经营数据",title:"数据不缺，缺的是可执行洞察",summary:"先识别数据与管理问题，再用六步法决定场景、产物和实现方式。",target:"经营表格很多，但问题发现和行动闭环慢",input:"一份课堂模拟区域经营数据",deliverable:"六步法跑出的场景 PRD 与可演示原型",tools:[["回到 Step 1","#scene-1"]],file:"assets/02_经营数据_模拟.csv",fileName:"02_经营数据_模拟.csv",fileCopy:"9条区域经营记录，包含目标、收入、成本、客诉与回款，是这个案例的知识起点。",prompt:`请读取《02_经营数据_模拟.csv》。
+      {id:"studio-data",no:"案例 C",meta:"业务起点包 · 经营数据",title:"数据不缺，缺的是可执行洞察",summary:"先识别数据与管理问题，再用六步法决定场景、产物和实现方式。",target:"经营表格很多，但问题发现和行动闭环慢",input:"一份课堂模拟区域经营数据",deliverable:"六步法跑出的场景 PRD 与可演示 HTML 原型",tools:[["回到 Step 1","#scene-1"]],file:"assets/02_经营数据_模拟.csv",fileName:"02_经营数据_模拟.csv",fileCopy:"9条区域经营记录，包含目标、收入、成本、客诉与回款，是这个案例的知识起点。",prompt:`请读取《02_经营数据_模拟.csv》。
 
 先不要生成看板、管理报告或行动建议，也不要预设最后要做什么智能体。
 
@@ -360,7 +369,7 @@ AI可以提出风险和动作建议，但不得自动修改排产、切换供应
     function toolLinks(items){return items.map(([label,url])=>`<a href="${url}" ${url.startsWith("http")?'target="_blank" rel="noopener"':""}>${label}</a>`).join("")}
     function sceneCard(item){const value=edits[item.id]??item.prompt;return `<article class="prompt-card ${completed.has(item.id)?"completed":""}" id="${item.id}"><header class="prompt-head"><span class="step-no">${item.no}</span><div><div class="prompt-meta">${item.meta}</div><h3>${item.title}</h3><p>${item.summary}</p></div><div class="prompt-tools">${toolLinks(item.tools)}</div></header><div class="prompt-body"><div class="prompt-guidance"><div class="guidance-block"><strong>练习目标</strong>${item.target}</div><div class="guidance-block"><strong>修改位置</strong>${item.input}</div></div>${item.framework?`<p class="route-note">${item.framework}</p>`:""}<label class="editor-label" for="${item.id}-editor"><span>可编辑提示词</span><span class="status-text ${edits[item.id]?"changed":""}" data-status="${item.id}">${edits[item.id]?"已修改并保存":"默认通用场景"}</span></label><textarea id="${item.id}-editor" data-editor="${item.id}" spellcheck="false">${value}</textarea><div class="editor-actions"><div class="action-group"><button class="button primary" type="button" data-copy="${item.id}">复制当前提示词</button><button class="button secondary" type="button" data-reset="${item.id}">恢复默认</button></div><button class="button text" type="button" data-complete="${item.id}">${completed.has(item.id)?"取消完成":"标记完成"}</button></div></div></article>`}
     function datasetDownloads(item){if(item.files){const files=item.files.map(([name,url])=>`<div class="dataset-file"><span>${name}</span><a href="${url}" download aria-label="下载 ${name}">下载</a></div>`).join("");return `<div class="dataset-files">${files}</div><a class="button primary" href="${item.bundle}" download>一键下载全部资料</a>`}return `<a class="button primary" href="${item.file}" download>下载知识材料</a>`}
-    function studioCard(item){const value=edits[item.id]??item.prompt,route=item.routeNote||"先用下面的初始提示词读懂材料，然后回到 Step 1，依次完成流程、节点、场景湖、ROI、PRD 和原型。案例卡本身不直接给最终答案。";return `<article class="studio-card ${completed.has(item.id)?"completed":""}" id="${item.id}"><header class="prompt-head"><span class="step-no">${item.no}</span><div><div class="prompt-meta">${item.meta}</div><h3>${item.title}</h3><p>${item.summary}</p></div><div class="prompt-tools">${toolLinks(item.tools)}</div></header><div class="studio-grid"><div><div class="task-goals"><div><strong>起始问题</strong>${item.target}</div><div><strong>知识材料</strong>${item.input}</div><div><strong>最终任务</strong>${item.deliverable}</div></div><p class="route-note"><strong>正确走法：</strong>${route}</p><label class="editor-label" for="${item.id}-editor"><span>初始提示词</span><span class="status-text ${edits[item.id]?"changed":""}" data-status="${item.id}">${edits[item.id]?"已修改并保存":"案例起始版"}</span></label><textarea id="${item.id}-editor" data-editor="${item.id}" spellcheck="false">${value}</textarea><div class="editor-actions"><div class="action-group"><button class="button primary" type="button" data-copy="${item.id}">复制初始提示词</button><button class="button secondary" type="button" data-reset="${item.id}">恢复默认</button></div><button class="button text" type="button" data-complete="${item.id}">${completed.has(item.id)?"取消完成":"标记完成"}</button></div></div><aside class="dataset-card ${item.files?"multi-file":""}" id="${item.id==="studio-yogurt"?"downloads":""}"><span class="file-type">知识起点 · 课堂模拟</span><h4>${item.fileName}</h4><p>${item.fileCopy}</p>${datasetDownloads(item)}<div class="dataset-note">不对应任何真实企业、客户或经营数据；请把材料作为六步法的输入，而不是标准答案。</div></aside></div></article>`}
+    function studioCard(item){const value=edits[item.id]??item.prompt,route=item.routeNote||"先用下面的初始提示词读懂材料，然后回到 Step 1，依次完成流程、节点、场景湖、ROI、PRD 和 HTML 原型。案例卡本身不直接给最终答案。";return `<article class="studio-card ${completed.has(item.id)?"completed":""}" id="${item.id}"><header class="prompt-head"><span class="step-no">${item.no}</span><div><div class="prompt-meta">${item.meta}</div><h3>${item.title}</h3><p>${item.summary}</p></div><div class="prompt-tools">${toolLinks(item.tools)}</div></header><div class="studio-grid"><div><div class="task-goals"><div><strong>起始问题</strong>${item.target}</div><div><strong>知识材料</strong>${item.input}</div><div><strong>最终任务</strong>${item.deliverable}</div></div><p class="route-note"><strong>正确走法：</strong>${route}</p><label class="editor-label" for="${item.id}-editor"><span>初始提示词</span><span class="status-text ${edits[item.id]?"changed":""}" data-status="${item.id}">${edits[item.id]?"已修改并保存":"案例起始版"}</span></label><textarea id="${item.id}-editor" data-editor="${item.id}" spellcheck="false">${value}</textarea><div class="editor-actions"><div class="action-group"><button class="button primary" type="button" data-copy="${item.id}">复制初始提示词</button><button class="button secondary" type="button" data-reset="${item.id}">恢复默认</button></div><button class="button text" type="button" data-complete="${item.id}">${completed.has(item.id)?"取消完成":"标记完成"}</button></div></div><aside class="dataset-card ${item.files?"multi-file":""}" id="${item.id==="studio-yogurt"?"downloads":""}"><span class="file-type">知识起点 · 课堂模拟</span><h4>${item.fileName}</h4><p>${item.fileCopy}</p>${datasetDownloads(item)}<div class="dataset-note">不对应任何真实企业、客户或经营数据；请把材料作为六步法的输入，而不是标准答案。</div></aside></div></article>`}
     function bindEditors(){document.querySelectorAll("[data-editor]").forEach(editor=>{if(edits[editor.dataset.editor])editor.classList.add("modified");editor.addEventListener("input",()=>{const id=editor.dataset.editor;edits[id]=editor.value;editor.classList.add("modified");const status=document.querySelector(`[data-status="${id}"]`);status.textContent="已修改并保存";status.classList.add("changed");persist()})});document.querySelectorAll("[data-copy]").forEach(button=>button.addEventListener("click",async()=>{const editor=document.querySelector(`[data-editor="${button.dataset.copy}"]`);showToast(await copyText(editor.value)?"提示词已复制，可粘贴到 WorkBuddy。":"复制未成功，请在文本框中全选后复制。") }));document.querySelectorAll("[data-reset]").forEach(button=>button.addEventListener("click",()=>{const id=button.dataset.reset,source=[...scenePrompts,...studioTasks].find(item=>item.id===id);delete edits[id];const editor=document.querySelector(`[data-editor="${id}"]`);editor.value=source.prompt;editor.classList.remove("modified");const status=document.querySelector(`[data-status="${id}"]`);status.textContent=id.startsWith("scene")?"默认通用场景":"案例起始版";status.classList.remove("changed");persist();showToast("已恢复默认提示词。") }));document.querySelectorAll("[data-complete]").forEach(button=>button.addEventListener("click",()=>{const id=button.dataset.complete;completed.has(id)?completed.delete(id):completed.add(id);persist();render();document.querySelector(`#${id}`).scrollIntoView({block:"center"});showToast(completed.has(id)?"已标记完成。":"已取消完成状态。") }))}
     function updateProgress(){document.querySelector("#progressCount").textContent=`${completed.size} / 9`;document.querySelector("#progressBar").value=completed.size}
     function render(){document.querySelector("#scenePromptList").innerHTML=scenePrompts.map(sceneCard).join("");document.querySelector("#studioList").innerHTML=studioTasks.map(studioCard).join("");document.querySelector("#sideNav").innerHTML=[...scenePrompts,...studioTasks].map(item=>`<li><a href="#${item.id}"><span>${item.no}</span><span>${item.title}</span></a></li>`).join("");updateProgress();bindEditors()}
