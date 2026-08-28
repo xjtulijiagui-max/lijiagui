@@ -133,21 +133,38 @@
 4. 对信息不足的地方写“待确认”，不要自行编造。
 
 最后用表格输出完整流程，并给出一段100字以内的流程瓶颈判断。`},
-      {id:"scene-2",no:"02",meta:"STEP 2 · 找节点",title:"找到 AI 应该接住的劳动",summary:"用查、提、整、写、改、比、判、推识别改造节点。",target:"获得带有人机分工、输入输出和风险边界的 AI 改造流程。",input:"粘贴 Step 1 的流程结果。",tools:[["WorkBuddy","#top"]],prompt:`请基于我提供的现状流程，识别适合AI介入的节点。
+      {id:"scene-2",no:"02",meta:"STEP 2 · 找节点",title:"用六问判断，哪些劳动可以交给 AI",summary:"先用查、提、整、写、改、比、判、推找到候选节点，再用六问筛掉不合适的工作。",target:"获得逐节点六问证据、优先级分数、人机分工和风险边界。",input:"粘贴 Step 1 的流程结果。",framework:"<strong>六问判断：</strong>高频反复？固定输入？固定输出？判断标准？风险可控？结果可反馈？",tools:[["WorkBuddy","#top"]],prompt:`请基于我提供的现状流程，识别适合AI介入的节点，并用“六问判断法”决定哪些劳动可以交给AI。
 
 【现状流程】
 {粘贴Step 1输出}
 
-请逐节点判断AI可承担的动作：查、提、整、写、改、比、判、推。
-对每个候选节点输出：
-1. 当前人工动作与耗时；
-2. AI可承担的具体动作；
-3. 所需资料、规则、样例和系统；
-4. AI输出形式；
-5. 人工仍需负责的判断、确认与异常处理；
-6. 权限、数据、事实和合规风险。
+第一步，逐节点寻找AI可能承担的动作：查、提、整、写、改、比、判、推。
 
-最后输出一张“现状流程→AI改造流程”对照表。高风险决策不得设计为AI自动放行。`},
+第二步，对每个候选节点逐一回答六个问题。每题只能写“是 / 部分 / 否”，并给出流程材料中的证据：
+1. 这件事是不是高频、反复发生的？
+2. 它有没有固定输入，即明确的起点材料、数据或触发条件？
+3. 它有没有固定输出，即交付物的格式、内容和完成标准是否明确？
+4. 它有没有清晰的判断标准，人工能否快速判断AI结果能不能用？
+5. 出错风险是否可控，错误是否在组织可接受、可发现、可纠正的范围内？
+6. 结果能否反馈回来，是否能获得使用数据、人工评价或纠错记录继续优化？
+
+第三步，为每个候选节点按1—5分评分：
+- 重复频率：越高分越高；
+- 标准清晰度：输入、输出和判断规则越清楚分越高；
+- 材料完整度：资料、数据、样例和系统权限越齐全分越高；
+- 风险可控度：越容易复核、纠错和转人工分越高。
+
+按下面的公式计算相对优先级：
+AI接手优先级 = 重复频率 × 标准清晰度 × 材料完整度 × 风险可控度
+
+请输出一张表，至少包含：流程节点、当前人工劳动、AI动作、六问答案与证据、四项评分、优先级分数、输入、输出、人工复核点、待补条件。
+
+最后分成三类：
+- 优先试点：六问基本成立，可进入Step 3场景湖；
+- 补条件后再做：价值存在，但材料、标准、权限或反馈链不足；
+- 保持人工主导：高责任、高风险或缺乏判断标准。
+
+分数只用于相对排序，不代表AI可以自动放行。涉及承诺、审批、资金、合规、人员和关键业务决策的节点，必须保留人工确认。`},
       {id:"scene-3",no:"03",meta:"STEP 3 · 建场景湖",title:"把候选机会放进同一张表",summary:"把零散想法变成可比较、可排序的场景资产。",target:"获得一张至少10项的业务场景湖。",input:"粘贴 Step 2 的 AI 改造节点。",tools:[["WorkBuddy","#top"]],prompt:`请把以下AI改造节点整理为业务场景湖。
 
 【AI改造节点】
@@ -246,7 +263,7 @@ Output：交付物格式、字段、事实来源、质量标准、验收人、�
     function showToast(text){toast.textContent=text;toast.classList.add("show");clearTimeout(window.keylogicToast);window.keylogicToast=setTimeout(()=>toast.classList.remove("show"),2400)}
     async function copyText(text){try{await navigator.clipboard.writeText(text);return true}catch(error){const helper=document.createElement("textarea");helper.value=text;helper.style.position="fixed";helper.style.opacity="0";document.body.appendChild(helper);helper.select();const ok=document.execCommand("copy");helper.remove();return ok}}
     function toolLinks(items){return items.map(([label,url])=>`<a href="${url}" ${url.startsWith("http")?'target="_blank" rel="noopener"':""}>${label}</a>`).join("")}
-    function sceneCard(item){const value=edits[item.id]??item.prompt;return `<article class="prompt-card ${completed.has(item.id)?"completed":""}" id="${item.id}"><header class="prompt-head"><span class="step-no">${item.no}</span><div><div class="prompt-meta">${item.meta}</div><h3>${item.title}</h3><p>${item.summary}</p></div><div class="prompt-tools">${toolLinks(item.tools)}</div></header><div class="prompt-body"><div class="prompt-guidance"><div class="guidance-block"><strong>练习目标</strong>${item.target}</div><div class="guidance-block"><strong>修改位置</strong>${item.input}</div></div><label class="editor-label" for="${item.id}-editor"><span>可编辑提示词</span><span class="status-text ${edits[item.id]?"changed":""}" data-status="${item.id}">${edits[item.id]?"已修改并保存":"默认通用场景"}</span></label><textarea id="${item.id}-editor" data-editor="${item.id}" spellcheck="false">${value}</textarea><div class="editor-actions"><div class="action-group"><button class="button primary" type="button" data-copy="${item.id}">复制当前提示词</button><button class="button secondary" type="button" data-reset="${item.id}">恢复默认</button></div><button class="button text" type="button" data-complete="${item.id}">${completed.has(item.id)?"取消完成":"标记完成"}</button></div></div></article>`}
+    function sceneCard(item){const value=edits[item.id]??item.prompt;return `<article class="prompt-card ${completed.has(item.id)?"completed":""}" id="${item.id}"><header class="prompt-head"><span class="step-no">${item.no}</span><div><div class="prompt-meta">${item.meta}</div><h3>${item.title}</h3><p>${item.summary}</p></div><div class="prompt-tools">${toolLinks(item.tools)}</div></header><div class="prompt-body"><div class="prompt-guidance"><div class="guidance-block"><strong>练习目标</strong>${item.target}</div><div class="guidance-block"><strong>修改位置</strong>${item.input}</div></div>${item.framework?`<p class="route-note">${item.framework}</p>`:""}<label class="editor-label" for="${item.id}-editor"><span>可编辑提示词</span><span class="status-text ${edits[item.id]?"changed":""}" data-status="${item.id}">${edits[item.id]?"已修改并保存":"默认通用场景"}</span></label><textarea id="${item.id}-editor" data-editor="${item.id}" spellcheck="false">${value}</textarea><div class="editor-actions"><div class="action-group"><button class="button primary" type="button" data-copy="${item.id}">复制当前提示词</button><button class="button secondary" type="button" data-reset="${item.id}">恢复默认</button></div><button class="button text" type="button" data-complete="${item.id}">${completed.has(item.id)?"取消完成":"标记完成"}</button></div></div></article>`}
     function studioCard(item){const value=edits[item.id]??item.prompt;return `<article class="studio-card ${completed.has(item.id)?"completed":""}" id="${item.id}"><header class="prompt-head"><span class="step-no">${item.no}</span><div><div class="prompt-meta">${item.meta}</div><h3>${item.title}</h3><p>${item.summary}</p></div><div class="prompt-tools">${toolLinks(item.tools)}</div></header><div class="studio-grid"><div><div class="task-goals"><div><strong>起始问题</strong>${item.target}</div><div><strong>知识材料</strong>${item.input}</div><div><strong>最终任务</strong>${item.deliverable}</div></div><p class="route-note"><strong>正确走法：</strong>先用下面的初始提示词读懂材料，然后回到 Step 1，依次完成流程、节点、场景湖、ROI、PRD 和原型。案例卡本身不直接给最终答案。</p><label class="editor-label" for="${item.id}-editor"><span>初始提示词</span><span class="status-text ${edits[item.id]?"changed":""}" data-status="${item.id}">${edits[item.id]?"已修改并保存":"案例起始版"}</span></label><textarea id="${item.id}-editor" data-editor="${item.id}" spellcheck="false">${value}</textarea><div class="editor-actions"><div class="action-group"><button class="button primary" type="button" data-copy="${item.id}">复制初始提示词</button><button class="button secondary" type="button" data-reset="${item.id}">恢复默认</button></div><button class="button text" type="button" data-complete="${item.id}">${completed.has(item.id)?"取消完成":"标记完成"}</button></div></div><aside class="dataset-card" id="${item.id==="studio-yogurt"?"downloads":""}"><span class="file-type">知识起点 · 课堂模拟</span><h4>${item.fileName}</h4><p>${item.fileCopy}</p><a class="button primary" href="${item.file}" download>下载知识材料</a><div class="dataset-note">不对应任何真实企业、客户或经营数据；请把材料作为六步法的输入，而不是标准答案。</div></aside></div></article>`}
     function bindEditors(){document.querySelectorAll("[data-editor]").forEach(editor=>{if(edits[editor.dataset.editor])editor.classList.add("modified");editor.addEventListener("input",()=>{const id=editor.dataset.editor;edits[id]=editor.value;editor.classList.add("modified");const status=document.querySelector(`[data-status="${id}"]`);status.textContent="已修改并保存";status.classList.add("changed");persist()})});document.querySelectorAll("[data-copy]").forEach(button=>button.addEventListener("click",async()=>{const editor=document.querySelector(`[data-editor="${button.dataset.copy}"]`);showToast(await copyText(editor.value)?"提示词已复制，可粘贴到 WorkBuddy。":"复制未成功，请在文本框中全选后复制。") }));document.querySelectorAll("[data-reset]").forEach(button=>button.addEventListener("click",()=>{const id=button.dataset.reset,source=[...scenePrompts,...studioTasks].find(item=>item.id===id);delete edits[id];const editor=document.querySelector(`[data-editor="${id}"]`);editor.value=source.prompt;editor.classList.remove("modified");const status=document.querySelector(`[data-status="${id}"]`);status.textContent=id.startsWith("scene")?"默认通用场景":"案例起始版";status.classList.remove("changed");persist();showToast("已恢复默认提示词。") }));document.querySelectorAll("[data-complete]").forEach(button=>button.addEventListener("click",()=>{const id=button.dataset.complete;completed.has(id)?completed.delete(id):completed.add(id);persist();render();document.querySelector(`#${id}`).scrollIntoView({block:"center"});showToast(completed.has(id)?"已标记完成。":"已取消完成状态。") }))}
     function updateProgress(){document.querySelector("#progressCount").textContent=`${completed.size} / 9`;document.querySelector("#progressBar").value=completed.size}
