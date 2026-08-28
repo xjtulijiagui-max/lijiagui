@@ -64,7 +64,7 @@
 
 ### ProgressPanel
 - **Structure**：完成数、文字说明、原生 progress。
-- **States**：0—8，状态持久化到本地浏览器。
+- **States**：0—9，状态持久化到本地浏览器。
 
 ### Toast
 - **Structure**：固定状态反馈。
