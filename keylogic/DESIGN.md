@@ -58,8 +58,9 @@
 - **Accessibility**：每个 textarea 有 label，按钮使用真实 `button`。
 
 ### DownloadCard
-- **Structure**：资料类型、文件名、用途、下载按钮、模拟数据声明。
-- **States**：default、hover、focus。
+- **Structure**：资料类型、文件名、用途、下载入口、模拟数据声明。
+- **Variants**：单文件卡；多文件资料包卡（紧凑文件清单 + 一键下载全部资料）。
+- **States**：default、file-link hover/focus、bundle-button hover/focus。
 - **Accessibility**：真实文件链接，文件名即下载名。
 
 ### ProgressPanel
