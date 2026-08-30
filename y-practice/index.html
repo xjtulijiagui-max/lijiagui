@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="WorkBuddy从入门到精通课堂练习台：五关完成任务卡、高频任务评分、能力地图、Plan计划和Skill设计画布。">
+  <meta property="og:title" content="WorkBuddy从入门到精通｜课堂练习台">
+  <meta property="og:description" content="从会用工具，到把业务经验封装成可复用的AI能力。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://xjtulijiagui-max.github.io/lijiagui/y-practice/">
+  <link rel="canonical" href="https://xjtulijiagui-max.github.io/lijiagui/y-practice/">
+  <title>WorkBuddy从入门到精通｜课堂练习台</title>
+  <style>
+    :root{
+      --canvas:#f2f6fb;--paper:#fff;--ink:#102a43;--muted:#4b6078;--primary:#075fcb;
+      --primary-dark:#08458f;--pale:#e7f1fd;--pale-strong:#bcd7f7;--night:#0c2c4a;
+      --line:#d6e2ef;--success:#176b52;--warning:#9a5a12;
+      --shadow-card:0 1px 0 rgba(16,42,67,.04);--shadow-toast:0 18px 48px rgba(12,44,74,.24);
+      --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:20px;--s6:24px;--s8:32px;
+      --s10:40px;--s12:48px;--s16:64px;--s20:80px;--radius-s:12px;--radius-m:18px;
+      --radius-l:26px;--ease:cubic-bezier(.16,1,.3,1)
+    }
+    *{box-sizing:border-box}html{scroll-behavior:smooth}
+    body{margin:0;background:var(--canvas);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;line-height:1.75;word-break:normal}
+    button,input,textarea,select{font:inherit}button,a{touch-action:manipulation}a{color:inherit}
+    :focus-visible{outline:3px solid var(--pale-strong);outline-offset:3px}
+    .shell{width:min(1440px,calc(100% - 48px));margin:auto}
+    .topline{height:6px;background:linear-gradient(90deg,var(--primary),var(--pale-strong))}
+    .topnav-wrap{background:var(--paper)}
+    .topnav{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:var(--s6);border-bottom:1px solid var(--line)}
+    .brand{display:flex;align-items:center;gap:var(--s3);font-weight:800;text-decoration:none}
+    .brand-mark{display:grid;place-items:center;width:38px;height:38px;border-radius:50% 50% 50% 10px;background:var(--primary);color:var(--paper);font-size:12px;letter-spacing:.04em}
+    .top-links{display:flex;align-items:center;gap:var(--s6);font-size:14px;color:var(--muted)}
+    .top-links a{text-decoration:none}.top-links a:hover{color:var(--primary)}
+    .hero{position:relative;overflow:hidden;background:var(--night);color:var(--paper)}
+    .hero:before,.hero:after{content:"";position:absolute;border-radius:50%;pointer-events:none}
+    .hero:before{width:640px;height:640px;right:-180px;top:-330px;background:radial-gradient(circle,var(--primary) 0,transparent 68%);opacity:.5}
+    .hero:after{width:440px;height:440px;left:-220px;bottom:-280px;background:radial-gradient(circle,var(--pale-strong) 0,transparent 70%);opacity:.16}
+    .hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:clamp(32px,7vw,112px);align-items:end;padding:clamp(56px,8vw,104px) 0 var(--s16)}
+    .eyebrow{font-size:12px;font-weight:800;letter-spacing:.14em;color:var(--pale-strong);text-transform:uppercase}
+    .hero h1{font-size:clamp(40px,5vw,68px);line-height:1.08;letter-spacing:-.05em;text-wrap:balance;margin:var(--s4) 0 var(--s5);max-width:920px}
+    .hero h1 span{color:var(--pale-strong)}.lead{font-size:17px;color:var(--pale);max-width:780px;margin:0}
+    .hero-panel{position:relative;padding:var(--s6);border:1px solid rgba(188,215,247,.42);background:rgba(255,255,255,.06);border-radius:var(--radius-l)}
+    .hero-panel strong{display:block;font-size:48px;line-height:1;color:var(--pale-strong);letter-spacing:-.06em}
+    .hero-panel p{margin:var(--s3) 0 var(--s4);font-size:13px;color:var(--pale)}
+    progress{appearance:none;width:100%;height:8px;border:0;border-radius:99px;overflow:hidden}
+    progress::-webkit-progress-bar{background:rgba(255,255,255,.18)}progress::-webkit-progress-value{background:var(--pale-strong)}
+    .workspace{display:grid;grid-template-columns:240px minmax(0,1fr);gap:clamp(32px,5vw,72px);padding:var(--s16) 0 112px}
+    .sidebar{position:sticky;top:var(--s6);align-self:start}.side-label{font-size:12px;font-weight:800;letter-spacing:.1em;color:var(--primary)}
+    .side-title{font-size:22px;font-weight:800;margin:var(--s1) 0 var(--s2)}.side-copy{font-size:13px;color:var(--muted);margin:0 0 var(--s5)}
+    .stage-nav{list-style:none;padding:0;margin:0;border-top:1px solid var(--line)}
+    .stage-nav a{display:grid;grid-template-columns:32px 1fr auto;gap:var(--s2);align-items:center;padding:var(--s3) 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--muted);font-size:13px}
+    .stage-nav a:hover{color:var(--ink)}.stage-no{font-weight:900;color:var(--primary)}
+    .stage-done{width:10px;height:10px;border-radius:50%;border:1px solid var(--line);background:var(--paper)}
+    .stage-done.on{background:var(--success);border-color:var(--success)}.side-actions{display:grid;gap:var(--s2);margin-top:var(--s5)}
+    .content{min-width:0}.intro{margin-bottom:var(--s8)}
+    .intro h2{font-size:clamp(28px,3.5vw,44px);line-height:1.18;letter-spacing:-.04em;text-wrap:balance;margin:var(--s2) 0 var(--s3)}
+    .intro p{font-size:15px;color:var(--muted);max-width:800px;margin:0}
+    .exercise{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius-l);box-shadow:var(--shadow-card);margin-bottom:var(--s8);overflow:hidden;scroll-margin-top:var(--s6);content-visibility:auto;contain-intrinsic-size:800px}
+    .exercise.completed{border-color:var(--primary);box-shadow:0 0 0 2px var(--pale)}
+    .exercise-head{display:grid;grid-template-columns:58px minmax(0,1fr) auto;gap:18px;align-items:center;padding:var(--s6);border-bottom:1px solid var(--line);background:linear-gradient(90deg,var(--pale),var(--paper) 62%)}
+    .exercise-no{display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:var(--primary);color:var(--paper);font-size:13px;font-weight:900}
+    .exercise-head h3{font-size:20px;line-height:1.35;margin:0 0 var(--s1);text-wrap:balance}.exercise-head p{font-size:13px;color:var(--muted);margin:0}
+    .complete-toggle{border:1px solid var(--line);background:var(--paper);color:var(--muted);padding:10px 15px;border-radius:999px;cursor:pointer;font-weight:800;font-size:13px}
+    .complete-toggle:hover{border-color:var(--primary);color:var(--primary)}.complete-toggle.on{background:var(--success);border-color:var(--success);color:var(--paper)}
+    .exercise-body{padding:var(--s6)}.two-col{display:grid;grid-template-columns:1fr 1fr;gap:var(--s5)}
+    .field{display:grid;gap:var(--s2)}.field+.field{margin-top:var(--s4)}label,.label{font-size:13px;font-weight:800;color:var(--ink)}
+    .hint{font-size:12px;color:var(--muted);font-weight:400}
+    input[type="text"],textarea,select{width:100%;border:1px solid var(--line);border-radius:var(--radius-s);background:var(--paper);color:var(--ink);padding:12px 14px;outline:none}
+    input[type="text"]:focus,textarea:focus,select:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--pale)}
+    textarea{min-height:112px;resize:vertical;line-height:1.7}.tall{min-height:240px}
+    .preview{border:1px solid var(--pale-strong);background:var(--pale);border-radius:var(--radius-m);padding:var(--s5);min-height:100%}
+    .preview h4{font-size:17px;margin:0 0 var(--s3)}.preview pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;font-size:13px;line-height:1.75;margin:0;color:var(--ink)}
+    .actions{display:flex;flex-wrap:wrap;gap:var(--s2);margin-top:var(--s4)}
+    .button{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:999px;padding:11px 17px;font-size:13px;font-weight:800;cursor:pointer;text-decoration:none;transition:transform 160ms var(--ease),background 160ms var(--ease),color 160ms var(--ease)}
+    .button:active{transform:scale(.98)}.button.primary{background:var(--primary);color:var(--paper)}.button.primary:hover{background:var(--primary-dark)}
+    .button.secondary{background:var(--paper);color:var(--ink);border:1px solid var(--line)}.button.secondary:hover{border-color:var(--primary);color:var(--primary)}
+    .button.text{background:transparent;color:var(--muted);padding-inline:10px}.button.text:hover{color:var(--primary)}
+    .button:disabled{cursor:not-allowed;opacity:.48;transform:none}.button:disabled:hover{background:var(--paper);border-color:var(--line);color:var(--ink)}
+    .resource-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4)}
+    .resource-card{display:flex;flex-direction:column;align-items:flex-start;gap:var(--s3);min-height:190px;padding:var(--s5);border:1px solid var(--line);border-radius:var(--radius-m);background:var(--paper)}
+    .resource-card strong{font-size:17px;line-height:1.45}.resource-card p{margin:0;color:var(--muted);font-size:13px;flex:1}.resource-card .button{margin-top:auto}
+    .score-guide{display:none;margin:0 0 var(--s2);font-size:12px;font-weight:800;color:var(--primary)}
+    .score-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius-m)}
+    table{width:100%;border-collapse:collapse;min-width:820px}th,td{padding:var(--s3);border-bottom:1px solid var(--line);text-align:left;font-size:13px}
+    th{background:var(--pale);font-size:12px;color:var(--muted)}tr:last-child td{border-bottom:0}td input{min-width:160px}.score-select{min-width:74px}
+    .score-value{font-weight:900;color:var(--primary);text-align:center}.top-result{margin-top:var(--s4);padding:var(--s4);border-left:4px solid var(--primary);background:var(--pale);border-radius:0 var(--radius-s) var(--radius-s) 0;font-size:14px}
+    .choice-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--s3)}.choice{position:relative}.choice input{position:absolute;opacity:0;pointer-events:none}
+    .choice span{display:block;height:100%;padding:var(--s4);border:1px solid var(--line);border-radius:var(--radius-m);cursor:pointer;background:var(--paper);font-size:13px}
+    .choice strong{display:block;font-size:15px;margin-bottom:var(--s1)}.choice input:checked+span{border-color:var(--primary);background:var(--pale);box-shadow:0 0 0 2px var(--pale-strong)}
+    .choice input:focus-visible+span{outline:3px solid var(--pale-strong);outline-offset:3px}
+    .canvas-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4)}.canvas-grid .wide{grid-column:1/-1}.status{font-size:12px;color:var(--success);font-weight:800}
+    .notice{padding:var(--s4);border:1px solid var(--pale-strong);background:var(--pale);border-radius:var(--radius-m);font-size:13px;color:var(--muted);margin-bottom:var(--s5)}.notice strong{color:var(--ink)}
+    .footer{background:var(--night);color:var(--paper);padding:var(--s10) 0}.footer-inner{display:flex;justify-content:space-between;align-items:flex-end;gap:var(--s6)}
+    .footer p{font-size:13px;color:var(--pale);margin:0}.toast{position:fixed;right:var(--s6);bottom:var(--s6);z-index:20;max-width:380px;padding:14px 18px;border-radius:var(--radius-s);background:var(--night);color:var(--paper);font-size:14px;box-shadow:var(--shadow-toast);opacity:0;transform:translateY(14px);pointer-events:none;transition:opacity 220ms var(--ease),transform 220ms var(--ease)}
+    .toast.show{opacity:1;transform:translateY(0)}
+    @media(max-width:980px){.top-links{display:none}.hero-grid{grid-template-columns:1fr}.workspace{grid-template-columns:1fr}.sidebar{position:static}.stage-nav{display:grid;grid-template-columns:repeat(5,1fr);gap:0 var(--s4)}.side-actions{grid-template-columns:1fr 1fr}.choice-grid{grid-template-columns:repeat(3,1fr)}.score-guide{display:block}.score-wrap{background:linear-gradient(90deg,var(--paper) 0,var(--paper) calc(100% - 24px),var(--pale-strong) 100%)}.score-wrap th:first-child,.score-wrap td:first-child{position:sticky;left:0;z-index:2;background:var(--paper);box-shadow:8px 0 12px rgba(36,74,117,.08)}.score-wrap th:first-child{background:var(--pale);z-index:3}}
+    @media(max-width:720px){.shell{width:min(100% - 28px,1440px)}.hero-grid{padding-top:var(--s12)}.hero h1{font-size:34px;letter-spacing:-.015em;word-break:keep-all}.intro h2{font-size:27px;letter-spacing:-.015em;word-break:keep-all}.exercise-head h3{font-size:18px;word-break:keep-all;overflow-wrap:normal}.stage-nav{grid-template-columns:1fr 1fr}.two-col,.canvas-grid,.resource-grid{grid-template-columns:1fr}.canvas-grid .wide{grid-column:auto}.exercise-head{grid-template-columns:48px minmax(0,1fr)}.complete-toggle{grid-column:2;justify-self:start}.choice-grid{grid-template-columns:1fr}.exercise-body{padding:18px}.footer-inner{align-items:flex-start;flex-direction:column}}
+    @media(max-width:430px){.stage-nav{grid-template-columns:1fr}.actions{display:grid}.button{width:100%}.side-actions{grid-template-columns:1fr}.toast{left:14px;right:14px;bottom:14px}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition-duration:.01ms!important}}
+  </style>
+</head>
+<body>
+  <div class="topline"></div>
+  <div class="topnav-wrap"><header class="shell topnav">
+    <a class="brand" href="#top" aria-label="WorkBuddy 从入门到精通，返回课堂练习台顶部"><span class="brand-mark" aria-hidden="true">WB</span><span>WorkBuddy 从入门到精通</span></a>
+    <nav class="top-links" aria-label="页面导航"><a href="#stage1">任务闭环</a><a href="#stage2">办公实战</a><a href="#stage3">能力评分</a><a href="#stage4">Plan</a><a href="#stage5">Skill画布</a><a href="https://www.helloagent.top/lijiagui.html" target="_blank" rel="noopener">李家贵主页</a></nav>
+  </header></div>
+  <main id="top">
+    <section class="hero"><div class="shell hero-grid">
+      <div><div class="eyebrow">CLASSROOM PRACTICE · 2026</div><h1>不只学会工具，<wbr><span>把自己的业务经验<wbr>带走。</span></h1><p class="lead">五个模块，从任务闭环、办公实战一路练到项目化交付和 Skill 设计。所有内容自动保存在当前浏览器，完成后可下载包含完成状态的学习记录。</p></div>
+      <aside class="hero-panel" aria-label="练习进度"><strong id="heroCount">0 / 5</strong><p id="heroText">先完成第1关：把一个模糊需求改写成任务卡。</p><progress id="heroProgress" max="5" value="0">0 / 5</progress></aside>
+    </div></section>
+    <div class="shell workspace">
+      <aside class="sidebar" aria-label="训练导航">
+        <div class="side-label">TRAINING PATH</div><div class="side-title">模块 2—6 实战</div>
+        <p class="side-copy">建议按顺序完成。五项都标记完成后，可下载包含答案与完成状态的学习记录。</p>
+        <ol class="stage-nav">
+          <li><a href="#stage1"><span class="stage-no">M2</span><span>任务闭环</span><span class="stage-done" data-dot="stage1"></span></a></li>
+          <li><a href="#stage2"><span class="stage-no">M3</span><span>办公实战</span><span class="stage-done" data-dot="stage2"></span></a></li>
+          <li><a href="#stage3"><span class="stage-no">M4</span><span>能力评分</span><span class="stage-done" data-dot="stage3"></span></a></li>
+          <li><a href="#stage4"><span class="stage-no">M5</span><span>Plan计划</span><span class="stage-done" data-dot="stage4"></span></a></li>
+          <li><a href="#stage5"><span class="stage-no">M6</span><span>Skill画布</span><span class="stage-done" data-dot="stage5"></span></a></li>
+        </ol>
+        <div class="side-actions"><button class="button secondary" id="downloadRecord" type="button" disabled>完成后下载学习记录</button><button class="button secondary" id="copyAll" type="button">复制全部成果</button><a class="button secondary" href="https://www.helloagent.top/lijiagui.html" target="_blank" rel="noopener">打开李家贵主页</a><button class="button text" id="resetAll" type="button">清空本页内容</button></div>
+      </aside>
+      <div class="content">
+        <section class="intro" aria-labelledby="introTitle"><div class="eyebrow" style="color:var(--primary)">从任务到能力资产</div><h2 id="introTitle">一节课，留下<wbr>五份能继续用的成果</h2><p>任务表达模板、办公实战入口、能力优先级表、复杂任务 Plan 提示词，以及一份业务 Skill 设计画布。没有标准答案，只有你的真实业务和可验证边界。</p></section>
+        <article class="exercise" id="stage1">
+          <header class="exercise-head"><span class="exercise-no">M2</span><div><h3>跑通任务闭环：<wbr>把模糊想法改成可执行任务卡</h3><p>目标 + 输入 + 输出 + 约束 + 验收，五项信息说清楚。</p></div><button class="complete-toggle" data-complete="stage1" type="button">标记完成</button></header>
+          <div class="exercise-body"><div class="two-col">
+            <div>
+              <div class="field"><label for="taskGoal">目标 <span class="hint">这次要解决什么问题？</span></label><textarea id="taskGoal" data-save="taskGoal" placeholder="例如：把本周项目材料整理成经营班子汇报"></textarea></div>
+              <div class="field"><label for="taskInput">输入 <span class="hint">可以使用哪些文件、数据、背景和样例？</span></label><textarea id="taskInput" data-save="taskInput" placeholder="例如：周报、项目进度表、会议纪要、旧版PPT"></textarea></div>
+              <div class="field"><label for="taskOutput">输出 <span class="hint">交付什么文件、结构和数量？</span></label><textarea id="taskOutput" data-save="taskOutput" placeholder="例如：12页PPT、3分钟讲稿、风险清单"></textarea></div>
+              <div class="field"><label for="taskConstraint">约束 <span class="hint">哪些不能猜、不能改、不能外发？</span></label><textarea id="taskConstraint" data-save="taskConstraint" placeholder="例如：数字必须回到原表，旧文件不得覆盖"></textarea></div>
+              <div class="field"><label for="taskAcceptance">验收 <span class="hint">做到什么程度才算完成？</span></label><textarea id="taskAcceptance" data-save="taskAcceptance" placeholder="例如：能打开、内容对、格式对、范围对、可追溯、可交付"></textarea></div>
+            </div>
+            <aside class="preview"><h4>可复制任务卡</h4><pre id="taskPreview"></pre><div class="actions"><button class="button primary" data-copy-target="taskPreview" type="button">复制任务卡</button><a class="button secondary" href="https://www.workbuddy.cn/" target="_blank" rel="noopener">打开WorkBuddy</a></div></aside>
+          </div></div>
+        </article>
+        <article class="exercise" id="stage2">
+          <header class="exercise-head"><span class="exercise-no">M3</span><div><h3>高频办公实战：<wbr>从案例演练进入项目协同</h3><p>本模块不再重复填表，直接进入两个真实练习入口。</p></div><button class="complete-toggle" data-complete="stage2" type="button">标记完成</button></header>
+          <div class="exercise-body"><div class="resource-grid">
+            <article class="resource-card"><strong>3分钟 AI 实战训练</strong><p>进入公开练习页，选择一个任务，按页面提示完成资料处理与成果输出。</p><a class="button primary" href="https://xjtulijiagui-max.github.io/lijiagui/3min/" target="_blank" rel="noopener">打开 3min 练习</a></article>
+            <article class="resource-card"><strong>【WorkBuddy】课程大纲自动化</strong><p>这是项目协同入口。进入共享项目后，在同一项目空间中协作完成课程大纲自动化。</p><a class="button primary" href="https://www.workbuddy.cn/app/projects?projectId=p_9571e91b526544a292655a8c7c1d8aff&amp;wb_invite_copied_at=1788072007056" target="_blank" rel="noopener">进入 WorkBuddy 项目协同</a></article>
+          </div></div>
+        </article>
+        <article class="exercise" id="stage3">
+          <header class="exercise-head"><span class="exercise-no">M4</span><div><h3>进阶能力地图：<wbr>给高频任务排出优先级</h3><p>保留原评分表，再进入银行业务练习检验判断。</p></div><button class="complete-toggle" data-complete="stage3" type="button">标记完成</button></header>
+          <div class="exercise-body"><div class="notice"><strong>评分方法：</strong>每项 1—5 分，相对优先级 = 高频 × 标准清晰 × 材料完整 × 风险可控。涉及承诺、审批、资金、合规和人员决策的任务，即使高分也必须保留人工确认。</div><p class="score-guide" id="scoreGuide">左右滑动查看四项评分；任务名称会固定在左侧。</p><div class="score-wrap" aria-describedby="scoreGuide"><table><thead><tr><th>重复任务</th><th>高频</th><th>标准</th><th>材料</th><th>风险可控</th><th>相对分</th></tr></thead><tbody id="scoreBody"></tbody></table></div><div class="top-result" id="topResult">先填写五项任务并评分，系统会在这里给出 TOP1。</div><div class="actions"><a class="button primary" href="https://xjtulijiagui-max.github.io/lijiagui/bankpractice/" target="_blank" rel="noopener">打开银行业务实战练习</a></div></div>
+        </article>
+        <article class="exercise" id="stage4">
+          <header class="exercise-head"><span class="exercise-no">M5</span><div><h3>复杂任务与项目化交付：<wbr>先让 WorkBuddy 给出 Plan</h3><p>计划先暴露依赖、改动、人工确认点和回退方式。</p></div><button class="complete-toggle" data-complete="stage4" type="button">标记完成</button></header>
+          <div class="exercise-body"><div class="two-col"><div class="field"><label for="complexTask">复杂任务</label><textarea class="tall" id="complexTask" data-save="complexTask" placeholder="写下一个材料多、步骤多、需要多人协同或可能修改文件的任务"></textarea></div><aside class="preview"><h4>Plan 提示词</h4><pre id="planPreview"></pre><div class="actions"><button class="button primary" data-copy-target="planPreview" type="button">复制Plan提示词</button></div></aside></div></div>
+        </article>
+        <article class="exercise" id="stage5">
+          <header class="exercise-head"><span class="exercise-no">M6</span><div><h3>IPO → SOP → Skill：<wbr>生成自己的 Skill 设计画布</h3><p>把前四项结果放进 IPO、SOP、边界和测试结构中。</p></div><button class="complete-toggle" data-complete="stage5" type="button">标记完成</button></header>
+          <div class="exercise-body">
+            <div class="notice"><strong>完成条件：</strong>至少写清场景、输入、处理、输出、风险边界和三类测试。未知信息可以写“待确认”，不要用想象补齐。</div>
+            <div class="canvas-grid">
+              <div class="field wide"><label for="canvasScene">场景定位 <span class="hint">为谁、解决什么、适用与不适用范围</span></label><textarea id="canvasScene" data-save="canvasScene"></textarea></div>
+              <div class="field"><label for="canvasInput">Input <span class="hint">文件、数据、规则、权限、样例</span></label><textarea id="canvasInput" data-save="canvasInput"></textarea></div>
+              <div class="field"><label for="canvasOutput">Output <span class="hint">交付物、字段、格式、质量、验收</span></label><textarea id="canvasOutput" data-save="canvasOutput"></textarea></div>
+              <div class="field wide"><label for="canvasProcess">Process / SOP <span class="hint">每一步的输入、动作、输出、确认点、异常与回退</span></label><textarea class="tall" id="canvasProcess" data-save="canvasProcess"></textarea></div>
+              <div class="field"><label for="canvasBoundary">风险边界与人工确认</label><textarea id="canvasBoundary" data-save="canvasBoundary"></textarea></div>
+              <div class="field"><label for="canvasTests">测试与迭代 <span class="hint">正常、信息不足、风险边界</span></label><textarea id="canvasTests" data-save="canvasTests"></textarea></div>
+            </div>
+            <div class="actions"><button class="button primary" id="copyCanvas" type="button">复制Skill画布</button><button class="button secondary" id="downloadCanvas" type="button">下载Markdown</button><a class="button secondary" href="https://workbuddy.link/p/T2osvhkWn72SY42intPSs7?ext2=copy_link" target="_blank" rel="noopener">【WorkBuddy】案例：IPO</a><span class="status" id="saveStatus">内容会自动保存到当前浏览器</span></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </main>
+  <footer class="footer"><div class="shell footer-inner"><div class="brand"><span class="brand-mark" aria-hidden="true">WB</span><span>WorkBuddy 从入门到精通｜课堂练习台</span></div><p>课程设计：李家贵｜本页不上传业务数据，内容仅保存在当前浏览器。</p></div></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script>
+    const STORAGE_KEY="workbuddy-mastery-class-v1";
+    const stages=["stage1","stage2","stage3","stage4","stage5"];
+    const planLines=["请先不要执行。围绕【复杂任务】输出一份可审阅的执行计划：","","1. 目标、使用对象、最终交付物；","2. 已有输入、仍缺资料、外部依赖；","3. 分步骤列出每一步的输入、动作、输出；","4. 将创建、修改、移动或覆盖哪些文件；","5. 哪些节点必须由我确认；","6. 每一步和最终成果的验收标准；","7. 主要风险、回退方式和停止条件。","","信息不足时标“待确认”，不要自行补造。等我确认计划后再执行。"];
+    let state={values:{},scores:{},completed:[]};
+    try{state=Object.assign(state,JSON.parse(localStorage.getItem(STORAGE_KEY)||"{}"))}catch(error){state={values:{},scores:{},completed:[]}}
+    const toast=document.querySelector("#toast");
+    function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state));document.querySelector("#saveStatus").textContent="已自动保存"}
+    function showToast(message){toast.textContent=message;toast.classList.add("show");clearTimeout(window.masteryToast);window.masteryToast=setTimeout(function(){toast.classList.remove("show")},2200)}
+    async function copyText(text){try{await navigator.clipboard.writeText(text);return true}catch(error){const helper=document.createElement("textarea");helper.value=text;helper.style.position="fixed";helper.style.opacity="0";document.body.appendChild(helper);helper.select();const ok=document.execCommand("copy");helper.remove();return ok}}
+    function value(id){const node=document.querySelector("#"+id);return node?node.value.trim():""}
+    function taskText(){return ["我要完成的目标是："+(value("taskGoal")||"{业务目标}"),"","可使用的输入："+(value("taskInput")||"{文件、数据、背景、样例}"),"最终要交付："+(value("taskOutput")||"{文件类型、结构、格式、数量}"),"必须遵守："+(value("taskConstraint")||"{事实边界、权限边界、不能覆盖或不能发送的内容}"),"验收标准："+(value("taskAcceptance")||"{能打开、内容对、格式对、范围对、可追溯、可交付}"),"","请先检查信息是否足够；不足时只列缺口和待确认问题。信息足够后，先给出执行计划，我确认后再开始。"].join("\n")}
+    function updateTask(){document.querySelector("#taskPreview").textContent=taskText()}
+    function makeScoreSelect(row,key,current,label){const select=document.createElement("select");select.className="score-select";select.dataset.score=row;select.dataset.key=key;select.setAttribute("aria-label",label);[1,2,3,4,5].forEach(function(n){const option=document.createElement("option");option.value=n;option.textContent=n;option.selected=Number(current)===n;select.appendChild(option)});return select}
+    function buildScoreRows(){
+      const body=document.querySelector("#scoreBody");body.innerHTML="";
+      for(let row=1;row<=5;row+=1){
+        const s=state.scores[row]||{name:"",freq:1,standard:1,material:1,risk:1},tr=document.createElement("tr"),nameCell=document.createElement("td"),input=document.createElement("input");
+        input.type="text";input.dataset.score=row;input.dataset.key="name";input.setAttribute("aria-label","第"+row+"项重复任务");input.value=s.name;input.placeholder="任务"+row;nameCell.appendChild(input);tr.appendChild(nameCell);
+        [["freq","高频"],["standard","标准"],["material","材料"],["risk","风险可控"]].forEach(function(pair){const td=document.createElement("td");td.appendChild(makeScoreSelect(row,pair[0],s[pair[0]],"任务"+row+pair[1]+"评分"));tr.appendChild(td)});
+        const total=document.createElement("td");total.className="score-value";total.dataset.total=row;tr.appendChild(total);body.appendChild(tr)
+      }
+      document.querySelectorAll("[data-score]").forEach(function(control){control.addEventListener("input",function(){const row=control.dataset.score,key=control.dataset.key;state.scores[row]=state.scores[row]||{name:"",freq:1,standard:1,material:1,risk:1};state.scores[row][key]=key==="name"?control.value:Number(control.value);save();updateScores()})})
+    }
+    function updateScores(){
+      const records=[];
+      for(let row=1;row<=5;row+=1){const s=state.scores[row]||{name:"",freq:1,standard:1,material:1,risk:1},total=Number(s.freq)*Number(s.standard)*Number(s.material)*Number(s.risk);document.querySelector("[data-total='"+row+"']").textContent=total;records.push({name:(s.name||"").trim(),total:total})}
+      const named=records.filter(function(item){return item.name}).sort(function(a,b){return b.total-a.total}),best=named[0],box=document.querySelector("#topResult");
+      if(!best){box.textContent="先填写五项任务并评分，系统会在这里给出 TOP1。";return}
+      box.textContent="当前 TOP1："+best.name+"，相对分 "+best.total+"。请回到业务材料核对评分证据，再进入模块5。";
+      state.values.lastTop=best.name
+    }
+    function scoreText(){const lines=[];for(let row=1;row<=5;row+=1){const s=state.scores[row]||{name:"",freq:1,standard:1,material:1,risk:1},total=Number(s.freq)*Number(s.standard)*Number(s.material)*Number(s.risk);lines.push((s.name||"任务"+row)+"｜高频 "+s.freq+"｜标准 "+s.standard+"｜材料 "+s.material+"｜风险可控 "+s.risk+"｜相对分 "+total)}return lines.join("\n")}
+    function planText(){return planLines.join("\n").replace("【复杂任务】","【"+(value("complexTask")||"复杂任务")+"】")}
+    function updatePlan(){document.querySelector("#planPreview").textContent=planText()}
+    function canvasText(){return ["# WorkBuddy Skill 设计画布","","## 1. 场景定位",value("canvasScene")||("场景："+(state.values.lastTop||"{TOP1场景}")+"\n服务对象：待确认\n适用范围：待确认\n不适用范围：待确认"),"","## 2. Input",value("canvasInput")||"待填写：文件、数据、规则、权限、样例与缺失处理。","","## 3. Process / SOP",value("canvasProcess")||"待填写：每一步的输入、动作、输出、人工确认点、异常与回退。","","## 4. Output",value("canvasOutput")||"待填写：交付物、字段、格式、事实来源、质量与验收。","","## 5. 风险边界与人工确认",value("canvasBoundary")||"待填写：外发、审批、资金、合规、人员与不可逆操作。","","## 6. 测试与迭代",value("canvasTests")||"正常任务：待设计\n信息不足：待设计\n风险边界：待设计\n问题记录与下一版修改：待填写","","## 7. 参考案例","3min练习：https://xjtulijiagui-max.github.io/lijiagui/3min/","课程大纲项目协同：https://www.workbuddy.cn/app/projects?projectId=p_9571e91b526544a292655a8c7c1d8aff&wb_invite_copied_at=1788072007056","银行业务练习：https://xjtulijiagui-max.github.io/lijiagui/bankpractice/","IPO案例：https://workbuddy.link/p/T2osvhkWn72SY42intPSs7?ext2=copy_link"].join("\n")}
+    function learningRecordText(){const labels=["模块2 任务闭环","模块3 办公实战","模块4 能力评分","模块5 Plan计划","模块6 Skill画布"],status=stages.map(function(id,index){return "- "+labels[index]+"："+(state.completed.includes(id)?"已完成":"未完成")});return ["# WorkBuddy 从入门到精通｜学习记录","","导出时间："+new Date().toLocaleString("zh-CN",{hour12:false}),"课程网页：https://xjtulijiagui-max.github.io/lijiagui/y-practice/","","## 完成状态"].concat(status,["","## 模块2｜任务卡",taskText(),"","## 模块3｜办公实战入口","- 3min练习：https://xjtulijiagui-max.github.io/lijiagui/3min/","- 课程大纲项目协同：https://www.workbuddy.cn/app/projects?projectId=p_9571e91b526544a292655a8c7c1d8aff&wb_invite_copied_at=1788072007056","","## 模块4｜能力优先级",scoreText(),"","TOP1："+(state.values.lastTop||"待完成"),"","## 模块5｜Plan",planText(),"","## 模块6｜Skill设计画布",canvasText()]).join("\n")}
+    function downloadText(filename,text){const blob=new Blob([text],{type:"text/markdown;charset=utf-8"}),url=URL.createObjectURL(blob),link=document.createElement("a");link.href=url;link.download=filename;document.body.appendChild(link);link.click();link.remove();URL.revokeObjectURL(url)}
+    function updateProgress(){const count=state.completed.filter(function(id){return stages.includes(id)}).length,recordButton=document.querySelector("#downloadRecord");document.querySelector("#heroCount").textContent=count+" / 5";document.querySelector("#heroProgress").value=count;document.querySelector("#heroText").textContent=count===5?"五项已完成，可以下载包含完成状态的学习记录。":"下一步：完成第"+(count+1)+"项。";recordButton.disabled=count!==5;recordButton.textContent=count===5?"下载完整学习记录":"完成后下载学习记录";stages.forEach(function(id){const done=state.completed.includes(id),article=document.querySelector("#"+id),button=document.querySelector("[data-complete='"+id+"']");document.querySelector("[data-dot='"+id+"']").classList.toggle("on",done);article.classList.toggle("completed",done);button.classList.toggle("on",done);button.textContent=done?"已完成":"标记完成"})}
+    document.querySelectorAll("[data-save]").forEach(function(field){if(state.values[field.dataset.save]!==undefined)field.value=state.values[field.dataset.save];field.addEventListener("input",function(){state.values[field.dataset.save]=field.value;save();updateTask();updatePlan()})});
+    buildScoreRows();
+    document.querySelectorAll("[data-complete]").forEach(function(button){button.addEventListener("click",function(){const id=button.dataset.complete;state.completed=state.completed.includes(id)?state.completed.filter(function(item){return item!==id}):state.completed.concat(id);save();updateProgress();showToast(state.completed.includes(id)?"本关已完成。":"已取消完成状态。")})});
+    document.querySelectorAll("[data-copy-target]").forEach(function(button){button.addEventListener("click",async function(){const text=document.querySelector("#"+button.dataset.copyTarget).textContent;showToast(await copyText(text)?"已复制，可以粘贴到WorkBuddy。":"复制未成功，请手动选择文本。")})});
+    document.querySelector("#copyCanvas").addEventListener("click",async function(){showToast(await copyText(canvasText())?"Skill画布已复制。":"复制未成功，请手动选择文本。")});
+    document.querySelector("#downloadCanvas").addEventListener("click",function(){downloadText("WorkBuddy_Skill设计画布.md",canvasText());showToast("Skill 画布已下载。")});
+    document.querySelector("#downloadRecord").addEventListener("click",function(){if(state.completed.filter(function(id){return stages.includes(id)}).length!==5)return;downloadText("WorkBuddy_课堂学习记录_含完成状态.md",learningRecordText());showToast("完整学习记录已下载。")});
+    document.querySelector("#copyAll").addEventListener("click",async function(){showToast(await copyText(learningRecordText())?"全部成果与完成状态已复制。":"复制未成功，请逐项复制。")});
+    document.querySelector("#resetAll").addEventListener("click",function(){if(!window.confirm("确认清空本页在当前浏览器中保存的所有练习内容？"))return;localStorage.removeItem(STORAGE_KEY);location.reload()});
+    updateTask();updateScores();updatePlan();updateProgress();
+  </script>
+</body>
+</html>
