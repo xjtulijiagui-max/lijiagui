@@ -1,0 +1,1742 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="从 AI 场景机会卡出发，依次完成 IPO 需求定义、SOP 沉淀、Skill 生成与多轮刷新。">
+  <meta name="theme-color" content="#061b46">
+  <link rel="icon" href="data:,">
+  <link rel="canonical" href="https://xjtulijiagui-max.github.io/lijiagui/ipo/">
+  <meta property="og:title" content="从场景到 Skill｜IPO 工作流">
+  <meta property="og:description" content="四步完成场景转 IPO、IPO 转 SOP、SOP 转 Skill 与多轮刷新。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://xjtulijiagui-max.github.io/lijiagui/ipo/">
+  <title>从场景到 Skill｜IPO 工作流</title>
+  <style>
+    :root {
+      --surface-page: #f5f8fd;
+      --surface-primary: #ffffff;
+      --surface-secondary: #eef5ff;
+      --surface-muted: #f4f4f4;
+      --surface-dark: #061b46;
+      --surface-dark-hover: #0a2d68;
+      --text-primary: #15223a;
+      --text-secondary: #5f6f89;
+      --text-on-dark: #ffffff;
+      --text-on-dark-muted: #cddcff;
+      --text-on-dark-soft: #d4e2ff;
+      --text-on-dark-accent: #a9c7ff;
+      --text-info: #173762;
+      --text-warning: #5e3900;
+      --border-default: #d8e4f7;
+      --border-strong: #b8c9e4;
+      --border-on-dark: #6d89bd;
+      --border-on-dark-subtle: rgba(255, 255, 255, 0.16);
+      --accent-primary: #0f62fe;
+      --accent-hover: #0043ce;
+      --accent-soft: #d9e8ff;
+      --status-success: #16854b;
+      --status-warning: #a15c00;
+      --surface-warning: #fff6e5;
+      --surface-nav-translucent: rgba(255, 255, 255, 0.96);
+      --code-bg: #07152e;
+      --code-text: #e7efff;
+      --shadow-toast: 0 8px 24px rgba(6, 27, 70, 0.24);
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-12: 48px;
+      --space-16: 64px;
+      --space-20: 80px;
+      --content-max: 1184px;
+      --reading-max: 840px;
+      --font-sans: "Microsoft YaHei", "PingFang SC", "Noto Sans SC", Arial, sans-serif;
+      --font-mono: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 124px;
+    }
+
+    body {
+      margin: 0;
+      color: var(--text-primary);
+      background: var(--surface-page);
+      font-family: var(--font-sans);
+      line-height: 1.75;
+    }
+
+    body,
+    button {
+      font-size: 16px;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+    }
+
+    a:focus-visible,
+    button:focus-visible,
+    summary:focus-visible {
+      outline: 3px solid var(--accent-primary);
+      outline-offset: 3px;
+    }
+
+    .container {
+      width: min(calc(100% - 48px), var(--content-max));
+      margin: 0 auto;
+    }
+
+    .masthead {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      min-height: 48px;
+      color: var(--text-on-dark);
+      background: var(--surface-dark);
+      border-bottom: 1px solid var(--border-on-dark-subtle);
+    }
+
+    .masthead-inner {
+      display: flex;
+      min-height: 48px;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+    }
+
+    .brand,
+    .back-link {
+      display: inline-flex;
+      min-height: 44px;
+      align-items: center;
+    }
+
+    .brand {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.16px;
+    }
+
+    .back-link {
+      color: var(--text-on-dark-muted);
+      font-size: 14px;
+      transition: color 160ms ease, background 160ms ease;
+    }
+
+    .back-link:hover {
+      color: var(--text-on-dark);
+      background: var(--surface-dark-hover);
+    }
+
+    .hero {
+      color: var(--text-on-dark);
+      background: var(--surface-dark);
+      padding: var(--space-16) 0 var(--space-20);
+    }
+
+    .hero-content {
+      max-width: 960px;
+    }
+
+    .hero-kicker {
+      margin: 0 0 var(--space-4);
+      color: var(--text-on-dark-accent);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      max-width: 920px;
+      margin: 0;
+      font-size: clamp(36px, 6vw, 64px);
+      font-weight: 600;
+      letter-spacing: 0;
+      line-height: 1.08;
+    }
+
+    .hero h1 span {
+      display: block;
+    }
+
+    .hero-lead {
+      max-width: 760px;
+      margin: var(--space-6) 0 0;
+      color: var(--text-on-dark-soft);
+      font-size: 18px;
+      line-height: 1.75;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      margin-top: var(--space-8);
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 48px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      padding: 11px 20px;
+      font-weight: 600;
+      line-height: 1.4;
+      cursor: pointer;
+      transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .button-primary {
+      color: var(--text-on-dark);
+      background: var(--accent-primary);
+    }
+
+    .button-primary:hover {
+      background: var(--accent-hover);
+    }
+
+    .button-secondary {
+      color: var(--text-on-dark);
+      background: transparent;
+      border-color: var(--border-on-dark);
+    }
+
+    .button-secondary:hover {
+      background: var(--surface-dark-hover);
+      border-color: var(--text-on-dark-accent);
+    }
+
+    .workflow-nav {
+      position: sticky;
+      top: 48px;
+      z-index: 40;
+      background: var(--surface-nav-translucent);
+      border-bottom: 1px solid var(--border-default);
+      backdrop-filter: blur(12px);
+    }
+
+    .workflow-track {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(176px, 1fr));
+      overflow-x: auto;
+      scrollbar-width: thin;
+    }
+
+    .workflow-link {
+      display: grid;
+      min-height: 72px;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      border-right: 1px solid var(--border-default);
+      color: var(--text-secondary);
+      transition: background 180ms ease, color 180ms ease;
+    }
+
+    .workflow-link:first-child {
+      border-left: 1px solid var(--border-default);
+    }
+
+    .workflow-link:hover,
+    .workflow-link.is-active {
+      color: var(--text-primary);
+      background: var(--surface-secondary);
+    }
+
+    .workflow-link.is-active {
+      box-shadow: inset 0 -3px 0 var(--accent-primary);
+    }
+
+    .workflow-number {
+      color: var(--accent-primary);
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .workflow-text strong,
+    .workflow-text span {
+      display: block;
+    }
+
+    .workflow-text strong {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .workflow-text span {
+      margin-top: 2px;
+      font-size: 12px;
+    }
+
+    main {
+      padding: var(--space-16) 0 var(--space-20);
+    }
+
+    .intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.8fr);
+      gap: var(--space-8);
+      margin-bottom: var(--space-16);
+    }
+
+    .intro-copy {
+      max-width: var(--reading-max);
+    }
+
+    .section-label {
+      margin: 0 0 var(--space-3);
+      color: var(--accent-primary);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+    }
+
+    .intro h2,
+    .cases h2 {
+      margin: 0;
+      font-size: 32px;
+      font-weight: 600;
+      line-height: 1.25;
+    }
+
+    .intro p {
+      margin: var(--space-4) 0 0;
+      color: var(--text-secondary);
+      font-size: 18px;
+    }
+
+    .principles {
+      margin: 0;
+      padding: var(--space-6);
+      background: var(--surface-secondary);
+      border-left: 4px solid var(--accent-primary);
+    }
+
+    .principles dt {
+      font-weight: 600;
+    }
+
+    .principles dd {
+      margin: var(--space-1) 0 var(--space-4);
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .principles dd:last-child {
+      margin-bottom: 0;
+    }
+
+    .step-section {
+      position: relative;
+      margin-top: var(--space-12);
+      padding: var(--space-8) 0 var(--space-12);
+      border-top: 1px solid var(--border-default);
+      scroll-margin-top: 124px;
+    }
+
+    .step-heading {
+      display: grid;
+      grid-template-columns: 64px minmax(0, 1fr);
+      gap: var(--space-6);
+      align-items: start;
+      max-width: 960px;
+    }
+
+    .step-badge {
+      display: grid;
+      width: 64px;
+      height: 64px;
+      place-items: center;
+      color: var(--text-on-dark);
+      background: var(--accent-primary);
+      font-family: var(--font-mono);
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .step-title h2 {
+      margin: 0;
+      font-size: 32px;
+      font-weight: 600;
+      line-height: 1.25;
+    }
+
+    .step-title p {
+      max-width: 760px;
+      margin: var(--space-3) 0 0;
+      color: var(--text-secondary);
+      font-size: 16px;
+    }
+
+    .step-body {
+      margin-top: var(--space-8);
+      margin-left: 88px;
+      max-width: 960px;
+    }
+
+    .callout {
+      margin-bottom: var(--space-6);
+      padding: var(--space-4) var(--space-6);
+      color: var(--text-info);
+      background: var(--surface-secondary);
+      border-left: 4px solid var(--accent-primary);
+    }
+
+    .callout strong {
+      display: block;
+      margin-bottom: var(--space-1);
+    }
+
+    .callout p {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .callout-warning {
+      color: var(--text-warning);
+      background: var(--surface-warning);
+      border-left-color: var(--status-warning);
+    }
+
+    .callout-spaced {
+      margin-top: var(--space-6);
+    }
+
+    .prompt-panel {
+      overflow: hidden;
+      background: var(--surface-primary);
+      border: 1px solid var(--border-strong);
+    }
+
+    .prompt-toolbar {
+      display: flex;
+      min-height: 64px;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      padding: var(--space-2) var(--space-4) var(--space-2) var(--space-6);
+      background: var(--surface-muted);
+      border-bottom: 1px solid var(--border-strong);
+    }
+
+    .prompt-meta strong,
+    .prompt-meta span {
+      display: block;
+    }
+
+    .prompt-meta strong {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .prompt-meta span {
+      color: var(--text-secondary);
+      font-size: 12px;
+    }
+
+    .copy-button {
+      min-width: 112px;
+      color: var(--text-on-dark);
+      background: var(--accent-primary);
+    }
+
+    .copy-button:hover {
+      background: var(--accent-hover);
+    }
+
+    .copy-button.is-copied {
+      background: var(--status-success);
+    }
+
+    .prompt-details {
+      background: var(--surface-primary);
+    }
+
+    .prompt-details summary {
+      display: flex;
+      min-height: 52px;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      padding: var(--space-3) var(--space-6);
+      color: var(--accent-hover);
+      background: var(--surface-primary);
+      font-weight: 600;
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .prompt-details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .prompt-details summary::after {
+      content: "展开";
+      color: var(--text-secondary);
+      font-size: 12px;
+      font-weight: 400;
+    }
+
+    .prompt-details[open] summary::after {
+      content: "收起";
+    }
+
+    .prompt-code {
+      overflow: auto;
+      max-height: 640px;
+      margin: 0;
+      padding: var(--space-6);
+      color: var(--code-text);
+      background: var(--code-bg);
+      font-family: var(--font-mono);
+      font-size: 14px;
+      line-height: 1.75;
+      tab-size: 2;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .compact .prompt-code {
+      max-height: none;
+    }
+
+    .tips {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      margin-top: var(--space-6);
+      background: var(--border-default);
+      border: 1px solid var(--border-default);
+    }
+
+    .tip {
+      min-height: 148px;
+      padding: var(--space-6);
+      background: var(--surface-primary);
+    }
+
+    .tip strong {
+      display: block;
+      margin-bottom: var(--space-2);
+      font-size: 16px;
+    }
+
+    .tip p {
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .cases {
+      margin-top: var(--space-16);
+      padding-top: var(--space-12);
+      border-top: 1px solid var(--border-default);
+    }
+
+    .case-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-4);
+      margin-top: var(--space-8);
+    }
+
+    .case-link {
+      display: flex;
+      min-height: 160px;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: var(--space-6);
+      background: var(--surface-primary);
+      border: 1px solid var(--border-default);
+      transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+    }
+
+    .case-link:hover {
+      background: var(--surface-secondary);
+      border-color: var(--accent-primary);
+      transform: translateY(-2px);
+    }
+
+    .case-source {
+      color: var(--accent-primary);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+    }
+
+    .case-link h3 {
+      margin: var(--space-3) 0;
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .case-action {
+      color: var(--accent-hover);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .finish {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--space-8);
+      align-items: center;
+      margin-top: var(--space-16);
+      padding: var(--space-8);
+      color: var(--text-on-dark);
+      background: var(--surface-dark);
+    }
+
+    .finish h2 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .finish p {
+      max-width: 720px;
+      margin: var(--space-2) 0 0;
+      color: var(--text-on-dark-muted);
+      font-size: 14px;
+    }
+
+    footer {
+      padding: var(--space-8) 0 var(--space-12);
+      color: var(--text-secondary);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .toast {
+      position: fixed;
+      right: var(--space-6);
+      bottom: var(--space-6);
+      z-index: 100;
+      max-width: min(360px, calc(100vw - 32px));
+      padding: var(--space-3) var(--space-4);
+      color: var(--text-on-dark);
+      background: var(--surface-dark);
+      box-shadow: var(--shadow-toast);
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    .toast.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 900px) {
+      .intro {
+        grid-template-columns: 1fr;
+      }
+
+      .tips {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .container {
+        width: min(calc(100% - 32px), var(--content-max));
+      }
+
+      .hero {
+        padding: var(--space-12) 0 var(--space-16);
+      }
+
+      .hero h1 {
+        font-size: clamp(36px, 10.7vw, 42px);
+      }
+
+      .hero-lead {
+        font-size: 16px;
+      }
+
+      .workflow-link {
+        min-width: 208px;
+      }
+
+      main {
+        padding-top: var(--space-12);
+      }
+
+      .step-heading {
+        grid-template-columns: 48px minmax(0, 1fr);
+        gap: var(--space-4);
+      }
+
+      .step-badge {
+        width: 48px;
+        height: 48px;
+        font-size: 16px;
+      }
+
+      .step-title h2 {
+        font-size: 26px;
+      }
+
+      .step-body {
+        margin-left: 0;
+      }
+
+      .prompt-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+        padding: var(--space-4);
+      }
+
+      .copy-button {
+        width: 100%;
+      }
+
+      .prompt-details summary,
+      .prompt-code {
+        padding-right: var(--space-4);
+        padding-left: var(--space-4);
+      }
+
+      .case-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .finish {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .masthead-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 0;
+        padding: var(--space-1) 0;
+      }
+
+      .brand,
+      .back-link {
+        min-height: 40px;
+      }
+
+      .workflow-nav {
+        top: 88px;
+      }
+
+      html {
+        scroll-padding-top: 164px;
+      }
+
+      .hero-actions .button {
+        width: 100%;
+      }
+
+      .intro h2 {
+        font-size: 28px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="masthead">
+    <div class="container masthead-inner">
+      <a class="brand" href="#top">IPO TO SKILL · 实战工作流</a>
+      <a class="back-link" href="../list/">返回 AI 实战训练导航</a>
+    </div>
+  </header>
+
+  <section class="hero" id="top" aria-labelledby="page-title">
+    <div class="container hero-content">
+      <p class="hero-kicker">SCENE · IPO · SOP · SKILL</p>
+      <h1 id="page-title"><span>从机会场景开始，</span><span>把需求一步步做成能用的 Skill</span></h1>
+      <p class="hero-lead">这套四步工作流不是把原文换几个标题。它先收敛场景、补齐输入和规则，再把过程沉淀成 SOP，最后生成并持续刷新 Skill。</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="#step-1">从 Step 1 开始</a>
+        <a class="button button-secondary" href="#cases">查看参考案例</a>
+      </div>
+    </div>
+  </section>
+
+  <nav class="workflow-nav" aria-label="四步工作流">
+    <div class="container workflow-track">
+      <a class="workflow-link is-active" href="#step-1" data-step-link="step-1">
+        <span class="workflow-number">01</span>
+        <span class="workflow-text"><strong>场景转 IPO</strong><span>把机会卡变成可测试需求</span></span>
+      </a>
+      <a class="workflow-link" href="#step-2" data-step-link="step-2">
+        <span class="workflow-number">02</span>
+        <span class="workflow-text"><strong>IPO 转 SOP</strong><span>把全过程沉淀下来</span></span>
+      </a>
+      <a class="workflow-link" href="#step-3" data-step-link="step-3">
+        <span class="workflow-number">03</span>
+        <span class="workflow-text"><strong>SOP 转 Skill</strong><span>生成可复用能力包</span></span>
+      </a>
+      <a class="workflow-link" href="#step-4" data-step-link="step-4">
+        <span class="workflow-number">04</span>
+        <span class="workflow-text"><strong>多轮刷新</strong><span>根据新信息持续优化</span></span>
+      </a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section class="intro" aria-labelledby="intro-title">
+      <div class="intro-copy">
+        <p class="section-label">使用说明</p>
+        <h2 id="intro-title">四次对话，形成一条可复用链路</h2>
+        <p>先准备第一次课的场景机会卡和 IPO Word 模板。每完成一步，把当轮结果留在同一段对话里，再复制下一步提示词继续。若关键业务规则缺失，先列 GAP，不要替业务人员编答案。</p>
+      </div>
+      <dl class="principles">
+        <dt>先收敛</dt>
+        <dd>一个核心用户、一个业务任务、一条主流程、一个核心输出。</dd>
+        <dt>不编造</dt>
+        <dd>制度、规则、字段、阈值没有依据时，一律标记待补充。</dd>
+        <dt>能测试</dt>
+        <dd>输入拿得到，过程跑得动，输出验得收，才进入 Skill。</dd>
+      </dl>
+    </section>
+
+    <section class="step-section" id="step-1" data-step-section>
+      <div class="step-heading">
+        <div class="step-badge">01</div>
+        <div class="step-title">
+          <h2>场景转 IPO</h2>
+          <p>把第一次课发现的 AI 机会场景，转换为可继续用于智能体设计、Skill 开发和测试的 IPO 需求定义。</p>
+        </div>
+      </div>
+      <div class="step-body">
+        <div class="callout callout-warning">
+          <strong>执行前要有两份材料</strong>
+          <p>第一次课的《HR AI 场景机会卡 / 作业》与《AI 智能体场景 IPO 需求定义书》Word 模板。缺少模板时，不要声称已经按模板交付。</p>
+        </div>
+        <article class="prompt-panel">
+          <div class="prompt-toolbar">
+            <div class="prompt-meta">
+              <strong>HR AI 场景机会卡转 IPO 提示词 V2</strong>
+              <span>完整版本，复制后补上场景作业与 Word 模板</span>
+            </div>
+            <button class="button copy-button" type="button" data-copy-source="prompt-1">复制提示词</button>
+          </div>
+          <details class="prompt-details">
+            <summary>查看完整提示词</summary>
+            <pre class="prompt-code" data-prompt-view="prompt-1"></pre>
+          </details>
+        </article>
+        <div class="tips">
+          <div class="tip">
+            <strong>交付不是一份</strong>
+            <p>同时生成 IPO 需求定义书与 IPO 缺口清单，两个文件中的 GAP 编号必须一一对应。</p>
+          </div>
+          <div class="tip">
+            <strong>高影响决策要留边界</strong>
+            <p>招聘、绩效、晋升、薪酬等场景，AI 只给分析、证据、建议和初稿，最终决策仍由人负责。</p>
+          </div>
+          <div class="tip">
+            <strong>先做课堂 MVP</strong>
+            <p>场景过大时，先定义一次课堂内能完成测试的最小场景，其余目标进入暂不做范围。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="step-section" id="step-2" data-step-section>
+      <div class="step-heading">
+        <div class="step-badge">02</div>
+        <div class="step-title">
+          <h2>IPO 转 SOP</h2>
+          <p>让 AI 复盘刚才任务的全过程，用 Input、Process、Output 三段写成以后还能再次执行的 SOP。</p>
+        </div>
+      </div>
+      <div class="step-body">
+        <div class="callout">
+          <strong>这里保留你提供的持仓分析案例</strong>
+          <p>实际换成 HR、销售或运营场景时，只替换数据源、处理动作与交付物，IPO 三段结构保持不变。</p>
+        </div>
+        <article class="prompt-panel compact">
+          <div class="prompt-toolbar">
+            <div class="prompt-meta">
+              <strong>IPO 转 SOP 提示词</strong>
+              <span>基于同一段对话里的实际执行过程生成</span>
+            </div>
+            <button class="button copy-button" type="button" data-copy-source="prompt-2">复制提示词</button>
+          </div>
+          <details class="prompt-details" open>
+            <summary>查看提示词</summary>
+            <pre class="prompt-code" data-prompt-view="prompt-2"></pre>
+          </details>
+        </article>
+      </div>
+    </section>
+
+    <section class="step-section" id="step-3" data-step-section>
+      <div class="step-heading">
+        <div class="step-badge">03</div>
+        <div class="step-title">
+          <h2>SOP 转 Skill</h2>
+          <p>当 SOP 已经能复现任务，就把它转成 Skill。此时重点不再是描述一次任务，而是定义以后每次如何触发、输入、处理、校验和交付。</p>
+        </div>
+      </div>
+      <div class="step-body">
+        <article class="prompt-panel compact">
+          <div class="prompt-toolbar">
+            <div class="prompt-meta">
+              <strong>SOP 转 Skill 提示词</strong>
+              <span>先用简洁指令生成首版，再根据测试结果补约束</span>
+            </div>
+            <button class="button copy-button" type="button" data-copy-source="prompt-3">复制提示词</button>
+          </div>
+          <details class="prompt-details" open>
+            <summary>查看提示词</summary>
+            <pre class="prompt-code" data-prompt-view="prompt-3"></pre>
+          </details>
+        </article>
+        <div class="tips">
+          <div class="tip">
+            <strong>触发条件</strong>
+            <p>写清用户在什么情况下应该调用 Skill，也要写清哪些任务不属于它。</p>
+          </div>
+          <div class="tip">
+            <strong>材料与缺口</strong>
+            <p>明确必选输入、可选输入与缺失时的追问顺序，避免 Skill 靠猜测继续执行。</p>
+          </div>
+          <div class="tip">
+            <strong>验收与失败处理</strong>
+            <p>把 IPO 中的验收标准写进 Skill，并保留格式校验、风险检查和失败后的恢复方式。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="step-section" id="step-4" data-step-section>
+      <div class="step-heading">
+        <div class="step-badge">04</div>
+        <div class="step-title">
+          <h2>多轮迭代后刷新 Skill</h2>
+          <p>在真实测试、补充材料和多轮讨论之后，让 AI 读取前序上下文，把新增规则、修订意见与验证结果合并回 Skill。</p>
+        </div>
+      </div>
+      <div class="step-body">
+        <article class="prompt-panel compact">
+          <div class="prompt-toolbar">
+            <div class="prompt-meta">
+              <strong>刷新 Skill 提示词</strong>
+              <span>建议在原对话中执行，确保能读取完整前序信息</span>
+            </div>
+            <button class="button copy-button" type="button" data-copy-source="prompt-4">复制提示词</button>
+          </div>
+          <details class="prompt-details" open>
+            <summary>查看提示词</summary>
+            <pre class="prompt-code" data-prompt-view="prompt-4"></pre>
+          </details>
+        </article>
+        <div class="callout callout-spaced">
+          <strong>刷新不等于推倒重写</strong>
+          <p>保留已经验证有效的流程，只修改前序对话中新增或被纠正的部分。刷新后再检查触发条件、输入字段、关键规则、输出格式和验收标准是否一致。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cases" id="cases" aria-labelledby="cases-title">
+      <p class="section-label">参考案例</p>
+      <h2 id="cases-title">把方法放进真实对话里看</h2>
+      <div class="case-grid">
+        <a class="case-link" href="https://workbuddy.link/p/MBWxhvp4M9icvlHisEcVqV?ext2=copy_link" target="_blank" rel="noopener noreferrer">
+          <div>
+            <span class="case-source">WORKBUDDY 案例</span>
+            <h3>IPO：从任务描述到输入、处理、输出定义</h3>
+          </div>
+          <span class="case-action">打开案例 ↗</span>
+        </a>
+        <a class="case-link" href="https://workbuddy.link/p/8OpWyes5aEskDHQP1SOyj1?ext2=copy_link" target="_blank" rel="noopener noreferrer">
+          <div>
+            <span class="case-source">WORKBUDDY 案例</span>
+            <h3>Skill 优化及验证：从首版到可重复执行</h3>
+          </div>
+          <span class="case-action">打开案例 ↗</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="finish" aria-labelledby="finish-title">
+      <div>
+        <h2 id="finish-title">完整链路的终点，不是“写完”，而是“下次还能稳定跑”</h2>
+        <p>第一次生成后，用真实材料跑一遍。把失败点、人工修改和新增规则留在原对话，再执行 Step 4 刷新 Skill。</p>
+      </div>
+      <a class="button button-primary" href="#step-1">回到 Step 1</a>
+    </section>
+  </main>
+
+  <footer>
+    李家贵 · AI 场景到 Skill 实战工作流
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">提示词已复制</div>
+
+  <script type="text/plain" id="prompt-1">
+# HR AI场景机会卡 → IPO需求定义书 转写提示词 V2
+
+## 角色
+
+你是一名“HR AI场景设计顾问 + AI智能体需求分析师”。
+
+我会提供：
+
+1. 第一次课提交的《HR AI场景机会卡/作业》
+2. 《AI智能体场景IPO需求定义书》Word模板
+
+你的任务不是简单润色作业，也不是把原文机械地分成I、P、O。
+
+你的任务是：
+
+把第一次课发现的“AI机会场景”，转换成一个能够继续用于
+AI智能体 / WorkBuddy Skill设计、开发和测试的IPO需求定义。
+
+---
+
+# 最终必须交付两个文件
+
+## 交付物1
+《XX场景_AI智能体IPO需求定义书_V0.1.docx》
+
+## 交付物2
+《XX场景_IPO缺口清单.docx》
+
+不得只在聊天框中输出文字。
+必须生成两个Word文件。
+
+---
+
+# 一、总原则
+
+## 原则1：严格遵循IPO模板
+
+《AI智能体场景IPO需求定义书_V0.1.docx》
+必须严格按照我提供的Word模板进行填写。
+
+不得自行重新设计一套IPO结构。
+
+保留模板原有的：
+
+- 标题层级
+- 表格结构
+- I / P / O结构
+- 字段名称
+- 内容顺序
+- 版式
+- 字体字号
+- 页眉页脚等格式
+
+原则上只替换模板中的样例内容。
+
+如果模板中存在：
+
+- 场景基本信息
+- I｜输入定义
+- 本次测试输入包
+- P｜处理流程
+- 核心业务规则
+- O｜输出定义
+- 核心输出表格
+- 验收标准
+
+等内容，应完整保留。
+
+## 原则2：不允许为了完整而编造
+
+原始作业没有提供的信息，不允许自行创造。
+
+尤其不得擅自编造：
+
+- 公司制度
+- HR政策
+- 岗位标准
+- 人才标准
+- 绩效规则
+- 评分规则
+- 权重
+- 数据字段
+- 系统接口
+- 系统权限
+- 审批规则
+- 业务判断标准
+- 阈值
+- 历史案例
+- 目标值
+- 验收指标
+
+如果缺失：
+
+在IPO V0.1对应位置填写：
+
+**【待补充：XXX】**
+
+同时将这一项同步进入
+《IPO缺口清单》。
+
+## 原则3：已有信息尽量转写
+
+原始作业中已经明确的信息，应尽可能完整转入IPO。
+
+不要因为信息还不完整，就把整份IPO留空。
+
+因此每项内容分为三类：
+
+### ①【已明确】
+原始作业已经明确，可以直接转写。
+
+### ②【可初步转写，需确认】
+根据原始作业可以合理结构化，但业务人员仍需最终确认。
+
+### ③【缺失】
+原始作业没有依据，必须由用户补充。
+
+---
+
+# 二、第一步：先做场景收敛
+
+在填写IPO之前，先判断第一次作业是不是“场景过大”。
+
+检查这个场景是否同时包含多个独立任务，例如：
+
+能力建模
++ 人才盘点
++ 人才评价
++ 风险预测
++ 课程推荐
++ 系统集成
+
+如果包含多个独立目标，不要直接把所有目标塞进一个IPO。
+
+按照以下原则收敛：
+
+一个核心用户
++ 一个明确业务任务
++ 一组主要输入
++ 一条主流程
++ 一个核心输出
++ 一套可以测试的成功标准
+
+优先定义一个可以在课堂上完成第一次测试的MVP场景。
+
+如果进行了场景收敛，必须在IPO“场景基本信息”中体现。
+
+同时在《IPO缺口清单》中增加：
+
+## 【场景范围确认】
+
+说明：
+
+- 原始场景是什么
+- 本次建议先做什么
+- 暂时不做什么
+- 需要用户确认是否接受
+
+---
+
+# 三、生成交付物1：
+# 《AI智能体场景IPO需求定义书 V0.1》
+
+严格按照上传的IPO Word模板填写。
+
+---
+
+## A. 场景基本信息
+
+至少从原作业中提取：
+
+- 场景名称
+- 使用对象
+- 使用频率
+- 当前痛点
+- 当前流程
+- AI介入节点
+- 预期价值
+- 风险边界
+- 课堂交付
+
+如果原作业没有明确，不得自行补写。
+
+填写：
+
+**【待补充：请明确……】**
+
+---
+
+## B. I｜INPUT 输入
+
+核心问题：
+
+**AI真正开始工作之前，到底必须拿到什么？**
+
+不要只写“上传资料”。
+
+逐项检查：
+
+- I-1 组织/业务目标
+- I-2 岗位、对象或职责信息
+- I-3 制度、政策、规则、标准
+- I-4 历史案例/历史数据
+- I-5 本次任务实际数据
+- I-6 用户目标
+- I-7 验收标准
+- I-8 工具与权限
+
+根据具体场景，可以修改“输入项名称”，但不要改变模板整体结构。
+
+每个输入都需要尽可能写清：
+
+- 输入项
+- 具体内容
+- 格式/字段要求
+- 是否必选
+
+特别注意：
+
+“需要员工数据”不算完整Input。
+
+应继续明确：
+
+- 需要哪张表？
+- 至少哪些字段？
+- 字段含义是什么？
+- 数据时间范围？
+- 是否脱敏？
+- 来源是什么？
+- 是否必须？
+
+如果这些没有依据，填写：
+
+**【待补充】**
+
+不要替业务人员设计。
+
+---
+
+## C. 本次测试输入包
+
+根据IPO，列出第一次测试真正需要准备的文件或数据。
+
+例如：
+
+| 文件/数据 | 示例名称 | 用途 |
+|---|---|---|
+
+只允许列：
+
+1. 已经存在的材料；
+2. 用户明确准备提供的材料；
+3. 明确标记为【待准备】的材料。
+
+不能假装材料已经存在。
+
+---
+
+## D. 信息不足时的处理规则
+
+必须明确：
+
+如果关键输入缺失，智能体不得直接生成正式结果。
+
+应：
+
+1. 判断缺少什么；
+2. 最多提出5个关键追问；
+3. 无法确认的内容标记为【待确认】；
+4. 当前结果标记为“讨论初稿”；
+5. 不得自行创造公司业务规则。
+
+---
+
+## E. P｜PROCESS 处理
+
+这是IPO最重要的部分。
+
+禁止出现只有：
+
+- “AI分析”
+- “AI智能判断”
+- “AI自动生成”
+
+这种无法执行的描述。
+
+必须拆成：
+
+| 步骤 | 节点 | 输入 | AI动作 | 业务规则/检查点 | 人机分工 |
+|---|---|---|---|---|---|
+
+例如：
+
+- P-1 输入校验
+- P-2 场景/对象识别
+- P-3 信息提取
+- P-4 业务匹配
+- P-5 判断/计算
+- P-6 结果生成
+- P-7 风险检查
+- P-8 一致性检查
+- P-9 格式化交付
+
+具体步骤根据作业实际调整。
+
+每一步必须回答：
+
+- AI拿什么？
+- AI具体做什么？
+- 依据什么规则做？
+- 什么情况下可以继续？
+- 什么情况下必须停止？
+- 什么情况需要用户确认？
+- 谁拥有最终决策权？
+
+如果“依据什么规则判断”这一项原作业没有提供，
+禁止自行创造。
+
+填写：
+
+**【待补充：业务判断规则】**
+
+并同步进入《IPO缺口清单》。
+
+---
+
+## F. 核心业务规则
+
+仅整理原始作业已经明确，或者用户提供材料能够支持的业务规则。
+
+重点检查：
+
+- 可追溯
+- 可衡量
+- 可控制
+- 一致性
+- 异常规则
+- 人工审核
+- 敏感数据
+- 决策边界
+
+特别注意：
+
+涉及：
+
+- 招聘淘汰
+- 绩效评价
+- 人才盘点
+- 人才潜力
+- 晋升
+- 薪酬
+- 处罚
+- 员工风险判断
+
+等高影响HR决策时，
+AI只能提供：
+
+- 分析
+- 证据
+- 建议
+- 初稿
+
+不得替代HR或管理者进行最终决策。
+
+---
+
+## G. O｜OUTPUT 输出
+
+不能只写：
+
+“输出分析报告”。
+
+必须明确：
+
+- O-1 核心交付物
+- O-2 结构化数据/表格
+- O-3 问题与风险清单
+- O-4 修订建议记录
+- O-5 测试记录
+
+根据实际场景填写。
+
+每个输出必须定义：
+
+- 交付物名称
+- 文件格式
+- 固定结构
+- 固定字段
+- 谁使用
+- 用在什么环节
+
+例如：
+
+如果输出Excel，至少定义：
+
+- 字段名
+- 字段含义
+- 字段顺序
+- 是否允许为空
+- 来源
+- 备注
+
+---
+
+## H. 验收标准
+
+至少检查：
+
+1. 完整性
+2. 准确性
+3. 可追溯性
+4. 一致性
+5. 可执行性
+6. 风险边界
+7. 稳定性
+
+如果原始作业已经提出业务目标，可以进一步加入：
+
+- 时间节省率
+- 人工修改率
+- 异常识别率
+- 匹配准确率
+- 推荐采纳率
+- 用户满意度
+
+但是：
+
+如果具体指标值没有来源，只能写：
+
+**【目标值待业务确认】**
+
+禁止自行写：
+
+- 90%
+- 95%
+- 99%
+
+等目标。
+
+---
+
+# 四、生成交付物2：
+# 《IPO缺口清单》
+
+这个文件不是“问题总结”，而是让学员可以直接补答案的作业表。
+
+文件开头写：
+
+> 以下信息无法从第一次课作业中可靠获得。
+> 请业务人员补充。
+> 填写完成后，将本文件重新提交给AI，即可刷新生成IPO V1.0。
+
+使用以下表格：
+
+| 编号 | IPO位置 | 缺什么 | 为什么必须补 | 请用户填写 | 优先级 |
+|---|---|---|---|---|---|
+
+例如：
+
+| 编号 | IPO位置 | 缺什么 | 为什么必须补 | 请用户填写 | 优先级 |
+|---|---|---|---|---|---|
+| GAP-01 | I-3 业务规则 | 人才潜力评价标准 | 没有规则AI无法进行人才分类 | 【请填写】 | A |
+| GAP-02 | I-5 数据 | 员工数据字段 | AI不知道从哪些字段形成画像 | 【请填写：字段名称、字段解释、样例】 | A |
+
+缺口按照四级分类：
+
+- **A｜不补就无法运行**
+- **B｜没有也能测试，但影响结果质量**
+- **C｜正式上线前需要补**
+- **D｜当前MVP建议暂不做**
+
+缺口不要泛泛地问：
+
+> 请补充更多资料。
+
+必须具体到业务人员可以直接回答。
+
+错误：
+
+> 请补充人才盘点规则。
+
+正确：
+
+> 请补充：
+> 1. 人才盘点包含哪些维度？
+> 2. 每个维度的定义是什么？
+> 3. 是否有等级？
+> 4. 等级如何判断？
+> 5. 最终结果是否需要进入九宫格？
+
+---
+
+# 五、缺口清单最后增加
+# 《本次最关键5个问题》
+
+无论有多少缺口，最后只选出影响当前MVP运行的最重要5个问题。
+
+按照：
+
+## 问题1
+**问题：**
+**为什么必须回答：**
+**用户填写：**
+
+## 问题2
+**问题：**
+**为什么必须回答：**
+**用户填写：**
+
+## 问题3
+**问题：**
+**为什么必须回答：**
+**用户填写：**
+
+## 问题4
+**问题：**
+**为什么必须回答：**
+**用户填写：**
+
+## 问题5
+**问题：**
+**为什么必须回答：**
+**用户填写：**
+
+让学员可以直接填写答案。
+
+---
+
+# 六、Word V0.1中的缺口必须和缺口清单一一对应
+
+例如IPO中写：
+
+> 【待补充 GAP-03：课程推荐匹配规则】
+
+那么《IPO缺口清单》中必须存在：
+
+**GAP-03**
+
+禁止出现编号对不上。
+
+---
+
+# 七、用户补完缺口后的第二次运行规则
+
+如果我下一次提供：
+
+1. 原始第一次课作业
+2. IPO需求定义书 V0.1
+3. 已经填写完成的《IPO缺口清单》
+
+则说明进入“IPO刷新阶段”。
+
+此时你的任务不是重新分析整个场景，而是：
+
+读取用户新补充的信息
+→ 逐项找到对应GAP
+→ 把补充内容写回IPO
+→ 更新I/P/O
+→ 重新执行一致性检查
+→ 输出最终：
+
+**《XX场景_AI智能体IPO需求定义书_V1.0.docx》**
+
+同时再次检查是否还存在新的关键缺口。
+
+如果还有：
+
+只输出新的：
+
+**《XX场景_IPO剩余缺口清单.docx》**
+
+如果所有A类关键缺口均已解决：
+
+在IPO中标明：
+
+**【状态：已具备第一次智能体/Skill测试条件】**
+
+---
+
+# 八、最终质量检查
+
+生成文件前检查：
+
+- [ ] IPO是否完全使用模板结构？
+- [ ] 是否遗漏原作业已有信息？
+- [ ] 是否偷偷创造业务规则？
+- [ ] I是否真的能够拿到？
+- [ ] P是否真的能够执行？
+- [ ] O是否真的能够验收？
+- [ ] 所有缺口是否有GAP编号？
+- [ ] IPO和缺口清单是否一一对应？
+- [ ] 用户是否能够直接在缺口清单中填写答案？
+- [ ] 补完缺口后是否可以直接刷新IPO？
+- [ ] 是否已经收敛到一个可测试MVP？
+
+---
+
+# 输入材料
+
+## 第一次课作业
+
+<<<上传或粘贴第一次课作业>>>
+
+## IPO Word模板
+
+<<<上传IPO需求定义书模板>>>
+  </script>
+
+  <script type="text/plain" id="prompt-2">
+把刚才这个任务的全过程，用 Markdown 输出一份
+可复用的 SOP，严格按 IPO 三段来写：
+
+## Input 输入
+
+- 数据源：持仓在线表格、腾讯自选股 MCP 连接器
+- 用户目标与验收标准
+
+## Process 处理
+
+- 读持仓表（说明用哪个字段）→ 搜每个标的的代码
+- 批量查询最新行情 → 查历史价格用于环比/同比
+- 汇率换算与盈亏计算 → 生成可视化报告与建议
+
+## Output 输出
+
+- 交付物：可视化报告 + 文字总结
+- 常见问题与处理方式
+  </script>
+
+  <script type="text/plain" id="prompt-3">
+请将以上sop转skill
+  </script>
+
+  <script type="text/plain" id="prompt-4">
+请根据前序对话刷新skill
+  </script>
+
+  <script>
+    (() => {
+      const promptIds = ["prompt-1", "prompt-2", "prompt-3", "prompt-4"];
+      const toast = document.querySelector("#toast");
+      let toastTimer;
+
+      const readPrompt = (id) => {
+        const source = document.getElementById(id);
+        return source ? source.textContent.trim() : "";
+      };
+
+      promptIds.forEach((id) => {
+        document.querySelectorAll('[data-prompt-view="' + id + '"]').forEach((view) => {
+          view.textContent = readPrompt(id);
+        });
+      });
+
+      const showToast = (message) => {
+        window.clearTimeout(toastTimer);
+        toast.textContent = message;
+        toast.classList.add("is-visible");
+        toastTimer = window.setTimeout(() => {
+          toast.classList.remove("is-visible");
+        }, 2200);
+      };
+
+      const fallbackCopy = (text) => {
+        const field = document.createElement("textarea");
+        field.value = text;
+        field.setAttribute("readonly", "");
+        field.style.position = "fixed";
+        field.style.opacity = "0";
+        document.body.appendChild(field);
+        field.select();
+        const copied = document.execCommand("copy");
+        field.remove();
+        return copied;
+      };
+
+      document.addEventListener("click", async (event) => {
+        const button = event.target.closest("[data-copy-source]");
+        if (!button) return;
+
+        const text = readPrompt(button.dataset.copySource);
+        let copied = false;
+
+        try {
+          await navigator.clipboard.writeText(text);
+          copied = true;
+        } catch {
+          copied = fallbackCopy(text);
+        }
+
+        if (!copied) {
+          showToast("复制失败，请展开后手动复制");
+          return;
+        }
+
+        const original = button.textContent;
+        button.textContent = "已复制";
+        button.classList.add("is-copied");
+        showToast("提示词已复制");
+        window.setTimeout(() => {
+          button.textContent = original;
+          button.classList.remove("is-copied");
+        }, 1600);
+      });
+
+      const links = [...document.querySelectorAll("[data-step-link]")];
+      const sections = [...document.querySelectorAll("[data-step-section]")];
+
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver((entries) => {
+          const visible = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+          if (!visible) return;
+
+          links.forEach((link) => {
+            link.classList.toggle("is-active", link.dataset.stepLink === visible.target.id);
+          });
+        }, {
+          rootMargin: "-28% 0px -58% 0px",
+          threshold: [0, 0.1, 0.35]
+        });
+
+        sections.forEach((section) => observer.observe(section));
+      }
+    })();
+  </script>
+</body>
+</html>

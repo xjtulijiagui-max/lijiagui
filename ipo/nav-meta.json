@@ -1,0 +1,15 @@
+{
+  "id": "ipo",
+  "title": "从场景到 Skill：IPO 实战工作流",
+  "shortTitle": "IPO 转 Skill",
+  "category": "通用方法与沙盘",
+  "description": "四步完成场景转 IPO、IPO 转 SOP、SOP 转 Skill 与多轮刷新。",
+  "path": "ipo/",
+  "tags": ["IPO", "SOP", "Skill", "HR AI", "提示词"],
+  "type": "方法工具",
+  "client": "通用",
+  "featured": true,
+  "order": 115,
+  "status": "正常",
+  "updated": "2026-08-30"
+}
