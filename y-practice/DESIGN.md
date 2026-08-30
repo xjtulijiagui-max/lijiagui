@@ -20,6 +20,9 @@
 | Line | `--line` | `#D6E2EF` | 分隔、边框 |
 | Success | `--success` | `#176B52` | 已保存、已完成 |
 | Warning | `--warning` | `#9A5A12` | 待补充提示 |
+| Hero panel border | `--hero-panel-border` | `rgba(188,215,247,.42)` | 深色 Hero 内的细边框 |
+| Hero panel surface | `--hero-panel-surface` | `rgba(255,255,255,.06)` | 深色 Hero 内的半透明面板 |
+| Progress track | `--progress-track` | `rgba(255,255,255,.18)` | 深色背景上的进度轨道 |
 
 颜色只从 CSS 变量读取；状态同时有文字或图形变化，不能只靠颜色。
 
@@ -32,7 +35,7 @@
 - Body large：17px，行高 1.75。
 - Body：14px，行高 1.75。
 - Caption：12px，700，行高 1.5。
-- 中文使用自然断行；标题使用 `text-wrap: balance`，禁止 `break-all`。
+- 中文使用自然断行；主标题使用 `text-wrap: balance` 与 `word-break: keep-all`，只在语义节点换行，禁止 `break-all`。
 
 ## 4. Spacing & Layout
 
@@ -102,3 +105,4 @@
 - 主卡片使用 1px 边框、轻微 `0 1px 0 rgba(16,42,67,.04)`。
 - Hero 使用深蓝底、两层径向光晕和细网格，体现工作台层次。
 - 完成态使用浅蓝内描边；Toast 使用唯一的明显阴影。
+- 平板评分表固定首列时使用 `--sticky-shadow`，避免横向滚动时内容粘连。
