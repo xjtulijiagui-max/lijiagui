@@ -127,6 +127,30 @@
     .resource-card { content-visibility:auto; contain-intrinsic-size:auto 320px; }
     .resource-card[hidden], aside a[hidden] { display:none; }
     button:focus-visible, a:focus-visible, summary:focus-visible { outline:3px solid rgba(31,101,255,.35); outline-offset:3px; }
+    /* hr-module-navigation-v1 */
+    .nav-group { margin-top:8px; border:1px solid var(--line); border-radius:16px; background:#fff; overflow:hidden; }
+    .nav-group[hidden] { display:none; }
+    .nav-group summary { display:grid; grid-template-columns:34px minmax(0,1fr) auto; gap:8px; align-items:center; min-height:46px; padding:10px; color:var(--ink); cursor:pointer; }
+    .nav-group summary:hover { background:var(--soft); }
+    .nav-group summary span { color:var(--blue); font-weight:900; font-variant-numeric:tabular-nums; }
+    .nav-group summary b { min-width:0; font-size:14px; }
+    .nav-group summary em { grid-column:auto; margin:0; min-width:26px; padding:2px 7px; border-radius:999px; background:var(--soft); color:var(--blue2); text-align:center; font-size:12px; font-style:normal; }
+    .nav-group[open] summary { border-bottom:1px solid var(--line); background:#f9fbff; }
+    .nav-children { padding:4px 4px 8px 10px; border-left:3px solid #c9d9ff; }
+    .nav-children a { padding:8px; }
+    .nav-children a[hidden] { display:none; }
+    .module-pill { background:#e7efff; border-color:#b9cdfb; color:var(--blue2); }
+    .tag-pill { background:#f7f9fd; border-color:#e3e9f4; color:#51627c; font-weight:650; }
+    .search-box { grid-template-columns:128px minmax(0,1fr); }
+    .search-box small { grid-column:2; margin-top:-8px; color:var(--muted); font-size:12px; font-weight:500; }
+    .filter-heading { margin-top:16px; color:var(--blue2); font-size:14px; font-weight:850; }
+    .filter-chip { min-height:44px; }
+    @media (max-width:620px) {
+      .search-box { grid-template-columns:1fr; }
+      .search-box small { grid-column:1; margin-top:-6px; }
+      .filter-row { display:grid; grid-template-columns:1fr 1fr; }
+      .filter-chip { width:100%; padding-inline:10px; }
+    }
     @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
     @media (max-width:1050px) {
       .layout { grid-template-columns:1fr; }
@@ -152,112 +176,158 @@
 <body>
   <header>
     <h1>HR提示词与智能体Skill<br class="mobile-title-break">资源库</h1>
-    <p>43条HR提示词已经过筛选、去重、补句和结构化重写，并保留14个可直接复用的HR Skill模板。每条都能单独复制使用，也支持分类筛选和全文检索。</p>
+    <p>43条精选HR提示词已归入9个业务模块，并保留14个HR Skill模板。可按模块展开两级目录，也可搜索标题、标签和正文，找到后直接复制。</p>
   </header>
 
   <div class="layout">
     <aside>
-      <h2>资源目录</h2>
-      <a class="nav-section" href="#new-prompts"><span>NEW</span><b>43条新整理提示词</b><em>HR全流程 + 智能体人设</em></a>
-      <a href="#hr-01" data-nav-group="flow"><span>H01</span><b>麦肯锡7S组织诊断</b><em>HR全流程</em></a>
-      <a href="#hr-02" data-nav-group="flow"><span>H02</span><b>组织效能提升方案</b><em>HR全流程</em></a>
-      <a href="#hr-03" data-nav-group="flow"><span>H03</span><b>智能家居产品经理能力模型</b><em>HR全流程</em></a>
-      <a href="#hr-04" data-nav-group="flow"><span>H04</span><b>智能家居业务人员编制测算</b><em>HR全流程</em></a>
-      <a href="#hr-05" data-nav-group="flow"><span>H05</span><b>工程师简历信息提取</b><em>HR全流程</em></a>
-      <a href="#hr-06" data-nav-group="flow"><span>H06</span><b>核心候选人入职谈判</b><em>HR全流程</em></a>
-      <a href="#hr-07" data-nav-group="flow"><span>H07</span><b>季度招聘效能分析</b><em>HR全流程</em></a>
-      <a href="#hr-08" data-nav-group="flow"><span>H08</span><b>销售培训需求访谈大纲</b><em>HR全流程</em></a>
-      <a href="#hr-09" data-nav-group="flow"><span>H09</span><b>柯氏四级培训评估</b><em>HR全流程</em></a>
-      <a href="#hr-10" data-nav-group="flow"><span>H10</span><b>高潜人才发展画像</b><em>HR全流程</em></a>
-      <a href="#hr-11" data-nav-group="flow"><span>H11</span><b>AI产品经理胜任力模型</b><em>HR全流程</em></a>
-      <a href="#hr-12" data-nav-group="flow"><span>H12</span><b>岗位价值评估与对比</b><em>HR全流程</em></a>
-      <a href="#hr-13" data-nav-group="flow"><span>H13</span><b>成长型企业薪酬体系设计</b><em>HR全流程</em></a>
-      <a href="#hr-14" data-nav-group="flow"><span>H14</span><b>员工级OKR拆解</b><em>HR全流程</em></a>
-      <a href="#hr-15" data-nav-group="flow"><span>H15</span><b>生产经理KPI设计</b><em>HR全流程</em></a>
-      <a href="#hr-16" data-nav-group="flow"><span>H16</span><b>跨境电商员工手册</b><em>HR全流程</em></a>
-      <a href="#hr-17" data-nav-group="flow"><span>H17</span><b>员工满意度多维分析</b><em>HR全流程</em></a>
-      <a href="#hr-18" data-nav-group="flow"><span>H18</span><b>满意度提升方案校准</b><em>HR全流程</em></a>
-      <a href="#hr-19" data-nav-group="flow"><span>H19</span><b>劳动合同条款风险审查</b><em>HR全流程</em></a>
-      <a href="#hr-20" data-nav-group="flow"><span>H20</span><b>员工访谈提纲设计</b><em>HR全流程</em></a>
-      <a href="#hr-21" data-nav-group="flow"><span>H21</span><b>电商员工离职数据分析</b><em>HR全流程</em></a>
-      <a href="#hr-22" data-nav-group="flow"><span>H22</span><b>企业使命愿景提炼</b><em>HR全流程</em></a>
-      <a href="#hr-23" data-nav-group="flow"><span>H23</span><b>价值观岗位行为标准</b><em>HR全流程</em></a>
-      <a href="#hr-24" data-nav-group="flow"><span>H24</span><b>年度企业文化活动排期</b><em>HR全流程</em></a>
-      <a href="#hr-25" data-nav-group="flow"><span>H25</span><b>新手妈妈体验日活动方案</b><em>HR全流程</em></a>
-      <a href="#hr-26" data-nav-group="flow"><span>H26</span><b>企业文化人物故事</b><em>HR全流程</em></a>
-      <a href="#hr-27" data-nav-group="persona"><span>H27</span><b>简历筛选助手</b><em>智能体人设</em></a>
-      <a href="#hr-28" data-nav-group="persona"><span>H28</span><b>结构化面试问题专家</b><em>智能体人设</em></a>
-      <a href="#hr-29" data-nav-group="persona"><span>H29</span><b>企业培训课程设计师</b><em>智能体人设</em></a>
-      <a href="#hr-30" data-nav-group="persona"><span>H30</span><b>岗位学习路径规划师</b><em>智能体人设</em></a>
-      <a href="#hr-31" data-nav-group="persona"><span>H31</span><b>智能管理教练</b><em>智能体人设</em></a>
-      <a href="#hr-32" data-nav-group="persona"><span>H32</span><b>部门薪酬数据分析</b><em>智能体人设</em></a>
-      <a href="#hr-33" data-nav-group="persona"><span>H33</span><b>绩效目标拆解专家</b><em>智能体人设</em></a>
-      <a href="#hr-34" data-nav-group="persona"><span>H34</span><b>绩效面谈专家</b><em>智能体人设</em></a>
-      <a href="#hr-35" data-nav-group="persona"><span>H35</span><b>企业活动策划专家</b><em>智能体人设</em></a>
-      <a href="#hr-36" data-nav-group="persona"><span>H36</span><b>劳动用工法律专家</b><em>智能体人设</em></a>
-      <a href="#hr-37" data-nav-group="persona"><span>H37</span><b>HR法律咨询回复框架</b><em>智能体人设</em></a>
-      <a href="#hr-38" data-nav-group="persona"><span>H38</span><b>Q12组织健康诊断</b><em>智能体人设</em></a>
-      <a href="#hr-39" data-nav-group="persona"><span>H39</span><b>员工HR问答助手</b><em>智能体人设</em></a>
-      <a href="#hr-40" data-nav-group="persona"><span>H40</span><b>麦肯锡7S组织诊断专家</b><em>智能体人设</em></a>
-      <a href="#hr-41" data-nav-group="persona"><span>H41</span><b>人才盘点报告专家</b><em>智能体人设</em></a>
-      <a href="#hr-42" data-nav-group="persona"><span>H42</span><b>九宫格人才盘点分析</b><em>智能体人设</em></a>
-      <a href="#hr-43" data-nav-group="persona"><span>H43</span><b>HR智能体设计检查清单</b><em>智能体人设</em></a>
-      <a class="nav-section" href="#skill-library"><span>SK</span><b>14个Skill模板</b><em>保留原有锚点与内容</em></a>
-      <a data-nav-group="skill" href="#skill-1"><span>01</span><b>简历初筛助手</b><em>分析型</em></a>
-<a data-nav-group="skill" href="#skill-2"><span>02</span><b>面试题生成助手</b><em>知识库型</em></a>
-<a data-nav-group="skill" href="#skill-3"><span>03</span><b>人才盘点助手</b><em>双模式分析型</em></a>
-<a data-nav-group="skill" href="#skill-4"><span>04</span><b>离职助手</b><em>流程型</em></a>
-<a data-nav-group="skill" href="#skill-5"><span>05</span><b>会议纪要助手</b><em>模板型</em></a>
-<a data-nav-group="skill" href="#skill-6"><span>06</span><b>岗位描述生成助手</b><em>模板型</em></a>
-<a data-nav-group="skill" href="#skill-7"><span>07</span><b>岗位说明书管理助手</b><em>模板型</em></a>
-<a data-nav-group="skill" href="#skill-8"><span>08</span><b>人才画像助手</b><em>分析型</em></a>
-<a data-nav-group="skill" href="#skill-9"><span>09</span><b>新员工百问百答助手</b><em>知识库型</em></a>
-<a data-nav-group="skill" href="#skill-10"><span>10</span><b>题库生成助手</b><em>知识库型</em></a>
-<a data-nav-group="skill" href="#skill-11"><span>11</span><b>制度编写助手</b><em>模板型</em></a>
-<a data-nav-group="skill" href="#skill-12"><span>12</span><b>HR智能问答助手</b><em>知识库型</em></a>
-<a data-nav-group="skill" href="#skill-13"><span>13</span><b>培训后勤工作助手</b><em>流程型</em></a>
-<a data-nav-group="skill" href="#skill-14"><span>14</span><b>校园招聘助手</b><em>流程型</em></a>
+      <h2>HR模块目录</h2>
+      <a class="nav-section" href="#new-prompts"><span>查找</span><b>搜索与模块筛选</b><em>标题、标签、正文都可检索</em></a>
+      <details class="nav-group" data-nav-module="organization" open>
+        <summary><span>01</span><b>组织设计与效能</b><em>3</em></summary>
+        <div class="nav-children">
+          <a href="#hr-01" data-nav-group="flow" data-nav-module="organization"><span>H01</span><b>麦肯锡7S组织诊断</b><em>7S模型 · 组织诊断</em></a>
+          <a href="#hr-02" data-nav-group="flow" data-nav-module="organization"><span>H02</span><b>组织效能提升方案</b><em>效能提升 · 变革路线图</em></a>
+          <a href="#hr-40" data-nav-group="persona" data-nav-module="organization"><span>H40</span><b>麦肯锡7S组织诊断专家</b><em>7S智能体 · 交互诊断</em></a>
+        </div>
+      </details>
+      <details class="nav-group" data-nav-module="recruiting">
+        <summary><span>02</span><b>招聘与人才配置</b><em>6</em></summary>
+        <div class="nav-children">
+          <a href="#hr-04" data-nav-group="flow" data-nav-module="recruiting"><span>H04</span><b>智能家居业务人员编制测算</b><em>编制测算 · 人力规划</em></a>
+          <a href="#hr-05" data-nav-group="flow" data-nav-module="recruiting"><span>H05</span><b>工程师简历信息提取</b><em>技术招聘 · 简历解析</em></a>
+          <a href="#hr-06" data-nav-group="flow" data-nav-module="recruiting"><span>H06</span><b>核心候选人入职谈判</b><em>Offer谈判 · 候选人</em></a>
+          <a href="#hr-07" data-nav-group="flow" data-nav-module="recruiting"><span>H07</span><b>季度招聘效能分析</b><em>招聘漏斗 · 渠道ROI</em></a>
+          <a href="#hr-27" data-nav-group="persona" data-nav-module="recruiting"><span>H27</span><b>简历筛选助手</b><em>简历筛选 · 招聘助手</em></a>
+          <a href="#hr-28" data-nav-group="persona" data-nav-module="recruiting"><span>H28</span><b>结构化面试问题专家</b><em>结构化面试 · 评分标准</em></a>
+        </div>
+      </details>
+      <details class="nav-group" data-nav-module="development">
+        <summary><span>03</span><b>能力模型与人才发展</b><em>10</em></summary>
+        <div class="nav-children">
+          <a href="#hr-03" data-nav-group="flow" data-nav-module="development"><span>H03</span><b>智能家居产品经理能力模型</b><em>产品经理 · 胜任力模型</em></a>
+          <a href="#hr-08" data-nav-group="flow" data-nav-module="development"><span>H08</span><b>销售培训需求访谈大纲</b><em>销售培训 · 需求访谈</em></a>
+          <a href="#hr-09" data-nav-group="flow" data-nav-module="development"><span>H09</span><b>柯氏四级培训评估</b><em>柯氏四级 · 培训评估</em></a>
+          <a href="#hr-10" data-nav-group="flow" data-nav-module="development"><span>H10</span><b>高潜人才发展画像</b><em>高潜人才 · 发展画像</em></a>
+          <a href="#hr-11" data-nav-group="flow" data-nav-module="development"><span>H11</span><b>AI产品经理胜任力模型</b><em>AI产品经理 · 能力模型</em></a>
+          <a href="#hr-29" data-nav-group="persona" data-nav-module="development"><span>H29</span><b>企业培训课程设计师</b><em>课程设计 · 学习目标</em></a>
+          <a href="#hr-30" data-nav-group="persona" data-nav-module="development"><span>H30</span><b>岗位学习路径规划师</b><em>学习路径 · 70-20-10</em></a>
+          <a href="#hr-31" data-nav-group="persona" data-nav-module="development"><span>H31</span><b>智能管理教练</b><em>管理教练 · GROW</em></a>
+          <a href="#hr-41" data-nav-group="persona" data-nav-module="development"><span>H41</span><b>人才盘点报告专家</b><em>人才盘点 · 继任梯队</em></a>
+          <a href="#hr-42" data-nav-group="persona" data-nav-module="development"><span>H42</span><b>九宫格人才盘点分析</b><em>九宫格 · 人才校准</em></a>
+        </div>
+      </details>
+      <details class="nav-group" data-nav-module="performance">
+        <summary><span>04</span><b>绩效与目标管理</b><em>4</em></summary>
+        <div class="nav-children">
+          <a href="#hr-14" data-nav-group="flow" data-nav-module="performance"><span>H14</span><b>员工级OKR拆解</b><em>OKR · 目标拆解</em></a>
+          <a href="#hr-15" data-nav-group="flow" data-nav-module="performance"><span>H15</span><b>生产经理KPI设计</b><em>制造业 · KPI</em></a>
+          <a href="#hr-33" data-nav-group="persona" data-nav-module="performance"><span>H33</span><b>绩效目标拆解专家</b><em>绩效指标 · 目标承接</em></a>
+          <a href="#hr-34" data-nav-group="persona" data-nav-module="performance"><span>H34</span><b>绩效面谈专家</b><em>绩效面谈 · 反馈辅导</em></a>
+        </div>
+      </details>
+      <details class="nav-group" data-nav-module="reward">
+        <summary><span>05</span><b>薪酬激励与岗位价值</b><em>3</em></summary>
+        <div class="nav-children">
+          <a href="#hr-12" data-nav-group="flow" data-nav-module="reward"><span>H12</span><b>岗位价值评估与对比</b><em>岗位价值 · 职级评估</em></a>
+          <a href="#hr-13" data-nav-group="flow" data-nav-module="reward"><span>H13</span><b>成长型企业薪酬体系设计</b><em>薪酬带宽 · 薪酬体系</em></a>
+          <a href="#hr-32" data-nav-group="persona" data-nav-module="reward"><span>H32</span><b>部门薪酬数据分析</b><em>薪酬分析 · 内部公平</em></a>
+        </div>
+      </details>
+      <details class="nav-group" data-nav-module="experience">
+        <summary><span>06</span><b>员工体验与组织健康</b><em>6</em></summary>
+        <div class="nav-children">
+          <a href="#hr-17" data-nav-group="flow" data-nav-module="experience"><span>H17</span><b>员工满意度多维分析</b><em>满意度 · 数据分析</em></a>
+          <a href="#hr-18" data-nav-group="flow" data-nav-module="experience"><span>H18</span><b>满意度提升方案校准</b><em>改善方案 · 员工体验</em></a>
+          <a href="#hr-20" data-nav-group="flow" data-nav-module="experience"><span>H20</span><b>员工访谈提纲设计</b><em>员工访谈 · 组织调研</em></a>
+          <a href="#hr-21" data-nav-group="flow" data-nav-module="experience"><span>H21</span><b>电商员工离职数据分析</b><em>离职分析 · 人才保留</em></a>
+          <a href="#hr-25" data-nav-group="flow" data-nav-module="experience"><span>H25</span><b>新手妈妈体验日活动方案</b><em>员工关怀 · 新手妈妈</em></a>
+          <a href="#hr-38" data-nav-group="persona" data-nav-module="experience"><span>H38</span><b>Q12组织健康诊断</b><em>Q12 · 员工敬业度</em></a>
+        </div>
+      </details>
+      <details class="nav-group" data-nav-module="culture">
+        <summary><span>07</span><b>企业文化与员工活动</b><em>5</em></summary>
+        <div class="nav-children">
+          <a href="#hr-22" data-nav-group="flow" data-nav-module="culture"><span>H22</span><b>企业使命愿景提炼</b><em>使命愿景 · 战略文化</em></a>
+          <a href="#hr-23" data-nav-group="flow" data-nav-module="culture"><span>H23</span><b>价值观岗位行为标准</b><em>价值观 · 行为标准</em></a>
+          <a href="#hr-24" data-nav-group="flow" data-nav-module="culture"><span>H24</span><b>年度企业文化活动排期</b><em>文化日历 · 年度排期</em></a>
+          <a href="#hr-26" data-nav-group="flow" data-nav-module="culture"><span>H26</span><b>企业文化人物故事</b><em>人物故事 · 文化传播</em></a>
+          <a href="#hr-35" data-nav-group="persona" data-nav-module="culture"><span>H35</span><b>企业活动策划专家</b><em>活动策划 · 风险预案</em></a>
+        </div>
+      </details>
+      <details class="nav-group" data-nav-module="compliance">
+        <summary><span>08</span><b>员工手册与劳动合规</b><em>4</em></summary>
+        <div class="nav-children">
+          <a href="#hr-16" data-nav-group="flow" data-nav-module="compliance"><span>H16</span><b>跨境电商员工手册</b><em>员工手册 · 跨境电商</em></a>
+          <a href="#hr-19" data-nav-group="flow" data-nav-module="compliance"><span>H19</span><b>劳动合同条款风险审查</b><em>劳动合同 · 风险审查</em></a>
+          <a href="#hr-36" data-nav-group="persona" data-nav-module="compliance"><span>H36</span><b>劳动用工法律专家</b><em>劳动法律 · 用工风险</em></a>
+          <a href="#hr-37" data-nav-group="persona" data-nav-module="compliance"><span>H37</span><b>HR法律咨询回复框架</b><em>法律咨询 · 回复框架</em></a>
+        </div>
+      </details>
+      <details class="nav-group" data-nav-module="hr-agent">
+        <summary><span>09</span><b>HR智能体与员工问答</b><em>2</em></summary>
+        <div class="nav-children">
+          <a href="#hr-39" data-nav-group="persona" data-nav-module="hr-agent"><span>H39</span><b>员工HR问答助手</b><em>员工问答 · 制度知识库</em></a>
+          <a href="#hr-43" data-nav-group="persona" data-nav-module="hr-agent"><span>H43</span><b>HR智能体设计检查清单</b><em>智能体审查 · 上线验收</em></a>
+        </div>
+      </details>
+      <details class="nav-group" data-nav-module="skill">
+        <summary><span>10</span><b>原有Skill模板</b><em>14</em></summary>
+        <div class="nav-children">
+          <a data-nav-group="skill" data-nav-module="skill" href="#skill-1"><span>01</span><b>简历初筛助手</b><em>分析型</em></a>
+          <a data-nav-group="skill" data-nav-module="skill" href="#skill-2"><span>02</span><b>面试题生成助手</b><em>知识库型</em></a>
+          <a data-nav-group="skill" data-nav-module="skill" href="#skill-3"><span>03</span><b>人才盘点助手</b><em>双模式分析型</em></a>
+          <a data-nav-group="skill" data-nav-module="skill" href="#skill-4"><span>04</span><b>离职助手</b><em>流程型</em></a>
+          <a data-nav-group="skill" data-nav-module="skill" href="#skill-5"><span>05</span><b>会议纪要助手</b><em>模板型</em></a>
+          <a data-nav-group="skill" data-nav-module="skill" href="#skill-6"><span>06</span><b>岗位描述生成助手</b><em>模板型</em></a>
+          <a data-nav-group="skill" data-nav-module="skill" href="#skill-7"><span>07</span><b>岗位说明书管理助手</b><em>模板型</em></a>
+          <a data-nav-group="skill" data-nav-module="skill" href="#skill-8"><span>08</span><b>人才画像助手</b><em>分析型</em></a>
+          <a data-nav-group="skill" data-nav-module="skill" href="#skill-9"><span>09</span><b>新员工百问百答助手</b><em>知识库型</em></a>
+          <a data-nav-group="skill" data-nav-module="skill" href="#skill-10"><span>10</span><b>题库生成助手</b><em>知识库型</em></a>
+          <a data-nav-group="skill" data-nav-module="skill" href="#skill-11"><span>11</span><b>制度编写助手</b><em>模板型</em></a>
+          <a data-nav-group="skill" data-nav-module="skill" href="#skill-12"><span>12</span><b>HR智能问答助手</b><em>知识库型</em></a>
+          <a data-nav-group="skill" data-nav-module="skill" href="#skill-13"><span>13</span><b>培训后勤工作助手</b><em>流程型</em></a>
+          <a data-nav-group="skill" data-nav-module="skill" href="#skill-14"><span>14</span><b>校园招聘助手</b><em>流程型</em></a>
+        </div>
+      </details>
     </aside>
 
     <main>
-      <section class="panel">
-        <h2>使用说明：从提示词到可运行智能体</h2>
-        <p>这套模板的核心不是让学员背提示词，而是让他们理解：业务Know-how必须变成“输入要求、工作流程、判断规则、输出格式和测试样例”。像把一个老HR的经验拆成齿轮、传动轴和仪表盘，智能体才能稳定运转。</p>
-        <div class="steps">
-          <div class="step"><strong>1. 放提示词</strong>把每个助手的完整提示词复制到智能体的角色设定、系统提示词或Skill生成区。</div>
-          <div class="step"><strong>2. 放知识库</strong>知识库型助手必须把制度、流程、手册、模板、FAQ放入reference/知识库，否则问答会失去依据。</div>
-          <div class="step"><strong>3. 配doc_maker</strong>会议纪要、制度编写、岗位说明书等文档型助手，建议配置<code>doc_maker</code>工具，用于生成Word版本。</div>
-          <div class="step"><strong>4. 加尾巴生成Skill</strong>原有14个Skill模板均已添加尾巴：<code>#以上内容转为Skill</code>。生成后通过<code>/技能名</code>唤醒，输入必填信息即可拿结果。</div>
-        </div>
-      </section>
-
       <section class="panel" id="new-prompts">
-        <h2>本次刷新：43条HR提示词</h2>
-        <p>按“HR全流程AI应用”和“HR智能体人设与回复逻辑”分成两组。全部内容已清理重写，补齐角色、输入、任务、输出与边界，可直接复制。涉及法律、薪酬、制度和个人信息时，仍需结合企业制度与最新法规人工复核。</p>
+        <h2>按9个HR模块快速查找</h2>
+        <p>每条提示词都已补充模块标签和关键词标签。可先选业务模块缩小范围，也可以直接搜索标题、标签或提示词正文；左侧目录按“模块—具体提示词”两级展开。</p>
         <div class="summary">
-          <div class="metric"><strong>26</strong>HR全流程应用提示词</div>
-          <div class="metric"><strong>17</strong>智能体人设与回复逻辑</div>
-          <div class="metric"><strong>14</strong>原有Skill模板继续保留</div>
+          <div class="metric"><strong>9</strong>HR业务模块</div>
+          <div class="metric"><strong>43</strong>精选可复制提示词</div>
+          <div class="metric"><strong>14</strong>原有Skill模板</div>
         </div>
         <div class="resource-toolbar" aria-label="提示词筛选">
-          <label class="search-box"><span>搜索</span><input id="resource-search" type="search" placeholder="输入招聘、培训、绩效、薪酬等关键词" autocomplete="off"></label>
-          <div class="filter-row" role="group" aria-label="资源类型">
-            <button class="filter-chip active" type="button" data-filter="all">全部57份</button>
-            <button class="filter-chip" type="button" data-filter="flow">HR全流程 26</button>
-            <button class="filter-chip" type="button" data-filter="persona">智能体人设 17</button>
+          <label class="search-box" for="resource-search"><span>关键词搜索</span><input id="resource-search" type="search" placeholder="搜索招聘、面试、绩效、薪酬、劳动合同……" autocomplete="off"><small>支持标题、模块、标签和正文</small></label>
+          <div class="filter-heading">按HR模块定位</div>
+          <div class="filter-row" role="group" aria-label="HR模块">
+            <button class="filter-chip active" type="button" data-filter="all">全部资源 57</button>
+            <button class="filter-chip" type="button" data-filter="organization">组织效能 3</button>
+            <button class="filter-chip" type="button" data-filter="recruiting">招聘配置 6</button>
+            <button class="filter-chip" type="button" data-filter="development">人才发展 10</button>
+            <button class="filter-chip" type="button" data-filter="performance">绩效目标 4</button>
+            <button class="filter-chip" type="button" data-filter="reward">薪酬激励 3</button>
+            <button class="filter-chip" type="button" data-filter="experience">员工体验 6</button>
+            <button class="filter-chip" type="button" data-filter="culture">文化活动 5</button>
+            <button class="filter-chip" type="button" data-filter="compliance">劳动合规 4</button>
+            <button class="filter-chip" type="button" data-filter="hr-agent">HR智能体 2</button>
             <button class="filter-chip" type="button" data-filter="skill">Skill模板 14</button>
           </div>
           <p class="result-count" id="result-count" aria-live="polite">当前显示57份资源</p>
         </div>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-01" data-group="flow">
+      <section class="card resource-card prompt-card" id="hr-01" data-group="flow" data-module="organization" data-search="麦肯锡7S组织诊断 组织设计与效能 7S模型 组织诊断">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H01</span>
             <div>
               <h2>麦肯锡7S组织诊断</h2>
-              <div class="labels"><span class="pill">HR全流程</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">组织设计与效能</span><span class="pill tag-pill">7S模型</span><span class="pill tag-pill">组织诊断</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -297,13 +367,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-02" data-group="flow">
+      <section class="card resource-card prompt-card" id="hr-02" data-group="flow" data-module="organization" data-search="组织效能提升方案 组织设计与效能 效能提升 变革路线图">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H02</span>
             <div>
               <h2>组织效能提升方案</h2>
-              <div class="labels"><span class="pill">HR全流程</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">组织设计与效能</span><span class="pill tag-pill">效能提升</span><span class="pill tag-pill">变革路线图</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -343,13 +413,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-03" data-group="flow">
+      <section class="card resource-card prompt-card" id="hr-03" data-group="flow" data-module="development" data-search="智能家居产品经理能力模型 能力模型与人才发展 产品经理 胜任力模型">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H03</span>
             <div>
               <h2>智能家居产品经理能力模型</h2>
-              <div class="labels"><span class="pill">HR全流程</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">能力模型与人才发展</span><span class="pill tag-pill">产品经理</span><span class="pill tag-pill">胜任力模型</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -389,13 +459,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-04" data-group="flow">
+      <section class="card resource-card prompt-card" id="hr-04" data-group="flow" data-module="recruiting" data-search="智能家居业务人员编制测算 招聘与人才配置 编制测算 人力规划">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H04</span>
             <div>
               <h2>智能家居业务人员编制测算</h2>
-              <div class="labels"><span class="pill">HR全流程</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">招聘与人才配置</span><span class="pill tag-pill">编制测算</span><span class="pill tag-pill">人力规划</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -435,13 +505,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-05" data-group="flow">
+      <section class="card resource-card prompt-card" id="hr-05" data-group="flow" data-module="recruiting" data-search="工程师简历信息提取 招聘与人才配置 技术招聘 简历解析">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H05</span>
             <div>
               <h2>工程师简历信息提取</h2>
-              <div class="labels"><span class="pill">HR全流程</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">招聘与人才配置</span><span class="pill tag-pill">技术招聘</span><span class="pill tag-pill">简历解析</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -480,13 +550,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-06" data-group="flow">
+      <section class="card resource-card prompt-card" id="hr-06" data-group="flow" data-module="recruiting" data-search="核心候选人入职谈判 招聘与人才配置 Offer谈判 候选人">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H06</span>
             <div>
               <h2>核心候选人入职谈判</h2>
-              <div class="labels"><span class="pill">HR全流程</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">招聘与人才配置</span><span class="pill tag-pill">Offer谈判</span><span class="pill tag-pill">候选人</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -526,13 +596,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-07" data-group="flow">
+      <section class="card resource-card prompt-card" id="hr-07" data-group="flow" data-module="recruiting" data-search="季度招聘效能分析 招聘与人才配置 招聘漏斗 渠道ROI">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H07</span>
             <div>
               <h2>季度招聘效能分析</h2>
-              <div class="labels"><span class="pill">HR全流程</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">招聘与人才配置</span><span class="pill tag-pill">招聘漏斗</span><span class="pill tag-pill">渠道ROI</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -571,13 +641,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-08" data-group="flow">
+      <section class="card resource-card prompt-card" id="hr-08" data-group="flow" data-module="development" data-search="销售培训需求访谈大纲 能力模型与人才发展 销售培训 需求访谈">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H08</span>
             <div>
               <h2>销售培训需求访谈大纲</h2>
-              <div class="labels"><span class="pill">HR全流程</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">能力模型与人才发展</span><span class="pill tag-pill">销售培训</span><span class="pill tag-pill">需求访谈</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -617,13 +687,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-09" data-group="flow">
+      <section class="card resource-card prompt-card" id="hr-09" data-group="flow" data-module="development" data-search="柯氏四级培训评估 能力模型与人才发展 柯氏四级 培训评估">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H09</span>
             <div>
               <h2>柯氏四级培训评估</h2>
-              <div class="labels"><span class="pill">HR全流程</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">能力模型与人才发展</span><span class="pill tag-pill">柯氏四级</span><span class="pill tag-pill">培训评估</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -663,13 +733,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-10" data-group="flow">
+      <section class="card resource-card prompt-card" id="hr-10" data-group="flow" data-module="development" data-search="高潜人才发展画像 能力模型与人才发展 高潜人才 发展画像">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H10</span>
             <div>
               <h2>高潜人才发展画像</h2>
-              <div class="labels"><span class="pill">HR全流程</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">能力模型与人才发展</span><span class="pill tag-pill">高潜人才</span><span class="pill tag-pill">发展画像</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -709,13 +779,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-11" data-group="flow">
+      <section class="card resource-card prompt-card" id="hr-11" data-group="flow" data-module="development" data-search="AI产品经理胜任力模型 能力模型与人才发展 AI产品经理 能力模型">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H11</span>
             <div>
               <h2>AI产品经理胜任力模型</h2>
-              <div class="labels"><span class="pill">HR全流程</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">能力模型与人才发展</span><span class="pill tag-pill">AI产品经理</span><span class="pill tag-pill">能力模型</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -755,13 +825,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-12" data-group="flow">
+      <section class="card resource-card prompt-card" id="hr-12" data-group="flow" data-module="reward" data-search="岗位价值评估与对比 薪酬激励与岗位价值 岗位价值 职级评估">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H12</span>
             <div>
               <h2>岗位价值评估与对比</h2>
-              <div class="labels"><span class="pill">HR全流程</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">薪酬激励与岗位价值</span><span class="pill tag-pill">岗位价值</span><span class="pill tag-pill">职级评估</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -801,13 +871,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-13" data-group="flow">
+      <section class="card resource-card prompt-card" id="hr-13" data-group="flow" data-module="reward" data-search="成长型企业薪酬体系设计 薪酬激励与岗位价值 薪酬带宽 薪酬体系">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H13</span>
             <div>
               <h2>成长型企业薪酬体系设计</h2>
-              <div class="labels"><span class="pill">HR全流程</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">薪酬激励与岗位价值</span><span class="pill tag-pill">薪酬带宽</span><span class="pill tag-pill">薪酬体系</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -847,13 +917,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-14" data-group="flow">
+      <section class="card resource-card prompt-card" id="hr-14" data-group="flow" data-module="performance" data-search="员工级OKR拆解 绩效与目标管理 OKR 目标拆解">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H14</span>
             <div>
               <h2>员工级OKR拆解</h2>
-              <div class="labels"><span class="pill">HR全流程</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">绩效与目标管理</span><span class="pill tag-pill">OKR</span><span class="pill tag-pill">目标拆解</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -893,13 +963,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-15" data-group="flow">
+      <section class="card resource-card prompt-card" id="hr-15" data-group="flow" data-module="performance" data-search="生产经理KPI设计 绩效与目标管理 制造业 KPI">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H15</span>
             <div>
               <h2>生产经理KPI设计</h2>
-              <div class="labels"><span class="pill">HR全流程</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">绩效与目标管理</span><span class="pill tag-pill">制造业</span><span class="pill tag-pill">KPI</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -939,13 +1009,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-16" data-group="flow">
+      <section class="card resource-card prompt-card" id="hr-16" data-group="flow" data-module="compliance" data-search="跨境电商员工手册 员工手册与劳动合规 员工手册 跨境电商">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H16</span>
             <div>
               <h2>跨境电商员工手册</h2>
-              <div class="labels"><span class="pill">HR全流程</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">员工手册与劳动合规</span><span class="pill tag-pill">员工手册</span><span class="pill tag-pill">跨境电商</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -985,13 +1055,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-17" data-group="flow">
+      <section class="card resource-card prompt-card" id="hr-17" data-group="flow" data-module="experience" data-search="员工满意度多维分析 员工体验与组织健康 满意度 数据分析">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H17</span>
             <div>
               <h2>员工满意度多维分析</h2>
-              <div class="labels"><span class="pill">HR全流程</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">员工体验与组织健康</span><span class="pill tag-pill">满意度</span><span class="pill tag-pill">数据分析</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -1031,13 +1101,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-18" data-group="flow">
+      <section class="card resource-card prompt-card" id="hr-18" data-group="flow" data-module="experience" data-search="满意度提升方案校准 员工体验与组织健康 改善方案 员工体验">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H18</span>
             <div>
               <h2>满意度提升方案校准</h2>
-              <div class="labels"><span class="pill">HR全流程</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">员工体验与组织健康</span><span class="pill tag-pill">改善方案</span><span class="pill tag-pill">员工体验</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -1077,13 +1147,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-19" data-group="flow">
+      <section class="card resource-card prompt-card" id="hr-19" data-group="flow" data-module="compliance" data-search="劳动合同条款风险审查 员工手册与劳动合规 劳动合同 风险审查">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H19</span>
             <div>
               <h2>劳动合同条款风险审查</h2>
-              <div class="labels"><span class="pill">HR全流程</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">员工手册与劳动合规</span><span class="pill tag-pill">劳动合同</span><span class="pill tag-pill">风险审查</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -1124,13 +1194,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-20" data-group="flow">
+      <section class="card resource-card prompt-card" id="hr-20" data-group="flow" data-module="experience" data-search="员工访谈提纲设计 员工体验与组织健康 员工访谈 组织调研">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H20</span>
             <div>
               <h2>员工访谈提纲设计</h2>
-              <div class="labels"><span class="pill">HR全流程</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">员工体验与组织健康</span><span class="pill tag-pill">员工访谈</span><span class="pill tag-pill">组织调研</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -1170,13 +1240,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-21" data-group="flow">
+      <section class="card resource-card prompt-card" id="hr-21" data-group="flow" data-module="experience" data-search="电商员工离职数据分析 员工体验与组织健康 离职分析 人才保留">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H21</span>
             <div>
               <h2>电商员工离职数据分析</h2>
-              <div class="labels"><span class="pill">HR全流程</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">员工体验与组织健康</span><span class="pill tag-pill">离职分析</span><span class="pill tag-pill">人才保留</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -1216,13 +1286,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-22" data-group="flow">
+      <section class="card resource-card prompt-card" id="hr-22" data-group="flow" data-module="culture" data-search="企业使命愿景提炼 企业文化与员工活动 使命愿景 战略文化">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H22</span>
             <div>
               <h2>企业使命愿景提炼</h2>
-              <div class="labels"><span class="pill">HR全流程</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">企业文化与员工活动</span><span class="pill tag-pill">使命愿景</span><span class="pill tag-pill">战略文化</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -1262,13 +1332,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-23" data-group="flow">
+      <section class="card resource-card prompt-card" id="hr-23" data-group="flow" data-module="culture" data-search="价值观岗位行为标准 企业文化与员工活动 价值观 行为标准">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H23</span>
             <div>
               <h2>价值观岗位行为标准</h2>
-              <div class="labels"><span class="pill">HR全流程</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">企业文化与员工活动</span><span class="pill tag-pill">价值观</span><span class="pill tag-pill">行为标准</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -1308,13 +1378,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-24" data-group="flow">
+      <section class="card resource-card prompt-card" id="hr-24" data-group="flow" data-module="culture" data-search="年度企业文化活动排期 企业文化与员工活动 文化日历 年度排期">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H24</span>
             <div>
               <h2>年度企业文化活动排期</h2>
-              <div class="labels"><span class="pill">HR全流程</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">企业文化与员工活动</span><span class="pill tag-pill">文化日历</span><span class="pill tag-pill">年度排期</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -1354,13 +1424,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-25" data-group="flow">
+      <section class="card resource-card prompt-card" id="hr-25" data-group="flow" data-module="experience" data-search="新手妈妈体验日活动方案 员工体验与组织健康 员工关怀 新手妈妈">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H25</span>
             <div>
               <h2>新手妈妈体验日活动方案</h2>
-              <div class="labels"><span class="pill">HR全流程</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">员工体验与组织健康</span><span class="pill tag-pill">员工关怀</span><span class="pill tag-pill">新手妈妈</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -1400,13 +1470,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-26" data-group="flow">
+      <section class="card resource-card prompt-card" id="hr-26" data-group="flow" data-module="culture" data-search="企业文化人物故事 企业文化与员工活动 人物故事 文化传播">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H26</span>
             <div>
               <h2>企业文化人物故事</h2>
-              <div class="labels"><span class="pill">HR全流程</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">企业文化与员工活动</span><span class="pill tag-pill">人物故事</span><span class="pill tag-pill">文化传播</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -1446,13 +1516,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-27" data-group="persona">
+      <section class="card resource-card prompt-card" id="hr-27" data-group="persona" data-module="recruiting" data-search="简历筛选助手 招聘与人才配置 简历筛选 招聘助手">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H27</span>
             <div>
               <h2>简历筛选助手</h2>
-              <div class="labels"><span class="pill">智能体人设</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">招聘与人才配置</span><span class="pill tag-pill">简历筛选</span><span class="pill tag-pill">招聘助手</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -1491,13 +1561,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-28" data-group="persona">
+      <section class="card resource-card prompt-card" id="hr-28" data-group="persona" data-module="recruiting" data-search="结构化面试问题专家 招聘与人才配置 结构化面试 评分标准">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H28</span>
             <div>
               <h2>结构化面试问题专家</h2>
-              <div class="labels"><span class="pill">智能体人设</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">招聘与人才配置</span><span class="pill tag-pill">结构化面试</span><span class="pill tag-pill">评分标准</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -1536,13 +1606,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-29" data-group="persona">
+      <section class="card resource-card prompt-card" id="hr-29" data-group="persona" data-module="development" data-search="企业培训课程设计师 能力模型与人才发展 课程设计 学习目标">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H29</span>
             <div>
               <h2>企业培训课程设计师</h2>
-              <div class="labels"><span class="pill">智能体人设</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">能力模型与人才发展</span><span class="pill tag-pill">课程设计</span><span class="pill tag-pill">学习目标</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -1582,13 +1652,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-30" data-group="persona">
+      <section class="card resource-card prompt-card" id="hr-30" data-group="persona" data-module="development" data-search="岗位学习路径规划师 能力模型与人才发展 学习路径 70-20-10">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H30</span>
             <div>
               <h2>岗位学习路径规划师</h2>
-              <div class="labels"><span class="pill">智能体人设</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">能力模型与人才发展</span><span class="pill tag-pill">学习路径</span><span class="pill tag-pill">70-20-10</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -1628,13 +1698,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-31" data-group="persona">
+      <section class="card resource-card prompt-card" id="hr-31" data-group="persona" data-module="development" data-search="智能管理教练 能力模型与人才发展 管理教练 GROW">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H31</span>
             <div>
               <h2>智能管理教练</h2>
-              <div class="labels"><span class="pill">智能体人设</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">能力模型与人才发展</span><span class="pill tag-pill">管理教练</span><span class="pill tag-pill">GROW</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -1674,13 +1744,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-32" data-group="persona">
+      <section class="card resource-card prompt-card" id="hr-32" data-group="persona" data-module="reward" data-search="部门薪酬数据分析 薪酬激励与岗位价值 薪酬分析 内部公平">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H32</span>
             <div>
               <h2>部门薪酬数据分析</h2>
-              <div class="labels"><span class="pill">智能体人设</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">薪酬激励与岗位价值</span><span class="pill tag-pill">薪酬分析</span><span class="pill tag-pill">内部公平</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -1720,13 +1790,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-33" data-group="persona">
+      <section class="card resource-card prompt-card" id="hr-33" data-group="persona" data-module="performance" data-search="绩效目标拆解专家 绩效与目标管理 绩效指标 目标承接">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H33</span>
             <div>
               <h2>绩效目标拆解专家</h2>
-              <div class="labels"><span class="pill">智能体人设</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">绩效与目标管理</span><span class="pill tag-pill">绩效指标</span><span class="pill tag-pill">目标承接</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -1766,13 +1836,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-34" data-group="persona">
+      <section class="card resource-card prompt-card" id="hr-34" data-group="persona" data-module="performance" data-search="绩效面谈专家 绩效与目标管理 绩效面谈 反馈辅导">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H34</span>
             <div>
               <h2>绩效面谈专家</h2>
-              <div class="labels"><span class="pill">智能体人设</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">绩效与目标管理</span><span class="pill tag-pill">绩效面谈</span><span class="pill tag-pill">反馈辅导</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -1812,13 +1882,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-35" data-group="persona">
+      <section class="card resource-card prompt-card" id="hr-35" data-group="persona" data-module="culture" data-search="企业活动策划专家 企业文化与员工活动 活动策划 风险预案">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H35</span>
             <div>
               <h2>企业活动策划专家</h2>
-              <div class="labels"><span class="pill">智能体人设</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">企业文化与员工活动</span><span class="pill tag-pill">活动策划</span><span class="pill tag-pill">风险预案</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -1858,13 +1928,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-36" data-group="persona">
+      <section class="card resource-card prompt-card" id="hr-36" data-group="persona" data-module="compliance" data-search="劳动用工法律专家 员工手册与劳动合规 劳动法律 用工风险">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H36</span>
             <div>
               <h2>劳动用工法律专家</h2>
-              <div class="labels"><span class="pill">智能体人设</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">员工手册与劳动合规</span><span class="pill tag-pill">劳动法律</span><span class="pill tag-pill">用工风险</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -1905,13 +1975,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-37" data-group="persona">
+      <section class="card resource-card prompt-card" id="hr-37" data-group="persona" data-module="compliance" data-search="HR法律咨询回复框架 员工手册与劳动合规 法律咨询 回复框架">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H37</span>
             <div>
               <h2>HR法律咨询回复框架</h2>
-              <div class="labels"><span class="pill">智能体人设</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">员工手册与劳动合规</span><span class="pill tag-pill">法律咨询</span><span class="pill tag-pill">回复框架</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -1952,13 +2022,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-38" data-group="persona">
+      <section class="card resource-card prompt-card" id="hr-38" data-group="persona" data-module="experience" data-search="Q12组织健康诊断 员工体验与组织健康 Q12 员工敬业度">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H38</span>
             <div>
               <h2>Q12组织健康诊断</h2>
-              <div class="labels"><span class="pill">智能体人设</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">员工体验与组织健康</span><span class="pill tag-pill">Q12</span><span class="pill tag-pill">员工敬业度</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -1998,13 +2068,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-39" data-group="persona">
+      <section class="card resource-card prompt-card" id="hr-39" data-group="persona" data-module="hr-agent" data-search="员工HR问答助手 HR智能体与员工问答 员工问答 制度知识库">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H39</span>
             <div>
               <h2>员工HR问答助手</h2>
-              <div class="labels"><span class="pill">智能体人设</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">HR智能体与员工问答</span><span class="pill tag-pill">员工问答</span><span class="pill tag-pill">制度知识库</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -2044,13 +2114,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-40" data-group="persona">
+      <section class="card resource-card prompt-card" id="hr-40" data-group="persona" data-module="organization" data-search="麦肯锡7S组织诊断专家 组织设计与效能 7S智能体 交互诊断">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H40</span>
             <div>
               <h2>麦肯锡7S组织诊断专家</h2>
-              <div class="labels"><span class="pill">智能体人设</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">组织设计与效能</span><span class="pill tag-pill">7S智能体</span><span class="pill tag-pill">交互诊断</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -2090,13 +2160,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-41" data-group="persona">
+      <section class="card resource-card prompt-card" id="hr-41" data-group="persona" data-module="development" data-search="人才盘点报告专家 能力模型与人才发展 人才盘点 继任梯队">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H41</span>
             <div>
               <h2>人才盘点报告专家</h2>
-              <div class="labels"><span class="pill">智能体人设</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">能力模型与人才发展</span><span class="pill tag-pill">人才盘点</span><span class="pill tag-pill">继任梯队</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -2136,13 +2206,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-42" data-group="persona">
+      <section class="card resource-card prompt-card" id="hr-42" data-group="persona" data-module="development" data-search="九宫格人才盘点分析 能力模型与人才发展 九宫格 人才校准">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H42</span>
             <div>
               <h2>九宫格人才盘点分析</h2>
-              <div class="labels"><span class="pill">智能体人设</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">能力模型与人才发展</span><span class="pill tag-pill">九宫格</span><span class="pill tag-pill">人才校准</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -2182,13 +2252,13 @@
         </details>
       </section>
 
-      <section class="card resource-card prompt-card" id="hr-43" data-group="persona">
+      <section class="card resource-card prompt-card" id="hr-43" data-group="persona" data-module="hr-agent" data-search="HR智能体设计检查清单 HR智能体与员工问答 智能体审查 上线验收">
         <div class="card-top">
           <div class="title-block">
             <span class="num">H43</span>
             <div>
               <h2>HR智能体设计检查清单</h2>
-              <div class="labels"><span class="pill">智能体人设</span><span class="pill">完整结构</span></div>
+              <div class="labels"><span class="pill module-pill">HR智能体与员工问答</span><span class="pill tag-pill">智能体审查</span><span class="pill tag-pill">上线验收</span></div>
             </div>
           </div>
           <span class="kb curated">精选可复制</span>
@@ -2251,7 +2321,7 @@
       </section>
 
 
-    <section class="card resource-card" data-group="skill" id="skill-1">
+    <section class="card resource-card" data-group="skill" data-module="skill" id="skill-1">
       <div class="card-top">
         <div class="title-block">
           <span class="num">01</span>
@@ -2352,7 +2422,7 @@
 请将以上提示词转化为一个可通过 / 唤醒的Skill。生成Skill后，用户通过 /技能名 唤醒Skill，并输入必要的输入信息，即可得到结果。</code></pre>
     </section>
 
-    <section class="card resource-card" data-group="skill" id="skill-2">
+    <section class="card resource-card" data-group="skill" data-module="skill" id="skill-2">
       <div class="card-top">
         <div class="title-block">
           <span class="num">02</span>
@@ -2457,7 +2527,7 @@
 请将以上提示词转化为一个可通过 / 唤醒的Skill。生成Skill后，用户通过 /技能名 唤醒Skill，并输入必要的输入信息，即可得到结果。</code></pre>
     </section>
 
-    <section class="card resource-card" data-group="skill" id="skill-3">
+    <section class="card resource-card" data-group="skill" data-module="skill" id="skill-3">
       <div class="card-top">
         <div class="title-block">
           <span class="num">03</span>
@@ -2585,7 +2655,7 @@
 请将以上提示词转化为一个可通过 / 唤醒的Skill。生成Skill后，用户通过 /技能名 唤醒Skill，并输入必要的输入信息，即可得到结果。</code></pre>
     </section>
 
-    <section class="card resource-card" data-group="skill" id="skill-4">
+    <section class="card resource-card" data-group="skill" data-module="skill" id="skill-4">
       <div class="card-top">
         <div class="title-block">
           <span class="num">04</span>
@@ -2687,7 +2757,7 @@
 请将以上提示词转化为一个可通过 / 唤醒的Skill。生成Skill后，用户通过 /技能名 唤醒Skill，并输入必要的输入信息，即可得到结果。</code></pre>
     </section>
 
-    <section class="card resource-card" data-group="skill" id="skill-5">
+    <section class="card resource-card" data-group="skill" data-module="skill" id="skill-5">
       <div class="card-top">
         <div class="title-block">
           <span class="num">05</span>
@@ -2791,7 +2861,7 @@
 请将以上提示词转化为一个可通过 / 唤醒的Skill。生成Skill后，用户通过 /技能名 唤醒Skill，并输入必要的输入信息，即可得到结果。</code></pre>
     </section>
 
-    <section class="card resource-card" data-group="skill" id="skill-6">
+    <section class="card resource-card" data-group="skill" data-module="skill" id="skill-6">
       <div class="card-top">
         <div class="title-block">
           <span class="num">06</span>
@@ -2896,7 +2966,7 @@
 请将以上提示词转化为一个可通过 / 唤醒的Skill。生成Skill后，用户通过 /技能名 唤醒Skill，并输入必要的输入信息，即可得到结果。</code></pre>
     </section>
 
-    <section class="card resource-card" data-group="skill" id="skill-7">
+    <section class="card resource-card" data-group="skill" data-module="skill" id="skill-7">
       <div class="card-top">
         <div class="title-block">
           <span class="num">07</span>
@@ -2991,7 +3061,7 @@
 请将以上提示词转化为一个可通过 / 唤醒的Skill。生成Skill后，用户通过 /技能名 唤醒Skill，并输入必要的输入信息，即可得到结果。</code></pre>
     </section>
 
-    <section class="card resource-card" data-group="skill" id="skill-8">
+    <section class="card resource-card" data-group="skill" data-module="skill" id="skill-8">
       <div class="card-top">
         <div class="title-block">
           <span class="num">08</span>
@@ -3082,7 +3152,7 @@
 请将以上提示词转化为一个可通过 / 唤醒的Skill。生成Skill后，用户通过 /技能名 唤醒Skill，并输入必要的输入信息，即可得到结果。</code></pre>
     </section>
 
-    <section class="card resource-card" data-group="skill" id="skill-9">
+    <section class="card resource-card" data-group="skill" data-module="skill" id="skill-9">
       <div class="card-top">
         <div class="title-block">
           <span class="num">09</span>
@@ -3188,7 +3258,7 @@
 请将以上提示词转化为一个可通过 / 唤醒的Skill。生成Skill后，用户通过 /技能名 唤醒Skill，并输入必要的输入信息，即可得到结果。</code></pre>
     </section>
 
-    <section class="card resource-card" data-group="skill" id="skill-10">
+    <section class="card resource-card" data-group="skill" data-module="skill" id="skill-10">
       <div class="card-top">
         <div class="title-block">
           <span class="num">10</span>
@@ -3292,7 +3362,7 @@
 请将以上提示词转化为一个可通过 / 唤醒的Skill。生成Skill后，用户通过 /技能名 唤醒Skill，并输入必要的输入信息，即可得到结果。</code></pre>
     </section>
 
-    <section class="card resource-card" data-group="skill" id="skill-11">
+    <section class="card resource-card" data-group="skill" data-module="skill" id="skill-11">
       <div class="card-top">
         <div class="title-block">
           <span class="num">11</span>
@@ -3392,7 +3462,7 @@
 请将以上提示词转化为一个可通过 / 唤醒的Skill。生成Skill后，用户通过 /技能名 唤醒Skill，并输入必要的输入信息，即可得到结果。</code></pre>
     </section>
 
-    <section class="card resource-card" data-group="skill" id="skill-12">
+    <section class="card resource-card" data-group="skill" data-module="skill" id="skill-12">
       <div class="card-top">
         <div class="title-block">
           <span class="num">12</span>
@@ -3501,7 +3571,7 @@
 请将以上提示词转化为一个可通过 / 唤醒的Skill。生成Skill后，用户通过 /技能名 唤醒Skill，并输入必要的输入信息，即可得到结果。</code></pre>
     </section>
 
-    <section class="card resource-card" data-group="skill" id="skill-13">
+    <section class="card resource-card" data-group="skill" data-module="skill" id="skill-13">
       <div class="card-top">
         <div class="title-block">
           <span class="num">13</span>
@@ -3598,7 +3668,7 @@
 请将以上提示词转化为一个可通过 / 唤醒的Skill。生成Skill后，用户通过 /技能名 唤醒Skill，并输入必要的输入信息，即可得到结果。</code></pre>
     </section>
 
-    <section class="card resource-card" data-group="skill" id="skill-14">
+    <section class="card resource-card" data-group="skill" data-module="skill" id="skill-14">
       <div class="card-top">
         <div class="title-block">
           <span class="num">14</span>
@@ -3704,18 +3774,26 @@
     const filterButtons = [...document.querySelectorAll('[data-filter]')];
     const resourceCards = [...document.querySelectorAll('.resource-card')];
     const navLinks = [...document.querySelectorAll('aside a[data-nav-group]')];
+    const navGroups = [...document.querySelectorAll('aside .nav-group')];
 
     function applyResourceFilters() {
       const query = (searchInput.value || '').trim().toLocaleLowerCase('zh-CN');
       let visibleCount = 0;
       resourceCards.forEach((card) => {
-        const groupMatch = activeFilter === 'all' || card.dataset.group === activeFilter;
-        const queryMatch = !query || card.textContent.toLocaleLowerCase('zh-CN').includes(query);
-        card.hidden = !(groupMatch && queryMatch);
+        const moduleMatch = activeFilter === 'all' || card.dataset.module === activeFilter;
+        const searchableText = (card.dataset.search || '') + ' ' + card.textContent;
+        const queryMatch = !query || searchableText.toLocaleLowerCase('zh-CN').includes(query);
+        card.hidden = !(moduleMatch && queryMatch);
         if (!card.hidden) visibleCount += 1;
       });
       navLinks.forEach((link) => {
-        link.hidden = activeFilter !== 'all' && link.dataset.navGroup !== activeFilter;
+        const target = document.querySelector(link.getAttribute('href'));
+        link.hidden = !target || target.hidden;
+      });
+      navGroups.forEach((group) => {
+        const hasVisibleChild = [...group.querySelectorAll('a[data-nav-group]')].some((link) => !link.hidden);
+        group.hidden = !hasVisibleChild;
+        if (hasVisibleChild && (query || activeFilter === group.dataset.navModule)) group.open = true;
       });
       document.getElementById('result-count').textContent = query
         ? `找到${visibleCount}份相关资源`
