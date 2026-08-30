@@ -69,6 +69,7 @@
     .exercise-body{padding:var(--s6)}.two-col{display:grid;grid-template-columns:1fr 1fr;gap:var(--s5)}
     .field{display:grid;gap:var(--s2)}.field+.field{margin-top:var(--s4)}label,.label{font-size:13px;font-weight:800;color:var(--ink)}
     .hint{font-size:12px;color:var(--muted);font-weight:400}
+    .no-break{white-space:nowrap}
     textarea{width:100%;border:1px solid var(--line);border-radius:var(--radius-s);background:var(--paper);color:var(--ink);padding:12px 14px;outline:none}
     textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--pale)}
     textarea{min-height:112px;resize:vertical;line-height:1.7}.tall{min-height:240px}
@@ -123,17 +124,17 @@
           <header class="exercise-head"><span class="exercise-no">M2</span><div><h3>跑通任务闭环：<wbr>把模糊想法改成可执行任务卡</h3><p>目标 + 输入 + 输出 + 约束 + 验收，五项信息说清楚。</p></div><button class="complete-toggle" data-complete="stage1" type="button">标记完成</button></header>
           <div class="exercise-body"><div class="two-col">
             <div>
-              <div class="field"><label for="taskGoal">目标 <span class="hint">这次要解决什么问题？</span></label><textarea id="taskGoal" data-save="taskGoal" placeholder="例如：把本周项目材料整理成经营班子汇报"></textarea></div>
+              <div class="field"><label for="taskGoal">目标 <span class="hint">这次要解决什么问题？</span></label><textarea id="taskGoal" data-save="taskGoal" placeholder="例如：&#10;把本周项目材料整理成经营班子汇报"></textarea></div>
               <div class="field"><label for="taskInput">输入 <span class="hint">可以使用哪些文件、数据、背景和样例？</span></label><textarea id="taskInput" data-save="taskInput" placeholder="例如：周报、项目进度表、会议纪要、旧版PPT"></textarea></div>
-              <div class="field"><label for="taskOutput">输出 <span class="hint">交付什么文件、结构和数量？</span></label><textarea id="taskOutput" data-save="taskOutput" placeholder="例如：12页PPT、3分钟讲稿、风险清单"></textarea></div>
-              <div class="field"><label for="taskConstraint">约束 <span class="hint">哪些不能猜、不能改、不能外发？</span></label><textarea id="taskConstraint" data-save="taskConstraint" placeholder="例如：数字必须回到原表，旧文件不得覆盖"></textarea></div>
+              <div class="field"><label for="taskOutput">输出 <span class="hint">交付什么文件、结构和数量？</span></label><textarea id="taskOutput" data-save="taskOutput" placeholder="例如：12页PPT、3分钟讲稿&#10;风险清单"></textarea></div>
+              <div class="field"><label for="taskConstraint">约束 <span class="hint">哪些不能猜、不能改、不能外发？</span></label><textarea id="taskConstraint" data-save="taskConstraint" placeholder="例如：数字必须回到原表&#10;旧文件不得覆盖"></textarea></div>
               <div class="field"><label for="taskAcceptance">验收 <span class="hint">做到什么程度才算完成？</span></label><textarea id="taskAcceptance" data-save="taskAcceptance" placeholder="例如：能打开、内容对、格式对、范围对、可追溯、可交付"></textarea></div>
             </div>
             <aside class="preview"><h4>可复制任务卡</h4><pre id="taskPreview"></pre><div class="actions"><button class="button primary" data-copy-target="taskPreview" type="button">复制任务卡</button><a class="button secondary" href="https://www.workbuddy.cn/" target="_blank" rel="noopener">打开WorkBuddy</a></div></aside>
           </div></div>
         </article>
         <article class="exercise" id="stage2">
-          <header class="exercise-head"><span class="exercise-no">M3</span><div><h3>高频办公实战：<wbr>从案例演练进入项目协同</h3><p>本模块不再重复填表，直接进入两个真实练习入口。</p></div><button class="complete-toggle" data-complete="stage2" type="button">标记完成</button></header>
+          <header class="exercise-head"><span class="exercise-no">M3</span><div><h3>高频办公实战：<wbr>从案例演练进入项目协同</h3><p>本模块不再重复填表，直接进入两个<span class="no-break">真实练习入口</span>。</p></div><button class="complete-toggle" data-complete="stage2" type="button">标记完成</button></header>
           <div class="exercise-body"><div class="resource-grid">
             <article class="resource-card"><strong>3分钟 AI 实战训练</strong><p>进入公开练习页，选择一个任务，按页面提示完成资料处理与成果输出。</p><a class="button primary" href="https://xjtulijiagui-max.github.io/lijiagui/3min/" target="_blank" rel="noopener">打开 3min 练习</a></article>
             <article class="resource-card"><strong>【WorkBuddy】课程大纲自动化</strong><p>这是项目协同入口。进入共享项目后，在同一项目空间中协作完成课程大纲自动化。</p><a class="button primary" href="https://www.workbuddy.cn/app/projects?projectId=p_9571e91b526544a292655a8c7c1d8aff&amp;wb_invite_copied_at=1788072007056" target="_blank" rel="noopener">进入 WorkBuddy 项目协同</a></article>
@@ -146,7 +147,7 @@
         <article class="exercise" id="stage5">
           <header class="exercise-head"><span class="exercise-no">M6</span><div><h3>IPO → SOP → Skill：<wbr>生成自己的 Skill 设计画布</h3><p>把前面练习结果放进 IPO、SOP、边界和测试结构中。</p></div><button class="complete-toggle" data-complete="stage5" type="button">标记完成</button></header>
           <div class="exercise-body">
-            <div class="notice"><strong>完成条件：</strong>至少写清场景、输入、处理、输出、风险边界和三类测试。未知信息可以写“待确认”，不要用想象补齐。</div>
+            <div class="notice"><strong>完成条件：</strong>至少写清场景、输入、处理、输出、风险边界和三类测试。未知信息可以写“<span class="no-break">待确认</span>”，不要用想象补齐。</div>
             <div class="canvas-grid">
               <div class="field wide"><label for="canvasScene">场景定位 <span class="hint">为谁、解决什么、适用与不适用范围</span></label><textarea id="canvasScene" data-save="canvasScene"></textarea></div>
               <div class="field"><label for="canvasInput">Input <span class="hint">文件、数据、规则、权限、样例</span></label><textarea id="canvasInput" data-save="canvasInput"></textarea></div>
