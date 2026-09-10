@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="酒店运营 AI 场景训练操作台，包含可编辑提示词、原图截图位、模板下载和最终提交清单。">
-  <title>酒店运营 AI 场景训练操作台</title>
+  <meta name="description" content="人力资源 AI 场景训练操作台，包含可编辑提示词、原图截图位、模板下载和最终提交清单。">
+  <title>人力资源 AI 场景训练操作台</title>
   <style>
     :root {
       color-scheme: dark;
@@ -835,7 +835,7 @@
   <div class="shell">
     <aside class="rail" aria-label="步骤导航">
       <div class="rail-title">
-        <strong>酒店运营 AI 场景训练操作台</strong>
+        <strong>人力资源 AI 场景训练操作台</strong>
         <span>先替换变量，再复制提示词。</span>
       </div>
       <nav aria-label="页面步骤">
@@ -849,7 +849,7 @@
       </nav>
       <div class="note-card">
         <h3>修改提醒</h3>
-        <p class="file-purpose">把 {变量} 换成本酒店的信息和材料，再复制到工具。涉及宾客的资料请先脱敏。</p>
+        <p class="file-purpose">把 {变量} 换成本企业的信息和材料，再复制到工具。涉及员工或候选人的资料请先脱敏。</p>
       </div>
       <a class="button-link submit-link" href="https://lijiagui.feishu.cn/share/base/form/shrcnT1NSzknu8leovmgkkebnwh" target="_blank" rel="noopener">打开飞书提交链接</a>
     </aside>
@@ -857,9 +857,9 @@
     <main>
       <section class="hero" aria-labelledby="page-title">
         <div>
-          <span class="kicker">酒店运营实操练习</span>
-          <h1 id="page-title">酒店运营 AI<br><span class="title-line">训练操作台</span></h1>
-          <p class="lead">从预订接待到离店回访，把酒店运营流程梳理清楚，再找 AI 能帮上忙的环节。按顺序完成流程图、场景湖清单和 ROI 评分，花括号里的内容换成本酒店的实际资料。</p>
+          <span class="kicker">人力资源实操练习</span>
+          <h1 id="page-title">人力资源 AI<br><span class="title-line">训练操作台</span></h1>
+          <p class="lead">从招聘入职到在职管理、离职交接，把人力资源流程梳理清楚，再找 AI 能帮上忙的环节。按顺序完成流程图、场景湖清单和 ROI 评分，花括号里的内容换成本企业的实际资料。</p>
           <div class="hero-actions">
             <button class="primary" type="button" data-copy-all>复制四个提示词</button>
             <a class="button-link" href="#scene-lake">下载模板资料</a>
@@ -893,7 +893,7 @@
       <section class="section" id="flow" aria-labelledby="flow-title">
         <div class="section-head">
           <h2 id="flow-title">Step1：流程生成：先把业务流程补完整</h2>
-          <p>先填写 {酒店名称及类型}，梳理宾客从预订到离店回访的流程。拿到 Mermaid 后，检查前厅、客房、餐饮等部门的交接和异常处理，补完整后导出 SVG。</p>
+          <p>先填写 {企业名称及行业}，梳理招聘、入职、在职管理和离职交接流程。拿到 Mermaid 后，检查 HR、用人部门、财务、IT 和行政的交接，补完整后导出 SVG。</p>
           <div class="tool-tags" aria-label="Step1 工具入口">
             <a class="tool-tag" href="https://chat.deepseek.com" target="_blank" rel="noopener">DeepSeek</a>
             <a class="tool-tag" href="https://www.doubao.com" target="_blank" rel="noopener">豆包</a>
@@ -908,21 +908,21 @@
               </div>
               <button type="button" data-copy-target="prompt-flow">复制当前提示词</button>
             </div>
-            <textarea class="prompt-box" id="prompt-flow">我是一名酒店运营经理，负责 {酒店名称及类型} 的日常运营。现在要梳理“宾客从预订到离店回访”的完整服务流程，减少前台等待、提升客房周转效率，让各部门交接更顺畅。请结合酒店运营实践搜索并补充流程，输出为 Mermaid 格式。
+            <textarea class="prompt-box" id="prompt-flow">我是一名人力资源经理，负责 {企业名称及行业} 的人力资源管理。现在要梳理“从用人需求提出到员工离职交接”的完整流程，减少重复填报和跨部门等待，让 HR、用人部门、财务、IT 和行政各自的任务更清楚。请结合人力资源管理实践搜索并补充流程，输出为 Mermaid 格式。
 
-流程请覆盖：渠道咨询与预订、房态和房价确认、到店前需求沟通、前台入住、客房清洁与查房、住中服务、餐饮协同、工程报修、客诉处理、退房结算、离店回访和经营复盘。标明前厅、客房、餐饮、工程、销售与收益管理、财务的职责和交接信息；补充超售、房间未清洁、提前入住、延迟退房、设备故障和账单争议等异常分支。
-酒店现行 SOP 和服务承诺以我提供的资料为准；未提供的信息请列为待确认，不要编造本酒店制度。
+流程请覆盖：编制与用人需求确认、岗位说明书、招聘发布与候选人沟通、面试组织、录用审批、入职准备与办理、试用期跟进与转正、培训发展、绩效目标与反馈、考勤与薪酬核对、员工关系、岗位异动、离职审批与交接、档案归档和人力资源复盘。说明每一步的责任岗位、输入资料、输出成果及交接对象；补充需求变更、候选人放弃入职、资料缺失、试用期评价分歧、考勤异常和离职交接未完成等分支。
+以 {企业现行制度和适用地区} 为依据；缺少的信息列为待确认，不编造企业政策、法定期限或审批权限。涉及劳动用工规定时，请注明可核验的官方来源和适用范围。
 
 请同时满足以下格式要求：
 1. 不同阶段使用不同颜色。
-2. 每个阶段内部可以自上而下排布，但是各个阶段要横向排布，使整个布局美观。
-3. 不同流程节点使用不同形状区分，例如开始/结束、审批、判断、材料、执行、风险提示等。
-4. 如果流程较长，请按到店前、入住、住中服务、离店与复盘分区，让酒店各岗位能快速找到自己的任务和交接节点。
-5. Mermaid 代码要能直接复制到 Mermaid 工具或 draw.io 中渲染，不要只输出文字说明。</textarea>
+2. 各阶段横向排布，阶段内部可自上而下展开；把考勤薪酬、绩效、培训等周期性工作单独标成循环，避免画成每名员工只走一次的直线。
+3. 用不同形状区分开始/结束、审批、判断、资料、执行和风险提示。
+4. 长流程按招聘、入职与转正、在职管理、异动与离职分区，标明 HR 与其他部门的交接节点。
+5. 输出可直接在 Mermaid 工具或 draw.io 中渲染的代码，不要只给文字说明。</textarea>
             <ul class="hint-list">
-              <li><span class="mark">+</span><span>先填写酒店名称及类型，例如城市商务酒店、度假酒店或精品酒店，再复制提示词。</span></li>
-              <li><span class="mark">+</span><span>如果流程不完整，继续追问：“请补充各岗位的交接信息、处理时限，以及满房、客诉和设备故障时的处理分支。”</span></li>
-              <li><span class="mark">+</span><span>最终下载 SVG，建议命名为：01-{酒店名称}-流程生成.svg。</span></li>
+              <li><span class="mark">+</span><span>先填写企业名称及行业，例如制造企业、连锁零售企业或科技公司，再复制提示词。</span></li>
+              <li><span class="mark">+</span><span>如果流程不完整，继续追问：“请补充 HR 与用人部门的交接信息、处理时限，以及入职资料缺失、考勤异常和离职交接未完成时的处理分支。”</span></li>
+              <li><span class="mark">+</span><span>最终下载 SVG，建议命名为：01-{企业名称}-流程生成.svg。</span></li>
             </ul>
             <div class="copy-status" aria-live="polite"></div>
           </article>
@@ -940,7 +940,7 @@
       <section class="section" id="ai-flow" aria-labelledby="ai-flow-title">
         <div class="section-head">
           <h2 id="ai-flow-title">Step2：AI 介入：在同一轮对话里找改造点</h2>
-          <p>结合前厅、客房、餐饮、工程等岗位的日常工作，找出 AI 能减少重复操作、加快服务响应的环节，同时明确哪些决定需要员工确认。</p>
+          <p>结合 HR 与用人部门的日常工作，找出 AI 能减少重复整理、加快响应的环节，并明确录用、转正、绩效和薪酬等决定的人工复核边界。</p>
           <div class="tool-tags" aria-label="Step2 工具入口">
             <a class="tool-tag" href="https://chat.deepseek.com" target="_blank" rel="noopener">DeepSeek</a>
             <a class="tool-tag" href="https://www.doubao.com" target="_blank" rel="noopener">豆包</a>
@@ -955,20 +955,21 @@
               </div>
               <button type="button" data-copy-target="prompt-ai-flow">复制当前提示词</button>
             </div>
-            <textarea class="prompt-box" id="prompt-ai-flow">请基于上一步生成的 {酒店运营流程 Mermaid 代码}，围绕“宾客从预订到离店回访”的服务流程，分析哪些节点适合 AI 介入，帮助酒店缩短等待时间、减少重复录入、提高服务响应速度和经营质量。
+            <textarea class="prompt-box" id="prompt-ai-flow">请基于上一步生成的 {人力资源流程 Mermaid 代码}，分析哪些节点适合 AI 辅助，帮助 HR 减少重复整理、缩短响应时间，让材料和流程更完整。
 
-重点考虑预订咨询辅助、到店需求整理、客房清扫排程、服务工单分派、客诉回复草拟、住客评价分析、入住率预测和经营日报生成。请使用 SCAMPER、SWOT、价值链分析等方法检查遗漏，区分“有数据即可试用”和“需要对接 PMS、工单或渠道系统”的场景，并输出新的 Mermaid 流程图。
+重点考虑岗位说明书草拟、面试安排与提醒、面试记录整理、入职材料清单核对、员工制度问答、培训需求归纳、绩效面谈记录整理、考勤异常提示、离职交接清单和人力资源月报生成。请用 SCAMPER、SWOT、价值链分析等方法检查遗漏，区分“有脱敏材料即可试用”和“需要对接招聘系统、HR 系统、考勤或审批系统”的场景，输出新的 Mermaid 流程图。
 
 格式要求：
-1. 保留原流程主线，不要为了 AI 化删除必要流程节点。
-2. AI 介入节点用另一种颜色标注，并在节点名中写清楚“AI 介入”。
-3. 每个 AI 节点请说明责任岗位、输入数据、AI 处理动作、输出结果和验证指标，例如入住办理时长、净房交付时长、工单响应时长或客诉闭环时长；没有实测数据时，不要虚构提效比例。
-4. 身份核验、退款赔付、房价调整和安全事件处置保留人工复核或审批。仅使用脱敏的宾客数据，写明 AI 建议如何交给员工确认，以及系统不可用时如何人工接续。
-5. Mermaid 代码要能直接复制渲染。</textarea>
+1. 保留原流程主线和必要的人工沟通、复核、审批节点。
+2. AI 辅助节点使用另一种颜色，节点名写清“AI 介入”。
+3. 每个 AI 节点说明责任岗位、输入数据、处理动作、输出结果和验证指标，例如材料整理工时、员工咨询响应时长、返工率或交接完成率；没有实测数据时，不虚构提效比例。
+4. 招聘录用、转正、绩效等级、晋升调薪、薪酬发放和解除劳动关系等决定由有权限的人员复核并作出。AI 仅整理证据、提示缺项、草拟材料，不自动排名、淘汰候选人或给员工定级；不依据性别、年龄、婚育、健康等与岗位要求无关的个人属性作判断。
+5. 优先使用脱敏或模拟材料，按岗位权限处理员工信息，说明信息缺失、模型出错或系统不可用时如何转人工。
+6. Mermaid 代码要能直接复制渲染。</textarea>
             <ul class="hint-list">
-              <li><span class="mark">+</span><span>填入 {酒店运营流程 Mermaid 代码}，接着第一步的酒店场景继续讨论。</span></li>
+              <li><span class="mark">+</span><span>填入 {人力资源流程 Mermaid 代码}，接着第一步的人力资源场景继续讨论。</span></li>
               <li><span class="mark">+</span><span>要求 AI 节点标注“输入数据、AI 处理、输出结果、节省时间或降低风险”。</span></li>
-              <li><span class="mark">+</span><span>最终下载 SVG，建议命名为：02-{酒店名称}-AI化改造.svg。</span></li>
+              <li><span class="mark">+</span><span>最终下载 SVG，建议命名为：02-{企业名称}-AI化改造.svg。</span></li>
             </ul>
             <div class="copy-status" aria-live="polite"></div>
           </article>
@@ -980,10 +981,10 @@
                 <tr><th>讨论点</th><th>追问句式</th></tr>
               </thead>
               <tbody>
-                <tr><td>增加流程</td><td>“客人到了但房间还没清好，谁协调、谁反馈、怎么交接？”</td></tr>
-                <tr><td>修改流程</td><td>“请把客诉处理拆成接诉、核实、授权、处理、回访，写清每步的责任岗位。”</td></tr>
-                <tr><td>删除流程</td><td>“这个环节是否适用于本酒店的业态和服务配置？不适用的请删除并说明原因。”</td></tr>
-                <tr><td>找业务点</td><td>“哪些 AI 介入点能缩短等待、减少返工，或带来可验证的增量毛利？”</td></tr>
+                <tr><td>增加流程</td><td>“新员工即将入职，但电脑、账号和工位还没准备好，谁协调、谁反馈、怎么交接？”</td></tr>
+                <tr><td>修改流程</td><td>“请把入职办理拆成资料核对、合同办理、账号开通、培训安排和跟进反馈，写清每步的责任岗位。”</td></tr>
+                <tr><td>删除流程</td><td>“这个环节是否适用于本企业的组织规模和人事制度？不适用的请删除并说明原因。”</td></tr>
+                <tr><td>找业务点</td><td>“哪些 AI 介入点能减少重复填报、缩短员工等待，或降低材料差错与返工？”</td></tr>
               </tbody>
             </table>
           </aside>
@@ -1007,19 +1008,20 @@
               </div>
               <button type="button" data-copy-target="prompt-scene">复制当前提示词</button>
             </div>
-            <textarea class="prompt-box short" id="prompt-scene">请以“场景湖清单-示例.xlsx”为格式模板，根据 {本酒店运营会议纪要/录音转写/各部门讨论要点}，结合 {Step2 输出的酒店 AI 改造 Mermaid 代码}，整理 {酒店名称/运营小组} 的 AI 场景湖清单，输出为 xls。
+            <textarea class="prompt-box short" id="prompt-scene">请以“场景湖清单-示例.xlsx”为格式模板，根据 {本企业人力资源会议纪要/录音转写/HR 与用人部门讨论要点}，结合 {Step2 输出的人力资源 AI 改造 Mermaid 代码}，整理 {企业名称/人力资源小组} 的 AI 场景湖清单，输出为 xls。
 
-按前厅预订与接待、客房清洁与房态、餐饮服务、工程维护、客诉与评价、销售与收益管理、财务与经营复盘梳理。场景名称要落到具体工作，例如“高峰时段入住咨询辅助”“退房后清扫任务排程”“住客差评分类与回复草拟”。
-保留模板原有列名、顺序和格式，在对应字段写清业务痛点、触发条件、责任岗位、输入数据、AI 动作、人工复核、输出成果和衡量指标。模板没有的字段放在补充说明工作表中。合并重复场景；讨论中未确认的建议标记为“待确认”，缺少的数据写“待补充”，不要照搬示例表中的其他行业内容。</textarea>
+按人力资源规划、招聘与入职、培训发展、绩效管理、薪酬考勤、员工关系与离职管理梳理。场景名称要落到具体工作，例如“用人需求转岗位说明书初稿”“新员工入职材料缺项核对”“员工制度问答”“绩效面谈纪要整理”“离职交接进度提醒”。
+保留模板原有列名、顺序和格式，在对应字段写清业务痛点、触发条件、责任岗位、输入数据、AI 动作、人工复核、输出成果和衡量指标。涉及员工或候选人信息时，补充脱敏方式、访问权限和人工确认边界；模板没有的字段放在补充说明工作表中。
+合并重复场景；讨论中未确认的建议标记为“待确认”，缺少的数据写“待补充”，不要照搬示例表中的其他行业内容。</textarea>
             <ul class="hint-list">
               <li><span class="mark">+</span><span>先下载并上传下方资料：场景湖清单-示例.xlsx。</span></li>
-              <li><span class="mark">+</span><span>补充本酒店运营会议纪要、各岗位讨论要点和 AI 改造 Mermaid 代码。</span></li>
+              <li><span class="mark">+</span><span>补充本人力资源会议纪要、各岗位讨论要点和 AI 改造 Mermaid 代码。</span></li>
               <li><span class="mark">+</span><span>若清单不对，继续对话让它补充、合并、删除或重排场景。</span></li>
             </ul>
             <div class="step-downloads" aria-label="Step3 下载资料">
               <div class="step-download">
                 <span class="badge greenish">下载资料</span>
-                <p class="file-purpose">点击标题下载后，放入小浣熊作为格式参考；场景内容按本酒店材料重新填写。</p>
+                <p class="file-purpose">点击标题下载后，放入小浣熊作为格式参考；场景内容按本企业材料重新填写。</p>
                 <a class="download-title" href="assets/场景湖清单-示例.xlsx" download>场景湖清单-示例.xlsx</a>
               </div>
             </div>
@@ -1053,15 +1055,16 @@
               </div>
               <button type="button" data-copy-target="prompt-roi">复制当前提示词</button>
             </div>
-            <textarea class="prompt-box short" id="prompt-roi">请根据 {Step3 输出的本酒店 AI 场景湖清单}，使用“高ROI场景评分表-示例.xlsx”和“场景综合评价表-参考-课后.xlsx”，完成酒店运营场景评分，返回 xls。
+            <textarea class="prompt-box short" id="prompt-roi">请根据 {Step3 输出的本企业人力资源 AI 场景湖清单}，使用“高ROI场景评分表-示例.xlsx”和“场景综合评价表-参考-课后.xlsx”，完成人力资源场景评分，返回 xls。
 
-严格按模板的评分维度、5 分制标准和权重逐项打分，并写出理由。结合酒店的业务量、员工重复工时、宾客等待时间、客诉情况、增量毛利，以及系统对接、培训、维护和人工复核成本判断；没有依据的分值标记为“暂估”，同时列出需要补采的数据。
-区分淡旺季和不同入住率下的表现，不把节省工时直接当成实际现金收益，不把新增营收直接当成利润，也不要把综合评分当成财务 ROI。
-在综合评价中选出优先试点的 3 个场景，说明责任部门、试点范围、实施前基线、验收指标和复盘时间。保持模板结构，输出文件命名为“04-{酒店名称}-高ROI场景评分结果.xls”。</textarea>
+严格按模板的评分维度、5 分制标准和权重逐项打分，并写出依据。结合月度业务量、HR 和用人部门的重复工时、员工咨询响应时长、材料差错与返工情况，以及系统对接、数据治理、培训、维护和人工复核成本判断。没有依据的分值标记为“暂估”，列出需要补采的数据；仅有演示效果时，不视为收益已实现。
+区分招聘旺季、集中入职、月度薪酬核对和年度绩效周期。节省工时与实际现金节约分别列示，避免重复计算；不要把综合评分当成财务 ROI，也不要把 AI 使用量直接换算成裁员人数。
+在综合评价中选出优先试点的 3 个场景，写明责任人、试点范围、实施前基线、验收指标和复盘时间。优先考虑数据准备充分、人工复核明确、可小范围验证的辅助工作；对涉及员工权益的场景单列风险与上线前提，不因预计收益高就跳过人工审批。
+保持模板结构，输出文件命名为“04-{企业名称}-高ROI场景评分结果.xls”。</textarea>
             <ul class="hint-list">
               <li><span class="mark">+</span><span>先下载并上传下方两份资料：评分表和综合评价参考表。</span></li>
               <li><span class="mark">+</span><span>确认评分理由不要空，便于老师看出判断依据。</span></li>
-              <li><span class="mark">+</span><span>输出文件建议命名为：04-{酒店名称}-高ROI场景评分结果.xls。</span></li>
+              <li><span class="mark">+</span><span>输出文件建议命名为：04-{企业名称}-高ROI场景评分结果.xls。</span></li>
             </ul>
             <div class="step-downloads" aria-label="Step4 下载资料">
               <div class="step-download">
@@ -1106,15 +1109,15 @@
           <article class="artifact-card">
             <h3>两个流程图附件 <span class="badge">SVG</span></h3>
             <ul class="check-list">
-              <li><span class="mark">1</span><span>01-{酒店名称}-流程生成.svg</span></li>
-              <li><span class="mark">2</span><span>02-{酒店名称}-AI化改造.svg</span></li>
+              <li><span class="mark">1</span><span>01-{企业名称}-流程生成.svg</span></li>
+              <li><span class="mark">2</span><span>02-{企业名称}-AI化改造.svg</span></li>
             </ul>
           </article>
           <article class="artifact-card">
             <h3>两个 Excel 附件 <span class="badge">xls</span></h3>
             <ul class="check-list">
-              <li><span class="mark">1</span><span>03-{酒店名称}-场景湖清单.xls</span></li>
-              <li><span class="mark">2</span><span>04-{酒店名称}-高ROI场景评分结果.xls</span></li>
+              <li><span class="mark">1</span><span>03-{企业名称}-场景湖清单.xls</span></li>
+              <li><span class="mark">2</span><span>04-{企业名称}-高ROI场景评分结果.xls</span></li>
             </ul>
           </article>
           <article class="artifact-card warning">
