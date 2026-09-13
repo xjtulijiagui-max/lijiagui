@@ -125,7 +125,7 @@
     .active-filter:hover{border-color:var(--color-border-strong);color:var(--color-accent)}
     .active-filter b{font-size:.875rem;line-height:1}
     .grid{min-height:60vh;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-4)}
-    .card{background:var(--color-surface-card);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:var(--space-5);box-shadow:var(--shadow-subtle);transition:transform 200ms ease-in-out,box-shadow 200ms ease-in-out,border-color 200ms ease-in-out;display:flex;flex-direction:column;min-height:270px;contain:layout paint style}
+    .card{min-width:0;background:var(--color-surface-card);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:var(--space-5);box-shadow:var(--shadow-subtle);transition:transform 200ms ease-in-out,box-shadow 200ms ease-in-out,border-color 200ms ease-in-out;display:flex;flex-direction:column;min-height:270px;contain:layout paint style}
     .card:hover,.card:focus-within{transform:translateY(-3px);box-shadow:var(--shadow-default);border-color:var(--color-border-strong)}
     .card-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
     .category{font-size:.75rem;color:var(--color-accent);background:var(--color-accent-soft);padding:5px var(--space-2);border-radius:7px;font-weight:700}
@@ -160,8 +160,8 @@
     .toast{position:fixed;right:22px;bottom:22px;background:var(--color-brand-deep);color:var(--color-surface-card);padding:11px 15px;border-radius:10px;box-shadow:var(--shadow-default);opacity:0;transform:translateY(12px);transition:opacity 200ms ease-in-out,transform 200ms ease-in-out;pointer-events:none;z-index:99}
     .toast.show{opacity:1;transform:none}
     @media(max-width:1100px){.catalog-layout{grid-template-columns:232px minmax(0,1fr)}.wrap{padding-inline:var(--space-5)}}
-    @media(max-width:959px){.catalog-layout{grid-template-columns:1fr}.filters{position:static}.filter-panel summary{display:flex;align-items:center;justify-content:space-between}.filter-panel-body{border-top:1px solid var(--color-border)}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.toolbar{position:static}.stats{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:640px){.wrap{padding-inline:var(--space-4)}.wrap.hero-inner{padding-block:38px 34px}.search-row{grid-template-columns:1fr}.ghost{min-height:42px}.search kbd{display:none}.query-examples{flex-wrap:wrap;overflow:visible}.stats{gap:var(--space-2)}.section-head{align-items:flex-start;flex-direction:column;gap:var(--space-2)}.result-count{white-space:normal}.grid{grid-template-columns:1fr}.card{min-height:0}.admin{padding:var(--space-5)}}
+    @media(max-width:959px){.catalog-layout{grid-template-columns:minmax(0,1fr)}.filters{position:static}.filter-panel summary{display:flex;align-items:center;justify-content:space-between}.filter-panel-body{border-top:1px solid var(--color-border)}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.toolbar{position:static}.stats{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:640px){.wrap{padding-inline:var(--space-4)}.wrap.hero-inner{padding-block:38px 34px}.search-row{grid-template-columns:1fr}.ghost{min-height:42px}.search kbd{display:none}.query-examples{flex-wrap:wrap;overflow:visible}.stats{gap:var(--space-2)}.section-head{align-items:flex-start;flex-direction:column;gap:var(--space-2)}.result-count{white-space:normal}.grid{grid-template-columns:minmax(0,1fr)}.card{min-height:0}.admin{padding:var(--space-5)}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}.card:hover,.card:focus-within,.quick a:hover{transform:none}}
   </style>
 </head>
@@ -1362,7 +1362,29 @@ window.NAV_ITEMS = [
     "status": "正常",
     "featured": true,
     "updated": "2026-09-12"
-  }];
+  },
+  {
+    "id": "pm-prompt",
+    "title": "产品经理沟通提示词手册",
+    "shortTitle": "产品经理沟通",
+    "category": "通用方法与沙盘",
+    "description": "22组可复制提示词，覆盖客户沟通、内部协同、向上汇报、项目交付、验收上线与冲突协调，支持全文搜索和按环节筛选。",
+    "url": "https://xjtulijiagui-max.github.io/lijiagui/pm-prompt/",
+    "tags": [
+      "产品经理",
+      "沟通",
+      "提示词",
+      "需求变更",
+      "项目交付"
+    ],
+    "type": "提示词与模板库",
+    "client": "通用",
+    "order": 265,
+    "status": "正常",
+    "featured": false,
+    "updated": "2026-09-13"
+  }
+];
 
 </script>
   <script>
