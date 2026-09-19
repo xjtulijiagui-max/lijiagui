@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<script>window.WB_OFFLINE=true;</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="color-scheme" content="light">
+<title>岗位设计助手 · 把硬仗落到岗位 · HR自动化工作台</title>
+<link rel="stylesheet" href="shared.css?v=13">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family:"Microsoft YaHei","微软雅黑","PingFang SC",sans-serif;
+  background:#FAFAF9; color:#1F2328; line-height:1.6;
+  -webkit-font-smoothing:antialiased; font-size:14px;
+}
+main { max-width:1280px; margin:0 auto; padding:24px 20px 70px; }
+.layout { display:grid; grid-template-columns:360px 1fr; gap:20px; align-items:start; }
+.panel { background:#FFFFFF; border:1px solid #ECEAE6; border-radius:10px; padding:18px; }
+.side { position:sticky; top:74px; }
+.ptitle { font-size:15px; font-weight:700; margin-bottom:4px; }
+.pnote { font-size:12px; color:#8A8F98; margin-bottom:14px; }
+.fgroup { margin-bottom:15px; }
+.flabel { font-size:12px; font-weight:700; color:#5F5E5A; margin-bottom:7px; display:flex; align-items:center; }
+.flabel .dot { width:5px; height:5px; border-radius:50%; background:#16A06A; margin-right:6px; }
+.frow { display:flex; align-items:center; gap:8px; margin-bottom:7px; }
+.frow label { flex:0 0 64px; font-size:12px; color:#6B7280; }
+.frow input, .frow select {
+  flex:1; min-width:0; font-family:inherit; font-size:13px; padding:6px 9px;
+  border:1px solid #DCDAD4; border-radius:5px; background:#FCFCFB; color:#1F2328;
+}
+.frow input:focus, .frow select:focus { outline:none; border-color:#16A06A; background:#fff; }
+.frow .unit { flex:0 0 34px; font-size:11px; color:#A0A4AC; }
+.hint { font-size:11.5px; color:#8A8F98; margin-top:2px; line-height:1.5; }
+table.rst { width:100%; border-collapse:collapse; font-size:13px; margin-top:4px; }
+table.rst th { background:#F5F5F3; font-size:12px; font-weight:700; color:#3D4450; padding:8px 10px; text-align:right; border-bottom:1px solid #ECEAE6; white-space:nowrap; }
+table.rst th:first-child { text-align:left; }
+table.rst td { padding:8px 10px; text-align:right; border-bottom:1px solid #F0EEE9; }
+table.rst td:first-child { text-align:left; color:#3D4450; }
+table.rst tr.hl td { background:#EAF7F1; font-weight:700; color:#16A06A; }
+table.rst tr.hl td:first-child { color:#118A5A; }
+table.rst td.num { font-variant-numeric:tabular-nums; }
+.badge { display:inline-block; font-size:11px; padding:2px 8px; border-radius:20px; font-weight:700; }
+.b-good { background:#EAF7F1; color:#16A06A; }
+.b-mid { background:#FAEEDA; color:#854F0B; }
+.b-bad { background:#FCEBEB; color:#A32D2D; }
+.callout { background:#F5F5F3; border-radius:8px; padding:13px 15px; font-size:13px; color:#3D4450; margin-top:12px; }
+.callout.green { background:#EAF7F1; color:#118A5A; }
+.callout.red { background:#FCEBEB; color:#791F1F; }
+.callout b { font-weight:700; }
+.concl { background:#16A06A; color:#fff; border-radius:10px; padding:20px 22px; margin-top:16px; }
+.concl h3 { font-size:15px; font-weight:700; margin-bottom:14px; }
+.concl ol { margin-left:18px; }
+.concl li { margin-bottom:11px; font-size:14px; }
+.concl li:last-child { margin-bottom:0; }
+.concl b { font-weight:700; }
+section { background:#FFFFFF; border:1px solid #ECEAE6; border-radius:10px; padding:20px; margin-bottom:16px; }
+.sec-h { display:flex; align-items:center; gap:9px; margin-bottom:14px; }
+.sec-n { width:22px; height:22px; flex:0 0 22px; border-radius:5px; background:#16A06A; color:#fff; font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+.sec-t { font-size:15px; font-weight:700; }
+.sec-sub { font-size:12px; color:#8A8F98; margin-left:auto; text-align:right; }
+.kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-bottom:16px; }
+.kpi { background:#fff; border:1px solid #ECEAE6; border-radius:10px; padding:14px 15px; }
+.kpi .k { font-size:12px; color:#8A8F98; }
+.kpi .v { font-size:23px; font-weight:700; margin:3px 0 2px; font-variant-numeric:tabular-nums; }
+.kpi .d { font-size:11.5px; color:#6B7280; }
+.kpi.g .v { color:#16A06A; } .kpi.r .v { color:#A32D2D; } .kpi.a .v { color:#BA7517; }
+.checklist { list-style:none; padding:0; }
+.checklist li { font-size:13px; padding:7px 10px; border-radius:6px; margin-bottom:6px; background:#FAFAF9; }
+.checklist li.bad { background:#FCEBEB; color:#791F1F; }
+.checklist li.good { background:#EAF7F1; color:#118A5A; }
+.checklist li b { font-weight:700; }
+@media (max-width:980px){ .layout{grid-template-columns:1fr;} .side{position:static;} }
+@media print { .wb-head,.wb-foot{display:none!important;} body{background:#fff;} .layout{display:block;} .side{display:none;} section{border:1px solid #ccc; page-break-inside:avoid;} }
+</style>
+<style>.layout>*{min-width:0}.hr-wide-result{max-width:100%;overflow-x:auto;overscroll-behavior-inline:contain}.hr-wide-result>table{min-width:640px}.hr-wide-result:focus-visible{outline:2px solid #16A06A;outline-offset:2px}@media print{.hr-wide-result{overflow:visible}.hr-wide-result>table{min-width:0}}</style>
+</head>
+<body>
+
+<main>
+<div class="layout">
+  <div class="side">
+    <div class="panel">
+      <div class="ptitle">填企业现状</div>
+      <div class="pnote">数字按「万元 / 人」填。诊断与测算只看这 9 项。</div>
+
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>企业名称</div>
+        <div class="frow"><input id="company" placeholder="如：XXAI原生组织"></div>
+      </div>
+
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>所属行业</div>
+        <div class="frow"><select id="industry">
+          <option>精密制造/五金加工</option><option>汽车零部件</option><option>电子制造(SMT)</option>
+          <option>机械加工</option><option>食品饮料</option><option>生物制药/医疗器械</option>
+          <option>新能源/光伏</option><option>建筑工程/房地产</option><option>纺织服装</option>
+          <option>物流/供应链</option><option>零售/连锁</option><option>软件/互联网</option>
+          <option>酒店/餐饮服务</option><option>培训/教育服务</option><option>其他</option>
+        </select></div>
+      </div>
+
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>营收目标 / 人均产值</div>
+        <div class="frow"><label>营收目标</label><input id="rev" type="number" value="28000"><span class="unit">万元</span></div>
+        <div class="frow"><label>人均产值</label><input id="perHead" type="number" value="85"><span class="unit">万元</span></div>
+        <div class="hint">人均产值目标 = 营收目标 ÷ 目标编制。制造业常见 70~100 万。</div>
+      </div>
+
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>现有规模</div>
+        <div class="frow"><label>现有人数</label><input id="curHead" type="number" value="370"><span class="unit">人</span></div>
+        <div class="frow"><label>副职人数</label><input id="vps" type="number" value="6"><span class="unit">人</span></div>
+        <div class="frow"><label>最大幅度</label><input id="maxSpan" type="number" value="60"><span class="unit">人</span></div>
+        <div class="hint">最大幅度 = 当前直管人数最多的一位管理者管多少人。</div>
+      </div>
+
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>架构现状</div>
+        <div class="frow"><label>质量部</label><select id="quality">
+          <option value="0">挂在生产副总下</option><option value="1">独立，向CEO汇报</option></select></div>
+        <div class="frow"><label>HR人数</label><input id="hr" type="number" value="3"><span class="unit">人</span></div>
+        <div class="frow"><label>战略数据</label><select id="data">
+          <option value="0">无战略/数据分析岗</option><option value="1">有</option></select></div>
+      </div>
+
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>人力成本占比</div>
+        <div class="frow"><label>占比</label><input id="cost" type="number" value="28"><span class="unit">%</span></div>
+        <div class="hint">人力总成本 ÷ 营收。红线 ≤30%，优化目标 &lt;25%。</div>
+      </div>
+
+      <button class="wb-btn wb-primary" style="width:100%" onclick="calc()">生成岗位设计方案</button>
+    </div>
+  </div>
+
+  <div>
+    <div id="out"></div>
+    <div class="callout" style="margin-top:14px;">
+      <b>用法</b>：先填右侧企业现状，点生成——它会用<b>五大致命病灶</b>扫描你的架构，再按营收目标倒推编制，最后给出用工方式和 90 天过渡路径。数字拿不准就用示例值先跑一遍。
+    </div>
+  </div>
+</div>
+</main>
+
+<script src="shared.js?v=13"></script>
+<script>
+wbShell('岗位设计助手');
+
+function statusBadge(level){
+  if(level==='red') return '<span class="badge b-bad">红 · 高危</span>';
+  if(level==='mid') return '<span class="badge b-mid">黄 · 预警</span>';
+  return '<span class="badge b-good">绿 · 达标</span>';
+}
+
+function calc(){
+  var company = wbVal('company') || '贵公司';
+  var rev = parseFloat(wbVal('rev')), perHead = parseFloat(wbVal('perHead'));
+  var curHead = parseFloat(wbVal('curHead')), vps = parseFloat(wbVal('vps'));
+  var maxSpan = parseFloat(wbVal('maxSpan')), hr = parseFloat(wbVal('hr'));
+  var quality = wbVal('quality')==='1', hasData = wbVal('data')==='1';
+  var cost = parseFloat(wbVal('cost'));
+
+  // 编制测算
+  var base = (rev && perHead) ? rev/perHead : null;
+  var flex = base!=null ? base*1.12 : null;
+  var delta = (base!=null && curHead) ? base - curHead : null;
+  var costLevel = cost>30 ? 'red' : (cost>=25 ? 'mid' : 'good');
+
+  // 五大致命病灶
+  var lesions = [];
+  // ① 副总分权
+  var l1 = (vps>=5) ? 'red' : (vps>=3 ? 'mid' : 'good');
+  lesions.push({n:'① 副总分权模式', level:l1,
+    fact:(vps>=5?('设了 '+vps+' 个副职，每人只管十几人'):(vps>=3?('副职 '+vps+' 人，分权偏细'):'副职 ≤2，指挥链较集中')),
+    con:'决策慢、内耗大、责任不清', fix:'收权到统一指挥中枢，副职每人直管 ≥10 人'});
+  // ② 质量失声
+  var l2 = quality ? 'good' : 'red';
+  lesions.push({n:'② 质量失声', level:l2,
+    fact: quality?'质量部独立、向CEO汇报':'质量部挂在生产副总下，无独立话语权',
+    con:'零缺陷难落地，客户投诉止不住', fix:'制造业质量部必须独立、直接向CEO汇报'});
+  // ③ 管理幅度失控
+  var l3 = (maxSpan>20) ? 'red' : (maxSpan>14 ? 'mid' : 'good');
+  lesions.push({n:'③ 管理幅度失控', level:l3,
+    fact:('最大直管 '+maxSpan+' 人'),
+    con:'现场问题层层衰减，质量事故频发', fix:'超 20 人必须增设工段长/班组长层级'});
+  // ④ HR职能残缺
+  var l4 = (hr<4) ? 'red' : (hr<5 ? 'mid' : 'good');
+  lesions.push({n:'④ HR职能残缺', level:l4,
+    fact:('HR '+hr+' 人'),
+    con:'人才盘点/激励/梯队全部缺位', fix:'HR 须覆盖招聘+薪酬+培训+OD+数据分析（≥5人）'});
+  // ⑤ 战略数据真空
+  var l5 = hasData ? 'good' : 'mid';
+  lesions.push({n:'⑤ 战略数据真空', level:l5,
+    fact: hasData?'有战略运营/数据分析岗':'无战略/数据分析岗',
+    con:'硬仗进度不可见、靠经验决策', fix:'设战略运营部，把战略变成运营数据看板'});
+
+  var redN = lesions.filter(function(x){return x.level==='red';}).length;
+  var midN = lesions.filter(function(x){return x.level==='mid';}).length;
+
+  // 用工方式建议
+  var employ = [
+    ['核心管理与技术','标准劳动关系','管理层/核心技术/业务骨干','长期稳定、全职'],
+    ['一线生产辅助','劳务派遣','行政/客服/临时项目','灵活调配、降风险'],
+    ['非核心专业职能','业务外包','IT运维/财务代账/保洁','按结果付费'],
+    ['旺季/项目临时','灵活用工','短期项目/专业顾问','按需调用、零工制']
+  ];
+
+  // 三阶段90天
+  var phases = [
+    ['第1-30天 · 立标准','成立组织优化组（CEO任组长）；发架构公告，明确一级部门/负责人/汇报关系；质量部独立、设战略运营部','CEO'],
+    ['第31-60天 · 调结构','拆分管理幅度（增工段/班组）；HR增配到位、启动盘点；整合分散职能；压缩副职与虚设岗','HRD'],
+    ['第61-90天 · 建机制','上线月度经营看板；启动复盘机制；关键岗盘点；薪酬与岗位价值挂钩；非核心岗试点派遣/外包','COO']
+  ];
+
+  // 避坑检查
+  var checks = [
+    ['是否有人为设岗（"这人不错，给他安排个岗"）', false],
+    ['是否有虚设岗位（"先挂着，以后再说"）', false],
+    ['编制是否失控（"忙就加人"）', false],
+    ['副总是否过多、每人只管小部门', vps>=5],
+    ['管理幅度是否失控（一人直管≥20人无中间层）', maxSpan>20],
+    ['质量部在制造业是否独立于生产', !quality],
+    ['HR职能是否完整（招聘+薪酬+培训+OD+数据分析）', hr<5],
+    ['是否有战略运营/数据分析能力', !hasData],
+    ['人力成本占比是否超过红线(>30%)', cost>30],
+    ['组织调整是否分阶段、先立后破', false]
+  ];
+
+  var R = {company:company, base:base, flex:flex, delta:delta, costLevel:costLevel,
+           lesions:lesions, redN:redN, midN:midN, employ:employ, phases:phases, checks:checks};
+  window.__job = R;
+
+  var h = '';
+  h += '<section><div class="sec-h"><span class="sec-n">★</span><span class="sec-t">组织诊断摘要</span>'
+     + '<span class="sec-sub">'+wbEsc(company)+'</span></div>';
+  h += '<div class="kpis">'
+     + '<div class="kpi '+(costLevel==='red'?'r':(costLevel==='mid'?'a':'g'))+'"><div class="k">人力成本占比</div><div class="v">'+(cost||'—')+'%</div><div class="d">'+(costLevel==='red'?'超红线':(costLevel==='mid'?'逼近红线':'安全'))+'</div></div>'
+     + '<div class="kpi"><div class="k">基础编制</div><div class="v">'+(base!=null?Math.round(base):'—')+'</div><div class="d">营收÷人均产值</div></div>'
+     + '<div class="kpi '+(redN?'r':'g')+'"><div class="k">高危病灶</div><div class="v">'+redN+'</div><div class="d">红项需立即整改</div></div>'
+     + '<div class="kpi '+(midN?'a':'g')+'"><div class="k">预警病灶</div><div class="v">'+midN+'</div><div class="d">黄项限期完善</div></div>'
+     + '</div>';
+
+  h += '<div class="hr-wide-result" tabindex="0" role="region" aria-label="结果表，可左右滚动"><table class="rst"><thead><tr><th>病灶</th><th>现状</th><th>等级</th><th>后果</th><th>优化方向</th></tr></thead><tbody>';
+  lesions.forEach(function(x){
+    h += '<tr><td>'+x.n+'</td><td style="text-align:left">'+wbEsc(x.fact)+'</td><td>'+statusBadge(x.level)+'</td><td style="text-align:left">'+wbEsc(x.con)+'</td><td style="text-align:left">'+wbEsc(x.fix)+'</td></tr>';
+  });
+  h += '</tbody></table></div></section>';
+
+  // 编制测算
+  h += '<section><div class="sec-h"><span class="sec-n">2</span><span class="sec-t">编制测算</span>'
+     + '<span class="sec-sub">人效导向，不凭感觉</span></div>';
+  h += '<table class="rst"><thead><tr><th>项目</th><th>数值</th><th>说明</th></tr></thead><tbody>';
+  h += '<tr><td>基础编制</td><td class="num">'+(base!=null?Math.round(base)+' 人':'—')+'</td><td style="text-align:left">营收目标 ÷ 人均产值目标</td></tr>';
+  h += '<tr><td>弹性编制</td><td class="num">'+(flex!=null?Math.round(flex)+' 人':'—')+'</td><td style="text-align:left">基础 × 1.12（季节/流失缓冲）</td></tr>';
+  h += '<tr class="hl"><td>与现有差额</td><td class="num">'+(delta!=null?(delta>=0?'+':'')+Math.round(delta)+' 人':'—')+'</td><td style="text-align:left">'+(delta==null?'':(delta>0?'需补人':'可瘦身'))+'</td></tr>';
+  h += '<tr><td>成本占比红线</td><td>'+statusBadge(costLevel)+'</td><td style="text-align:left">≤30% 为红线，优化目标 &lt;25%</td></tr>';
+  h += '</tbody></table>';
+  h += '<div class="callout '+(costLevel==='red'?'red':'')+'">编制原则：总量在弹性编制内、管理层精简、关键支撑岗加强、非核心可外包。人力成本占比保留 5 个百分点安全垫。</div></section>';
+
+  // 用工方式
+  h += '<section><div class="sec-h"><span class="sec-n">3</span><span class="sec-t">用工方式建议</span></div>';
+  h += '<table class="rst"><thead><tr><th>岗位类别</th><th>用工类型</th><th>适用对象</th><th>成本特点</th></tr></thead><tbody>';
+  employ.forEach(function(r){ h += '<tr><td style="text-align:left">'+r[0]+'</td><td style="text-align:left">'+r[1]+'</td><td style="text-align:left">'+r[2]+'</td><td style="text-align:left">'+r[3]+'</td></tr>'; });
+  h += '</tbody></table></section>';
+
+  // 90天过渡
+  h += '<section><div class="sec-h"><span class="sec-n">4</span><span class="sec-t">三阶段 90 天过渡</span><span class="sec-sub">先立后破</span></div>';
+  h += '<table class="rst"><thead><tr><th>阶段</th><th>关键动作</th><th>责任人</th></tr></thead><tbody>';
+  phases.forEach(function(r){ h += '<tr><td style="text-align:left"><b>'+r[0]+'</b></td><td style="text-align:left">'+r[1]+'</td><td>'+r[2]+'</td></tr>'; });
+  h += '</tbody></table></section>';
+
+  // 避坑检查
+  h += '<section><div class="sec-h"><span class="sec-n">5</span><span class="sec-t">避坑检查</span></div><ul class="checklist">';
+  checks.forEach(function(c){
+    var bad = c[1];
+    h += '<li class="'+(bad?'bad':'good')+'">'+(bad?'⚠ 需关注':'✓ 已规避')+' · '+wbEsc(c[0])+'</li>';
+  });
+  h += '</ul></section>';
+
+  // 结论
+  var concl = [];
+  concl.push('架构核心目标：把<b>硬仗</b>落到能打胜仗的阵型上。当前'+redN+' 个红项、'+midN+' 个黄项，优先收口红项（'+
+    lesions.filter(function(x){return x.level==='red';}).map(function(x){return x.n;}).join('、')+'）。');
+  if(base!=null) concl.push('按营收目标倒推，基础编制约 <b>'+Math.round(base)+' 人</b>'+(delta!=null?(delta>0?'，比现在多 ':'，比现在少 ')+Math.abs(Math.round(delta))+' 人':'')+'；编制跟着人效走，不凭感觉加人。');
+  concl.push('质量部在制造业必须独立、向CEO汇报；HR 须补齐到 ≥5 人覆盖五职能；先立后破，90 天内跑通看板与复盘。');
+  h += '<div class="concl"><h3>三条能拿去开会的结论</h3><ol>';
+  concl.forEach(function(c){ h += '<li>'+c+'</li>'; });
+  h += '</ol></div>';
+
+  document.getElementById('out').innerHTML = h;
+}
+
+// 加载示例
+(function(){ document.getElementById('company').value='XXAI原生组织'; })();
+calc();
+</script>
+<script src="dataIface.js?v=12"></script>
+<script>wbDataIface.setup({ pageKey:'job_v1', tables:[], afterLoad:function(){ if(typeof calc==='function') calc(); } });</script>
+
+<script>window.WB_AGENT_KEY='job';</script>
+</body>
+</html>

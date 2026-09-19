@@ -1,0 +1,3012 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<script>window.WB_OFFLINE=true;</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="color-scheme" content="light">
+<title>关键岗位价值系数速算智能助手 - A类核心岗位识别 · HR自动化工作台</title>
+
+<style>
+:root {
+  --primary: #1a56db;
+  --primary-light: #e8f0fe;
+  --danger: #dc2626;
+  --danger-light: #fef2f2;
+  --danger-border: #fecaca;
+  --warning: #d97706;
+  --warning-light: #fffbeb;
+  --warning-border: #fde68a;
+  --success: #059669;
+  --success-light: #ecfdf5;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  --white: #ffffff;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+  --shadow-md: 0 4px 6px rgba(0,0,0,.07), 0 2px 4px rgba(0,0,0,.06);
+  --shadow-lg: 0 10px 15px rgba(0,0,0,.1), 0 4px 6px rgba(0,0,0,.05);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+  background: #f0f2f5;
+  color: var(--gray-800);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* Header */
+.app-header {
+  background: linear-gradient(135deg, #1e3a5f 0%, #1a56db 50%, #2563eb 100%);
+  color: white;
+  padding: 16px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,.15);
+}
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.header-title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+.header-subtitle {
+  font-size: 13px;
+  opacity: .85;
+  font-weight: 400;
+}
+.header-badge {
+  background: rgba(255,255,255,.2);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* Steps indicator */
+.steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 32px;
+  gap: 0;
+}
+.step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gray-400);
+  transition: all .3s;
+}
+.step.active {
+  color: var(--primary);
+  background: var(--primary-light);
+  font-weight: 600;
+}
+.step.done {
+  color: var(--success);
+}
+.step-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  background: var(--gray-200);
+  color: var(--gray-500);
+}
+.step.active .step-num {
+  background: var(--primary);
+  color: white;
+}
+.step.done .step-num {
+  background: var(--success);
+  color: white;
+}
+.step-line {
+  width: 40px;
+  height: 2px;
+  background: var(--gray-200);
+  margin: 0 4px;
+}
+.step-line.done {
+  background: var(--success);
+}
+
+/* Cards */
+.card {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 28px;
+  margin-bottom: 20px;
+}
+.card-header {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gray-900);
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--gray-100);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.card-header .icon {
+  font-size: 22px;
+}
+
+/* Form Elements */
+.form-group {
+  margin-bottom: 20px;
+}
+.form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gray-700);
+  margin-bottom: 6px;
+}
+.form-label .required {
+  color: var(--danger);
+  margin-left: 2px;
+}
+.form-hint {
+  font-size: 12px;
+  color: var(--gray-400);
+  margin-top: 4px;
+}
+select, textarea, input[type="text"] {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--gray-300);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--gray-800);
+  background: white;
+  transition: border-color .2s, box-shadow .2s;
+  outline: none;
+}
+select:focus, textarea:focus, input[type="text"]:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(26,86,219,.1);
+}
+textarea {
+  min-height: 140px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 24px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all .2s;
+  font-family: inherit;
+}
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+.btn-primary:hover {
+  background: #1e4fc7;
+  box-shadow: var(--shadow-md);
+}
+.btn-outline {
+  background: white;
+  color: var(--gray-600);
+  border: 1.5px solid var(--gray-300);
+}
+.btn-outline:hover {
+  background: var(--gray-50);
+  border-color: var(--gray-400);
+}
+.btn-danger {
+  background: var(--danger);
+  color: white;
+}
+.btn-danger:hover { background: #b91c1c; }
+.btn-success {
+  background: var(--success);
+  color: white;
+}
+.btn-success:hover { background: #047857; }
+.btn-sm {
+  padding: 6px 14px;
+  font-size: 13px;
+}
+.btn-group {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+/* Position input */
+.position-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.position-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.position-row input {
+  flex: 1;
+}
+.position-row .btn-remove {
+  padding: 8px 12px;
+  background: var(--gray-100);
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  color: var(--gray-500);
+  font-size: 14px;
+  transition: all .2s;
+}
+.position-row .btn-remove:hover {
+  background: var(--danger-light);
+  color: var(--danger);
+  border-color: var(--danger-border);
+}
+
+/* Results Page */
+.page { display: none; }
+.page.active { display: block; }
+
+/* Summary cards */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.summary-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  text-align: center;
+  border-top: 3px solid var(--gray-300);
+}
+.summary-card.a-class { border-top-color: var(--danger); }
+.summary-card.b-class { border-top-color: var(--warning); }
+.summary-card.c-class { border-top-color: var(--success); }
+.summary-card.total { border-top-color: var(--primary); }
+.summary-card .count {
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1;
+}
+.summary-card.a-class .count { color: var(--danger); }
+.summary-card.b-class .count { color: var(--warning); }
+.summary-card.c-class .count { color: var(--success); }
+.summary-card.total .count { color: var(--primary); }
+.summary-card .label {
+  font-size: 13px;
+  color: var(--gray-500);
+  margin-top: 6px;
+}
+
+/* Base info */
+.base-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 16px;
+  background: var(--gray-50);
+  border-radius: var(--radius-sm);
+  margin-bottom: 20px;
+  font-size: 13px;
+}
+.base-info .tag {
+  background: var(--primary-light);
+  color: var(--primary);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+.base-info .battles {
+  width: 100%;
+  margin-top: 8px;
+}
+.base-info .battles .title {
+  font-weight: 600;
+  color: var(--gray-700);
+  margin-bottom: 6px;
+}
+.base-info .battle-item {
+  background: white;
+  padding: 6px 14px;
+  border-radius: 6px;
+  margin: 3px 0;
+  border-left: 3px solid var(--primary);
+  font-size: 13px;
+}
+
+/* Position cards */
+.section-title {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-title.a-title { color: var(--danger); }
+.section-title.b-title { color: var(--warning); }
+.section-title.c-title { color: var(--success); }
+.section-badge {
+  font-size: 12px;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+.section-badge.a-badge { background: var(--danger-light); color: var(--danger); }
+.section-badge.b-badge { background: var(--warning-light); color: var(--warning); }
+.section-badge.c-badge { background: var(--success-light); color: var(--success); }
+
+.pos-card {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 16px;
+  overflow: hidden;
+  transition: box-shadow .2s;
+}
+.pos-card:hover {
+  box-shadow: var(--shadow-md);
+}
+.pos-card.a-highlight {
+  border-left: 4px solid var(--danger);
+  background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+}
+.pos-card.b-highlight {
+  border-left: 4px solid var(--warning);
+}
+.pos-card.c-highlight {
+  border-left: 4px solid var(--success);
+}
+
+.pos-card-header {
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--gray-100);
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.pos-card-header .pos-name {
+  font-size: 16px;
+  font-weight: 700;
+}
+.pos-card-header .pos-dept {
+  font-size: 13px;
+  color: var(--gray-500);
+  margin-left: 8px;
+}
+.pos-card-header .pos-score {
+  font-size: 24px;
+  font-weight: 800;
+}
+.pos-card-header .a-score { color: var(--danger); }
+.pos-card-header .b-score { color: var(--warning); }
+.pos-card-header .c-score { color: var(--success); }
+.pos-card-header .class-badge {
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .05em;
+}
+.class-badge.a-badge { background: var(--danger); color: white; }
+.class-badge.b-badge { background: var(--warning); color: white; }
+.class-badge.c-badge { background: var(--success); color: white; }
+
+.pos-card-body {
+  padding: 16px 20px;
+}
+
+/* Score display */
+.score-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.score-item {
+  flex: 1;
+  min-width: 140px;
+  padding: 12px;
+  background: var(--gray-50);
+  border-radius: var(--radius-sm);
+  text-align: center;
+}
+.score-item .dim-label {
+  font-size: 12px;
+  color: var(--gray-500);
+  margin-bottom: 4px;
+}
+.score-item .dim-value {
+  font-size: 22px;
+  font-weight: 700;
+}
+.score-item .dim-value.high { color: var(--danger); }
+.score-item .dim-value.mid { color: var(--warning); }
+.score-item .dim-value.low { color: var(--success); }
+
+.score-edit {
+  margin-top: 8px;
+}
+.score-edit select {
+  width: 100%;
+  padding: 6px 10px;
+  font-size: 13px;
+}
+
+/* Judgment basis */
+.judgment {
+  background: #fefce8;
+  border: 1px solid #fde68a;
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  font-size: 13px;
+  margin-top: 8px;
+}
+.judgment .judge-title {
+  font-weight: 600;
+  color: #92400e;
+  margin-bottom: 4px;
+}
+.judgment .judge-item {
+  color: #78350f;
+  margin: 2px 0;
+  padding-left: 12px;
+  position: relative;
+}
+.judgment .judge-item::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--success);
+  font-weight: 700;
+}
+
+/* Strategy box */
+.strategy-box {
+  margin-top: 12px;
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  line-height: 1.8;
+}
+.strategy-box.a-strategy {
+  background: var(--danger-light);
+  border: 1px solid var(--danger-border);
+  color: #7f1d1d;
+}
+.strategy-box.b-strategy {
+  background: var(--warning-light);
+  border: 1px solid var(--warning-border);
+  color: #78350f;
+}
+.strategy-box.c-strategy {
+  background: var(--success-light);
+  border: 1px solid #a7f3d0;
+  color: #064e3b;
+}
+.strategy-box .strategy-icon {
+  font-weight: 700;
+  font-size: 14px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* Toolbar */
+.toolbar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.toolbar .filter-group {
+  display: flex;
+  gap: 8px;
+}
+.toolbar .filter-btn {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+  border: 1.5px solid var(--gray-300);
+  background: white;
+  color: var(--gray-600);
+  font-weight: 500;
+  transition: all .2s;
+}
+.toolbar .filter-btn.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--gray-400);
+}
+.empty-state .empty-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+/* Modal */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,.5);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay.show { display: flex; }
+.modal {
+  background: white;
+  border-radius: var(--radius);
+  padding: 28px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: var(--shadow-lg);
+}
+.modal h3 { margin-bottom: 12px; }
+.modal p { font-size: 14px; color: var(--gray-600); margin-bottom: 20px; }
+
+/* Toast */
+.toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 300;
+  animation: slideDown 0.3s ease;
+  box-shadow: var(--shadow-lg);
+}
+.toast.warning { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+.toast.info { background: var(--primary-light); color: var(--primary); border: 1px solid #bfdbfe; }
+@keyframes slideDown {
+  from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* Pie chart */
+.pie-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  padding: 16px;
+}
+.pie-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+.legend-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+}
+.legend-dot.a-dot { background: var(--danger); }
+.legend-dot.b-dot { background: var(--warning); }
+.legend-dot.c-dot { background: var(--success); }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container { padding: 12px; }
+  .card { padding: 16px; }
+  .header-title { font-size: 16px; }
+  .score-row { flex-direction: column; gap: 10px; }
+  .btn-group { flex-direction: column; }
+  .summary-grid { grid-template-columns: repeat(2, 1fr); }
+  .toolbar { flex-direction: column; }
+}
+
+/* Loading spinner */
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255,255,255,.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin .6s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Excel upload area */
+.upload-area {
+  border: 2px dashed var(--gray-300);
+  border-radius: var(--radius-sm);
+  padding: 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all .2s;
+}
+.upload-area:hover {
+  border-color: var(--primary);
+  background: var(--primary-light);
+}
+.upload-area .upload-icon {
+  font-size: 32px;
+  color: var(--gray-400);
+  margin-bottom: 8px;
+}
+.upload-area .upload-text {
+  font-size: 14px;
+  color: var(--gray-500);
+}
+.upload-area input[type="file"] { display: none; }
+
+.note-banner {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-size: 12px;
+  color: #1e40af;
+  margin-top: 8px;
+}
+
+/* Integration buttons */
+.inline-ai-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1.5px dashed var(--primary);
+  background: var(--primary-light);
+  color: var(--primary);
+  transition: all .2s;
+  margin-left: 8px;
+  white-space: nowrap;
+}
+.inline-ai-btn:hover {
+  background: var(--primary);
+  color: white;
+  border-style: solid;
+}
+.label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.one-click-bar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 16px;
+  background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%);
+  border: 2px dashed #93c5fd;
+  border-radius: var(--radius);
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.one-click-bar .title {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--primary);
+  white-space: nowrap;
+}
+.one-click-bar .desc {
+  font-size: 13px;
+  color: var(--gray-500);
+  flex: 1;
+  min-width: 200px;
+}
+
+/* Large modal for assistants */
+.modal-lg {
+  max-width: 720px;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+.modal-steps {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.modal-step-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--gray-200);
+  transition: background .3s;
+}
+.modal-step-dot.active { background: var(--primary); }
+.modal-step-dot.done { background: var(--success); }
+
+.industry-goal-templates {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 8px;
+  margin: 12px 0;
+}
+.goal-chip {
+  padding: 10px 14px;
+  border: 1.5px solid var(--gray-300);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 13px;
+  text-align: center;
+  transition: all .2s;
+  background: white;
+}
+.goal-chip:hover {
+  border-color: var(--primary);
+  background: var(--primary-light);
+}
+.goal-chip.selected {
+  border-color: var(--primary);
+  background: var(--primary-light);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* Dept selector */
+.dept-selector {
+  border: 1.5px solid var(--gray-300);
+  border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+  overflow: hidden;
+  transition: border-color .2s;
+}
+.dept-selector.selected { border-color: var(--primary); }
+.dept-selector-header {
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  background: var(--gray-50);
+  font-weight: 600;
+  font-size: 14px;
+  user-select: none;
+}
+.dept-selector-header:hover { background: var(--primary-light); }
+.dept-selector-header .checkbox {
+  width: 18px; height: 18px;
+  border: 2px solid var(--gray-400);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: white;
+  flex-shrink: 0;
+}
+.dept-selector.selected .dept-selector-header .checkbox {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+.dept-selector-body {
+  display: none;
+  padding: 8px 14px 12px;
+  background: white;
+  border-top: 1px solid var(--gray-100);
+}
+.dept-selector.selected .dept-selector-body { display: block; }
+.pos-check-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  cursor: pointer;
+  font-size: 13px;
+}
+.pos-check-item .dot {
+  width: 16px; height: 16px;
+  border: 2px solid var(--gray-400);
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.pos-check-item.checked .dot {
+  background: var(--success);
+  border-color: var(--success);
+}
+.pos-check-item.checked .dot::after {
+  content: '✓';
+  color: white;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* Battle card in modal */
+.battle-card-gen {
+  background: var(--gray-50);
+  border-left: 3px solid var(--primary);
+  padding: 10px 14px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin: 6px 0;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background .2s;
+}
+.battle-card-gen:hover { background: var(--primary-light); }
+.battle-card-gen .battle-priority {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-right: 6px;
+}
+.battle-card-gen .p0 { background: #fee2e2; color: #dc2626; }
+.battle-card-gen .p1 { background: #fef3c7; color: #d97706; }
+</style>
+<link rel="stylesheet" href="shared.css?v=13">
+<script src="shared.js?v=13"></script>
+</head>
+<body>
+
+<!-- Header -->
+<header class="app-header">
+  <div class="header-inner">
+    <div>
+      <div class="header-title">关键岗位价值系数速算智能助手</div>
+      <div class="header-subtitle">岗位价值 = 战略影响度 x 市场稀缺性 x 替代难度</div>
+    </div>
+    <div class="header-badge">V1.1</div>
+  </div>
+</header>
+
+<!-- Steps -->
+<div class="container">
+  <div class="steps" id="stepsBar">
+    <div class="step active" id="step1">
+      <span class="step-num">1</span> 信息录入
+    </div>
+    <div class="step-line" id="stepLine1"></div>
+    <div class="step" id="step2">
+      <span class="step-num">2</span> AI智能识别
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 1: INPUT ==================== -->
+  <div class="page active" id="pageInput">
+    <div class="card">
+      <div class="card-header">
+        <span class="icon">&#x1F3E2;</span> 企业基本信息
+      </div>
+
+      <!-- 行业选择 -->
+      <div class="form-group">
+        <label class="form-label">
+          企业所属行业 <span class="required">*</span>
+        </label>
+        <select id="industrySelect">
+          <option value="">-- 请选择行业 --</option>
+          <option value="制造">制造</option>
+          <option value="新能源动力电池">新能源动力电池</option>
+          <option value="互联网">互联网</option>
+          <option value="医药生物">医药生物</option>
+          <option value="零售连锁">零售连锁</option>
+          <option value="建筑工程">建筑工程</option>
+          <option value="金融">金融</option>
+          <option value="半导体">半导体</option>
+          <option value="医疗器械">医疗器械</option>
+          <option value="餐饮">餐饮</option>
+          <option value="化工">化工</option>
+          <option value="其他">其他（自定义）</option>
+        </select>
+        <div id="customIndustryGroup" style="display:none; margin-top:8px;">
+          <input type="text" id="customIndustry" placeholder="请输入您的行业名称">
+        </div>
+        <div class="form-hint">选择行业后，系统将自动匹配行业人才数据库，调取岗位市场稀缺性基准分值</div>
+      </div>
+
+      <!-- 年度硬仗 -->
+      <div class="form-group">
+        <div class="label-row">
+          <label class="form-label">
+            本年度战略硬仗清单 <span class="required">*</span>
+          </label>
+          <button class="inline-ai-btn" onclick="openStrategyDecoder()" title="调用战略解码师智能生成硬仗">
+            &#x1F9E0; 战略解码师·智能生成
+          </button>
+        </div>
+        <textarea id="battleInput" placeholder="请逐条填写公司今年必须打赢的核心目标（新品研发、营收增长、渠道扩张、数字化转型、上市、产能扩建、合规攻坚等）
+
+示例：
+①自研新一代储能电池，抢占国内储能细分市场；
+②搭建海外销售团队，海外营收占比提升40%；
+③完成数字化工厂改造，生产良率提升至99.5%"></textarea>
+        <div class="form-hint">每行一条硬仗目标，AI将逐条解析自动匹配对应岗位并计算战略影响度；或点击「战略解码师」智能生成</div>
+      </div>
+
+      <!-- 岗位清单 -->
+      <div class="form-group">
+        <div class="label-row">
+          <label class="form-label">企业现有岗位清单 <span style="color:var(--gray-400);font-weight:400;">（可选）</span></label>
+          <button class="inline-ai-btn" onclick="openJobDesigner()" title="调用岗位设计助手智能生成岗位清单">
+            &#x1F4CB; 岗位设计助手·智能生成
+          </button>
+        </div>
+        
+        <!-- 批量导入Excel -->
+        <div class="upload-area" id="uploadArea" style="margin-bottom:12px;">
+          <div class="upload-icon">&#x1F4C1;</div>
+          <div class="upload-text">点击上传 CSV 批量导入（xlsx 请另存为 CSV；也可直接在下方粘贴）</div>
+          <input type="file" id="excelUpload" accept=".xlsx,.xls,.csv">
+        </div>
+
+        <div style="text-align:center; color:var(--gray-400); font-size:13px; margin:8px 0;">— 或手动输入 —</div>
+
+        <!-- 手动输入 -->
+        <div class="position-list" id="positionList">
+          <div class="position-row">
+            <input type="text" placeholder="岗位名称（如：研发总监）" class="pos-name-input">
+            <input type="text" placeholder="所属部门（如：研发中心）" class="pos-dept-input">
+            <button class="btn-remove" onclick="removePositionRow(this)" title="删除">&#x2715;</button>
+          </div>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="addPositionRow()" style="margin-top:8px;">+ 添加岗位</button>
+        
+        <div class="note-banner" id="autoNote" style="display:none;">
+          &#x26A0; 如不填写岗位清单，系统将自动使用<strong>行业标准岗位库</strong>进行测算，建议导入企业真实岗位以提升精准度
+        </div>
+      </div>
+
+      <!-- 一键自动生成 + 操作按钮 -->
+      <div class="one-click-bar">
+        <span class="title">&#x26A1; 一键全流程</span>
+        <span class="desc">自动生成年度硬仗 + 岗位清单，并立即开始智能识别</span>
+        <button class="btn btn-primary btn-sm" onclick="autoGenerateAndAnalyze()" id="btnAutoGen">
+          &#x1F680; 一键自动生成并识别
+        </button>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="startAnalysis()" id="btnStart">
+          &#x1F50D; 开始智能识别
+        </button>
+        <button class="btn btn-outline" onclick="resetForm()">&#x21BA; 重置表单</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 战略解码师弹窗 ==================== -->
+  <div class="modal-overlay" id="strategyModalOverlay">
+    <div class="modal modal-lg" id="strategyModal">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+        <h3 style="margin:0;">&#x1F9E0; 战略解码师 — 智能生成年度硬仗</h3>
+        <button onclick="closeStrategyDecoder()" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--gray-400);line-height:1;">&times;</button>
+      </div>
+      
+      <!-- Step indicators -->
+      <div class="modal-steps" id="stratSteps">
+        <div class="modal-step-dot active" id="stratDot1"></div>
+        <div class="modal-step-dot" id="stratDot2"></div>
+        <div class="modal-step-dot" id="stratDot3"></div>
+      </div>
+
+      <!-- S1: 公司背景 -->
+      <div id="stratS1">
+        <p style="color:var(--gray-600);font-size:14px;margin-bottom:16px;">请告诉我三件事：</p>
+        
+        <div class="form-group">
+          <label class="form-label">1. 公司今年最想达成的头等大事是什么？</label>
+          <textarea id="stratGoal" rows="2" placeholder="如：营收突破3亿、拿下3个海外大客户、完成B轮融资..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">2. 具体数字目标（可选）</label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <input type="text" id="stratRevenue" placeholder="营收目标（如：3亿）">
+            <input type="text" id="stratProfit" placeholder="利润目标（如：3000万）">
+            <input type="text" id="stratHeadcount" placeholder="员工规模（如：200人）">
+            <input type="text" id="stratOtherGoal" placeholder="其他关键目标">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">3. 去年最遗憾没做到的事是什么？</label>
+          <input type="text" id="stratRegret" placeholder="如：集采未中、核心人员流失、新市场开拓失败...">
+        </div>
+
+        <div style="text-align:right;">
+          <button class="btn btn-primary" onclick="stratGoS2()">下一步：确认目标 &rarr;</button>
+        </div>
+      </div>
+
+      <!-- S2: 目标确认 + 战略方向选择 -->
+      <div id="stratS2" style="display:none;">
+        <div id="stratConfirmBox" style="background:var(--gray-50);border-radius:var(--radius-sm);padding:14px;margin-bottom:16px;font-size:13px;"></div>
+        
+        <p style="font-size:14px;font-weight:600;margin-bottom:8px;">选择今年的战略方向（可多选）：</p>
+        <div class="industry-goal-templates" id="stratGoalTemplates"></div>
+
+        <div style="display:flex;gap:8px;margin-top:16px;justify-content:flex-end;">
+          <button class="btn btn-outline btn-sm" onclick="stratBackS1()">&larr; 返回修改</button>
+          <button class="btn btn-primary" onclick="stratGenerate()">&#x2728; 生成硬仗清单</button>
+        </div>
+      </div>
+
+      <!-- S3: 生成结果 -->
+      <div id="stratS3" style="display:none;">
+        <p style="font-size:14px;font-weight:600;margin-bottom:12px;">&#x1F3AF; AI已生成以下硬仗清单，勾选后填入表单：</p>
+        <div id="stratBattleList"></div>
+        <div style="display:flex;gap:8px;margin-top:16px;justify-content:flex-end;">
+          <button class="btn btn-outline btn-sm" onclick="stratBackS2()">&larr; 重新选择</button>
+          <button class="btn btn-primary" onclick="stratApply()">&#x2705; 填入年度硬仗</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 岗位设计助手弹窗 ==================== -->
+  <div class="modal-overlay" id="jobModalOverlay">
+    <div class="modal modal-lg" id="jobModal">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <h3 style="margin:0;">&#x1F4CB; 岗位设计助手 — 智能生成岗位清单</h3>
+        <button onclick="closeJobDesigner()" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--gray-400);line-height:1;">&times;</button>
+      </div>
+      
+      <p style="color:var(--gray-500);font-size:13px;margin-bottom:16px;">
+        当前行业：<strong id="jobIndustryLabel">--</strong>。勾选部门展开选择岗位，未勾选的部门不会生成岗位。
+      </p>
+
+      <div id="jobDeptList"></div>
+
+      <div style="display:flex;gap:8px;margin-top:16px;align-items:center;">
+        <button class="btn btn-outline btn-sm" onclick="jobSelectAllDepts()">全选部门</button>
+        <button class="btn btn-outline btn-sm" onclick="jobClearAllDepts()">清空选择</button>
+        <div style="flex:1;"></div>
+        <span id="jobSelectedCount" style="font-size:13px;color:var(--gray-500);">已选 0 个岗位</span>
+        <button class="btn btn-primary btn-sm" onclick="jobApply()">&#x2705; 填入岗位清单</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 2: RESULTS ==================== -->
+  <div class="page" id="pageResults">
+    <!-- 基础信息 -->
+    <div class="card" id="baseInfoCard"></div>
+
+    <!-- 统计 -->
+    <div class="summary-grid" id="summaryGrid"></div>
+
+    <!-- 饼图 -->
+    <div class="card" id="pieCard">
+      <div class="pie-container" id="pieChart"></div>
+    </div>
+
+    <!-- 工具栏 -->
+    <div class="toolbar">
+      <div class="filter-group">
+        <button class="filter-btn active" onclick="filterPositions('all')" id="filterAll">全部岗位</button>
+        <button class="filter-btn" onclick="filterPositions('A')" id="filterA">&#x1F534; 仅A类岗位</button>
+        <button class="filter-btn" onclick="filterPositions('B')" id="filterB">&#x1F7E1; 仅B类岗位</button>
+        <button class="filter-btn" onclick="filterPositions('C')" id="filterC">&#x1F7E2; 仅C类岗位</button>
+      </div>
+      <div style="flex:1;"></div>
+      <button class="btn btn-success btn-sm" onclick="exportExcel()">&#x1F4CA; 导出 Excel 盘点表</button>
+      <button class="btn btn-outline btn-sm" onclick="backToInput()">&#x2190; 返回修改</button>
+    </div>
+
+    <!-- A类岗位 -->
+    <div class="section-title a-title" id="aTitle">
+      &#x1F534; A 类核心关键岗位专区
+      <span class="section-badge a-badge" id="aCount">0个</span>
+    </div>
+    <div id="aPositions"></div>
+
+    <!-- B类岗位 -->
+    <div class="section-title b-title" id="bTitle" style="margin-top:24px;">
+      &#x1F7E1; B 类重要骨干岗位专区
+      <span class="section-badge b-badge" id="bCount">0个</span>
+    </div>
+    <div id="bPositions"></div>
+
+    <!-- C类岗位 -->
+    <div class="section-title c-title" id="cTitle" style="margin-top:24px;">
+      &#x1F7E2; C 类基础执行岗位专区
+      <span class="section-badge c-badge" id="cCount">0个</span>
+    </div>
+    <div id="cPositions"></div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toastContainer"></div>
+</div>
+
+<script>
+// ==================== 行业岗位基准库 ====================
+const INDUSTRY_POSITION_DB = {
+  "制造": [
+    { name: "生产总监", dept: "生产制造中心", scarcity: 3 },
+    { name: "生产经理", dept: "生产制造中心", scarcity: 2 },
+    { name: "班长/线长", dept: "生产制造中心", scarcity: 1 },
+    { name: "厂长", dept: "工厂管理", scarcity: 4 },
+    { name: "副厂长", dept: "工厂管理", scarcity: 3 },
+    { name: "车间主任", dept: "工厂管理", scarcity: 2 },
+    { name: "研发经理", dept: "研发中心", scarcity: 3 },
+    { name: "研发工程师", dept: "研发中心", scarcity: 3 },
+    { name: "产品工程师", dept: "研发中心", scarcity: 2 },
+    { name: "质量经理", dept: "质量管理部", scarcity: 2 },
+    { name: "质量工程师", dept: "质量管理部", scarcity: 2 },
+    { name: "质检主管", dept: "质量管理部", scarcity: 1 },
+    { name: "工艺经理", dept: "工艺技术部", scarcity: 3 },
+    { name: "工艺工程师", dept: "工艺技术部", scarcity: 3 },
+    { name: "技术员", dept: "工艺技术部", scarcity: 1 },
+    { name: "设备经理", dept: "设备管理部", scarcity: 3 },
+    { name: "设备工程师", dept: "设备管理部", scarcity: 3 },
+    { name: "维修主管", dept: "设备管理部", scarcity: 2 },
+    { name: "采购经理", dept: "采购部", scarcity: 2 },
+    { name: "采购工程师", dept: "采购部", scarcity: 2 },
+    { name: "供应商管理", dept: "采购部", scarcity: 2 },
+    { name: "精益生产工程师", dept: "生产管理部", scarcity: 3 },
+    { name: "生产计划主管", dept: "生产管理部", scarcity: 2 },
+    { name: "生产调度员", dept: "生产管理部", scarcity: 1 },
+    { name: "供应链总监", dept: "供应链中心", scarcity: 3 },
+    { name: "供应链经理", dept: "供应链中心", scarcity: 2 },
+    { name: "物流经理", dept: "供应链中心", scarcity: 2 },
+    { name: "安全经理", dept: "安全管理部", scarcity: 2 },
+    { name: "安全工程师", dept: "安全管理部", scarcity: 2 },
+    { name: "环保专员", dept: "安全管理部", scarcity: 2 },
+    { name: "财务总监", dept: "财务部", scarcity: 2 },
+    { name: "财务经理", dept: "财务部", scarcity: 2 },
+    { name: "会计主管", dept: "财务部", scarcity: 1 },
+    { name: "HR总监", dept: "人力资源部", scarcity: 2 },
+    { name: "HR经理", dept: "人力资源部", scarcity: 2 },
+    { name: "招聘主管", dept: "人力资源部", scarcity: 1 },
+    { name: "销售总监", dept: "销售中心", scarcity: 3 },
+    { name: "销售经理", dept: "销售中心", scarcity: 2 },
+    { name: "大客户经理", dept: "销售中心", scarcity: 2 },
+    { name: "IT经理", dept: "信息技术部", scarcity: 2 },
+    { name: "IT工程师", dept: "信息技术部", scarcity: 2 },
+    { name: "系统管理员", dept: "信息技术部", scarcity: 1 },
+  ],
+  "新能源动力电池": [
+    { name: "电池研发总监", dept: "研发中心", scarcity: 5 },
+    { name: "电池研发工程师", dept: "研发中心", scarcity: 4 },
+    { name: "产品经理", dept: "研发中心", scarcity: 3 },
+    { name: "首席科学家", dept: "研究院", scarcity: 5 },
+    { name: "高级研究员", dept: "研究院", scarcity: 4 },
+    { name: "技术专家", dept: "研究院", scarcity: 4 },
+    { name: "电芯工程师", dept: "电芯研发部", scarcity: 5 },
+    { name: "电芯研发经理", dept: "电芯研发部", scarcity: 4 },
+    { name: "电芯测试工程师", dept: "电芯研发部", scarcity: 3 },
+    { name: "BMS软件工程师", dept: "BMS研发部", scarcity: 4 },
+    { name: "BMS硬件工程师", dept: "BMS研发部", scarcity: 4 },
+    { name: "BMS测试工程师", dept: "BMS研发部", scarcity: 3 },
+    { name: "材料科学家", dept: "材料研究院", scarcity: 5 },
+    { name: "材料工程师", dept: "材料研究院", scarcity: 4 },
+    { name: "化学分析师", dept: "材料研究院", scarcity: 3 },
+    { name: "工艺开发总监", dept: "工艺技术中心", scarcity: 4 },
+    { name: "工艺工程师", dept: "工艺技术中心", scarcity: 3 },
+    { name: "工艺技术员", dept: "工艺技术中心", scarcity: 2 },
+    { name: "生产总监", dept: "制造中心", scarcity: 3 },
+    { name: "生产经理", dept: "制造中心", scarcity: 2 },
+    { name: "生产班长", dept: "制造中心", scarcity: 1 },
+    { name: "质量总监", dept: "品质管理部", scarcity: 3 },
+    { name: "质量工程师", dept: "品质管理部", scarcity: 2 },
+    { name: "质检员", dept: "品质管理部", scarcity: 1 },
+    { name: "测试验证工程师", dept: "测试中心", scarcity: 3 },
+    { name: "测试经理", dept: "测试中心", scarcity: 3 },
+    { name: "可靠性工程师", dept: "测试中心", scarcity: 3 },
+    { name: "供应链总监", dept: "采购与供应链", scarcity: 3 },
+    { name: "采购经理", dept: "采购与供应链", scarcity: 2 },
+    { name: "物流经理", dept: "采购与供应链", scarcity: 2 },
+    { name: "销售总监", dept: "销售中心", scarcity: 3 },
+    { name: "销售经理", dept: "销售中心", scarcity: 2 },
+    { name: "海外销售经理", dept: "销售中心", scarcity: 3 },
+    { name: "HR总监", dept: "人力资源部", scarcity: 2 },
+    { name: "HR经理", dept: "人力资源部", scarcity: 2 },
+    { name: "招聘主管", dept: "人力资源部", scarcity: 1 },
+    { name: "财务总监", dept: "财务部", scarcity: 2 },
+    { name: "财务经理", dept: "财务部", scarcity: 2 },
+    { name: "成本会计", dept: "财务部", scarcity: 1 },
+    { name: "IT经理", dept: "信息技术部", scarcity: 2 },
+    { name: "IT工程师", dept: "信息技术部", scarcity: 2 },
+    { name: "系统运维", dept: "信息技术部", scarcity: 1 },
+  ],
+  "互联网": [
+    { name: "CTO/技术总监", dept: "技术中心", scarcity: 4 },
+    { name: "架构师", dept: "技术中心", scarcity: 4 },
+    { name: "技术经理", dept: "技术中心", scarcity: 3 },
+    { name: "前端工程师", dept: "技术中心", scarcity: 2 },
+    { name: "后端工程师", dept: "技术中心", scarcity: 2 },
+    { name: "产品总监", dept: "产品中心", scarcity: 3 },
+    { name: "高级产品经理", dept: "产品中心", scarcity: 3 },
+    { name: "产品运营", dept: "产品中心", scarcity: 2 },
+    { name: "算法工程师", dept: "AI/算法部", scarcity: 4 },
+    { name: "机器学习工程师", dept: "AI/算法部", scarcity: 4 },
+    { name: "数据工程师", dept: "AI/算法部", scarcity: 3 },
+    { name: "增长负责人", dept: "增长运营部", scarcity: 4 },
+    { name: "增长产品经理", dept: "增长运营部", scarcity: 3 },
+    { name: "用户运营", dept: "增长运营部", scarcity: 2 },
+    { name: "运营总监", dept: "运营中心", scarcity: 3 },
+    { name: "运营经理", dept: "运营中心", scarcity: 2 },
+    { name: "活动运营", dept: "运营中心", scarcity: 1 },
+    { name: "市场总监", dept: "市场部", scarcity: 3 },
+    { name: "市场经理", dept: "市场部", scarcity: 2 },
+    { name: "品牌经理", dept: "市场部", scarcity: 2 },
+    { name: "测试经理", dept: "质量保障部", scarcity: 2 },
+    { name: "测试工程师", dept: "质量保障部", scarcity: 2 },
+    { name: "自动化测试工程师", dept: "质量保障部", scarcity: 2 },
+    { name: "UI/UX设计师", dept: "设计部", scarcity: 3 },
+    { name: "视觉设计师", dept: "设计部", scarcity: 2 },
+    { name: "交互设计师", dept: "设计部", scarcity: 2 },
+    { name: "HR总监", dept: "人力资源部", scarcity: 2 },
+    { name: "HRBP", dept: "人力资源部", scarcity: 2 },
+    { name: "招聘经理", dept: "人力资源部", scarcity: 2 },
+    { name: "财务总监", dept: "财务部", scarcity: 2 },
+    { name: "财务经理", dept: "财务部", scarcity: 2 },
+    { name: "财务BP", dept: "财务部", scarcity: 2 },
+  ],
+  "医药生物": [
+    { name: "研发总监", dept: "研发中心", scarcity: 5 },
+    { name: "研发经理", dept: "研发中心", scarcity: 4 },
+    { name: "药物化学研究员", dept: "研发中心", scarcity: 4 },
+    { name: "首席科学家", dept: "研究院", scarcity: 5 },
+    { name: "高级研究员", dept: "研究院", scarcity: 4 },
+    { name: "生物信息学家", dept: "研究院", scarcity: 4 },
+    { name: "临床项目经理", dept: "临床研究部", scarcity: 4 },
+    { name: "临床监察员CRA", dept: "临床研究部", scarcity: 3 },
+    { name: "临床数据管理员", dept: "临床研究部", scarcity: 2 },
+    { name: "注册事务总监", dept: "注册事务部", scarcity: 4 },
+    { name: "注册事务经理", dept: "注册事务部", scarcity: 3 },
+    { name: "注册专员", dept: "注册事务部", scarcity: 2 },
+    { name: "药理学研究员", dept: "药理部", scarcity: 4 },
+    { name: "毒理学研究员", dept: "药理部", scarcity: 4 },
+    { name: "药理实验员", dept: "药理部", scarcity: 2 },
+    { name: "生产总监", dept: "生产中心", scarcity: 3 },
+    { name: "生产经理", dept: "生产中心", scarcity: 2 },
+    { name: "GMP合规主管", dept: "生产中心", scarcity: 3 },
+    { name: "质量总监", dept: "质量管理部", scarcity: 3 },
+    { name: "QA经理", dept: "质量管理部", scarcity: 3 },
+    { name: "QC分析师", dept: "质量管理部", scarcity: 2 },
+    { name: "医学事务经理", dept: "医学部", scarcity: 4 },
+    { name: "医学联络官MSL", dept: "医学部", scarcity: 3 },
+    { name: "医学信息专员", dept: "医学部", scarcity: 2 },
+    { name: "市场准入总监", dept: "市场准入部", scarcity: 4 },
+    { name: "市场准入经理", dept: "市场准入部", scarcity: 3 },
+    { name: "药物经济学分析师", dept: "市场准入部", scarcity: 3 },
+    { name: "销售总监", dept: "销售中心", scarcity: 3 },
+    { name: "区域销售经理", dept: "销售中心", scarcity: 2 },
+    { name: "医药代表主管", dept: "销售中心", scarcity: 1 },
+    { name: "HR总监", dept: "人力资源部", scarcity: 2 },
+    { name: "HR经理", dept: "人力资源部", scarcity: 2 },
+    { name: "培训经理", dept: "人力资源部", scarcity: 2 },
+    { name: "财务总监", dept: "财务部", scarcity: 2 },
+    { name: "财务经理", dept: "财务部", scarcity: 2 },
+    { name: "预算分析师", dept: "财务部", scarcity: 2 },
+  ],
+  "零售连锁": [
+    { name: "运营总监", dept: "运营中心", scarcity: 3 },
+    { name: "运营经理", dept: "运营中心", scarcity: 2 },
+    { name: "运营督导", dept: "运营中心", scarcity: 1 },
+    { name: "区域经理", dept: "区域管理部", scarcity: 3 },
+    { name: "区域运营主管", dept: "区域管理部", scarcity: 2 },
+    { name: "区域培训师", dept: "区域管理部", scarcity: 2 },
+    { name: "选址开发总监", dept: "拓展部", scarcity: 4 },
+    { name: "选址开发经理", dept: "拓展部", scarcity: 3 },
+    { name: "招商经理", dept: "拓展部", scarcity: 2 },
+    { name: "供应链总监", dept: "供应链中心", scarcity: 3 },
+    { name: "采购经理", dept: "供应链中心", scarcity: 2 },
+    { name: "仓储物流经理", dept: "供应链中心", scarcity: 2 },
+    { name: "商品企划总监", dept: "商品中心", scarcity: 3 },
+    { name: "品类经理", dept: "商品中心", scarcity: 2 },
+    { name: "采购专员", dept: "商品中心", scarcity: 1 },
+    { name: "电商运营总监", dept: "电商部", scarcity: 3 },
+    { name: "电商运营经理", dept: "电商部", scarcity: 2 },
+    { name: "直播运营主管", dept: "电商部", scarcity: 2 },
+    { name: "门店店长", dept: "门店运营", scarcity: 2 },
+    { name: "副店长", dept: "门店运营", scarcity: 1 },
+    { name: "值班经理", dept: "门店运营", scarcity: 1 },
+    { name: "市场总监", dept: "市场部", scarcity: 2 },
+    { name: "市场经理", dept: "市场部", scarcity: 2 },
+    { name: "会员运营主管", dept: "市场部", scarcity: 2 },
+    { name: "HR总监", dept: "人力资源部", scarcity: 2 },
+    { name: "HR经理", dept: "人力资源部", scarcity: 2 },
+    { name: "招聘专员", dept: "人力资源部", scarcity: 1 },
+    { name: "财务总监", dept: "财务部", scarcity: 2 },
+    { name: "财务经理", dept: "财务部", scarcity: 2 },
+    { name: "门店会计", dept: "财务部", scarcity: 1 },
+  ],
+  "建筑工程": [
+    { name: "项目经理", dept: "工程管理部", scarcity: 3 },
+    { name: "项目副经理", dept: "工程管理部", scarcity: 2 },
+    { name: "施工员", dept: "工程管理部", scarcity: 1 },
+    { name: "总工程师", dept: "技术中心", scarcity: 4 },
+    { name: "BIM工程师", dept: "技术中心", scarcity: 3 },
+    { name: "技术员", dept: "技术中心", scarcity: 2 },
+    { name: "造价工程师", dept: "成本管理部", scarcity: 3 },
+    { name: "预算员", dept: "成本管理部", scarcity: 2 },
+    { name: "合约主管", dept: "成本管理部", scarcity: 2 },
+    { name: "结构工程师", dept: "设计部", scarcity: 3 },
+    { name: "建筑设计师", dept: "设计部", scarcity: 3 },
+    { name: "机电工程师", dept: "设计部", scarcity: 2 },
+    { name: "安全总监", dept: "安全管理部", scarcity: 3 },
+    { name: "安全员", dept: "安全管理部", scarcity: 1 },
+    { name: "安全资料员", dept: "安全管理部", scarcity: 1 },
+    { name: "投标经理", dept: "市场经营部", scarcity: 3 },
+    { name: "商务经理", dept: "市场经营部", scarcity: 2 },
+    { name: "标书专员", dept: "市场经营部", scarcity: 1 },
+    { name: "工程总监", dept: "工程管理中心", scarcity: 3 },
+    { name: "质量总监", dept: "工程管理中心", scarcity: 3 },
+    { name: "资料主管", dept: "工程管理中心", scarcity: 1 },
+    { name: "HR总监", dept: "人力资源部", scarcity: 2 },
+    { name: "HR经理", dept: "人力资源部", scarcity: 2 },
+    { name: "劳资专员", dept: "人力资源部", scarcity: 1 },
+    { name: "财务总监", dept: "财务部", scarcity: 2 },
+    { name: "财务经理", dept: "财务部", scarcity: 2 },
+    { name: "项目会计", dept: "财务部", scarcity: 1 },
+  ],
+  "金融": [
+    { name: "风控总监", dept: "风控部", scarcity: 4 },
+    { name: "风控经理", dept: "风控部", scarcity: 3 },
+    { name: "风控分析师", dept: "风控部", scarcity: 2 },
+    { name: "投资总监", dept: "投资部", scarcity: 4 },
+    { name: "投资经理", dept: "投资部", scarcity: 3 },
+    { name: "投资分析师", dept: "投资部", scarcity: 2 },
+    { name: "量化研究员", dept: "量化投资部", scarcity: 5 },
+    { name: "量化开发工程师", dept: "量化投资部", scarcity: 4 },
+    { name: "交易员", dept: "量化投资部", scarcity: 3 },
+    { name: "合规总监", dept: "合规部", scarcity: 4 },
+    { name: "合规经理", dept: "合规部", scarcity: 3 },
+    { name: "反洗钱专员", dept: "合规部", scarcity: 2 },
+    { name: "产品总监", dept: "产品部", scarcity: 3 },
+    { name: "产品经理", dept: "产品部", scarcity: 2 },
+    { name: "产品运营", dept: "产品部", scarcity: 2 },
+    { name: "IT总监", dept: "信息技术部", scarcity: 3 },
+    { name: "系统架构师", dept: "信息技术部", scarcity: 3 },
+    { name: "信息安全工程师", dept: "信息技术部", scarcity: 3 },
+    { name: "基金经理", dept: "基金管理部", scarcity: 4 },
+    { name: "研究员", dept: "基金管理部", scarcity: 3 },
+    { name: "基金运营", dept: "基金管理部", scarcity: 2 },
+    { name: "客户总监", dept: "客户部", scarcity: 3 },
+    { name: "客户经理", dept: "客户部", scarcity: 2 },
+    { name: "理财顾问", dept: "客户部", scarcity: 2 },
+    { name: "HR总监", dept: "人力资源部", scarcity: 2 },
+    { name: "HR经理", dept: "人力资源部", scarcity: 2 },
+    { name: "薪酬绩效主管", dept: "人力资源部", scarcity: 2 },
+    { name: "财务总监", dept: "财务部", scarcity: 2 },
+    { name: "财务经理", dept: "财务部", scarcity: 2 },
+    { name: "资金主管", dept: "财务部", scarcity: 2 },
+  ],
+  "半导体": [
+    { name: "芯片设计总监", dept: "设计中心", scarcity: 5 },
+    { name: "芯片设计工程师", dept: "设计中心", scarcity: 4 },
+    { name: "版图设计工程师", dept: "设计中心", scarcity: 4 },
+    { name: "工艺集成工程师", dept: "工艺部", scarcity: 5 },
+    { name: "光刻工程师", dept: "工艺部", scarcity: 5 },
+    { name: "刻蚀工程师", dept: "工艺部", scarcity: 4 },
+    { name: "EDA工程师", dept: "EDA部", scarcity: 5 },
+    { name: "CAD工程师", dept: "EDA部", scarcity: 4 },
+    { name: "PDK工程师", dept: "EDA部", scarcity: 4 },
+    { name: "封装测试总监", dept: "封测中心", scarcity: 4 },
+    { name: "封装工程师", dept: "封测中心", scarcity: 3 },
+    { name: "测试工程师", dept: "封测中心", scarcity: 3 },
+    { name: "设备工程师", dept: "设备部", scarcity: 4 },
+    { name: "设备维护工程师", dept: "设备部", scarcity: 3 },
+    { name: "厂务工程师", dept: "设备部", scarcity: 3 },
+    { name: "模拟IC工程师", dept: "模拟设计部", scarcity: 5 },
+    { name: "射频工程师", dept: "模拟设计部", scarcity: 5 },
+    { name: "电源管理IC工程师", dept: "模拟设计部", scarcity: 4 },
+    { name: "数字IC工程师", dept: "数字设计部", scarcity: 4 },
+    { name: "FPGA工程师", dept: "数字设计部", scarcity: 4 },
+    { name: "验证工程师", dept: "数字设计部", scarcity: 3 },
+    { name: "生产总监", dept: "制造中心", scarcity: 3 },
+    { name: "生产经理", dept: "制造中心", scarcity: 2 },
+    { name: "良率提升工程师", dept: "制造中心", scarcity: 3 },
+    { name: "HR总监", dept: "人力资源部", scarcity: 2 },
+    { name: "HR经理", dept: "人力资源部", scarcity: 2 },
+    { name: "技术招聘主管", dept: "人力资源部", scarcity: 2 },
+    { name: "财务总监", dept: "财务部", scarcity: 2 },
+    { name: "财务经理", dept: "财务部", scarcity: 2 },
+    { name: "成本控制主管", dept: "财务部", scarcity: 2 },
+  ],
+  "医疗器械": [
+    { name: "研发总监", dept: "研发中心", scarcity: 4 },
+    { name: "研发经理", dept: "研发中心", scarcity: 3 },
+    { name: "硬件工程师", dept: "研发中心", scarcity: 3 },
+    { name: "软件工程师", dept: "研发中心", scarcity: 2 },
+    { name: "注册法规总监", dept: "法规事务部", scarcity: 4 },
+    { name: "注册经理", dept: "法规事务部", scarcity: 3 },
+    { name: "法规专员", dept: "法规事务部", scarcity: 2 },
+    { name: "临床经理", dept: "临床研究部", scarcity: 4 },
+    { name: "临床协调员CRC", dept: "临床研究部", scarcity: 2 },
+    { name: "数据统计师", dept: "临床研究部", scarcity: 3 },
+    { name: "质量体系经理", dept: "质量管理部", scarcity: 3 },
+    { name: "质量工程师", dept: "质量管理部", scarcity: 2 },
+    { name: "体系审核员", dept: "质量管理部", scarcity: 2 },
+    { name: "产品经理", dept: "产品部", scarcity: 3 },
+    { name: "产品专员", dept: "产品部", scarcity: 2 },
+    { name: "临床应用专员", dept: "产品部", scarcity: 2 },
+    { name: "生产总监", dept: "生产中心", scarcity: 3 },
+    { name: "生产经理", dept: "生产中心", scarcity: 2 },
+    { name: "生产技术员", dept: "生产中心", scarcity: 1 },
+    { name: "销售总监", dept: "销售中心", scarcity: 3 },
+    { name: "区域销售经理", dept: "销售中心", scarcity: 2 },
+    { name: "售后工程师", dept: "销售中心", scarcity: 2 },
+    { name: "HR总监", dept: "人力资源部", scarcity: 2 },
+    { name: "HR经理", dept: "人力资源部", scarcity: 2 },
+    { name: "培训主管", dept: "人力资源部", scarcity: 1 },
+    { name: "财务总监", dept: "财务部", scarcity: 2 },
+    { name: "财务经理", dept: "财务部", scarcity: 2 },
+    { name: "成本会计", dept: "财务部", scarcity: 1 },
+  ],
+  "餐饮": [
+    { name: "运营总监", dept: "运营中心", scarcity: 3 },
+    { name: "运营经理", dept: "运营中心", scarcity: 2 },
+    { name: "督导", dept: "运营中心", scarcity: 1 },
+    { name: "行政总厨", dept: "中央厨房", scarcity: 3 },
+    { name: "厨师长", dept: "中央厨房", scarcity: 2 },
+    { name: "面点主管", dept: "中央厨房", scarcity: 2 },
+    { name: "菜品研发总监", dept: "研发中心", scarcity: 3 },
+    { name: "菜品研发经理", dept: "研发中心", scarcity: 2 },
+    { name: "研发厨师", dept: "研发中心", scarcity: 2 },
+    { name: "区域经理", dept: "区域管理部", scarcity: 2 },
+    { name: "区域运营主管", dept: "区域管理部", scarcity: 2 },
+    { name: "区域培训师", dept: "区域管理部", scarcity: 1 },
+    { name: "供应链经理", dept: "供应链部", scarcity: 2 },
+    { name: "采购主管", dept: "供应链部", scarcity: 2 },
+    { name: "仓储主管", dept: "供应链部", scarcity: 1 },
+    { name: "门店店长", dept: "门店运营", scarcity: 2 },
+    { name: "副店长", dept: "门店运营", scarcity: 1 },
+    { name: "前厅经理", dept: "门店运营", scarcity: 1 },
+    { name: "食品安全经理", dept: "品控部", scarcity: 2 },
+    { name: "品控专员", dept: "品控部", scarcity: 1 },
+    { name: "化验员", dept: "品控部", scarcity: 1 },
+    { name: "HR总监", dept: "人力资源部", scarcity: 2 },
+    { name: "HR经理", dept: "人力资源部", scarcity: 2 },
+    { name: "招聘专员", dept: "人力资源部", scarcity: 1 },
+    { name: "财务总监", dept: "财务部", scarcity: 2 },
+    { name: "财务经理", dept: "财务部", scarcity: 2 },
+    { name: "门店会计", dept: "财务部", scarcity: 1 },
+  ],
+  "化工": [
+    { name: "研发总监", dept: "研发中心", scarcity: 4 },
+    { name: "研发经理", dept: "研发中心", scarcity: 3 },
+    { name: "化学工程师", dept: "研发中心", scarcity: 3 },
+    { name: "工艺工程师", dept: "工艺技术部", scarcity: 4 },
+    { name: "工艺经理", dept: "工艺技术部", scarcity: 3 },
+    { name: "工艺技术员", dept: "工艺技术部", scarcity: 2 },
+    { name: "生产总监", dept: "生产中心", scarcity: 3 },
+    { name: "生产经理", dept: "生产中心", scarcity: 2 },
+    { name: "车间主任", dept: "生产中心", scarcity: 2 },
+    { name: "安全环保总监", dept: "安环部", scarcity: 4 },
+    { name: "安全工程师", dept: "安环部", scarcity: 3 },
+    { name: "环保工程师", dept: "安环部", scarcity: 3 },
+    { name: "质量经理", dept: "质量管理部", scarcity: 2 },
+    { name: "质量工程师", dept: "质量管理部", scarcity: 2 },
+    { name: "化验员", dept: "质量管理部", scarcity: 1 },
+    { name: "设备工程师", dept: "设备部", scarcity: 3 },
+    { name: "设备经理", dept: "设备部", scarcity: 3 },
+    { name: "仪表工程师", dept: "设备部", scarcity: 2 },
+    { name: "供应链经理", dept: "供应链部", scarcity: 2 },
+    { name: "采购主管", dept: "供应链部", scarcity: 2 },
+    { name: "物流主管", dept: "供应链部", scarcity: 1 },
+    { name: "销售总监", dept: "销售中心", scarcity: 3 },
+    { name: "销售经理", dept: "销售中心", scarcity: 2 },
+    { name: "外贸经理", dept: "销售中心", scarcity: 2 },
+    { name: "HR总监", dept: "人力资源部", scarcity: 2 },
+    { name: "HR经理", dept: "人力资源部", scarcity: 2 },
+    { name: "招聘主管", dept: "人力资源部", scarcity: 1 },
+    { name: "财务总监", dept: "财务部", scarcity: 2 },
+    { name: "财务经理", dept: "财务部", scarcity: 2 },
+    { name: "成本会计", dept: "财务部", scarcity: 1 },
+  ],
+  "其他": [
+    { name: "总经理", dept: "总经办", scarcity: 3 },
+    { name: "总经理助理", dept: "总经办", scarcity: 2 },
+    { name: "行政经理", dept: "总经办", scarcity: 1 },
+    { name: "销售总监", dept: "销售中心", scarcity: 3 },
+    { name: "销售经理", dept: "销售中心", scarcity: 2 },
+    { name: "大客户经理", dept: "销售中心", scarcity: 2 },
+    { name: "技术总监", dept: "技术中心", scarcity: 3 },
+    { name: "技术经理", dept: "技术中心", scarcity: 2 },
+    { name: "技术工程师", dept: "技术中心", scarcity: 2 },
+    { name: "运营总监", dept: "运营中心", scarcity: 3 },
+    { name: "运营经理", dept: "运营中心", scarcity: 2 },
+    { name: "运营专员", dept: "运营中心", scarcity: 1 },
+    { name: "HR总监", dept: "人力资源部", scarcity: 2 },
+    { name: "HR经理", dept: "人力资源部", scarcity: 2 },
+    { name: "招聘专员", dept: "人力资源部", scarcity: 1 },
+    { name: "财务总监", dept: "财务部", scarcity: 2 },
+    { name: "财务经理", dept: "财务部", scarcity: 2 },
+    { name: "出纳", dept: "财务部", scarcity: 1 },
+  ]
+};
+
+// ==================== 战略标签匹配库 ====================
+const STRATEGIC_TAG_MAP = [
+  {
+    keywords: ["新品研发", "技术突破", "产品研发", "新技术", "研发突破", "自研", "产品创新", "技术攻关", "核心技术"],
+    module: "研发创新",
+    positions: [
+      { name: "研发总监", impact: 5 },
+      { name: "首席科学家", impact: 5 },
+      { name: "产品总监", impact: 4 },
+      { name: "总工程师", impact: 4 },
+      { name: "电池研发总监", impact: 5 },
+      { name: "芯片设计总监", impact: 5 },
+      { name: "CTO/技术总监", impact: 4 },
+      { name: "菜品研发总监", impact: 4 },
+      { name: "电芯工程师", impact: 4 },
+      { name: "BMS软件工程师", impact: 4 },
+      { name: "材料科学家", impact: 4 },
+      { name: "算法工程师", impact: 4 },
+      { name: "工艺集成工程师", impact: 4 },
+      { name: "EDA工程师", impact: 4 },
+      { name: "模拟IC工程师", impact: 4 },
+      { name: "数字IC工程师", impact: 4 },
+      { name: "研发工程师", impact: 3 },
+      { name: "工艺工程师", impact: 3 },
+    ]
+  },
+  {
+    keywords: ["海外", "出口", "国际化", "出海", "跨境", "全球", "国外", "海外营收", "海外销售", "海外市场"],
+    module: "海外扩张",
+    positions: [
+      { name: "销售总监", impact: 5 },
+      { name: "海外销售总监", impact: 5 },
+      { name: "区域经理", impact: 4 },
+      { name: "市场总监", impact: 3 },
+      { name: "运营总监", impact: 3 },
+      { name: "产品总监", impact: 3 },
+    ]
+  },
+  {
+    keywords: ["营收增长", "收入增长", "业绩增长", "销售额", "营收翻", "翻倍", "增长", "营收目标"],
+    module: "营收增长",
+    positions: [
+      { name: "销售总监", impact: 5 },
+      { name: "市场总监", impact: 4 },
+      { name: "增长负责人", impact: 5 },
+      { name: "运营总监", impact: 3 },
+      { name: "产品总监", impact: 3 },
+      { name: "区域经理", impact: 4 },
+      { name: "客户总监", impact: 3 },
+      { name: "电商运营总监", impact: 3 },
+    ]
+  },
+  {
+    keywords: ["渠道", "经销商", "代理商", "加盟", "门店", "拓展", "覆盖", "渠道扩张", "渠道下沉"],
+    module: "渠道扩张",
+    positions: [
+      { name: "销售总监", impact: 4 },
+      { name: "渠道总监", impact: 5 },
+      { name: "区域经理", impact: 4 },
+      { name: "选址开发总监", impact: 4 },
+      { name: "运营总监", impact: 3 },
+      { name: "市场总监", impact: 3 },
+    ]
+  },
+  {
+    keywords: ["数字化", "智能制造", "信息化", "自动化", "智能工厂", "数字工厂", "数字化工厂", "工业4.0", "数字化转型"],
+    module: "数字化转型",
+    positions: [
+      { name: "IT经理", impact: 4 },
+      { name: "IT总监", impact: 4 },
+      { name: "CTO/技术总监", impact: 4 },
+      { name: "生产总监", impact: 4 },
+      { name: "自动化工程师", impact: 5 },
+      { name: "精益生产工程师", impact: 3 },
+      { name: "设备工程师", impact: 3 },
+      { name: "工艺工程师", impact: 3 },
+      { name: "架构师", impact: 3 },
+    ]
+  },
+  {
+    keywords: ["上市", "IPO", "融资", "资本市场", "股改", "辅导备案"],
+    module: "上市融资",
+    positions: [
+      { name: "CFO", impact: 5 },
+      { name: "财务总监", impact: 5 },
+      { name: "合规总监", impact: 4 },
+      { name: "法务总监", impact: 4 },
+      { name: "董事会秘书", impact: 5 },
+      { name: "风控总监", impact: 3 },
+    ]
+  },
+  {
+    keywords: ["产能", "产量", "良率", "扩产", "产能扩建", "产能扩张", "产能提升", "效率提升"],
+    module: "产能优化",
+    positions: [
+      { name: "生产总监", impact: 5 },
+      { name: "厂长", impact: 4 },
+      { name: "工艺工程师", impact: 4 },
+      { name: "设备工程师", impact: 3 },
+      { name: "质量总监", impact: 3 },
+      { name: "质量经理", impact: 3 },
+      { name: "精益生产工程师", impact: 4 },
+      { name: "供应链总监", impact: 3 },
+      { name: "工艺开发总监", impact: 4 },
+    ]
+  },
+  {
+    keywords: ["合规", "法规", "注册", "GMP", "认证", "监管", "合规攻坚", "药监"],
+    module: "合规监管",
+    positions: [
+      { name: "合规总监", impact: 4 },
+      { name: "注册事务总监", impact: 5 },
+      { name: "质量总监", impact: 4 },
+      { name: "安全环保总监", impact: 4 },
+      { name: "法务总监", impact: 3 },
+      { name: "注册法规总监", impact: 5 },
+      { name: "质量体系经理", impact: 3 },
+    ]
+  },
+  {
+    keywords: ["供应链", "采购", "物流", "仓储", "供应商", "降本"],
+    module: "供应链管理",
+    positions: [
+      { name: "供应链总监", impact: 4 },
+      { name: "供应链经理", impact: 4 },
+      { name: "采购经理", impact: 3 },
+      { name: "运营总监", impact: 3 },
+    ]
+  },
+  {
+    keywords: ["品牌", "营销", "推广", "用户增长", "获客", "私域"],
+    module: "品牌营销",
+    positions: [
+      { name: "市场总监", impact: 4 },
+      { name: "运营总监", impact: 3 },
+      { name: "增长负责人", impact: 4 },
+      { name: "产品总监", impact: 3 },
+      { name: "UI/UX设计师", impact: 2 },
+      { name: "电商运营总监", impact: 3 },
+    ]
+  },
+  {
+    keywords: ["安全", "环保", "ESG", "碳中和", "安全生产"],
+    module: "安全环保",
+    positions: [
+      { name: "安全总监", impact: 4 },
+      { name: "安全经理", impact: 3 },
+      { name: "安全环保总监", impact: 4 },
+    ]
+  },
+  {
+    keywords: ["储能", "电池", "新能源", "动力电池", "电芯"],
+    module: "新能源储能",
+    positions: [
+      { name: "电池研发总监", impact: 5 },
+      { name: "电芯工程师", impact: 5 },
+      { name: "BMS软件工程师", impact: 4 },
+      { name: "材料科学家", impact: 4 },
+      { name: "工艺开发总监", impact: 4 },
+      { name: "测试验证工程师", impact: 3 },
+      { name: "生产总监", impact: 3 },
+    ]
+  },
+  {
+    keywords: ["芯片", "半导体", "IC", "晶圆", "封装", "光刻"],
+    module: "芯片半导体",
+    positions: [
+      { name: "芯片设计总监", impact: 5 },
+      { name: "工艺集成工程师", impact: 5 },
+      { name: "EDA工程师", impact: 5 },
+      { name: "模拟IC工程师", impact: 5 },
+      { name: "数字IC工程师", impact: 4 },
+      { name: "封装测试总监", impact: 4 },
+      { name: "设备工程师", impact: 4 },
+    ]
+  },
+];
+
+// ==================== 替代难度基准库（按岗位类型） ====================
+const REPLACEMENT_DIFFICULTY_BASE = {
+  // 高管/核心决策层
+  "总经理": 5, "CEO": 5, "CFO": 5, "CTO/技术总监": 5, "首席科学家": 5,
+  "董事会秘书": 5,
+  // 核心研发
+  "研发总监": 4, "电池研发总监": 5, "芯片设计总监": 5, "总工程师": 4,
+  "电芯工程师": 5, "BMS软件工程师": 5, "材料科学家": 5,
+  "工艺集成工程师": 5, "EDA工程师": 5, "模拟IC工程师": 5, "数字IC工程师": 5,
+  "算法工程师": 5, "架构师": 5, "量化研究员": 5,
+  // 高级专业
+  "工艺开发总监": 4, "测试验证工程师": 3, "研发工程师": 3, "工艺工程师": 3,
+  "注册事务总监": 4, "注册法规总监": 4, "临床项目经理": 4, "临床经理": 4,
+  "基金经理": 4, "投资总监": 4, "风控总监": 4,
+  // 管理岗
+  "生产总监": 3, "厂长": 4, "质量总监": 3, "质量经理": 2,
+  "供应链总监": 3, "供应链经理": 3, "采购经理": 2,
+  "销售总监": 4, "市场总监": 3, "运营总监": 3, "HR总监": 3,
+  "财务总监": 3, "IT经理": 2, "IT总监": 3,
+  "增长负责人": 4, "产品总监": 3,
+  "区域经理": 3, "选址开发总监": 3, "门店店长": 2,
+  "安全总监": 3, "安全经理": 2, "安全环保总监": 4,
+  "合规总监": 4, "法务总监": 3,
+  // 基础岗
+  "前端工程师": 2, "后端工程师": 2, "测试工程师": 2,
+  "设备工程师": 2, "UI/UX设计师": 2, "电商运营总监": 3,
+  "精益生产工程师": 3, "结构工程师": 3, "造价工程师": 3,
+  "BIM工程师": 3, "工程总监": 3, "项目经理": 3,
+  "投标经理": 3, "市场准入总监": 3, "医学事务经理": 3,
+  "药理学研究员": 3, "产品经理": 2, "医学事务经理": 3,
+  "商品企划总监": 3, "菜品研发总监": 3, "行政总厨": 3,
+  "食品安全经理": 2, "品质总监": 3, "质量体系经理": 3,
+  "客户总监": 3, "封装测试总监": 3,
+};
+
+// ==================== A/B/C策略文案 ====================
+const STRATEGY_TEXT = {
+  A: "本岗位为组织发展核心支柱，必须配置 A 级顶尖人才。招聘、面试全流程由企业一把手亲自参与面试与把关；配套差异化薪酬、长期股权激励、专项人才保留方案。",
+  B: "配置 B 级及以上人才，由部门负责人主导面试与选拔流程。提供有竞争力的薪酬体系，关注人才成长路径与发展空间。",
+  C: "配置合格人才即可，通过标准化流程筛选，保障基础工作胜任力。可采用灵活用工、外包等降本方式。"
+};
+
+// ==================== 全局状态 ====================
+let analysisResult = null;
+let currentFilter = 'all';
+
+// ==================== UI事件 ====================
+document.getElementById('industrySelect').addEventListener('change', function() {
+  const customGroup = document.getElementById('customIndustryGroup');
+  customGroup.style.display = this.value === '其他' ? 'block' : 'none';
+});
+
+// Excel上传
+document.getElementById('uploadArea').addEventListener('click', function() {
+  document.getElementById('excelUpload').click();
+});
+document.getElementById('excelUpload').addEventListener('change', function(e) {
+  handleExcelUpload(e.target.files[0]);
+});
+
+// ==================== 岗位列表操作 ====================
+function addPositionRow() {
+  const list = document.getElementById('positionList');
+  const row = document.createElement('div');
+  row.className = 'position-row';
+  row.innerHTML = `
+    <input type="text" placeholder="岗位名称（如：研发总监）" class="pos-name-input">
+    <input type="text" placeholder="所属部门（如：研发中心）" class="pos-dept-input">
+    <button class="btn-remove" onclick="removePositionRow(this)" title="删除">&#x2715;</button>
+  `;
+  list.appendChild(row);
+  updateAutoNote();
+}
+
+function removePositionRow(btn) {
+  const list = document.getElementById('positionList');
+  if (list.children.length > 1) {
+    btn.parentElement.remove();
+  } else {
+    // 清空最后一行
+    btn.parentElement.querySelectorAll('input').forEach(i => i.value = '');
+  }
+  updateAutoNote();
+}
+
+function updateAutoNote() {
+  const note = document.getElementById('autoNote');
+  const inputs = document.querySelectorAll('.pos-name-input');
+  let hasValue = false;
+  inputs.forEach(i => { if (i.value.trim()) hasValue = true; });
+  note.style.display = hasValue ? 'none' : 'block';
+}
+
+function getManualPositions() {
+  const rows = document.querySelectorAll('.position-row');
+  const positions = [];
+  rows.forEach(row => {
+    const name = row.querySelector('.pos-name-input').value.trim();
+    const dept = row.querySelector('.pos-dept-input').value.trim();
+    if (name) {
+      positions.push({ name, dept: dept || '未指定部门' });
+    }
+  });
+  return positions;
+}
+
+// Excel处理
+function handleExcelUpload(file) {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, { type: 'array' });
+      const sheet = workbook.Sheets[workbook.SheetNames[0]];
+      const json = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+      
+      const list = document.getElementById('positionList');
+      list.innerHTML = '';
+      
+      let imported = 0;
+      json.forEach((row, idx) => {
+        if (idx === 0) return; // 跳过表头
+        const name = String(row[0] || '').trim();
+        const dept = String(row[1] || '').trim();
+        if (name && !name.includes('岗位') && !name.includes('部门')) {
+          const div = document.createElement('div');
+          div.className = 'position-row';
+          div.innerHTML = `
+            <input type="text" value="${escapeHtml(name)}" class="pos-name-input">
+            <input type="text" value="${escapeHtml(dept)}" class="pos-dept-input">
+            <button class="btn-remove" onclick="removePositionRow(this)" title="删除">&#x2715;</button>
+          `;
+          list.appendChild(div);
+          imported++;
+        }
+      });
+      
+      if (imported === 0) {
+        addPositionRow();
+      }
+      updateAutoNote();
+      showToast(`成功导入 ${imported} 个岗位`, 'info');
+    } catch (err) {
+      showToast('Excel 文件解析失败，请检查格式（第一列：岗位名称，第二列：所属部门）', 'warning');
+      console.error(err);
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function escapeHtml(str) {
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+// ==================== 核心分析引擎 ====================
+function startAnalysis() {
+  // 验证
+  const industrySelect = document.getElementById('industrySelect');
+  let industry = industrySelect.value;
+  if (industry === '其他') {
+    industry = document.getElementById('customIndustry').value.trim();
+  }
+  if (!industry) {
+    showToast('请选择或填写企业所属行业', 'warning');
+    return;
+  }
+  
+  const battlesText = document.getElementById('battleInput').value.trim();
+  if (!battlesText) {
+    showToast('请填写本年度战略硬仗清单', 'warning');
+    return;
+  }
+  
+  // 解析硬仗
+  const battles = battlesText.split('\n').filter(s => s.trim());
+  if (battles.length === 0) {
+    showToast('请至少填写一条战略硬仗', 'warning');
+    return;
+  }
+  
+  // 获取岗位清单
+  let positions = getManualPositions();
+  if (positions.length === 0) {
+    // 自动使用行业标准岗位库
+    const industryKey = Object.keys(INDUSTRY_POSITION_DB).find(k => 
+      k === industry || industry.includes(k) || k.includes(industry)
+    ) || '其他';
+    positions = (INDUSTRY_POSITION_DB[industryKey] || INDUSTRY_POSITION_DB['其他']).map(p => ({
+      name: p.name,
+      dept: p.dept,
+      scarcity: p.scarcity,
+      isAuto: true
+    }));
+  }
+  
+  // 显示加载
+  const btn = document.getElementById('btnStart');
+  btn.innerHTML = '<span class="spinner"></span> AI解析中...';
+  btn.disabled = true;
+  
+  // 模拟AI解析延迟（让用户感知分析过程）
+  setTimeout(() => {
+    const result = analyze(industry, battles, positions);
+    analysisResult = result;
+    renderResults(result);
+    
+    btn.innerHTML = '&#x1F50D; 开始智能识别';
+    btn.disabled = false;
+    
+    // 切换页面
+    document.getElementById('pageInput').classList.remove('active');
+    document.getElementById('pageResults').classList.add('active');
+    
+    // 更新步骤
+    document.getElementById('step1').classList.remove('active');
+    document.getElementById('step1').classList.add('done');
+    document.getElementById('step1').querySelector('.step-num').textContent = '✓';
+    document.getElementById('stepLine1').classList.add('done');
+    document.getElementById('step2').classList.add('active');
+    
+    // 滚动到顶部
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    // 检查是否有A类
+    const aCount = result.positions.filter(p => p.class === 'A').length;
+    if (aCount === 0) {
+      setTimeout(() => {
+        showToast('当前无 A 类核心岗位（总分≥60），可手动上调关键岗位三维分数重新测算', 'warning');
+      }, 500);
+    }
+  }, 1200);
+}
+
+function analyze(industry, battles, positions) {
+  // 1. 解析硬仗关键词
+  const battleKeywords = [];
+  battles.forEach(battle => {
+    STRATEGIC_TAG_MAP.forEach(tag => {
+      tag.keywords.forEach(kw => {
+        if (battle.includes(kw)) {
+          if (!battleKeywords.find(bk => bk.module === tag.module)) {
+            battleKeywords.push({ battle, module: tag.module, tag });
+          }
+        }
+      });
+    });
+  });
+  
+  // 如果没匹配到任何标签，使用通用匹配
+  if (battleKeywords.length === 0) {
+    battleKeywords.push({ 
+      battle: battles[0], 
+      module: '通用战略', 
+      tag: STRATEGIC_TAG_MAP[2] // 默认营收增长
+    });
+  }
+  
+  // 2. 为每个岗位打分
+  const scoredPositions = positions.map(pos => {
+    // 战略影响度：基于硬仗匹配
+    let impact = 2; // 默认基础分
+    const matchedBattles = [];
+    
+    battleKeywords.forEach(bk => {
+      bk.tag.positions.forEach(tp => {
+        if (pos.name.includes(tp.name) || tp.name.includes(pos.name)) {
+          if (tp.impact > impact) {
+            impact = tp.impact;
+          }
+          if (!matchedBattles.find(b => b.battle === bk.battle)) {
+            matchedBattles.push(bk);
+          }
+        }
+      });
+    });
+    
+    // 如果没有匹配到硬仗，检查是否是高管/关键岗位默认给3分
+    if (matchedBattles.length === 0) {
+      const highImpactRoles = ['总监', '总经理', 'CEO', 'CFO', 'CTO', '首席', '总工程师', '厂长', '科学家'];
+      if (highImpactRoles.some(r => pos.name.includes(r))) {
+        impact = 3;
+      }
+    }
+    
+    // 市场稀缺性：从行业库获取或默认值
+    let scarcity = pos.scarcity || 2;
+    if (!pos.scarcity) {
+      // 从行业岗位库查找
+      const industryKey = Object.keys(INDUSTRY_POSITION_DB).find(k => k === industry || industry.includes(k));
+      if (industryKey) {
+        const found = INDUSTRY_POSITION_DB[industryKey].find(p => p.name === pos.name);
+        if (found) scarcity = found.scarcity;
+      }
+    }
+    
+    // 替代难度：从基准库获取或根据职位推断
+    let replacement = REPLACEMENT_DIFFICULTY_BASE[pos.name] || 2;
+    // 如果包含了"总监"、"首席"等关键词，提高替代难度
+    if (!REPLACEMENT_DIFFICULTY_BASE[pos.name]) {
+      if (pos.name.includes('首席') || pos.name.includes('科学家')) replacement = 5;
+      else if (pos.name.includes('总监') || pos.name.includes('总工程师')) replacement = 4;
+      else if (pos.name.includes('经理') || pos.name.includes('高级')) replacement = 3;
+    }
+    
+    // 计算总分
+    const totalScore = impact * scarcity * replacement;
+    
+    // 分级
+    let posClass;
+    if (totalScore >= 60) {
+      // A类双重校验
+      const highCount = (impact >= 4 ? 1 : 0) + (scarcity >= 4 ? 1 : 0) + (replacement >= 4 ? 1 : 0);
+      posClass = highCount >= 2 ? 'A' : 'B';
+    } else if (totalScore >= 25) {
+      posClass = 'B';
+    } else {
+      posClass = 'C';
+    }
+    
+    return {
+      name: pos.name,
+      dept: pos.dept || '未指定部门',
+      impact,
+      scarcity,
+      replacement,
+      totalScore,
+      class: posClass,
+      battles: matchedBattles,
+      isAuto: pos.isAuto || false,
+    };
+  });
+  
+  // 按总分降序
+  scoredPositions.sort((a, b) => b.totalScore - a.totalScore);
+  
+  return {
+    industry,
+    battles,
+    positions: scoredPositions,
+    aCount: scoredPositions.filter(p => p.class === 'A').length,
+    bCount: scoredPositions.filter(p => p.class === 'B').length,
+    cCount: scoredPositions.filter(p => p.class === 'C').length,
+    hasAutoPositions: scoredPositions.some(p => p.isAuto),
+  };
+}
+
+function renderBaseInfoAndStats(result) {
+  // 基础信息
+  var baseInfoCard = document.getElementById('baseInfoCard');
+  baseInfoCard.innerHTML = `
+    <div class="card-header"><span class="icon">&#x1F4CB;</span> 本次盘点基础信息</div>
+    <div class="base-info">
+      <span class="tag">&#x1F3ED; 行业：${escapeHtml(result.industry)}</span>
+      <span class="tag">&#x1F465; 岗位总数：${result.positions.length}个</span>
+      <span class="tag">&#x1F534; A类：${result.aCount}个</span>
+      <span class="tag">&#x1F7E1; B类：${result.bCount}个</span>
+      <span class="tag">&#x1F7E2; C类：${result.cCount}个</span>
+      ${result.hasAutoPositions ? '<span class="tag" style="background:#fef3c7;color:#92400e;">&#x26A0; 本次使用行业通用岗位测算</span>' : ''}
+      <div class="battles">
+        <div class="title">&#x1F3AF; 年度硬仗清单：</div>
+        ${result.battles.map(function(b, i) { return '<div class="battle-item">' + (i+1) + '. ' + escapeHtml(b) + '</div>'; }).join('')}
+      </div>
+    </div>
+  `;
+
+  // 统计卡片
+  var summaryGrid = document.getElementById('summaryGrid');
+  summaryGrid.innerHTML = `
+    <div class="summary-card total">
+      <div class="count">${result.positions.length}</div>
+      <div class="label">岗位总数</div>
+    </div>
+    <div class="summary-card a-class">
+      <div class="count">${result.aCount}</div>
+      <div class="label">A类核心关键岗位</div>
+    </div>
+    <div class="summary-card b-class">
+      <div class="count">${result.bCount}</div>
+      <div class="label">B类重要骨干岗位</div>
+    </div>
+    <div class="summary-card c-class">
+      <div class="count">${result.cCount}</div>
+      <div class="label">C类基础执行岗位</div>
+    </div>
+  `;
+
+  // 饼图
+  renderPieChart(result);
+}
+
+// ==================== 结果渲染 ====================
+function renderResults(result) {
+  renderBaseInfoAndStats(result);
+  
+  // 数量标签
+  document.getElementById('aCount').textContent = result.aCount + '\u4E2A';
+  document.getElementById('bCount').textContent = result.bCount + '\u4E2A';
+  document.getElementById('cCount').textContent = result.cCount + '\u4E2A';
+  
+  // 岗位卡片
+  currentFilter = 'all';
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('filterAll').classList.add('active');
+  
+  renderPositionCards(result);
+}
+
+function renderPieChart(result) {
+  const total = result.positions.length || 1;
+  const aPct = (result.aCount / total * 100).toFixed(1);
+  const bPct = (result.bCount / total * 100).toFixed(1);
+  const cPct = (result.cCount / total * 100).toFixed(1);
+  
+  // SVG饼图
+  const cx = 100, cy = 100, r = 90;
+  let cumulative = 0;
+  
+  const segments = [
+    { pct: result.aCount / total, color: '#dc2626', label: 'A类' },
+    { pct: result.bCount / total, color: '#d97706', label: 'B类' },
+    { pct: result.cCount / total, color: '#059669', label: 'C类' },
+  ];
+  
+  let paths = '';
+  segments.forEach(seg => {
+    if (seg.pct === 0) return;
+    const startAngle = cumulative * 2 * Math.PI;
+    const endAngle = (cumulative + seg.pct) * 2 * Math.PI;
+    cumulative += seg.pct;
+    
+    const x1 = cx + r * Math.sin(startAngle);
+    const y1 = cy - r * Math.cos(startAngle);
+    const x2 = cx + r * Math.sin(endAngle);
+    const y2 = cy - r * Math.cos(endAngle);
+    
+    const largeArc = seg.pct > 0.5 ? 1 : 0;
+    paths += `<path d="M${cx},${cy} L${x1},${y1} A${r},${r} 0 ${largeArc},1 ${x2},${y2} Z" fill="${seg.color}"/>`;
+  });
+  
+  document.getElementById('pieChart').innerHTML = `
+    <svg width="220" height="220" viewBox="0 0 200 200">
+      <circle cx="${cx}" cy="${cy}" r="${r}" fill="#f3f4f6"/>
+      ${paths}
+      <circle cx="${cx}" cy="${cy}" r="50" fill="white"/>
+      <text x="${cx}" y="${cy - 5}" text-anchor="middle" font-size="18" font-weight="800" fill="#374151">${total}</text>
+      <text x="${cx}" y="${cy + 14}" text-anchor="middle" font-size="11" fill="#9ca3af">岗位总数</text>
+    </svg>
+    <div class="pie-legend">
+      <div class="legend-item"><span class="legend-dot a-dot"></span> A类核心岗位：${result.aCount}个（${aPct}%）</div>
+      <div class="legend-item"><span class="legend-dot b-dot"></span> B类骨干岗位：${result.bCount}个（${bPct}%）</div>
+      <div class="legend-item"><span class="legend-dot c-dot"></span> C类基础岗位：${result.cCount}个（${cPct}%）</div>
+    </div>
+  `;
+}
+
+function renderPositionCards(result, filter = 'all') {
+  const filteredPositions = filter === 'all' 
+    ? result.positions 
+    : result.positions.filter(p => p.class === filter);
+  
+  const aPositions = filteredPositions.filter(p => p.class === 'A');
+  const bPositions = filteredPositions.filter(p => p.class === 'B');
+  const cPositions = filteredPositions.filter(p => p.class === 'C');
+  
+  document.getElementById('aPositions').innerHTML = aPositions.length === 0 
+    ? '<div class="empty-state"><div class="empty-icon">📭</div>暂无A类岗位</div>'
+    : aPositions.map((p, i) => renderPositionCard(p, i)).join('');
+  
+  document.getElementById('bPositions').innerHTML = bPositions.length === 0 
+    ? '<div class="empty-state"><div class="empty-icon">📭</div>暂无B类岗位</div>'
+    : bPositions.map((p, i) => renderPositionCard(p, i)).join('');
+  
+  document.getElementById('cPositions').innerHTML = cPositions.length === 0 
+    ? '<div class="empty-state"><div class="empty-icon">📭</div>暂无C类岗位</div>'
+    : cPositions.map((p, i) => renderPositionCard(p, i)).join('');
+  
+  // 更新数量
+  document.getElementById('aCount').textContent = (filter === 'all' ? result.aCount : aPositions.length) + '个';
+  document.getElementById('bCount').textContent = (filter === 'all' ? result.bCount : bPositions.length) + '个';
+  document.getElementById('cCount').textContent = (filter === 'all' ? result.cCount : cPositions.length) + '个';
+  
+  // 隐藏空的section标题
+  document.getElementById('aTitle').style.display = (filter === 'B' || filter === 'C') ? 'none' : '';
+  document.getElementById('bTitle').style.display = (filter === 'A' || filter === 'C') ? 'none' : '';
+  document.getElementById('cTitle').style.display = (filter === 'A' || filter === 'B') ? 'none' : '';
+}
+
+function renderPositionCard(pos, index) {
+  const dimClass = (v) => v >= 4 ? 'high' : v >= 3 ? 'mid' : 'low';
+  const classHighlight = pos.class === 'A' ? 'a-highlight' : pos.class === 'B' ? 'b-highlight' : 'c-highlight';
+  const scoreClass = pos.class === 'A' ? 'a-score' : pos.class === 'B' ? 'b-score' : 'c-score';
+  const classBadge = pos.class === 'A' ? 'a-badge' : pos.class === 'B' ? 'b-badge' : 'c-badge';
+  const strategyClass = pos.class === 'A' ? 'a-strategy' : pos.class === 'B' ? 'b-strategy' : 'c-strategy';
+  const strategyIcon = pos.class === 'A' ? '&#x1F451; 一把手用人策略' : pos.class === 'B' ? '&#x1F4CB; 部门负责人策略' : '&#x2705; 标准化策略';
+  
+  // 判定依据
+  let judgmentItems = [];
+  if (pos.battles && pos.battles.length > 0) {
+    pos.battles.forEach(b => {
+      judgmentItems.push(`绑定硬仗「${b.battle.substring(0, 30)}${b.battle.length > 30 ? '...' : ''}」→ ${b.module}`);
+    });
+  }
+  if (pos.class === 'A') {
+    const highChecks = [];
+    if (pos.impact >= 4) highChecks.push('战略影响度≥4分');
+    if (pos.scarcity >= 4) highChecks.push('市场稀缺性≥4分');
+    if (pos.replacement >= 4) highChecks.push('替代难度≥4分');
+    judgmentItems.push(`A类双重校验通过：满足 ${highChecks.join('、')}`);
+  }
+  
+  return `
+    <div class="pos-card ${classHighlight}" data-class="${pos.class}">
+      <div class="pos-card-header">
+        <div>
+          <span class="pos-name">${escapeHtml(pos.name)}</span>
+          <span class="pos-dept">${escapeHtml(pos.dept)}</span>
+          ${pos.isAuto ? '<span style="font-size:11px;color:var(--gray-400);margin-left:6px;">（行业标准库）</span>' : ''}
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="class-badge ${classBadge}">${pos.class}类</span>
+          <span class="pos-score ${scoreClass}">${pos.totalScore}<span style="font-size:12px;font-weight:500;">分</span></span>
+        </div>
+      </div>
+      <div class="pos-card-body">
+        <div class="score-row">
+          <div class="score-item">
+            <div class="dim-label">战略影响度</div>
+            <div class="dim-value ${dimClass(pos.impact)}">${pos.impact}</div>
+            <div class="score-edit">
+              <select onchange="updateScore(${index}, 'impact', parseInt(this.value), '${escapeHtml(pos.name)}')">
+                ${[1,2,3,4,5].map(v => `<option value="${v}" ${pos.impact === v ? 'selected' : ''}>${v}分</option>`).join('')}
+              </select>
+            </div>
+          </div>
+          <div class="score-item">
+            <div class="dim-label">市场稀缺性</div>
+            <div class="dim-value ${dimClass(pos.scarcity)}">${pos.scarcity}</div>
+            <div class="score-edit">
+              <select onchange="updateScore(${index}, 'scarcity', parseInt(this.value), '${escapeHtml(pos.name)}')">
+                ${[1,2,3,4,5].map(v => `<option value="${v}" ${pos.scarcity === v ? 'selected' : ''}>${v}分</option>`).join('')}
+              </select>
+            </div>
+          </div>
+          <div class="score-item">
+            <div class="dim-label">替代难度</div>
+            <div class="dim-value ${dimClass(pos.replacement)}">${pos.replacement}</div>
+            <div class="score-edit">
+              <select onchange="updateScore(${index}, 'replacement', parseInt(this.value), '${escapeHtml(pos.name)}')">
+                ${[1,2,3,4,5].map(v => `<option value="${v}" ${pos.replacement === v ? 'selected' : ''}>${v}分</option>`).join('')}
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        ${judgmentItems.length > 0 ? `
+        <div class="judgment">
+          <div class="judge-title">&#x1F4DD; 判定依据</div>
+          ${judgmentItems.map(j => `<div class="judge-item">${j}</div>`).join('')}
+        </div>
+        ` : ''}
+        
+        <div class="strategy-box ${strategyClass}">
+          <span class="strategy-icon">${strategyIcon}</span>
+          ${STRATEGY_TEXT[pos.class]}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function updateScore(index, dimension, value, posName) {
+  if (!analysisResult) return;
+  
+  // 在结果中找到对应岗位（使用名称匹配）
+  const pos = analysisResult.positions.find(p => p.name === posName);
+  if (!pos) return;
+  
+  pos[dimension] = value;
+  pos.totalScore = pos.impact * pos.scarcity * pos.replacement;
+  
+  // 重新分级（含A类双重校验）
+  if (pos.totalScore >= 60) {
+    const highCount = (pos.impact >= 4 ? 1 : 0) + (pos.scarcity >= 4 ? 1 : 0) + (pos.replacement >= 4 ? 1 : 0);
+    pos.class = highCount >= 2 ? 'A' : 'B';
+  } else if (pos.totalScore >= 25) {
+    pos.class = 'B';
+  } else {
+    pos.class = 'C';
+  }
+  
+  // 重新统计
+  analysisResult.aCount = analysisResult.positions.filter(p => p.class === 'A').length;
+  analysisResult.bCount = analysisResult.positions.filter(p => p.class === 'B').length;
+  analysisResult.cCount = analysisResult.positions.filter(p => p.class === 'C').length;
+  
+  // 保存当前筛选状态（renderResults会重置为all）
+  var savedFilter = currentFilter;
+  
+  // 重新渲染基础信息和统计（但不重置筛选）
+  renderBaseInfoAndStats(analysisResult);
+  
+  // 按原筛选重新渲染卡片
+  renderPositionCards(analysisResult, savedFilter);
+  
+  // 恢复筛选按钮状态
+  document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+  var targetBtn = document.getElementById('filter' + (savedFilter === 'all' ? 'All' : savedFilter));
+  if (targetBtn) targetBtn.classList.add('active');
+}
+
+function filterPositions(cls) {
+  currentFilter = cls;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('filter' + (cls === 'all' ? 'All' : cls)).classList.add('active');
+  renderPositionCards(analysisResult, cls === 'all' ? 'all' : cls);
+}
+
+// ==================== 导出Excel ====================
+function exportExcel() {
+  if (!analysisResult) return;
+  
+  const data = [
+    ['行业', '年度硬仗', '岗位名称', '所属部门', '战略影响度', '市场稀缺性', '替代难度', '岗位总分', '岗位分级', '判定依据', '人才管理策略']
+  ];
+  
+  analysisResult.positions.forEach(pos => {
+    const battleText = pos.battles && pos.battles.length > 0 
+      ? pos.battles.map(b => b.module).join('; ') 
+      : '通用支撑';
+    const judgmentText = pos.class === 'A' 
+      ? `总分≥60; 满足${(pos.impact>=4?1:0)+(pos.scarcity>=4?1:0)+(pos.replacement>=4?1:0)}条高分规则` 
+      : pos.class === 'B' ? `总分25-59` : `总分<25`;
+    
+    data.push([
+      analysisResult.industry,
+      analysisResult.battles.join('; '),
+      pos.name,
+      pos.dept,
+      pos.impact,
+      pos.scarcity,
+      pos.replacement,
+      pos.totalScore,
+      pos.class + '类',
+      judgmentText,
+      STRATEGY_TEXT[pos.class]
+    ]);
+  });
+  
+  const ws = XLSX.utils.aoa_to_sheet(data);
+  
+  // 设置列宽
+  ws['!cols'] = [
+    { wch: 15 }, { wch: 40 }, { wch: 16 }, { wch: 14 },
+    { wch: 12 }, { wch: 12 }, { wch: 10 }, { wch: 10 },
+    { wch: 10 }, { wch: 25 }, { wch: 50 }
+  ];
+  
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'A类岗位价值盘点');
+  XLSX.writeFile(wb, `岗位价值系数盘点_${analysisResult.industry}_${new Date().toISOString().slice(0,10)}.xlsx`);
+  
+  showToast('Excel盘点表已导出', 'info');
+}
+
+// ==================== 导航 ====================
+function backToInput() {
+  document.getElementById('pageResults').classList.remove('active');
+  document.getElementById('pageInput').classList.add('active');
+  document.getElementById('step1').classList.add('active');
+  document.getElementById('step1').classList.remove('done');
+  document.getElementById('step1').querySelector('.step-num').textContent = '1';
+  document.getElementById('stepLine1').classList.remove('done');
+  document.getElementById('step2').classList.remove('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function resetForm() {
+  document.getElementById('industrySelect').value = '';
+  document.getElementById('battleInput').value = '';
+  document.getElementById('customIndustry').value = '';
+  document.getElementById('customIndustryGroup').style.display = 'none';
+  document.getElementById('excelUpload').value = '';
+  
+  const list = document.getElementById('positionList');
+  list.innerHTML = `
+    <div class="position-row">
+      <input type="text" placeholder="岗位名称（如：研发总监）" class="pos-name-input">
+      <input type="text" placeholder="所属部门（如：研发中心）" class="pos-dept-input">
+      <button class="btn-remove" onclick="removePositionRow(this)" title="删除">&#x2715;</button>
+    </div>
+  `;
+  updateAutoNote();
+  showToast('表单已重置', 'info');
+}
+
+// ==================== Toast ====================
+function showToast(msg, type) {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = 'toast ' + type;
+  toast.textContent = msg;
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transition = 'opacity .3s';
+    setTimeout(() => toast.remove(), 300);
+  }, 2500);
+}
+
+// ==================== 初始化 ====================
+updateAutoNote();
+
+// ============================================================
+//  战略解码师·智能生成年度硬仗
+// ============================================================
+function openStrategyDecoder() {
+  // 预填行业
+  const industry = getCurrentIndustry();
+  if (industry) {
+    document.getElementById('stratGoal').placeholder = `如：${industry}行业营收突破3亿、拿下头部客户...`;
+  }
+  document.getElementById('strategyModalOverlay').classList.add('show');
+  document.getElementById('stratS1').style.display = 'block';
+  document.getElementById('stratS2').style.display = 'none';
+  document.getElementById('stratS3').style.display = 'none';
+  updateStratDots(1);
+}
+
+function closeStrategyDecoder() {
+  document.getElementById('strategyModalOverlay').classList.remove('show');
+}
+
+function updateStratDots(step) {
+  for (let i = 1; i <= 3; i++) {
+    const dot = document.getElementById('stratDot' + i);
+    dot.classList.remove('active', 'done');
+    if (i < step) dot.classList.add('done');
+    if (i === step) dot.classList.add('active');
+  }
+}
+
+function getCurrentIndustry() {
+  const sel = document.getElementById('industrySelect');
+  if (sel.value === '其他') return document.getElementById('customIndustry').value.trim();
+  return sel.value;
+}
+
+function stratGoS2() {
+  const industry = getCurrentIndustry();
+  const goal = document.getElementById('stratGoal').value.trim();
+  if (!goal && !industry) {
+    showToast('请至少填写公司头等大事或选择行业', 'warning');
+    return;
+  }
+  
+  // 构建确认信息
+  const revenue = document.getElementById('stratRevenue').value.trim();
+  const profit = document.getElementById('stratProfit').value.trim();
+  const headcount = document.getElementById('stratHeadcount').value.trim();
+  const otherGoal = document.getElementById('stratOtherGoal').value.trim();
+  const regret = document.getElementById('stratRegret').value.trim();
+  
+  const stratData = { industry, goal, revenue, profit, headcount, otherGoal, regret };
+  document.getElementById('stratConfirmBox').innerHTML = `
+    <div style="font-weight:700;color:var(--gray-800);margin-bottom:8px;">&#x1F4CB; 目标确认</div>
+    <div>&#x1F3ED; 行业：${escapeHtml(industry || '未选择')}</div>
+    <div>&#x1F3AF; 头等大事：${escapeHtml(goal || '未填写')}</div>
+    ${revenue ? `<div>&#x1F4B0; 营收目标：${escapeHtml(revenue)}</div>` : ''}
+    ${profit ? `<div>&#x1F4CA; 利润目标：${escapeHtml(profit)}</div>` : ''}
+    ${headcount ? `<div>&#x1F465; 员工规模：${escapeHtml(headcount)}人</div>` : ''}
+    ${otherGoal ? `<div>&#x1F4CC; 其他目标：${escapeHtml(otherGoal)}</div>` : ''}
+    ${regret ? `<div style="color:#dc2626;margin-top:4px;">&#x26A0; 去年遗憾：${escapeHtml(regret)}</div>` : ''}
+  `;
+  
+  // 渲染战略方向模板
+  renderGoalTemplates(industry);
+  
+  // 存储数据
+  document.getElementById('stratS2').dataset.stratData = JSON.stringify(stratData);
+  
+  document.getElementById('stratS1').style.display = 'none';
+  document.getElementById('stratS2').style.display = 'block';
+  document.getElementById('stratS3').style.display = 'none';
+  updateStratDots(2);
+}
+
+function stratBackS1() {
+  document.getElementById('stratS1').style.display = 'block';
+  document.getElementById('stratS2').style.display = 'none';
+  document.getElementById('stratS3').style.display = 'none';
+  updateStratDots(1);
+}
+
+function stratBackS2() {
+  document.getElementById('stratS1').style.display = 'none';
+  document.getElementById('stratS2').style.display = 'block';
+  document.getElementById('stratS3').style.display = 'none';
+  updateStratDots(2);
+}
+
+// 行业→战略方向模板
+const STRATEGY_GOAL_TEMPLATES = {
+  "制造": [
+    { label: '&#x1F4C8; 营收增长30%+', key: '制造营收' },
+    { label: '&#x1F3ED; 产能扩建/新工厂', key: '制造产能' },
+    { label: '&#x1F916; 数字化/智能制造', key: '制造数字' },
+    { label: '&#x1F30D; 海外市场拓展', key: '制造海外' },
+    { label: '&#x1F4C9; 降本增效', key: '制造降本' },
+    { label: '&#x1F510; 新产品线研发', key: '制造新品' },
+  ],
+  "新能源动力电池": [
+    { label: '&#x1F50B; 新一代电池研发', key: '电池研发' },
+    { label: '&#x1F3ED; 产能扩建/GWh', key: '电池产能' },
+    { label: '&#x1F30D; 海外建厂/出口', key: '电池海外' },
+    { label: '&#x1F4C8; 市占率提升', key: '电池市占' },
+    { label: '&#x1F4C9; 降本至X元/Wh', key: '电池降本' },
+    { label: '&#x1F916; 数字化工厂', key: '电池数字' },
+  ],
+  "互联网": [
+    { label: '&#x1F4C8; 用户增长/DAU翻倍', key: '互联增长' },
+    { label: '&#x1F4B0; 营收/ARPU提升', key: '互联营收' },
+    { label: '&#x1F9E0; AI产品落地', key: '互联AI' },
+    { label: '&#x1F30D; 出海/国际化', key: '互联出海' },
+    { label: '&#x1F4C9; 降本/盈利转正', key: '互联降本' },
+  ],
+  "医药生物": [
+    { label: '&#x1F9EA; 新药研发/IND', key: '医药研发' },
+    { label: '&#x1F4CB; 注册申报/NDA', key: '医药注册' },
+    { label: '&#x1F3E5; 集采中标', key: '医药集采' },
+    { label: '&#x1F4C8; 渠道/营收增长', key: '医药营收' },
+    { label: '&#x1F3ED; 产能GMP升级', key: '医药产能' },
+  ],
+  "半导体": [
+    { label: '&#x1F4A1; 芯片流片/量产', key: '芯片流片' },
+    { label: '&#x1F3ED; 产线扩产', key: '芯片产能' },
+    { label: '&#x1F4F1; 客户Design-win', key: '芯片客户' },
+    { label: '&#x1F9E0; 下一代工艺研发', key: '芯片工艺' },
+  ],
+  "金融": [
+    { label: '&#x1F4B0; AUM/规模增长', key: '金融规模' },
+    { label: '&#x1F4CA; IPO/上市', key: '金融上市' },
+    { label: '&#x1F9E0; 量化/数字化', key: '金融量化' },
+    { label: '&#x1F6E1; 风控合规升级', key: '金融合规' },
+  ],
+  "建筑工程": [
+    { label: '&#x1F3D7; 中标额/合同额', key: '建筑中标' },
+    { label: '&#x1F4C8; 营收规模增长', key: '建筑营收' },
+    { label: '&#x1F3D9; 区域/新市场拓展', key: '建筑区域' },
+    { label: '&#x1F4C9; 利润率/降本', key: '建筑降本' },
+  ],
+  "零售连锁": [
+    { label: '&#x1F3EC; 门店扩张/X家', key: '零售开店' },
+    { label: '&#x1F4C8; 同店营收增长', key: '零售同店' },
+    { label: '&#x1F6E0; 供应链优化', key: '零售供应' },
+    { label: '&#x1F4F1; 数字化转型', key: '零售数字' },
+  ],
+  "医疗器械": [
+    { label: '&#x1F4CB; 注册证获取', key: '器械注册' },
+    { label: '&#x1F4C8; 渠道/营收增长', key: '器械营收' },
+    { label: '&#x1F9EA; 新产品研发', key: '器械研发' },
+    { label: '&#x1F3E5; 集采中标', key: '器械集采' },
+  ],
+  "餐饮": [
+    { label: '&#x1F3EC; 门店扩张', key: '餐饮开店' },
+    { label: '&#x1F4C8; 营收/翻台率', key: '餐饮营收' },
+    { label: '&#x1F373; 新菜品研发', key: '餐饮菜品' },
+    { label: '&#x1F4F1; 数字化/外卖', key: '餐饮数字' },
+  ],
+  "化工": [
+    { label: '&#x1F3ED; 产能扩建', key: '化工产能' },
+    { label: '&#x1F30D; 出口/海外', key: '化工海外' },
+    { label: '&#x1F6E1; 安全环保升级', key: '化工安环' },
+    { label: '&#x1F9EA; 新产品研发', key: '化工研发' },
+  ],
+};
+
+const DEFAULT_GOAL_TEMPLATES = [
+  { label: '&#x1F4C8; 营收增长', key: '通用营收' },
+  { label: '&#x1F4C9; 降本增效', key: '通用降本' },
+  { label: '&#x1F30D; 市场拓展', key: '通用拓展' },
+  { label: '&#x1F9EA; 新品/研发', key: '通用研发' },
+  { label: '&#x1F916; 数字化升级', key: '通用数字' },
+];
+
+function renderGoalTemplates(industry) {
+  const container = document.getElementById('stratGoalTemplates');
+  const templates = STRATEGY_GOAL_TEMPLATES[industry] || DEFAULT_GOAL_TEMPLATES;
+  container.innerHTML = templates.map(t => `
+    <div class="goal-chip" data-key="${t.key}" onclick="toggleGoalChip(this)">${t.label}</div>
+  `).join('');
+}
+
+function toggleGoalChip(chip) {
+  chip.classList.toggle('selected');
+}
+
+// 硬仗生成引擎
+const BATTLE_GENERATOR = {
+  "制造营收": ["营收突破X亿，核心大客户签约数翻倍", "建立大客户直销团队，KA客户覆盖行业TOP10"],
+  "制造产能": ["完成X号工厂产能扩建，年产能提升至XX万件", "推进精益生产体系落地，OEE提升至85%+"],
+  "制造数字": ["完成数字化工厂一期改造，MES系统全面上线", "打通ERP-MES-WMS数据链路，实现生产数据实时可视化"],
+  "制造海外": ["搭建海外销售团队，海外营收占比提升至30%", "完成东南亚/欧洲市场准入认证，首批海外订单交付"],
+  "制造降本": ["供应链全面降本，采购成本下降8%", "推进自动化改造，人均产值提升20%"],
+  "制造新品": ["完成X款新产品研发并量产，新品营收占比达25%", "建立IPD研发流程，研发周期缩短30%"],
+  "电池研发": ["自研新一代XX电池技术，能量密度突破XXXWh/kg", "完成固态电池/钠电等新技术中试验证"],
+  "电池产能": ["产能扩建至XXGWh，良率提升至98%+", "完成X号超级工厂投产，爬坡周期≤6个月"],
+  "电池海外": ["搭建海外销售与服务体系，海外营收占比提升至40%", "完成欧盟/北美市场认证，首批海外订单交付"],
+  "电池市占": ["国内储能/动力电池市场份额提升至XX%", "绑定3家头部车企/储能客户深度合作"],
+  "电池降本": ["电芯成本降至X元/Wh以下，材料成本下降15%", "供应链垂直整合，关键材料自供率达40%"],
+  "电池数字": ["完成数字孪生工厂建设，生产效率提升25%", "AI质检覆盖全产线，漏检率降至0.1%以下"],
+  "互联增长": ["DAU/MAU翻倍增长，新增用户XX万", "核心功能留存率提升至40%+"],
+  "互联营收": ["营收突破X亿，ARPU提升30%", "商业化产品线从X条扩展至Y条"],
+  "互联AI": ["AI大模型产品落地，DAU突破XX万", "完成至少2个垂直行业AI解决方案商用"],
+  "互联出海": ["海外产品上线，DAU突破XX万", "组建海外运营团队，覆盖东南亚/中东/拉美"],
+  "互联降本": ["实现盈亏平衡/正向盈利", "云成本优化下降20%，人效提升30%"],
+  "医药研发": ["完成X个新药IND申报，进入临床I期", "建立AI辅助药物发现平台，研发周期缩短25%"],
+  "医药注册": ["完成核心产品NDA/BLA申报", "获得至少1个新药上市批件"],
+  "医药集采": ["核心产品集采中标，覆盖XX省份", "集采中标后产能翻倍，生产成本下降20%"],
+  "医药营收": ["营收突破X亿，新增覆盖XX家医院", "自营销售团队扩至XX人，代理商网络覆盖全国"],
+  "医药产能": ["完成GMP车间升级改造，通过FDA/EMA核查", "产能提升50%，质量投诉率降至0.1%以下"],
+  "芯片流片": ["完成XX纳米工艺芯片流片并验证通过", "核心IP自主化率达60%"],
+  "芯片产能": ["产线扩产至XX万片/月，产能利用率90%+", "良率从XX%提升至XX%"],
+  "芯片客户": ["获得3家以上Tier1客户Design-win", "进入至少1家国际头部客户供应链"],
+  "芯片工艺": ["启动下一代工艺预研，完成关键技术验证", "专利布局新增XX项"],
+  "金融规模": ["AUM突破XX亿，客户数增长40%", "推出X款创新金融产品"],
+  "金融上市": ["完成股改/辅导备案，提交IPO申请", "财务合规体系全面达标"],
+  "金融量化": ["量化策略实盘年化收益超XX%", "AI风控模型覆盖全部业务线"],
+  "金融合规": ["通过监管现场检查，零重大缺陷", "反洗钱/数据合规体系全面升级"],
+  "建筑中标": ["年度新签合同额突破XX亿", "EPC/PPP项目占比提升至40%"],
+  "建筑营收": ["营收突破XX亿，回款率提升至85%+", "重点项目按期交付率100%"],
+  "建筑区域": ["新进入X个省份市场，区域占比提升至30%", "海外市场首次突破，签约额XX亿"],
+  "建筑降本": ["项目利润率提升3个百分点", "集采覆盖率提升至80%，采购成本下降5%"],
+  "零售开店": ["新开门店XX家，总门店数突破XX家", "新店6个月内盈利比例达80%"],
+  "零售同店": ["同店营收增长15%+", "会员复购率提升至50%+"],
+  "零售供应": ["供应链中心仓覆盖率达90%，配送时效24h", "库存周转天数缩短至XX天"],
+  "零售数字": ["线上营收占比提升至30%", "私域用户突破XX万，小程序GMV翻倍"],
+  "器械注册": ["完成X个产品NMPA/FDA注册取证", "核心产品获创新医疗器械特别审批"],
+  "器械营收": ["营收突破X亿，覆盖XX家医院", "经销商网络扩至XX家"],
+  "器械研发": ["完成X款新产品研发，进入临床/型检", "研发投入产出比提升至XX"],
+  "器械集采": ["核心产品集采中标，以价换量", "集采后成本压缩30%，产能翻番"],
+  "餐饮开店": ["新开门店XX家，城市覆盖XX个", "单店模型跑通，投资回收期≤X个月"],
+  "餐饮营收": ["营收突破X亿，翻台率提升至X", "外卖营收占比提升至35%"],
+  "餐饮菜品": ["推出X款爆款新品，新品营收占比20%", "中央厨房标准化覆盖率提升至70%"],
+  "餐饮数字": ["会员体系激活率提升至60%", "全渠道数字化订单占比超50%"],
+  "化工产能": ["产能扩建至XX万吨，产能利用率90%+", "关键设备OEE提升至85%"],
+  "化工海外": ["出口营收占比提升至30%", "取得REACH/EU认证，进入欧洲市场"],
+  "化工安环": ["安全生产零重大事故，通过ISO14001", "碳中和路线图启动，能耗降低15%"],
+  "化工研发": ["完成X款高附加值新产品量产", "研发投入占比提升至5%"],
+  "通用营收": ["营收突破年度目标，同比增长XX%", "核心产品市占率提升X个百分点"],
+  "通用降本": ["全面降本增效，运营成本下降X%", "人效提升XX%，人均产值达XX万"],
+  "通用拓展": ["新市场/新区域布局，新增收入X亿", "渠道网络覆盖XX个城市"],
+  "通用研发": ["完成X款核心产品/技术突破", "研发周期缩短XX%，新品贡献率超XX%"],
+  "通用数字": ["完成核心业务数字化，效率提升XX%", "数据驱动决策覆盖XX%业务场景"],
+};
+
+function stratGenerate() {
+  const chips = document.querySelectorAll('#stratGoalTemplates .goal-chip.selected');
+  if (chips.length === 0) {
+    showToast('请至少选择一个战略方向', 'warning');
+    return;
+  }
+  
+  const stratData = JSON.parse(document.getElementById('stratS2').dataset.stratData || '{}');
+  const selectedKeys = Array.from(chips).map(c => c.dataset.key);
+  
+  // 生成硬仗
+  const battles = [];
+  selectedKeys.forEach(key => {
+    const templates = BATTLE_GENERATOR[key];
+    if (templates) {
+      const battle = templates[0];
+      // 替换占位符
+      let text = battle;
+      if (stratData.revenue) text = text.replace('X亿', stratData.revenue);
+      if (stratData.revenue) text = text.replace('XX亿', stratData.revenue);
+      
+      const priority = key.includes('营收') || key.includes('增长') || key.includes('中标') || key.includes('集采') || key.includes('研发') ? 'P0' : 'P1';
+      
+      battles.push({ text, priority, key });
+    }
+  });
+  
+  // 限制3-5场
+  const finalBattles = battles.length > 5 ? battles.slice(0, 5) : battles;
+  
+  document.getElementById('stratBattleList').innerHTML = finalBattles.map((b, i) => `
+    <div class="battle-card-gen">
+      <span class="battle-priority ${b.priority === 'P0' ? 'p0' : 'p1'}">${b.priority}</span>
+      <strong>硬仗${i+1}：</strong>${escapeHtml(b.text)}
+    </div>
+  `).join('');
+  
+  document.getElementById('stratS3').dataset.battles = JSON.stringify(finalBattles.map(b => b.text));
+  
+  document.getElementById('stratS1').style.display = 'none';
+  document.getElementById('stratS2').style.display = 'none';
+  document.getElementById('stratS3').style.display = 'block';
+  updateStratDots(3);
+}
+
+function stratApply() {
+  const battlesJson = document.getElementById('stratS3').dataset.battles;
+  if (!battlesJson) return;
+  const battles = JSON.parse(battlesJson);
+  
+  // 格式化填入textarea
+  const textarea = document.getElementById('battleInput');
+  const existing = textarea.value.trim();
+  const newText = battles.map((b, i) => `${i+1}. ${b}`).join('\n');
+  
+  if (existing) {
+    textarea.value = existing + '\n' + newText;
+  } else {
+    textarea.value = newText;
+  }
+  
+  closeStrategyDecoder();
+  showToast(`已生成 ${battles.length} 条硬仗并填入表单`, 'info');
+}
+
+// ============================================================
+//  岗位设计助手·智能生成岗位清单
+// ============================================================
+function openJobDesigner() {
+  const industry = getCurrentIndustry();
+  if (!industry) {
+    showToast('请先选择行业', 'warning');
+    return;
+  }
+  
+  document.getElementById('jobIndustryLabel').textContent = industry;
+  
+  // 渲染部门选择器
+  const industryKey = Object.keys(INDUSTRY_POSITION_DB).find(k => 
+    k === industry || industry.includes(k) || k.includes(industry)
+  ) || '其他';
+  
+  const positions = INDUSTRY_POSITION_DB[industryKey] || INDUSTRY_POSITION_DB['其他'];
+  
+  // 按部门分组
+  const deptMap = {};
+  positions.forEach(p => {
+    if (!deptMap[p.dept]) deptMap[p.dept] = [];
+    deptMap[p.dept].push(p);
+  });
+  
+  const deptList = document.getElementById('jobDeptList');
+  deptList.innerHTML = Object.entries(deptMap).map(([dept, poss]) => `
+    <div class="dept-selector" data-dept="${escapeHtml(dept)}" id="dept_${escapeHtml(dept.replace(/\s/g,'_'))}">
+      <div class="dept-selector-header" onclick="toggleDeptSelector('${escapeHtml(dept.replace(/'/g,"\\'"))}')">
+        <div class="checkbox"></div>
+        ${escapeHtml(dept)} <span style="color:var(--gray-400);font-weight:400;">(${poss.length}个岗位)</span>
+      </div>
+      <div class="dept-selector-body">
+        ${poss.map(p => `
+          <div class="pos-check-item" data-name="${escapeHtml(p.name)}" data-dept="${escapeHtml(dept)}" onclick="togglePosCheck(this)">
+            <div class="dot"></div>
+            ${escapeHtml(p.name)}
+            <span style="color:var(--gray-400);font-size:11px;margin-left:auto;">稀缺性: ${'★'.repeat(p.scarcity)}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+  
+  document.getElementById('jobModalOverlay').classList.add('show');
+  updateJobSelectedCount();
+}
+
+function closeJobDesigner() {
+  document.getElementById('jobModalOverlay').classList.remove('show');
+}
+
+function toggleDeptSelector(deptName) {
+  const el = document.getElementById('dept_' + deptName.replace(/\s/g, '_'));
+  if (!el) return;
+  el.classList.toggle('selected');
+  
+  // 联动勾选/取消部门下所有岗位
+  const allChecked = el.querySelectorAll('.pos-check-item.checked').length === el.querySelectorAll('.pos-check-item').length;
+  const items = el.querySelectorAll('.pos-check-item');
+  items.forEach(item => {
+    if (allChecked) {
+      item.classList.remove('checked');
+    } else {
+      item.classList.add('checked');
+    }
+  });
+  
+  updateJobSelectedCount();
+}
+
+function togglePosCheck(el) {
+  el.classList.toggle('checked');
+  // 同步部门选择状态
+  const deptEl = el.closest('.dept-selector');
+  const allItems = deptEl.querySelectorAll('.pos-check-item');
+  const checkedItems = deptEl.querySelectorAll('.pos-check-item.checked');
+  if (checkedItems.length === 0) {
+    deptEl.classList.remove('selected');
+  } else if (checkedItems.length === allItems.length) {
+    deptEl.classList.add('selected');
+  }
+  updateJobSelectedCount();
+}
+
+function jobSelectAllDepts() {
+  document.querySelectorAll('.dept-selector').forEach(el => {
+    el.classList.add('selected');
+    el.querySelectorAll('.pos-check-item').forEach(item => item.classList.add('checked'));
+  });
+  updateJobSelectedCount();
+}
+
+function jobClearAllDepts() {
+  document.querySelectorAll('.dept-selector').forEach(el => {
+    el.classList.remove('selected');
+    el.querySelectorAll('.pos-check-item').forEach(item => item.classList.remove('checked'));
+  });
+  updateJobSelectedCount();
+}
+
+function updateJobSelectedCount() {
+  const count = document.querySelectorAll('#jobDeptList .pos-check-item.checked').length;
+  document.getElementById('jobSelectedCount').textContent = `已选 ${count} 个岗位`;
+}
+
+function jobApply() {
+  const checkedItems = document.querySelectorAll('#jobDeptList .pos-check-item.checked');
+  if (checkedItems.length === 0) {
+    showToast('请至少选择一个岗位', 'warning');
+    return;
+  }
+  
+  // 获取已选岗位
+  const selectedPositions = [];
+  checkedItems.forEach(item => {
+    selectedPositions.push({
+      name: item.dataset.name,
+      dept: item.dataset.dept
+    });
+  });
+  
+  // 填入岗位清单
+  const list = document.getElementById('positionList');
+  list.innerHTML = '';
+  
+  selectedPositions.forEach(pos => {
+    const row = document.createElement('div');
+    row.className = 'position-row';
+    row.innerHTML = `
+      <input type="text" value="${escapeHtml(pos.name)}" class="pos-name-input">
+      <input type="text" value="${escapeHtml(pos.dept)}" class="pos-dept-input">
+      <button class="btn-remove" onclick="removePositionRow(this)" title="删除">&#x2715;</button>
+    `;
+    list.appendChild(row);
+  });
+  
+  updateAutoNote();
+  closeJobDesigner();
+  showToast(`已填入 ${selectedPositions.length} 个岗位`, 'info');
+}
+
+// ============================================================
+//  一键自动生成并识别
+// ============================================================
+function autoGenerateAndAnalyze() {
+  const industry = getCurrentIndustry();
+  if (!industry) {
+    showToast('请先选择企业所属行业', 'warning');
+    return;
+  }
+  
+  const btn = document.getElementById('btnAutoGen');
+  const origText = btn.innerHTML;
+  btn.innerHTML = '<span class="spinner"></span> 自动生成中...';
+  btn.disabled = true;
+  
+  setTimeout(() => {
+    // Step 1: 自动生成硬仗
+    const templates = STRATEGY_GOAL_TEMPLATES[industry] || DEFAULT_GOAL_TEMPLATES;
+    const topKeys = templates.slice(0, 4).map(t => t.key); // 取前4个方向
+    const battles = [];
+    topKeys.forEach(key => {
+      const bt = BATTLE_GENERATOR[key];
+      if (bt) battles.push(bt[0]);
+    });
+    
+    // 填入硬仗
+    document.getElementById('battleInput').value = battles.map((b, i) => `${i+1}. ${b}`).join('\n');
+    
+    // Step 2: 自动生成岗位清单
+    const industryKey = Object.keys(INDUSTRY_POSITION_DB).find(k => 
+      k === industry || industry.includes(k) || k.includes(industry)
+    ) || '其他';
+    const positions = (INDUSTRY_POSITION_DB[industryKey] || INDUSTRY_POSITION_DB['其他']).map(p => ({
+      name: p.name,
+      dept: p.dept,
+      scarcity: p.scarcity,
+      isAuto: true
+    }));
+    
+    // 填入岗位清单
+    const list = document.getElementById('positionList');
+    list.innerHTML = '';
+    positions.forEach(pos => {
+      const row = document.createElement('div');
+      row.className = 'position-row';
+      row.innerHTML = `
+        <input type="text" value="${escapeHtml(pos.name)}" class="pos-name-input">
+        <input type="text" value="${escapeHtml(pos.dept)}" class="pos-dept-input">
+        <button class="btn-remove" onclick="removePositionRow(this)" title="删除">&#x2715;</button>
+      `;
+      list.appendChild(row);
+    });
+    updateAutoNote();
+    
+    btn.innerHTML = origText;
+    btn.disabled = false;
+    
+    showToast(`已自动生成 ${battles.length} 条硬仗 + ${positions.length} 个岗位，正在识别...`, 'info');
+    
+    // Step 3: 自动开始分析
+    setTimeout(() => startAnalysis(), 500);
+  }, 800);
+}
+
+// 点击弹窗遮罩关闭
+document.getElementById('strategyModalOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeStrategyDecoder();
+});
+document.getElementById('jobModalOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeJobDesigner();
+});
+</script>
+<script>wbShell("关键岗位价值速算");</script>
+<script>function wbExport(){ exportExcel(); }</script>
+<script src="dataIface.js?v=12"></script>
+<script>wbDataIface.setup({ pageKey:'position_v1', noImportBox:true, noRecomputeOnLoad:true, tables:[{id:'positionList', label:'岗位清单(岗位名称/所属部门)', rowSel:'.position-row', cellSel:'input', cols:['岗位名称','所属部门']}] });</script>
+
+<script>(function(){var head=document.querySelector('.wb-head'),panel=document.querySelector('.hr-data-tools');if(head&&panel)head.insertAdjacentElement('afterend',panel);})();</script>
+<script>window.WB_AGENT_KEY='position';</script>
+</body>
+</html>

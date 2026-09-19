@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<script>window.WB_OFFLINE=true;</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="color-scheme" content="light">
+<title>研发岗位设计助手 · 评定→薪酬→绩效联动 · HR自动化工作台</title>
+<link rel="stylesheet" href="shared.css?v=13">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:"Microsoft YaHei","微软雅黑","PingFang SC",sans-serif; background:#FAFAF9; color:#1F2328; line-height:1.6; -webkit-font-smoothing:antialiased; font-size:14px; }
+main { max-width:1280px; margin:0 auto; padding:24px 20px 70px; }
+.layout { display:grid; grid-template-columns:380px 1fr; gap:20px; align-items:start; }
+.panel { background:#FFFFFF; border:1px solid #ECEAE6; border-radius:10px; padding:18px; }
+.side { position:sticky; top:74px; }
+.ptitle { font-size:15px; font-weight:700; margin-bottom:4px; }
+.pnote { font-size:12px; color:#8A8F98; margin-bottom:14px; }
+.fgroup { margin-bottom:15px; }
+.flabel { font-size:12px; font-weight:700; color:#5F5E5A; margin-bottom:7px; display:flex; align-items:center; }
+.flabel .dot { width:5px; height:5px; border-radius:50%; background:#16A06A; margin-right:6px; }
+.frow { display:flex; align-items:center; gap:8px; margin-bottom:7px; }
+.frow label { flex:0 0 70px; font-size:12px; color:#6B7280; }
+.frow input, .frow select { flex:1; min-width:0; font-family:inherit; font-size:13px; padding:6px 9px; border:1px solid #DCDAD4; border-radius:5px; background:#FCFCFB; color:#1F2328; }
+.frow input:focus, .frow select:focus { outline:none; border-color:#16A06A; background:#fff; }
+.frow .unit { flex:0 0 34px; font-size:11px; color:#A0A4AC; }
+.hint { font-size:11.5px; color:#8A8F98; margin-top:2px; line-height:1.5; }
+table.rst { width:100%; border-collapse:collapse; font-size:13px; margin-top:4px; }
+table.rst th { background:#F5F5F3; font-size:12px; font-weight:700; color:#3D4450; padding:8px 10px; text-align:right; border-bottom:1px solid #ECEAE6; white-space:nowrap; }
+table.rst th:first-child { text-align:left; }
+table.rst td { padding:8px 10px; text-align:right; border-bottom:1px solid #F0EEE9; }
+table.rst td:first-child { text-align:left; color:#3D4450; }
+table.rst tr.hl td { background:#EAF7F1; font-weight:700; color:#16A06A; }
+table.rst tr.hl td:first-child { color:#118A5A; }
+table.rst td.num { font-variant-numeric:tabular-nums; }
+.badge { display:inline-block; font-size:11px; padding:2px 8px; border-radius:20px; font-weight:700; }
+.b-good { background:#EAF7F1; color:#16A06A; } .b-mid { background:#FAEEDA; color:#854F0B; } .b-bad { background:#FCEBEB; color:#A32D2D; }
+.callout { background:#F5F5F3; border-radius:8px; padding:13px 15px; font-size:13px; color:#3D4450; margin-top:12px; }
+.callout.green { background:#EAF7F1; color:#118A5A; } .callout.red { background:#FCEBEB; color:#791F1F; }
+.callout b { font-weight:700; }
+.concl { background:#16A06A; color:#fff; border-radius:10px; padding:20px 22px; margin-top:16px; }
+.concl h3 { font-size:15px; font-weight:700; margin-bottom:14px; }
+.concl ol { margin-left:18px; } .concl li { margin-bottom:11px; font-size:14px; } .concl li:last-child { margin-bottom:0; } .concl b { font-weight:700; }
+section { background:#FFFFFF; border:1px solid #ECEAE6; border-radius:10px; padding:20px; margin-bottom:16px; }
+.sec-h { display:flex; align-items:center; gap:9px; margin-bottom:14px; }
+.sec-n { width:22px; height:22px; flex:0 0 22px; border-radius:5px; background:#16A06A; color:#fff; font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+.sec-t { font-size:15px; font-weight:700; }
+.sec-sub { font-size:12px; color:#8A8F98; margin-left:auto; text-align:right; }
+.kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; margin-bottom:16px; }
+.kpi { background:#fff; border:1px solid #ECEAE6; border-radius:10px; padding:14px 15px; }
+.kpi .k { font-size:12px; color:#8A8F98; } .kpi .v { font-size:22px; font-weight:700; margin:3px 0 2px; font-variant-numeric:tabular-nums; } .kpi .d { font-size:11.5px; color:#6B7280; }
+.kpi.g .v { color:#16A06A; } .kpi.r .v { color:#A32D2D; } .kpi.a .v { color:#BA7517; }
+.emp-tb { width:100%; border-collapse:collapse; font-size:13px; }
+.emp-tb th { background:#F5F5F3; font-size:12px; font-weight:700; color:#3D4450; padding:6px 5px; text-align:left; }
+.emp-tb td { padding:4px 4px; }
+.emp-tb input { width:100%; font-family:inherit; font-size:13px; padding:5px 5px; border:1px solid #DCDAD4; border-radius:5px; background:#FCFCFB; }
+.emp-tb input:focus { outline:none; border-color:#16A06A; }
+.emp-tb .x { color:#A32D2D; cursor:pointer; font-weight:700; text-align:center; }
+.addbtn { margin-top:8px; font-size:12px; color:#16A06A; cursor:pointer; font-weight:700; }
+@media (max-width:980px){ .layout{grid-template-columns:1fr;} .side{position:static;} }
+@media print { .wb-head,.wb-foot{display:none!important;} body{background:#fff;} .layout{display:block;} .side{display:none;} section{border:1px solid #ccc; page-break-inside:avoid;} }
+</style>
+<style>
+.layout > *, .panel, section, .fgroup, #out { min-width:0; }
+.hr-table-scroll { max-width:100%; overflow-x:auto; overscroll-behavior-inline:contain; }
+.hr-table-scroll:focus-visible { outline:2px solid #16A06A; outline-offset:2px; }
+.hr-table-scroll table.rst { min-width:460px; }
+.hr-table-scroll .emp-tb { min-width:460px; }
+.hr-table-scroll .task-tb { min-width:620px; }
+.hr-table-scroll .pos-tb { min-width:360px; }
+.kpi-row { grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) 64px; }
+.kpi-row input, .kpi-row .w { min-width:0; width:100%; }
+@media(max-width:600px){ .sec-h{flex-wrap:wrap;} .sec-sub{margin-left:31px;text-align:left;} .shapebox{flex-wrap:wrap;} }
+@media print { .hr-table-scroll{overflow:visible;} .hr-table-scroll table.rst{min-width:0;} }
+</style>
+</head>
+<body>
+<main>
+<div class="layout">
+  <div class="side">
+    <div class="panel">
+      <div class="ptitle">填评定参数</div>
+      <div class="pnote">研发序列：五维评分 → 五级定级 → 薪酬带宽 → 项目奖金三级分配。</div>
+
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>企业名称</div>
+        <div class="frow"><input id="company" placeholder="如：XXAI原生组织"></div>
+      </div>
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>五维权重（和=100）</div>
+        <div class="frow"><label>知识</label><input id="w1" type="number" value="10"><span class="unit">%</span></div>
+        <div class="frow"><label>技能</label><input id="w2" type="number" value="20"><span class="unit">%</span></div>
+        <div class="frow"><label>素质</label><input id="w3" type="number" value="10"><span class="unit">%</span></div>
+        <div class="frow"><label>行为</label><input id="w4" type="number" value="20"><span class="unit">%</span></div>
+        <div class="frow"><label>成果</label><input id="w5" type="number" value="40"><span class="unit">%</span></div>
+      </div>
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>L1–L5 分数线</div>
+        <div class="frow"><label>L2≥</label><input id="c1" type="number" value="60"><span class="unit">分</span></div>
+        <div class="frow"><label>L3≥</label><input id="c2" type="number" value="70"><span class="unit">分</span></div>
+        <div class="frow"><label>L4≥</label><input id="c3" type="number" value="80"><span class="unit">分</span></div>
+        <div class="frow"><label>L5≥</label><input id="c4" type="number" value="88"><span class="unit">分</span></div>
+        <div class="hint">比例上限：L4 及以上（高级及以上）≤25%。</div>
+      </div>
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>薪酬与奖金池</div>
+        <div class="frow"><label>月薪基数</label><input id="base" type="number" value="12000"><span class="unit">元</span></div>
+        <div class="frow"><label>项目池</label><input id="pool" type="number" value="55767"><span class="unit">元</span></div>
+        <div class="hint">月薪=基本70%+绩效30% 随等级系数联动；项目奖金中心留存30%、项目组池70%，Σ个人=池。</div>
+      </div>
+
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>参评研发（知识/技能/素质/行为/成果）</div>
+        <div class="hr-table-scroll" tabindex="0" role="region" aria-label="数据表，可左右滚动"><table class="emp-tb">
+          <thead><tr><th>姓名</th><th>知</th><th>技</th><th>素</th><th>行</th><th>果</th><th></th></tr></thead>
+          <tbody id="empRows"></tbody>
+        </table></div>
+        <div class="addbtn" onclick="addEmp()">＋ 加一名研发</div>
+      </div>
+
+      <button class="wb-btn wb-primary" style="width:100%" onclick="calc()">生成研发岗位设计决议</button>
+    </div>
+  </div>
+
+  <div>
+    <div id="out"></div>
+    <div class="callout" style="margin-top:14px;">
+      <b>用法</b>：填五维权重、L1–L5 分数线和薪酬基数，逐人填分，点生成——自动定级、联动薪酬带宽、把项目奖金三级分配并守恒校验。
+    </div>
+  </div>
+</div>
+</main>
+
+<script src="shared.js?v=13"></script>
+<script>
+wbShell('研发岗位设计');
+
+var EMPS=[['孙明',88,90,82,85,92],['周婷',76,80,72,78,84],['吴昊',90,92,88,86,94],['郑爽',70,74,68,72,78],['冯磊',82,86,78,80,88]];
+function addEmp(n,a,b,c,d,e){ var tb=document.getElementById('empRows'); var tr=document.createElement('tr');
+  tr.innerHTML='<td><input class="e-n" value="'+(n||'')+'"></td><td><input class="e-1" type="number" value="'+(a!=null?a:'')+'"></td><td><input class="e-2" type="number" value="'+(b!=null?b:'')+'"></td><td><input class="e-3" type="number" value="'+(c!=null?c:'')+'"></td><td><input class="e-4" type="number" value="'+(d!=null?d:'')+'"></td><td><input class="e-5" type="number" value="'+(e!=null?e:'')+'"></td><td class="x" onclick="this.parentNode.remove()">✕</td>';
+  tb.appendChild(tr); }
+EMPS.forEach(function(x){ addEmp(x[0],x[1],x[2],x[3],x[4],x[5]); });
+
+var COEF=[1.0,1.1,1.25,1.5,1.8]; // L1-L5
+var LNAME=['L1','L2','L3','L4','L5'];
+function grade(s,c1,c2,c3,c4){ if(s>=c4) return 4; if(s>=c3) return 3; if(s>=c2) return 2; if(s>=c1) return 1; return 0; }
+function num(v,d){ var x=parseFloat(v); return isFinite(x)?x:(d||0); }
+
+function calc(){
+  var company=wbVal('company')||'贵公司';
+  var w=[num(wbVal('w1'),10),num(wbVal('w2'),20),num(wbVal('w3'),10),num(wbVal('w4'),20),num(wbVal('w5'),40)];
+  var wt=w.reduce(function(a,b){return a+b;},0); if(wt<=0) wt=100;
+  var c=[num(wbVal('c1'),60),num(wbVal('c2'),70),num(wbVal('c3'),80),num(wbVal('c4'),88)];
+  var base=num(wbVal('base'),12000), pool=num(wbVal('pool'),55767);
+
+  var rows=document.querySelectorAll('#empRows tr'); var emps=[]; var sumCoef=0;
+  rows.forEach(function(tr){
+    var n=tr.querySelector('.e-n').value.trim();
+    var s5=[num(tr.querySelector('.e-1').value,0),num(tr.querySelector('.e-2').value,0),num(tr.querySelector('.e-3').value,0),num(tr.querySelector('.e-4').value,0),num(tr.querySelector('.e-5').value,0)];
+    if(!n && s5[0]===0) return;
+    var comp=(s5[0]*w[0]+s5[1]*w[1]+s5[2]*w[2]+s5[3]*w[3]+s5[4]*w[4])/wt;
+    var g=grade(comp,c[0],c[1],c[2],c[3]);
+    emps.push({name:n||'未命名', score:comp, g:g, coef:COEF[g]});
+    sumCoef+=COEF[g];
+  });
+  var n=emps.length;
+  var dist=[0,0,0,0,0]; emps.forEach(function(e){ dist[e.g]++; });
+  var highPct = n? (dist[3]+dist[4])/n*100 : 0;
+  var highOk = highPct<=25;
+  // 项目奖金三级分配：中心30% + 项目组70%，项目组池按系数分
+  var center=pool*0.3, projPool=pool*0.7;
+  var alloc=emps.map(function(e){ return sumCoef? projPool*e.coef/sumCoef : 0; });
+  var allocSum=alloc.reduce(function(a,b){return a+b;},0);
+  var balanced=Math.abs(allocSum-projPool)<1;
+  // 月薪带宽
+  var monthly=emps.map(function(e){ return base*e.coef; });
+
+  var R={company:company, n:n, emps:emps, dist:dist, highPct:highPct, highOk:highOk, pool:pool, center:center, projPool:projPool, allocSum:allocSum, balanced:balanced};
+  window.__yanfa=R;
+
+  var h='';
+  h+='<section><div class="sec-h"><span class="sec-n">★</span><span class="sec-t">研发评定总览</span><span class="sec-sub">'+wbEsc(company)+'</span></div>';
+  h+='<div class="kpis">'
+    +'<div class="kpi"><div class="k">参评人数</div><div class="v">'+n+'</div><div class="d">人</div></div>'
+    +'<div class="kpi"><div class="k">L4及以上</div><div class="v">'+(dist[3]+dist[4])+'</div><div class="d">'+(highOk?'≤25% ✓':'超上限 ⚠')+'</div></div>'
+    +'<div class="kpi"><div class="k">项目奖分配</div><div class="v">'+(balanced?'守恒':'失衡')+'</div><div class="d">组池'+projPool.toFixed(0)+'元</div></div>'
+    +'<div class="kpi"><div class="k">中心留存</div><div class="v">'+(center).toFixed(0)+'</div><div class="d">元(30%)</div></div>'
+    +'</div></section>';
+
+  h+='<section><div class="sec-h"><span class="sec-n">1</span><span class="sec-t">员工评定与薪酬联动</span></div>';
+  h+='<div class="hr-table-scroll" tabindex="0" role="region" aria-label="数据表，可左右滚动"><table class="rst"><thead><tr><th>姓名</th><th>综合分</th><th>等级</th><th>系数</th><th>月薪(元)</th><th>项目奖(元)</th></tr></thead><tbody>';
+  emps.forEach(function(e,i){ h+='<tr><td>'+wbEsc(e.name)+'</td><td class="num">'+e.score.toFixed(1)+'</td><td style="text-align:left">'+(e.g===0?'<span class="badge b-bad">未达标</span>':LNAME[e.g])+'</td><td class="num">'+e.coef.toFixed(2)+'</td><td class="num">'+monthly[i].toFixed(0)+'</td><td class="num">'+alloc[i].toFixed(0)+'</td></tr>'; });
+  h+='<tr class="hl"><td>合计</td><td class="num">—</td><td>—</td><td class="num">'+sumCoef.toFixed(2)+'</td><td class="num">—</td><td class="num">'+allocSum.toFixed(0)+'</td></tr>';
+  h+='</tbody></table></div>';
+  h+='<div class="callout '+(balanced?'green':'red')+'">项目奖金三级分配：中心留存 '+center.toFixed(0)+' 元（30%）+ 项目组池 '+projPool.toFixed(0)+' 元（70%），Σ个人 = '+allocSum.toFixed(0)+' 元，'+(balanced?'守恒 ✓':'差额需配平')+'。薪酬结构：基本70%+绩效30%=100%。</div></section>';
+
+  h+='<section><div class="sec-h"><span class="sec-n">2</span><span class="sec-t">等级分布与上限</span></div>';
+  h+='<div class="hr-table-scroll" tabindex="0" role="region" aria-label="数据表，可左右滚动"><table class="rst"><thead><tr><th>等级</th><th>人数</th><th>占比</th><th>上限</th></tr></thead><tbody>';
+  for(var g=4;g>=0;g--){ var pct=n?dist[g]/n*100:0;
+    h+='<tr><td style="text-align:left">'+LNAME[g]+'</td><td class="num">'+dist[g]+'</td><td class="num">'+pct.toFixed(1)+'%</td><td style="text-align:left">'+(g>=3?(highOk?'<span class="badge b-good">达标</span>':'<span class="badge b-bad">超25%</span>'):'—')+'</td></tr>'; }
+  h+='</tbody></table></div></section>';
+
+  var concl=[];
+  concl.push('参评 <b>'+n+'</b> 人，L4 及以上 '+(dist[3]+dist[4])+' 人（'+(highPct).toFixed(1)+'%，'+(highOk?'达标':'超 25% 上限')+'）；综合分区间 '+Math.min.apply(null,emps.map(function(e){return e.score;})).toFixed(1)+'–'+Math.max.apply(null,emps.map(function(e){return e.score;})).toFixed(1)+'。');
+  concl.push('薪酬随等级系数联动（月薪基数 '+base.toFixed(0)+' 元 × 系数），结构基本70%+绩效30%；项目奖金三级分配'+(balanced?'守恒 ✓':'需配平')+'。');
+  concl.push('连续两周期合格者获评审资格；比例越上限时提高分数门槛或限额评聘，避免薪酬总额失控。');
+  h+='<div class="concl"><h3>三条能拿去开会的结论</h3><ol>';
+  concl.forEach(function(c){ h+='<li>'+c+'</li>'; });
+  h+='</ol></div>';
+
+  document.getElementById('out').innerHTML=h;
+}
+calc();
+</script>
+<script src="dataIface.js?v=12"></script>
+<script>wbDataIface.setup({ pageKey:'yanfa_v1', tables:[{id:'empRows', label:'参评研发(姓名/知/技/素/行/果)', rowSel:'tr', cellSel:'input', cols:['姓名','知','技','素','行','果']}], afterLoad:function(){ if(typeof calc==='function') calc(); } });</script>
+
+<script>window.WB_AGENT_KEY='yanfa';</script>
+</body>
+</html>

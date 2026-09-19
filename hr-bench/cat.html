@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<script>window.WB_OFFLINE=true;</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="color-scheme" content="light">
+<title>资料库 · HR自动化工作台</title>
+<link rel="stylesheet" href="shared.css?v=13">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family:"Microsoft YaHei","微软雅黑","PingFang SC",sans-serif;
+  background:#F4F7F5; color:#23272E; line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+.cat-bg {
+  position:fixed; inset:0; z-index:-1;
+  background:
+    radial-gradient(ellipse 70% 45% at 80% 0%, rgba(22,160,106,.10), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(217,154,43,.08), transparent 50%),
+    linear-gradient(180deg,#F4F7F5 0%,#FFFFFF 40%,#F4F7F5 100%);
+}
+.cat-wrap { max-width:960px; margin:0 auto; padding:34px 24px 80px; }
+
+.cat-top {
+  display:flex; align-items:center; gap:12px; margin-bottom:22px;
+  font-size:14px; color:#6B7280;
+}
+.cat-top a { color:#6B7280; text-decoration:none; }
+.cat-top a:hover { color:#16A06A; }
+.cat-top b { color:#1F2328; font-weight:600; }
+
+.cat-head {
+  background:#FFFFFF; border:1px solid rgba(0,0,0,.08);
+  border-radius:20px; padding:28px; margin-bottom:26px;
+}
+.cat-head .icon { font-size:38px; margin-bottom:10px; }
+.cat-head h1 { font-size:28px; font-weight:700; margin-bottom:8px; color:#1F2328; }
+.cat-head p { font-size:14px; color:#6B7280; max-width:680px; }
+.cat-head .stats { display:flex; gap:18px; margin-top:18px; flex-wrap:wrap; }
+.cat-head .stat { background:#F4F7F5; border:1px solid rgba(0,0,0,.06); border-radius:10px; padding:8px 14px; font-size:13px; color:#6B7280; }
+.cat-head .stat b { color:#1F2328; font-weight:700; }
+
+/* 顶部聚合操作 */
+.cat-actions { display:flex; flex-wrap:wrap; gap:12px; margin-bottom:28px; }
+.cat-actions a, .cat-actions button {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:11px 20px; border-radius:10px; font-size:14px; font-weight:600; cursor:pointer; text-decoration:none;
+  transition:transform .15s, box-shadow .15s;
+}
+.cat-actions a:hover, .cat-actions button:hover { transform:translateY(-1px); }
+.cat-actions .prime { background:linear-gradient(135deg,#16A06A,#0D8A5A); color:#fff; box-shadow:0 10px 30px rgba(22,160,106,.22); }
+.cat-actions .ghost { border:1px solid rgba(0,0,0,.12); color:#3D4450; background:#fff; }
+.cat-actions .download { background:#EFF6FF; color:#2563EB; border:1px solid #BFDBFE; }
+.cat-actions .pending { opacity:.5; cursor:default; pointer-events:none; }
+
+/* 文件列表 */
+.cat-sec h3 { font-size:16px; font-weight:700; margin-bottom:14px; color:#1F2328; }
+.cat-list {
+  background:#FFFFFF; border:1px solid rgba(0,0,0,.07);
+  border-radius:18px; overflow:hidden;
+}
+.cat-row {
+  display:grid; grid-template-columns:90px 1fr 90px; align-items:center;
+  padding:13px 18px; border-bottom:1px solid rgba(0,0,0,.05);
+  font-size:14px;
+}
+.cat-row:last-child { border-bottom:none; }
+.cat-row.head { background:#F4F7F5; font-weight:700; color:#6B7280; font-size:13px; }
+.cat-row .mod { color:#16A06A; font-weight:600; font-size:13px; }
+.cat-row .name { color:#1F2328; padding-right:12px; }
+.cat-row .act { text-align:right; }
+.cat-row .act a {
+  display:inline-flex; align-items:center; gap:4px;
+  color:#16A06A; text-decoration:none; font-size:13px; font-weight:600;
+  padding:5px 12px; border-radius:6px; background:#EAF7F1;
+}
+.cat-row .act a:hover { background:#D6F0E2; }
+.cat-row .act span { color:#8A9098; font-size:13px; }
+
+/* 空态 */
+.cat-empty { text-align:center; padding:60px 20px; color:#8A9098; }
+
+@media (max-width:900px){
+  .cat-top { padding-top:42px; flex-wrap:wrap; gap:8px; }
+  .cat-row { grid-template-columns:70px 1fr 80px; }
+  .cat-wrap { padding:24px 16px 60px; }
+}
+@media (max-width:520px){
+  .cat-row { grid-template-columns:1fr; gap:8px; }
+  .cat-row .act { text-align:left; }
+}
+</style>
+</head>
+<body>
+<div class="cat-bg"></div>
+
+<div class="cat-wrap">
+  <div class="cat-top">
+    <a href="index.html">工作台</a>
+    <span>/</span>
+    <span>资料库</span>
+    <span>/</span>
+    <b id="bc-name">加载中…</b>
+  </div>
+
+  <div class="cat-head" id="cat-head">
+    <div class="icon" id="cat-icon">📦</div>
+    <h1 id="cat-title">分类名称</h1>
+    <p id="cat-desc">分类描述</p>
+    <div class="stats" id="cat-stats"></div>
+  </div>
+
+  <div class="cat-actions" id="cat-actions"></div>
+
+  <div class="cat-sec" id="cat-sec">
+    <h3 id="list-title">文件列表</h3>
+    <div class="cat-list" id="cat-list"></div>
+  </div>
+</div>
+
+<script src="resources.js?v=13"></script>
+<script src="shared.js?v=13"></script>
+<script>
+(function(){
+  var catName = new URLSearchParams(location.search).get('cat') || '';
+  var data = window.WB_RESOURCES || [];
+  var cat = catName ? null : data[0];
+  for (var i = 0; i < data.length; i++) { if (data[i].cat === catName) { cat = data[i]; break; } }
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  if (!cat) {
+    document.getElementById('bc-name').textContent = '未找到';
+    document.getElementById('cat-title').textContent = '未找到该分类';
+    document.getElementById('cat-desc').textContent = '请返回工作台重新选择。';
+    document.getElementById('cat-sec').style.display = 'none';
+    document.getElementById('cat-stats').style.display = 'none';
+    document.getElementById('cat-actions').style.display = 'none';
+    return;
+  }
+
+  document.getElementById('bc-name').textContent = cat.cat;
+  document.getElementById('cat-icon').textContent = cat.icon || '📦';
+  document.getElementById('cat-title').textContent = cat.cat;
+  document.getElementById('cat-desc').textContent = cat.desc || '';
+
+  var ready = (cat.items || []).filter(function(it){ return it.ready; }).length;
+  var total = (cat.items || []).length;
+  var stats = '<div class="stat"><b>' + total + '</b> 个入口</div>' +
+              '<div class="stat"><b>' + ready + '</b> 已开放</div>' +
+              '<div class="stat"><b>' + (total - ready) + '</b> 待上传</div>';
+  document.getElementById('cat-stats').innerHTML = stats;
+
+  // 顶部聚合操作
+  var acts = '';
+  (cat.items || []).forEach(function(it){
+    if (!it.ready) {
+      acts += '<button class="ghost pending">' + esc(it.name) + '</button>';
+    } else if (it.link) {
+      acts += '<a class="prime" href="' + esc(it.link) + '">打开「' + esc(it.name.replace(/^[^\s]+\s+/, '')) + '」 →</a>';
+    } else if (it.zip) {
+      acts += '<button class="download" onclick="' + esc('wbDownloadBundle(' + JSON.stringify(it.zip) + ',' + JSON.stringify(it.zipname || 'bundle.zip') + ')') + '">' + esc(it.name) + '</button>';
+    } else if (it.file) {
+      acts += '<a class="ghost" href="' + esc(it.file) + '" download>下载 ' + esc(it.name) + '</a>';
+    }
+  });
+  document.getElementById('cat-actions').innerHTML = acts;
+
+  // 文件列表
+  var list = document.getElementById('cat-list');
+  list.innerHTML = '<div class="cat-row head"><div class="mod">类型</div><div class="name">名称</div><div class="act">操作</div></div>';
+
+  function renderItems(items) {
+    items.forEach(function(it){
+      if (!it.ready) {
+        list.innerHTML += '<div class="cat-row"><div class="mod">—</div><div class="name">' + esc(it.name) + '</div><div class="act"><span>待上传</span></div></div>';
+        return;
+      }
+      var mod = '入口';
+      if (it.file) mod = it.note || '文件';
+      if (it.zip) mod = '打包';
+      if (it.link) mod = '页面';
+      var act = '';
+      if (it.link) act = '<a href="' + esc(it.link) + '">打开 →</a>';
+      else if (it.zip) act = '<a href="#" onclick="' + esc('wbDownloadBundle(' + JSON.stringify(it.zip) + ',' + JSON.stringify(it.zipname || 'bundle.zip') + ');return false;') + '">打包 ↓</a>';
+      else if (it.file) act = '<a href="' + esc(it.file) + '" download>下载 ↓</a>';
+      list.innerHTML += '<div class="cat-row"><div class="mod">' + esc(mod) + '</div><div class="name">' + esc(it.name) + '</div><div class="act">' + act + '</div></div>';
+    });
+  }
+
+  renderItems(cat.items || []);
+
+  // 若分类有 manifest，额外展开全部文件
+  if (cat.manifest) {
+    document.getElementById('list-title').textContent = '全部文件（' + ((cat.items || []).length) + ' 个入口 + 展开文件）';
+    fetch(cat.manifest).then(function(r){ if (!r.ok) throw new Error('清单读取失败'); return r.json(); }).then(function(manifest){
+      var dir = cat.manifest.replace('manifest.json', '');
+      manifest.forEach(function(item){
+        var fn = item.file || item.name;
+        var fileUrl = /^(?:resources\/|https?:\/\/)/.test(fn) ? fn : dir + fn;
+        list.innerHTML += '<div class="cat-row"><div class="mod">' + esc(item.module || '文件') + '</div><div class="name">' + esc(item.name) + '</div><div class="act"><a href="' + esc(fileUrl) + '" download>下载 ↓</a></div></div>';
+      });
+    }).catch(function(e){
+      list.innerHTML += '<div class="cat-row"><div class="mod">—</div><div class="name">展开文件失败：' + esc(e && e.message ? e.message : e) + '</div><div class="act"><span>—</span></div></div>';
+    });
+  }
+})();
+</script>
+<script>wbSidebar();</script>
+
+<script></script>
+</body>
+</html>
+

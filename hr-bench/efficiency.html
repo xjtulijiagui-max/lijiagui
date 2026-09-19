@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<script>window.WB_OFFLINE=true;</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="color-scheme" content="light">
+<title>人效账速算表 · 12 个数算出四笔账与编制天花板 · HR自动化工作台</title>
+<link rel="stylesheet" href="shared.css?v=13">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family:"Microsoft YaHei","微软雅黑","PingFang SC",sans-serif;
+  background:#FAFAF9; color:#1F2328; line-height:1.6;
+  -webkit-font-smoothing:antialiased; font-size:14px;
+}
+
+header {
+  background:#FFFFFF; border-bottom:1px solid #ECEAE6;
+  padding:14px 0; position:sticky; top:0; z-index:50;
+}
+.hwrap { max-width:1280px; margin:0 auto; padding:0 20px; display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+.back { color:#6B7280; text-decoration:none; font-size:13px; }
+.back:hover { color:#16A06A; }
+.htitle { font-size:17px; font-weight:700; }
+.hspace { flex:1; }
+.btn {
+  font-family:inherit; font-size:13px; padding:7px 14px; border-radius:6px;
+  border:1px solid #DCDAD4; background:#fff; color:#3D4450; cursor:pointer;
+}
+.btn:hover { border-color:#16A06A; color:#16A06A; }
+.btn.primary { background:#16A06A; border-color:#16A06A; color:#fff; }
+.btn.primary:hover { background:#118A5A; color:#fff; }
+
+main { max-width:1280px; margin:0 auto; padding:24px 20px 70px; }
+.layout { display:grid; grid-template-columns:340px 1fr; gap:20px; align-items:start; }
+
+.panel { background:#FFFFFF; border:1px solid #ECEAE6; border-radius:10px; padding:18px; }
+.side { position:sticky; top:74px; }
+
+.ptitle { font-size:15px; font-weight:700; margin-bottom:4px; }
+.pnote { font-size:12px; color:#8A8F98; margin-bottom:14px; }
+
+.fgroup { margin-bottom:16px; }
+.flabel { font-size:12px; font-weight:700; color:#5F5E5A; margin-bottom:7px; display:flex; align-items:center; }
+.flabel .dot { width:5px; height:5px; border-radius:50%; background:#16A06A; margin-right:6px; }
+.frow { display:flex; align-items:center; gap:8px; margin-bottom:6px; }
+.frow label { flex:0 0 58px; font-size:12px; color:#6B7280; }
+.frow input {
+  flex:1; min-width:0; font-family:inherit; font-size:13px; padding:6px 9px;
+  border:1px solid #DCDAD4; border-radius:5px; background:#FCFCFB; color:#1F2328;
+}
+.frow input:focus { outline:none; border-color:#16A06A; background:#fff; }
+.frow .unit { flex:0 0 30px; font-size:11px; color:#A0A4AC; }
+
+table.grid3 { width:100%; border-collapse:collapse; }
+table.grid3 th {
+  font-size:11px; color:#8A8F98; font-weight:500; text-align:right; padding:0 0 5px;
+}
+table.grid3 th:first-child { text-align:left; width:82px; }
+table.grid3 td { padding:2px 0; }
+table.grid3 td:first-child { font-size:12px; color:#6B7280; }
+table.grid3 input {
+  width:100%; font-family:inherit; font-size:13px; padding:5px 7px; text-align:right;
+  border:1px solid #DCDAD4; border-radius:5px; background:#FCFCFB; color:#1F2328;
+}
+table.grid3 input:focus { outline:none; border-color:#16A06A; background:#fff; }
+
+.warn {
+  background:#FCEBEB; border-left:3px solid #E24B4A; color:#A32D2D;
+  padding:10px 13px; border-radius:0 6px 6px 0; font-size:12.5px; margin-top:6px; display:none;
+}
+.warn.show { display:block; }
+.warn b { font-weight:700; }
+.oknote { background:#EAF7F1; border-left:3px solid #16A06A; color:#16A06A;
+  padding:10px 13px; border-radius:0 6px 6px 0; font-size:12.5px; margin-top:6px; display:none; }
+.oknote.show { display:block; }
+
+.pastebox { background:#E6F1FB; border:1px solid #B5D4F4; border-radius:8px; padding:12px; margin-bottom:18px; }
+.pastebox .flabel { color:#0C447C; }
+.pastebox .flabel .dot { background:#378ADD; }
+.pastebox textarea {
+  width:100%; font-family:inherit; font-size:12.5px; line-height:1.5; padding:8px 9px;
+  border:1px solid #B5D4F4; border-radius:6px; background:#fff; color:#1F2328; resize:vertical;
+}
+.pastebox textarea:focus { outline:none; border-color:#378ADD; }
+.ptip { font-size:11.5px; color:#185FA5; margin-top:6px; line-height:1.5; }
+
+.mask { display:none; position:fixed; left:0; top:0; right:0; bottom:0; z-index:200;
+  background:rgba(31,35,40,.45); padding:30px 16px; overflow:auto; }
+.mask.show { display:block; }
+.dlg { max-width:660px; margin:0 auto; background:#fff; border-radius:12px; overflow:hidden; }
+.dlg-h { background:#16A06A; color:#fff; padding:14px 18px; display:flex; align-items:center; }
+.dlg-h b { font-size:15px; font-weight:700; }
+.dlg-h span { font-size:12px; margin-left:8px; opacity:.85; }
+.dlg-x { margin-left:auto; cursor:pointer; font-size:20px; line-height:1; opacity:.8; }
+.dlg-x:hover { opacity:1; }
+.dlg-b { padding:18px; }
+.dlg-f { padding:14px 18px; border-top:1px solid #ECEAE6; display:flex; gap:10px; justify-content:flex-end; background:#FCFCFB; }
+
+.pv { width:100%; border-collapse:collapse; font-size:13px; margin-bottom:4px; }
+.pv th { background:#F5F5F3; font-size:12px; font-weight:700; color:#3D4450; padding:7px 8px; text-align:right; border-bottom:1px solid #ECEAE6; }
+.pv th:first-child { text-align:left; }
+.pv td { padding:6px 8px; text-align:right; border-bottom:1px solid #F0EEE9; }
+.pv td:first-child { text-align:left; }
+.pv select { font-family:inherit; font-size:12.5px; padding:4px 6px; border:1px solid #DCDAD4; border-radius:5px; background:#fff; width:100%; }
+.pv tr.miss td { background:#FCEBEB; }
+.pv input { width:100%; font-family:inherit; font-size:13px; padding:5px 7px; text-align:right;
+  border:1px solid #DCDAD4; border-radius:5px; }
+.pv input:focus { outline:none; border-color:#16A06A; }
+
+.raw { margin-top:14px; border-top:1px dashed #ECEAE6; padding-top:12px; }
+.raw summary { font-size:12.5px; color:#6B7280; cursor:pointer; }
+.rawtable { width:100%; border-collapse:collapse; font-size:11.5px; margin-top:8px; }
+.rawtable td { border:1px solid #ECEAE6; padding:3px 6px; color:#6B7280; }
+.rawtable tr:first-child td { background:#F5F5F3; font-weight:700; color:#3D4450; }
+
+section { background:#FFFFFF; border:1px solid #ECEAE6; border-radius:10px; padding:20px; margin-bottom:16px; }
+.sec-h { display:flex; align-items:center; gap:9px; margin-bottom:14px; }
+.sec-n { width:22px; height:22px; flex:0 0 22px; border-radius:5px; background:#16A06A; color:#fff;
+  font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+.sec-t { font-size:15px; font-weight:700; }
+.sec-sub { font-size:12px; color:#8A8F98; margin-left:auto; text-align:right; }
+
+table.rst { width:100%; border-collapse:collapse; font-size:13px; }
+table.rst th {
+  background:#F5F5F3; font-size:12px; font-weight:700; color:#3D4450;
+  padding:8px 10px; text-align:right; border-bottom:1px solid #ECEAE6; white-space:nowrap;
+}
+table.rst th:first-child { text-align:left; }
+table.rst td { padding:8px 10px; text-align:right; border-bottom:1px solid #F0EEE9; }
+table.rst td:first-child { text-align:left; color:#3D4450; }
+table.rst tr.hl td { background:#EAF7F1; font-weight:700; color:#16A06A; }
+table.rst tr.hl td:first-child { color:#118A5A; }
+table.rst td.num { font-variant-numeric:tabular-nums; }
+.up { color:#16A06A; font-weight:700; }
+.down { color:#A32D2D; font-weight:700; }
+.mid { color:#BA7517; font-weight:700; }
+.muted { color:#A0A4AC; }
+
+.badge { display:inline-block; font-size:11px; padding:2px 8px; border-radius:20px; font-weight:700; }
+.b-good { background:#EAF7F1; color:#16A06A; }
+.b-mid { background:#FAEEDA; color:#854F0B; }
+.b-bad { background:#FCEBEB; color:#A32D2D; }
+
+.callout { background:#F5F5F3; border-radius:8px; padding:13px 15px; font-size:13px; color:#3D4450; margin-top:12px; }
+.callout.green { background:#EAF7F1; color:#118A5A; }
+.callout.red { background:#FCEBEB; color:#791F1F; }
+.callout b { font-weight:700; }
+
+.concl { background:#16A06A; color:#fff; border-radius:10px; padding:20px 22px; }
+.concl h3 { font-size:15px; font-weight:700; margin-bottom:14px; }
+.concl ol { margin-left:18px; }
+.concl li { margin-bottom:11px; font-size:14px; }
+.concl li:last-child { margin-bottom:0; }
+.concl b { font-weight:700; }
+.concl .amt { font-size:16px; font-weight:700; }
+
+.kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-bottom:16px; }
+.kpi { background:#fff; border:1px solid #ECEAE6; border-radius:10px; padding:14px 15px; }
+.kpi .k { font-size:12px; color:#8A8F98; }
+.kpi .v { font-size:24px; font-weight:700; margin:3px 0 2px; font-variant-numeric:tabular-nums; }
+.kpi .d { font-size:11.5px; color:#6B7280; }
+.kpi.g .v { color:#16A06A; }
+.kpi.r .v { color:#A32D2D; }
+.kpi.a .v { color:#BA7517; }
+
+.shapebox { display:flex; align-items:center; gap:14px; background:#FCEBEB; border-radius:8px; padding:14px 16px; }
+.shapebox .sf { font-size:13px; color:#791F1F; }
+.shapebox .sv { font-size:15px; font-weight:700; color:#A32D2D; }
+
+@media (max-width:980px) {
+  .layout { grid-template-columns:1fr; }
+  .side { position:static; }
+  .hwrap { gap:10px; }
+}
+@media print {
+  header, .noprint { display:none !important; }
+  body { background:#fff; }
+  .layout { display:block; }
+  .side { display:none; }
+  section { border:1px solid #ccc; page-break-inside:avoid; }
+}
+</style>
+<style>
+.layout > *, .panel, section, .fgroup, #out { min-width:0; }
+.hr-table-scroll { max-width:100%; overflow-x:auto; overscroll-behavior-inline:contain; }
+.hr-table-scroll:focus-visible { outline:2px solid #16A06A; outline-offset:2px; }
+.hr-table-scroll table.rst { min-width:460px; }
+.hr-table-scroll .emp-tb { min-width:460px; }
+.hr-table-scroll .task-tb { min-width:620px; }
+.hr-table-scroll .pos-tb { min-width:360px; }
+.kpi-row { grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) 64px; }
+.kpi-row input, .kpi-row .w { min-width:0; width:100%; }
+@media(max-width:900px){ header{padding-left:56px;} }
+@media(max-width:600px){ .sec-h{flex-wrap:wrap;} .sec-sub{margin-left:31px;text-align:left;} .shapebox{flex-wrap:wrap;} }
+@media print { .hr-table-scroll{overflow:visible;} .hr-table-scroll table.rst{min-width:0;} }
+</style>
+</head>
+<body>
+
+<header class="noprint">
+  <div class="hwrap">
+    <a class="back" href="index.html">← 工具箱</a>
+    <span class="htitle">人效账速算表</span>
+    <span class="hspace"></span>
+    <button class="btn" onclick="loadDemo()">加载示例</button>
+    <button class="btn" onclick="clearAll()">清空</button>
+    <button class="btn" onclick="window.print()">打印/存PDF</button>
+    <button class="btn primary" onclick="exportCSV()">导出 Excel</button>
+  </div>
+</header>
+
+<main>
+<div class="layout">
+
+  <div class="side">
+    <div class="panel">
+      <div class="pastebox">
+        <div class="flabel"><span class="dot"></span>有现成表格？直接粘过来</div>
+        <textarea id="pasteArea" rows="3" placeholder="打开你的 Excel / 财务导出表，选中数据区域复制，粘到这里"></textarea>
+        <div class="ptip">横排竖排都认，认「元 / 万元 / 亿元」。粘完先给你看一眼认得对不对，不会直接填。</div>
+      </div>
+
+      <div class="ptitle">填 12 个数</div>
+      <div class="pnote">金额单位：万元。人数含派遣与外包常驻。</div>
+
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>公司名称</div>
+        <div class="frow"><input id="company" style="flex:1" placeholder="例：XXAI原生组织"></div>
+      </div>
+
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>三年四组数</div>
+        <div class="hr-table-scroll" tabindex="0" role="region" aria-label="数据表，可左右滚动"><table class="grid3">
+          <tr><th></th><th>前年</th><th>去年</th><th>本年</th></tr>
+          <tr><td>营业收入</td>
+            <td><input type="number" id="rev1"></td><td><input type="number" id="rev2"></td><td><input type="number" id="rev3"></td></tr>
+          <tr><td>净利润</td>
+            <td><input type="number" id="pf1"></td><td><input type="number" id="pf2"></td><td><input type="number" id="pf3"></td></tr>
+          <tr><td>人工成本</td>
+            <td><input type="number" id="hc1"></td><td><input type="number" id="hc2"></td><td><input type="number" id="hc3"></td></tr>
+          <tr><td>期末人数</td>
+            <td><input type="number" id="hd1"></td><td><input type="number" id="hd2"></td><td><input type="number" id="hd3"></td></tr>
+        </table></div>
+        <div class="oknote" id="calib"></div>
+        <div class="warn" id="calibWarn"></div>
+      </div>
+
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>三条对标线</div>
+        <div class="frow"><label>人均营收</label><input type="number" id="bRev" value="85"><span class="unit">万</span></div>
+        <div class="frow"><label>人事费用率</label><input type="number" id="bRate" value="13"><span class="unit">%</span></div>
+        <div class="frow"><label>成本利润率</label><input type="number" id="bProf" value="70"><span class="unit">%</span></div>
+      </div>
+
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>明年目标</div>
+        <div class="frow"><label>目标营收</label><input type="number" id="nRev"><span class="unit">万</span></div>
+        <div class="frow"><label>人均产值</label><input type="number" id="nPer"><span class="unit">万</span></div>
+        <div class="frow"><label>费用率</label><input type="number" id="nRate" value="13"><span class="unit">%</span></div>
+      </div>
+
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>城市层级</div>
+        <div class="frow"><label>&nbsp;</label>
+          <select id="city" style="flex:1;font-family:inherit;font-size:13px;padding:6px 8px;border:1px solid #DCDAD4;border-radius:5px;">
+            <option value="1">一线 / 新一线</option>
+            <option value="2">二三线</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="out">
+    <div class="panel" style="text-align:center;padding:50px 20px;color:#8A8F98;">
+      在左边填入三年数据，结果会立刻算出来。<br>想先看效果，点右上角「加载示例」。
+    </div>
+  </div>
+
+</div>
+</main>
+
+<div class="mask noprint" id="mask">
+  <div class="dlg">
+    <div class="dlg-h">
+      <b>我认出来了这些</b><span>请核对一眼，认错了直接改</span>
+      <span class="dlg-x" onclick="closePaste()">×</span>
+    </div>
+    <div class="dlg-b" id="dlgBody"></div>
+    <div class="dlg-f">
+      <button class="btn" onclick="closePaste()">取消</button>
+      <button class="btn primary" onclick="applyPaste()">确认填入</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var IDS = ['rev1','rev2','rev3','pf1','pf2','pf3','hc1','hc2','hc3','hd1','hd2','hd3',
+           'bRev','bRate','bProf','nRev','nPer','nRate','city','company'];
+
+function num(id){ var v = parseFloat(document.getElementById(id).value); return isNaN(v) ? null : v; }
+function f1(v){ return v==null ? '—' : v.toFixed(1); }
+function f2(v){ return v==null ? '—' : v.toFixed(2); }
+function f0(v){ return v==null ? '—' : Math.round(v).toLocaleString('zh-CN'); }
+function pct(v){ return v==null ? '—' : v.toFixed(2)+'%'; }
+function cagr(a,b){ if(a==null||b==null||a<=0||b<=0) return null; return (Math.pow(b/a,0.5)-1)*100; }
+function growth(a,b){ if(a==null||b==null||a===0) return null; return (b-a)/a*100; }
+function arrow(v){ if(v==null) return ''; var c = v>0.5?'up':(v<-0.5?'down':'muted'); var s = v>0.5?'↗':(v<-0.5?'↘':'→'); return '<span class="'+c+'">'+s+'</span>'; }
+
+function loadDemo(){
+  var d = {company:'XXAI原生组织', rev1:21000,rev2:24500,rev3:28000, pf1:1500,pf2:2000,pf3:2600,
+           hc1:3300,hc2:3800,hc3:4200, hd1:380,hd2:400,hd3:420,
+           bRev:85,bRate:13,bProf:70, nRev:35000,nPer:80,nRate:13, city:'1'};
+  for(var k in d) document.getElementById(k).value = d[k];
+  calc();
+}
+function clearAll(){
+  IDS.forEach(function(id){ if(id!=='bRev'&&id!=='bRate'&&id!=='bProf'&&id!=='nRate'&&id!=='city')
+    document.getElementById(id).value=''; });
+  calc();
+}
+
+function calc(){
+  var rev=[num('rev1'),num('rev2'),num('rev3')], pf=[num('pf1'),num('pf2'),num('pf3')];
+  var hc=[num('hc1'),num('hc2'),num('hc3')], hd=[num('hd1'),num('hd2'),num('hd3')];
+  var bRev=num('bRev'), bRate=num('bRate'), bProf=num('bProf');
+  var nRev=num('nRev'), nPer=num('nPer'), nRate=num('nRate');
+
+  if(rev[2]==null||pf[2]==null||hc[2]==null||hd[2]==null||hd[2]==0){
+    document.getElementById('out').innerHTML =
+      '<div class="panel" style="text-align:center;padding:50px 20px;color:#8A8F98;">'+
+      '至少填完「本年」的四个数，就可以开始算。<br>填齐三年能看趋势和对标。</div>';
+    return;
+  }
+
+  var R = [];
+  for(var i=0;i<3;i++){
+    R[i] = {
+      rev: rev[i], pf: pf[i], hc: hc[i], hd: hd[i],
+      rph: (rev[i]!=null&&hd[i]) ? rev[i]/hd[i] : null,
+      pph: (pf[i]!=null&&hd[i]) ? pf[i]/hd[i] : null,
+      rate: (hc[i]!=null&&rev[i]) ? hc[i]/rev[i]*100 : null,
+      rolc: (pf[i]!=null&&hc[i]) ? pf[i]/hc[i]*100 : null,
+      ch: (hc[i]!=null&&hd[i]) ? hc[i]/hd[i] : null,
+      npm: (pf[i]!=null&&rev[i]) ? pf[i]/rev[i]*100 : null
+    };
+  }
+  var C = R[2];
+
+  var calibMsg='', calibWarn='';
+  if(C.ch!=null){
+    var mSalary = C.ch*10000/12;
+    var line = document.getElementById('city').value==='1' ? 4000 : 3000;
+    var cityName = document.getElementById('city').value==='1' ? '一线/新一线' : '二三线';
+    if(mSalary < line){
+      calibWarn = '<b>口径可疑，先别往下算。</b><br>你填的全口径人工成本，摊到每人每月只有 <b>'+
+        Math.round(mSalary).toLocaleString('zh-CN')+'</b> 元，低于'+cityName+' '+line.toLocaleString('zh-CN')+
+        ' 元的经验线。<br>最常见的情况是<b>劳务工、临时工的费用记进了施工成本、分包费或材料费</b>，'+
+        '没进人工成本。<br>先跟财务确认口径再往下推——否则人事费用率被严重低估，形态判定会整体反转。';
+    } else {
+      calibMsg = '口径校验通过：人均人工成本 '+f2(C.ch)+' 万，折合月薪约 '+
+        Math.round(mSalary).toLocaleString('zh-CN')+' 元，符合'+cityName+'经验线。';
+    }
+  }
+
+  var g={};
+  if(rev[1]!=null&&rev[2]!=null) g.rev = growth(rev[1],rev[2]);
+  if(hc[1]!=null&&hc[2]!=null) g.hc = growth(hc[1],hc[2]);
+  if(hd[1]!=null&&hd[2]!=null) g.hd = growth(hd[1],hd[2]);
+  if(pf[1]!=null&&pf[2]!=null) g.pf = growth(pf[1],pf[2]);
+
+  var scissor=null, scissorGap=null, scissorTxt='';
+  if(g.rev!=null&&g.hc!=null){
+    scissorGap = g.rev - g.hc;
+    if(g.hc < g.rev - 1) { scissor='good'; scissorTxt='良性 · 人效在提升'; }
+    else if(g.hc > g.rev + 1) { scissor='bad'; scissorTxt='恶性 · 越干越亏'; }
+    else { scissor='mid'; scissorTxt='平庸 · 靠堆人换增长'; }
+  }
+
+  var bench=[];
+  if(C.rph!=null&&bRev){
+    var gap=bRev-C.rph, achieve=C.rph/bRev*100;
+    bench.push({n:'人均营收', act:f2(C.rph)+' 万', std:bRev+' 万', ach:achieve,
+      money: gap>0 ? '同等人数应做 '+f0(C.hd*bRev)+' 万，<b>少做 '+f0(C.hd*gap)+' 万</b>' : '已超标杆 '+f0(C.hd*(-gap))+' 万',
+      bad: gap>0});
+  }
+  if(C.pph!=null&&C.npm!=null&&bRev){
+    var bp=bRev*C.npm/100, gap2=bp-C.pph, ach2=bp?C.pph/bp*100:null;
+    bench.push({n:'人均利润', act:f2(C.pph)+' 万', std:f2(bp)+' 万', ach:ach2,
+      money: gap2>0 ? '<b>少赚 '+f0(C.hd*gap2)+' 万</b>' : '已超标杆', bad: gap2>0});
+  }
+  if(C.rate!=null&&bRate!=null){
+    var gp=C.rate-bRate, ach3=bRate?bRate/C.rate*100:null;
+    bench.push({n:'人事费用率', act:pct(C.rate), std:'≤'+bRate+'%', ach:ach3,
+      money: gp>0 ? '应控制在 '+f0(C.rev*bRate/100)+' 万，<b>多花 '+f0(C.rev*gp/100)+' 万</b>' : '低于健康线，可考虑结构性加薪',
+      bad: gp>0});
+  }
+  if(C.rolc!=null&&bProf!=null){
+    var g4=bProf-C.rolc, ach4=bProf?C.rolc/bProf*100:null;
+    bench.push({n:'人工成本利润率', act:pct(C.rolc), std:'≥'+bProf+'%', ach:ach4,
+      money: g4>0 ? '应赚 '+f0(C.hc*bProf/100)+' 万，<b>少赚 '+f0(C.hc*g4/100)+' 万</b>' : '已超标杆',
+      bad: g4>0});
+  }
+
+  var lowRph = (C.rph!=null&&bRev&&C.rph<bRev);
+  var highRate = (C.rate!=null&&bRate!=null&&C.rate>bRate);
+  var shape, shapeDesc, shapeCls;
+  if(!lowRph && highRate){ shape='高价买高产'; shapeDesc='高产出 + 高成本占用，可接受。盯住成本别失控。'; shapeCls='b-mid'; }
+  else if(lowRph && highRate){ shape='正在亏人'; shapeDesc='低产出 + 高成本占用，<b>必须动刀</b>。这是最危险的一种形态。'; shapeCls='b-bad'; }
+  else if(!lowRph && !highRate){ shape='挤压过度'; shapeDesc='高产出 + 低成本占用，短期漂亮，<b>要防核心人员流失</b>。'; shapeCls='b-mid'; }
+  else { shape='低水平平衡'; shapeDesc='低产出 + 低成本占用，根因是业务量不足（事少）。<b>此形态禁止走裁员路径</b>——减人会同步减产能，营收跟着掉。正确动作是做业务增量 + 结构性加薪。'; shapeCls='b-bad'; }
+
+  var caps=[], curRate = C.rate, curRph = C.rph;
+  if(nRev){
+    if(curRph) caps.push({n:'A. 人效不变（躺平）', std:f2(curRph)+' 万/人', head:nRev/curRph, key:false});
+    if(nPer) caps.push({n:'B. 达成目标人均产值', std:nPer+' 万/人', head:nRev/nPer, key:true});
+    if(bRev) caps.push({n:'C. 达到行业标杆', std:bRev+' 万/人', head:nRev/bRev, key:false});
+    caps.push({n:'D. 不增编', std:'需做到 '+f2(nRev/C.hd)+' 万/人', head:C.hd, key:false});
+  }
+  var capB = caps.length>1 ? caps[1].head : null;
+  var addHead = capB!=null ? capB - C.hd : null;
+
+  var packs=[];
+  if(nRev){
+    if(curRate) packs.push({n:'A. 维持现状', std:pct(curRate), amt:nRev*curRate/100, key:false});
+    if(nRate!=null) packs.push({n:'B. 控到健康线', std:nRate+'%', amt:nRev*nRate/100, key:true});
+    packs.push({n:'C. 冲优秀线', std:'12%', amt:nRev*12/100, key:false});
+  }
+  var packB = packs.length>1 ? packs[1].amt : null;
+  var addPack = packB!=null ? packB - C.hc : null;
+
+  var redundancy=[];
+  if(bRev) redundancy.push({n:'按行业标杆 '+bRev+' 万/人倒推', v:C.hd - C.rev/bRev});
+  if(nPer) redundancy.push({n:'按目标人均产值 '+nPer+' 万/人倒推', v:C.hd - C.rev/nPer});
+
+  var costHead=null, costPack=null;
+  if(caps.length>1 && C.ch){ costHead = (caps[0].head - caps[1].head) * C.ch; }
+  if(packs.length>1){ costPack = packs[0].amt - packs[1].amt; }
+  var totalCost = (costHead!=null||costPack!=null) ? (costHead||0)+(costPack||0) : null;
+
+  var raiseRoom=null, newHeadCost=null;
+  if(addPack!=null && addHead!=null && C.ch){ newHeadCost = addHead*C.ch; raiseRoom = (addPack-newHeadCost)/C.hc*100; }
+
+  var company = document.getElementById('company').value || '（未填公司名）';
+  var h = '';
+
+  h += '<div class="kpis">';
+  h += '<div class="kpi '+(C.rph!=null&&bRev&&C.rph<bRev?'r':'g')+'"><div class="k">本年人均营收</div><div class="v">'+(C.rph!=null?f2(C.rph):'—')+'</div><div class="d">万/人 · 标杆 '+bRev+' 万</div></div>';
+  h += '<div class="kpi"><div class="k">本年人均利润</div><div class="v">'+(C.pph!=null?f2(C.pph):'—')+'</div><div class="d">万/人</div></div>';
+  h += '<div class="kpi '+(C.rate!=null&&bRate!=null&&C.rate>bRate?'r':'g')+'"><div class="k">人事费用率</div><div class="v">'+(C.rate!=null?C.rate.toFixed(1):'—')+'%</div><div class="d">健康线 ≤'+bRate+'%</div></div>';
+  h += '<div class="kpi '+(C.rolc!=null&&bProf!=null&&C.rolc<bProf?'a':'g')+'"><div class="k">人工成本利润率</div><div class="v">'+(C.rolc!=null?C.rolc.toFixed(1):'—')+'%</div><div class="d">标杆 ≥'+bProf+'%</div></div>';
+  h += '</div>';
+
+  if(calibWarn) h += '<div class="warn show" style="margin-bottom:16px">'+calibWarn+'</div>';
+  else if(calibMsg) h += '<div class="oknote show" style="margin-bottom:16px">'+calibMsg+'</div>';
+
+  h += '<section><div class="sec-h"><div class="sec-n">1</div><div class="sec-t">三年四笔账趋势</div>'+
+       '<div class="sec-sub">①和②看产出，③和④看代价</div></div>';
+  h += '<div class="hr-table-scroll" tabindex="0" role="region" aria-label="数据表，可左右滚动"><table class="rst"><tr><th>指标</th><th>前年</th><th>去年</th><th>本年</th><th>两年CAGR</th><th>趋势</th></tr>';
+  h += row3('营业收入', rev, f0);
+  h += row3('净利润', pf, f0);
+  h += row3('人工成本（全口径）', hc, f0);
+  h += row3('期末人数', hd, f0);
+  h += '<tr class="hl"><td>① 人均营收（万/人）</td>'+cells(R,'rph',f2)+'<td class="num">'+fmtCagr(cagr(R[0].rph,R[2].rph))+'</td><td>'+arrow(cagr(R[0].rph,R[2].rph))+'</td></tr>';
+  h += '<tr class="hl"><td>② 人均利润（万/人）</td>'+cells(R,'pph',f2)+'<td class="num">'+fmtCagr(cagr(R[0].pph,R[2].pph))+'</td><td>'+arrow(cagr(R[0].pph,R[2].pph))+'</td></tr>';
+  h += '<tr class="hl"><td>③ 人事费用率</td>'+cells(R,'rate',function(v){return v==null?'—':v.toFixed(2)+'%';})+'<td class="num">'+fmtPp(R[0].rate,R[2].rate)+'</td><td>'+arrow(R[0].rate!=null&&R[2].rate!=null?(R[0].rate-R[2].rate):null,true)+'</td></tr>';
+  h += '<tr class="hl"><td>④ 人工成本利润率</td>'+cells(R,'rolc',function(v){return v==null?'—':v.toFixed(2)+'%';})+'<td class="num">'+fmtPp(R[0].rolc,R[2].rolc)+'</td><td>'+arrow(R[0].rolc!=null&&R[2].rolc!=null?(R[2].rolc-R[0].rolc):null)+'</td></tr>';
+  h += '<tr><td class="muted">人均人工成本（万）</td>'+cells(R,'ch',f2)+'<td class="num">'+fmtCagr(cagr(R[0].ch,R[2].ch))+'</td><td>'+arrow(cagr(R[0].ch,R[2].ch))+'</td></tr>';
+  h += '<tr><td class="muted">净利率</td>'+cells(R,'npm',function(v){return v==null?'—':v.toFixed(2)+'%';})+'<td class="num">'+fmtPp(R[0].npm,R[2].npm)+'</td><td>'+arrow(R[0].npm!=null&&R[2].npm!=null?(R[2].npm-R[0].npm):null)+'</td></tr>';
+  h += '</table></div></section>';
+
+  if(g.rev!=null&&g.hc!=null){
+    h += '<section><div class="sec-h"><div class="sec-n">2</div><div class="sec-t">增速剪刀差</div>'+
+         '<div class="sec-sub">人工成本增速 vs 营收增速，看增长质量</div></div>';
+    h += '<div class="hr-table-scroll" tabindex="0" role="region" aria-label="数据表，可左右滚动"><table class="rst"><tr><th>本年 vs 去年</th><th>营收</th><th>人工成本</th><th>人数</th><th>净利润</th><th>判定</th></tr>';
+    h += '<tr><td>增速</td><td class="num">'+sg(g.rev)+'</td><td class="num">'+sg(g.hc)+'</td><td class="num">'+sg(g.hd)+'</td><td class="num">'+sg(g.pf)+
+         '</td><td><span class="badge b-'+scissor+'">'+scissorTxt+'</span></td></tr>';
+    h += '</table></div>';
+    h += '<div class="callout '+(scissor==='bad'?'red':(scissor==='good'?'green':''))+'">';
+    if(scissor==='good'){
+      h += '人工成本增速 <b>'+g.hc.toFixed(2)+'%</b> 低于营收增速 <b>'+g.rev.toFixed(2)+'%</b>，剪刀差 <b>'+
+           scissorGap.toFixed(1)+' 个百分点</b>——每多挣 100 块，人工只多花 '+((100+g.hc)/(100+g.rev)*100).toFixed(1)+' 块。<br>'+
+           (g.hd!=null ? '人数增速 '+g.hd.toFixed(2)+'%，'+(g.hd < g.rev ? '远低于营收增速，<b>不是靠堆人换增长</b>。' : '已接近营收增速，有堆人嫌疑。') : '');
+    } else if(scissor==='bad'){
+      h += '<b>警告：</b>人工成本增速 '+g.hc.toFixed(2)+'% 超过营收增速 '+g.rev.toFixed(2)+'%，剪刀差 <b>'+
+           scissorGap.toFixed(1)+' 个百分点</b>。规模在涨，但人效在退——这种增长越做越亏。';
+    } else {
+      h += '人工成本增速与营收增速基本持平（差 '+Math.abs(scissorGap).toFixed(1)+' 个百分点），属于<b>靠堆人换增长</b>，规模上去了但人效没改善。';
+    }
+    h += '</div></section>';
+  }
+
+  h += '<section><div class="sec-h"><div class="sec-n">3</div><div class="sec-t">对标达标率与缺口</div>'+
+       '<div class="sec-sub">每个缺口都必须折算成金额</div></div>';
+  h += '<div class="hr-table-scroll" tabindex="0" role="region" aria-label="数据表，可左右滚动"><table class="rst"><tr><th>指标</th><th>本年实际</th><th>标杆</th><th>达标率</th><th>缺口折算金额</th></tr>';
+  bench.forEach(function(b){
+    var cls = b.ach==null?'':(b.ach>=100?'up':(b.ach>=85?'mid':'down'));
+    h += '<tr><td>'+b.n+'</td><td class="num">'+b.act+'</td><td class="num muted">'+b.std+'</td>'+
+         '<td class="num '+cls+'">'+(b.ach==null?'—':b.ach.toFixed(1)+'%')+'</td><td class="num">'+b.money+'</td></tr>';
+  });
+  h += '</table></div>';
+  h += '<div class="shapebox"><div><div class="sf">四笔账形态判定</div>'+
+       '<div class="sv">'+shape+'</div></div></div>';
+  h += '<div class="callout">'+shapeDesc+'</div></section>';
+
+  if(caps.length){
+    h += '<section><div class="sec-h"><div class="sec-n">4</div><div class="sec-t">编制天花板（明年 '+f0(nRev)+' 万）</div>'+
+         '<div class="sec-sub">判断该不该批人</div></div>';
+    h += '<div class="hr-table-scroll" tabindex="0" role="region" aria-label="数据表，可左右滚动"><table class="rst"><tr><th>情景</th><th>人均产值假设</th><th>所需人数</th><th>相对本年 '+f0(C.hd)+' 人</th></tr>';
+    caps.forEach(function(c){
+      var d = c.head - C.hd;
+      var mark = c.key ? ' ✅ 建议' : '';
+      h += '<tr'+(c.key?' class="hl"':'')+'><td>'+c.n+mark+'</td><td class="num">'+c.std+'</td>'+
+           '<td class="num">'+f0(c.head)+' 人</td><td class="num '+(d>0?'down':'up')+'">'+
+           (d>=0?'需增编 '+f0(d)+' 人':'可减编 '+f0(-d)+' 人')+'</td></tr>';
+    });
+    h += '</table></div>';
+    if(capB!=null && addHead!=null){
+      h += '<div class="callout green"><b>老板拍板：明年编制天花板 '+f0(capB)+' 人，全年净增编上限 '+
+           (addHead>=0?f0(addHead):'0')+' 人。</b><br>'+
+           '躺平情景 A 与建议情景 B 相差 '+f0(Math.abs(caps[0].head-capB))+' 个人头，按人均人工成本 '+
+           f2(C.ch)+' 万计，这一条约束一年就是 <b>'+f0(Math.abs(costHead||0))+' 万</b>的差别。</div>';
+    }
+    h += '</section>';
+  }
+
+  if(packs.length){
+    h += '<section><div class="sec-h"><div class="sec-n">5</div><div class="sec-t">工资包上限（明年）</div>'+
+         '<div class="sec-sub">判断明年能给多少钱</div></div>';
+    h += '<div class="hr-table-scroll" tabindex="0" role="region" aria-label="数据表，可左右滚动"><table class="rst"><tr><th>情景</th><th>目标人事费用率</th><th>工资包上限</th><th>相对本年 '+f0(C.hc)+' 万</th></tr>';
+    packs.forEach(function(p){
+      var d = p.amt - C.hc;
+      h += '<tr'+(p.key?' class="hl"':'')+'><td>'+p.n+(p.key?' ✅ 建议':'')+'</td><td class="num">'+p.std+'</td>'+
+           '<td class="num">'+f0(p.amt)+' 万</td><td class="num '+(d>0?'up':'down')+'">'+
+           (d>=0?'可增 '+f0(d)+' 万（+'+(C.hc?(d/C.hc*100).toFixed(1):'—')+'%）':'需压 '+f0(-d)+' 万')+'</td></tr>';
+    });
+    h += '</table></div>';
+    if(packB!=null && addPack!=null){
+      h += '<div class="callout green"><b>老板拍板：明年工资包上限 '+f0(packB)+' 万，全年可增 '+f0(addPack)+' 万。</b><br>'+
+           '维持现状与控到健康线相差 <b>'+f0(Math.abs(costPack||0))+' 万</b>——这 '+
+           f0(Math.abs(costPack||0))+' 万不控，全部从利润里出。<br>'+
+           (newHeadCost!=null&&raiseRoom!=null ?
+             ('这 '+f0(addPack)+' 万怎么分：'+f0(Math.max(addHead,0))+' 个新增编制约占 <b>'+f0(newHeadCost)+
+              ' 万</b>，留给全员调薪只剩 <b>'+f0(addPack-newHeadCost)+' 万</b>，普调空间仅 <b>'+raiseRoom.toFixed(2)+'%</b>。')
+             : '')+'</div>';
+    }
+    h += '</section>';
+  }
+
+  if(redundancy.length){
+    h += '<section><div class="sec-h"><div class="sec-n">6</div><div class="sec-t">冗员当量</div>'+
+         '<div class="sec-sub">效率缺口，不等于该裁的人数</div></div>';
+    h += '<div class="hr-table-scroll" tabindex="0" role="region" aria-label="数据表，可左右滚动"><table class="rst"><tr><th>算法</th><th>理论所需人数</th><th>冗员当量</th><th>占总人数</th></tr>';
+    var vs = [];
+    redundancy.forEach(function(r){
+      vs.push(r.v);
+      h += '<tr><td>'+r.n+'</td><td class="num">'+f0(C.hd-r.v)+' 人</td><td class="num down">'+f0(r.v)+' 人</td>'+
+           '<td class="num">'+(r.v/C.hd*100).toFixed(1)+'%</td></tr>';
+    });
+    var lo=Math.min.apply(null,vs), hi=Math.max.apply(null,vs);
+    h += '</table></div>';
+    h += '<div class="callout red">存在 <b>'+f0(lo)+'–'+f0(hi)+' 人</b>的人效冗员当量（占总人数 '+
+         (lo/C.hd*100).toFixed(1)+'%–'+(hi/C.hd*100).toFixed(1)+'%）。<br>'+
+         '<b>冗员当量 ≠ 该裁的人数。</b>它衡量的是效率缺口，实际能减多少，要做事务级扫描才知道。</div>';
+    h += '</section>';
+  }
+
+  if(totalCost!=null){
+    h += '<section><div class="concl"><h3>三条可以直接拿去卡预算的硬结论</h3><ol>';
+    if(capB!=null&&addHead!=null)
+      h += '<li>明年编制天花板 <span class="amt">'+f0(capB)+' 人</span>，净增编上限 <span class="amt">'+
+           (addHead>0?f0(addHead):'0')+' 人</span>。任何部门要人，先拿这个数挡回去。</li>';
+    if(packB!=null&&addPack!=null){
+      h += '<li>明年工资包上限 <span class="amt">'+f0(packB)+' 万</span>，可增 <span class="amt">'+f0(addPack)+' 万</span>。';
+      if(raiseRoom!=null) h += '扣掉新增编制 '+f0(newHeadCost)+' 万，全员普调空间仅 <span class="amt">'+raiseRoom.toFixed(2)+'%</span>。';
+      h += '</li>';
+    }
+    h += '<li>不控编的代价 = 人头 '+f0(costHead||0)+' 万 + 工资包 '+f0(costPack||0)+' 万 = <span class="amt">'+
+         f0(totalCost)+' 万</span>，相当于本年净利润的 <span class="amt">'+
+         (C.pf?(totalCost/C.pf*100).toFixed(1):'—')+'%</span>。</li>';
+    h += '</ol></div></section>';
+  }
+
+  document.getElementById('out').innerHTML = h;
+  window.__last = {company:company, R:R, C:C, bench:bench, caps:caps, packs:packs,
+    redundancy:redundancy, shape:shape, addHead:addHead, addPack:addPack,
+    costHead:costHead, costPack:costPack, totalCost:totalCost, raiseRoom:raiseRoom,
+    newHeadCost:newHeadCost, g:g, scissorTxt:scissorTxt, bRev:bRev, bRate:bRate, bProf:bProf};
+  var cw=document.getElementById('calibWarn'), cm=document.getElementById('calib');
+  cw.className = calibWarn ? 'warn show' : 'warn'; cw.innerHTML = calibWarn;
+  cm.className = calibMsg ? 'oknote show' : 'oknote'; cm.innerHTML = calibMsg;
+}
+
+function row3(name, arr, fmt){
+  return '<tr><td class="muted">'+name+'</td><td class="num">'+fmt(arr[0])+'</td><td class="num">'+
+    fmt(arr[1])+'</td><td class="num">'+fmt(arr[2])+'</td><td></td><td></td></tr>';
+}
+function cells(R,k,fmt){ return '<td class="num">'+fmt(R[0][k])+'</td><td class="num">'+fmt(R[1][k])+'</td><td class="num">'+fmt(R[2][k])+'</td>'; }
+function fmtCagr(v){ if(v==null) return '—'; var c=v>0.5?'up':(v<-0.5?'down':'muted'); return '<span class="'+c+'">'+(v>0?'+':'')+v.toFixed(1)+'%</span>'; }
+function fmtPp(a,b){ if(a==null||b==null) return '—'; var d=b-a; var c=d>0.05?'up':(d<-0.05?'down':'muted'); return '<span class="'+c+'">'+(d>0?'+':'')+d.toFixed(2)+'pp</span>'; }
+function sg(v){ if(v==null) return '—'; var c=v>0?'up':(v<0?'down':'muted'); return '<span class="'+c+'">'+(v>0?'+':'')+v.toFixed(2)+'%</span>'; }
+
+function exportCSV(){
+  if(!window.__last){ alert('先填入数据再导出。'); return; }
+  var L=window.__last, C=L.C, R=L.R, rows=[];
+  var co = L.company || '公司';
+  rows.push(['人效账速算表 · '+co]);
+  rows.push(['口径: 金额万元 / 人数人 / 人均万元', '', '', '数据仅存本地，未上传']);
+  rows.push([]);
+  rows.push(['三年四笔账趋势']);
+  rows.push(['指标','前年','去年','本年','两年CAGR']);
+  ['rev','pf','hc','hd'].forEach(function(k,i){
+    var nm=['营业收入','净利润','人工成本(全口径)','期末人数'][i];
+    rows.push([nm, R[0][k], R[1][k], R[2][k], '']);
+  });
+  rows.push(['① 人均营收(万/人)', n2(R[0].rph), n2(R[1].rph), n2(R[2].rph), pc(cagr(R[0].rph,R[2].rph))]);
+  rows.push(['② 人均利润(万/人)', n2(R[0].pph), n2(R[1].pph), n2(R[2].pph), pc(cagr(R[0].pph,R[2].pph))]);
+  rows.push(['③ 人事费用率', pc(R[0].rate), pc(R[1].rate), pc(R[2].rate), '']);
+  rows.push(['④ 人工成本利润率', pc(R[0].rolc), pc(R[1].rolc), pc(R[2].rolc), '']);
+  rows.push(['人均人工成本(万)', n2(R[0].ch), n2(R[1].ch), n2(R[2].ch), '']);
+  rows.push(['净利率', pc(R[0].npm), pc(R[1].npm), pc(R[2].npm), '']);
+  rows.push([]);
+  if(L.g.rev!=null){
+    rows.push(['增速剪刀差(本年vs去年)']);
+    rows.push(['营收增速','人工成本增速','人数增速','净利润增速','判定']);
+    rows.push([pc(L.g.rev),pc(L.g.hc),pc(L.g.hd),pc(L.g.pf),L.scissorTxt]);
+    rows.push([]);
+  }
+  rows.push(['对标达标率与缺口']);
+  rows.push(['指标','本年实际','标杆','达标率','缺口折算金额']);
+  L.bench.forEach(function(b){
+    rows.push([b.n, b.act, b.std, b.ach==null?'':b.ach.toFixed(1)+'%', b.money.replace(/<[^>]+>/g,'')]);
+  });
+  rows.push(['形态判定', L.shape]);
+  rows.push([]);
+  if(L.caps.length){
+    rows.push(['编制天花板(明年)']);
+    rows.push(['情景','人均产值假设','所需人数','相对本年']);
+    L.caps.forEach(function(c){
+      rows.push([c.n, c.std, Math.round(c.head), (c.head-C.hd>=0?'需增编 ':'可减编 ')+Math.round(Math.abs(c.head-C.hd))+' 人']);
+    });
+    rows.push([]);
+  }
+  if(L.packs.length){
+    rows.push(['工资包上限(明年)']);
+    rows.push(['情景','目标人事费用率','工资包上限','相对本年']);
+    L.packs.forEach(function(p){
+      rows.push([p.n, p.std, Math.round(p.amt), Math.round(p.amt-C.hc)]);
+    });
+    rows.push([]);
+  }
+  if(L.redundancy.length){
+    rows.push(['冗员当量']);
+    rows.push(['算法','冗员当量','占总人数']);
+    L.redundancy.forEach(function(r){ rows.push([r.n, Math.round(r.v), (r.v/C.hd*100).toFixed(1)+'%']); });
+    rows.push([]);
+  }
+  rows.push(['三条硬结论']);
+  if(L.addHead!=null) rows.push(['1','明年编制天花板 '+Math.round(L.caps[1].head)+' 人，净增编上限 '+Math.round(Math.max(L.addHead,0))+' 人']);
+  if(L.addPack!=null){
+    var s='2 明年工资包上限 '+Math.round(L.packs[1].amt)+' 万，可增 '+Math.round(L.addPack)+' 万';
+    if(L.raiseRoom!=null) s+='；普调空间仅 '+L.raiseRoom.toFixed(2)+'%';
+    rows.push([s]);
+  }
+  if(L.totalCost!=null) rows.push(['3 不控编代价 '+Math.round(L.totalCost)+' 万 = 本年净利的 '+(C.pf?(L.totalCost/C.pf*100).toFixed(1):'—')+'%']);
+
+  var csv = rows.map(function(r){
+    return r.map(function(c){
+      c = (c==null?'':String(c));
+      return /[",\n]/.test(c) ? '"'+c.replace(/"/g,'""')+'"' : c;
+    }).join(',');
+  }).join('\r\n');
+
+  var blob = new Blob(['\ufeff'+csv], {type:'text/csv;charset=utf-8;'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = '人效账速算表_'+co+'.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+}
+function n2(v){ return v==null?'':v.toFixed(2); }
+function pc(v){ return v==null?'':v.toFixed(2)+'%'; }
+
+/* ================= 粘贴导入 ================= */
+var FIELD_NAME = {rev:'营业收入', pf:'净利润', hc:'人工成本（全口径）', hd:'期末人数'};
+var FIELD_SEQ  = ['hd','hc','pf','rev'];
+var KEYMAP = {
+  hd: ['期末人数','员工人数','在职人数','平均人数','用工人数','从业人数','在册人数','人数','编制人数','人头'],
+  hc: ['人工成本','薪酬总额','工资总额','人力成本','薪酬成本','人工费用','薪资总额','职工薪酬','薪酬','工资','社保公积金'],
+  pf: ['净利润','税后利润','净利','归母净利润','扣非净利润','净利润率'],
+  rev:['营业收入','销售收入','主营业务收入','营业额','营收','收入总额','销售额','主营收入','开票收入']
+};
+
+function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){
+  return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+
+function matchField(label){
+  var s = String(label||'').replace(/[\s\u3000()（）:：*]/g,'');
+  if(!s) return null;
+  if(/人均|增长率|同比|环比|占比|比率|万元\/人|元\/人|人效/.test(s)) return null;
+  for(var i=0;i<FIELD_SEQ.length;i++){
+    var k = FIELD_SEQ[i], ks = KEYMAP[k];
+    for(var j=0;j<ks.length;j++){
+      if(s.indexOf(ks[j]) < 0) continue;
+      if(k==='pf' && /利润总额|营业利润|毛利|未分配|息税前/.test(s)) continue;
+      if(k==='rev' && /成本|费用|其他业务|营业外|税金/.test(s)) continue;
+      if(k==='hd' && /成本|费用|工资|薪酬|总额/.test(s)) continue;
+      if(k==='hc' && /人数|人均/.test(s)) continue;
+      return k;
+    }
+  }
+  return null;
+}
+
+function toNum(v){
+  if(v==null) return null;
+  var s = String(v).trim();
+  if(!s || s==='-' || s==='—') return null;
+  var neg = false;
+  if(/^\(.*\)$/.test(s)){ neg = true; s = s.slice(1,-1); }
+  s = s.replace(/[,，\s\u3000]/g,'').replace(/[元万亿%¥￥]/g,'');
+  if(!s) return null;
+  var n = parseFloat(s);
+  if(isNaN(n)) return null;
+  return neg ? -n : n;
+}
+
+function detectUnit(rows){
+  var txt = rows.map(function(r){ return r.join(' '); }).join(' ');
+  if(/亿元/.test(txt)) return 'yi';
+  if(/万元/.test(txt)) return 'wan';
+  var all = [];
+  rows.forEach(function(r){ r.forEach(function(c){ var n = toNum(c); if(n!=null) all.push(n); }); });
+  if(!all.length) return 'wan';
+  var mx = Math.max.apply(null, all.map(Math.abs));
+  if(mx > 1e7) return 'yuan';
+  if(mx > 0 && mx < 1000) return 'yi';
+  return 'wan';
+}
+
+function parseRows(raw){
+  var s = String(raw||'').trim();
+  if(!s) return null;
+  var rows = null;
+  if(/<t[dh][\s>]/i.test(s) || /<tr[\s>]/i.test(s)){
+    try{
+      var doc = new DOMParser().parseFromString(s, 'text/html');
+      var trs = doc.querySelectorAll('tr');
+      rows = [];
+      for(var i=0;i<trs.length;i++){
+        var cs = trs[i].querySelectorAll('td,th'), r = [];
+        for(var j=0;j<cs.length;j++) r.push(cs[j].textContent.trim());
+        rows.push(r);
+      }
+    }catch(e){ rows = null; }
+  }
+  if(!rows || !rows.length){
+    var lines = s.split(/\r\n|\r|\n/);
+    rows = lines.map(function(line){
+      if(line.indexOf('\t') >= 0) return line.split('\t');
+      if(line.indexOf(',') >= 0) return line.split(',');
+      if(line.indexOf('，') >= 0) return line.split('，');
+      return line.split(/\s{2,}/);
+    }).map(function(r){ return r.map(function(c){ return String(c).trim(); }); });
+  }
+  return rows.filter(function(r){ return r.some(function(c){ return c!==''; }); });
+}
+
+function align3(vals){
+  var v = (vals||[]).filter(function(x){ return x!=null; });
+  if(v.length > 3) v = v.slice(-3);
+  var out = [null,null,null];
+  for(var i=0;i<v.length;i++) out[3-v.length+i] = v[i];
+  return out;
+}
+
+function analyze(rows){
+  var vCount = 0, hCount = 0;
+  if(rows[0]) rows[0].forEach(function(c,j){ if(j>0 && matchField(c)) vCount++; });
+  rows.forEach(function(r){ if(matchField(r[0])) hCount++; });
+  var orient = vCount >= hCount ? 'v' : 'h';
+
+  var order = [], cand = [], auto = {}, colLabels = [];
+  if(orient === 'v'){
+    for(var i=1;i<rows.length;i++){
+      var m = String(rows[i][0]||'').match(/(19|20)\d{2}/);
+      order.push({i:i, y: m ? parseInt(m[0],10) : null});
+    }
+    if(order.length && order.every(function(o){ return o.y!=null; }))
+      order.sort(function(a,b){ return a.y - b.y; });
+    rows[0].forEach(function(c,j){
+      if(j===0) return;
+      var label = String(c||'').trim() || ('第'+j+'列');
+      colLabels.push({j:j, label:label});
+      cand.push({key:'col:'+j, label:label, raw:c,
+        vals: order.map(function(o){ return toNum(rows[o.i][j]); })});
+    });
+  } else {
+    rows.forEach(function(r,i){
+      var label = String(r[0]||'').trim() || ('第'+(i+1)+'行');
+      colLabels.push({j:i, label:label});
+      cand.push({key:'row:'+i, label:label, raw:r[0], vals: r.slice(1).map(toNum)});
+    });
+  }
+  cand.forEach(function(c){
+    var f = matchField(c.raw);
+    if(f && !auto[f]) auto[f] = c.key;
+  });
+  return {rows:rows, orient:orient, cand:cand, auto:auto,
+          unit:detectUnit(rows), hit:Object.keys(auto).length};
+}
+
+function handlePaste(raw){
+  var rows = parseRows(raw);
+  if(!rows || rows.length < 2){
+    alert('没读到表格内容。\n\n请先从 Excel 或财务系统里「选中数据区域」再复制，然后粘贴。');
+    return;
+  }
+  window.__paste = analyze(rows);
+  renderPreview();
+  document.getElementById('mask').className = 'mask noprint show';
+}
+
+function renderPreview(){
+  var A = window.__paste;
+  var h = '';
+  h += '<div style="font-size:13px;color:#3D4450;margin-bottom:14px;line-height:1.7">'+
+       '数据方向：<b>'+(A.orient==='v' ? '字段在表头（横排年份）' : '字段在左侧（竖排年份）')+'</b>　·　'+
+       '自动认出 <b style="color:'+(A.hit===4?'#16A06A':'#BA7517')+'">'+A.hit+' / 4</b> 个字段<br>'+
+       (A.hit < 4 ? '<span style="color:#A32D2D">有字段没认出来，请在下面的下拉框里手动指定是哪一行/列。</span>'
+                  : '<span style="color:#16A06A">四个字段都认出来了，核对一下数字和单位就可以填入。</span>')+
+       '</div>';
+
+  h += '<div class="hr-table-scroll" tabindex="0" role="region" aria-label="数据表，可左右滚动"><table class="pv"><tr><th style="width:150px">字段（可改）</th><th>前年</th><th>去年</th><th>本年</th></tr>';
+  FIELD_SEQ.forEach(function(f, idx){
+    var key = A.auto[f] || '';
+    var src = null;
+    A.cand.forEach(function(c){ if(c.key === key) src = c; });
+    var v = align3(src ? src.vals : []);
+    var miss = !src;
+    h += '<tr'+(miss?' class="miss"':'')+'><td><select id="pv_sel_'+idx+'">'+
+         '<option value="">— 不是数据 —</option>'+
+         A.cand.map(function(c){
+           return '<option value="'+c.key+'"'+(c.key===key?' selected':'')+'>'+esc(c.label)+'</option>';
+         }).join('')+'</select></td>'+
+         '<td><input id="pv_v_'+idx+'_0" value="'+(v[0]==null?'':v[0])+'"></td>'+
+         '<td><input id="pv_v_'+idx+'_1" value="'+(v[1]==null?'':v[1])+'"></td>'+
+         '<td><input id="pv_v_'+idx+'_2" value="'+(v[2]==null?'':v[2])+'"></td></tr>';
+  });
+  h += '</table></div>';
+
+  h += '<div class="hr-table-scroll" tabindex="0" role="region" aria-label="数据表，可左右滚动"><table class="pv" style="margin-top:14px"><tr><th style="width:150px">金额单位</th><th>换算说明</th></tr>';
+  h += '<tr><td><select id="pv_unit" onchange="unitHint()">'+
+       [['wan','万元'],['yuan','元'],['yi','亿元']].map(function(u){
+         return '<option value="'+u[0]+'"'+(A.unit===u[0]?' selected':'')+'>'+u[1]+'</option>';
+       }).join('')+'</select></td>'+
+       '<td id="pv_unit_hint" style="text-align:left;color:#6B7280;font-size:12.5px"></td></tr></table></div>';
+  h += '<div style="font-size:12px;color:#8A8F98;margin-top:6px">人数不参与换算。金额会统一换算成「万元」后填入。</div>';
+
+  h += '<details class="raw"><summary>看一眼原始表格（前 8 行）</summary><div class="hr-table-scroll" tabindex="0" role="region" aria-label="数据表，可左右滚动"><table class="rawtable">'+
+       A.rows.slice(0,8).map(function(r){
+         return '<tr>'+r.slice(0,8).map(function(c){ return '<td>'+esc(c)+'</td>'; }).join('')+'</tr>';
+       }).join('')+'</table></div></details>';
+
+  document.getElementById('dlgBody').innerHTML = h;
+  unitHint();
+}
+
+function unitHint(){
+  var u = document.getElementById('pv_unit').value;
+  var t = u==='wan' ? '原样填入，不用换算。'
+        : u==='yuan' ? '每个金额 ÷ 10000 后填入（例如 280000000 → 28000）。'
+        : '每个金额 × 10000 后填入（例如 2.8 → 28000）。';
+  document.getElementById('pv_unit_hint').textContent = t;
+}
+
+function applyPaste(){
+  var A = window.__paste;
+  var unit = document.getElementById('pv_unit').value;
+  var mul = unit==='yuan' ? 0.0001 : (unit==='yi' ? 10000 : 1);
+  var got = {};
+  FIELD_SEQ.forEach(function(f, idx){
+    var key = document.getElementById('pv_sel_'+idx).value;
+    if(!key) return;
+    var src = null;
+    A.cand.forEach(function(c){ if(c.key===key) src = c; });
+    var manual = [];
+    for(var k=0;k<3;k++){
+      var el = document.getElementById('pv_v_'+idx+'_'+k);
+      manual.push(el ? toNum(el.value) : null);
+    }
+    var base = align3(src ? src.vals : []);
+    var vals = base.map(function(b,i){
+      var m = manual[i];
+      return (m!=null && b!=null && Math.abs(m-b) > 1e-9) ? m : b;
+    });
+    got[f] = vals;
+  });
+
+  ['rev','pf','hc'].forEach(function(f){
+    if(!got[f]) return;
+    for(var k=0;k<3;k++){
+      if(got[f][k]==null) continue;
+      var el = document.getElementById(f+(k+1));
+      el.value = Math.round(got[f][k]*mul*10000)/10000;
+    }
+  });
+  if(got.hd){
+    for(var k2=0;k2<3;k2++){
+      if(got.hd[k2]==null) continue;
+      var e2 = document.getElementById('hd'+(k2+1));
+      e2.value = Math.round(got.hd[k2]*100)/100;
+    }
+  }
+
+  var miss = FIELD_SEQ.filter(function(f){ return !got[f]; }).map(function(f){ return FIELD_NAME[f]; });
+  closePaste();
+  calc();
+  if(miss.length) alert('已填入。以下字段没认到，需要你手动补：\n· ' + miss.join('\n· '));
+}
+
+function closePaste(){
+  document.getElementById('mask').className = 'mask noprint';
+  var pa = document.getElementById('pasteArea');
+  if(pa) pa.value = '';
+}
+
+IDS.forEach(function(id){
+  var el = document.getElementById(id);
+  el.addEventListener('input', calc);
+  el.addEventListener('change', calc);
+});
+
+(function(){
+  var pa = document.getElementById('pasteArea');
+  var timer = null;
+  pa.addEventListener('paste', function(e){
+    var cd = e.clipboardData || window.clipboardData;
+    var txt = cd ? cd.getData('text/plain') : '';
+    e.preventDefault();
+    if(txt && txt.trim()) handlePaste(txt);
+  });
+  pa.addEventListener('input', function(){
+    var v = pa.value.trim();
+    if(v.length < 4) return;
+    clearTimeout(timer);
+    timer = setTimeout(function(){ handlePaste(v); }, 400);
+  });
+})();
+
+loadDemo();
+</script>
+<script src="shared.js?v=13"></script>
+<script>wbSidebar();</script>
+<script src="dataIface.js?v=12"></script>
+<script>wbDataIface.setup({ pageKey:'efficiency_v1', tables:[], afterLoad:function(){ if(typeof calc==='function') calc(); } });</script>
+
+<script>window.WB_AGENT_KEY='efficiency';</script>
+</body>
+</html>

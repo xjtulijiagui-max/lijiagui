@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<script>window.WB_OFFLINE=true;</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="color-scheme" content="light">
+<title>招聘面试助手 · 需求×编制护栏→结构化面试→漏斗 · HR自动化工作台</title>
+<link rel="stylesheet" href="shared.css?v=13">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:"Microsoft YaHei","微软雅黑","PingFang SC",sans-serif; background:#FAFAF9; color:#1F2328; line-height:1.6; -webkit-font-smoothing:antialiased; font-size:14px; }
+main { max-width:1280px; margin:0 auto; padding:24px 20px 70px; }
+.layout { display:grid; grid-template-columns:380px 1fr; gap:20px; align-items:start; }
+.panel { background:#FFFFFF; border:1px solid #ECEAE6; border-radius:10px; padding:18px; }
+.side { position:sticky; top:74px; }
+.ptitle { font-size:15px; font-weight:700; margin-bottom:4px; }
+.pnote { font-size:12px; color:#8A8F98; margin-bottom:14px; }
+.fgroup { margin-bottom:15px; }
+.flabel { font-size:12px; font-weight:700; color:#5F5E5A; margin-bottom:7px; display:flex; align-items:center; }
+.flabel .dot { width:5px; height:5px; border-radius:50%; background:#16A06A; margin-right:6px; }
+.frow { display:flex; align-items:center; gap:8px; margin-bottom:7px; }
+.frow label { flex:0 0 84px; font-size:12px; color:#6B7280; }
+.frow input, .frow select { flex:1; min-width:0; font-family:inherit; font-size:13px; padding:6px 9px; border:1px solid #DCDAD4; border-radius:5px; background:#FCFCFB; color:#1F2328; }
+.frow input:focus, .frow select:focus { outline:none; border-color:#16A06A; background:#fff; }
+.frow .unit { flex:0 0 34px; font-size:11px; color:#A0A4AC; }
+.hint { font-size:11.5px; color:#8A8F98; margin-top:2px; line-height:1.5; }
+table.rst { width:100%; border-collapse:collapse; font-size:13px; margin-top:4px; }
+table.rst th { background:#F5F5F3; font-size:12px; font-weight:700; color:#3D4450; padding:8px 10px; text-align:right; border-bottom:1px solid #ECEAE6; white-space:nowrap; }
+table.rst th:first-child { text-align:left; }
+table.rst td { padding:8px 10px; text-align:right; border-bottom:1px solid #F0EEE9; }
+table.rst td:first-child { text-align:left; color:#3D4450; }
+table.rst tr.hl td { background:#EAF7F1; font-weight:700; color:#16A06A; }
+table.rst tr.hl td:first-child { color:#118A5A; }
+table.rst td.num { font-variant-numeric:tabular-nums; }
+.badge { display:inline-block; font-size:11px; padding:2px 8px; border-radius:20px; font-weight:700; }
+.b-good { background:#EAF7F1; color:#16A06A; } .b-mid { background:#FAEEDA; color:#854F0B; } .b-bad { background:#FCEBEB; color:#A32D2D; }
+.callout { background:#F5F5F3; border-radius:8px; padding:13px 15px; font-size:13px; color:#3D4450; margin-top:12px; }
+.callout.green { background:#EAF7F1; color:#118A5A; } .callout.red { background:#FCEBEB; color:#791F1F; }
+.callout b { font-weight:700; }
+.concl { background:#16A06A; color:#fff; border-radius:10px; padding:20px 22px; margin-top:16px; }
+.concl h3 { font-size:15px; font-weight:700; margin-bottom:14px; }
+.concl ol { margin-left:18px; } .concl li { margin-bottom:11px; font-size:14px; } .concl li:last-child { margin-bottom:0; } .concl b { font-weight:700; }
+section { background:#FFFFFF; border:1px solid #ECEAE6; border-radius:10px; padding:20px; margin-bottom:16px; }
+.sec-h { display:flex; align-items:center; gap:9px; margin-bottom:14px; }
+.sec-n { width:22px; height:22px; flex:0 0 22px; border-radius:5px; background:#16A06A; color:#fff; font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+.sec-t { font-size:15px; font-weight:700; }
+.sec-sub { font-size:12px; color:#8A8F98; margin-left:auto; text-align:right; }
+.kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; margin-bottom:16px; }
+.kpi { background:#fff; border:1px solid #ECEAE6; border-radius:10px; padding:14px 15px; }
+.kpi .k { font-size:12px; color:#8A8F98; } .kpi .v { font-size:22px; font-weight:700; margin:3px 0 2px; font-variant-numeric:tabular-nums; } .kpi .d { font-size:11.5px; color:#6B7280; }
+.kpi.g .v { color:#16A06A; } .kpi.r .v { color:#A32D2D; } .kpi.a .v { color:#BA7517; }
+.jb-tb, .emp-tb { width:100%; border-collapse:collapse; font-size:13px; }
+.jb-tb th, .emp-tb th { background:#F5F5F3; font-size:12px; font-weight:700; color:#3D4450; padding:6px 5px; text-align:left; }
+.jb-tb td, .emp-tb td { padding:4px 4px; }
+.jb-tb input, .emp-tb input { width:100%; font-family:inherit; font-size:13px; padding:5px 5px; border:1px solid #DCDAD4; border-radius:5px; background:#FCFCFB; }
+.jb-tb input:focus, .emp-tb input:focus { outline:none; border-color:#16A06A; }
+.jb-tb .x, .emp-tb .x { color:#A32D2D; cursor:pointer; font-weight:700; text-align:center; }
+.addbtn { margin-top:8px; font-size:12px; color:#16A06A; cursor:pointer; font-weight:700; }
+@media (max-width:980px){ .layout{grid-template-columns:1fr;} .side{position:static;} }
+@media print { .wb-head,.wb-foot{display:none!important;} body{background:#fff;} .layout{display:block;} .side{display:none;} section{border:1px solid #ccc; page-break-inside:avoid;} }
+</style>
+<style>
+.layout > *, .panel, section, .fgroup, #out { min-width:0; }
+.hr-table-scroll { max-width:100%; overflow-x:auto; overscroll-behavior-inline:contain; }
+.hr-table-scroll:focus-visible { outline:2px solid #16A06A; outline-offset:2px; }
+.hr-table-scroll table.rst, .hr-table-scroll .emp-tb { min-width:460px; }
+@media(max-width:600px){ .sec-h{flex-wrap:wrap;} .sec-sub{margin-left:31px;text-align:left;} .rk{grid-template-columns:24px minmax(0,1fr) 70px 55px 75px;} }
+@media print { .hr-table-scroll{overflow:visible;} .hr-table-scroll table.rst{min-width:0;} }
+</style>
+</head>
+<body>
+<main>
+<div class="layout">
+  <div class="side">
+    <div class="panel">
+      <div class="ptitle">填招聘与面试数据</div>
+      <div class="pnote">招聘需求×编制护栏 → 结构化面试 5 维胜任力 → 录用建议 → 招聘漏斗。</div>
+
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>企业名称</div>
+        <div class="frow"><input id="company" placeholder="如：XXAI原生组织"></div>
+      </div>
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>岗位需求（编制 / 在岗 / 急招 / 关键岗）</div>
+        <div class="hr-table-scroll" tabindex="0" role="region" aria-label="数据表，可左右滚动"><table class="jb-tb">
+          <thead><tr><th>岗位</th><th>编制</th><th>在岗</th><th>急招</th><th>关键</th><th></th></tr></thead>
+          <tbody id="jbRows"></tbody>
+        </table></div>
+        <div class="addbtn" onclick="addJob()">＋ 加一个岗位</div>
+        <div class="hint">急招：0 无 / 1 P2 / 2 P1 / 3 P0；关键岗填 1。</div>
+      </div>
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>胜任力权重（和=100）</div>
+        <div class="frow"><label>维度1</label><input id="w1" type="number" value="20"><span class="unit">%</span></div>
+        <div class="frow"><label>维度2</label><input id="w2" type="number" value="20"><span class="unit">%</span></div>
+        <div class="frow"><label>维度3</label><input id="w3" type="number" value="20"><span class="unit">%</span></div>
+        <div class="frow"><label>维度4</label><input id="w4" type="number" value="20"><span class="unit">%</span></div>
+        <div class="frow"><label>维度5</label><input id="w5" type="number" value="20"><span class="unit">%</span></div>
+        <div class="frow"><label>红线分</label><input id="red" type="number" value="60"><span class="unit">分</span></div>
+      </div>
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>候选人（姓名/应聘/5维分）</div>
+        <div class="hr-table-scroll" tabindex="0" role="region" aria-label="数据表，可左右滚动"><table class="emp-tb">
+          <thead><tr><th>姓名</th><th>应聘</th><th>D1</th><th>D2</th><th>D3</th><th>D4</th><th>D5</th><th></th></tr></thead>
+          <tbody id="empRows"></tbody>
+        </table></div>
+        <div class="addbtn" onclick="addEmp()">＋ 加一名候选人</div>
+      </div>
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>招聘漏斗</div>
+        <div class="frow"><label>简历数</label><input id="cv" type="number" value="200"><span class="unit">份</span></div>
+        <div class="frow"><label>面试数</label><input id="iv" type="number" value="50"><span class="unit">人</span></div>
+        <div class="frow"><label>offer数</label><input id="of" type="number" value="8"><span class="unit">人</span></div>
+        <div class="frow"><label>到岗数</label><input id="on" type="number" value="6"><span class="unit">人</span></div>
+        <div class="frow"><label>预算</label><input id="bud" type="number" value="80"><span class="unit">万</span></div>
+      </div>
+
+      <button class="wb-btn wb-primary" style="width:100%" onclick="calc()">生成招聘面试决议</button>
+    </div>
+  </div>
+
+  <div>
+    <div id="out"></div>
+    <div class="callout" style="margin-top:14px;">
+      <b>用法</b>：填岗位需求（含编制护栏）、胜任力权重与红线、候选人五维分和漏斗数据，点生成——校验编制占用率、给录用建议（绿/黄/红）、算招聘转化与单 hires 成本。
+    </div>
+  </div>
+</div>
+</main>
+
+<script src="shared.js?v=13"></script>
+<script>
+wbShell('招聘面试');
+
+var JOBS=[['工艺工程师',3,2,3,1],['质量工程师',2,1,2,1],['设备维修',4,3,1,0],['生产班长',6,5,2,0],['研发工程师',3,2,3,1],['销售经理',2,1,3,0]];
+function addJob(n,h,c,u,k){ var tb=document.getElementById('jbRows'); var tr=document.createElement('tr');
+  tr.innerHTML='<td><input class="j-n" value="'+(n||'')+'"></td><td><input class="j-h" type="number" value="'+(h!=null?h:'')+'"></td><td><input class="j-c" type="number" value="'+(c!=null?c:'')+'"></td><td><input class="j-u" type="number" value="'+(u!=null?u:'')+'"></td><td><input class="j-k" type="number" value="'+(k!=null?k:'')+'"></td><td class="x" onclick="this.parentNode.remove()">✕</td>';
+  tb.appendChild(tr); }
+JOBS.forEach(function(x){ addJob(x[0],x[1],x[2],x[3],x[4]); });
+
+var CAN=[['张伟','工艺工程师',82,78,85,80,84],['刘芳','质量工程师',70,72,68,75,71],['陈强','设备维修',60,55,58,62,57],['李娜','研发工程师',88,90,85,87,91],['王磊','销售经理',45,50,52,48,46],['赵敏','生产班长',76,74,78,73,75],['孙浩','工艺工程师',58,60,55,57,59],['周婷','研发工程师',83,85,80,82,86],['吴勇','销售经理',66,70,64,68,69],['郑爽','质量工程师',40,38,42,41,39]];
+function addEmp(n,pos,a,b,c,d,e){ var tb=document.getElementById('empRows'); var tr=document.createElement('tr');
+  tr.innerHTML='<td><input class="e-n" value="'+(n||'')+'"></td><td><input class="e-pos" value="'+(pos||'')+'"></td><td><input class="e-1" type="number" value="'+(a!=null?a:'')+'"></td><td><input class="e-2" type="number" value="'+(b!=null?b:'')+'"></td><td><input class="e-3" type="number" value="'+(c!=null?c:'')+'"></td><td><input class="e-4" type="number" value="'+(d!=null?d:'')+'"></td><td><input class="e-5" type="number" value="'+(e!=null?e:'')+'"></td><td class="x" onclick="this.parentNode.remove()">✕</td>';
+  tb.appendChild(tr); }
+CAN.forEach(function(x){ addEmp(x[0],x[1],x[2],x[3],x[4],x[5],x[6]); });
+
+function num(v,d){ var x=parseFloat(v); return isFinite(x)?x:(d||0); }
+
+function calc(){
+  var company=wbVal('company')||'贵公司';
+  var w=[num(wbVal('w1'),20),num(wbVal('w2'),20),num(wbVal('w3'),20),num(wbVal('w4'),20),num(wbVal('w5'),20)];
+  var wt=w.reduce(function(a,b){return a+b;},0); if(wt<=0) wt=100;
+  var red=num(wbVal('red'),60);
+
+  // 岗位需求
+  var jobs=[]; var totH=0, totC=0, p0=0,p1=0,p2=0, kkN=0, over=0;
+  document.querySelectorAll('#jbRows tr').forEach(function(tr){
+    var n=tr.querySelector('.j-n').value.trim(); var h=num(tr.querySelector('.j-h').value,0), c=num(tr.querySelector('.j-c').value,0), u=num(tr.querySelector('.j-u').value,0), k=num(tr.querySelector('.j-k').value,0);
+    if(!n && h===0) return;
+    totH+=h; totC+=c; if(u===3)p0++; else if(u===2)p1++; else if(u===1)p2++; if(k===1)kkN++;
+    if(c>h) over++;
+    jobs.push({name:n||'未命名', h:h, c:c, u:u, k:k});
+  });
+  var occ = totH? totC/totH*100 : 0;
+
+  // 候选人
+  var emps=[]; var gN=0,yN=0,rN=0;
+  document.querySelectorAll('#empRows tr').forEach(function(tr){
+    var n=tr.querySelector('.e-n').value.trim(); var pos=tr.querySelector('.e-pos').value.trim();
+    var s5=[num(tr.querySelector('.e-1').value,0),num(tr.querySelector('.e-2').value,0),num(tr.querySelector('.e-3').value,0),num(tr.querySelector('.e-4').value,0),num(tr.querySelector('.e-5').value,0)];
+    if(!n && s5[0]===0) return;
+    var comp=(s5[0]*w[0]+s5[1]*w[1]+s5[2]*w[2]+s5[3]*w[3]+s5[4]*w[4])/wt;
+    var redHit = s5.some(function(v){ return v<red; });
+    var advice = redHit ? 'red' : (comp>=80?'green':(comp>=red?'mid':'red'));
+    if(advice==='green')gN++; else if(advice==='mid')yN++; else rN++;
+    emps.push({name:n||'未命名', pos:pos, score:comp, advice:advice});
+  });
+
+  // 漏斗
+  var cv=num(wbVal('cv'),200), iv=num(wbVal('iv'),50), of=num(wbVal('of'),8), on=num(wbVal('on'),6), bud=num(wbVal('bud'),80);
+  var r1= cv? iv/cv*100:0, r2= iv? of/iv*100:0, r3= of? on/of*100:0, rAll= cv? on/cv*100:0;
+  var costPP = on? bud/on : 0;
+
+  var R={company:company, occ:occ, over:over, p0:p0, kkN:kkN, gN:gN, yN:yN, rN:rN, rAll:rAll, costPP:costPP, bud:bud};
+  window.__zhaopin=R;
+
+  var h='';
+  h+='<section><div class="sec-h"><span class="sec-n">★</span><span class="sec-t">招聘总览</span><span class="sec-sub">'+wbEsc(company)+'</span></div>';
+  h+='<div class="kpis">'
+    +'<div class="kpi '+(occ>100?'r':'g')+'"><div class="k">编制占用率</div><div class="v">'+occ.toFixed(1)+'</div><div class="d">%</div></div>'
+    +'<div class="kpi '+(over?'r':'g')+'"><div class="k">超编岗位</div><div class="v">'+over+'</div><div class="d">个</div></div>'
+    +'<div class="kpi"><div class="k">急招 P0</div><div class="v">'+p0+'</div><div class="d">关键岗 '+kkN+'</div></div>'
+    +'<div class="kpi g"><div class="k">录用绿</div><div class="v">'+gN+'</div><div class="d">黄'+yN+'/红'+rN+'</div></div>'
+    +'<div class="kpi"><div class="k">整体转化</div><div class="v">'+rAll.toFixed(1)+'</div><div class="d">%</div></div>'
+    +'<div class="kpi a"><div class="k">单hires成本</div><div class="v">'+costPP.toFixed(1)+'</div><div class="d">万/人</div></div>'
+    +'</div></section>';
+
+  h+='<section><div class="sec-h"><span class="sec-n">1</span><span class="sec-t">岗位需求与编制护栏</span></div>';
+  h+='<div class="hr-table-scroll" tabindex="0" role="region" aria-label="数据表，可左右滚动"><table class="rst"><thead><tr><th>岗位</th><th>编制</th><th>在岗</th><th>急招</th><th>关键岗</th><th>状态</th></tr></thead><tbody>';
+  jobs.forEach(function(j){ var st = j.c>j.h? '<span class="badge b-bad">超编</span>' : (j.u===3?'<span class="badge b-mid">P0急招</span>':'<span class="badge b-good">在编</span>');
+    h+='<tr><td style="text-align:left">'+wbEsc(j.name)+'</td><td class="num">'+j.h+'</td><td class="num">'+j.c+'</td><td class="num">'+(j.u===3?'P0':(j.u===2?'P1':(j.u===1?'P2':'—')))+'</td><td class="num">'+(j.k===1?'是':'—')+'</td><td style="text-align:left">'+st+'</td></tr>'; });
+  h+='<tr class="hl"><td style="text-align:left">合计</td><td class="num">'+totH+'</td><td class="num">'+totC+'</td><td class="num">—</td><td class="num">'+kkN+'</td><td style="text-align:left">占用率 '+occ.toFixed(1)+'%</td></tr>';
+  h+='</tbody></table></div>';
+  h+='<div class="callout '+(over?'red':'green')+'">编制占用率 '+occ.toFixed(1)+'%，超编岗位 '+over+' 个'+(over?'，招聘须在编制内闭环，不得突破':'(无超编，合规 ✓')+'。</div></section>';
+
+  h+='<section><div class="sec-h"><span class="sec-n">2</span><span class="sec-t">候选人面试与录用建议</span></div>';
+  h+='<div class="hr-table-scroll" tabindex="0" role="region" aria-label="数据表，可左右滚动"><table class="rst"><thead><tr><th>姓名</th><th>应聘</th><th>综合分</th><th>红线</th><th>建议</th></tr></thead><tbody>';
+  emps.forEach(function(e){ var rb=e.score>=red?'≥红线':'触红线'; var ad = e.advice==='green'?'<span class="badge b-good">绿·录用</span>':(e.advice==='mid'?'<span class="badge b-mid">黄·待定</span>':'<span class="badge b-bad">红·不录用</span>');
+    h+='<tr><td style="text-align:left">'+wbEsc(e.name)+'</td><td style="text-align:left">'+wbEsc(e.pos)+'</td><td class="num">'+e.score.toFixed(1)+'</td><td style="text-align:left">'+rb+'</td><td style="text-align:left">'+ad+'</td></tr>'; });
+  h+='<tr class="hl"><td style="text-align:left">合计</td><td>—</td><td class="num">—</td><td>—</td><td style="text-align:left">绿 '+gN+' / 黄 '+yN+' / 红 '+rN+'</td></tr>';
+  h+='</tbody></table></div>';
+  h+='<div class="callout">红线维度未过者一律红区，不降级放行；综合分 ≥80 绿、红线~80 黄、触红线红。</div></section>';
+
+  h+='<section><div class="sec-h"><span class="sec-n">3</span><span class="sec-t">招聘漏斗与单 hires 成本</span></div>';
+  h+='<div class="hr-table-scroll" tabindex="0" role="region" aria-label="数据表，可左右滚动"><table class="rst"><thead><tr><th>环节</th><th>数量</th><th>转化率</th></tr></thead><tbody>';
+  h+='<tr><td style="text-align:left">简历 → 面试</td><td class="num">'+cv+' → '+iv+'</td><td class="num">'+r1.toFixed(1)+'%</td></tr>';
+  h+='<tr><td style="text-align:left">面试 → offer</td><td class="num">'+iv+' → '+of+'</td><td class="num">'+r2.toFixed(1)+'%</td></tr>';
+  h+='<tr><td style="text-align:left">offer → 到岗</td><td class="num">'+of+' → '+on+'</td><td class="num">'+r3.toFixed(1)+'%</td></tr>';
+  h+='<tr class="hl"><td style="text-align:left">整体转化</td><td class="num">'+cv+' → '+on+'</td><td class="num">'+rAll.toFixed(1)+'%</td></tr>';
+  h+='</tbody></table></div>';
+  h+='<div class="callout">招聘成本 = 预算 '+bud.toFixed(0)+' 万 ÷ 到岗 '+on+' 人 = <b>'+costPP.toFixed(1)+' 万/人</b>（单 hires）；到岗 '+on+' 人兑现招聘预算闭环。</div></section>';
+
+  var concl=[];
+  concl.push('本轮招聘 <b>'+jobs.length+'</b> 岗（P0 '+p0+'、关键岗 '+kkN+'），编制占用率 <b>'+occ.toFixed(1)+'%</b>，超编岗位 <b>'+over+'</b> 个'+(over?'，须先消化超编再招':'，在编制内闭环 ✓')+'。');
+  concl.push('结构化面试 <b>'+emps.length+'</b> 人，录用建议 绿 <b>'+gN+'</b> / 黄 '+yN+' / 红 '+rN+'；红线维度未过者一律红区，不降级放行。');
+  concl.push('招聘漏斗整体转化 <b>'+rAll.toFixed(1)+'%</b>，单 hires 成本 <b>'+costPP.toFixed(1)+' 万</b>；到岗 '+on+' 人兑现预算闭环。');
+  h+='<div class="concl"><h3>三条能拿去开会的结论</h3><ol>';
+  concl.forEach(function(c){ h+='<li>'+c+'</li>'; });
+  h+='</ol></div>';
+
+  document.getElementById('out').innerHTML=h;
+}
+calc();
+</script>
+<script src="dataIface.js?v=12"></script>
+<script>wbDataIface.setup({ pageKey:'zhaopin_v1', tables:[
+  {id:'jbRows', label:'岗位需求(岗位/编制/在岗/急招/关键)', rowSel:'tr', cellSel:'input', cols:['岗位','编制','在岗','急招','关键']},
+  {id:'empRows', label:'候选人(姓名/应聘/D1/D2/D3/D4/D5)', rowSel:'tr', cellSel:'input', cols:['姓名','应聘','D1','D2','D3','D4','D5']}
+], afterLoad:function(){ if(typeof calc==='function') calc(); } });</script>
+
+<script>window.WB_AGENT_KEY='zhaopin';</script>
+</body>
+</html>

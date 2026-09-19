@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <script>window.WB_OFFLINE=true;</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="color-scheme" content="light">
+  <title>组织健康度快速诊断 | HR自动化工作台</title>
+  
+  <link rel="stylesheet" href="diagnosis.css?v=12">
+<link rel="stylesheet" href="shared.css?v=13">
+<script src="shared.js?v=13"></script>
+</head>
+<body>
+  <div class="app-container">
+
+    <!-- ===== 欢迎页 ===== -->
+    <div id="page-welcome" class="page active">
+      <div class="welcome-hero">
+        <div class="hero-icon">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+            <rect x="8" y="8" width="20" height="20" rx="4" fill="#1a56db"/>
+            <rect x="36" y="8" width="20" height="20" rx="4" fill="#0891b2" opacity="0.8"/>
+            <rect x="8" y="36" width="20" height="20" rx="4" fill="#0891b2" opacity="0.6"/>
+            <rect x="36" y="36" width="20" height="20" rx="4" fill="#1a56db" opacity="0.7"/>
+          </svg>
+        </div>
+        <h1>组织健康度<br>快速诊断</h1>
+        <p class="hero-subtitle">基于"事-岗-人-钱-险"五维组织人力体系模型</p>
+      </div>
+
+      <div class="welcome-body">
+        <div class="model-intro">
+          <div class="model-card">
+            <span class="model-label" style="background:#1a56db">事</span>
+            <div>
+              <strong>战略与流程</strong>
+              <p>目标是否清晰、拆解是否到位</p>
+            </div>
+          </div>
+          <div class="model-card">
+            <span class="model-label" style="background:#0891b2">岗</span>
+            <div>
+              <strong>架构与岗位</strong>
+              <p>架构是否匹配、职责是否清晰</p>
+            </div>
+          </div>
+          <div class="model-card">
+            <span class="model-label" style="background:#7c3aed">人</span>
+            <div>
+              <strong>人才与团队</strong>
+              <p>人岗是否匹配、梯队是否健全</p>
+            </div>
+          </div>
+          <div class="model-card">
+            <span class="model-label" style="background:#ea580c">钱</span>
+            <div>
+              <strong>薪酬与成本</strong>
+              <p>激励是否有效、成本是否可控</p>
+            </div>
+          </div>
+          <div class="model-card">
+            <span class="model-label" style="background:#dc2626">险</span>
+            <div>
+              <strong>用工风险</strong>
+              <p>社保合规、合同规范、用工模式</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="welcome-info">
+          <p>全程约 <strong>5分钟</strong>，共 <strong>25道题</strong></p>
+          <p>完成后自动生成 <strong>个性化诊断报告</strong></p>
+          <p>报告可下载，供企业内部核实问题与跟进改善</p>
+        </div>
+
+        <button class="btn-primary btn-large" onclick="goToPage('info')">
+          开始诊断
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+
+        <p class="welcome-footer">HR自动化工作台</p>
+      </div>
+    </div>
+
+    <!-- ===== 企业信息页 ===== -->
+    <div id="page-info" class="page">
+      <div class="page-header">
+        <button class="btn-back" onclick="goToPage('welcome')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        </button>
+        <div class="step-indicator">第 1 步 / 共 2 步</div>
+      </div>
+
+      <h2 class="section-title">企业基本信息</h2>
+      <p class="section-desc">用于生成个性化诊断报告，信息仅用于本次诊断</p>
+
+      <div class="form-group">
+        <label>企业名称 <span class="optional">（选填）</span></label>
+        <input type="text" id="company-name" placeholder="如：XXAI原生组织">
+      </div>
+
+      <div class="form-group">
+        <label>所属行业 <span class="required">*</span></label>
+        <select id="company-industry">
+          <option value="">请选择</option>
+          <option value="制造业">制造业</option>
+          <option value="贸易/商贸">贸易/商贸</option>
+          <option value="科技/互联网">科技/互联网</option>
+          <option value="服务业">服务业</option>
+          <option value="建筑工程">建筑工程</option>
+          <option value="物流供应链">物流供应链</option>
+          <option value="零售连锁">零售连锁</option>
+          <option value="食品饮料">食品饮料</option>
+          <option value="医药/生物">医药/生物</option>
+          <option value="新能源">新能源</option>
+          <option value="纺织服装">纺织服装</option>
+          <option value="教育培训">教育培训</option>
+          <option value="其他">其他</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>企业人数 <span class="required">*</span></label>
+        <div class="radio-grid">
+          <label class="radio-card"><input type="radio" name="size" value="50人以下"><span>50人以下</span></label>
+          <label class="radio-card"><input type="radio" name="size" value="50-200人"><span>50-200人</span></label>
+          <label class="radio-card"><input type="radio" name="size" value="200-500人"><span>200-500人</span></label>
+          <label class="radio-card"><input type="radio" name="size" value="500-1000人"><span>500-1000人</span></label>
+          <label class="radio-card"><input type="radio" name="size" value="1000人以上"><span>1000人以上</span></label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>年度营收区间 <span class="optional">（选填）</span></label>
+        <div class="radio-grid">
+          <label class="radio-card"><input type="radio" name="revenue" value="1000万以下"><span>1000万以下</span></label>
+          <label class="radio-card"><input type="radio" name="revenue" value="1000万-5000万"><span>1000万-5000万</span></label>
+          <label class="radio-card"><input type="radio" name="revenue" value="5000万-2亿"><span>5000万-2亿</span></label>
+          <label class="radio-card"><input type="radio" name="revenue" value="2亿-10亿"><span>2亿-10亿</span></label>
+          <label class="radio-card"><input type="radio" name="revenue" value="10亿以上"><span>10亿以上</span></label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>人效比（人均营业收入） <span class="required">*</span></label>
+        <p class="field-hint">人均营业收入 = 年度营收 ÷ 企业总人数</p>
+        <div class="radio-grid">
+          <label class="radio-card"><input type="radio" name="efficiency" value="20万以下"><span>20万以下</span></label>
+          <label class="radio-card"><input type="radio" name="efficiency" value="20万-50万"><span>20万-50万</span></label>
+          <label class="radio-card"><input type="radio" name="efficiency" value="50万-100万"><span>50万-100万</span></label>
+          <label class="radio-card"><input type="radio" name="efficiency" value="100万-200万"><span>100万-200万</span></label>
+          <label class="radio-card"><input type="radio" name="efficiency" value="200万以上"><span>200万以上</span></label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>近三年业绩平均增速 <span class="required">*</span></label>
+        <p class="field-hint">过去三年的营收年均复合增长率</p>
+        <div class="radio-grid">
+          <label class="radio-card"><input type="radio" name="growth" value="下降/负增长"><span>下降/负增长</span></label>
+          <label class="radio-card"><input type="radio" name="growth" value="0-10%"><span>0-10%</span></label>
+          <label class="radio-card"><input type="radio" name="growth" value="10-20%"><span>10-20%</span></label>
+          <label class="radio-card"><input type="radio" name="growth" value="20-30%"><span>20-30%</span></label>
+          <label class="radio-card"><input type="radio" name="growth" value="30%以上"><span>30%以上</span></label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>发展阶段 <span class="required">*</span></label>
+        <div class="radio-grid">
+          <label class="radio-card"><input type="radio" name="stage" value="初创型"><span>初创型</span></label>
+          <label class="radio-card"><input type="radio" name="stage" value="成长型"><span>成长型</span></label>
+          <label class="radio-card"><input type="radio" name="stage" value="成熟型"><span>成熟型</span></label>
+          <label class="radio-card"><input type="radio" name="stage" value="拟上市"><span>拟上市</span></label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>老板最头疼的问题 <span class="optional">（可多选，最多3个）</span></label>
+        <div class="checkbox-grid" id="pain-points">
+          <label class="checkbox-card"><input type="checkbox" name="pain" value="战略目标落不下去"><span>战略目标落不下去</span></label>
+          <label class="checkbox-card"><input type="checkbox" name="pain" value="招不到合适的人"><span>招不到合适的人</span></label>
+          <label class="checkbox-card"><input type="checkbox" name="pain" value="人效太低养不起"><span>人效太低养不起</span></label>
+          <label class="checkbox-card"><input type="checkbox" name="pain" value="核心人才留不住"><span>核心人才留不住</span></label>
+          <label class="checkbox-card"><input type="checkbox" name="pain" value="薪酬不公平有怨言"><span>薪酬不公平有怨言</span></label>
+          <label class="checkbox-card"><input type="checkbox" name="pain" value="部门协作推诿多"><span>部门协作推诿多</span></label>
+          <label class="checkbox-card"><input type="checkbox" name="pain" value="岗位职责不清"><span>岗位职责不清</span></label>
+          <label class="checkbox-card"><input type="checkbox" name="pain" value="人力成本居高不下"><span>人力成本居高不下</span></label>
+        </div>
+      </div>
+
+      <button class="btn-primary btn-large" onclick="goToSurvey()">
+        下一步：开始诊断
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+
+    <!-- ===== 问卷页 ===== -->
+    <div id="page-survey" class="page">
+      <div class="page-header">
+        <button class="btn-back" onclick="goToPage('info')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        </button>
+        <div class="step-indicator">第 2 步 / 共 2 步</div>
+      </div>
+
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="survey-progress" style="width: 0%"></div>
+      </div>
+      <p class="progress-text" id="progress-text">已完成 0 / 25 题</p>
+
+      <div id="survey-content"></div>
+
+      <button class="btn-primary btn-large hidden" id="btn-generate" onclick="generateReport()">
+        生成诊断报告
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      </button>
+    </div>
+
+    <!-- ===== 加载页 ===== -->
+    <div id="page-loading" class="page">
+      <div class="loading-content">
+        <div class="loading-spinner"></div>
+        <h2>正在生成诊断报告...</h2>
+        <p class="loading-tip" id="loading-tip">正在分析五维健康度</p>
+      </div>
+    </div>
+
+    <!-- ===== 报告页 ===== -->
+    <div id="page-report" class="page">
+      <div class="page-header report-header">
+        <button class="btn-back" onclick="goToPage('welcome')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 0 0 1 1h3m10-11l2 2m-2-2v10a1 1 0 0 1-1 1h-3m-6 0a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1m-6 0h6"/></svg>
+        </button>
+        <div class="report-title-bar">诊断报告</div>
+        <button class="btn-share" onclick="window.print()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13"/></svg>
+        </button>
+      </div>
+
+      <div id="report-content"></div>
+    </div>
+
+  </div>
+
+  <!-- 微信浏览器引导浮层 -->
+  <div id="wechat-guide-overlay" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);z-index:9999;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;">
+    <div style="position:absolute;top:16px;right:24px;color:#fff;font-size:14px;display:flex;align-items:center;gap:6px;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+      <span>点击右上角</span>
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ffd700" stroke-width="2"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>
+    </div>
+    <div style="text-align:center;color:#fff;max-width:320px;">
+      
+      <h3 style="font-size:20px;font-weight:700;margin-bottom:16px;">请先在浏览器中打开</h3>
+      <p style="font-size:15px;line-height:2;color:rgba(255,255,255,0.9);">
+        填写完成后报告需要<strong style="color:#60a5fa;">自动下载</strong><br>
+        微信内无法下载文件<br><br>
+        请点击右上角 <span style="color:#ffd700;font-weight:700;font-size:18px;">···</span><br>
+        选择「<strong style="color:#60a5fa;">在浏览器打开</strong>」<br><br>
+        <span style="font-size:13px;color:rgba(255,255,255,0.6);">在浏览器中填写可自动下载报告</span>
+      </p>
+    </div>
+    <button onclick="hideWeChatGuide()" style="margin-top:24px;padding:10px 28px;font-size:13px;color:rgba(255,255,255,0.5);background:transparent;border:1px solid rgba(255,255,255,0.2);border-radius:8px;cursor:pointer;">
+      仍要在微信内填写
+    </button>
+  </div>
+
+  <script src="diagnosis.js?v=12"></script>
+<script>wbShell("组织人效诊断");</script>
+
+
+<script>window.WB_AGENT_KEY='diagnosis';</script>
+
+</body>
+</html>

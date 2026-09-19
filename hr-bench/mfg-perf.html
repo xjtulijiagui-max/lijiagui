@@ -1,0 +1,1534 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<script>window.WB_OFFLINE=true;</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>员工级绩效运作工作台 · 制造型企业版 · HR自动化工作台</title>
+<style>
+:root{
+  --navy:#1F4E79; --navy2:#2E6DA4; --bg:#F4F6F9; --card:#FFFFFF;
+  --line:#DDE3EC; --text:#1F2937; --sub:#6B7280; --ok:#0E9F6E; --warn:#D97706; --bad:#DC2626;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:"Microsoft YaHei","微软雅黑",-apple-system,"Segoe UI",sans-serif;font-size:14px;line-height:1.6}
+header{background:linear-gradient(135deg,#1F4E79,#2E6DA4);color:#fff;padding:16px 22px}
+header h1{margin:0;font-size:19px;font-weight:700;letter-spacing:.5px}
+header .sub{font-size:12.5px;opacity:.9;margin-top:4px}
+.wrap{max-width:1400px;margin:0 auto;padding:16px 18px 60px}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--card);
+  border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:14px}
+.btn{border:1px solid var(--line);background:#fff;color:var(--text);border-radius:8px;
+  padding:7px 13px;cursor:pointer;font-size:13px;font-family:inherit;transition:.15s}
+.btn:hover{background:#EEF3FA;border-color:var(--navy2);color:var(--navy)}
+.btn.primary{background:var(--navy);color:#fff;border-color:var(--navy)}
+.btn.primary:hover{background:var(--navy2);color:#fff}
+.btn.sm{padding:4px 9px;font-size:12px}
+.tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:14px}
+.tab{padding:8px 16px;border-radius:8px 8px 0 0;background:#E8EDF4;color:var(--sub);
+  cursor:pointer;font-size:13.5px;border:1px solid var(--line);border-bottom:none}
+.tab.active{background:var(--card);color:var(--navy);font-weight:700}
+.panel{display:none;background:var(--card);border:1px solid var(--line);border-radius:0 10px 10px 10px;padding:16px 18px}
+.panel.active{display:block}
+h2{font-size:15.5px;color:var(--navy);margin:18px 0 10px;padding-left:9px;border-left:4px solid var(--navy)}
+h2:first-child{margin-top:0}
+h3{font-size:14px;margin:14px 0 8px;color:var(--navy)}
+.grid{display:grid;gap:12px}
+.g4{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr))}
+.kpi{background:#F8FAFD;border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.kpi .lbl{font-size:12px;color:var(--sub)}
+.kpi .val{font-size:22px;font-weight:700;color:var(--navy);line-height:1.3}
+.kpi .val small{font-size:12px;font-weight:400;color:var(--sub)}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0}
+th{background:#EAF0F8;color:var(--navy);font-weight:700;text-align:left;padding:7px 8px;
+  border:1px solid var(--line);white-space:nowrap;font-size:12.5px}
+td{padding:6px 8px;border:1px solid var(--line);vertical-align:top}
+tbody tr:nth-child(even){background:#FBFCFE}
+tr.hl-bad td{background:#FEF2F2}
+tr.hl-warn td{background:#FFFBEB}
+.tree{font-family:"Consolas","Microsoft YaHei",monospace;font-size:13px;line-height:1.9}
+.tree .hz{color:#fff;background:var(--navy);border-radius:6px;padding:2px 9px;font-weight:700}
+.tree .dp{color:#0B5CAB}
+.tree .pp{color:var(--ok);font-weight:700}
+.tree .miss{color:var(--bad);font-weight:700}
+.pill{display:inline-block;padding:1px 8px;border-radius:10px;font-size:11.5px;font-weight:700}
+.p-ok{background:#E6F7F0;color:var(--ok)}
+.p-warn{background:#FEF3C7;color:var(--warn)}
+.p-bad{background:#FEE2E2;color:var(--bad)}
+.p-gray{background:#EEF1F5;color:var(--sub)}
+label{display:block;font-size:12.5px;color:var(--sub);margin:8px 0 3px}
+input,select,textarea{width:100%;padding:7px 9px;border:1px solid var(--line);border-radius:7px;
+  font-family:inherit;font-size:13px;color:var(--text);background:#fff}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--navy2);box-shadow:0 0 0 3px rgba(46,109,164,.12)}
+textarea{resize:vertical;min-height:70px;line-height:1.6}
+.frm{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px 14px}
+.frm .full{grid-column:1/-1}
+.card{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:#FBFCFE;margin-bottom:10px}
+.card .hd{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.muted{color:var(--sub);font-size:12.5px}
+.note{background:#EFF6FF;border-left:4px solid var(--navy2);padding:9px 13px;border-radius:6px;
+  font-size:13px;color:#1E3A5F;margin:10px 0}
+.warnbox{background:#FEF2F2;border-left:4px solid var(--bad);padding:9px 13px;border-radius:6px;
+  font-size:13px;color:#7F1D1D;margin:10px 0}
+.small{font-size:12px}
+hr{border:none;border-top:1px dashed var(--line);margin:16px 0}
+.flexrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.mono{font-family:Consolas,monospace}
+.hide{display:none}
+.legend{font-size:12px;color:var(--sub);margin:6px 0}
+.home-link{display:inline-block;color:inherit;font-size:12.5px;margin-bottom:8px;text-decoration:none;border:1px solid currentColor;border-radius:8px;padding:4px 9px}
+.home-link:hover{background:rgba(255,255,255,.12)}
+.grid>*,.frm>*,.flexrow>*{min-width:0}
+input,select,textarea{max-width:100%;min-width:0}
+#actualList,#rvList,#procTable,#scoreOut,#alignTree{max-width:100%;overflow-x:auto}
+#actualList table,#rvList table,#procTable table,#scoreOut table{min-width:640px}
+@media(max-width:600px){
+  header{padding:14px 16px}
+  header h1{font-size:17px}
+  .wrap{padding:12px 12px 40px}
+  .panel{padding:14px 12px}
+  .toolbar input{max-width:100%}
+  .tab{padding:8px 10px;font-size:13px}
+  .g4,.frm{grid-template-columns:minmax(0,1fr)}
+  .note,.warnbox,.card{overflow-wrap:anywhere}
+}
+@media print{.home-link{display:none}#actualList,#rvList,#procTable,#scoreOut,#alignTree{overflow:visible}#actualList table,#rvList table,#procTable table,#scoreOut table{min-width:0}}
+@media print{header,.toolbar,.tabs{display:none}.panel{display:block!important;border:none}}
+</style>
+</head>
+<body>
+<header>
+  <a class="home-link" href="home.html#agents">返回HR工作台</a>
+  <h1>员工级绩效运作工作台 · 制造型企业版</h1>
+  <div class="sub">三层对齐（经营目标→硬仗→部门指标→一人一表） ｜ 过程+结果双轮 ｜ PDCA闭环 ｜ 双周复盘动态辅导</div>
+</header>
+
+<div class="wrap">
+  <div class="toolbar">
+    <span class="muted">企业</span>
+    <input id="coName" style="width:230px" value="XXAI原生组织">
+    <span class="muted">当前周期</span>
+    <input id="curCycle" style="width:120px" value="2026-W05">
+    <button class="btn" onclick="loadDemo()">载入演示数据</button>
+    <button class="btn" onclick="openImport()">粘贴导入（Excel/TSV）</button>
+    <button class="btn" onclick="exportAll()">导出数据</button>
+    <button class="btn" onclick="window.print()">打印</button>
+    <button class="btn" onclick="clearAll()">清空</button>
+    <span class="muted small" id="saveTip" style="margin-left:auto"></span>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-t="p0">① 数据看板</div>
+    <div class="tab" data-t="p6">② 数据字典</div>
+    <div class="tab" data-t="p7">③ 数据接入</div>
+    <div class="tab" data-t="p8">④ 三层对齐</div>
+    <div class="tab" data-t="p2">⑤ 双周复盘</div>
+    <div class="tab" data-t="p3">⑥ 过程分与预警</div>
+    <div class="tab" data-t="p4">⑦ 辅导话术</div>
+    <div class="tab" data-t="p5">⑧ 评分汇总</div>
+  </div>
+
+
+  <!-- ============ ① 数据看板（三级视角） ============ -->
+  <div class="panel active" id="p0">
+    <div class="note"><b>三级看板：</b>不同的人只看他管得着的那一段。数据从「数据字典」定义的取数口径自动计算，
+      不依赖人工填分。<b>看板要能"自己找人"</b>——见页面底部的预警任务单。</div>
+    <div class="flexrow" style="margin:10px 0">
+      <span class="muted">查看视角</span>
+      <select id="viewLevel" onchange="renderDashboard()" style="width:210px">
+        <option value="L1">L1 总裁／厂长驾驶舱</option>
+        <option value="L2">L2 部门长看板</option>
+        <option value="L3">L3 员工个人看板</option>
+      </select>
+      <span id="viewDeptWrap" style="display:none">
+        <span class="muted">选择部门</span>
+        <select id="viewDept" onchange="renderDashboard()" style="width:160px"></select>
+      </span>
+      <span id="viewEmpWrap" style="display:none">
+        <span class="muted">选择员工</span>
+        <select id="viewEmp" onchange="renderDashboard()" style="width:160px"></select>
+      </span>
+      <span class="muted">数据期</span>
+      <input id="viewPeriod" style="width:120px" onchange="renderDashboard()" placeholder="2026-01">
+    </div>
+    <div id="dashOut"></div>
+    <h2>预警任务单（看板驱动动作）</h2>
+    <div id="triggerOut"></div>
+  </div>
+
+  <!-- ============ ② 数据字典 ============ -->
+  <div class="panel" id="p6">
+    <h2>指标数据字典（口径注册表）</h2>
+    <div class="note">
+      这是整套体系的<b>地基</b>。中小企业上不了重系统，更要先把口径写死——否则 ERP 里"产量"和质检表里"合格产量"
+      不是一回事，算出来的人均产值两边差 8%，最后谁也不认账。<br>
+      <b>填写要求：</b>每个考核指标都必须在本表登记，明确"从哪来、怎么算、谁提供、多久更新一次"。未登记的指标不得进入一人一表。
+    </div>
+    <div class="flexrow" style="margin:10px 0">
+      <button class="btn primary" onclick="addDictRow()">＋ 新增指标</button>
+      <button class="btn" onclick="renderDict()">刷新</button>
+      <button class="btn" onclick="exportDict()">导出数据字典</button>
+      <button class="btn" onclick="importDictDemo()">载入演示字典</button>
+      <span class="muted small" id="dictTip"></span>
+    </div>
+    <div style="overflow:auto"><div id="dictTable"></div></div>
+    <h2>字典体检</h2>
+    <div id="dictIssues"></div>
+  </div>
+
+  <!-- ============ ③ 数据接入 ============ -->
+  <div class="panel" id="p7">
+    <h2>业务数据导入（报表粘贴 / 台账录入）</h2>
+    <div class="note">
+      <b>中小企业标准做法：</b>不追求接口直连，而是「系统导表 → 粘贴导入 → 自动映射 → 自动算分」。<br>
+      支持三种录入：① <b>批量粘贴</b>从 ERP/MES/Excel 复制的月度数据；② <b>单条补录</b>手工台账类数据（5S、安全、改善提案）；
+      ③ <b>倒查</b>导入后自动比对字典口径，发现差异立刻提示。
+    </div>
+
+    <h3>方式一：批量粘贴（从 Excel 复制整块区域，含表头）</h3>
+    <div class="muted small" style="margin:6px 0">
+      表头需包含：<span class="mono">指标编号　实际值　数据期　数据来源</span>（部门/岗位可选）。
+      系统按指标编号自动匹配字典、自动算达成率与得分。
+    </div>
+    <textarea id="actualText" style="min-height:150px;font-family:Consolas,monospace;font-size:12px"
+      placeholder="指标编号&#9;实际值&#9;数据期&#9;数据来源&#10;D-PROD-01&#9;95.2%&#9;2026-01&#9;ERP导出&#10;D-QLT-01&#9;98.7%&#9;2026-01&#9;QMS导出"></textarea>
+    <div class="flexrow" style="margin-top:10px">
+      <button class="btn primary" onclick="importActual()">解析并导入</button>
+      <button class="btn" onclick="fillActualDemo()">填入示例</button>
+      <span class="muted small" id="actualTip"></span>
+    </div>
+
+    <h3>方式二：单条补录（算不出的那一类）</h3>
+    <div class="muted small" style="margin:6px 0">用于系统记录不了的管理类数据：5S评分、安全事件、改善提案、协作评价。手机端一分钟能填完。</div>
+    <div class="frm">
+      <div><label>指标编号</label><input id="a_code" placeholder="如 D-PROD-04"></div>
+      <div><label>实际值</label><input id="a_val" placeholder="如 0起 / 95分"></div>
+      <div><label>数据期</label><input id="a_period" placeholder="2026-01"></div>
+      <div><label>数据来源</label><input id="a_src" placeholder="如 安全台账"></div>
+      <div class="full"><label>备注（异常说明，选填）</label><input id="a_note"></div>
+      <div class="full flexrow"><button class="btn primary" onclick="addActualOne()">＋ 追加一条</button></div>
+    </div>
+
+    <h2>已导入的业务数据</h2>
+    <div id="actualList"></div>
+    <h2>实际值 vs 字典口径 · 差异倒查</h2>
+    <div id="actualIssues"></div>
+  </div>
+  <!-- ============ ① 对齐看板 ============ -->
+  <div class="panel" id="p8">
+    <h2>纵向对齐体检</h2>
+    <div class="grid g4" id="alignKpi"></div>
+    <div id="alignIssues"></div>
+    <h2>对齐链路图</h2>
+    <div class="tree" id="alignTree"></div>
+    <div class="legend">图例：<span class="pill p-ok">已承接</span> 该层已有人负责 ｜ <span class="pill p-bad">断链</span> 无人承接，目标会悬空</div>
+  </div>
+
+  <!-- ============ ② 双周复盘 ============ -->
+  <div class="panel" id="p2">
+    <h2>双周复盘录入（业务部门日常辅导）</h2>
+    <div class="note">
+      <b>标准议程（45分钟）：</b>①对上承接3′ → ②红黄绿灯12′ → ③障碍与求助10′ → ④下一步动作12′ → ⑤教练式辅导8′<br>
+      <b>灯色规则：</b>信心指数 8-10 绿灯 ｜ 5-7 黄灯 ｜ 1-4 红灯。连续 2 次红灯自动升级为「必须辅导」。
+    </div>
+    <div class="frm">
+      <div><label>周期编号</label><input id="r_cycle"></div>
+      <div><label>复盘日期</label><input id="r_date" type="date"></div>
+      <div><label>员工</label><select id="r_emp" onchange="onEmp()"></select></div>
+      <div><label>岗位</label><input id="r_post" readonly style="background:#F3F4F6"></div>
+      <div><label>部门</label><input id="r_dept" readonly style="background:#F3F4F6"></div>
+      <div><label>对齐目标 / 指标</label><select id="r_kr" onchange="onKr()"></select></div>
+      <div><label>KR / 目标值</label><input id="r_target"></div>
+      <div><label>本期实际</label><input id="r_actual"></div>
+      <div><label>信心指数（1-10）</label><input id="r_conf" type="number" min="1" max="10" value="7" oninput="calcLight()"></div>
+      <div><label>灯（自动判定）</label><input id="r_light" readonly style="background:#F3F4F6;font-weight:700"></div>
+      <div><label>原因分类</label><select id="r_reason">
+        <option value="">— 请选择 —</option>
+        <option>不会（知识技能）</option><option>不愿（动机意愿）</option><option>不能（资源工具）</option>
+        <option>不清（信息标准）</option><option>外部不可控</option></select></div>
+      <div><label>辅导方式</label><select id="r_coach">
+        <option>班前会反馈</option><option>一对一辅导（GROW）</option><option>例会点评</option>
+        <option>书面反馈</option><option>现场带教</option></select></div>
+      <div class="full"><label>主要障碍（只讲卡点，不讲流水账）</label><textarea id="r_block"></textarea></div>
+      <div class="full"><label>需要的支持 / 资源（需要谁、需要什么）</label><input id="r_support"></div>
+      <div><label>下一步动作 1</label><input id="r_a1"></div>
+      <div><label>下一步动作 2</label><input id="r_a2"></div>
+      <div><label>下一步动作 3</label><input id="r_a3"></div>
+      <div><label>责任人</label><input id="r_owner"></div>
+      <div><label>截止日期</label><input id="r_due" type="date"></div>
+      <div class="full"><label>上级辅导要点（GROW 提问式）</label><input id="r_tip"></div>
+      <div class="full flexrow">
+        <button class="btn primary" onclick="saveReview()">保存复盘记录</button>
+        <button class="btn" onclick="genCoach()">按原因生成辅导话术</button>
+        <button class="btn" onclick="resetForm()">清空表单</button>
+      </div>
+    </div>
+    <h2>复盘台账</h2>
+    <div id="rvList"></div>
+  </div>
+
+  <!-- ============ ③ 过程分与预警 ============ -->
+  <div class="panel" id="p3">
+    <h2>过程分自动累积（不靠月末凭印象打分）</h2>
+    <div class="note">月度过程指标得分 = 当期各次双周复盘表现加权平均。计算口径：过程分 = 平均信心指数 × 10，
+      并按红灯次数扣减（每次红灯 −5 分，保底 0 分）。</div>
+    <div id="procTable"></div>
+    <h2>红黄绿灯预警</h2>
+    <div id="warnList"></div>
+  </div>
+
+  <!-- ============ ④ 辅导话术 ============ -->
+  <div class="panel" id="p4">
+    <h2>教练式辅导话术生成（GROW + BEST）</h2>
+    <div class="note">选择员工与原因分类，自动生成一套可直接照着问的面谈脚本。原则：先客观再主观、先环境再个人、
+      对事不对人、让对方自己说出答案。</div>
+    <div class="frm">
+      <div><label>员工</label><select id="c_emp" onchange="renderCoach()"></select></div>
+      <div><label>原因分类</label><select id="c_reason" onchange="renderCoach()">
+        <option>不会（知识技能）</option><option>不愿（动机意愿）</option><option>不能（资源工具）</option>
+        <option>不清（信息标准）</option><option>外部不可控</option></select></div>
+      <div><label>辅导场景</label><select id="c_scene" onchange="renderCoach()">
+        <option>双周复盘中的即时辅导</option><option>月度绩效面谈</option><option>连续红灯后的升级辅导</option></select></div>
+    </div>
+    <div id="coachOut"></div>
+  </div>
+
+  <!-- ============ ⑤ 评分汇总 ============ -->
+  <div class="panel" id="p5">
+    <h2>月度评分与强制分布</h2>
+    <div class="note">总分 = 结果指标得分×权重 + 过程指标得分×权重 + 综合素质得分×权重 − 红线扣分。
+      等级：A优秀≥90 ｜ B良好80-89 ｜ C合格70-79 ｜ D待改进60-69 ｜ E差&lt;60。分数拉不开差距时启用拉差公式。</div>
+    <div class="frm">
+      <div><label>结果指标得分（0-100）</label><input id="sc_res" type="number" value="85"></div>
+      <div><label>综合素质得分（0-100）</label><input id="sc_qual" type="number" value="85"></div>
+      <div><label>红线扣分（直接减）</label><input id="sc_red" type="number" value="0"></div>
+      <div><label>拉差后最高分 Tm</label><input id="sc_tm" type="number" value="90"></div>
+      <div><label>拉差后最低分 T1</label><input id="sc_t1" type="number" value="70"></div>
+      <div style="display:flex;align-items:flex-end"><button class="btn primary" onclick="renderScore()">计算</button></div>
+    </div>
+    <div id="scoreOut"></div>
+  </div>
+</div>
+
+<!-- 导入弹窗 -->
+<div id="impModal" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,.5);z-index:99;
+  align-items:center;justify-content:center;padding:24px">
+  <div style="background:#fff;border-radius:12px;max-width:880px;width:100%;max-height:86vh;overflow:auto;padding:20px">
+    <h2 style="margin-top:0">粘贴导入（从 Excel 直接复制整块区域，含表头）</h2>
+    <div class="note">支持四类表：<b>硬仗清单</b>（含「硬仗编号」列）、<b>部门指标</b>（含「指标编号」列）、
+      <b>一人一表</b>（含「员工姓名」+「模块」列）、<b>双周复盘台账</b>（含「周期编号」列）。
+      系统按表头自动识别，可一次粘贴多张表。</div>
+    <textarea id="impText" style="min-height:280px;font-family:Consolas,monospace;font-size:12px"
+      placeholder="硬仗编号&#9;硬仗名称&#9;主责部门&#9;成功标准&#10;H01&#9;交付准交率提升到98%&#9;生产部&#9;月度准交率≥98%"></textarea>
+    <div class="flexrow" style="margin-top:12px">
+      <button class="btn primary" onclick="doImport()">解析并导入</button>
+      <button class="btn" onclick="closeImport()">取消</button>
+      <span class="muted small">导入会覆盖同类数据的现有内容</span>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ================= 数据层 ================= */
+const KEY='hr_bench_mfg_perf_workbench_v1';
+let DB={hz:[],dept:[],people:[],reviews:[],dict:[],actual:[],co:{name:'',cycle:''}};
+
+function save(){DB.co={name:document.getElementById('coName').value,cycle:document.getElementById('curCycle').value};
+  localStorage.setItem(KEY,JSON.stringify(DB));flash('已自动保存到本机浏览器');}
+function flash(t){const e=document.getElementById('saveTip');e.textContent=t;setTimeout(()=>e.textContent='',2200);}
+function load(){
+  const raw=localStorage.getItem(KEY);
+  if(raw){try{DB=JSON.parse(raw);}catch(e){}}
+  DB.dict=DB.dict||[];DB.actual=DB.actual||[];
+  DB.hz=DB.hz||[];DB.dept=DB.dept||[];DB.people=DB.people||[];DB.reviews=DB.reviews||[];
+  if(DB.co&&DB.co.name)document.getElementById('coName').value=DB.co.name;
+  if(DB.co&&DB.co.cycle)document.getElementById('curCycle').value=DB.co.cycle;
+}
+function clearAll(){if(!confirm('确定清空本机保存的全部绩效数据？此操作不可撤销。'))return;
+  DB={hz:[],dept:[],people:[],reviews:[],dict:[],actual:[],co:{name:'',cycle:''}};localStorage.removeItem(KEY);renderAll();}
+
+/* ================= 通用工具 ================= */
+function pct(v){if(v===null||v===undefined||v==='')return 0;let f=parseFloat(v);if(isNaN(f))return 0;
+  return f<=1?f*100:f;}
+function g(v){return (Math.round(pct(v)*100)/100).toString();}
+function esc(s){return (s===null||s===undefined?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function uniq(a){return [...new Set(a)];}
+
+/* ================= ① 对齐看板 ================= */
+function renderAlign(){
+  const hz=DB.hz,dept=DB.dept,people=DB.people;
+  const hzCover={},postCover={};
+  dept.forEach(d=>{if(d.hz)(hzCover[d.hz]=hzCover[d.hz]||[]).push(d.id)});
+  people.forEach(p=>p.items.forEach(it=>{if(it.parent&&it.parent!=='—')(postCover[it.parent]=postCover[it.parent]||[]).push(p.name)}));
+
+  const orphanDept=dept.filter(d=>!d.hz||!hz.some(h=>h.id===d.hz));
+  const brokenHz=hz.filter(h=>!(hzCover[h.id]||[]).length);
+  const emptyDept=dept.filter(d=>!(postCover[d.id]||[]).length);
+  const noRedline=people.filter(p=>!p.items.some(i=>i.mod==='红线项'));
+  const wBad=people.filter(p=>{const s=p.items.reduce((a,i)=>a+pct(i.w),0);return Math.abs(s-100)>0.01});
+
+  const items=[
+    ['硬仗数量',hz.length,'条'],
+    ['部门指标',dept.length,'条'],
+    ['一人一表覆盖',people.length,'人'],
+    ['断链硬仗',brokenHz.length,brokenHz.length?'条':'条 ✓'],
+    ['悬空部门指标',emptyDept.length,'条'],
+    ['孤儿指标',orphanDept.length,'条'],
+  ];
+  document.getElementById('alignKpi').innerHTML=items.map(([l,v,u])=>{
+    const bad=(l.includes('断链')||l.includes('悬空')||l.includes('孤儿'))&&v>0;
+    return `<div class="kpi"><div class="lbl">${l}</div><div class="val" style="${bad?'color:var(--bad)':''}">${v}<small> ${u}</small></div></div>`;
+  }).join('');
+
+  let iss=[];
+  brokenHz.forEach(h=>iss.push(['bad','断链',`硬仗「${esc(h.name)}」没有任何部门指标承接，目标会悬空`]));
+  emptyDept.forEach(d=>iss.push(['warn','悬空',`部门指标 ${esc(d.id)}「${esc(d.name)}」没有员工级指标承接，没人对它负责`]));
+  orphanDept.forEach(d=>iss.push(['warn','孤儿',`部门指标 ${esc(d.id)}「${esc(d.name)}」未挂回任何硬仗`]));
+  noRedline.forEach(p=>iss.push(['warn','缺红线',`${esc(p.name)}（${esc(p.post)}）的一人一表缺少红线项（安全/质量/合规否决项）`]));
+  wBad.forEach(p=>{const s=p.items.reduce((a,i)=>a+pct(i.w),0);
+    iss.push(['bad','权重',`${esc(p.name)} 权重合计 ${Math.round(s*100)/100}%，不等于100%`])});
+  const t=document.getElementById('alignIssues');
+  t.innerHTML=iss.length?`<div class="${iss.some(i=>i[0]==='bad')?'warnbox':'note'}"><b>体检发现 ${iss.length} 项问题：</b><ul style="margin:6px 0 0 18px;padding:0">${
+    iss.map(i=>`<li><span class="pill ${i[0]==='bad'?'p-bad':'p-warn'}">${i[1]}</span> ${i[2]}</li>`).join('')}</ul></div>`
+    :`<div class="note">✅ 对齐链路完整，没有断链。</div>`;
+
+  let s='';
+  hz.forEach(h=>{
+    s+=`<div style="margin-top:12px"><span class="hz">硬仗 ${esc(h.id)}</span> ${esc(h.name)}　<span class="muted">主责：${esc(h.dept||'未填')}｜负责人：${esc(h.owner||'—')}</span></div>`;
+    const ds=hzCover[h.id]||[];
+    if(!ds.length){s+=`<div style="margin-left:22px"><span class="miss">└─ 断链：无部门指标承接</span></div>`;return;}
+    ds.forEach((did,ix)=>{
+      const d=dept.find(x=>x.id===did)||{};
+      s+=`<div style="margin-left:22px">├─ <span class="dp">[部门] ${esc(did)}</span> ${esc(d.name||'')}　<span class="muted">归口：${esc(d.post||'—')}</span></div>`;
+      const ppl=uniq(postCover[did]||[]);
+      s+=`<div style="margin-left:44px">└─ ${ppl.length?`<span class="pp">[岗位] ${esc(ppl.join('、'))}</span>`:`<span class="miss">[岗位] ⚠️ 无人承接</span>`}</div>`;
+    });
+  });
+  document.getElementById('alignTree').innerHTML=s||'<span class="muted">暂无数据，请载入演示数据或粘贴导入。</span>';
+}
+
+/* ================= ② 双周复盘 ================= */
+function fillEmpSelect(){
+  const opts=DB.people.map(p=>`<option>${esc(p.name)}</option>`).join('');
+  const sel=document.getElementById('r_emp');
+  const keep=sel.value;
+  sel.innerHTML=opts||'<option>（无数据）</option>';
+  if(keep&&DB.people.some(p=>p.name===keep))sel.value=keep;
+  const sel2=document.getElementById('c_emp');
+  const keep2=sel2.value;
+  sel2.innerHTML=opts||'<option>（无数据）</option>';
+  if(keep2&&DB.people.some(p=>p.name===keep2))sel2.value=keep2;
+  else if(DB.people.length)sel2.value=DB.people[0].name;
+  if(DB.people.length)onEmp();
+}
+function onEmp(){
+  const nm=document.getElementById('r_emp').value;
+  const p=DB.people.find(x=>x.name===nm);
+  document.getElementById('r_post').value=p?p.post:'';
+  document.getElementById('r_dept').value=p?p.dept:'';
+  const sel=document.getElementById('r_kr');
+  const opts=p?p.items.filter(i=>['KPI','GS','KPA'].includes(i.mod)):[];
+  sel.innerHTML=(opts.length?opts:[]).map(i=>{
+    const pid=i.parent&&i.parent!=='—'?i.parent:'职责类';
+    return `<option value="${esc(pid)}" data-t="${esc(i.target||'')}">${esc(i.name)}（${esc(pid)}）</option>`;
+  }).join('')||'<option value="">（无KPI/GS）</option>';
+  onKr();
+}
+function onKr(){
+  const o=document.getElementById('r_kr').selectedOptions[0];
+  if(o&&o.dataset.t)document.getElementById('r_target').value=o.dataset.t;
+}
+function calcLight(){
+  const v=parseInt(document.getElementById('r_conf').value||0,10);
+  const el=document.getElementById('r_light');
+  let l='黄灯',c='var(--warn)';
+  if(v>=8){l='绿灯';c='var(--ok)';}else if(v>=5){l='黄灯';c='var(--warn)';}
+  else if(v>=1){l='红灯';c='var(--bad)';}else{l='';}
+  el.value=l;el.style.color=c;
+}
+function resetForm(){
+  ['r_block','r_support','r_a1','r_a2','r_a3','r_owner','r_tip','r_actual'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('r_conf').value=7;document.getElementById('r_reason').value='';calcLight();
+}
+function autoRate(){
+  const t=document.getElementById('r_target').value,a=document.getElementById('r_actual').value;
+  const tn=parseFloat(String(t).replace(/[^\d.\-]/g,'')),an=parseFloat(String(a).replace(/[^\d.\-]/g,''));
+  if(!isNaN(tn)&&!isNaN(an)&&tn!==0)return Math.round(an/tn*1000)/10;
+  return '';
+}
+function saveReview(){
+  const nm=document.getElementById('r_emp').value;
+  const p=DB.people.find(x=>x.name===nm)||{};
+  const o=document.getElementById('r_kr').selectedOptions[0];
+  const rec={
+    cycle:document.getElementById('r_cycle').value||document.getElementById('curCycle').value,
+    date:document.getElementById('r_date').value,
+    dept:p.dept||'',emp:nm,post:p.post||'',
+    kr:o?o.textContent:'',target:document.getElementById('r_target').value,
+    actual:document.getElementById('r_actual').value,rate:autoRate(),
+    conf:parseInt(document.getElementById('r_conf').value||0,10),
+    light:document.getElementById('r_light').value,
+    block:document.getElementById('r_block').value,reason:document.getElementById('r_reason').value,
+    support:document.getElementById('r_support').value,
+    a1:document.getElementById('r_a1').value,a2:document.getElementById('r_a2').value,a3:document.getElementById('r_a3').value,
+    owner:document.getElementById('r_owner').value,due:document.getElementById('r_due').value,
+    coach:document.getElementById('r_coach').value,tip:document.getElementById('r_tip').value,
+    parent:o?o.value:''
+  };
+  if(!rec.emp){alert('请先选择员工');return;}
+  DB.reviews.push(rec);save();renderAll();resetForm();
+  alert('复盘记录已保存。已自动更新过程分与预警。');
+}
+function delReview(i){if(!confirm('删除这条复盘记录？'))return;DB.reviews.splice(i,1);save();renderAll();}
+function renderReviews(){
+  const rs=DB.reviews;
+  if(!rs.length){document.getElementById('rvList').innerHTML='<div class="muted">暂无复盘记录。</div>';return;}
+  let h=`<table><thead><tr><th>周期</th><th>日期</th><th>员工</th><th>对齐目标</th><th>目标</th><th>实际</th>
+    <th>完成率</th><th>信心</th><th>灯</th><th>主要障碍</th><th>原因分类</th><th>下一步动作</th><th>截止</th><th>操作</th></tr></thead><tbody>`;
+  rs.forEach((r,i)=>{
+    const cls=r.light==='红灯'?'hl-bad':(r.light==='黄灯'?'hl-warn':'');
+    const pc=r.light==='红灯'?'p-bad':(r.light==='黄灯'?'p-warn':'p-ok');
+    h+=`<tr class="${cls}"><td>${esc(r.cycle)}</td><td>${esc(r.date)}</td><td>${esc(r.emp)}</td>
+      <td>${esc(r.kr)}</td><td>${esc(r.target)}</td><td>${esc(r.actual)}</td><td>${r.rate===''?'—':r.rate+'%'}</td>
+      <td>${esc(r.conf)}</td><td><span class="pill ${pc}">${esc(r.light)}</span></td>
+      <td>${esc(r.block)}</td><td>${esc(r.reason)}</td>
+      <td>${esc([r.a1,r.a2,r.a3].filter(Boolean).join('；'))}</td><td>${esc(r.due)}</td>
+      <td><button class="btn sm" onclick="delReview(${i})">删除</button></td></tr>`;
+  });
+  document.getElementById('rvList').innerHTML=h+'</tbody></table>';
+}
+
+/* ================= ③ 过程分与预警 ================= */
+function renderProc(){
+  const byEmp={};
+  DB.reviews.forEach(r=>{(byEmp[r.emp]=byEmp[r.emp]||[]).push(r)});
+  const names=Object.keys(byEmp);
+  if(!names.length){document.getElementById('procTable').innerHTML='<div class="muted">暂无复盘记录，无法计算过程分。</div>';
+    document.getElementById('warnList').innerHTML='<div class="muted">—</div>';return;}
+  let h=`<table><thead><tr><th>员工</th><th>部门/岗位</th><th>复盘次数</th><th>平均信心指数</th>
+    <th>红灯次数</th><th>红灯率</th><th>过程分</th><th>状态</th></tr></thead><tbody>`;
+  names.forEach(n=>{
+    const rs=byEmp[n],avg=rs.reduce((a,r)=>a+(r.conf||0),0)/rs.length;
+    const red=rs.filter(r=>r.light==='红灯').length;
+    let sc=Math.round(avg*10-red*5);sc=Math.max(0,Math.min(100,sc));
+    const st=red>=2?['必须辅导','p-bad']:(red===1||avg<6?['重点关注','p-warn']:['正常推进','p-ok']);
+    h+=`<tr><td><b>${esc(n)}</b></td><td>${esc(rs[0].dept)} / ${esc(rs[0].post)}</td><td>${rs.length}</td>
+      <td>${Math.round(avg*10)/10}</td><td>${red}</td><td>${Math.round(red/rs.length*100)}%</td>
+      <td><b>${sc}</b></td><td><span class="pill ${st[1]}">${st[0]}</span></td></tr>`;
+  });
+  document.getElementById('procTable').innerHTML=h+'</tbody></table>';
+
+  let w=[];
+  names.forEach(n=>{
+    const rs=byEmp[n].slice().sort((a,b)=>String(a.cycle).localeCompare(String(b.cycle)));
+    const last2=rs.slice(-2);
+    const redLine=last2.length===2&&last2.every(r=>r.light==='红灯');
+    if(redLine)w.push(['bad',`${n} 连续 2 次红灯 → 按机制<b>自动升级为「必须辅导」</b>，由上一级介入做资源协调或岗位调整。`]);
+    const avg=rs.reduce((a,r)=>a+(r.conf||0),0)/rs.length;
+    if(!redLine&&avg<6)w.push(['warn',`${n} 平均信心指数 ${Math.round(avg*10)/10} 偏低，建议安排一次正式辅导面谈。`]);
+    const noAct=rs.filter(r=>!r.a1&&!r.a2&&!r.a3).length;
+    if(noAct)w.push(['warn',`${n} 有 ${noAct} 条复盘记录没有填写「下一步动作」，复盘易流于走过场。`]);
+    if(!rs.some(r=>r.light==='红灯')&&rs.length>=3)w.push(['ok',`${n} 连续 ${rs.length} 次非红灯。若长期全绿，请复核目标值是否定低。`]);
+  });
+  document.getElementById('warnList').innerHTML=w.length?w.map(([lv,t])=>{
+    const cls=lv==='bad'?'warnbox':(lv==='warn'?'note':'note');
+    const pill=lv==='bad'?'p-bad':(lv==='warn'?'p-warn':'p-ok');
+    const tag=lv==='bad'?'升级辅导':(lv==='warn'?'关注':'健康');
+    return `<div class="${cls}"><span class="pill ${pill}">${tag}</span> ${t}</div>`;
+  }).join(''):'<div class="note">✅ 暂无预警。</div>';
+}
+
+/* ================= ④ 辅导话术 ================= */
+const COACH={
+  '不会（知识技能）':{
+    diag:'属于「知识技能」缺口——知道要做什么，但不会做。措施重点是<b>现场带教、技能培训、师徒结对</b>，而不是加压。',
+    g:['你希望在这件事上达到什么状态？做到什么程度算成功？',
+       '如果用一句话描述目标，你会怎么说？'],
+    r:['最近一次做这件事，具体卡在哪一步？请描述当时的场景。',
+       '你觉得自己已经掌握了哪些部分？还差哪一块？',
+       '同样的动作，班组里谁做得最好？他和你做的差别在哪？'],
+    o:['如果让你自己设计一个练习计划，你会怎么安排？',
+       '需要谁来带你？需要几次？',
+       '有没有可以参考的标准作业书或视频？'],
+    w:['接下来两周，你打算先练哪一步？',
+       '我们一起定个检查点，什么时候我看你的第一次成果？']},
+  '不能（资源工具）':{
+    diag:'属于「资源/工具」缺口——会做，但条件不具备。优先<b>协调资源、优化流程、补齐工具</b>。这一类的成本最低、见效最快。',
+    g:['这件事做到合格，需要哪些条件？',
+       '哪些条件是目前缺的？'],
+    r:['具体是哪一样东西拖住了你？设备、物料、人手、还是时间？',
+       '这个问题出现多久了？你之前试过什么办法？',
+       '如果资源到位，你估计能做到什么水平？'],
+    o:['需要谁配合？需要我出面协调哪一环？',
+       '有没有可能先用替代方案顶一段时间？',
+       '流程上有没有可以简化的步骤？'],
+    w:['我去协调，你负责哪部分？',
+       '什么时候能给我第一版结果？']},
+  '不愿（动机意愿）':{
+    diag:'属于「动机意愿」缺口——会做但不想做。要先分清是<b>个人问题还是组织问题</b>（做得好的没奖励、做得好没差别），再谈激励与沟通。',
+    g:['你自己怎么看这件事的重要性？',
+       '做到之后对你个人意味着什么？'],
+    r:['是什么让你不太想做这件事？',
+       '你觉得做了和不做，有区别吗？',
+       '团队里别人是怎么看的？'],
+    o:['如果让你来做规则，你会怎么改，才让你愿意做？',
+       '什么样的认可对你是有意义的？',
+       '有没有你更愿意承担的部分，我们可以换一换？'],
+    w:['我们各让一步：你做哪一件，我做哪一件？',
+       '下个双周你怎么证明给我看？']},
+  '不清（信息标准）':{
+    diag:'属于「信息」缺口——员工不知道标准、目标或反馈是什么。这是<b>占比最大（35%）</b>的原因，先修这一块。',
+    g:['你知道这件事做好的标准是什么吗？请复述一遍。',
+       '做到什么程度算合格、什么算优秀？'],
+    r:['上一次我跟你说标准是什么时候？',
+       '你拿到的信息里，哪一部分是模糊的？',
+       '你判断自己做得好不好，依据是什么？'],
+    o:['为了避免再模糊，我们把它写下来，你觉得要写清哪几条？',
+       '要不要做一个看得见的看板或对照表？'],
+    w:['今天之内我把标准写清给你，你确认一遍。',
+       '下个班前会你用一句话把标准讲给班组成员听。']},
+  '外部不可控':{
+    diag:'属于外部因素——客户变更、供应商异常、市场波动等。重点是把<b>不可控变成可控</b>：设定预警线、备选方案、责任分工，而不是追责个人。',
+    g:['在外部条件不确定的情况下，我们能把什么控制住？',
+       '你能承诺的部分是什么？'],
+    r:['这个外部变化具体影响了你哪些环节？',
+       '最早什么时候你就能发现苗头？',
+       '当时你做了哪些应对？'],
+    o:['能不能设一条预警线，提前发现？',
+       '有没有B方案、备选供应商或者替代排产？',
+       '需要哪个部门一起定应急规则？'],
+    w:['你负责盯预警，我负责拉通跨部门，可以吗？',
+       '我们把这条写进流程，下次就有准备了。']}
+};
+function renderCoach(){
+  const nmEl=document.getElementById('c_emp');
+  const rsnEl=document.getElementById('c_reason');
+  const sceneEl=document.getElementById('c_scene');
+  let nm=nmEl&&nmEl.value?nmEl.value:'';
+  if(!nm&&DB.people&&DB.people.length){nm=DB.people[0].name;if(nmEl)nmEl.value=nm;}
+  let rsn=rsnEl&&rsnEl.value?rsnEl.value:'不清（信息标准）';
+  if(rsnEl&&!rsnEl.value)rsnEl.value=rsn;
+  const scene=(sceneEl&&sceneEl.value)||'双周复盘中的即时辅导';
+  const c=COACH[rsn]||COACH['不清（信息标准）'];
+  if(!c){document.getElementById('coachOut').innerHTML='';return;}
+  const rs=DB.reviews.filter(r=>r.emp===nm);
+  const last=rs[rs.length-1];
+  const ctx=last?`<div class="note"><b>最近一次复盘：</b>${esc(last.cycle)}｜${esc(last.kr)}｜目标 ${esc(last.target)}｜实际 ${esc(last.actual)}
+    ｜信心指数 <b>${esc(last.conf)}</b>（${esc(last.light)}）<br><b>主要障碍：</b>${esc(last.block)||'未填写'}
+    <br><b>需要支持：</b>${esc(last.support)||'未填写'}<br><b>下一步动作：</b>${esc([last.a1,last.a2,last.a3].filter(Boolean).join('；'))||'未填写'}</div>`:
+    `<div class="note">该员工暂无复盘记录，话术按通用场景生成。</div>`;
+  const sec=(t,lv,arr)=>`<h3>${lv}　${t}</h3><ul style="margin:4px 0 0 18px;padding:0">${arr.map(x=>`<li>${x}</li>`).join('')}</ul>`;
+  document.getElementById('coachOut').innerHTML=`
+    <h2>${esc(nm)||'（未选择）'}　·　${esc(scene)}　·　原因分类：${esc(rsn)}</h2>
+    ${ctx}
+    <div class="note"><b>诊断判断：</b>${c.diag}</div>
+    ${sec('制定目标（Goal）','G',c.g)}
+    ${sec('了解现状（Reality）','R',c.r)}
+    ${sec('探索方案（Options）','O',c.o)}
+    ${sec('方案共识（Will）','W',c.w)}
+    <h3>面谈收尾（BEST 法则）</h3>
+    <ul style="margin:4px 0 0 18px;padding:0">
+      <li><b>B 描述行为：</b>用事实和数据说话，不评价人格。——“最近 3 次复盘，这个指标分别是 ……”</li>
+      <li><b>E 表达影响：</b>说明对团队和业务的影响。——“这会让交付在下游月末才暴露。”</li>
+      <li><b>S 征求意见：</b>“你觉得主要原因是什么？需要我做什么？”</li>
+      <li><b>T 讨论下一步：</b>共同定行动，不由单方下指令，写入台账并约检查点。</li>
+    </ul>
+    <div class="warnbox small"><b>提醒：</b>涉及薪酬、调岗、解除、处分等决定，须经企业人力资源与法务复核，并留存书面沟通与签收证据；
+      不得基于性别、年龄、民族、婚育、残障、宗教等与岗位无关属性做出人事决定。</div>`;
+}
+
+/* ================= ⑤ 评分汇总 ================= */
+function renderScore(){
+  const byEmp={};
+  DB.reviews.forEach(r=>{(byEmp[r.emp]=byEmp[r.emp]||[]).push(r)});
+  const res=parseFloat(document.getElementById('sc_res').value||0);
+  const qual=parseFloat(document.getElementById('sc_qual').value||0);
+  const red=parseFloat(document.getElementById('sc_red').value||0);
+  const Tm=parseFloat(document.getElementById('sc_tm').value||90),T1=parseFloat(document.getElementById('sc_t1').value||70);
+  const rows=DB.people.map(p=>{
+    const rs=byEmp[p.name]||[];
+    const avg=rs.length?rs.reduce((a,r)=>a+(r.conf||0),0)/rs.length:7;
+    const rcount=rs.filter(r=>r.light==='红灯').length;
+    let proc=Math.max(0,Math.min(100,Math.round(avg*10-rcount*5)));
+    const wr=p.items.filter(i=>['KPI','GS','KPA'].includes(i.mod)).reduce((a,i)=>a+pct(i.w),0);
+    const wp=p.items.filter(i=>['KBI','KCI'].includes(i.mod)).reduce((a,i)=>a+pct(i.w),0);
+    const wq=p.items.filter(i=>i.mod==='综合素质').reduce((a,i)=>a+pct(i.w),0);
+    const tot=(res*wr+proc*wp+qual*wq)/100-red;
+    const tot0=Math.max(0,Math.min(100,Math.round(tot*10)/10));
+    return {name:p.name,dept:p.dept,post:p.post,res,proc,qual,red,tot:tot0,rcount,n:rs.length,wr,wp,wq};
+  });
+  if(!rows.length){document.getElementById('scoreOut').innerHTML='<div class="muted">暂无员工数据。</div>';return;}
+  const Xm=Math.max(...rows.map(r=>r.tot)),Xo=Math.min(...rows.map(r=>r.tot));
+  const a=Xm>Xo?(Tm-T1)/(Xm-Xo):0;
+  rows.forEach(r=>{r.pull=Math.round((a*(r.tot-Xo)+T1)*100)/100;});
+  const sorted=[...rows].sort((x,y)=>y.pull-x.pull);
+  const N=sorted.length;
+  const rank={};const order=['A','B','C','D','E'];const quota=[0.10,0.25,0.55,0.10,0];
+  let idx=0,acc=0;
+  order.forEach((g_,gi)=>{const cnt=gi===4?N-idx:Math.max(0,Math.round(quota[gi]*N));for(let k=0;k<cnt&&idx<N;k++){rank[sorted[idx].name]=g_;idx++;}void acc;});
+  const grade=s=>s>=90?'A':s>=80?'B':s>=70?'C':s>=60?'D':'E';
+  let h=`<table><thead><tr><th>员工</th><th>部门/岗位</th><th>结果得分</th><th>过程得分<br><span class="small">（复盘次数）</span></th>
+    <th>素质得分</th><th>红线扣分</th><th>总分</th><th>等级</th><th>拉差后</th><th>部门排名</th><th>强制分布</th></tr></thead><tbody>`;
+  rows.sort((x,y)=>y.tot-x.tot).forEach((r,i)=>{
+    const pc=r.tot>=80?'p-ok':(r.tot>=70?'p-gray':'p-warn');
+    h+=`<tr class="${r.tot<70?'hl-warn':''}"><td><b>${esc(r.name)}</b></td><td>${esc(r.dept)} / ${esc(r.post)}</td>
+      <td>${r.res}</td><td>${r.proc}<div class="small muted">复盘 ${r.n} 次${r.rcount?'，红灯 '+r.rcount+' 次':''}</div></td>
+      <td>${r.qual}</td><td>${r.red||0}</td><td><b>${r.tot}</b></td>
+      <td><span class="pill ${pc}">${grade(r.tot)}</span></td><td>${r.pull}</td><td>${i+1}</td>
+      <td><span class="pill p-gray">${rank[r.name]||'—'}</span></td></tr>`;
+  });
+  const avgP=Math.round(rows.reduce((x,r)=>x+r.proc,0)/rows.length*10)/10;
+  document.getElementById('scoreOut').innerHTML=h+'</tbody></table>'+
+    `<div class="note"><b>计算说明：</b>拉差系数 a = (${Tm} − ${T1}) ÷ (${Math.round(Xm*10)/10} − ${Math.round(Xo*10)/10}) = <b>${Math.round(a*100)/100}</b>；
+      原始分区间 ${Math.round(Xo*10)/10} ~ ${Math.round(Xm*10)/10} 分，拉差后压缩到 ${T1} ~ ${Tm} 分，用于拉开差距。<br>
+      本月全员平均过程分 <b>${avgP}</b>（由双周复盘自动累积，非月末主观打分）。<br>
+      强制分布参考比例：A 10%｜B 25%｜C 55%｜D 10%｜E 0%。人数少的部门建议用「时间换空间法」或「名额分配法」，不要机械套用。</div>`;
+}
+
+/* ================= 导入 / 导出 ================= */
+function openImport(){document.getElementById('impModal').style.display='flex';}
+function closeImport(){document.getElementById('impModal').style.display='none';}
+function parseTSV(line){return line.split('\t').map(x=>x.trim());}
+function doImport(){
+  const raw=document.getElementById('impText').value.replace(/\r/g,'');
+  if(!raw.trim()){alert('请先粘贴数据');return;}
+  const blocks=raw.split(/\n\s*\n/).map(b=>b.split('\n').filter(l=>l.trim()));
+  let n=0,kind=[];
+  blocks.forEach(lines=>{
+    if(lines.length<2)return;
+    const hd=parseTSV(lines[0]);
+    const has=k=>hd.includes(k);
+    const rec=lines.slice(1).map(l=>{const v=parseTSV(l);const o={};hd.forEach((k,i)=>o[k]=v[i]!==undefined?v[i]:'');return o;});
+    if(has('硬仗编号')){DB.hz=rec.map(r=>({id:r['硬仗编号'],name:r['硬仗名称'],dept:r['主责部门'],owner:r['硬仗负责人'],goal:r['成功标准（必须量化）']||r['成功标准']}));n+=rec.length;kind.push('硬仗');}
+    else if(has('指标编号')){DB.dept=rec.map(r=>({id:r['指标编号'],dept:r['所属部门'],name:r['指标名称'],hz:r['承接硬仗编号'],type:r['指标类型'],w:r['权重%'],post:r['归口岗位']}));n+=rec.length;kind.push('部门指标');}
+    else if(has('员工姓名')&&has('模块')){const m={};
+      rec.forEach(r=>{const nm=r['员工姓名'];if(!nm)return;
+        m[nm]=m[nm]||{name:nm,emp:r['工号'],dept:r['部门'],post:r['岗位'],period:r['考核周期'],sup:r['直接上级'],items:[]};
+        m[nm].items.push({mod:r['模块'],name:r['指标名称'],parent:r['承接上级指标编号'],w:r['权重%'],rule:r['指标定义/评分规则'],src:r['数据来源'],target:r['目标值'],low:r['底限值'],high:r['挑战值']});});
+      DB.people=Object.values(m);n+=rec.length;kind.push('一人一表');}
+    else if(has('周期编号')){DB.reviews=rec.map(r=>({cycle:r['周期编号'],date:r['复盘日期'],dept:r['部门'],emp:r['员工姓名'],post:r['岗位'],
+        kr:r['关键结果KR'],target:r['KR目标值'],actual:r['本期实际'],rate:r['完成率%'],
+        conf:parseInt(r['信心指数(1-10)']||r['信心指数']||0,10),light:r['灯'],block:r['主要障碍'],
+        reason:r['原因分类'],support:r['需要的支持/资源'],a1:r['下一步动作1'],a2:r['下一步动作2'],a3:r['下一步动作3'],
+        owner:r['责任人'],due:r['截止日期'],coach:r['辅导方式'],tip:r['上级辅导要点'],parent:r['对齐指标编号']}));n+=rec.length;kind.push('双周复盘');}
+  });
+  save();renderAll();closeImport();
+  alert('导入完成：识别到 '+uniq(kind).join('、')+'，共 '+n+' 行。');
+}
+function ts(v){return (v===null||v===undefined?'':String(v)).replace(/\t/g,' ').replace(/\n/g,'/');}
+function dl(name,text){
+  const b=new Blob(['\ufeff'+text],{type:'text/plain;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1500);
+}
+function exportAll(){
+  let out=[];
+  out.push(['硬仗编号','硬仗名称','主责部门','硬仗负责人','成功标准（必须量化）'].join('\t'));
+  DB.hz.forEach(r=>out.push([r.id,r.name,r.dept,r.owner,r.goal].map(ts).join('\t')));
+  out.push('');
+  out.push(['指标编号','所属部门','指标名称','承接硬仗编号','指标类型','权重%','归口岗位'].join('\t'));
+  DB.dept.forEach(r=>out.push([r.id,r.dept,r.name,r.hz,r.type,r.w,r.post].map(ts).join('\t')));
+  out.push('');
+  out.push(['员工姓名','工号','部门','岗位','直接上级','考核周期','序号','模块','指标名称','承接上级指标编号','指标定义/评分规则','数据来源','底限值','目标值','挑战值','权重%'].join('\t'));
+  DB.people.forEach(p=>p.items.forEach((i,k)=>out.push([p.name,p.emp,p.dept,p.post,p.sup,p.period,k+1,i.mod,i.name,i.parent,i.rule,i.src,i.low,i.target,i.high,i.w].map(ts).join('\t'))));
+  out.push('');
+  out.push(['周期编号','复盘日期','部门','员工姓名','岗位','对齐指标编号','关键结果KR','KR目标值','本期实际','完成率%','信心指数(1-10)','灯','主要障碍','原因分类','需要的支持/资源','下一步动作1','下一步动作2','下一步动作3','责任人','截止日期','辅导方式','上级辅导要点'].join('\t'));
+  DB.reviews.forEach(r=>out.push([r.cycle,r.date,r.dept,r.emp,r.post,r.parent,r.kr,r.target,r.actual,r.rate,r.conf,r.light,r.block,r.reason,r.support,r.a1,r.a2,r.a3,r.owner,r.due,r.coach,r.tip].map(ts).join('\t')));
+  dl('绩效运作数据导出_'+new Date().toISOString().slice(0,10)+'.txt',out.join('\n'));
+}
+
+/* ================= 演示数据 ================= */
+function loadDemo(){
+  if(!confirm('载入演示数据将覆盖当前内容，继续？'))return;
+  DB=JSON.parse(JSON.stringify(DEMO));recomputeActual();save();renderAll();
+}
+
+
+/* ================= 数据字典层 ================= */
+/* 字典字段：code 指标编号｜name 指标名称｜dept 归属部门｜mod 模块｜formula 计算公式
+   src 数据源系统｜field 取数字段｜collect 采集方式｜freq 刷新频率｜owner 数据责任人｜unit 单位
+   dir 方向(正向/逆向)｜base 底限｜target 目标｜challenge 挑战｜judge 判定方式 */
+
+function ensureDict(){DB.dict=DB.dict||[];DB.actual=DB.actual||[];}
+
+const COLLECT_METHODS=['系统导出','系统API','人工台账','现场评定','计算推导'];
+const FREQS=['日','周','双周','月','季','年'];
+
+function addDictRow(){
+  DB.dict.push({code:'',name:'',dept:'',mod:'KPI',formula:'',src:'',field:'',
+    collect:'系统导出',freq:'月',owner:'',unit:'%',dir:'正向',
+    base:'',target:'',challenge:'',judge:'三线法线性折算'});
+  renderDict();save();
+}
+function delDictRow(i){if(!confirm('删除这条字典记录？'))return;DB.dict.splice(i,1);renderDict();save();}
+function setDF(i,k,v){DB.dict[i][k]=v;save();}
+function setDNum(i,k,v){DB.dict[i][k]=v;save();}
+
+function renderDict(){
+  ensureDict();
+  const d=DB.dict;
+  if(!d.length){
+    document.getElementById('dictTable').innerHTML=
+      '<div class="muted">暂无字典记录。点「载入演示字典」可由现有部门指标自动生成一版，或手动新增。</div>';
+    document.getElementById('dictIssues').innerHTML='<div class="muted">—</div>';
+    return;
+  }
+  const opt=(arr,cur)=>arr.map(x=>`<option ${x===cur?'selected':''}>${esc(x)}</option>`).join('');
+  let h=`<table><thead><tr>
+    <th style="min-width:96px">指标编号</th><th style="min-width:130px">指标名称</th><th style="min-width:88px">归属部门</th>
+    <th>模块</th><th style="min-width:190px">计算公式</th><th style="min-width:110px">数据源系统</th>
+    <th style="min-width:110px">取数字段</th><th>采集方式</th><th>刷新频率</th><th style="min-width:88px">数据责任人</th>
+    <th>单位</th><th>方向</th><th>底限</th><th>目标</th><th>挑战</th><th style="min-width:120px">判定方式</th><th>操作</th>
+  </tr></thead><tbody>`;
+  d.forEach((r,i)=>{
+    const inp=(k,w)=>`<input value="${esc(r[k]||'')}" onchange="setDF(${i},'${k}',this.value)" style="border:none;background:transparent;padding:2px;font-size:12px;${w?'width:'+w:''}">`;
+    h+=`<tr>
+      <td>${inp('code','92px')}</td><td>${inp('name')}</td><td>${inp('dept','84px')}</td>
+      <td><select onchange="setDF(${i},'mod',this.value)" style="border:none;background:transparent;font-size:12px;padding:2px">
+        ${opt(['KPI','GS','KPA','KBI','KCI','综合素质','红线项'],r.mod)}</select></td>
+      <td>${inp('formula')}</td><td>${inp('src')}</td><td>${inp('field')}</td>
+      <td><select onchange="setDF(${i},'collect',this.value)" style="border:none;background:transparent;font-size:12px;padding:2px">
+        ${opt(COLLECT_METHODS,r.collect)}</select></td>
+      <td><select onchange="setDF(${i},'freq',this.value)" style="border:none;background:transparent;font-size:12px;padding:2px">
+        ${opt(FREQS,r.freq)}</select></td>
+      <td>${inp('owner','84px')}</td>
+      <td>${inp('unit','44px')}</td>
+      <td><select onchange="setDF(${i},'dir',this.value)" style="border:none;background:transparent;font-size:12px;padding:2px">
+        ${opt(['正向','逆向'],r.dir)}</select></td>
+      <td>${inp('base','52px')}</td><td>${inp('target','52px')}</td><td>${inp('challenge','52px')}</td>
+      <td><select onchange="setDF(${i},'judge',this.value)" style="border:none;background:transparent;font-size:12px;padding:2px">
+        ${opt(['三线法线性折算','里程碑法','每超X扣分','计次扣分','5级行为锚定','否决项'],r.judge)}</select></td>
+      <td><button class="btn sm" onclick="delDictRow(${i})">删</button></td></tr>`;
+  });
+  document.getElementById('dictTable').innerHTML=h+'</tbody></table>';
+
+  /* 字典体检 */
+  const iss=[];
+  const codes=d.map(x=>x.code).filter(Boolean);
+  const dup=codes.filter((c,i)=>codes.indexOf(c)!==i);
+  uniq(dup).forEach(c=>iss.push(['bad','编号重复',`指标编号 ${esc(c)} 出现多次，会导致取数时对不上号`]));
+  d.forEach((r,i)=>{
+    const tag=r.code||r.name||('第'+(i+1)+'行');
+    if(!r.code)iss.push(['warn','缺编号',`「${esc(r.name||tag)}」没有指标编号，无法被一人一表和数据导入引用`]);
+    if(!r.formula)iss.push(['warn','缺公式',`${esc(tag)}「${esc(r.name||'')}」未写计算公式，不同人算出来会不一致`]);
+    if(!r.src)iss.push(['warn','缺数据源',`${esc(tag)} 未指定数据源系统，不知道该找谁要数`]);
+    if(!r.owner)iss.push(['warn','缺责任人',`${esc(tag)} 未指定数据责任人，数据延迟无人催`]);
+    if(r.mod!=='红线项'&&r.mod!=='KBI'&&r.mod!=='综合素质'&&!r.target)
+      iss.push(['warn','缺目标值',`${esc(tag)}「${esc(r.name||'')}」没有目标值，无法判定达成`]);
+    if(r.collect!=='系统导出'&&r.collect!=='系统API'&&!r.freq)
+      iss.push(['warn','缺频率',`${esc(tag)} 是人工采集但没写刷新频率，容易变成月底补数`]);
+  });
+  /* 双向核对：一人一表的每项是否都能在字典找到取数口径 */
+  const dictCodes=new Set(codes);
+  const dictNames=new Set(d.map(x=>x.name).filter(Boolean));
+  const missSet=new Set();
+  (DB.people||[]).forEach(p=>p.items.forEach(it=>{
+    if(it.mod==='红线项')return;
+    const pid=it.parent;
+    if(pid&&pid!=='—'){
+      if(!dictCodes.has(pid))missSet.add(`${pid}｜${it.name}｜承接编号未登记`);
+    }else if(!dictNames.has(it.name)){
+      missSet.add(`（无编号）｜${it.name}｜职责类指标未登记口径`);
+    }
+  }));
+  [...missSet].forEach(x=>{const [c,n,why]=x.split('｜');
+    iss.push(['warn','未登记',
+      `一人一表中的「${esc(n)}」${c==='（无编号）'?'':'（承接 '+esc(c)+'）'}未在数据字典登记：${esc(why)}，取数会断`])});
+
+  /* 反向核对：字典里登记了但没人承接的 KPI */
+  const usedCodes=new Set();
+  (DB.people||[]).forEach(p=>p.items.forEach(it=>{if(it.parent&&it.parent!=='—')usedCodes.add(it.parent)}));
+  const idle=d.filter(x=>x.mod==='KPI'&&x.code&&!usedCodes.has(x.code));
+  idle.forEach(x=>iss.push(['warn','无人承接',
+    `数据字典中的 ${esc(x.code)}「${esc(x.name)}」是 KPI 但没有任何岗位承接，指标会悬空`]));
+
+  const t=document.getElementById('dictIssues');
+  const bad=iss.filter(i=>i[0]==='bad');
+  t.innerHTML=iss.length
+    ? `<div class="${bad.length?'warnbox':'note'}"><b>字典体检发现 ${iss.length} 项问题（严重 ${bad.length} 项）：</b>
+       <ul style="margin:6px 0 0 18px;padding:0">${iss.slice(0,40).map(i=>
+       `<li><span class="pill ${i[0]==='bad'?'p-bad':'p-warn'}">${i[1]}</span> ${i[2]}</li>`).join('')}</ul>
+       ${iss.length>40?`<div class="small muted" style="margin-top:6px">……还有 ${iss.length-40} 项，已省略</div>`:''}</div>`
+    : `<div class="note">✅ 字典完整：所有指标都有编号、公式、数据源与责任人。</div>`;
+}
+
+function exportDict(){
+  ensureDict();
+  const hd=['指标编号','指标名称','归属部门','模块','计算公式','数据源系统','取数字段','采集方式','刷新频率',
+    '数据责任人','单位','方向','底限值','目标值','挑战值','判定方式'];
+  let out=[hd.join('\t')];
+  DB.dict.forEach(r=>out.push([r.code,r.name,r.dept,r.mod,r.formula,r.src,r.field,r.collect,r.freq,
+    r.owner,r.unit,r.dir,r.base,r.target,r.challenge,r.judge].map(ts).join('\t')));
+  dl('绩效指标数据字典_'+new Date().toISOString().slice(0,10)+'.txt',out.join('\n'));
+}
+
+function importDictDemo(){
+  ensureDict();
+  if(DB.dict.length&&!confirm('将追加演示字典记录，继续？'))return;
+  const seed=[
+    ['D-PROD-01','生产计划达成率','生产部','KPI','实际完成产量÷计划产量×100%','ERP','生产订单完工数量','系统导出','日','生产计划员','%','正向','90%','96%','100%','三线法线性折算'],
+    ['D-PROD-02','单位制造成本降低率','生产部','KPI','(基期单耗成本−本期单耗成本)÷基期单耗成本×100%','财务系统','成本月报-制造费用','系统导出','月','成本会计','%','正向','基准','降3%','降6%','三线法线性折算'],
+    ['D-PROD-03','设备综合效率OEE','生产部','KPI','时间稼动率×性能稼动率×良品率','设备台账','OEE月报','人工台账','月','设备主管','%','正向','70%','82%','88%','三线法线性折算'],
+    ['D-PROD-04','安全事故次数','生产部','红线项','统计期内轻伤及以上事故起数','安全台账','事故登记表','人工台账','月','安全员','起','逆向','—','0','—','否决项'],
+    ['D-QLT-01','一次交验合格率','质量部','KPI','一次交验合格数÷送检总数×100%','QMS','检验日报-合格数','系统导出','日','质量工程师','%','正向','96.5%','98.5%','99.5%','三线法线性折算'],
+    ['D-QLT-02','客户质量投诉次数','质量部','KPI','统计期内客户正式投诉单数','售后台账','客诉登记表','人工台账','月','质量工程师','次','逆向','3','1','0','计次扣分'],
+    ['D-QLT-03','重大批量质量事故','质量部','红线项','单批不良损失超5万元的事故起数','质量台账','质量事故台账','人工台账','月','质量主管','起','逆向','—','0','—','否决项'],
+    ['D-TEC-01','工艺改善项目按期交付率','工艺技术部','GS','按期完成节点数÷计划节点数×100%','项目周报','项目里程碑表','人工台账','月','工艺工程师','%','正向','80%','95%','100%','里程碑法'],
+    ['D-TEC-02','换模标准工时缩短率','工艺技术部','KPI','(改善前工时−改善后工时)÷改善前工时×100%','工艺台账','换模工时记录','人工台账','月','工艺工程师','%','正向','5%','15%','25%','三线法线性折算'],
+    ['D-PMC-01','物料齐套率','计划物控部','KPI','齐套订单数÷计划投产订单数×100%','ERP','物料齐套报表','系统导出','日','生产计划员','%','正向','85%','95%','99%','三线法线性折算'],
+    ['D-EQP-01','设备故障停机时间','设备动力部','KPI','统计期内非计划停机小时数','设备台账','故障维修记录','人工台账','月','设备主管','小时','逆向','60','30','15','三线法线性折算'],
+    ['D-HR-01','关键岗位年度流失率','人力资源部','KPI','关键岗位离职人数÷关键岗位平均在岗人数×100%','人事系统','离职台账','系统导出','季','人力资源经理','%','逆向','22%','14%','10%','三线法线性折算'],
+    ['D-HR-02','技能等级评定覆盖率','人力资源部','GS','已评定人数÷应评定人数×100%','人事系统','技能评定档案','人工台账','季','人力资源经理','%','正向','0%','100%','100%','里程碑法']
+  ];
+  seed.forEach(s=>DB.dict.push(Object.fromEntries(
+    ['code','name','dept','mod','formula','src','field','collect','freq','owner','unit','dir','base','target','challenge','judge']
+    .map((k,i)=>[k,s[i]]))));
+  renderDict();save();
+  document.getElementById('dictTip').textContent='已载入 '+seed.length+' 条演示字典';
+}
+
+/* ================= 数据接入层 ================= */
+/* 判断一人一表的某项能否用部门级实际值取数：
+   口径必须一致——同为百分比、同为工时、或同为次数才算同口径。
+   不同口径（如部门「缩短率%」vs 岗位「按期完成」）不得硬套，改走人工回填。 */
+function sameCaliber(dictRec,item){
+  if(!dictRec)return false;
+  const t1=String(dictRec.target||''),t2=String(item.target||'');
+  if(!t1||!t2)return true;
+  const hasPct=s=>/[%％]|降|升|缩短|提升/.test(s);
+  const isTime=s=>/工时|小时|h\b|天|日/.test(s);
+  const isCnt=s=>/次|起|份|个/.test(s);
+  const isStr=s=>/级|按期|完成|执行|以上/.test(s);
+  const cls=s=>hasPct(s)?'pct':isTime(s)?'time':isCnt(s)?'cnt':isStr(s)?'str':'other';
+  return cls(t1)===cls(t2);
+}
+/* 查找某岗位指标对应的可取数实际值（口径一致的才返回） */
+function findActualForItem(item,period){
+  ensureDict();
+  const pid=item.parent;
+  if(!pid||pid==='—')return null;
+  const dd=DB.dict.find(x=>x.code===pid);
+  if(!dd)return null;
+  const cand=DB.actual.filter(a=>a.code===pid&&a.period===period);
+  if(!cand.length)return null;
+  const fit=cand.find(a=>sameCaliber(dd,item));
+  return fit||null;
+}
+
+function calcRate(dir,base,target,actual){
+  const n=x=>{const v=parseFloat(String(x||'').replace(/[^\d.\-]/g,''));return isNaN(v)?null:v;};
+  const b=n(base),t=n(target),a=n(actual);
+  if(a===null||t===null)return null;
+  if(t===0)return a===0?100:0;
+  return dir==='逆向'?Math.round(t/a*1000)/10:Math.round(a/t*1000)/10;
+}
+/* 三线法算分：以「达成率」为输入，输出 0-120 分
+   底限线（base）→ 60 分　｜　目标线（target）→ 100 分　｜　挑战线（challenge）→ 120 分
+   三段线性插值，低于底限按比例衰减到 0，高于挑战线封顶 120。
+   达成率 = 正向：实际÷目标；逆向：目标÷实际（均以百分比表示，100% 即刚好达标） */
+function threeLine(rate,baseRate,targetRate,chalRate){
+  if(rate===null||isNaN(rate))return null;
+  const B=baseRate,T=targetRate,C=chalRate;
+  let s;
+  if(rate<=0)s=0;
+  else if(rate<B)s=Math.max(0,B>0?rate/B*60:0);
+  else if(rate<T)s=60+(T>B?(rate-B)/(T-B)*40:40);
+  else if(rate<C)s=100+(C>T?(rate-T)/(C-T)*20:10);
+  else s=120;
+  return Math.round(Math.min(120,Math.max(0,s))*10)/10;
+}
+function scoreByDict(rec,rate){
+  if(rate===null||rate===undefined||isNaN(rate))return null;
+  const n=x=>{const v=parseFloat(String(x||'').replace(/[^\d.\-]/g,''));return isNaN(v)?null:v;};
+  const j=rec.judge||'三线法线性折算';
+  const t=n(rec.target),b=n(rec.base),c=n(rec.challenge);
+  if(j==='否决项')return rate>=100?100:0;
+  if(j==='三线法线性折算'){
+    /* 目标/底限/挑战都换算成「达成率」口径：目标线恒为 100% */
+    let B=85,T=100,C=110;
+    if(b!==null&&t!==null&&t!==0){
+      B=rec.dir==='逆向'?Math.round(t/b*1000)/10:Math.round(b/t*1000)/10;
+      B=Math.max(1,Math.min(99,B));
+    }
+    if(c!==null&&t!==null&&t!==0){
+      C=rec.dir==='逆向'?Math.round(t/c*1000)/10:Math.round(c/t*1000)/10;
+      C=Math.max(101,Math.min(200,C));
+    }
+    return threeLine(rate,B,T,C);
+  }
+  if(j==='里程碑法'){
+    return Math.round(Math.max(0,Math.min(120,rate))*10)/10;
+  }
+  if(j==='计次扣分'){
+    /* 实际次数与目标次数比较，每超 1 次扣 8 分 */
+    const a=n(rec._actualRaw!==undefined?rec._actualRaw:0);
+    if(a!==null&&t!==null)return Math.max(0,Math.round((100-Math.max(0,a-t)*8)*10)/10);
+    return Math.round(Math.max(0,Math.min(100,rate))*10)/10;
+  }
+  if(j==='5级行为锚定'){
+    return Math.round(Math.max(0,Math.min(120,rate))*10)/10;
+  }
+  return Math.round(Math.max(0,Math.min(120,rate))*10)/10;
+}
+
+function parseActual(){
+  const raw=document.getElementById('actualText').value.replace(/\r/g,'');
+  const lines=raw.split('\n').filter(l=>l.trim());
+  if(lines.length<2)return [];
+  const hd=lines[0].split('\t').map(x=>x.trim());
+  return lines.slice(1).map(l=>{
+    const v=l.split('\t').map(x=>x.trim());const o={};
+    hd.forEach((k,i)=>o[k]=v[i]!==undefined?v[i]:'');return o;
+  });
+}
+function importActual(){
+  ensureDict();
+  const rec=parseActual();
+  if(!rec.length){alert('请先粘贴数据（含表头行）');return;}
+  const out=[];let ok=0,miss=0;
+  rec.forEach(r=>{
+    const code=r['指标编号']||r['编号'];
+    const val=r['实际值']||r['实际'];
+    const period=r['数据期']||r['周期'];
+    const src=r['数据来源']||r['来源']||'';
+    if(!code||val===undefined||val===''){miss++;return;}
+    const dd=DB.dict.find(x=>x.code===code);
+    const rate=dd?calcRate(dd.dir,dd.base,dd.target,val):pct(val);
+    const sc=dd?scoreByDict(dd,rate):null;
+    out.push({code,name:dd?dd.name:'（字典未登记）',dept:dd?dd.dept:'',val,period:period||'',
+      src,owner:dd?dd.owner:'',rate,score:sc,dir:dd?dd.dir:'正向',target:dd?dd.target:''});
+    ok++;
+  });
+  const byKey={};
+  DB.actual.forEach(a=>byKey[a.code+'|'+a.period]=a);
+  out.forEach(a=>byKey[a.code+'|'+a.period]=a);
+  DB.actual=Object.values(byKey);
+  recomputeActual();save();renderActual();
+  document.getElementById('actualTip').textContent=`成功 ${ok} 条，跳过 ${miss} 条`;
+  alert('数据导入完成：'+ok+' 条。'+(miss?('跳过 '+miss+' 条（缺编号或实际值）'):''));
+}
+function fillActualDemo(){
+  document.getElementById('actualText').value=
+    ['指标编号\t实际值\t数据期\t数据来源',
+     'D-PROD-01\t95.2%\t2026-01\tERP导出',
+     'D-QLT-01\t98.7%\t2026-01\tQMS导出',
+     'D-PMC-01\t93.1%\t2026-01\tERP导出',
+     'D-EQP-01\t28小时\t2026-01\t设备台账',
+     'D-PROD-02\t降2.1%\t2026-01\t财务月报',
+     'D-TEC-02\t8.6%\t2026-01\t工艺台账',
+     'D-HR-01\t19%\t2026-01\t人事月报',
+     'D-QLT-02\t2次\t2026-01\t售后台账',
+     'D-PROD-03\t79.5%\t2026-01\t设备台账'].join('\n');
+}
+function addActualOne(){
+  ensureDict();
+  const code=document.getElementById('a_code').value.trim();
+  const val=document.getElementById('a_val').value.trim();
+  if(!code||!val){alert('请填写指标编号与实际值');return;}
+  const dd=DB.dict.find(x=>x.code===code);
+  const period=document.getElementById('a_period').value.trim();
+  const rate=dd?calcRate(dd.dir,dd.base,dd.target,val):pct(val);
+  const sc=dd?scoreByDict(dd,rate):null;
+  const key=code+'|'+period;
+  DB.actual=DB.actual.filter(a=>a.code+'|'+a.period!==key);
+  DB.actual.push({code,name:dd?dd.name:'（字典未登记）',dept:dd?dd.dept:'',val,period,src:document.getElementById('a_src').value.trim(),
+    owner:dd?dd.owner:'',rate,score:sc,dir:dd?dd.dir:'正向',target:dd?dd.target:'',note:document.getElementById('a_note').value.trim()});
+  ['a_code','a_val','a_src','a_note'].forEach(i=>document.getElementById(i).value='');
+  recomputeActual();save();renderActual();
+}
+function delActual(i){DB.actual.splice(i,1);save();renderActual();}
+function renderActual(){
+  ensureDict();
+  const a=DB.actual;
+  if(!a.length){document.getElementById('actualList').innerHTML='<div class="muted">暂无导入数据。</div>';
+    document.getElementById('actualIssues').innerHTML='<div class="muted">—</div>';return;}
+  let h=`<table><thead><tr><th>数据期</th><th>指标编号</th><th>指标名称</th><th>归属部门</th>
+    <th>实际值</th><th>达成率</th><th>自动得分</th><th>方向</th><th>数据来源</th><th>数据责任人</th><th>操作</th></tr></thead><tbody>`;
+  a.slice().sort((x,y)=>String(y.period).localeCompare(String(x.period))||String(x.code).localeCompare(String(y.code)))
+   .forEach(r0=>{
+    const i=a.indexOf(r0);
+    const bad=r0.score!==null&&r0.score<70;
+    h+=`<tr class="${bad?'hl-warn':''}"><td>${esc(r0.period)}</td><td class="mono">${esc(r0.code)}</td>
+      <td>${esc(r0.name)}</td><td>${esc(r0.dept)}</td><td><b>${esc(r0.val)}</b></td>
+      <td>${r0.rate===null?'—':r0.rate+'%'}</td>
+      <td>${r0.score===null?'—':`<b>${r0.score}</b>`}</td>
+      <td>${esc(r0.dir)}</td><td>${esc(r0.src)}</td><td>${esc(r0.owner)}</td>
+      <td><button class="btn sm" onclick="delActual(${i})">删</button></td></tr>`;
+  });
+  document.getElementById('actualList').innerHTML=h+'</tbody></table>';
+
+  /* 差异倒查 */
+  const iss=[];
+  const periods=uniq(a.map(x=>x.period).filter(Boolean));
+  a.forEach(r=>{
+    const dd=DB.dict.find(x=>x.code===r.code);
+    if(!dd){iss.push(['bad','字典缺失',`导入的 ${esc(r.code)}「${esc(r.name)}」在数据字典中找不到，得分无法判定`]);return;}
+    if(r.score===null)iss.push(['bad','无法算分',`${esc(r.code)}「${esc(r.name)}」目标值或实际值格式异常，算不出得分`]);
+    else if(r.score<70)iss.push(['warn','未达标',`${esc(r.code)}「${esc(r.name)}」达成 ${r.rate}%，自动得分 ${r.score}（目标 ${esc(r.target)}）——已达辅导触发线`]);
+  });
+  /* 跨期口径核对：按指标编号只报一次 */
+  const byCode2={};
+  a.forEach(r=>{(byCode2[r.code]=byCode2[r.code]||[]).push(r)});
+  Object.keys(byCode2).forEach(c=>{
+    const peers=byCode2[c];
+    if(peers.length<2)return;
+    const dd=DB.dict.find(x=>x.code===c);
+    const nm=(dd&&dd.name)||peers[0].name||c;
+    const vals=peers.map(p=>parseFloat(String(p.val).replace(/[^\d.\-]/g,''))).filter(v=>!isNaN(v));
+    if(vals.length<2)return;
+    const mx=Math.max(...vals),mn=Math.min(...vals);
+    if(mx>0&&(mx-mn)/mx>0.02)
+      iss.push(['warn','跨期口径核对',`${esc(c)}「${esc(nm)}」不同数据期实际值差异 ${Math.round((mx-mn)/mx*100)}%（${mn} ~ ${mx}）。若为真实改善可忽略；若为口径变化，须回到数据字典统一后再取数。`]);
+  });
+  periods.forEach(p=>{
+    const codes=a.filter(x=>x.period===p).map(x=>x.code);
+    const dc=DB.dict.filter(x=>x.mod==='KPI').map(x=>x.code);
+    const lack=dc.filter(c=>!codes.includes(c));
+    if(dc.length&&lack.length)
+      iss.push(['warn','数据未齐',`${esc(p)} 期还有 ${lack.length} 个 KPI 未导入实际值：${lack.slice(0,6).join('、')}${lack.length>6?'…':''}`]);
+  });
+  const t=document.getElementById('actualIssues');
+  t.innerHTML=iss.length
+    ? `<div class="${iss.some(i=>i[0]==='bad')?'warnbox':'note'}"><b>倒查发现 ${iss.length} 项：</b>
+       <ul style="margin:6px 0 0 18px;padding:0">${iss.slice(0,30).map(i=>
+       `<li><span class="pill ${i[0]==='bad'?'p-bad':'p-warn'}">${i[1]}</span> ${i[2]}</li>`).join('')}</ul></div>`
+    : `<div class="note">✅ 导入数据与字典口径一致，无异常。</div>`;
+}
+
+/* ================= 三级看板 ================= */
+function ensureView(){
+  const lv=document.getElementById('viewLevel').value;
+  document.getElementById('viewDeptWrap').style.display=lv==='L2'?'':'none';
+  document.getElementById('viewEmpWrap').style.display=lv==='L3'?'':'none';
+  const depts=uniq((DB.dept||[]).map(d=>d.dept).concat((DB.people||[]).map(p=>p.dept))).filter(Boolean);
+  const sd=document.getElementById('viewDept');
+  if(sd.options.length!==depts.length)sd.innerHTML=depts.map(d=>`<option>${esc(d)}</option>`).join('')||'<option>（无）</option>';
+  const se=document.getElementById('viewEmp');
+  const ppl=(DB.people||[]).map(p=>p.name);
+  if(se.options.length!==ppl.length)se.innerHTML=ppl.map(n=>`<option>${esc(n)}</option>`).join('')||'<option>（无）</option>';
+}
+function periods(){return uniq((DB.actual||[]).map(a=>a.period).filter(Boolean)).sort();}
+function latestPeriod(){
+  const el=document.getElementById('viewPeriod');
+  const cur=el?String(el.value||'').trim():'';
+  if(cur)return cur;
+  const ps=periods();
+  const p=ps.length?ps[ps.length-1]:'';
+  if(el&&p)el.value=p;
+  return p;
+}
+function deptAvgScore(dept,period){
+  const ds=DB.dept.filter(d=>d.dept===dept).map(d=>d.id);
+  const rows=DB.actual.filter(a=>a.period===period&&ds.includes(a.code)&&a.score!==null);
+  if(!rows.length)return null;
+  return Math.round(rows.reduce((x,r)=>x+r.score,0)/rows.length*10)/10;
+}
+function lightOf(sc){return sc===null?['无数据','p-gray']:sc>=85?['绿灯','p-ok']:sc>=70?['黄灯','p-warn']:['红灯','p-bad'];}
+
+function renderDashboard(){
+  ensureView();
+  const lv=document.getElementById('viewLevel').value;
+  const period=latestPeriod();
+  const el=document.getElementById('dashOut');
+  const ps=periods();
+  if(!ps.length){
+    el.innerHTML='<div class="note">还没有业务数据。请到「数据接入」页导入，或先「载入演示字典」+导入示例数据。<br>'+
+      '<b>看板的价值来自真实取数</b>——手工敲进来的分数只能看，不能驱动动作。</div>';
+    renderTriggers();return;
+  }
+  if(!document.getElementById('viewPeriod').value)document.getElementById('viewPeriod').value=period;
+
+  let h='';
+  if(lv==='L1'){
+    const hzRows=DB.hz.map(hz=>{
+      const ds=DB.dept.filter(d=>d.hz===hz.id).map(d=>d.id);
+      const rows=DB.actual.filter(a=>a.period===period&&ds.includes(a.code)&&a.score!==null);
+      const avg=rows.length?Math.round(rows.reduce((x,r)=>x+r.score,0)/rows.length*10)/10:null;
+      const [lt,pc]=lightOf(avg);
+      const done=rows.length?Math.min(100,Math.round(rows.reduce((x,r)=>x+r.rate,0)/rows.length)):0;
+      return {hz,avg,lt,pc,done,n:rows.length};
+    });
+    const all=hzRows.filter(r=>r.avg!==null);
+    const total=all.length?Math.round(all.reduce((x,r)=>x+r.avg,0)/all.length*10)/10:null;
+    const red=all.filter(r=>r.avg<70).length;
+    const yel=all.filter(r=>r.avg>=70&&r.avg<85).length;
+    const grn=all.filter(r=>r.avg>=85).length;
+    h+=`<h2>L1 总裁／厂长驾驶舱 · ${esc(period)}</h2>`;
+    h+=`<div class="grid g4">
+      <div class="kpi"><div class="lbl">硬仗综合达成</div><div class="val">${total===null?'—':total}<small> 分</small></div>
+        <div class="small muted">4场硬仗加权平均</div></div>
+      <div class="kpi"><div class="lbl">绿灯硬仗</div><div class="val" style="color:var(--ok)">${grn}<small> 场</small></div></div>
+      <div class="kpi"><div class="lbl">黄灯硬仗</div><div class="val" style="color:var(--warn)">${yel}<small> 场</small></div></div>
+      <div class="kpi"><div class="lbl">红灯硬仗</div><div class="val" style="color:${red?'var(--bad)':'var(--sub)'}">${red}<small> 场</small></div>
+        <div class="small muted">需厂长介入</div></div>
+    </div>`;
+    h+=`<h3>硬仗推进实况</h3><div style="overflow:auto"><table><thead><tr>
+      <th>硬仗</th><th>主责</th><th>负责人</th><th>已导入指标</th><th>平均达成率</th><th>综合得分</th><th>灯</th><th>推进条</th>
+      </tr></thead><tbody>`;
+    hzRows.forEach(r=>{
+      h+=`<tr class="${r.avg!==null&&r.avg<70?'hl-bad':(r.avg!==null&&r.avg<85?'hl-warn':'')}">
+        <td><b>${esc(r.hz.id)}</b> ${esc(r.hz.name)}</td><td>${esc(r.hz.dept)}</td><td>${esc(r.hz.owner||'—')}</td>
+        <td>${r.n} 个</td><td>${r.done}%</td><td><b>${r.avg===null?'—':r.avg}</b></td>
+        <td><span class="pill ${r.pc}">${r.lt}</span></td>
+        <td style="min-width:140px"><div style="background:#E5E7EB;border-radius:4px;height:9px;overflow:hidden">
+          <div style="width:${r.done}%;height:100%;background:${r.avg!==null&&r.avg<70?'#DC2626':(r.avg!==null&&r.avg<85?'#D97706':'#0E9F6E')}"></div></div></td></tr>`;
+    });
+    h+='</tbody></table></div>';
+    const depts=uniq(DB.dept.map(d=>d.dept));
+    h+=`<h3>部门红黄绿灯</h3><div style="overflow:auto"><table style="min-width:640px"><thead><tr>
+      <th>部门</th><th>指标数</th><th>已取数</th><th>平均得分</th><th>灯</th><th>最弱指标</th></tr></thead><tbody>`;
+    depts.forEach(dp=>{
+      const ds=DB.dept.filter(d=>d.dept===dp);
+      const rows=DB.actual.filter(a=>a.period===period&&ds.map(x=>x.id).includes(a.code)&&a.score!==null);
+      const avg=rows.length?Math.round(rows.reduce((x,r)=>x+r.score,0)/rows.length*10)/10:null;
+      const [lt,pc]=lightOf(avg);
+      const worst=rows.slice().sort((x,y)=>x.score-y.score)[0];
+      h+=`<tr class="${avg!==null&&avg<70?'hl-bad':(avg!==null&&avg<85?'hl-warn':'')}">
+        <td><b>${esc(dp)}</b></td><td>${ds.length}</td><td>${rows.length}</td>
+        <td><b>${avg===null?'—':avg}</b></td><td><span class="pill ${pc}">${lt}</span></td>
+        <td>${worst?esc(worst.name)+'（'+worst.score+'分）':'—'}</td></tr>`;
+    });
+    h+='</tbody></table></div>';
+  }
+
+  if(lv==='L2'){
+    const dp=document.getElementById('viewDept').value;
+    const ds=DB.dept.filter(d=>d.dept===dp);
+    const rows=ds.map(d=>{
+      const a=DB.actual.find(x=>x.code===d.id&&x.period===period);
+      return {d,actual:a,score:a?a.score:null,rate:a?a.rate:null};
+    }).sort((x,y)=>(y.score===null?-1:y.score)-(x.score===null?-1:x.score));
+    const got=rows.filter(r=>r.score!==null);
+    const avg=got.length?Math.round(got.reduce((x,r)=>x+r.score,0)/got.length*10)/10:null;
+    const [lt,pc]=lightOf(avg);
+    h+=`<h2>L2 部门长看板 · ${esc(dp)} · ${esc(period)}</h2>`;
+    h+=`<div class="grid g4">
+      <div class="kpi"><div class="lbl">部门平均得分</div><div class="val">${avg===null?'—':avg}</div>
+        <div class="small"><span class="pill ${pc}">${lt}</span></div></div>
+      <div class="kpi"><div class="lbl">指标取数完成</div><div class="val">${got.length}<small> / ${rows.length}</small></div></div>
+      <div class="kpi"><div class="lbl">需关注指标</div><div class="val" style="color:${got.filter(r=>r.score<80).length?'var(--warn)':'var(--sub)'}">${got.filter(r=>r.score<80).length}<small> 项</small></div>
+        <div class="small muted">得分低于80分</div></div>
+      <div class="kpi"><div class="lbl">待辅导岗位</div><div class="val" style="color:var(--warn)">${uniq(DB.people.filter(p=>p.dept===dp&&p.items.some(it=>{const a=findActualForItem(it,period);return a&&a.score!==null&&a.score<80;})).map(p=>p.name)).length}<small> 人</small></div></div>
+    </div>`;
+    h+=`<h3>部门指标实况</h3><div style="overflow:auto"><table><thead><tr>
+      <th>指标编号</th><th>指标名称</th><th>类型</th><th>承接硬仗</th><th>目标</th><th>实际</th><th>达成率</th><th>得分</th><th>数据责任人</th><th>灯</th>
+      </tr></thead><tbody>`;
+    rows.forEach(r=>{
+      const [l,p]=lightOf(r.score);
+      h+=`<tr class="${r.score!==null&&r.score<70?'hl-bad':(r.score!==null&&r.score<85?'hl-warn':'')}">
+        <td class="mono">${esc(r.d.id)}</td><td><b>${esc(r.d.name)}</b></td><td>${esc(r.d.type)}</td>
+        <td>${esc(r.d.hz||'—')}</td><td>${esc(r.actual?r.actual.target:'未登记')}</td>
+        <td>${r.actual?esc(r.actual.val):'<span class="muted">未取数</span>'}</td>
+        <td>${r.rate===null?'—':r.rate+'%'}</td><td><b>${r.score===null?'—':r.score}</b></td>
+        <td>${esc(r.actual?r.actual.owner:'')}</td><td><span class="pill ${p}">${l}</span></td></tr>`;
+    });
+    h+='</tbody></table></div>';
+    h+=`<h3>岗位贡献排序（本部门）</h3><div style="overflow:auto"><table><thead><tr>
+      <th>员工</th><th>岗位</th><th>考核项</th><th>已取数</th><th>平均得分</th><th>最弱项</th><th>灯</th></tr></thead><tbody>`;
+    DB.people.filter(p=>p.dept===dp).forEach(p=>{
+      const rows2=p.items.map(i=>findActualForItem(i,period)).filter(a=>a&&a.score!==null);
+      const avg2=rows2.length?Math.round(rows2.reduce((x,r)=>x+r.score,0)/rows2.length*10)/10:null;
+      const [l2,p2]=lightOf(avg2);
+      const worst=rows2.slice().sort((x,y)=>x.score-y.score)[0];
+      h+=`<tr class="${avg2!==null&&avg2<70?'hl-bad':(avg2!==null&&avg2<85?'hl-warn':'')}">
+        <td><b>${esc(p.name)}</b></td><td>${esc(p.post)}</td><td>${p.items.length}</td><td>${rows2.length}</td>
+        <td><b>${avg2===null?'—':avg2}</b></td>
+        <td>${worst?esc(worst.name)+'（'+worst.score+'）':'—'}</td>
+        <td><span class="pill ${p2}">${l2}</span></td></tr>`;
+    });
+    h+='</tbody></table></div>';
+  }
+
+  if(lv==='L3'){
+    const nm=document.getElementById('viewEmp').value;
+    const p=DB.people.find(x=>x.name===nm);
+    if(!p){el.innerHTML='<div class="note">请选择员工。</div>';renderTriggers();return;}
+    const items=p.items.map(it=>{
+      const a=findActualForItem(it,period);
+      return {it,a,score:a?a.score:null,rate:a?a.rate:null};
+    });
+    const got=items.filter(x=>x.score!==null);
+    const wr=p.items.filter(i=>['KPI','GS','KPA'].includes(i.mod)).reduce((x,i)=>x+pct(i.w),0);
+    const avg=got.length?Math.round(got.reduce((x,r)=>x+r.score,0)/got.length*10)/10:null;
+    const tot=avg===null?null:Math.round((avg*wr/100+(100-wr)/100*85)*10)/10;
+    const [lt,pc]=lightOf(tot);
+    h+=`<h2>L3 员工个人看板 · ${esc(p.name)}（${esc(p.dept)} / ${esc(p.post)}） · ${esc(period)}</h2>`;
+    h+=`<div class="grid g4">
+      <div class="kpi"><div class="lbl">预计得分</div><div class="val">${tot===null?'—':tot}
+        <div class="small"><span class="pill ${pc}">${lt}</span></div></div></div>
+      <div class="kpi"><div class="lbl">已取数项</div><div class="val">${got.length}<small> / ${p.items.length}</small></div></div>
+      <div class="kpi"><div class="lbl">需关注项</div><div class="val" style="color:${got.filter(x=>x.score<80).length?'var(--warn)':'var(--sub)'}">${got.filter(x=>x.score<80).length}<small> 项</small></div>
+        <div class="small muted">得分低于80分</div></div>
+      <div class="kpi"><div class="lbl">直接上级</div><div class="val" style="font-size:14px;padding-top:6px">${esc(p.sup||'—')}</div></div>
+    </div>`;
+    h+=`<h3>我这一个月 · 逐项对照</h3><div style="overflow:auto"><table><thead><tr>
+      <th>模块</th><th>指标</th><th>权重</th><th>目标</th><th>实际</th><th>达成率</th><th>得分</th><th>差距与动作</th>
+      </tr></thead><tbody>`;
+    items.forEach(x=>{
+      const gap=x.score===null?'':(x.score<70?'⚠️ 未达标，需立即行动':x.score<80?'偏低，列入复盘重点':x.score<100?'接近目标，再推一把':'已达成目标');
+      h+=`<tr class="${x.score!==null&&x.score<70?'hl-bad':(x.score!==null&&x.score<85?'hl-warn':'')}">
+        <td>${esc(x.it.mod)}</td><td><b>${esc(x.it.name)}</b></td><td>${esc(x.it.w)}%</td>
+        <td>${esc(x.it.target)}</td><td>${x.a?esc(x.a.val):'<span class="muted">未取数</span>'}</td>
+        <td>${x.rate===null?'—':x.rate+'%'}</td><td><b>${x.score===null?'—':x.score}</b></td>
+        <td>${gap}</td></tr>`;
+    });
+    h+='</tbody></table></div>';
+    const pend=p.items.filter(it=>!findActualForItem(it,period));
+    if(pend.length)h+=`<div class="note"><b>待取数 ${pend.length} 项：</b>${
+      pend.map(x=>esc(x.name)).join('、')}。<br>
+      这些多为管理类指标（现场行为、纪律、综合素质），系统记录不了，需主管按月评定或本人自评后上级确认。
+      <b>不是没数据，是还没人填。</b></div>`;
+    h+=`<div class="note"><b>算给自己的话：</b>分数是结果，不是目的。看板上的每一项都能对上部门指标——
+      你做好的每一项，最后都变成了公司那场硬仗的一部分。</div>`;
+  }
+  el.innerHTML=h;
+  renderTriggers();
+}
+
+/* ================= 预警触发器（看板驱动动作） ================= */
+function renderTriggers(){
+  ensureDict();
+  const period=latestPeriod();
+  const all=periods();
+  const out=[];
+  const ds=DB.dept||[];
+
+  /* 触发器1：指标连续下滑 / 未达标 */
+  const byCode={};
+  DB.actual.forEach(a=>{(byCode[a.code]=byCode[a.code]||[]).push(a)});
+  Object.keys(byCode).forEach(c=>{
+    const arr=byCode[c].slice().sort((x,y)=>String(x.period).localeCompare(String(y.period)));
+    const last=arr[arr.length-1];
+    if(last.score!==null&&last.score<80)
+      out.push({lv:last.score<70?'bad':'warn',tag:last.score<70?'指标未达标':'指标偏低',
+        ttl:`${last.code}「${last.name}」${last.period} 得分 ${last.score}`,
+        body:`达成 ${last.rate}%（目标 ${last.target||'—'}），数据来源：${last.src||'未注明'}。
+              责任人 ${last.owner||'未指定'}。`,act:'生成辅导任务单',who:last.owner||'部门负责人',due:'3日内'});
+    if(arr.length>=2){
+      const a=arr[arr.length-2].score,b=last.score;
+      if(a!==null&&b!==null&&b<a-5)
+        out.push({lv:'warn',tag:'连续下滑',ttl:`${last.code}「${last.name}」环比下降 ${Math.round((a-b)*10)/10} 分`,
+          body:`${arr[arr.length-2].period} ${a} 分 → ${last.period} ${b} 分。连续下滑超过 5 分触发预警。`,
+          act:'列为复盘重点议题',who:last.owner||'部门负责人',due:'下次双周复盘'});
+    }
+  });
+  /* 触发器2：复盘连续红灯 */
+  const byEmp={};
+  (DB.reviews||[]).forEach(r=>{(byEmp[r.emp]=byEmp[r.emp]||[]).push(r)});
+  Object.keys(byEmp).forEach(n=>{
+    const rs=byEmp[n].slice().sort((x,y)=>String(x.cycle).localeCompare(String(y.cycle)));
+    const last2=rs.slice(-2);
+    if(last2.length===2&&last2.every(r=>r.light==='红灯'))
+      out.push({lv:'bad',tag:'升级辅导',ttl:`${n} 连续 2 次复盘亮红灯`,
+        body:`最近两次：${last2[0].cycle} 信心 ${last2[0].conf} ｜ ${last2[1].cycle} 信心 ${last2[1].conf}。
+              障碍：${last2[1].block||'未填写'}。`,act:'上一级介入，做资源协调或岗位调整',who:'部门长',due:'1周内'});
+  });
+  /* 触发器3：红线项 */
+  DB.actual.forEach(a=>{
+    const dd=DB.dict.find(x=>x.code===a.code);
+    if(dd&&dd.judge==='否决项'&&a.score!==null&&a.score<100)
+      out.push({lv:'bad',tag:'触红线项',ttl:`${a.code}「${a.name}」${a.period} 触发否决项`,
+        body:`实际值 ${a.val}。否决项不占权重但直接影响考核结果，需按制度处理。`,
+        act:'直接推送厂长＋HRD',who:'厂长／HRD',due:'24小时内响应'});
+  });
+  /* 触发器4：数据未按时取数 */
+  const lack=DB.dict.filter(d=>d.mod==='KPI').filter(d=>
+    !DB.actual.some(a=>a.code===d.code&&a.period===period));
+  if(lack.length)
+    out.push({lv:'warn',tag:'数据未齐',ttl:`${period} 期有 ${lack.length} 个 KPI 尚未取数`,
+      body:`未取数指标：${lack.slice(0,8).map(d=>d.code).join('、')}${lack.length>8?'…':''}。
+            数据责任人分别为：${uniq(lack.map(d=>d.owner||'未指定')).join('、')}。`,
+      act:'催办数据责任人',who:'HR／数据专员',due:'每月5日前'});
+  /* 触发器5：字典缺口径 */
+  const noOwner=DB.dict.filter(d=>!d.owner);
+  if(noOwner.length)
+    out.push({lv:'warn',tag:'字典不完整',ttl:`${noOwner.length} 个指标未指定数据责任人`,
+      body:`涉及：${noOwner.slice(0,6).map(d=>d.code).join('、')}${noOwner.length>6?'…':''}。数据延迟时找不到人催。`,
+      act:'补齐字典',who:'HR＋IT',due:'本周内'});
+
+  const el=document.getElementById('triggerOut');
+  if(!out.length){el.innerHTML='<div class="note">✅ 暂无预警，各项指标与复盘状态正常。</div>';return;}
+  const order={bad:0,warn:1};
+  out.sort((x,y)=>order[x.lv]-order[y.lv]);
+  el.innerHTML=`<div class="note"><b>共 ${out.length} 条预警任务。</b>
+    红灯 ${out.filter(x=>x.lv==='bad').length} 条须立即处理｜黄灯 ${out.filter(x=>x.lv==='warn').length} 条列入复盘议程。
+    <b>看板的价值不在于展示，而在于它自己会找人。</b></div>`+
+    out.map((x,i)=>`<div class="${x.lv==='bad'?'warnbox':'note'}" style="margin:8px 0">
+      <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
+        <b>${i+1}. ${esc(x.ttl)}</b>
+        <span class="pill ${x.lv==='bad'?'p-bad':'p-warn'}">${esc(x.tag)}</span></div>
+      <div style="margin:4px 0">${esc(x.body)}</div>
+      <div class="small"><b>自动动作：</b>${esc(x.act)}　｜　<b>责任人：</b>${esc(x.who)}　｜　<b>时效：</b>${esc(x.due)}</div>
+    </div>`).join('');
+}
+
+/* ---------- 接入渲染总入口 ---------- */
+function renderDataPanels(){ensureDict();renderDict();renderActual();renderDashboard();}
+
+/* ================= 初始化 ================= */
+function renderAll(){renderAlign();fillEmpSelect();renderReviews();renderProc();renderCoach();renderScore();renderDataPanels();}
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active');document.getElementById(t.dataset.t).classList.add('active');
+}));
+['coName','curCycle'].forEach(id=>document.getElementById(id).addEventListener('change',save));
+/* 载入/导入后统一重算：给每条 actual 补齐 rate 与 score（保证看板不出现 NaN） */
+function recomputeActual(){
+  ensureDict();
+  DB.actual.forEach(a=>{
+    const dd=DB.dict.find(x=>x.code===a.code);
+    if(!dd){a.rate=pct(a.val);a.score=null;return;}
+    a.name=dd.name;a.dept=dd.dept;a.dir=dd.dir;a.target=dd.target;
+    a.owner=a.owner||dd.owner;
+    a.rate=calcRate(dd.dir,dd.base,dd.target,a.val);
+    a.score=scoreByDict(dd,a.rate);
+  });
+}
+window.addEventListener('load',function(){
+  load();
+  if(!DB.people.length){DB=JSON.parse(JSON.stringify(DEMO));}
+  document.getElementById('r_cycle').value=document.getElementById('curCycle').value;
+  document.getElementById('r_date').value=new Date().toISOString().slice(0,10);
+  calcLight();recomputeActual();renderAll();
+  document.getElementById('viewPeriod').value=latestPeriod();
+  renderDashboard();
+});
+</script>
+<script>
+/* ============ 内置演示数据（注塑制造企业） ============ */
+const DEMO={
+co:{name:'XXAI原生组织',cycle:'2026-W05'},
+hz:[
+ {id:'H01',name:'交付准交率从92%提升到98%',dept:'生产部',owner:'生产总监 王刚',goal:'月度准交率≥98%'},
+ {id:'H02',name:'单位制造成本下降8%',dept:'生产部',owner:'生产总监 王刚',goal:'吨产品制造成本降至2944元'},
+ {id:'H03',name:'一次交验合格率从96.5%提升到99.2%',dept:'质量部',owner:'质量总监 李敏',goal:'月度一次合格率≥99.2%'},
+ {id:'H04',name:'关键岗位年流失率从22%降到10%',dept:'人力资源部',owner:'人力资源总监 陈静',goal:'关键岗位流失率≤10%'}
+],
+dept:[
+ {id:'D-PROD-01',dept:'生产部',name:'生产计划达成率',hz:'H01',type:'KPI',w:20,post:'生产主管'},
+ {id:'D-PROD-02',dept:'生产部',name:'单位制造成本降低率',hz:'H02',type:'KPI',w:15,post:'生产主管'},
+ {id:'D-PROD-03',dept:'生产部',name:'设备综合效率OEE',hz:'H02',type:'KPI',w:15,post:'设备主管'},
+ {id:'D-PROD-04',dept:'生产部',name:'安全事故次数',hz:'H01',type:'KPA',w:0,post:'生产主管'},
+ {id:'D-QLT-01',dept:'质量部',name:'一次交验合格率',hz:'H03',type:'KPI',w:25,post:'质量工程师'},
+ {id:'D-QLT-02',dept:'质量部',name:'客户质量投诉次数',hz:'H03',type:'KPI',w:20,post:'质量工程师'},
+ {id:'D-QLT-03',dept:'质量部',name:'重大批量质量事故',hz:'H03',type:'KPA',w:0,post:'质量主管'},
+ {id:'D-TEC-01',dept:'工艺技术部',name:'工艺改善项目按期交付率',hz:'H02',type:'GS',w:30,post:'工艺工程师'},
+ {id:'D-TEC-02',dept:'工艺技术部',name:'换模标准工时缩短率',hz:'H02',type:'KPI',w:25,post:'工艺工程师'},
+ {id:'D-PMC-01',dept:'计划物控部',name:'物料齐套率',hz:'H01',type:'KPI',w:30,post:'生产计划员'},
+ {id:'D-EQP-01',dept:'设备动力部',name:'设备故障停机时间',hz:'H02',type:'KPI',w:30,post:'设备主管'},
+ {id:'D-HR-01',dept:'人力资源部',name:'关键岗位年度流失率',hz:'H04',type:'KPI',w:30,post:'人力资源经理'},
+ {id:'D-HR-02',dept:'人力资源部',name:'技能等级评定覆盖率',hz:'H04',type:'GS',w:20,post:'人力资源经理'}
+],
+people:[
+ {name:'张伟',emp:'P1023',dept:'生产部',post:'注塑班长',period:'2026年1月',sup:'生产主管 刘海',items:[
+   {mod:'KPI',name:'生产计划达成率',parent:'D-PROD-01',w:25,target:'96%',low:'90%',high:'100%',rule:'<90%得0分；90%~96%线性至85分；96%~100%线性至100分',src:'MES系统日报'},
+   {mod:'KPI',name:'当班一次合格率',parent:'D-QLT-01',w:20,target:'98.5%',low:'96%',high:'99.5%',rule:'三线法线性折算',src:'质量检验日报'},
+   {mod:'KPI',name:'班组单位物耗成本',parent:'D-PROD-02',w:15,target:'降3%',low:'基准',high:'降6%',rule:'每超目标1%扣4分',src:'财务成本月报'},
+   {mod:'GS',name:'换模SOP优化落地',parent:'D-TEC-02',w:10,target:'按期完成',low:'—',high:'提前完成',rule:'延迟1周扣5分',src:'工艺技术部验收'},
+   {mod:'KPA',name:'班前会与首件确认执行',parent:'—',w:15,target:'100%执行',low:'—',high:'—',rule:'缺1次扣2分；未首件确认致批量不良每次-20分',src:'班组日志'},
+   {mod:'KBI',name:'带班与现场管理行为',parent:'—',w:10,target:'4级以上',low:'—',high:'5级',rule:'5级行为锚定',src:'上级观察记录'},
+   {mod:'综合素质',name:'责任心与执行力',parent:'—',w:5,target:'3级',low:'—',high:'5级',rule:'态度评分5级',src:'上级评价'},
+   {mod:'红线项',name:'安全事故（轻伤及以上）',parent:'D-PROD-04',w:0,target:'0起',low:'—',high:'—',rule:'否决项',src:'安全台账'}]},
+ {name:'李强',emp:'P2011',dept:'生产部',post:'注塑操作工',period:'2026年1月',sup:'注塑班长 张伟',items:[
+   {mod:'KPI',name:'机台产量达成率',parent:'D-PROD-01',w:40,target:'96%',low:'90%',high:'100%',rule:'三线法线性折算',src:'MES系统日报'},
+   {mod:'KPI',name:'自检不良率',parent:'D-QLT-01',w:25,target:'0.8%',low:'1.5%',high:'0.3%',rule:'每超0.5个百分点扣5分',src:'质量检验日报'},
+   {mod:'KBI',name:'作业标准执行（SOP/点检/5S）',parent:'—',w:20,target:'3级以上',low:'—',high:'5级',rule:'5级行为锚定',src:'班长现场记录'},
+   {mod:'KPA',name:'劳动纪律与安全生产',parent:'—',w:15,target:'0次违规',low:'—',high:'—',rule:'违章每次-10分',src:'考勤与安全台账'},
+   {mod:'红线项',name:'违章操作/擅自离岗',parent:'D-PROD-04',w:0,target:'0次',low:'—',high:'—',rule:'否决项',src:'安全台账'}]},
+ {name:'王磊',emp:'E3055',dept:'工艺技术部',post:'工艺工程师',period:'2026年Q1',sup:'工艺技术部经理 赵鹏',items:[
+   {mod:'GS',name:'换模标准工时缩短项目',parent:'D-TEC-02',w:30,target:'15%',low:'5%',high:'25%',rule:'里程碑法，每延迟1节点扣8分',src:'项目周报'},
+   {mod:'KPI',name:'成型周期优化达成率',parent:'D-TEC-01',w:25,target:'95%',low:'80%',high:'100%',rule:'三线法',src:'工艺验证报告'},
+   {mod:'KPI',name:'新模具试模一次成功率',parent:'D-TEC-01',w:20,target:'80%',low:'60%',high:'95%',rule:'三线法',src:'试模记录'},
+   {mod:'KPI',name:'工艺文件及时更新率',parent:'D-TEC-01',w:10,target:'95%',low:'85%',high:'100%',rule:'三线法',src:'文件管理系统'},
+   {mod:'KBI',name:'现场支持与技术分享',parent:'—',w:10,target:'3级以上',low:'—',high:'5级',rule:'5级行为锚定',src:'生产部反馈记录'},
+   {mod:'综合素质',name:'进取心与专业精神',parent:'—',w:5,target:'3级',low:'—',high:'5级',rule:'能力素质5级',src:'上级评价'},
+   {mod:'红线项',name:'工艺文件错误导致批量不良',parent:'D-QLT-03',w:0,target:'0起',low:'—',high:'—',rule:'否决项',src:'质量事故台账'}]},
+ {name:'赵刚',emp:'E4012',dept:'设备动力部',post:'设备主管',period:'2026年1月',sup:'生产总监 王刚',items:[
+   {mod:'KPI',name:'设备综合效率OEE',parent:'D-PROD-03',w:30,target:'82%',low:'70%',high:'88%',rule:'三线法',src:'设备管理系统'},
+   {mod:'KPI',name:'设备故障停机时间',parent:'D-EQP-01',w:30,target:'30h',low:'60h',high:'15h',rule:'每超10小时扣5分',src:'设备管理系统'},
+   {mod:'GS',name:'点检保养体系落地',parent:'D-PROD-03',w:20,target:'按期完成',low:'—',high:'提前完成',rule:'每缺1项扣5分',src:'设备管理台账'},
+   {mod:'KBI',name:'现场巡查与故障响应行为',parent:'—',w:10,target:'3级以上',low:'—',high:'5级',rule:'5级行为锚定',src:'生产部反馈记录'},
+   {mod:'综合素质',name:'责任心与跨部门协作',parent:'—',w:10,target:'3级',low:'—',high:'5级',rule:'态度评分5级',src:'上级评价'},
+   {mod:'红线项',name:'设备安全事故',parent:'D-PROD-04',w:0,target:'0起',low:'—',high:'—',rule:'否决项',src:'安全台账'}]},
+ {name:'周敏',emp:'Q5017',dept:'质量部',post:'质量工程师',period:'2026年1月',sup:'质量主管 吴昊',items:[
+   {mod:'KPI',name:'一次交验合格率',parent:'D-QLT-01',w:30,target:'98.5%',low:'96.5%',high:'99.5%',rule:'三线法',src:'质量检验日报'},
+   {mod:'KPI',name:'客户质量投诉次数',parent:'D-QLT-02',w:25,target:'1次',low:'3次',high:'0次',rule:'每超1次扣8分',src:'客户投诉台账'},
+   {mod:'KPI',name:'8D报告闭环及时率',parent:'D-QLT-02',w:20,target:'90%',low:'70%',high:'100%',rule:'延迟1份扣5分',src:'质量异常台账'},
+   {mod:'GS',name:'TOP3缺陷攻关项目',parent:'D-QLT-01',w:15,target:'按期完成',low:'—',high:'提前完成',rule:'每延迟1周扣5分',src:'质量改善报告'},
+   {mod:'KBI',name:'过程巡检与首件监督行为',parent:'—',w:10,target:'3级以上',low:'—',high:'5级',rule:'5级行为锚定',src:'巡检记录表'},
+   {mod:'红线项',name:'重大批量质量事故漏检',parent:'D-QLT-03',w:0,target:'0起',low:'—',high:'—',rule:'否决项',src:'质量事故台账'}]},
+ {name:'孙倩',emp:'M6033',dept:'计划物控部',post:'生产计划员',period:'2026年1月',sup:'计划物控部经理 郑凯',items:[
+   {mod:'KPI',name:'物料齐套率',parent:'D-PMC-01',w:40,target:'95%',low:'85%',high:'99%',rule:'三线法',src:'ERP系统'},
+   {mod:'KPI',name:'计划产量完成率',parent:'D-PROD-01',w:25,target:'96%',low:'90%',high:'100%',rule:'三线法',src:'MES系统日报'},
+   {mod:'GS',name:'排产规则优化',parent:'D-PMC-01',w:20,target:'按期完成',low:'—',high:'提前完成',rule:'每延迟1周扣5分',src:'排产规则文件'},
+   {mod:'KBI',name:'异常协调与沟通行为',parent:'—',w:10,target:'3级以上',low:'—',high:'5级',rule:'5级行为锚定',src:'部门反馈记录'},
+   {mod:'综合素质',name:'责任心与响应速度',parent:'—',w:5,target:'3级',low:'—',high:'5级',rule:'态度评分5级',src:'上级评价'},
+   {mod:'红线项',name:'因排产失误导致停线',parent:'D-PMC-01',w:0,target:'0次',low:'—',high:'—',rule:'否决项',src:'生产异常台账'}]},
+ {name:'陈静',emp:'H7011',dept:'人力资源部',post:'人力资源经理',period:'2026年Q1',sup:'总经理',items:[
+   {mod:'KPI',name:'关键岗位年度流失率',parent:'D-HR-01',w:35,target:'14%',low:'22%',high:'10%',rule:'三线法逆向折算',src:'人事月报'},
+   {mod:'GS',name:'技能等级评定覆盖率',parent:'D-HR-02',w:25,target:'100%',low:'0%',high:'100%',rule:'里程碑法',src:'技能评定档案'},
+   {mod:'KPI',name:'师徒制带教覆盖率',parent:'D-HR-02',w:20,target:'90%',low:'60%',high:'100%',rule:'三线法',src:'带教档案'},
+   {mod:'KBI',name:'HRBP业务沟通频次',parent:'—',w:10,target:'2次',low:'1次',high:'4次',rule:'缺1次扣3分',src:'面谈记录'},
+   {mod:'综合素质',name:'服务意识与专业度',parent:'—',w:10,target:'3级',low:'—',high:'5级',rule:'能力素质5级',src:'上级与业务部门评价'},
+   {mod:'红线项',name:'用工合规重大风险',parent:'D-HR-01',w:0,target:'0起',low:'—',high:'—',rule:'否决项',src:'合规台账'}]}
+],
+dict:[
+  {"code": "D-PROD-01", "name": "生产计划达成率", "dept": "生产部", "mod": "KPI", "formula": "实际完成产量÷计划产量×100%", "src": "ERP", "field": "生产订单完工数量", "collect": "系统导出", "freq": "日", "owner": "生产计划员", "unit": "%", "dir": "正向", "base": "90%", "target": "96%", "challenge": "100%", "judge": "三线法线性折算"},
+  {"code": "D-PROD-02", "name": "单位制造成本降低率", "dept": "生产部", "mod": "KPI", "formula": "(基期单耗成本−本期单耗成本)÷基期单耗成本×100%", "src": "财务系统", "field": "成本月报-制造费用", "collect": "系统导出", "freq": "月", "owner": "成本会计", "unit": "%", "dir": "正向", "base": "0%", "target": "3%", "challenge": "6%", "judge": "三线法线性折算"},
+  {"code": "D-PROD-03", "name": "设备综合效率OEE", "dept": "生产部", "mod": "KPI", "formula": "时间稼动率×性能稼动率×良品率", "src": "设备台账", "field": "OEE月报", "collect": "人工台账", "freq": "月", "owner": "设备主管", "unit": "%", "dir": "正向", "base": "70%", "target": "82%", "challenge": "88%", "judge": "三线法线性折算"},
+  {"code": "D-PROD-04", "name": "安全事故次数", "dept": "生产部", "mod": "红线项", "formula": "统计期内轻伤及以上事故起数", "src": "安全台账", "field": "事故登记表", "collect": "人工台账", "freq": "月", "owner": "安全员", "unit": "起", "dir": "逆向", "base": "—", "target": "0", "challenge": "—", "judge": "否决项"},
+  {"code": "D-QLT-01", "name": "一次交验合格率", "dept": "质量部", "mod": "KPI", "formula": "一次交验合格数÷送检总数×100%", "src": "QMS", "field": "检验日报-合格数", "collect": "系统导出", "freq": "日", "owner": "质量工程师", "unit": "%", "dir": "正向", "base": "96.5%", "target": "98.5%", "challenge": "99.5%", "judge": "三线法线性折算"},
+  {"code": "D-QLT-02", "name": "客户质量投诉次数", "dept": "质量部", "mod": "KPI", "formula": "统计期内客户正式投诉单数", "src": "售后台账", "field": "客诉登记表", "collect": "人工台账", "freq": "月", "owner": "质量工程师", "unit": "次", "dir": "逆向", "base": "3", "target": "1", "challenge": "0", "judge": "三线法线性折算"},
+  {"code": "D-QLT-03", "name": "重大批量质量事故", "dept": "质量部", "mod": "红线项", "formula": "单批不良损失超5万元的事故起数", "src": "质量台账", "field": "质量事故台账", "collect": "人工台账", "freq": "月", "owner": "质量主管", "unit": "起", "dir": "逆向", "base": "—", "target": "0", "challenge": "—", "judge": "否决项"},
+  {"code": "D-TEC-01", "name": "工艺改善项目按期交付率", "dept": "工艺技术部", "mod": "GS", "formula": "按期完成节点数÷计划节点数×100%", "src": "项目周报", "field": "项目里程碑表", "collect": "人工台账", "freq": "月", "owner": "工艺工程师", "unit": "%", "dir": "正向", "base": "80%", "target": "95%", "challenge": "100%", "judge": "里程碑法"},
+  {"code": "D-TEC-02", "name": "换模标准工时缩短率", "dept": "工艺技术部", "mod": "KPI", "formula": "(改善前工时−改善后工时)÷改善前工时×100%", "src": "工艺台账", "field": "换模工时记录", "collect": "人工台账", "freq": "月", "owner": "工艺工程师", "unit": "%", "dir": "正向", "base": "5%", "target": "15%", "challenge": "25%", "judge": "三线法线性折算"},
+  {"code": "D-PMC-01", "name": "物料齐套率", "dept": "计划物控部", "mod": "KPI", "formula": "齐套订单数÷计划投产订单数×100%", "src": "ERP", "field": "物料齐套报表", "collect": "系统导出", "freq": "日", "owner": "生产计划员", "unit": "%", "dir": "正向", "base": "85%", "target": "95%", "challenge": "99%", "judge": "三线法线性折算"},
+  {"code": "D-EQP-01", "name": "设备故障停机时间", "dept": "设备动力部", "mod": "KPI", "formula": "统计期内非计划停机小时数", "src": "设备台账", "field": "故障维修记录", "collect": "人工台账", "freq": "月", "owner": "设备主管", "unit": "小时", "dir": "逆向", "base": "60", "target": "30", "challenge": "15", "judge": "三线法线性折算"},
+  {"code": "D-HR-01", "name": "关键岗位年度流失率", "dept": "人力资源部", "mod": "KPI", "formula": "关键岗位离职人数÷关键岗位平均在岗人数×100%", "src": "人事系统", "field": "离职台账", "collect": "系统导出", "freq": "季", "owner": "人力资源经理", "unit": "%", "dir": "逆向", "base": "22%", "target": "14%", "challenge": "10%", "judge": "三线法线性折算"},
+  {"code": "D-HR-02", "name": "技能等级评定覆盖率", "dept": "人力资源部", "mod": "GS", "formula": "已评定人数÷应评定人数×100%", "src": "人事系统", "field": "技能评定档案", "collect": "人工台账", "freq": "季", "owner": "人力资源经理", "unit": "%", "dir": "正向", "base": "0%", "target": "100%", "challenge": "100%", "judge": "里程碑法"}
+],
+actual:[
+  {"code": "D-PROD-01", "val": "93.8%", "period": "2026-01", "src": "ERP导出"},
+  {"code": "D-PROD-01", "val": "95.2%", "period": "2026-02", "src": "ERP导出"},
+  {"code": "D-PROD-02", "val": "降1.2%", "period": "2026-01", "src": "财务月报"},
+  {"code": "D-PROD-02", "val": "降2.1%", "period": "2026-02", "src": "财务月报"},
+  {"code": "D-PROD-03", "val": "77.4%", "period": "2026-01", "src": "设备台账"},
+  {"code": "D-PROD-03", "val": "79.5%", "period": "2026-02", "src": "设备台账"},
+  {"code": "D-QLT-01", "val": "98.1%", "period": "2026-01", "src": "QMS导出"},
+  {"code": "D-QLT-01", "val": "98.7%", "period": "2026-02", "src": "QMS导出"},
+  {"code": "D-QLT-02", "val": "2次", "period": "2026-01", "src": "售后台账"},
+  {"code": "D-QLT-02", "val": "2次", "period": "2026-02", "src": "售后台账"},
+  {"code": "D-TEC-01", "val": "82%", "period": "2026-01", "src": "项目周报"},
+  {"code": "D-TEC-01", "val": "91%", "period": "2026-02", "src": "项目周报"},
+  {"code": "D-TEC-02", "val": "4.2%", "period": "2026-01", "src": "工艺台账"},
+  {"code": "D-TEC-02", "val": "8.6%", "period": "2026-02", "src": "工艺台账"},
+  {"code": "D-PMC-01", "val": "91.0%", "period": "2026-01", "src": "ERP导出"},
+  {"code": "D-PMC-01", "val": "93.1%", "period": "2026-02", "src": "ERP导出"},
+  {"code": "D-EQP-01", "val": "38小时", "period": "2026-01", "src": "设备台账"},
+  {"code": "D-EQP-01", "val": "28小时", "period": "2026-02", "src": "设备台账"},
+  {"code": "D-HR-01", "val": "19%", "period": "2026-01", "src": "人事月报"},
+  {"code": "D-HR-01", "val": "17%", "period": "2026-02", "src": "人事月报"},
+  {"code": "D-HR-02", "val": "62%", "period": "2026-01", "src": "技能评定档案"},
+  {"code": "D-HR-02", "val": "86%", "period": "2026-02", "src": "技能评定档案"}
+],
+reviews:[
+ {cycle:'2026-W01',date:'2026-01-10',dept:'生产部',emp:'张伟',post:'注塑班长',parent:'D-PROD-01',kr:'当班产量达成率≥96%',target:'96%',actual:'95.1%',rate:99.1,conf:8,light:'绿灯',block:'无重大障碍',reason:'',support:'',a1:'维持现有排产节奏',a2:'跟进A产品换模准备',a3:'班前会宣导首件确认',owner:'张伟',due:'2026-01-17',coach:'班前会反馈',tip:'保持并关注换模节点'},
+ {cycle:'2026-W03',date:'2026-01-24',dept:'生产部',emp:'张伟',post:'注塑班长',parent:'D-PROD-01',kr:'当班产量达成率≥96%',target:'96%',actual:'93.5%',rate:97.4,conf:6,light:'黄灯',block:'3号机换模时间偏长，当班少做2模',reason:'不能（资源工具）',support:'需要设备动力部配合优化换模SOP，工艺技术部给出标准工时',a1:'与设备部确认换模标准工时',a2:'完成A产品换模动作拆解',a3:'班前会宣导首件确认要点',owner:'张伟',due:'2026-01-31',coach:'一对一辅导（GROW）',tip:'先问换模慢在哪一步，让他自己找出3个卡点'},
+ {cycle:'2026-W05',date:'2026-02-07',dept:'生产部',emp:'张伟',post:'注塑班长',parent:'D-QLT-01',kr:'当班一次合格率≥98.5%',target:'98.5%',actual:'98.1%',rate:99.6,conf:7,light:'黄灯',block:'6号机出现缩水不良，原因待确认',reason:'不会（知识技能）',support:'需要工艺工程师现场指导模具温度设定',a1:'联系王磊现场分析缩水原因',a2:'更新机台参数看板',a3:'班前会通报缺陷要点',owner:'张伟',due:'2026-02-14',coach:'现场带教',tip:'先让他描述缩水出现的条件，再引导到模温与保压参数的关系'},
+ {cycle:'2026-W01',date:'2026-01-10',dept:'工艺技术部',emp:'王磊',post:'工艺工程师',parent:'D-TEC-02',kr:'换模标准工时缩短15%',target:'15%',actual:'4.2%',rate:28,conf:7,light:'黄灯',block:'3套模具因结构差异大，拆解动作不能通用',reason:'不会（知识技能）',support:'需要外聘模具专家做一次现场辅导',a1:'按模具结构分3类做动作拆解',a2:'先完成A1类模具SOP',a3:'输出换模视频教材',owner:'王磊',due:'2026-01-24',coach:'一对一辅导（GROW）',tip:'用GROW，让他先提3个分类方案'},
+ {cycle:'2026-W03',date:'2026-01-24',dept:'工艺技术部',emp:'王磊',post:'工艺工程师',parent:'D-TEC-02',kr:'换模标准工时缩短15%',target:'15%',actual:'8.6%',rate:57.3,conf:8,light:'绿灯',block:'分类方案已确认，进入A1类拆解',reason:'',support:'',a1:'完成A1类模具SOP',a2:'拍摄换模动作视频',a3:'与生产部对齐试运行窗口',owner:'王磊',due:'2026-02-07',coach:'例会点评',tip:'进度符合预期，鼓励沉淀方法论'},
+ {cycle:'2026-W01',date:'2026-01-10',dept:'设备动力部',emp:'赵刚',post:'设备主管',parent:'D-EQP-01',kr:'非计划停机≤30小时/月',target:'30h',actual:'9.5h',rate:31.7,conf:8,light:'绿灯',block:'无重大故障',reason:'',support:'',a1:'继续推进点检标准编制',a2:'完成关键设备台账核对',a3:'备件安全库存复核',owner:'赵刚',due:'2026-01-17',coach:'例会点评',tip:'保持，关注点检体系落地节点'},
+ {cycle:'2026-W01',date:'2026-01-10',dept:'质量部',emp:'周敏',post:'质量工程师',parent:'D-QLT-02',kr:'客户质量投诉≤1次/月',target:'1次',actual:'0次',rate:100,conf:9,light:'绿灯',block:'无',reason:'',support:'',a1:'完成8D报告归档',a2:'更新检验标准',a3:'组织质量意识培训',owner:'周敏',due:'2026-01-17',coach:'例会点评',tip:'保持'},
+ {cycle:'2026-W03',date:'2026-01-24',dept:'质量部',emp:'周敏',post:'质量工程师',parent:'D-QLT-02',kr:'客户质量投诉≤1次/月',target:'1次',actual:'2次',rate:0,conf:3,light:'红灯',block:'同一客户连续两批外观不良，8D根因未锁定',reason:'不会（知识技能）',support:'需要质量总监牵头，工艺技术部配合做DOE验证',a1:'48小时内输出临时对策',a2:'组织跨部门根因分析会',a3:'更新外观检验标准',owner:'周敏',due:'2026-01-28',coach:'一对一辅导（GROW）',tip:'先做客观复述再问：你觉得根因可能在哪个环节？需要谁配合？'},
+ {cycle:'2026-W05',date:'2026-02-07',dept:'质量部',emp:'周敏',post:'质量工程师',parent:'D-QLT-02',kr:'客户质量投诉≤1次/月',target:'1次',actual:'2次',rate:0,conf:4,light:'红灯',block:'DOE 验证排期被生产占用，根因仍未锁定',reason:'不能（资源工具）',support:'需要生产部给出2小时试模窗口',a1:'锁定试验窗口时间',a2:'完成DOE验证',a3:'输出永久对策',owner:'周敏',due:'2026-02-14',coach:'一对一辅导（GROW）',tip:'先协调资源，再问她自己判断的根因优先级'},
+ {cycle:'2026-W01',date:'2026-01-10',dept:'计划物控部',emp:'孙倩',post:'生产计划员',parent:'D-PMC-01',kr:'物料齐套率≥95%',target:'95%',actual:'91%',rate:95.8,conf:6,light:'黄灯',block:'两种进口原料到货延迟',reason:'外部不可控',support:'需要采购部锁定第二供应商',a1:'完成备选供应商评估',a2:'建立齐套预警线',a3:'调整近两周排产',owner:'孙倩',due:'2026-01-24',coach:'例会点评',tip:'把不可控变可控：设预警线+备选方案'},
+ {cycle:'2026-W01',date:'2026-01-10',dept:'人力资源部',emp:'陈静',post:'人力资源经理',parent:'D-HR-01',kr:'关键岗位流失率≤14%',target:'14%',actual:'19%',rate:73.7,conf:6,light:'黄灯',block:'注塑技师被周边企业挖角，薪酬竞争力不足',reason:'不能（资源工具）',support:'需要总经理批准关键岗位薪酬调整方案',a1:'完成关键岗位盘点',a2:'输出保留方案',a3:'启动师徒制结对',owner:'陈静',due:'2026-01-31',coach:'一对一辅导（GROW）',tip:'先算清流失成本，再谈薪酬调整的必要性'}
+]
+};
+</script>
+<script>window.WB_AGENT_KEY='mfgperf';</script>
+</body>
+</html>

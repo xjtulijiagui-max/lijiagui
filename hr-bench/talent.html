@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<script>window.WB_OFFLINE=true;</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="color-scheme" content="light">
+<title>人才甄选助手 · 九宫格盘点与继任 · HR自动化工作台</title>
+<link rel="stylesheet" href="shared.css?v=13">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:"Microsoft YaHei","微软雅黑","PingFang SC",sans-serif; background:#FAFAF9; color:#1F2328; line-height:1.6; font-size:14px; }
+main { max-width:1280px; margin:0 auto; padding:24px 20px 70px; }
+.layout { display:grid; grid-template-columns:380px 1fr; gap:20px; align-items:start; }
+.panel { background:#FFFFFF; border:1px solid #ECEAE6; border-radius:10px; padding:18px; }
+.side { position:sticky; top:74px; }
+.ptitle { font-size:15px; font-weight:700; margin-bottom:4px; }
+.pnote { font-size:12px; color:#8A8F98; margin-bottom:14px; }
+.fgroup { margin-bottom:15px; }
+.flabel { font-size:12px; font-weight:700; color:#5F5E5A; margin-bottom:7px; display:flex; align-items:center; }
+.flabel .dot { width:5px; height:5px; border-radius:50%; background:#16A06A; margin-right:6px; }
+.frow { display:flex; align-items:center; gap:8px; margin-bottom:7px; }
+.frow label { flex:0 0 64px; font-size:12px; color:#6B7280; }
+.frow input, .frow select { flex:1; min-width:0; font-family:inherit; font-size:13px; padding:6px 9px; border:1px solid #DCDAD4; border-radius:5px; background:#FCFCFB; color:#1F2328; }
+.frow input:focus, .frow select:focus { outline:none; border-color:#16A06A; background:#fff; }
+.pastebox { background:#E6F1FB; border:1px solid #B5D4F4; border-radius:8px; padding:12px; margin-bottom:16px; }
+.pastebox .flabel { color:#0C447C; } .pastebox .flabel .dot { background:#378ADD; }
+.pastebox textarea { width:100%; font-family:inherit; font-size:12.5px; line-height:1.5; padding:8px 9px; border:1px solid #B5D4F4; border-radius:6px; background:#fff; color:#1F2328; resize:vertical; }
+.pastebox textarea:focus { outline:none; border-color:#378ADD; }
+.ptip { font-size:11.5px; color:#185FA5; margin-top:6px; line-height:1.5; }
+table.rst { width:100%; border-collapse:collapse; font-size:13px; margin-top:4px; }
+table.rst th { background:#F5F5F3; font-size:12px; font-weight:700; color:#3D4450; padding:8px 10px; text-align:right; border-bottom:1px solid #ECEAE6; white-space:nowrap; }
+table.rst th:first-child { text-align:left; }
+table.rst td { padding:8px 10px; text-align:right; border-bottom:1px solid #F0EEE9; }
+table.rst td:first-child { text-align:left; color:#3D4450; }
+table.rst tr.hl td { background:#EAF7F1; font-weight:700; color:#16A06A; }
+table.rst tr.bad td { background:#FCEBEB; color:#791F1F; }
+table.rst td.num { font-variant-numeric:tabular-nums; }
+.badge { display:inline-block; font-size:11px; padding:2px 8px; border-radius:20px; font-weight:700; }
+.b-good { background:#EAF7F1; color:#16A06A; } .b-mid { background:#FAEEDA; color:#854F0B; } .b-bad { background:#FCEBEB; color:#A32D2D; }
+.callout { background:#F5F5F3; border-radius:8px; padding:13px 15px; font-size:13px; color:#3D4450; margin-top:12px; }
+.callout.green { background:#EAF7F1; color:#118A5A; } .callout.red { background:#FCEBEB; color:#791F1F; } .callout b { font-weight:700; }
+.concl { background:#16A06A; color:#fff; border-radius:10px; padding:20px 22px; margin-top:16px; }
+.concl h3 { font-size:15px; font-weight:700; margin-bottom:14px; }
+.concl ol { margin-left:18px; } .concl li { margin-bottom:11px; font-size:14px; } .concl li:last-child { margin-bottom:0; } .concl b { font-weight:700; }
+section { background:#FFFFFF; border:1px solid #ECEAE6; border-radius:10px; padding:20px; margin-bottom:16px; }
+.sec-h { display:flex; align-items:center; gap:9px; margin-bottom:14px; }
+.sec-n { width:22px; height:22px; flex:0 0 22px; border-radius:5px; background:#16A06A; color:#fff; font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+.sec-t { font-size:15px; font-weight:700; } .sec-sub { font-size:12px; color:#8A8F98; margin-left:auto; text-align:right; }
+.kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; margin-bottom:16px; }
+.kpi { background:#fff; border:1px solid #ECEAE6; border-radius:10px; padding:14px 15px; }
+.kpi .k { font-size:12px; color:#8A8F98; } .kpi .v { font-size:22px; font-weight:700; margin:3px 0 2px; font-variant-numeric:tabular-nums; }
+.kpi .d { font-size:11.5px; color:#6B7280; } .kpi.g .v { color:#16A06A; } .kpi.r .v { color:#A32D2D; } .kpi.a .v { color:#BA7517; }
+.grid9 { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin-top:6px; }
+.grid9 div { font-size:12px; padding:8px 5px; text-align:center; border-radius:6px; border:1px solid #ECEAE6; background:#FAFAF9; }
+.grid9 div .t { display:block; font-weight:700; font-size:11px; } .grid9 div .c { font-size:13px; font-weight:700; }
+.grid9 div.red { background:#FCEBEB; border-color:#E24B4A; } .grid9 div.green { background:#EAF7F1; border-color:#16A06A; }
+@media (max-width:980px){ .layout{grid-template-columns:1fr;} .side{position:static;} }
+@media print { .wb-head,.wb-foot{display:none!important;} body{background:#fff;} .layout{display:block;} .side{display:none;} section{border:1px solid #ccc; page-break-inside:avoid;} }
+</style>
+<style>.layout>*{min-width:0}.hr-wide-result{max-width:100%;overflow-x:auto;overscroll-behavior-inline:contain}.hr-wide-result>table{min-width:560px}.hr-wide-result:focus-visible{outline:2px solid #16A06A;outline-offset:2px}@media print{.hr-wide-result{overflow:visible}.hr-wide-result>table{min-width:0}}</style>
+</head>
+<body>
+
+<main>
+<div class="layout">
+  <div class="side">
+    <div class="panel">
+      <div class="ptitle">① 粘贴员工名单</div>
+      <div class="pnote">从 Excel 选中「姓名,岗位,绩效分,潜力分」复制粘进来。</div>
+      <div class="pastebox">
+        <div class="flabel"><span class="dot"></span>员工名单（每行一人）</div>
+        <textarea id="pasteArea" rows="7" placeholder="张三,生产经理,8.5,7.5&#10;李四,质量工程师,6,5&#10;王五,销售主管,9,8"></textarea>
+        <div class="ptip">格式：姓名, 岗位, 绩效分(0~10), 潜力分(0~10)。可选追加 继任A, 继任B。支持逗号或 Tab 分隔。</div>
+      </div>
+
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>企业名称</div>
+        <div class="frow"><input id="company" value="XXAI原生组织"></div>
+      </div>
+
+      <button class="wb-btn wb-primary" style="width:100%" onclick="calc()">生成人才甄选方案</button>
+      <button class="wb-btn" style="width:100%;margin-top:8px;" onclick="loadDemo()">加载示例</button>
+      <div class="hint" style="margin-top:8px;color:#8A8F98;font-size:11.5px;">视角升级：从「招了多少人」→「关键岗位人才<b>成活率</b>」。90 天融入 + 绩效达标才算成功。</div>
+    </div>
+  </div>
+
+  <div>
+    <div id="out"></div>
+    <div class="callout" style="margin-top:14px;">
+      <b>用法</b>：把企业的人才名单粘进来，它会按绩效×潜力放进九宫格、标出继任缺口、给每个岗位配 STAR 面试题库和 90 天融入计划。不传名单也能看模板结构。
+    </div>
+  </div>
+</div>
+</main>
+
+<script src="shared.js?v=13"></script>
+<script>
+wbShell('人才甄选助手');
+
+function band(v){ return v>=8 ? '高' : (v>=5 ? '中' : '低'); }
+function gridCell(pb, tb){
+  var map = {
+    '高-高':['★ 高潜','加速培养、挑战项目、优先晋升'],
+    '中-高':['稳盘骨干','稳固留任、横向拓展、专家路线'],
+    '低-高':['待激活','轮岗试炼、教练辅导、激活潜力'],
+    '高-中':['待激活','调整岗位匹配、明确目标+激励'],
+    '中-中':['稳盘支撑','保持稳定、适度培养、渐进提升'],
+    '低-中':['需优化','调整岗位、降低期望、考虑替换'],
+    '高-低':['待激活','诊断绩效障碍、导师一对一、限期改善'],
+    '中-低':['需优化','限期整改、明确底线、观察6个月'],
+    '低-低':['需优化','优先汰换、释放资源、引进替代']
+  };
+  return map[pb+'-'+tb];
+}
+
+function parsePeople(){
+  var txt = wbVal('pasteArea') || '';
+  var lines = txt.split(/\r?\n/).map(function(l){return l.trim();}).filter(Boolean);
+  var people = [];
+  lines.forEach(function(l){
+    var p = l.split(/[\t,，;；]+/).map(function(s){return s.trim();});
+    if(p.length < 4) return;
+    var perf = parseFloat(p[2]), pot = parseFloat(p[3]);
+    if(isNaN(perf) || isNaN(pot)) return;
+    people.push({ name:p[0], post:p[1], perf:perf, pot:pot, succA:p[4]||'', succB:p[5]||'' });
+  });
+  return people;
+}
+
+function loadDemo(){
+  document.getElementById('pasteArea').value =
+    '张三,生产经理,8.5,7.5,李四,王五\n' +
+    '李四,质量工程师,6,5\n' +
+    '王五,销售主管,9,8,赵六\n' +
+    '赵六,设备主管,4.5,6\n' +
+    '钱七,HR经理,7,7,孙八\n' +
+    '孙八,工艺工程师,5.5,4\n' +
+    '周九,班组长,7.5,8\n' +
+    '吴十,采购主管,3,4';
+  calc();
+}
+
+function calc(){
+  var company = wbVal('company') || '贵公司';
+  var people = parsePeople();
+  window.__talent = { company:company, people:people };
+
+  // 九宫格汇总
+  var counts = {};
+  people.forEach(function(p){
+    var key = band(p.perf)+'-'+band(p.pot);
+    counts[key] = (counts[key]||0)+1;
+    var cell = gridCell(band(p.perf), band(p.pot));
+    p.cell = cell[0]; p.strategy = cell[1];
+  });
+
+  var h = '';
+  if(!people.length){
+    h += '<section><div class="sec-h"><span class="sec-n">1</span><span class="sec-t">九宫格人才盘点</span></div>'
+      + '<div class="callout">左侧粘贴名单后自动生成。格式：姓名, 岗位, 绩效分, 潜力分（0~10）。</div></section>';
+    h += templateSections(company);
+    document.getElementById('out').innerHTML = h;
+    return;
+  }
+
+  var high = people.filter(function(p){return p.cell==='★ 高潜';}).length;
+  var need = people.filter(function(p){return p.cell==='需优化';}).length;
+  var gaps = people.filter(function(p){return !p.succA || !p.succB;});
+
+  h += '<section><div class="sec-h"><span class="sec-n">1</span><span class="sec-t">九宫格人才盘点</span>'
+    + '<span class="sec-sub">'+people.length+' 人 · '+wbEsc(company)+'</span></div>';
+  h += '<div class="kpis">'
+    + '<div class="kpi g"><div class="k">★ 高潜</div><div class="v">'+high+'</div><div class="d">加速培养</div></div>'
+    + '<div class="kpi a"><div class="k">稳盘/待激活</div><div class="v">'+(people.length-high-need)+'</div><div class="d">留任/激活</div></div>'
+    + '<div class="kpi r"><div class="k">需优化</div><div class="v">'+need+'</div><div class="d">整改/汰换</div></div>'
+    + '<div class="kpi '+(gaps.length?'r':'g')+'"><div class="k">继任缺口</div><div class="v">'+gaps.length+'</div><div class="d">缺 A/B 储备</div></div>'
+    + '</div>';
+
+  // 分布九宫格
+  h += '<div class="grid9">';
+  [['高','高'],['中','高'],['低','高'],['高','中'],['中','中'],['低','中'],['高','低'],['中','低'],['低','低']].forEach(function(p){
+    var key=p[0]+'-'+p[1]; var n=counts[key]||0;
+    var cls = (key==='高-高')?'green':((key==='低-低'||key==='低-中'||key==='中-低')?'red':'');
+    h += '<div class="'+cls+'"><span class="t">'+p[0]+'绩/'+p[1]+'潜</span><span class="c">'+n+' 人</span></div>';
+  });
+  h += '</div>';
+
+  h += '<div class="hr-wide-result" tabindex="0" role="region" aria-label="结果表，可左右滚动"><table class="rst" style="margin-top:12px;"><thead><tr><th>姓名</th><th>岗位</th><th>绩效</th><th>潜力</th><th>九宫格</th><th>策略</th></tr></thead><tbody>';
+  people.forEach(function(p){
+    h += '<tr><td style="text-align:left">'+wbEsc(p.name)+'</td><td style="text-align:left">'+wbEsc(p.post)+'</td>'
+      + '<td class="num">'+p.perf+'</td><td class="num">'+p.pot+'</td><td style="text-align:left">'+p.cell+'</td><td style="text-align:left">'+wbEsc(p.strategy)+'</td></tr>';
+  });
+  h += '</tbody></table></div></section>';
+
+  // 继任缺口
+  h += '<section><div class="sec-h"><span class="sec-n">2</span><span class="sec-t">关键岗位继任缺口</span><span class="sec-sub">每个关键岗 ≥2 储备</span></div>';
+  h += '<table class="rst"><thead><tr><th>姓名</th><th>岗位</th><th>继任A</th><th>继任B</th><th>状态</th></tr></thead><tbody>';
+  gaps.forEach(function(p){
+    h += '<tr class="bad"><td style="text-align:left">'+wbEsc(p.name)+'</td><td style="text-align:left">'+wbEsc(p.post)+'</td>'
+      + '<td style="text-align:left">'+(p.succA||'—')+'</td><td style="text-align:left">'+(p.succB||'—')+'</td><td><span class="badge b-bad">缺口</span></td></tr>';
+  });
+  if(!gaps.length) h += '<tr><td colspan="5" style="text-align:left">无缺口，继任储备充足。</td></tr>';
+  h += '</tbody></table>';
+  h += '<div class="callout '+(gaps.length?'red':'')+'">继任缺口 = 组织风险。无继任人的关键岗位，一旦离职业务即断档，须优先补 A/B 角。</div></section>';
+
+  // 面试题库（按岗位）
+  var posts = []; people.forEach(function(p){ if(posts.indexOf(p.post)<0) posts.push(p.post); });
+  h += '<section><div class="sec-h"><span class="sec-n">3</span><span class="sec-t">结构化面试题库（STAR）</span><span class="sec-sub">'+posts.length+' 个岗位</span></div>';
+  var dims = ['团队协作','客户第一','主动性','诚信'];
+  posts.forEach(function(post){
+    h += '<div class="callout" style="margin-top:10px;"><b>'+wbEsc(post)+'</b>'
+      + '<table class="rst"><thead><tr><th>考察维度</th><th>STAR 面试题</th></tr></thead><tbody>';
+    dims.forEach(function(d){
+      h += '<tr><td style="text-align:left">'+d+'</td><td style="text-align:left">请讲一次你在「'+wbEsc(post)+'」工作中，体现'+d+'的具体事例——当时情境、你的行动、最终结果？（追问：如果重来你会怎么不同？）</td></tr>';
+    });
+    h += '</tbody></table></div>';
+  });
+  h += '</section>';
+
+  h += templateSections(company);
+
+  // 结论
+  var concl = [];
+  concl.push(company+' 盘点 '+people.length+' 人：'+high+' 个高潜、'+need+' 个需优化。先把高潜推向挑战项目，把需优化限期整改或汰换，别让「中等」掩盖风险。');
+  if(gaps.length) concl.push('继任缺口 '+gaps.length+' 人（'+gaps.map(function(p){return p.name;}).join('、')+'）须优先补 A/B 角，否则是组织单点故障。');
+  concl.push('面试用 STAR 行为法、不聊「你适合吗」；入职即算成功是错的——90 天融入 + 绩效达标才算，成活率才是真 KPI。');
+  h += '<div class="concl"><h3>三条能拿去开会的结论</h3><ol>';
+  concl.forEach(function(c){ h += '<li>'+c+'</li>'; });
+  h += '</ol></div>';
+
+  document.getElementById('out').innerHTML = h;
+}
+
+function templateSections(company){
+  var s = '<section><div class="sec-h"><span class="sec-n">4</span><span class="sec-t">90 天融入计划</span></div>'
+    + '<table class="rst"><thead><tr><th>阶段</th><th>天数</th><th>关键任务</th><th>里程碑 / 评估</th></tr></thead><tbody>'
+    + '<tr><td style="text-align:left">熟悉期</td><td class="num">1-7</td><td style="text-align:left">熟悉环境、了解文化、明确期望</td><td style="text-align:left">文化认知确认</td></tr>'
+    + '<tr><td style="text-align:left">入门期</td><td class="num">8-30</td><td style="text-align:left">入职培训、理解职责、交付首个小任务</td><td style="text-align:left">首个任务达标</td></tr>'
+    + '<tr><td style="text-align:left">承担期</td><td class="num">31-60</td><td style="text-align:left">独立承担、绩效初步达标、团队融入</td><td style="text-align:left">绩效初评≥达标</td></tr>'
+    + '<tr><td style="text-align:left">确认期</td><td class="num">61-90</td><td style="text-align:left">绩效全面达标、文化验证、留任确认</td><td style="text-align:left">90天达标率</td></tr>'
+    + '</tbody></table></section>';
+  s += '<section><div class="sec-h"><span class="sec-n">5</span><span class="sec-t">雇主品牌三句话</span></div>'
+    + '<div class="callout green">① <b>我们是谁</b>：'+wbEsc(company)+'：请填写企业的主营业务、产品与客户。<br>'
+    + '② <b>要什么人</b>：有创业精神、敢扛责任、愿与团队一起成长的人。<br>'
+    + '③ <b>能给什么</b>：请根据真实的薪酬、培养安排与发展机会填写，避免无依据的承诺。</div></section>';
+  return s;
+}
+
+loadDemo();
+</script>
+<script src="dataIface.js?v=12"></script>
+<script>wbDataIface.setup({ pageKey:'talent_v1', noImportBox:true, noRecomputeOnLoad:true, tables:[] });</script>
+
+<script>window.WB_AGENT_KEY='talent';</script>
+</body>
+</html>

@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<script>window.WB_OFFLINE=true;</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>组织战略解码 · HR自动化工作台</title>
+<style>
+:root{ --green:#16A06A; --green-d:#0E7A50; --gold:#C8860B; --ink:#23272E; --mut:#6B7480; --line:#E3E8E4; --bg:#F6F8F6; --card:#FFFFFF; --red:#D64545; --blue:#2F6FBF; }
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html,body{margin:0; padding:0; background:#F6F8F6 !important; color:#23272E !important; color-scheme:light only;}
+body{font-family:"Microsoft YaHei","微软雅黑","PingFang SC",sans-serif; line-height:1.65; font-size:14px;}
+.topbar{background:#fff; border-bottom:1px solid var(--line); padding:12px 22px; display:flex; align-items:center; gap:14px; flex-wrap:wrap; position:sticky; top:0; z-index:50;}
+.topbar .logo{font-size:19px; font-weight:800; color:var(--ink);}
+.topbar .logo em{color:var(--green); font-style:normal;}
+.topbar .sub{font-size:12px; color:var(--mut);}
+.badge{font-size:11px; background:#EAF6F0; color:var(--green-d); border:1px solid #BFE3D2; border-radius:20px; padding:2px 10px; font-weight:600;}
+.spacer{flex:1;}
+.btn{display:inline-block; border:1px solid var(--line); background:#fff; color:var(--ink); border-radius:8px; padding:7px 14px; font-size:13px; cursor:pointer; font-family:inherit; font-weight:600; text-decoration:none;}
+.btn:hover{border-color:var(--green); color:var(--green-d);}
+.btn.primary{background:var(--green); border-color:var(--green); color:#fff;}
+.btn.primary:hover{background:var(--green-d); color:#fff;}
+.btn.gold{background:var(--gold); border-color:var(--gold); color:#fff;}
+.btn.gold:hover{background:#A96F08; color:#fff;}
+.btn.del{color:var(--red); border-color:#F0C9C9;}
+.btn.sm{padding:3px 10px; font-size:12px;}
+.wrap{max-width:1180px; margin:0 auto; padding:20px 18px 80px;}
+/* 步骤条 */
+.stepper{display:flex; gap:8px; margin:16px 0 20px; flex-wrap:wrap;}
+.step{flex:1; min-width:210px; background:#fff; border:1px solid var(--line); border-radius:12px; padding:12px 16px; cursor:pointer; display:flex; gap:10px; align-items:center;}
+.step .n{width:30px; height:30px; border-radius:50%; background:#EDF1EE; color:var(--mut); font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+.step .t{font-size:14px; font-weight:700;}
+.step .d{font-size:11px; color:var(--mut);}
+.step.on{border-color:var(--green); box-shadow:0 0 0 2px rgba(22,160,106,.12);}
+.step.on .n{background:var(--green); color:#fff;}
+.step.done .n{background:#EAF6F0; color:var(--green-d);}
+/* 面板 */
+.panel{display:none;}
+.panel.on{display:block;}
+.card{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 22px; margin-bottom:16px;}
+.card h2{margin:0 0 6px; font-size:17px;}
+.card h2 .tag{font-size:11px; color:var(--gold); font-weight:700; margin-left:8px;}
+.card .hint{font-size:12px; color:var(--mut); margin-bottom:14px;}
+.grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr)); gap:12px;}
+.fld label{display:block; font-size:12px; font-weight:700; margin-bottom:4px; color:var(--ink);}
+.fld label i{color:var(--mut); font-weight:400; font-style:normal;}
+input[type=text],input[type=number],select,textarea{width:100%; border:1px solid var(--line); border-radius:8px; padding:8px 10px; font-size:13px; font-family:inherit; background:#FBFCFB; color:var(--ink);}
+input:focus,select:focus,textarea:focus{outline:none; border-color:var(--green);}
+textarea{min-height:56px; resize:vertical;}
+table.tb{width:100%; border-collapse:collapse; font-size:12.5px;}
+table.tb th{background:#F0F4F1; border:1px solid var(--line); padding:7px 8px; text-align:left; font-size:12px; white-space:nowrap;}
+table.tb td{border:1px solid var(--line); padding:5px 6px; vertical-align:middle;}
+table.tb input,table.tb select,table.tb textarea{border:none; background:transparent; padding:4px 6px; font-size:12.5px;}
+table.tb input:focus,table.tb select:focus,table.tb textarea:focus{background:#fff; border:1px solid var(--green); border-radius:6px;}
+.ok{color:var(--green-d); font-weight:700;}
+.bad{color:var(--red); font-weight:700;}
+.mut{color:var(--mut);}
+.callout{background:#FDF6E8; border:1px solid #EFD9A7; border-radius:10px; padding:10px 14px; font-size:12.5px; margin:12px 0;}
+.callout.red{background:#FCEFEF; border-color:#F0C9C9;}
+.callout.green{background:#EEF8F3; border-color:#BFE3D2;}
+.raciA{background:#FDECEC !important;} .raciA select{color:var(--red); font-weight:800;}
+.raciR{background:#EAF2FB !important;} .raciR select{color:var(--blue); font-weight:700;}
+.raciC{background:#F4F4F4 !important;} .raciR select,.raciC select{font-weight:700;}
+.mini{font-size:11.5px; color:var(--mut);}
+/* 报告 */
+#report h1{font-size:20px; text-align:center; margin:6px 0 2px;}
+#report .rsub{text-align:center; font-size:12px; color:var(--mut); margin-bottom:18px;}
+#report h3{font-size:15px; border-left:4px solid var(--green); padding-left:10px; margin:26px 0 10px;}
+#report table.tb td,#report table.tb th{padding:6px 8px;}
+#report .sign{margin-top:34px; font-size:13px; display:flex; justify-content:space-between;}
+/* toast */
+#toast{position:fixed; left:50%; bottom:36px; transform:translateX(-50%); background:#23272E; color:#fff; padding:10px 22px; border-radius:24px; font-size:13px; opacity:0; pointer-events:none; transition:opacity .25s; z-index:99;}
+#toast.on{opacity:.96;}
+.grid>*,.card{min-width:0}
+input,select,textarea{max-width:100%;min-width:0}
+.table-scroll{max-width:100%;overflow-x:auto;margin-bottom:10px}
+.table-scroll table.tb{min-width:600px}
+#report .sign{flex-wrap:wrap;gap:10px}
+@media(max-width:600px){
+  .topbar{position:static;padding:12px 16px;gap:8px}
+  .topbar .logo{font-size:17px}
+  .topbar .sub{overflow-wrap:anywhere}
+  .wrap{padding:12px 12px 40px}
+  .step{min-width:0;flex-basis:100%;padding:10px 14px}
+  .card{padding:16px 14px}
+  .grid{grid-template-columns:minmax(0,1fr)}
+  .grid>.fld{grid-column:1/-1!important}
+  .card h2 .tag{display:block;margin-left:0}
+  #toast{max-width:calc(100% - 24px);width:max-content}
+}
+@media print{.table-scroll{overflow:visible}.table-scroll table.tb{min-width:0}}
+@media print{ .topbar,.stepper,.noprint{display:none !important;} .panel{display:none !important;} #step4{display:block !important;} body{background:#fff;} }
+</style>
+</head>
+<body>
+<div class="topbar noprint">
+  <div><div class="logo">组织战略解码 <em>· HR工作台</em></div><div class="sub">三层穿透：拆到钱 · 落到人 · 穿到周 —— 解码不出唯一担责人的硬仗，当场砍掉</div></div>
+  <span class="badge" id="verBadge">本地版</span>
+  <div class="spacer"></div>
+  <button class="btn gold" onclick="loadDemo()">载入XXAI原生组织案例</button>
+  <button class="btn" onclick="clearAll()">清空重填</button>
+  <button class="btn" onclick="exportWord()">导出 Word</button>
+  <button class="btn primary" onclick="exportExcel()">导出 Excel</button>
+  <button class="btn" onclick="doPrint()">打印/存 PDF</button>
+  <a class="btn" href="home.html#agents">返回HR工作台</a>
+</div>
+<div class="wrap">
+  <div class="stepper noprint" id="stepper"></div>
+
+  <!-- S1 公司画像 -->
+  <div class="panel" id="step1">
+    <div class="card">
+      <h2>S1 · 公司画像 <span class="tag">约 1 分钟</span></h2>
+      <div class="hint">填得越实，解码越狠。行业下拉内置战略洞察模板；「去年最大遗憾」会进入 A 角落位障碍分析。</div>
+      <div class="grid">
+        <div class="fld"><label>公司名称</label><input type="text" id="c_name"></div>
+        <div class="fld"><label>所属行业（14 选 1）</label><select id="c_industry"></select></div>
+        <div class="fld"><label>总人数</label><input type="number" id="c_headcount"></div>
+        <div class="fld"><label>本年营收基线（万元）</label><input type="number" id="c_revBase"></div>
+        <div class="fld"><label>明年营收目标（万元）</label><input type="number" id="c_revTarget"></div>
+        <div class="fld"><label>编制天花板（人，选填，来自智能体②）</label><input type="number" id="c_capHead"></div>
+      </div>
+      <div class="grid" style="margin-top:12px;">
+        <div class="fld" style="grid-column:span 2;"><label>年度核心目标（一句话，要可考核）</label><textarea id="c_coreGoal"></textarea></div>
+        <div class="fld" style="grid-column:span 2;"><label>去年最大遗憾（组织层面的坑）</label><textarea id="c_regret"></textarea></div>
+      </div>
+      <div class="callout mini" id="industryInsight"></div>
+    </div>
+    <div class="card">
+      <h2>部门清单 <span class="tag">第二层穿透的落点</span></h2>
+      <div class="hint">部门名 + 人数 + 负责人。负责人要写「姓名+岗位」，RACI 的唯一 A 只认自然人，不认部门名。</div>
+      <div id="deptBox"></div>
+      <button class="btn sm" onclick="addDept()">＋ 加部门</button>
+    </div>
+    <div style="text-align:right;"><button class="btn primary" onclick="goStep(2)">下一步：硬仗清单 →</button></div>
+  </div>
+
+  <!-- S2 硬仗清单 -->
+  <div class="panel" id="step2">
+    <div class="card">
+      <h2>S2 · 硬仗清单（第一层穿透：拆到钱）</h2>
+      <div class="hint">硬仗上限 <b>5 条</b>。第 6 条起必须回答「砍掉哪一条给它腾位置」；指向同一笔钱的两条硬仗，合并为一条并指定共同担责人。每条硬仗拆成金额 / 天数 / 人数增量——算不出钱的硬仗打回重写。</div>
+      <div id="battleBox"></div>
+      <button class="btn sm" onclick="addBattle()">＋ 加硬仗</button>
+      <div id="battleWarn"></div>
+    </div>
+    <div class="card">
+      <h2>增量归属核对表 <span class="tag">硬门槛：加总必须吻合</span></h2>
+      <div class="hint">把总增量按业务盘拆开，各盘增量之和必须等于总目标增量。对不上就报警，禁止进入第二层。</div>
+      <div class="grid" style="margin-bottom:10px;">
+        <div class="fld"><label>总增量（万元，自动=目标−基线，可改）</label><input type="number" id="at_total"></div>
+        <div class="fld"><label>核对状态</label><input type="text" id="at_status" readonly></div>
+      </div>
+      <div id="attrBox"></div>
+      <button class="btn sm" onclick="addAttr()">＋ 加业务盘</button>
+      <div class="callout" id="attrCallout"></div>
+    </div>
+    <div style="display:flex; justify-content:space-between;">
+      <button class="btn" onclick="goStep(1)">← 上一步</button>
+      <button class="btn primary" onclick="tryGo3()">下一步：RACI 矩阵 →</button>
+    </div>
+  </div>
+
+  <!-- S3 RACI -->
+  <div class="panel" id="step3">
+    <div class="card">
+      <h2>S3 · 部门 × 硬仗 RACI 总矩阵（第二层穿透：落到人）</h2>
+      <div class="hint">每行有且只有 <b style="color:#D64545;">1 个 A</b>（签字担责人，必须是自然人+岗位）。0 个 A = 这条仗没人签字；2 个 A = 没有 A。R 可多个（≤3 个部门）。</div>
+      <div id="raciBox"></div>
+      <div id="raciCheck"></div>
+    </div>
+    <div class="card">
+      <h2>A 角认领签字表 <span class="tag">课堂现场认领</span></h2>
+      <div class="hint">A 角填姓名+岗位，写清认领的数字、落位障碍（对照去年遗憾）与前置解除动作。签不了字的 A 角，就是组织要先改的地方。</div>
+      <div id="aSignBox"></div>
+    </div>
+    <div style="display:flex; justify-content:space-between;">
+      <button class="btn" onclick="goStep(2)">← 上一步</button>
+      <button class="btn primary" onclick="goStep(4)">下一步：决议产出 →</button>
+    </div>
+  </div>
+
+  <!-- S4 决议产出 -->
+  <div class="panel" id="step4">
+    <div class="card noprint">
+      <h2>S4 · 年度战略解码决议（预览）</h2>
+      <div class="hint">点右上角「导出 Word / 导出 Excel」拿走文件；打印可存 PDF。第三层穿透（岗位级 RACI 与部门 PBC）在下方直接编辑，随决议一起导出。</div>
+    </div>
+    <div id="pbcBox"></div>
+    <div id="jobBox"></div>
+    <div id="reportBox"></div>
+    <div style="display:flex; justify-content:space-between;" class="noprint">
+      <button class="btn" onclick="goStep(3)">← 上一步</button>
+    </div>
+  </div>
+</div>
+<div id="toast"></div>
+
+<script>
+/* ============ 基础 ============ */
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function toast(m){ var t=$('toast'); t.textContent=m; t.className='on'; clearTimeout(t._h); t._h=setTimeout(function(){ t.className=''; },2200); }
+function num(v){ var n=parseFloat(v); return isNaN(n)?0:n; }
+
+var INDUSTRIES=['酒店餐饮','汽车零部件','电子制造','生物制药','食品加工','纺织服装','商贸零售','物流运输','建筑工程','教育培训','软件互联网','金融服务','新能源','其他制造'];
+var INSIGHT={
+'酒店餐饮':'行业要点：五星/品质升级看服务评分与人员稳定；会议宴会+文旅融合是增量盘；人效看人均销售与人均净利。硬仗常落：品质升级、宴会营收、人员流失率。',
+'汽车零部件':'行业要点：增量看新项目定点与量产爬坡；交付周期与质损率是利润暗渠；人均产值是编制硬约束。硬仗常落：营收增量、新品占比、交付天数、质损率。',
+'电子制造':'行业要点：新品迭代快，研发投产比是命门；供应链齐套率卡交付；核心工程师流失直接掉产能。硬仗常落：新品营收、NPI 周期、齐套率、核心保留。',
+'生物制药':'行业要点：管线进度即市值；合规与质量一票否决；销售费用率与学术推广转化要算清。硬仗常落：管线里程碑、获批进度、单产上量。',
+'食品加工':'行业要点：渠道库存与临期损耗吃利润；大客户依赖度高；新品上架率决定增长。硬仗常落：新品铺市率、损耗率、大客户守住。',
+'纺织服装':'行业要点：季前备货赌库存，售罄率是命；快反供应链压交付；零售人效看坪效连带。硬仗常落：售罄率、库存周转、快反周期。',
+'商贸零售':'行业要点：客流×转化×客单三件套；会员复购是利润底盘；供应链账期是现金命门。硬仗常落：同店增长、会员复购率、库存周转。',
+'物流运输':'行业要点：单车/单票成本决定生死；干线装载率与末端时效是两把尺；大客户合同续签率稳盘。硬仗常落：单位成本、装载率、时效达成。',
+'建筑工程':'行业要点：现金流比利润更要命；项目毛利与回款双控；资质与履约评分接活。硬仗常落：回款率、项目毛利、履约评分。',
+'教育培训':'行业要点：续班率是唯一硬指标；获客成本上限要拍死；师资人效与满班率定利润。硬仗常落：续班率、满班率、获客成本。',
+'软件互联网':'行业要点：续费/净收入留存率(NDR)定估值；交付定制化吞毛利；核心产研流失断代际。硬仗常落：NDR、毛利改善、核心保留。',
+'金融服务':'行业要点：合规红线前置；AUM/管理规模是底盘；人效看人均产能与产能结构。硬仗常落：规模增长、人均产能、合规零事故。',
+'新能源':'行业要点：B端大客户、长账期，回款就是第二条生命线；非标交付扯皮多；销售人效与回款绑定。硬仗常落：订单增量、回款率(DSO)、交付达成。',
+'其他制造':'行业要点：交付周期与人均产值是通用两把尺；计件工资易致质量波动，浮动部分要挂质量系数；管理幅度超 8 人必失控。硬仗常落：准交率、人均产值、质损率。'
+};
+
+/* ============ 状态 ============ */
+var KEY='hr_bench_strategy_ceo_v11';
+var S={
+  step:1,
+  company:{name:'',industry:'汽车零部件',headcount:'',revBase:'',revTarget:'',coreGoal:'',regret:'',capHead:''},
+  depts:[{name:'',head:'',leader:''}],
+  battles:[],
+  attr:{total:'',rows:[]},
+  raci:{},
+  aSign:{},
+  pbc:{},
+  job:[]
+};
+function newBattle(){ return {name:'',base:'',target:'',unit:'万元',prio:'P0',why:'',win:'',ms:['','','',''],dep:'',incr:''}; }
+
+/* ============ 自动留存 ============ */
+var saveTimer=null;
+function save(){ clearTimeout(saveTimer); saveTimer=setTimeout(saveNow,350); }
+function saveNow(){
+  try{ localStorage.setItem(KEY, JSON.stringify(S)); var b=$('verBadge'); if(b){ b.textContent='本地版 · 已自动留存'; } }catch(e){}
+}
+function load(){
+  try{
+    var raw=localStorage.getItem(KEY); if(!raw) return false;
+    var d=JSON.parse(raw); if(!d||!d.company) return false;
+    S.step=[1,2,3,4].includes(d.step)?d.step:1;
+    S.company=Object.assign(S.company,d.company);
+    S.depts=(d.depts&&d.depts.length)?d.depts:S.depts;
+    S.battles=d.battles||[];
+    S.attr=d.attr||S.attr;
+    S.raci=d.raci||{}; S.aSign=d.aSign||{}; S.pbc=d.pbc||{}; S.job=d.job||[];
+    return true;
+  }catch(e){ return false; }
+}
+
+/* ============ 步骤导航 ============ */
+var STEPDEF=[
+  {t:'S1 公司画像',d:'行业 · 部门 · 目标'},
+  {t:'S2 硬仗清单',d:'拆到钱 · 增量核对'},
+  {t:'S3 RACI 矩阵',d:'落到人 · 唯一 A'},
+  {t:'S4 决议产出',d:'穿到周 · 出文件'}
+];
+function renderStepper(){
+  var h='';
+  STEPDEF.forEach(function(s,i){
+    h+='<div class="step'+(S.step===i+1?' on':(S.step>i+1?' done':''))+'" data-a="go" data-step="'+(i+1)+'">'+
+       '<div class="n">'+(S.step>i+1?'✓':(i+1))+'</div><div><div class="t">'+s.t+'</div><div class="d">'+s.d+'</div></div></div>';
+  });
+  $('stepper').innerHTML=withScrollableTables(h);
+  $('stepper').querySelectorAll('[data-a="go"]').forEach(function(el){
+    el.addEventListener('click',function(){ goStep(+el.getAttribute('data-step')); });
+  });
+}
+function goStep(n){ S.step=n; renderStepper(); renderAll(); window.scrollTo(0,0); save(); }
+function tryGo3(){
+  var chk=attrCheck();
+  if(!chk.ok){ toast('增量归属加总不吻合，禁止进入第二层——先对齐 '+chk.diff+' 万缺口'); return; }
+  goStep(3);
+}
+
+/* ============ S1 ============ */
+function fillCompany(){
+  $('c_name').value=S.company.name||''; $('c_industry').value=S.company.industry||'汽车零部件';
+  $('c_headcount').value=S.company.headcount||''; $('c_revBase').value=S.company.revBase||'';
+  $('c_revTarget').value=S.company.revTarget||''; $('c_coreGoal').value=S.company.coreGoal||'';
+  $('c_regret').value=S.company.regret||''; $('c_capHead').value=S.company.capHead||'';
+  showInsight();
+}
+function showInsight(){
+  var ind=$('c_industry').value;
+  $('industryInsight').innerHTML='💼 <b>'+esc(ind)+'战略洞察：</b>'+esc(INSIGHT[ind]||'');
+}
+function renderDepts(){
+  var h='<table class="tb"><tr><th style="width:40px;">#</th><th>部门名称</th><th style="width:90px;">人数</th><th>负责人（姓名+岗位，A 角只认自然人）</th><th style="width:46px;"></th></tr>';
+  S.depts.forEach(function(d,i){
+    h+='<tr><td>'+(i+1)+'</td>'+
+      '<td><input data-a="dept" data-i="'+i+'" data-f="name" value="'+esc(d.name)+'"></td>'+
+      '<td><input data-a="dept" data-i="'+i+'" data-f="head" value="'+esc(d.head)+'" style="width:70px;"></td>'+
+      '<td><input data-a="dept" data-i="'+i+'" data-f="leader" value="'+esc(d.leader)+'"></td>'+
+      '<td><button class="btn sm del" data-a="dept-del" data-i="'+i+'">删</button></td></tr>';
+  });
+  h+='</table>';
+  $('deptBox').innerHTML=withScrollableTables(h);
+  bindBox($('deptBox'));
+}
+function addDept(){ S.depts.push({name:'',head:'',leader:''}); renderDepts(); save(); }
+
+/* ============ S2 ============ */
+var PRIO={'P0':'P0 生死战','P1':'P1 攻坚战','P2':'P2 阵地战'};
+function renderBattles(){
+  var box=$('battleBox');
+  if(!S.battles.length){ box.innerHTML='<div class="mut" style="padding:8px 0;">还没添加硬仗。先想清楚：今年不打赢就活不好的仗，是哪几条？</div>'; $('battleWarn').innerHTML=''; return; }
+  var h='<table class="tb"><tr><th style="width:36px;">#</th><th style="min-width:150px;">硬仗名称</th><th style="width:80px;">基线</th><th style="width:80px;">目标</th><th style="width:64px;">单位</th><th style="width:96px;">拆成钱/天/人数（增量）</th><th style="width:96px;">优先级</th><th style="min-width:130px;">为什么是硬仗</th><th style="min-width:130px;">胜仗标准（可考核）</th><th style="min-width:120px;">季度里程碑 Q1→Q4</th><th style="min-width:110px;">成败依赖</th><th style="width:44px;"></th></tr>';
+  S.battles.forEach(function(b,i){
+    h+='<tr><td><b>'+(i+1)+'</b></td>'+
+      '<td><input data-a="bt" data-i="'+i+'" data-f="name" value="'+esc(b.name)+'"></td>'+
+      '<td><input data-a="bt" data-i="'+i+'" data-f="base" value="'+esc(b.base)+'" style="width:64px;"></td>'+
+      '<td><input data-a="bt" data-i="'+i+'" data-f="target" value="'+esc(b.target)+'" style="width:64px;"></td>'+
+      '<td><input data-a="bt" data-i="'+i+'" data-f="unit" value="'+esc(b.unit)+'" style="width:52px;"></td>'+
+      '<td><input data-a="bt" data-i="'+i+'" data-f="incr" value="'+esc(b.incr)+'" placeholder="如 +7000 万" style="width:84px;"></td>'+
+      '<td><select data-a="bt" data-i="'+i+'" data-f="prio">';
+    Object.keys(PRIO).forEach(function(k){ h+='<option value="'+k+'"'+(b.prio===k?' selected':'')+'>'+PRIO[k]+'</option>'; });
+    h+='</select></td>'+
+      '<td><textarea data-a="bt" data-i="'+i+'" data-f="why" rows="2">'+esc(b.why)+'</textarea></td>'+
+      '<td><textarea data-a="bt" data-i="'+i+'" data-f="win" rows="2">'+esc(b.win)+'</textarea></td>'+
+      '<td><textarea data-a="bt" data-i="'+i+'" data-f="ms" rows="2" placeholder="Q1…；Q2…；Q3…；Q4…">'+esc((b.ms||[]).join('；'))+'</textarea></td>'+
+      '<td><textarea data-a="bt" data-i="'+i+'" data-f="dep" rows="2">'+esc(b.dep)+'</textarea></td>'+
+      '<td><button class="btn sm del" data-a="bt-del" data-i="'+i+'">砍</button></td></tr>';
+  });
+  h+='</table>';
+  box.innerHTML=withScrollableTables(h);
+  bindBox(box);
+  var w=$('battleWarn');
+  if(S.battles.length>5){
+    w.innerHTML='<div class="callout red"><b>砍项判据触发：</b>硬仗上限 5 条，现在 '+S.battles.length+' 条。第 6 条起必须回答：「砍掉哪一条给它腾位置？」指向同一笔钱的两条硬仗，合并为一条并指定共同担责人。资源恒定的前提下，六条并列 = 六条都打不赢。</div>';
+  } else if(S.battles.length===5){
+    w.innerHTML='<div class="callout green">已到 5 条上限。再加必须先砍一条——老板最难的不是加仗，是砍仗。</div>';
+  } else w.innerHTML='';
+}
+function addBattle(){
+  if(S.battles.length>=5){ toast('硬仗上限 5 条：先砍一条，或把指向同一笔钱的两条合并'); return; }
+  S.battles.push(newBattle()); renderBattles(); save();
+}
+function renderAttr(){
+  /* 总增量 = 明年营收目标 − 本年营收基线（引擎口径：目标−基线）；
+     未被手工改过时，始终跟随 S1 的基线/目标自动刷新 */
+  var auto=num($('c_revTarget').value)-num($('c_revBase').value);
+  if(!S.attr.manual){
+    var want = auto>0 ? String(auto) : '';
+    if($('at_total').value!==want) $('at_total').value=want;
+    S.attr.total=want;
+  }
+  var h='<table class="tb"><tr><th style="width:40px;">#</th><th>业务盘</th><th style="width:100px;">本年</th><th style="width:100px;">明年目标</th><th style="width:110px;">增量</th><th>归属（部门/担责人）</th><th style="width:44px;"></th></tr>';
+  (S.attr.rows||[]).forEach(function(r,i){
+    h+='<tr><td>'+(i+1)+'</td>'+
+      '<td><input data-a="at" data-i="'+i+'" data-f="pan" value="'+esc(r.pan)+'"></td>'+
+      '<td><input data-a="at" data-i="'+i+'" data-f="cur" value="'+esc(r.cur)+'" style="width:88px;"></td>'+
+      '<td><input data-a="at" data-i="'+i+'" data-f="next" value="'+esc(r.next)+'" style="width:88px;"></td>'+
+      '<td><input data-a="at" data-i="'+i+'" data-f="incr" value="'+esc(r.incr)+'" style="width:96px;"></td>'+
+      '<td><input data-a="at" data-i="'+i+'" data-f="owner" value="'+esc(r.owner)+'"></td>'+
+      '<td><button class="btn sm del" data-a="at-del" data-i="'+i+'">删</button></td></tr>';
+  });
+  h+='</table>';
+  $('attrBox').innerHTML=withScrollableTables(h);
+  bindBox($('attrBox'));
+  attrCheck();
+}
+function addAttr(){ S.attr.rows.push({pan:'',cur:'',next:'',incr:'',owner:''}); renderAttr(); save(); }
+function attrCheck(){
+  var total=num($('at_total').value); var sum=0;
+  (S.attr.rows||[]).forEach(function(r){ sum+=num(r.incr); });
+  var diff=Math.round((total-sum)*100)/100;
+  var ok=(S.attr.rows.length>0 && total>0 && Math.abs(diff)<0.01);
+  var st=$('at_status'), co=$('attrCallout');
+  if(!total){ st.value='待填总增量'; st.className=''; }
+  else if(ok){ st.value='✓ 核对吻合'; st.className='ok'; }
+  else { st.value='✗ 差 '+diff+' 万'; st.className='bad'; }
+  if(ok){ co.className='callout green'; co.innerHTML='<b>核对吻合 ✓</b> 各业务盘增量之和 = 总增量。老板要当众说出那句硬话：「明年 '+total+' 万增量，一分钱都不来自意外，每一分都写在这里。」'; }
+  else if(total>0){ co.className='callout red'; co.innerHTML='<b>增量归属不吻合（差 '+diff+' 万）：</b>对不上就停在这一层，禁止进入第二层——加总对不上的解码是假解码。补齐业务盘、或修正总增量。'; }
+  else { co.className='callout'; co.innerHTML='填好营收基线/目标后总增量自动带出；也可手动填写。然后按业务盘拆分归属。'; }
+  return {ok:ok,diff:diff};
+}
+
+/* ============ S3 ============ */
+function raciCellKey(bi,dept){ return bi+'||'+dept; }
+function dIndex(d){ return S.depts.indexOf(d); }
+function renderRaci(){
+  var box=$('raciBox');
+  if(!S.battles.length || !S.depts.length){ box.innerHTML='<div class="mut">需要先完成 S1 部门清单与 S2 硬仗清单。</div>'; $('raciCheck').innerHTML=''; return; }
+  var h='<div style="overflow-x:auto;"><table class="tb"><tr><th style="min-width:150px; position:sticky;left:0;background:#F0F4F1;">硬仗 \\ 部门</th>';
+  S.depts.forEach(function(d,i){ h+='<th style="min-width:76px;">'+esc(d.name||'（未命名）')+(d.leader?'<br><span class="mini">'+esc(d.leader)+'</span>':'')+'</th>'; });
+  h+='</tr>';
+  S.battles.forEach(function(b,bi){
+    h+='<tr><td style="position:sticky;left:0;background:#fff;"><b>'+esc(b.name||'（未命名硬仗）')+'</b></td>';
+    S.depts.forEach(function(d,i){
+      var dn=d.name||('D'+i);
+      var k=raciCellKey(bi,dn);
+      var v=(S.raci[k]||'');
+      var cls=v==='A'?'raciA':(v==='R'?'raciR':(v==='C'?'raciC':''));
+      h+='<td class="'+cls+'"><select data-a="raci" data-i="'+bi+'" data-d="'+esc(dn)+'">'+
+        '<option value=""></option><option value="A"'+(v==='A'?' selected':'')+'>A 签字</option><option value="R"'+(v==='R'?' selected':'')+'>R 执行</option>'+
+        '<option value="C"'+(v==='C'?' selected':'')+'>C 咨询</option><option value="I"'+(v==='I'?' selected':'')+'>I 知会</option></select></td>';
+    });
+    h+='</tr>';
+  });
+  h+='</table></div>';
+  box.innerHTML=withScrollableTables(h);
+  bindBox(box);
+  raciCheckAll();
+}
+function raciACount(bi){
+  var c=0, who=[];
+  S.depts.forEach(function(d,i){
+    var k=raciCellKey(bi,d.name||('D'+i));
+    if(S.raci[k]==='A'){ c++; who.push(d.leader||d.name); }
+  });
+  return {c:c,who:who};
+}
+function raciCheckAll(){
+  var box=$('raciCheck'); if(!S.battles.length){ box.innerHTML=''; return true; }
+  var h='', allOk=true;
+  S.battles.forEach(function(b,bi){
+    var r=raciACount(bi);
+    if(r.c===1){ h+='<span class="ok" style="margin-right:16px;">✓ '+(bi+1)+'. '+esc(b.name)+' → A: '+esc(r.who[0])+'</span>'; }
+    else { allOk=false; h+='<span class="bad" style="margin-right:16px;">'+(r.c===0?'✗ '+(bi+1)+'. '+esc(b.name||'未命名')+'：这条仗没人签字':'✗ '+(bi+1)+'. '+esc(b.name||'未命名')+'：两个 A 等于没有 A（当前 '+r.c+' 个）')+'</span>'; }
+  });
+  box.innerHTML='<div class="'+(allOk?'callout green':'callout red')+'">'+(allOk?'<b>唯一 A 校验全部通过 ✓</b> ':'<b>唯一 A 校验未通过：</b>')+h+'</div>';
+  return allOk;
+}
+function renderASign(){
+  var box=$('aSignBox');
+  if(!S.battles.length){ box.innerHTML='<div class="mut">先完成硬仗清单。</div>'; return; }
+  var h='<table class="tb"><tr><th style="width:36px;">#</th><th style="min-width:130px;">硬仗</th><th style="min-width:120px;">A 角（姓名+岗位）</th><th style="min-width:120px;">认领的数字</th><th style="min-width:150px;">落位障碍（对照去年遗憾）</th><th style="min-width:150px;">前置解除动作</th><th style="width:110px;">承接力预警</th></tr>';
+  S.battles.forEach(function(b,bi){
+    var a=S.aSign[bi]||{};
+    var ac=raciACount(bi);
+    var autoA=(ac.c===1)?ac.who[0]:'';
+    h+='<tr><td>'+(bi+1)+'</td><td>'+esc(b.name||'（未命名）')+'</td>'+
+      '<td><input data-a="as" data-i="'+bi+'" data-f="who" value="'+esc(a.who||'')+'" placeholder="'+esc(autoA||'待矩阵落 A')+'"></td>'+
+      '<td><input data-a="as" data-i="'+bi+'" data-f="num" value="'+esc(a.num||((b.target?b.target:'')+(b.unit?' '+b.unit:'')))+'"></td>'+
+      '<td><textarea data-a="as" data-i="'+bi+'" data-f="obstacle" rows="2">'+esc(a.obstacle||'')+'</textarea></td>'+
+      '<td><textarea data-a="as" data-i="'+bi+'" data-f="action" rows="2">'+esc(a.action||'')+'</textarea></td>'+
+      '<td><select data-a="as" data-i="'+bi+'" data-f="level">'+
+        '<option value="🟢 可承接"'+(a.level==='🟢 可承接'?' selected':'')+'>🟢 可承接</option>'+
+        '<option value="🟡 需先补岗/收权"'+(a.level==='🟡 需先补岗/收权'?' selected':'')+'>🟡 需先补岗/收权</option>'+
+        '<option value="🔴 不改架子必失败"'+(a.level==='🔴 不改架子必失败'?' selected':'')+'>🔴 不改架子必失败</option>'+
+      '</select></td></tr>';
+  });
+  h+='</table>';
+  box.innerHTML=withScrollableTables(h);
+  bindBox(box);
+}
+
+/* ============ S4 ============ */
+function renderPbc(){
+  var box=$('pbcBox');
+  if(!S.depts.length){ box.innerHTML=''; return; }
+  var h='<div class="card"><h2>部门 PBC 关键指标（第三层穿透：穿到周）<span class="tag">每部门 ≤5 项 · 权重合计 100%</span></h2>'+
+    '<div class="hint">每项必须有基线/目标/权重/数据来源；核心指标（承接主扛硬仗）权重 ≥30%；<b>承接他部门硬仗的配合指标权重合计 ≥20%</b>（防「不是我的 KPI」推诿）。基线取不到写「基线待取」，限期 2 周补齐。</div>';
+  S.depts.forEach(function(d,di){
+    var dn=d.name||('部门'+(di+1));
+    var items=(S.pbc[dn]||[]);
+    var sum=0; items.forEach(function(it){ sum+=num(it.weight); });
+    h+='<div style="margin:14px 0 6px;"><b>'+esc(dn)+'</b> <span class="'+(items.length&&(Math.abs(sum-100)<0.01)?'ok':'bad')+'">权重合计 '+sum+'%</span> <span class="mini">'+(items.length>5?'<b class="bad">超过 5 项！</b>':'')+'</span></div>';
+    h+='<table class="tb"><tr><th style="width:34px;">#</th><th style="min-width:150px;">指标</th><th style="width:100px;">基线</th><th style="width:100px;">目标</th><th style="width:64px;">权重%</th><th style="min-width:120px;">承接硬仗（选=配合指标）</th><th style="min-width:110px;">数据来源</th><th style="width:44px;"></th></tr>';
+    items.forEach(function(it,ii){
+      h+='<tr><td>'+(ii+1)+'</td>'+
+        '<td><input data-a="pbc" data-i="'+di+'" data-ii="'+ii+'" data-f="kpi" value="'+esc(it.kpi)+'"></td>'+
+        '<td><input data-a="pbc" data-i="'+di+'" data-ii="'+ii+'" data-f="base" value="'+esc(it.base)+'" style="width:88px;"></td>'+
+        '<td><input data-a="pbc" data-i="'+di+'" data-ii="'+ii+'" data-f="target" value="'+esc(it.target)+'" style="width:88px;"></td>'+
+        '<td><input data-a="pbc" data-i="'+di+'" data-ii="'+ii+'" data-f="weight" value="'+esc(it.weight)+'" style="width:52px;"></td>'+
+        '<td><select data-a="pbc" data-i="'+di+'" data-ii="'+ii+'" data-f="link"><option value="">（本部门主扛）</option>';
+      S.battles.forEach(function(b,bi){ h+='<option value="'+bi+'"'+(String(it.link)===String(bi)?' selected':'')+'>'+esc(b.name||('硬仗'+(bi+1)))+'</option>'; });
+      h+='</select></td>'+
+        '<td><input data-a="pbc" data-i="'+di+'" data-ii="'+ii+'" data-f="src" value="'+esc(it.src)+'"></td>'+
+        '<td><button class="btn sm del" data-a="pbc-del" data-i="'+di+'" data-ii="'+ii+'">删</button></td></tr>';
+    });
+    h+='</table><button class="btn sm" data-a="pbc-add" data-i="'+di+'" style="margin-top:6px;">＋ 加指标（'+esc(dn)+'）</button>';
+  });
+  h+='</div>';
+  box.innerHTML=withScrollableTables(h);
+  bindBox(box);
+}
+function renderJob(){
+  var box=$('jobBox');
+  var h='<div class="card"><h2>岗位级 RACI（主战部门）<span class="tag">选 2–3 个主战部门</span></h2>'+
+    '<div class="hint">下周一这个岗位做什么？月底拿什么数交账？穿不到岗位下周动作的硬仗就是口号。</div>';
+  if(!S.job.length) S.job=[{dept:'',posts:'',rows:[{act:'',vals:[]}]}];
+  S.job.forEach(function(j,ji){
+    var posts=(j.posts||'').split(/[，,、]/).map(function(s){return s.trim();}).filter(Boolean);
+    h+='<div style="margin:14px 0 6px;"><input data-a="job-dept" data-i="'+ji+'" value="'+esc(j.dept)+'" placeholder="部门名称" style="width:180px; font-weight:700;"> '+
+       '<input data-a="job-posts" data-i="'+ji+'" value="'+esc(j.posts)+'" placeholder="岗位列表，用逗号分隔，如：总监,计划排产,车间主任" style="width:420px;"></div>';
+    if(posts.length){
+      h+='<div style="overflow-x:auto;"><table class="tb"><tr><th style="min-width:170px;">关键动作</th>';
+      posts.forEach(function(p){ h+='<th style="min-width:70px;">'+esc(p)+'</th>'; });
+      h+='<th style="width:40px;"></th></tr>';
+      (j.rows||[]).forEach(function(r,ri){
+        h+='<tr><td><input data-a="jr-act" data-i="'+ji+'" data-ri="'+ri+'" value="'+esc(r.act)+'"></td>';
+        posts.forEach(function(p,pi){
+          var v=(r.vals||[])[pi]||'';
+          h+='<td><select data-a="jr" data-i="'+ji+'" data-ri="'+ri+'" data-pi="'+pi+'">'+['','A','R','C','I'].map(function(o){return '<option value="'+o+'"'+(v===o?' selected':'')+'>'+(o||'—')+'</option>';}).join('')+'</select></td>';
+        });
+        h+='<td><button class="btn sm del" data-a="jr-del" data-i="'+ji+'" data-ri="'+ri+'">×</button></td></tr>';
+      });
+      h+='</table></div>';
+    }
+    h+='<button class="btn sm" data-a="jr-add" data-i="'+ji+'" style="margin-top:6px;">＋ 加动作</button> '+
+       '<button class="btn sm del" data-a="job-del" data-i="'+ji+'" style="margin-top:6px;">删除该部门</button>';
+  });
+  h+='<button class="btn sm" data-a="job-add" style="margin-top:10px;">＋ 加主战部门</button></div>';
+  box.innerHTML=withScrollableTables(h);
+  bindBox(box);
+}
+
+/* ============ 报告 ============ */
+function tbOpen(){ return '<table class="tb">'; }
+function raciOwnBattles(di){
+  var dn=S.depts[di]?(S.depts[di].name||('D'+di)):('D'+di);
+  var own=[];
+  S.battles.forEach(function(b,bi){
+    if(S.raci[raciCellKey(bi,dn)]==='A') own.push(bi);
+  });
+  return own;
+}
+function reportHtml(){
+  var c=S.company;
+  var h='<h1>'+esc(c.name||'（公司名）')+' · 年度战略解码决议</h1>'+
+    '<div class="rsub">三层穿透解码法：拆到钱 · 落到人 · 穿到周 ｜ 战略解码师（老板版）生成 ｜ '+esc(c.industry||'')+' · '+esc(c.headcount||'—')+' 人 ｜ 核心目标：'+esc(c.coreGoal||'—')+'</div>';
+  /* 一 硬仗数字拆解 */
+  h+='<h3>一、硬仗数字拆解表（第一层：拆到钱）</h3>'+tbOpen()+
+    '<tr><th>#</th><th>硬仗</th><th>基线</th><th>目标</th><th>拆成钱/天/人数</th><th>优先级</th><th>胜仗标准</th><th>Q1→Q4 里程碑</th><th>成败依赖</th></tr>';
+  S.battles.forEach(function(b,i){
+    h+='<tr><td>'+(i+1)+'</td><td><b>'+esc(b.name)+'</b><br><span class="mini">'+esc(b.why)+'</span></td><td>'+esc(b.base)+'</td><td>'+esc(b.target)+' '+esc(b.unit)+'</td><td>'+esc(b.incr)+'</td><td>'+esc(PRIO[b.prio]||b.prio)+'</td><td>'+esc(b.win)+'</td><td>'+esc((b.ms||[]).join('；'))+'</td><td>'+esc(b.dep)+'</td></tr>';
+  });
+  h+='</table>';
+  h+='<div class="callout"><b>砍项判据检查：</b>'+(S.battles.length>5?'硬仗 '+S.battles.length+' 条，超出 ≤5 条上限，必须砍并。':(S.battles.length===0?'尚未添加硬仗。':'共 '+S.battles.length+' 条，符合 ≤5 条上限 ✓'))+'</div>';
+  /* 二 增量归属 */
+  var chk=attrCheck();
+  h+='<h3>二、增量归属核对表'+(chk.ok?'（核对吻合 ✓）':'（⚠ 未吻合，差 '+chk.diff+' 万）')+'</h3>'+tbOpen()+
+    '<tr><th>业务盘</th><th>本年</th><th>明年目标</th><th>增量</th><th>归属</th></tr>';
+  (S.attr.rows||[]).forEach(function(r){ h+='<tr><td>'+esc(r.pan)+'</td><td>'+esc(r.cur)+'</td><td>'+esc(r.next)+'</td><td>'+esc(r.incr)+'</td><td>'+esc(r.owner)+'</td></tr>'; });
+  h+='<tr><td><b>合计</b></td><td></td><td></td><td><b>'+esc($('at_total').value||'—')+'</b></td><td><b>总增量 '+esc($('at_total').value||'—')+' 万</b></td></tr></table>';
+  /* 三 RACI */
+  h+='<h3>三、部门 × 硬仗 RACI 总矩阵（第二层：落到人，每行唯一 A）</h3>'+tbOpen()+
+    '<tr><th>硬仗 \\ 部门</th>';
+  S.depts.forEach(function(d){ h+='<th>'+esc(d.name||'')+(d.leader?'<br><span class="mini">'+esc(d.leader)+'</span>':'')+'</th>'; });
+  h+='</tr>';
+  S.battles.forEach(function(b,bi){
+    h+='<tr><td><b>'+esc(b.name||'')+'</b></td>';
+    S.depts.forEach(function(d,i){
+      var v=S.raci[raciCellKey(bi,d.name||('D'+i))];
+      h+='<td'+(v==='A'?' style="background:#FDECEC;font-weight:800;color:#D64545;"':'')+'>'+(v?esc(v):'')+'</td>';
+    });
+    h+='</tr>';
+  });
+  h+='</table><div>'+($('raciCheck')?$('raciCheck').innerHTML:'')+'</div>';
+  /* 四 A 角认领 */
+  h+='<h3>四、A 角认领签字表</h3>'+tbOpen()+
+    '<tr><th>#</th><th>硬仗</th><th>A 角（唯一担责人）</th><th>认领的数字</th><th>落位障碍</th><th>前置解除动作</th><th>组织承接力预警</th></tr>';
+  S.battles.forEach(function(b,bi){
+    var a=S.aSign[bi]||{};
+    h+='<tr><td>'+(bi+1)+'</td><td>'+esc(b.name||'')+'</td><td><b>'+esc(a.who||'')+'</b></td><td>'+esc(a.num||'')+'</td><td>'+esc(a.obstacle||'')+'</td><td>'+esc(a.action||'')+'</td><td>'+esc(a.level||'')+'</td></tr>';
+  });
+  h+='</table>';
+  /* 五 岗位级 RACI */
+  h+='<h3>五、岗位级 RACI（主战部门，穿到周）</h3>';
+  var anyJob=false;
+  (S.job||[]).forEach(function(j){
+    var posts=(j.posts||'').split(/[，,、]/).map(function(s){return s.trim();}).filter(Boolean);
+    if(!j.dept||!posts.length) return; anyJob=true;
+    h+='<div style="margin:8px 0 4px;"><b>'+esc(j.dept)+'</b></div>'+tbOpen()+'<tr><th>关键动作</th>';
+    posts.forEach(function(p){ h+='<th>'+esc(p)+'</th>'; });
+    h+='</tr>';
+    (j.rows||[]).forEach(function(r){
+      if(!r.act) return;
+      h+='<tr><td>'+esc(r.act)+'</td>';
+      posts.forEach(function(p,pi){ var v=(r.vals||[])[pi]||''; h+='<td'+(v==='A'?' style="background:#FDECEC;font-weight:800;"':'')+'>'+esc(v||'')+'</td>'; });
+      h+='</tr>';
+    });
+    h+='</table>';
+  });
+  if(!anyJob) h+='<div class="mut">（尚未填写岗位级 RACI——穿不到岗位下周动作的硬仗就是口号，建议至少填 2 个主战部门。）</div>';
+  /* 六 PBC */
+  h+='<h3>六、部门 PBC 关键指标（≤5 项 · 权重 100%）</h3>';
+  var anyPbc=false;
+  S.depts.forEach(function(d,di){
+    var dn=d.name||('部门'+(di+1));
+    var items=(S.pbc[dn]||[]); if(!items.length) return; anyPbc=true;
+    var sum=0, out=0, own=raciOwnBattles(di);
+    items.forEach(function(it){ sum+=num(it.weight); if(it.link!=='' && it.link!=null && own.indexOf(Number(it.link))<0) out+=num(it.weight); });
+    h+='<div style="margin:10px 0 4px;"><b>'+esc(dn)+'</b>｜权重合计 <b class="'+(Math.abs(sum-100)<0.01?'ok':'bad')+'">'+sum+'%</b>｜承接他部门硬仗权重 <b class="'+(out>=20?'ok':'bad')+'">'+out+'%</b>'+(out<20&&out>0?'（&lt;20% 有推诿风险）':'')+'</div>'+tbOpen()+
+      '<tr><th>#</th><th>指标</th><th>基线</th><th>目标</th><th>权重</th><th>承接硬仗</th><th>数据来源</th></tr>';
+    items.forEach(function(it,ii){
+      var bn=(it.link!==''&&it.link!=null&&S.battles[it.link])?S.battles[it.link].name:'（主扛）';
+      h+='<tr><td>'+(ii+1)+'</td><td>'+esc(it.kpi)+'</td><td>'+esc(it.base)+'</td><td>'+esc(it.target)+'</td><td>'+esc(it.weight)+'%</td><td>'+esc(bn)+'</td><td>'+esc(it.src)+'</td></tr>';
+    });
+    h+='</table>';
+  });
+  if(!anyPbc) h+='<div class="mut">（尚未填写部门 PBC——战略解码的最后一公里：没有 PBC，硬仗就停在会议室。）</div>';
+  /* 七 汇报改革 */
+  h+='<h3>七、部门汇报改革对照表（活动量 → 业绩支持度）</h3>'+tbOpen()+'<tr><th>部门</th><th>旧汇报（活动量）</th><th>新汇报（业绩支持度）</th></tr>';
+  var ref={'研发部':['完成 12 个项目节点','新品营收本月 ____ 万，进度 __%；一次通过率 __%'],
+    '生产部':['完成 3 批订单','交付周期 __ 天（较基线缩 __ 天），支撑准交订单 ____ 万'],
+    '销售部':['拜访客户 120 家','回款 ____ 万，回款率 __%，逾期应收降 ___ 万'],
+    '人力资源部':['招聘 8 人','核心岗到岗 __ 人（缺口 __），核心流失率 __%（较基线降 _pp）'],
+    '质量部':['开了 15 份 8D 报告','外部质量损失 ___ 万（月均降 __ 万），年化损失率 __%']};
+  S.depts.forEach(function(d){
+    var dn=d.name||''; var r=ref[dn]||['（活动量汇报）','支持了多少业绩：指标 __%，较基线 __'];
+    h+='<tr><td>'+esc(dn)+'</td><td>'+esc(r[0])+'</td><td>'+esc(r[1])+'</td></tr>';
+  });
+  h+='</table><div class="callout">每个部门的价值 = 支持了多少业绩，不是做了多少活。汇报改革与 PBC 同步生效。</div>';
+  /* 八 复盘节奏 */
+  h+='<h3>八、复盘节奏（月度对数会 + 季度砍项会）</h3>'+tbOpen()+'<tr><th>会议</th><th>频次</th><th>时长</th><th>主持</th><th>议程</th></tr>'+
+    '<tr><td><b>月度对数会</b></td><td>每月 5 日前</td><td>90 min</td><td>董事长</td><td>① 五个 A 角逐一报数（只报数字，不报活动）② 偏差 &gt;10% 当场给措施与日期 ③ 下月承诺数</td></tr>'+
+    '<tr><td><b>季度砍项会</b></td><td>季末</td><td>半天</td><td>董事长</td><td>① 硬仗完成率评分 ② 强制砍项：连续两季度进度 &lt;60% 的硬仗，要么换 A 角，要么砍掉 ③ 资源重新分配 ④ 人效四指标季度对标（→智能体②）</td></tr></table>';
+  /* 九 预警 */
+  h+='<h3>九、解码可行性预警（组织承接力评估）</h3>'+tbOpen()+'<tr><th>硬仗</th><th>A 角</th><th>落位障碍</th><th>承接力</th><th>前置解除动作</th></tr>';
+  var warn=0;
+  S.battles.forEach(function(b,bi){
+    var a=S.aSign[bi]||{};
+    if(a.level && a.level.indexOf('🟢')<0) warn++;
+    h+='<tr><td>'+esc(b.name||'')+'</td><td>'+esc(a.who||'')+'</td><td>'+esc(a.obstacle||'')+'</td><td>'+esc(a.level||'')+'</td><td>'+esc(a.action||'')+'</td></tr>';
+  });
+  h+='</table>';
+  h+='<div class="callout '+(warn?'red':'green')+'">'+(warn?
+    '<b>总结论：'+warn+' 条硬仗在现有组织架子上落不下去。</b>战略解码的真正价值不是写出漂亮的 KPI 表，而是逼出「必须先改哪几处架子」——以上前置解除动作，直接构成智能体④（控编与岗位合并）的输入。':
+    '<b>承接力检查通过。</b>若后续 A 角变化，重跑本页复查落位障碍。')+'</div>';
+  h+='<div class="sign"><span>董事长签字：____________</span><span>各 A 角签字：____________</span><span>HRD 存档编号：'+esc(c.name||'')+'-'+(new Date().getFullYear())+'</span></div>';
+  return h;
+}
+function withScrollableTables(h){
+  return h.replace(/<table(?=[ >])/g,'<div class="table-scroll" role="region" aria-label="内容表格，可横向滚动" tabindex="0"><table').replaceAll('</table>','</table></div>');
+}
+function renderReport(){ $('reportBox').innerHTML='<div class="card" id="report">'+withScrollableTables(reportHtml())+'</div>'; }
+function renderAll(){ for(var i=1;i<=4;i++) $('step'+i).classList.toggle('on',i===S.step); renderDepts(); renderBattles(); renderAttr(); renderRaci(); renderASign(); renderPbc(); renderJob(); renderReport(); }
+
+/* ============ 事件绑定（直接绑定 + 委托双保险） ============ */
+function bindBox(box){
+  if(!box) return;
+  box.querySelectorAll('[data-a]').forEach(function(el){
+    var act=el.getAttribute('data-a');
+    if(el.tagName==='INPUT'||el.tagName==='SELECT'||el.tagName==='TEXTAREA'){
+      var ev=(el.tagName==='SELECT')?'change':'input';
+      el.addEventListener(ev,function(){ handleAct(act,el,el.value); });
+      el.addEventListener('change',function(){ handleAct(act,el,el.value); });
+    } else if(el.tagName==='BUTTON'){
+      el.addEventListener('click',function(ev){ ev.preventDefault(); handleAct(act,el,null); });
+    }
+  });
+}
+function msParse(v){ return String(v||'').split(/[；;\n]/).map(function(s){return s.trim();}).slice(0,4); }
+function deptName(di){ return S.depts[di]?(S.depts[di].name||('部门'+(di+1))):('部门'+(di+1)); }
+function handleAct(act,el,v){
+  var i=el.getAttribute('data-i');
+  if(act==='dept'){ S.depts[i][el.getAttribute('data-f')]=v; if(el.getAttribute('data-f')==='name'){ renderRaci(); renderPbc(); renderReport(); } }
+  else if(act==='dept-del'){ S.depts.splice(+i,1); renderAll(); }
+  else if(act==='bt'){
+    var f=el.getAttribute('data-f');
+    if(f==='ms') S.battles[i].ms=msParse(v); else S.battles[i][f]=v;
+    if(f==='name'){ renderRaci(); renderASign(); renderPbc(); }
+    renderReport();
+  }
+  else if(act==='bt-del'){ S.battles.splice(+i,1); renderAll(); }
+  else if(act==='at'){ S.attr.rows[i][el.getAttribute('data-f')]=v; attrCheck(); renderReport(); }
+  else if(act==='at-del'){ S.attr.rows.splice(+i,1); renderAttr(); renderReport(); }
+  else if(act==='raci'){
+    var bi=+i, dn=el.getAttribute('data-d'), k=raciCellKey(bi,dn);
+    if(v) S.raci[k]=v; else delete S.raci[k];
+    /* 唯一 A 强制：本行设 A 时，同行其他 A 自动降为 R */
+    if(v==='A'){ S.depts.forEach(function(d,di){ var dk=raciCellKey(bi,d.name||('D'+di)); if(dk!==k && S.raci[dk]==='A'){ S.raci[dk]='R'; } }); renderRaci(); }
+    raciCheckAll(); renderASign(); renderReport();
+  }
+  else if(act==='as'){ var f2=el.getAttribute('data-f'); if(!S.aSign[i]) S.aSign[i]={}; S.aSign[i][f2]=v; renderReport(); }
+  else if(act==='pbc'){
+    var di=+i, ii=+el.getAttribute('data-ii'), f3=el.getAttribute('data-f'), dn3=deptName(di);
+    if(!S.pbc[dn3]) S.pbc[dn3]=[];
+    S.pbc[dn3][ii][f3]=v; renderPbc(); renderReport();
+  }
+  else if(act==='pbc-del'){ var dn1=deptName(+i); S.pbc[dn1].splice(+el.getAttribute('data-ii'),1); renderPbc(); renderReport(); }
+  else if(act==='pbc-add'){
+    var dn2=deptName(+i);
+    if(!S.pbc[dn2]) S.pbc[dn2]=[];
+    if(S.pbc[dn2].length>=5){ toast('PBC 每部门 ≤5 项，先砍或并'); return; }
+    S.pbc[dn2].push({kpi:'',base:'',target:'',weight:'',link:'',src:''}); renderPbc(); renderReport();
+  }
+  else if(act==='job-dept'){ S.job[i].dept=v; renderReport(); }
+  else if(act==='job-posts'){ S.job[i].posts=v; renderJob(); renderReport(); }
+  else if(act==='jr-act'){ S.job[i].rows[+el.getAttribute('data-ri')].act=v; renderReport(); }
+  else if(act==='jr'){ var ji=+i, ri=+el.getAttribute('data-ri'), pi=+el.getAttribute('data-pi');
+    if(!S.job[ji].rows[ri].vals) S.job[ji].rows[ri].vals=[];
+    S.job[ji].rows[ri].vals[pi]=v; renderReport(); }
+  else if(act==='jr-del'){ S.job[i].rows.splice(+el.getAttribute('data-ri'),1); renderJob(); renderReport(); }
+  else if(act==='jr-add'){ S.job[i].rows.push({act:'',vals:[]}); renderJob(); renderReport(); }
+  else if(act==='job-del'){ S.job.splice(+i,1); renderJob(); renderReport(); }
+  save();
+}
+
+/* ============ S1 绑定 ============ */
+function bindCompany(){
+  ['c_name','c_industry','c_headcount','c_revBase','c_revTarget','c_coreGoal','c_regret','c_capHead'].forEach(function(id){
+    var el=$(id);
+    el.addEventListener('input',function(){
+      var f=id.slice(2);
+      S.company[f]=el.value;
+      if(f==='revBase'||f==='revTarget'){ renderAttr(); }
+      if(f==='industry'){ showInsight(); }
+      renderReport(); save();
+    });
+    el.addEventListener('change',function(){ if(id==='c_industry'){ S.company.industry=el.value; showInsight(); save(); } });
+  });
+  $('at_total').addEventListener('input',function(){ S.attr.manual=true; S.attr.total=this.value; attrCheck(); renderReport(); save(); });
+}
+
+/* ============ 导出 ============ */
+function dl(name,content,mime){
+  var b=new Blob(['\ufeff'+content],{type:mime+';charset=utf-8'});
+  var a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download=name;
+  document.body.appendChild(a); a.click(); setTimeout(function(){ document.body.removeChild(a); },50);
+}
+function fileBase(){ return (S.company.name||'公司')+'-战略解码决议-'+new Date().toISOString().slice(0,10); }
+function exportWord(){
+  goStep(4);
+  var html='<html xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8"><style>'+
+    'body{font-family:微软雅黑,sans-serif;font-size:12pt;line-height:1.5;}'+
+    'h1{font-size:18pt;text-align:center;} h3{font-size:14pt;border-left:4px solid #16A06A;padding-left:8px;}'+
+    'table{border-collapse:collapse;width:100%;font-size:9.5pt;} td,th{border:1px solid #888;padding:4px 6px;} th{background:#EFF3F0;}'+
+    '.mini{font-size:8pt;color:#666;} .callout{background:#FDF6E8;padding:8px;border:1px solid #EFD9A7;}'+
+    '.ok{color:#0E7A50;font-weight:bold;} .bad{color:#D64545;font-weight:bold;}</style></head><body>'+
+    reportHtml()+'</body></html>';
+  dl(fileBase()+'.doc', html, 'application/msword');
+  toast('Word 已生成（用 Office/WPS 打开另存 .docx 即可）');
+}
+function exportExcel(){
+  goStep(4);
+  var html='<html xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="utf-8"><style>'+
+    'table{border-collapse:collapse;} td,th{border:1px solid #888;padding:4px 6px;font-size:9.5pt;font-family:微软雅黑;} th{background:#EFF3F0;font-weight:bold;} h3{font-size:12pt;} h1{font-size:16pt;} .mini{font-size:8pt;color:#666;}</style></head><body>'+
+    '<h1>'+esc(S.company.name||'')+' · 战略解码决议</h1>'+reportHtml()+'</body></html>';
+  dl(fileBase()+'.xls', html, 'application/vnd.ms-excel');
+  toast('Excel 已生成');
+}
+function doPrint(){ goStep(4); setTimeout(function(){ window.print(); },150); }
+function clearAll(){
+  if(!confirm('确定清空全部内容重新填写？此操作不可撤销。')) return;
+  try{ localStorage.removeItem(KEY); }catch(e){}
+  location.reload();
+}
+
+/* ============ XXAI原生组织演示数据 ============ */
+function loadDemo(){
+  if(S.battles.length && !confirm('载入演示数据会覆盖当前内容，继续？')) return;
+  S.company={name:'XXAI原生组织',industry:'汽车零部件',headcount:'420',revBase:'28000',revTarget:'35000',
+    coreGoal:'营收 2.8→3.5 亿，新品占比 40%，净利率不低于 9%',regret:'副总分权不清、质量部话语权弱、回款无人管——去年质损 896 万、核心流失 18%',capHead:'438'};
+  S.depts=[
+    {name:'总经办',head:'3',leader:'董事长 周明'},{name:'研发部',head:'45',leader:'研发总监'},{name:'生产部',head:'185',leader:'生产总监'},
+    {name:'供应链部',head:'25',leader:'供应链总监'},{name:'销售部',head:'55',leader:'销售总监'},{name:'市场部',head:'12',leader:'市场经理'},
+    {name:'售后部',head:'20',leader:'售后经理'},{name:'质量部',head:'25',leader:'质量总监'},{name:'财务部',head:'15',leader:'财务总监'},
+    {name:'人力资源部',head:'12',leader:'HRD'},{name:'行政IT部',head:'18',leader:'行政经理'}];
+  S.battles=[
+    {name:'营收 3.5 亿 · 新品打头阵（H1+H2 合并）',base:'28000',target:'35000',unit:'万元',prio:'P0',
+     why:'增量 7000 万是明年生死线；新品占比 25%→40%，H2 就是 H1',win:'营收 3.5 亿且新品 ≥1.4 亿；老品守住 2.1 亿零增长即达标',
+     ms:['Q1 新品定点 6 个','Q2 新品量产 2 个','Q3 新品营收破 6000 万','Q4 新品 1.4 亿收官'],dep:'研发按时量产、销售新品上量',incr:'+7000 万'},
+    {name:'交付周期 45→32 天',base:'45',target:'32',unit:'天',prio:'P0',
+     why:'按明年日均营收 95.9 万计，缩短 13 天释放营运资金约 1247 万',win:'订单平均交付 ≤32 天，准交率 ≥95%',
+     ms:['Q1 APS 排产上线','Q2 交付 40 天','Q3 交付 36 天','Q4 交付 32 天'],dep:'供应链齐套率、计划排产',incr:'释放营运资金约 1247 万'},
+    {name:'人均产值 66.7→80 万',base:'66.7',target:'80',unit:'万/人',prio:'P0',
+     why:'编制天花板 3.5 亿÷80 万=438 人，全年净增编 ≤18 人',win:'人均产值 ≥80 万，总人数 ≤438',
+     ms:['Q1 编制审批权收归董事长','Q2 冻结普增编','Q3 减编 10 人','Q4 达标 80 万'],dep:'设计降本、自动化、编制管控',incr:'人均 +13.3 万'},
+    {name:'外部质损率 3.2%→1.5%',base:'3.2',target:'1.5',unit:'%',prio:'P1',
+     why:'去年质损 896 万，年省 371 万 ≈ 净利润的 14.3%',win:'外部质损率 ≤1.5%，年损失 ≤525 万',
+     ms:['Q1 质量总监直汇报','Q2 8D 闭环率 100%','Q3 2.2%','Q4 1.5%'],dep:'SQE 前置、工艺防错',incr:'年省 371 万'},
+    {name:'核心人才流失 18%→10%',base:'18',target:'10',unit:'%',prio:'P1',
+     why:'核心盘 89 人，替换成本 32 万/人，年省 224 万',win:'核心流失率 ≤10%，继任覆盖率 ≥60%',
+     ms:['Q1 补 OD 岗','Q2 继任计划覆盖 30%','Q3 技能等级挂钩调薪','Q4 流失 ≤10%'],dep:'薪酬竞争力、OD 体系',incr:'年省 224 万'}];
+  S.attr={total:'7000',rows:[
+    {pan:'新品',cur:'7000（2.8亿×25%）',next:'14000（3.5亿×40%）',incr:'+7000',owner:'研发部（R）+ 销售部（R）'},
+    {pan:'老品',cur:'21000（2.8亿×75%）',next:'21000（守住即胜）',incr:'0',owner:'销售部大客户组（R）'}]};
+  S.raci={
+    '0||总经办':'C','0||研发部':'R','0||生产部':'C','0||供应链部':'R','0||销售部':'A','0||市场部':'R','0||售后部':'C','0||质量部':'C','0||财务部':'C','0||人力资源部':'I','0||行政IT部':'I',
+    '1||总经办':'I','1||研发部':'C','1||生产部':'A','1||供应链部':'R','1||销售部':'I','1||市场部':'I','1||售后部':'I','1||质量部':'C','1||财务部':'I','1||人力资源部':'I','1||行政IT部':'C',
+    '2||总经办':'A','2||研发部':'R','2||生产部':'R','2||供应链部':'R','2||销售部':'R','2||市场部':'R','2||售后部':'R','2||质量部':'R','2||财务部':'C','2||人力资源部':'R','2||行政IT部':'R',
+    '3||总经办':'I','3||研发部':'C','3||生产部':'R','3||供应链部':'R','3||销售部':'I','3||市场部':'I','3||售后部':'R','3||质量部':'A','3||财务部':'I','3||人力资源部':'I','3||行政IT部':'I',
+    '4||总经办':'C','4||研发部':'R','4||生产部':'R','4||供应链部':'C','4||销售部':'R','4||市场部':'C','4||售后部':'C','4||质量部':'C','4||财务部':'C','4||人力资源部':'A','4||行政IT部':'I'};
+  S.aSign={
+    '0':{who:'销售总监',num:'3.5 亿 / 新品 1.4 亿 / 老品守 2.1 亿',obstacle:'回款无人管，销售部 55 人对应收无责任岗',action:'新设「回款管理专员」1 人，向销售总监直接汇报',level:'🟡 需先补岗/收权'},
+    '1':{who:'生产总监',num:'45→32 天，释放营运资金 1247 万',obstacle:'直管 185 人幅度失控，无法穿透到班组',action:'下设 3 位车间主任 + 1 计划排产，直管幅度 185→≤8',level:'🔴 不改架子必失败'},
+    '2':{who:'董事长 周明',num:'438 人天花板，全年净增编 ≤18 人',obstacle:'编制审批权分散，副总分权不清',action:'编制审批权收归董事长，增编必过人均产值测算',level:'🟡 需先补岗/收权'},
+    '3':{who:'质量总监',num:'3.2%→1.5%，年省 371 万',obstacle:'质量部话语权弱，且由研发副总兼管（运动员兼裁判）',action:'质量总监改为直接向总经理汇报，脱离研发副总条线',level:'🔴 不改架子必失败'},
+    '4':{who:'HRD',num:'核心盘 89 人，流失 18%→10%，年省 224 万',obstacle:'HR 12 人无组织发展岗、无继任计划',action:'新增「组织发展/人效经理」1 人',level:'🔴 不改架子必失败'}};
+  S.pbc={
+    '研发部':[
+      {kpi:'新品营收',base:'0.70 亿',target:'1.40 亿',weight:'35',link:'',src:'财务营收台账（新品编码口径）'},
+      {kpi:'研发投入产出比（新品营收÷研发人工成本）',base:'7.3 倍',target:'≥14.0 倍',weight:'20',link:'',src:'财务+HR 成本表'},
+      {kpi:'图纸/BOM 一次通过率（支撑交付）',base:'基线待取（2 周内补齐）',target:'≥95%',weight:'15',link:'1',src:'PLM 系统'},
+      {kpi:'核心研发流失率（承接人才仗）',base:'18%',target:'≤10%',weight:'15',link:'4',src:'HR 花名册'},
+      {kpi:'研发人均营收',base:'62 万',target:'≥80 万',weight:'15',link:'',src:'财务分摊表'}],
+    '生产部':[
+      {kpi:'订单交付周期',base:'45 天',target:'≤32 天',weight:'35',link:'',src:'ERP 订单交付台账'},
+      {kpi:'生产口径人均产值',base:'151 万',target:'≥196 万',weight:'25',link:'',src:'财务+HR'},
+      {kpi:'外部质量损失率（承接质损仗）',base:'3.2%',target:'≤1.5%',weight:'20',link:'3',src:'质量部月报'},
+      {kpi:'生产总监直管幅度',base:'185 人',target:'≤8 人',weight:'10',link:'',src:'组织架构图'},
+      {kpi:'计件工资质量系数占比',base:'浮动全挂产量',target:'质量系数 ≥30%',weight:'10',link:'',src:'薪酬方案'}],
+    '销售部':[
+      {kpi:'营业收入',base:'2.80 亿',target:'3.50 亿',weight:'30',link:'',src:'财务'},
+      {kpi:'新品营收（承接新品仗）',base:'0.70 亿',target:'1.40 亿',weight:'25',link:'0',src:'财务（新品编码）'},
+      {kpi:'回款率/逾期应收（新设回款专员唯一担责）',base:'基线待取（2 周内补齐 DSO）',target:'回款率 ≥95%，DSO 降 15 天',weight:'25',link:'',src:'财务应收台账'},
+      {kpi:'老品基本盘',base:'2.10 亿',target:'≥2.10 亿',weight:'10',link:'',src:'财务'},
+      {kpi:'大客户销售流失率（承接人才仗）',base:'18%',target:'≤10%',weight:'10',link:'4',src:'HR 花名册'}]};
+  S.job=[
+    {dept:'研发部',posts:'研发总监,结构组,电子组,软件组,项目PMO（新设）,销售售前,生产工艺,质量SQE',rows:[
+      {act:'新品立项 / 砍项决策',vals:['A','C','C','C','R','C','I','I']},
+      {act:'新品营收 1.4 亿达成',vals:['A','R','R','R','R','R','C','I']},
+      {act:'图纸/BOM 一次通过率 ≥95%',vals:['A','R','R','R','C','I','C','C']},
+      {act:'DFM 可制造性前置评审',vals:['C','R','C','C','R','I','A','C']},
+      {act:'设计降本（支撑人均产值）',vals:['A','R','C','C','R','I','C','I']},
+      {act:'核心研发保留（承接人才仗）',vals:['A','C','C','C','I','I','I','I']}]},
+    {dept:'生产部',posts:'生产总监,计划排产（新设）,车间主任×3,班组长×12,工艺,质检,供应链',rows:[
+      {act:'交付周期 45→32 天',vals:['A','R','R','R','C','C','R']},
+      {act:'APS 排产系统上线',vals:['A','R','C','I','C','I','C']},
+      {act:'物料齐套率保障',vals:['C','R','I','I','I','I','A']},
+      {act:'首件确认与过程巡检',vals:['I','I','R','R','C','A','I']},
+      {act:'生产口径人均产值',vals:['A','C','R','R','R','I','I']},
+      {act:'管理幅度 185→≤8',vals:['A','I','R','I','I','I','I']}]},
+    {dept:'销售部',posts:'销售总监,大客户组20,渠道组15,售前10,回款专员（新设）,市场部,财务部',rows:[
+      {act:'营收 3.5 亿',vals:['A','R','R','C','C','C','I']},
+      {act:'老品守住 2.1 亿',vals:['A','R','C','C','I','I','I']},
+      {act:'新品 1.4 亿',vals:['A','R','R','R','I','R','I']},
+      {act:'回款率 ≥95%',vals:['C','R','R','I','A','I','C']},
+      {act:'坏账计提与客户授信',vals:['I','C','C','I','R','I','A']},
+      {act:'大客户销售保留（人才仗）',vals:['A','C','C','I','I','I','I']}]}];
+  S.step=4;
+  fillCompany(); renderAll(); renderStepper();
+  save(); toast('XXAI原生组织案例已载入：五条硬仗 · 唯一 A 全过 · 三处必改架子');
+}
+
+/* ============ 启动 ============ */
+(function init(){
+  var sel=$('c_industry');
+  INDUSTRIES.forEach(function(x){ var o=document.createElement('option'); o.value=x; o.textContent=x; sel.appendChild(o); });
+  bindCompany();
+  var has=load();
+  fillCompany();
+  if(!S.depts.length) S.depts=[{name:'',head:'',leader:''}];
+  if(!S.attr.rows) S.attr.rows=[];
+  if(!S.job.length) S.job=[{dept:'',posts:'',rows:[{act:'',vals:[]}]}];
+  renderAll(); renderStepper();
+  if(has) $('verBadge').textContent='本地版 · 已自动留存';
+})();
+</script>
+<script>window.WB_AGENT_KEY='strategy';</script>
+</body>
+</html>

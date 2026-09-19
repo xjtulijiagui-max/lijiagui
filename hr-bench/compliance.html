@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<script>window.WB_OFFLINE=true;</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="color-scheme" content="light">
+<title>用工合规助手 · 10 大风险排雷 · HR自动化工作台</title>
+<link rel="stylesheet" href="shared.css?v=13">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:"Microsoft YaHei","微软雅黑","PingFang SC",sans-serif; background:#FAFAF9; color:#1F2328; line-height:1.6; font-size:14px; }
+main { max-width:1280px; margin:0 auto; padding:24px 20px 70px; }
+.layout { display:grid; grid-template-columns:360px 1fr; gap:20px; align-items:start; }
+.panel { background:#FFFFFF; border:1px solid #ECEAE6; border-radius:10px; padding:18px; }
+.side { position:sticky; top:74px; }
+.ptitle { font-size:15px; font-weight:700; margin-bottom:4px; }
+.pnote { font-size:12px; color:#8A8F98; margin-bottom:14px; }
+.fgroup { margin-bottom:15px; }
+.flabel { font-size:12px; font-weight:700; color:#5F5E5A; margin-bottom:7px; display:flex; align-items:center; }
+.flabel .dot { width:5px; height:5px; border-radius:50%; background:#16A06A; margin-right:6px; }
+.frow { display:flex; align-items:center; gap:8px; margin-bottom:7px; }
+.frow label { flex:0 0 64px; font-size:12px; color:#6B7280; }
+.frow input, .frow select { flex:1; min-width:0; font-family:inherit; font-size:13px; padding:6px 9px; border:1px solid #DCDAD4; border-radius:5px; background:#FCFCFB; color:#1F2328; }
+.frow input:focus, .frow select:focus { outline:none; border-color:#16A06A; background:#fff; }
+.hint { font-size:11.5px; color:#8A8F98; margin-top:2px; line-height:1.5; }
+table.rst { width:100%; border-collapse:collapse; font-size:13px; margin-top:4px; }
+table.rst th { background:#F5F5F3; font-size:12px; font-weight:700; color:#3D4450; padding:8px 10px; text-align:right; border-bottom:1px solid #ECEAE6; white-space:nowrap; }
+table.rst th:first-child { text-align:left; }
+table.rst td { padding:8px 10px; text-align:right; border-bottom:1px solid #F0EEE9; }
+table.rst td:first-child { text-align:left; color:#3D4450; }
+table.rst tr.hl td { background:#EAF7F1; font-weight:700; color:#16A06A; }
+table.rst td.num { font-variant-numeric:tabular-nums; }
+.badge { display:inline-block; font-size:11px; padding:2px 8px; border-radius:20px; font-weight:700; }
+.b-good { background:#EAF7F1; color:#16A06A; } .b-mid { background:#FAEEDA; color:#854F0B; } .b-bad { background:#FCEBEB; color:#A32D2D; }
+.callout { background:#F5F5F3; border-radius:8px; padding:13px 15px; font-size:13px; color:#3D4450; margin-top:12px; }
+.callout.green { background:#EAF7F1; color:#118A5A; } .callout.red { background:#FCEBEB; color:#791F1F; } .callout b { font-weight:700; }
+.concl { background:#16A06A; color:#fff; border-radius:10px; padding:20px 22px; margin-top:16px; }
+.concl h3 { font-size:15px; font-weight:700; margin-bottom:14px; }
+.concl ol { margin-left:18px; } .concl li { margin-bottom:11px; font-size:14px; } .concl li:last-child { margin-bottom:0; } .concl b { font-weight:700; }
+section { background:#FFFFFF; border:1px solid #ECEAE6; border-radius:10px; padding:20px; margin-bottom:16px; }
+.sec-h { display:flex; align-items:center; gap:9px; margin-bottom:14px; }
+.sec-n { width:22px; height:22px; flex:0 0 22px; border-radius:5px; background:#16A06A; color:#fff; font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+.sec-t { font-size:15px; font-weight:700; } .sec-sub { font-size:12px; color:#8A8F98; margin-left:auto; text-align:right; }
+.kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; margin-bottom:16px; }
+.kpi { background:#fff; border:1px solid #ECEAE6; border-radius:10px; padding:14px 15px; }
+.kpi .k { font-size:12px; color:#8A8F98; } .kpi .v { font-size:22px; font-weight:700; margin:3px 0 2px; font-variant-numeric:tabular-nums; }
+.kpi .d { font-size:11.5px; color:#6B7280; } .kpi.g .v { color:#16A06A; } .kpi.r .v { color:#A32D2D; } .kpi.a .v { color:#BA7517; }
+.rk { display:grid; grid-template-columns:28px 1fr 96px 70px 90px 110px; gap:6px; align-items:center; margin-bottom:7px; font-size:12px; }
+.rk .rn { font-weight:700; color:#6B7280; }
+.rk select, .rk input { font-family:inherit; font-size:12px; padding:5px 6px; border:1px solid #DCDAD4; border-radius:5px; background:#FCFCFB; width:100%; }
+.rk.head { font-size:11px; color:#8A8F98; font-weight:700; margin-bottom:4px; }
+.ceo { list-style:none; padding:0; } .ceo li { font-size:13px; padding:9px 12px; border-radius:7px; background:#FAFAF9; margin-bottom:7px; }
+.ceo li b { color:#118A5A; }
+@media (max-width:980px){ .layout{grid-template-columns:1fr;} .side{position:static;} .rk{grid-template-columns:24px 1fr 80px 60px 80px;} }
+@media print { .wb-head,.wb-foot{display:none!important;} body{background:#fff;} .layout{display:block;} .side{display:none;} section{border:1px solid #ccc; page-break-inside:avoid;} }
+</style>
+<style>
+.layout > *, .panel, section, .fgroup, #out { min-width:0; }
+.hr-table-scroll { max-width:100%; overflow-x:auto; overscroll-behavior-inline:contain; }
+.hr-table-scroll:focus-visible { outline:2px solid #16A06A; outline-offset:2px; }
+.hr-table-scroll table.rst, .hr-table-scroll .emp-tb { min-width:460px; }
+.rk { min-width:640px; grid-template-columns:28px minmax(130px,1fr) 96px 70px 90px 110px; }
+@media(max-width:600px){ .sec-h{flex-wrap:wrap;} .sec-sub{margin-left:31px;text-align:left;} }
+@media print { .hr-table-scroll{overflow:visible;} .hr-table-scroll table.rst{min-width:0;} }
+</style>
+</head>
+<body>
+
+<main>
+<div class="layout">
+  <div class="side">
+    <div class="panel">
+      <div class="ptitle">企业用工画像</div>
+      <div class="pnote">先填规模，再把 10 大风险点逐一点开扫一遍。</div>
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>基本情况</div>
+        <div class="frow"><label>行业</label><input id="industry" value="精密制造"></div>
+        <div class="frow"><label>员工数</label><input id="headcount" type="number" value="370"><span class="unit" style="flex:0 0 30px;font-size:11px;color:#A0A4AC;">人</span></div>
+        <div class="frow"><label>用工</label><select id="etype"><option>正式+派遣</option><option>全正式</option><option>含退休返聘</option><option>含实习</option></select></div>
+      </div>
+      <div class="callout" style="margin-bottom:14px;">合规是底线，不是选项。风险是<b>CEO 的风险</b>——下面 5 件事不能全交给 HR。</div>
+      <button class="wb-btn wb-primary" style="width:100%" onclick="calc()">生成合规诊断</button>
+      <div class="hint" style="margin-top:8px;">右侧每行：选合规状态、填涉及人数、选发生概率，系统自动给三色等级和赔偿预估。</div>
+    </div>
+  </div>
+
+  <div>
+    <section>
+      <div class="sec-h"><span class="sec-t">10 项风险自查</span><span class="sec-sub">逐项填写后生成诊断</span></div>
+      <div class="hr-table-scroll" tabindex="0" role="region" aria-label="风险自查表，可左右滚动"><div id="riskBox"></div></div>
+    </section>
+    <div id="out"></div>
+    <div class="callout" style="margin-top:14px;">
+      <b>用法</b>：逐一点开 10 大高频风险点，按企业实际情况选状态、填人数——它会按「发生概率 × 人均赔付」估出金额、标红黄绿、排出整改优先级，最后给 CEO 五件事和自查周期。赔偿金额为<b>参考估算</b>，正式处置以律师意见为准。
+    </div>
+  </div>
+</div>
+</main>
+
+<script src="shared.js?v=13"></script>
+<script>
+wbShell('用工合规助手');
+
+// 10 大风险点：名称 / 人均赔付参考(万元) / 法条摘要
+var RISKS = [
+  ['未签劳动合同','8.0','入职30天内须签；超期未签=双倍工资(最长11个月)'],
+  ['社保未足额缴纳','3.0','按实际工资缴纳；不足额=补缴+滞纳金+罚款'],
+  ['违法解除劳动合同','10.0','无合法理由单方解除=赔偿金2N'],
+  ['加班费未支付','2.0','超时须付加班费或调休；欠付=补发+加付'],
+  ['试用期违法约定','1.0','试用期与合同期限须匹配；违法约定无效'],
+  ['竞业限制滥用','2.0','仅限高管/核心；须付补偿金，否则条款无效'],
+  ['工伤认定与赔付','15.0','30日内申请认定；逾期=企业全额承担'],
+  ['规章制度未公示','1.0','制度须签收确认；未公示=仲裁败诉'],
+  ['薪酬结构不合规','1.0','最低工资底线+不得克扣；违规=补差+处罚'],
+  ['年休假未保障','0.5','法定年假须保障；不安排=付3倍工资']
+];
+var PROB = { '低':0.3, '中':0.5, '高':0.8 };
+
+function buildRows(){
+  var box = document.getElementById('riskBox');
+  if(!box) return;
+  var h = '<div class="rk head"><div>#</div><div>风险点</div><div>合规状态</div><div>人数</div><div>概率</div><div>人均赔付(万)</div></div>';
+  RISKS.forEach(function(r,i){
+    h += '<div class="rk"><div class="rn">'+(i+1)+'</div><div style="text-align:left">'+r[0]+'</div>'
+      + '<select id="risk-status-'+i+'" data-k="s" data-i="'+i+'"><option>合规</option><option>部分合规</option><option>不合规</option><option>未实施</option></select>'
+      + '<input id="risk-count-'+i+'" data-k="n" data-i="'+i+'" type="number" value="0">'
+      + '<select id="risk-probability-'+i+'" data-k="p" data-i="'+i+'"><option>低</option><option>中</option><option>高</option></select>'
+      + '<div style="text-align:right;color:#6B7280">'+r[1]+'</div></div>';
+  });
+  box.innerHTML = h;
+}
+buildRows();
+
+function levelOf(status){
+  if(status==='合规') return 'good';
+  if(status==='部分合规') return 'mid';
+  return 'red'; // 不合规 / 未实施
+}
+function prioOf(level){ return level==='red'?'P0 · 7天':(level==='mid'?'P1 · 30天':'P2 · 季度复查'); }
+
+function calc(){
+  var company = (wbVal('industry')||'企业') + '（' + (wbVal('headcount')||'?') + '人）';
+  var items = [];
+  document.querySelectorAll('#riskBox .rk select[data-k="s"], #riskBox .rk input[data-k="n"], #riskBox .rk select[data-k="p"]').forEach(function(){});
+  var rows = document.querySelectorAll('#riskBox .rk');
+  for(var i=0;i<rows.length;i++){
+    if(!rows[i].querySelector) continue;
+    var sel = rows[i].querySelector('select[data-k="s"]');
+    if(!sel) continue;
+    var status = sel.value;
+    var n = parseFloat(rows[i].querySelector('input[data-k="n"]').value) || 0;
+    var p = rows[i].querySelector('select[data-k="p"]').value;
+    var riskIndex = Number(sel.getAttribute('data-i'));
+    var perPay = parseFloat(RISKS[riskIndex][1]);
+    var lvl = levelOf(status);
+    var est = (lvl==='good') ? 0 : n * perPay * PROB[p];
+    items.push({ name:RISKS[riskIndex][0], law:RISKS[riskIndex][2], status:status, n:n, p:p, lvl:lvl, est:est, prio:prioOf(lvl) });
+  }
+  var redN = items.filter(function(x){return x.lvl==='red';}).length;
+  var midN = items.filter(function(x){return x.lvl==='mid';}).length;
+  var greenN = items.filter(function(x){return x.lvl==='good';}).length;
+  var total = items.reduce(function(a,b){return a+b.est;},0);
+  var overall = redN>0 ? '高危' : (midN>0 ? '中风险' : '低风险');
+
+  window.__comp = { company:company, items:items, redN:redN, midN:midN, greenN:greenN, total:total, overall:overall };
+
+  var h = '<section><div class="sec-h"><span class="sec-n">★</span><span class="sec-t">10 大风险点扫描</span>'
+    + '<span class="sec-sub">'+wbEsc(company)+'</span></div>';
+  h += '<div class="kpis">'
+    + '<div class="kpi '+(redN?'r':'g')+'"><div class="k">高危(红)</div><div class="v">'+redN+'</div><div class="d">7天内整改</div></div>'
+    + '<div class="kpi '+(midN?'a':'g')+'"><div class="k">预警(黄)</div><div class="v">'+midN+'</div><div class="d">30天闭环</div></div>'
+    + '<div class="kpi g"><div class="k">达标(绿)</div><div class="v">'+greenN+'</div><div class="d">季度复查</div></div>'
+    + '<div class="kpi '+(total>0?'r':'g')+'"><div class="k">赔偿预估</div><div class="v">'+(total>0?Math.round(total):0)+'</div><div class="d">万元(参考)</div></div>'
+    + '</div>';
+  h += '<div class="hr-table-scroll" tabindex="0" role="region" aria-label="数据表，可左右滚动"><table class="rst"><thead><tr><th>风险点</th><th>状态</th><th>人数</th><th>概率</th><th>预估(万)</th><th>紧迫性</th></tr></thead><tbody>';
+  items.forEach(function(x){
+    var badge = x.lvl==='red'?'<span class="badge b-bad">红</span>':(x.lvl==='mid'?'<span class="badge b-mid">黄</span>':'<span class="badge b-good">绿</span>');
+    h += '<tr><td style="text-align:left">'+wbEsc(x.name)+'</td><td>'+badge+'</td><td class="num">'+x.n+'</td><td>'+x.p+'</td><td class="num">'+x.est.toFixed(1)+'</td><td>'+x.prio+'</td></tr>';
+  });
+  h += '</tbody></table></div>';
+  h += '<div class="callout '+(redN?'red':'')+'">总体风险评级：<b>'+overall+'</b>。赔偿预估为参考值（人均赔付 × 人数 × 概率），正式处置以律师意见为准。</div></section>';
+
+  // CEO 五件事
+  var ceo = [
+    '核心人员解雇决策 — 高管/核心技术解除涉及商业秘密与高额补偿',
+    '薪酬结构调整审批 — 降薪/改结构影响核心人才稳定与成本底线',
+    '劳动争议和解(>5万) — 超 5 万须 CEO 审批，避免 HR 越权',
+    '规章制度发布审批 — 涉员工权益的制度须 CEO 审定才有效',
+    '竞业限制/保密协议 — 范围、期限、补偿标准须 CEO 确认'
+  ];
+  h += '<section><div class="sec-h"><span class="sec-n">2</span><span class="sec-t">CEO 不能授权 HR 的 5 件事</span></div><ul class="ceo">';
+  ceo.forEach(function(c){ h += '<li>'+c+'</li>'; });
+  h += '</ul></section>';
+
+  // 自查周期
+  h += '<section><div class="sec-h"><span class="sec-n">3</span><span class="sec-t">自查周期</span></div>'
+    + '<div class="hr-table-scroll" tabindex="0" role="region" aria-label="数据表，可左右滚动"><table class="rst"><thead><tr><th>节奏</th><th>动作</th><th>产出</th></tr></thead><tbody>'
+    + '<tr><td style="text-align:left">季度复查</td><td style="text-align:left">10 大风险点快速复查</td><td style="text-align:left">红黄绿更新</td></tr>'
+    + '<tr><td style="text-align:left">年度深度审计</td><td style="text-align:left">全维度合规审计 + 新法规跟踪</td><td style="text-align:left">制度修订清单</td></tr>'
+    + '<tr><td style="text-align:left">持续机制</td><td style="text-align:left">制度更新流程 + 员工培训</td><td style="text-align:left">合规文化固化</td></tr>'
+    + '</tbody></table></div></section>';
+
+  // 结论
+  var concl = [];
+  concl.push('当前 '+overall+'：'+redN+' 个红项须 <b>7 天内</b>启动整改（'+items.filter(function(x){return x.lvl==='red';}).map(function(x){return x.name;}).join('、')+'），赔偿预估约 <b>'+Math.round(total)+' 万元</b>。');
+  concl.push('制度模板（劳动合同/规章制度/竞业协议）必须经<b>民主程序 + 公示签收</b>才有效，不能直接用未经公示的版本。');
+  concl.push('CEO 须亲自把关上述 5 件事；风险是 CEO 的风险，不能全交给 HR。');
+  h += '<div class="concl"><h3>三条能拿去开会的结论</h3><ol>';
+  concl.forEach(function(c){ h += '<li>'+c+'</li>'; });
+  h += '</ol></div>';
+
+  document.getElementById('out').innerHTML = h;
+}
+calc();
+</script>
+<script src="dataIface.js?v=12"></script>
+<script>wbDataIface.setup({ pageKey:'compliance_v1', tables:[], afterLoad:function(){ if(typeof calc==='function') calc(); } });</script>
+
+<script>window.WB_AGENT_KEY='compliance';</script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<script>window.WB_OFFLINE=true;</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="color-scheme" content="light">
+<title>生成企业专属体系文件 · HR自动化工作台</title>
+<link rel="stylesheet" href="shared.css?v=13">
+<style>
+.wrap { max-width: 960px; margin: 0 auto; padding: 28px 20px 60px; }
+.pagehead { margin: 8px 0 6px; }
+.pagehead h1 { font-size: 22px; font-weight: 700; }
+.pagehead .sub { color:#6B7280; font-size:13px; margin-top:4px; }
+.section { background:#fff; border:1px solid #ECEAE6; border-radius:14px; padding:18px 20px; margin:16px 0; }
+.section h2 { font-size:15px; font-weight:700; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+.section h2::before { content:""; width:8px; height:8px; border-radius:50%; background:#16A06A; display:inline-block; }
+.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:12px 18px; }
+.field { display:flex; flex-direction:column; gap:5px; }
+.field label { font-size:13px; color:#3D4450; }
+.field .hint { font-size:11px; color:#9AA0A6; }
+.field input, .field select { font-size:14px; padding:9px 11px; border:1px solid #DCDAD4; border-radius:9px; background:#fff; color:#1F2328; font-family:inherit; }
+.field input:focus, .field select:focus { outline:none; border-color:#16A06A; box-shadow:0 0 0 3px #EAF7F1; }
+.planbar { background:#EAF7F1; border:1px solid #C7E8D7; border-radius:10px; padding:10px 14px; font-size:13px; color:#118A5A; margin-bottom:6px; }
+.planbar b { color:#0B5844; }
+.modgroup { margin-bottom:14px; }
+.modgroup > .mh { display:flex; align-items:center; gap:10px; font-size:14px; font-weight:700; color:#118A5A; margin:6px 0 8px; }
+.modgroup > .mh .cnt { font-size:12px; color:#9AA0A6; font-weight:400; }
+.docs { display:grid; grid-template-columns:1fr 1fr; gap:8px 14px; }
+.docitem { display:flex; align-items:flex-start; gap:9px; padding:9px 11px; border:1px solid #ECEAE6; border-radius:9px; cursor:pointer; background:#fff; font-size:12.5px; }
+.docitem:hover { border-color:#16A06A; }
+.docitem input { margin-top:2px; }
+.docitem .t { font-weight:600; line-height:1.35; }
+.actions { display:flex; gap:12px; margin-top:18px; flex-wrap:wrap; }
+.btn { font-size:14px; padding:11px 22px; border-radius:11px; border:1px solid transparent; cursor:pointer; font-family:inherit; }
+.btn-primary { background:#16A06A; color:#fff; }
+.btn-primary:hover { background:#118A5A; }
+.btn-ghost { background:#fff; border-color:#DCDAD4; color:#3D4450; }
+.btn:disabled { opacity:.5; cursor:not-allowed; }
+.warn { font-size:12px; color:#B45309; background:#FEF3E2; border:1px solid #FCE3C0; border-radius:8px; padding:8px 12px; margin-top:10px; }
+.preview { font-size:13px; color:#3D4450; background:#FAFAF9; border:1px dashed #DCDAD4; border-radius:10px; padding:12px 14px; margin-top:12px; white-space:pre-wrap; max-height:260px; overflow:auto; }
+.progress { font-size:13px; color:#118A5A; margin-top:12px; }
+@media (max-width:640px){ .grid2,.docs{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="pagehead">
+    <h1>生成企业专属体系文件</h1>
+    <div class="sub">填企业信息 → 勾选模板 → 一键把「XXAI原生组织」替换为贵公司名称、生成带企业信息的 Word，并打包下载。</div>
+  </div>
+
+  <div id="planbar" class="planbar" style="display:none"></div>
+
+  <div class="section">
+    <h2>一、企业基本信息</h2>
+    <div class="grid2">
+      <div class="field"><label>企业名称 *</label><input id="company" placeholder="如：杭州示例制造有限公司"></div>
+      <div class="field"><label>所属行业</label>
+        <select id="industry">
+          <option value="制造业">制造业</option>
+          <option value="零售业">零售业</option>
+          <option value="科技互联网">科技 / 互联网</option>
+          <option value="建筑工程">建筑工程</option>
+          <option value="服务业">服务业（专业服务）</option>
+          <option value="医疗健康">医疗健康</option>
+          <option value="教育培训">教育培训</option>
+          <option value="贸易进出口">贸易 / 进出口</option>
+          <option value="电商新零售">电商 / 新零售</option>
+          <option value="餐饮酒店">餐饮酒店</option>
+          <option value="其他">其他</option>
+        </select>
+      </div>
+      <div class="field"><label>员工规模（人）</label><input id="scale" type="number" placeholder="如：320"></div>
+      <div class="field"><label>年营收（万元，选填）</label><input id="revenue" type="number" placeholder="如：18000"></div>
+    </div>
+    <div class="warn">说明：生成的 Word 会保留XXAI原生组织原版全部条款与表格，仅把公司名替换为贵公司，并在开头插入「企业信息说明」。行业 / 规模用于说明块标注，便于按本企业实际修订。</div>
+  </div>
+
+  <div class="section">
+    <h2>二、选择要生成的体系文件（按模块）</h2>
+    <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:#3D4450;cursor:pointer;margin-bottom:8px">
+      <input type="checkbox" id="all"> 全选 / 全不选（共 <span id="total">0</span> 份）
+    </label>
+    <div id="doclist"></div>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-primary" id="gen">生成并打包下载</button>
+    <button class="btn btn-ghost" id="preview">预览说明</button>
+  </div>
+  <div class="progress" id="prog" style="display:none"></div>
+  <div class="preview" id="pv" style="display:none"></div>
+</main>
+
+<script src="docxgen.js?v=12"></script>
+<script src="hrzip.js?v=12"></script>
+<script src="resources.js?v=13"></script>
+<script src="shared.js?v=13"></script>
+<script>
+var MANIFEST_URL = 'resources/人力资源体系文件模板集/manifest.json';
+var MOD_ORDER = ['事','岗','人','钱','险','流程制度'];
+var MOD_LABEL = {'事':'事·战略与目标','岗':'岗·组织与岗位','人':'人·人才与招聘','钱':'钱·薪酬与激励','险':'险·合规与风险','流程制度':'流程制度'};
+var ALL = [];
+
+function val(id){ var e=document.getElementById(id); return e?e.value.trim():''; }
+
+function today(){ var d=new Date(); return d.getFullYear()+'年'+(d.getMonth()+1)+'月'+d.getDate()+'日'; }
+
+function loadPlanBar(){
+  try{
+    var raw=localStorage.getItem('hr_bench_plan_v1'); if(!raw) return;
+    var p=JSON.parse(raw); var ks=Object.keys(p||{}); if(!ks.length) return;
+    var bar=document.getElementById('planbar');
+    bar.style.display='block';
+    bar.textContent='已从工具页带入 '+(p._from||'HR工具')+' 的方案：'+ks.map(function(k){return k+'='+p[k];}).join('；');
+    if(p.员工人数!=null) document.getElementById('scale').value=p.员工人数;
+    if(p.年营收!=null) document.getElementById('revenue').value=p.年营收;
+  }catch(e){}
+}
+
+function renderList(){
+  var list=document.getElementById('doclist');
+  document.getElementById('total').textContent=ALL.length;
+  list.innerHTML='';
+  MOD_ORDER.forEach(function(mod){
+    var items=ALL.filter(function(m){return m.module===mod;});
+    if(!items.length) return;
+    var g=document.createElement('div'); g.className='modgroup';
+    g.innerHTML='<div class="mh">'+MOD_LABEL[mod]+' <span class="cnt">（'+items.length+' 份）</span>'+
+      '<label style="font-size:12px;font-weight:400;color:#3D4450;cursor:pointer"><input type="checkbox" class="modall" data-mod="'+mod+'"> 本模块全选</label></div>';
+    var grid=document.createElement('div'); grid.className='docs';
+    items.forEach(function(m){
+      var lab=document.createElement('label'); lab.className='docitem';
+      lab.innerHTML='<input type="checkbox" class="docchk" value="'+m.file+'" data-name="'+m.name.replace(/"/g,'&quot;')+'" checked>'+
+        '<div class="t">'+m.name+'</div>';
+      grid.appendChild(lab);
+    });
+    g.appendChild(grid); list.appendChild(g);
+  });
+  document.getElementById('all').addEventListener('change',function(){
+    document.querySelectorAll('.docchk').forEach(function(c){ c.checked=document.getElementById('all').checked; });
+  });
+  document.querySelectorAll('.modall').forEach(function(cb){
+    cb.addEventListener('change',function(){
+      document.querySelectorAll('.docchk').forEach(function(c){
+        var m=ALL.find(function(x){return x.file===c.value;});
+        if(m && m.module===cb.dataset.mod) c.checked=cb.checked;
+      });
+    });
+  });
+}
+
+function selected(){ return Array.prototype.slice.call(document.querySelectorAll('.docchk')).filter(function(c){return c.checked;}); }
+
+function newName(origName, company){
+  return origName.split('XXAI原生组织').join(company) + '.docx';
+}
+
+function downloadZip(bytes, filename){
+  var blob=new Blob([bytes], {type:'application/zip'});
+  var url=URL.createObjectURL(blob); var a=document.createElement('a');
+  a.href=url; a.download=filename; document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(url); a.remove(); }, 2000);
+}
+
+async function generate(){
+  var company=val('company');
+  if(!company){ alert('请先填写企业名称'); document.getElementById('company').focus(); return; }
+  var sels=selected();
+  if(!sels.length){ alert('请至少勾选一份文件'); return; }
+  var btn=document.getElementById('gen'); btn.disabled=true;
+  var prog=document.getElementById('prog'); prog.style.display='block';
+  var files=[], failed=[];
+  for(var i=0;i<sels.length;i++){
+    var c=sels[i];
+    prog.textContent='正在生成 '+(i+1)+'/'+sels.length+'：'+c.dataset.name;
+    try{
+      var buf=await fetch(c.value).then(function(r){if(!r.ok) throw new Error('文件读取失败'); return r.arrayBuffer();});
+      var out=WBHRZip.replaceInDocx(buf, {company:company, industry:val('industry'), scale:val('scale'), date:today()});
+      files.push({ name:newName(c.dataset.name, company), data:out });
+    }catch(e){ failed.push(c.dataset.name); console.error('生成失败', c.value, e); }
+  }
+  if(files.length){
+    var zip=WBDocx._zipStore(files);
+    downloadZip(zip, company+'_人力资源体系文件_'+files.length+'份_'+today()+'.zip');
+    prog.textContent='为「'+company+'」生成 '+files.length+' 份，已打包下载。用 Word / WPS 打开后按实际修订。'+(failed.length?' 未生成 '+failed.length+' 份：'+failed.join('、'):'');
+  }else{
+    prog.textContent='生成失败，请重试或检查网络。';
+  }
+  btn.disabled=false;
+}
+
+function preview(){
+  var company=val('company')||'【贵公司】';
+  var sels=selected();
+  var txt='预览：'+company+' 的体系文件将包含\n';
+  txt+='· 开头插入说明块：行业 '+(val('industry')||'通用')+' · 规模 约'+(val('scale')||'—')+'人 · 生成日期 '+today()+'\n';
+  txt+='· 全文「XXAI原生组织」替换为「'+company+'」\n';
+  txt+='· 保留XXAI原生组织原版全部条款与表格（含岗位说明书、薪酬方案、制度范本等）\n';
+  txt+='已勾选 '+sels.length+' 份，将打包为 1 个 zip 下载。';
+  var pv=document.getElementById('pv'); pv.style.display='block'; pv.textContent=txt;
+}
+
+fetch(MANIFEST_URL).then(function(r){if(!r.ok) throw new Error('清单读取失败'); return r.json();}).then(function(j){
+  ALL=j; renderList(); loadPlanBar();
+}).catch(function(e){ alert('清单加载失败：'+e); });
+
+document.getElementById('gen').addEventListener('click', generate);
+document.getElementById('preview').addEventListener('click', preview);
+
+wbShell('生成企业专属体系文件');
+wbSidebar();
+</script>
+
+<script></script>
+</body>
+</html>

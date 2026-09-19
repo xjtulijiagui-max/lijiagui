@@ -1,0 +1,1884 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<script>window.WB_OFFLINE=true;</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>招聘面试智能助手 v1 · 智能体⑭升级版 · HR自动化工作台</title>
+<style>
+:root{
+  --navy:#1F3A5F; --blue:#2E5C8A; --blue-l:#EAF1F9; --line:#E3E6EA;
+  --bg:#F4F6F8; --card:#FFFFFF; --txt:#1F2328; --mut:#5F6B7A; --hint:#8A94A2;
+  --ok:#2E7D32; --ok-bg:#E8F3E9; --warn:#B7791F; --warn-bg:#FDF4E3; --bad:#C0392B; --bad-bg:#FBEAE8;
+  --r:10px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:"Microsoft YaHei","微软雅黑",-apple-system,"Segoe UI",sans-serif;font-size:14px;line-height:1.65}
+header{flex-wrap:wrap;background:var(--navy);color:#fff;padding:12px 20px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:50}
+header h1{font-size:16px;font-weight:500;margin:0}
+header .ver{font-size:12px;background:rgba(255,255,255,.16);padding:2px 8px;border-radius:20px}
+header .sp{flex:1}
+header .co{font-size:12.5px;opacity:.9}
+header button{font-family:inherit;font-size:12.5px;background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.28);border-radius:6px;padding:6px 12px;cursor:pointer}
+header button:hover{background:rgba(255,255,255,.24)}
+.wrap{display:flex;align-items:flex-start;gap:16px;padding:16px;max-width:1680px;margin:0 auto}
+.side{width:310px;flex:0 0 310px;position:sticky;top:64px;max-height:calc(100vh - 80px);overflow-y:auto}
+.main{flex:1;min-width:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin-bottom:14px}
+.card>.ct{font-size:13px;font-weight:500;color:var(--navy);margin:0 0 10px;padding-bottom:8px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:6px}
+.card>.ct .dot{width:6px;height:6px;border-radius:50%;background:var(--blue);flex:0 0 6px}
+.frow{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.frow label{flex:0 0 92px;font-size:12.5px;color:var(--mut)}
+.frow input,.frow select{flex:1;min-width:0;font-family:inherit;font-size:12.5px;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:#FCFCFD;color:var(--txt)}
+.frow input:focus,.frow select:focus{outline:none;border-color:var(--blue);background:#fff}
+.frow.two label{flex:0 0 44px}
+.hint{font-size:11.5px;color:var(--hint);line-height:1.55}
+nav{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+nav button{font-family:inherit;font-size:12.5px;padding:7px 12px;border:1px solid var(--line);background:var(--card);color:var(--mut);border-radius:20px;cursor:pointer;white-space:nowrap}
+nav button:hover{border-color:var(--blue);color:var(--blue)}
+nav button.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.sec{display:none}
+.sec.on{display:block}
+.sec-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.sec-head h2{font-size:16px;font-weight:500;color:var(--navy);margin:0;flex:1}
+.sec-head .tag{font-size:11.5px;padding:2px 8px;border-radius:20px;background:var(--blue-l);color:var(--blue);white-space:nowrap}
+.sec-head .tag.new{background:var(--warn-bg);color:var(--warn)}
+.sec-head .tag.reuse{background:var(--ok-bg);color:var(--ok)}
+.btn{font-family:inherit;font-size:12.5px;padding:6px 12px;border:1px solid var(--blue);background:#fff;color:var(--blue);border-radius:6px;cursor:pointer;white-space:nowrap}
+.btn:hover{background:var(--blue-l)}
+.btn.pri{background:var(--navy);border-color:var(--navy);color:#fff}
+.btn.pri:hover{background:var(--blue)}
+.doc-body h3{font-size:14px;font-weight:500;color:var(--navy);margin:18px 0 8px;padding-left:9px;border-left:3px solid var(--blue)}
+.doc-body h3:first-child{margin-top:0}
+.doc-body h4{font-size:13px;font-weight:500;color:var(--txt);margin:14px 0 6px}
+.doc-body p{margin:0 0 8px;font-size:13px;line-height:1.75}
+.doc-body ul{margin:0 0 10px;padding-left:20px}
+.doc-body li{font-size:13px;line-height:1.75;margin-bottom:3px}
+.doc-body table{width:100%;border-collapse:collapse;margin:0 0 12px;font-size:12.5px}
+.doc-body th{background:var(--navy);color:#fff;font-weight:400;text-align:left;padding:8px 10px;border:1px solid var(--navy)}
+.doc-body td{padding:8px 10px;border:1px solid var(--line);vertical-align:top;line-height:1.6}
+.doc-body tr:nth-child(even) td{background:#FAFBFC}
+.doc-body .kv{display:grid;grid-template-columns:150px 1fr;gap:0;border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-bottom:12px}
+.doc-body .kv>div{padding:8px 12px;font-size:12.5px;border-bottom:1px solid var(--line)}
+.doc-body .kv>div:nth-child(odd){background:#F8FAFC;color:var(--mut)}
+.doc-body .note,.doc-body .warn,.doc-body .ok{font-size:12.5px;padding:9px 12px;border-radius:8px;margin-bottom:12px;line-height:1.65}
+.doc-body .note{background:var(--blue-l);color:#1B3A5C;border-left:3px solid var(--blue)}
+.doc-body .warn{background:var(--warn-bg);color:#6B4A0D;border-left:3px solid var(--warn)}
+.doc-body .ok{background:var(--ok-bg);color:#1E5423;border-left:3px solid var(--ok)}
+.badge{display:inline-block;font-size:11.5px;padding:1px 7px;border-radius:20px;white-space:nowrap}
+.badge.s{background:var(--ok-bg);color:var(--ok)}
+.badge.o{background:var(--warn-bg);color:var(--warn)}
+.badge.w{background:var(--bad-bg);color:var(--bad)}
+.badge.n{background:#EEF1F4;color:var(--mut)}
+.comp{border:1px solid var(--line);border-radius:8px;padding:12px;margin-bottom:12px;background:#FCFCFD}
+.comp .ch{display:flex;align-items:center;gap:8px;margin-bottom:9px}
+.comp .ch .idx{width:22px;height:22px;border-radius:50%;background:var(--navy);color:#fff;font-size:11.5px;display:flex;align-items:center;justify-content:center;flex:0 0 22px}
+.comp .ch input.nm{min-width:0;flex:1;font-family:inherit;font-size:13px;font-weight:500;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:#fff}
+.comp .ch .wt{display:flex;align-items:center;gap:4px;font-size:12.5px;color:var(--mut)}
+.comp .ch input.wv{width:56px;font-family:inherit;font-size:13px;text-align:right;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:#fff}
+.comp .ch .del{font-size:12px;color:var(--bad);cursor:pointer;background:none;border:none;font-family:inherit;padding:4px 6px}
+.comp textarea{width:100%;font-family:inherit;font-size:12.5px;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:#fff;resize:vertical;min-height:44px;line-height:1.6;color:var(--txt)}
+.comp textarea:focus{outline:none;border-color:var(--blue)}
+.comp .fl{font-size:11.5px;color:var(--mut);margin:7px 0 3px}
+.comp .g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.wsum{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;font-size:13px;margin-bottom:12px}
+.wsum.good{background:var(--ok-bg);color:#1E5423}
+.wsum.bad{background:var(--bad-bg);color:#8C2418}
+.guard{font-size:12.5px;padding:9px 12px;border-radius:8px;margin-bottom:9px;line-height:1.7}
+.guard.g0{background:var(--bad-bg);color:#8C2418;border-left:3px solid var(--bad)}
+.guard.g1{background:var(--warn-bg);color:#6B4A0D;border-left:3px solid var(--warn)}
+.guard.g2{background:var(--ok-bg);color:#1E5423;border-left:3px solid var(--ok)}
+.metric{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:14px}
+.metric .m{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:11px 13px}
+.metric .m .l{font-size:11.5px;color:var(--mut);margin-bottom:3px}
+.metric .m .v{font-size:19px;font-weight:500;color:var(--navy);line-height:1.25}
+.metric .m .v small{font-size:12px;font-weight:400;color:var(--mut);margin-left:2px}
+.metric .m .d{font-size:11px;color:var(--hint);margin-top:2px}
+.score-row{display:flex;align-items:center;gap:6px}
+.score-row select{font-family:inherit;font-size:12.5px;padding:5px 6px;border:1px solid var(--line);border-radius:6px;background:#fff}
+.imp{width:100%;height:74px;font-family:Consolas,monospace;font-size:12px;padding:7px 8px;border:1px solid var(--line);border-radius:6px;background:#FCFCFD;color:var(--txt);resize:vertical;margin-top:6px}
+.imp:focus{outline:none;border-color:var(--blue)}
+.mini-btn{font-size:12px;color:var(--blue);cursor:pointer;font-weight:500;background:var(--blue-l);border:1px solid #CFE0F2;border-radius:6px;padding:6px 10px;font-family:inherit}
+.mini-btn:hover{background:#DCE9F7}
+#toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:var(--navy);color:#fff;font-size:13px;padding:10px 20px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .22s;z-index:99}
+#toast.on{opacity:1}
+.home-link{color:inherit;font-size:12.5px;text-decoration:none;border:1px solid rgba(255,255,255,.28);border-radius:6px;padding:6px 12px;white-space:nowrap}
+.home-link:hover{background:rgba(255,255,255,.14)}
+.table-scroll{max-width:100%;overflow-x:auto;margin-bottom:12px}
+.table-scroll table{min-width:580px;margin-bottom:0}
+.doc-body .kv{grid-template-columns:150px minmax(0,1fr)}
+.doc-body .kv>div,.comp .g2>div{min-width:0;overflow-wrap:anywhere}
+@media(max-width:980px){
+  .wrap{flex-direction:column}
+  .side{width:100%;flex:auto;position:static;max-height:none;overflow:visible}
+  .main{width:100%}
+}
+@media(max-width:600px){
+  header{position:static;padding:12px 16px;gap:8px}
+  header h1{flex:1 1 100%}
+  header .sp{display:none}
+  header .co{flex-basis:100%;overflow-wrap:anywhere}
+  .wrap{padding:12px}
+  .sec-head{flex-wrap:wrap}
+  .sec-head h2{flex-basis:100%}
+  .comp .ch{flex-wrap:wrap}
+  .comp .ch input.nm{flex:1 1 calc(100% - 30px)}
+  .comp .g2{grid-template-columns:minmax(0,1fr)}
+  .doc-body .kv{grid-template-columns:104px minmax(0,1fr)}
+  #toast{max-width:calc(100% - 24px);width:max-content}
+}
+@media print{.home-link{display:none}.table-scroll{overflow:visible}.table-scroll table{min-width:0}}
+@media print{.side,nav,header button,.sec-head .btn{display:none}.sec{display:block!important}.wrap{display:block;padding:0}.card{border:none}}
+</style>
+</head>
+<body>
+<header>
+  <a class="home-link" href="home.html#agents">返回HR工作台</a>
+  <h1>招聘面试智能助手</h1>
+  <span class="ver">v1 · 智能体⑭升级版</span>
+  <span class="sp"></span>
+  <span class="co" id="hCo"></span>
+  <button onclick="loadSample()">载入样例</button>
+  <button onclick="window.print()">打印当前</button>
+  <button onclick="resetAll()">重置全部</button>
+</header>
+
+<div class="wrap">
+  <aside class="side">
+    <div class="card">
+      <div class="ct"><span class="dot"></span>01 企业基础信息</div>
+      <div class="frow"><label>企业名称</label><input id="c_name"></div>
+      <div class="frow"><label>所属行业</label><input id="c_industry"></div>
+      <div class="frow"><label>员工规模</label><input id="c_size"></div>
+      <div class="frow"><label>年营收</label><input id="c_revenue"></div>
+    </div>
+
+    <div class="card">
+      <div class="ct"><span class="dot"></span>02 岗位信息</div>
+      <div class="frow"><label>用人部门</label><input id="p_dept"></div>
+      <div class="frow"><label>岗位名称</label><input id="p_name"></div>
+      <div class="frow"><label>岗位层级</label>
+        <select id="p_level">
+          <option>基层执行岗</option><option>专业骨干岗</option>
+          <option selected>管理岗（主管/经理）</option><option>中高层管理岗</option>
+        </select>
+      </div>
+      <div class="frow"><label>学历门槛</label><input id="p_edu"></div>
+      <div class="frow"><label>经验门槛</label><input id="p_exp"></div>
+      <div class="frow"><label>汇报对象</label><input id="p_report"></div>
+      <div class="frow two"><label>编制</label><input id="p_hc_plan" style="flex:1"><label>在编</label><input id="p_hc_now" style="flex:1"></div>
+      <div class="frow two"><label>年薪起</label><input id="p_sal_min" style="flex:1"><label>年薪止</label><input id="p_sal_max" style="flex:1"></div>
+      <div class="hint">年薪单位：万元。用于画像薪酬带宽与 offer 区间测算。</div>
+      <div class="fl" style="font-size:11.5px;color:var(--mut);margin:9px 0 3px">岗位一句话使命（12 个月内必须交付什么）</div>
+      <textarea class="imp" id="p_purpose" style="height:56px"></textarea>
+    </div>
+
+    <div class="card">
+      <div class="ct"><span class="dot"></span>03 部门硬仗清单（L0 输入源）</div>
+      <div class="hint" style="margin-bottom:8px">从企业战略解码成果直接粘贴。招聘的起点是「今年必须打赢的仗」，不是「缺个人」。</div>
+      <textarea class="imp" id="b_raw" style="height:88px" placeholder="一行一仗，Tab 分隔：编号 / 硬仗名称 / 衡量指标 / 目标值"></textarea>
+      <button class="mini-btn" style="margin-top:6px;width:100%" onclick="parseBattles()">解析硬仗清单</button>
+    </div>
+
+    <div class="card">
+      <div class="ct"><span class="dot"></span>04 一票否决红线</div>
+      <div class="hint" style="margin-bottom:8px">红线独立于综合分判定，不能被加权稀释。一行一条。</div>
+      <textarea class="imp" id="v_raw" style="height:66px" placeholder="红线名称 / 判定规则"></textarea>
+    </div>
+
+    <div class="card">
+      <div class="ct"><span class="dot"></span>05 招聘漏斗与成本</div>
+      <div class="frow"><label>收到简历</label><input id="f_resume"></div>
+      <div class="frow"><label>初筛通过</label><input id="f_screen"></div>
+      <div class="frow"><label>进入一面</label><input id="f_i1"></div>
+      <div class="frow"><label>进入二面</label><input id="f_i2"></div>
+      <div class="frow"><label>发出 offer</label><input id="f_offer"></div>
+      <div class="frow"><label>实际到岗</label><input id="f_onboard"></div>
+      <div class="frow"><label>周期(天)</label><input id="f_days"></div>
+      <div class="frow"><label>招聘投入</label><input id="f_cost"></div>
+      <div class="hint">投入单位：万元（渠道费 + HR 工时折算）。</div>
+    </div>
+
+    <div class="card">
+      <div class="ct"><span class="dot"></span>06 校准与数据接口</div>
+      <div class="frow" style="align-items:flex-start">
+        <label style="flex:0 0 92px">校准会</label>
+        <label style="flex:1;font-size:12.5px;display:flex;align-items:center;gap:6px;cursor:pointer">
+          <input type="checkbox" id="calib_done" style="flex:0 0 auto;width:15px;height:15px">已完成（用历史录用者回测过评分卡）
+        </label>
+      </div>
+      <div class="hint" style="margin-bottom:9px">未校准的评分卡，权重与锚点都只是假设。这一小时 AI 替代不了。</div>
+      <div style="display:flex;gap:8px">
+        <button class="mini-btn" style="flex:1" onclick="diToggle()">粘贴 Excel 导入</button>
+        <button class="mini-btn" style="flex:1" onclick="diExport()">导出全部为 TSV</button>
+      </div>
+      <div id="diBox" style="display:none;margin-top:10px">
+        <div class="hint">从 Excel 复制整块数据粘贴到下方，点「灌入」即替换现有并自动留存。</div>
+        <textarea class="imp" id="diParams" placeholder="参数（名称 Tab 值）"></textarea>
+        <textarea class="imp" id="diComps" placeholder="胜任力（名称/权重/强证据/合格证据/弱证据/面试题1/面试题2）"></textarea>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button class="btn pri" style="flex:1" onclick="diImport()">灌入网页（替换现有）</button>
+          <button class="mini-btn" onclick="diToggle()">收起</button>
+        </div>
+      </div>
+      <div class="hint" id="diFlag" style="margin-top:8px"></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <nav id="nav"></nav>
+    <section id="s_design" class="sec on">
+      <div class="sec-head"><h2>评分卡设计台</h2><span class="tag">核心 · 先做这步</span>
+        <button class="btn" onclick="addComp()">＋ 增加胜任力</button>
+        <button class="btn" onclick="autoWeight()">权重均分</button>
+      </div>
+      <div id="guardBox"></div>
+      <div class="card"><div class="ct"><span class="dot"></span>胜任力评分卡（4-6 项，权重和须为 100）</div><div id="compList"></div></div>
+      <div class="card"><div class="ct"><span class="dot"></span>评分卡七步自检</div><div class="doc-body" id="s_design-body"></div></div>
+    </section>
+  </main>
+</div>
+<div id="toast"></div>
+
+<script>
+/* ============================================================
+   招聘面试智能助手 v1 — 智能体⑭升级版（内容层 + 决策层合一）
+   零依赖 · 离线可用 · 数据存本机 localStorage
+   ============================================================ */
+
+var LS_KEY = 'hr_bench_recruit_interview_v1';
+var state = null;
+
+var BLANK = function(){
+  return {
+    company:{name:'',industry:'',size:'',revenue:''},
+    post:{dept:'',name:'',level:'管理岗（主管/经理）',edu:'',exp:'',report:'',
+          hcPlan:'',hcNow:'',salMin:'',salMax:'',purpose:''},
+    battles:[],
+    comps:[],
+    veto:[],
+    funnel:{resume:'',screen:'',i1:'',i2:'',offer:'',onboard:'',days:'',cost:''},
+    calibDone:false,
+    scores:{}
+  };
+};
+
+var SAMPLE = function(){
+  return {
+    company:{name:'XXAI原生组织',industry:'新能源装备制造（B端非标件）',size:'30 人',revenue:'约 8000 万元'},
+    post:{dept:'销售部',name:'大客户销售经理',level:'管理岗（主管/经理）',
+          edu:'大专及以上',exp:'5 年以上 B 端工业品销售经验，其中 2 年以上非标/项目型销售',
+          report:'销售总监',hcPlan:'5',hcNow:'4',salMin:'25',salMax:'45',
+          purpose:'12 个月内独立开发 3 家新行业大客户，并把所辖客户逾期账款压降到 10% 以内，让销售部从「靠老客户续单」转向「靠新客户增长」。'},
+    battles:[
+      {code:'H1',name:'回款攻坚',metric:'逾期应收账款占比',target:'从 32% 压降到 10%；12 个月以上账龄清零',owner:'销售部'},
+      {code:'H2',name:'新客户突破',metric:'新行业签约客户数',target:'新签 5 家（跳出原有 3 个行业）',owner:'销售部'},
+      {code:'H3',name:'销售周期压缩',metric:'跨年项目平均周期',target:'从 14 个月压缩到 10 个月',owner:'销售部/技术部'},
+      {code:'H4',name:'团队稳定与产出',metric:'核心销售留存率 / 人均产出',target:'留存率 ≥85%；人均产出提升 25%',owner:'销售部/人力资源部'}
+    ],
+    comps:[
+      {name:'大客户攻坚与关系经营',weight:'30',
+       strong:'独立拿下过单笔 500 万元以上的全新客户，能画出完整决策链地图（谁拍板、谁反对、谁影响），并说清每一步的破局动作。',
+       ok:'主导过百万元级新客户开发，能复盘关键节点的推进动作与卡点。',
+       weak:'主要靠老客户续单或渠道分配，说不出新客户从 0 到 1 的具体打法。',
+       q1:'请讲一个你从零开发的最大新客户，当时对方的采购决策链是怎样的？',
+       q2:'有没有一次你判断错了关键决策人？后来怎么补救的？'},
+      {name:'长周期项目管控',weight:'25',
+       strong:'主导过周期 12 个月以上的非标项目，能说清里程碑设置逻辑、客户方对接人变更时的衔接办法，以及自己防止项目烂尾的具体机制。',
+       ok:'参与过跨年项目，能说清自己负责的节点与交付结果。',
+       weak:'只做过短周期标准品销售，或项目一拖就丢给技术/售后。',
+       q1:'讲一个周期最长、过程最曲折的项目，中间差点黄掉的是哪一步？',
+       q2:'客户方对接人换人了，你怎么保证项目不断档？'},
+      {name:'回款风险意识与催收执行',weight:'20',
+       strong:'能在签约前识别回款风险（付款条件、客户资金状况、行业账期），有一套固定催收节奏，并有把逾期账款实际追回的战绩。',
+       ok:'会关注账期，能说清自己催收的常规动作。',
+       weak:'认为回款是财务的事，签完合同就不管了。',
+       q1:'你签过付款条件最差的一份合同是什么？为什么接受？',
+       q2:'一笔拖了 8 个月的账款，你是怎么一步步追回来的？'},
+      {name:'技术方案理解与转化',weight:'15',
+       strong:'能独立看懂客户图纸与工况参数，把技术指标翻译成客户能感知的价值（省多少钱、少停多少机）。',
+       ok:'能借助技术同事完成方案讲解与答疑。',
+       weak:'完全依赖技术支持，无法独立与客户技术负责人对话。',
+       q1:'客户提了一个我们标准产品满足不了的需求，你怎么把它变成可落地的方案？',
+       q2:'你怎么向一个不懂技术的采购解释我们的技术优势？'},
+      {name:'韧性抗压与自驱',weight:'10',
+       strong:'能讲清自己经历过的最长一次无产出期，那段时间每天具体在做什么、靠什么撑下来。',
+       ok:'能描述自己在压力下的调整方式。',
+       weak:'遇到连续拒绝容易情绪化或放弃，需要外部推动。',
+       q1:'你连续几个月没开单是什么时候？那段时间你每天怎么过？',
+       q2:'你最近一次主动学习新东西是什么？为什么学？'}
+    ],
+    veto:[
+      {name:'回款诚信',rule:'存在为完成签单指标而隐瞒客户回款风险、私自承诺账期的行为'},
+      {name:'商业廉洁',rule:'存在收受客户或供应商回扣、飞单、私下经营同类业务的行为'},
+      {name:'履历真实',rule:'学历、任职经历、业绩数据存在实质性造假'}
+    ],
+    funnel:{resume:'480',screen:'120',i1:'60',i2:'30',offer:'8',onboard:'6',days:'42',cost:'12'},
+    calibDone:false,
+    scores:{}
+  };
+};
+
+/* ---------- 工具 ---------- */
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function num(v){ var n=parseFloat(String(v==null?'':v).replace(/[^\d.\-]/g,'')); return isNaN(n)?0:n; }
+function pct(a,b){ if(!b) return '—'; return (a/b*100).toFixed(1)+'%'; }
+function toast(msg){ var t=$('toast'); t.textContent=msg; t.classList.add('on'); setTimeout(function(){ t.classList.remove('on'); },1900); }
+function wsum(){ var s=0; state.comps.forEach(function(c){ s+=num(c.weight); }); return Math.round(s*100)/100; }
+
+/* ---------- 护栏：反偏见与可观察性审查 ---------- */
+var BIAS_WORDS = [
+  {w:'文化契合', why:'「文化契合」无定义，是偏见入口。改写成具体行为，如「能在跨部门冲突中推动结论落地」。'},
+  {w:'性格开朗', why:'性格描述不可观察，且易演变为对表达风格的偏好。改写为「能在客户方多人会议中主动推进议题」。'},
+  {w:'形象气质', why:'涉及外貌，属受保护特征代理词。删除。'},
+  {w:'抗压能力强', why:'特质词，不可评分。改写为「在连续 3 个月无产出的情况下仍保持每周 8 家新客户拜访」。'},
+  {w:'沟通能力强', why:'特质词，不可评分。改写为「能向非技术背景的采购讲清技术方案并推动其向上汇报」。'},
+  {w:'责任心强', why:'特质词，不可评分。改写为「承诺的交付节点有主动提前预警记录」。'},
+  {w:'踏实肯干', why:'特质词，不可评分。改写为可量化的行为证据。'},
+  {w:'学历好', why:'院校背景非岗位必需，易构成不公平筛选。若确需，写明具体知识要求。'},
+  {w:'年轻', why:'年龄属受保护特征。删除。'},
+  {w:'已婚已育', why:'婚育状况属受保护特征。删除。'},
+  {w:'本地人', why:'籍贯属受保护特征。删除。'},
+  {w:'男生优先', why:'性别属受保护特征。删除。'},
+  {w:'有狼性', why:'特质词，不可评分。改写为具体的攻坚行为。'},
+  {w:'执行力强', why:'特质词，不可评分。改写为「接到任务后 24 小时内给出拆解方案并明确首步动作」。'}
+];
+var VAGUE_WORDS = ['能力强','素质高','水平高','意识强','思维好','态度好','比较优秀','综合素质'];
+
+function scanComps(){
+  var hits=[];
+  state.comps.forEach(function(c,i){
+    var text=[c.name,c.strong,c.ok,c.weak].join(' ');
+    BIAS_WORDS.forEach(function(b){
+      if(text.indexOf(b.w)>=0) hits.push({comp:c.name||('第'+(i+1)+'项'),word:b.w,why:b.why,level:'P0'});
+    });
+    VAGUE_WORDS.forEach(function(v){
+      if(text.indexOf(v)>=0) hits.push({comp:c.name||('第'+(i+1)+'项'),word:v,why:'泛泛的形容词，面试官无法据此打分。请替换为可观察的行为证据。',level:'P1'});
+    });
+  });
+  return hits;
+}
+
+function runGuards(){
+  var g=[], ws=wsum();
+  if(!state.comps.length){
+    g.push({lv:'g0',t:'评分卡为空',d:'至少需要 4 项胜任力才能开始。这是全链路的第一块基石，后面的手册、评估表、试用期考核表都从它派生。'});
+  } else {
+    if(Math.abs(ws-100)>0.01){
+      g.push({lv:'g0',t:'权重和 = '+ws+'，不等于 100',d:'权重和不为 100，综合分会被系统性放大或缩小，绿黄红建议随之失真。请调整权重后再用。'});
+    } else {
+      g.push({lv:'g2',t:'权重和 = 100，校验通过',d:'权重已配平，综合分可直接用于录用建议判定。'});
+    }
+    if(state.comps.length<4){
+      g.push({lv:'g1',t:'胜任力仅 '+state.comps.length+' 项，偏少',d:'建议 4-6 项。少于 4 项覆盖面不足，多于 6 项面试官记不住、评分会失真。'});
+    }
+    if(state.comps.length>6){
+      g.push({lv:'g1',t:'胜任力达 '+state.comps.length+' 项，偏多',d:'建议压到 6 项以内。被迫取舍的过程本身就是想清楚「这个岗到底靠什么赢」。'});
+    }
+    var top=state.comps.slice().sort(function(a,b){ return num(b.weight)-num(a.weight); });
+    if(state.comps.length>=4){
+      var t1=num(top[0].weight), t2=num(top[1].weight), t3=num(top[2].weight);
+      if(Math.abs(t1-t3)<0.01 && Math.abs(t2-t3)<0.01){
+        g.push({lv:'g1',t:'权重疑似平均分配',d:'前三项权重接近相等，通常意味着还没想清楚这个岗位真正靠什么赢。请强制排序：如果只能保住一项，是哪一项？'});
+      }
+    }
+  }
+  var hits=scanComps();
+  if(hits.length){
+    var p0=hits.filter(function(h){return h.level==='P0';});
+    var p1=hits.filter(function(h){return h.level==='P1';});
+    if(p0.length){
+      g.push({lv:'g0',t:'反偏见扫描命中 '+p0.length+' 处（P0 必须改）',
+        d:p0.map(function(h){ return '「'+esc(h.comp)+'」出现「'+esc(h.word)+'」——'+esc(h.why); }).join('<br>')});
+    }
+    if(p1.length){
+      g.push({lv:'g1',t:'可观察性不足 '+p1.length+' 处（P1 建议改）',
+        d:p1.map(function(h){ return '「'+esc(h.comp)+'」出现「'+esc(h.word)+'」——'+esc(h.why); }).join('<br>')});
+    }
+  } else if(state.comps.length){
+    g.push({lv:'g2',t:'反偏见与可观察性扫描通过',d:'未发现受保护特征代理词与不可评的特质词。'});
+  }
+  if(!state.veto.length){
+    g.push({lv:'g1',t:'未设置一票否决红线',d:'诚信、资金、安全类红线必须独立判定。仅靠加权综合分，红线会被高分项稀释掉。'});
+  } else {
+    g.push({lv:'g2',t:'已设 '+state.veto.length+' 条一票否决红线',d:'红线独立判定，不参与加权。'});
+  }
+  if(!state.calibDone){
+    g.push({lv:'g1',t:'评分卡尚未校准',d:'请挑 1-2 名 12-24 个月前录用、现在绩效已知的人回测：高绩效者只拿到 3 分，说明行为锚点写错了；低绩效者拿高分，说明权重错了。校准完成后在左侧勾选。'});
+  } else {
+    g.push({lv:'g2',t:'评分卡已完成校准',d:'锚点与权重已用真实录用结果验证过。'});
+  }
+  return g;
+}
+
+/* ---------- 硬仗解析 ---------- */
+function parseBattles(){
+  var raw=$('b_raw').value.trim();
+  if(!raw){ toast('请先粘贴硬仗清单'); return; }
+  var rows=[];
+  raw.split('\n').forEach(function(line){
+    line=line.replace(/\r/g,'').trim();
+    if(!line) return;
+    var d = line.indexOf('\t')>=0 ? '\t' : (line.indexOf('，')>=0 ? '，' : (line.indexOf(',')>=0 ? ',' : '|'));
+    var c=line.split(d).map(function(s){ return s.trim(); });
+    if(c.length>=2) rows.push({code:c[0],name:c[1],metric:c[2]||'',target:c[3]||'',owner:c[4]||''});
+  });
+  if(!rows.length){ toast('未解析出硬仗，请检查分隔符'); return; }
+  state.battles=rows; renderAll(); toast('已解析 '+rows.length+' 条硬仗');
+}
+function parseVeto(){
+  var raw=$('v_raw').value.trim(); if(!raw) return;
+  var rows=[];
+  raw.split('\n').forEach(function(line){
+    line=line.replace(/\r/g,'').trim(); if(!line) return;
+    var i=line.indexOf('\t'); if(i<0) i=line.indexOf('，'); if(i<0) i=line.indexOf('/');
+    if(i>0) rows.push({name:line.slice(0,i).trim(),rule:line.slice(i+1).trim()});
+    else rows.push({name:line,rule:''});
+  });
+  state.veto=rows;
+}
+
+/* ---------- 评分卡设计台 ---------- */
+function renderComps(){
+  var host=$('compList'); if(!host) return;
+  if(!state.comps.length){
+    host.innerHTML='<div class="hint">还没有胜任力。点右上「＋ 增加胜任力」开始，或点顶部「载入样例」看完整示范。</div>';
+    return;
+  }
+  var html='';
+  state.comps.forEach(function(c,i){
+    html+='<div class="comp">'
+      +'<div class="ch"><span class="idx">'+(i+1)+'</span>'
+      +'<input class="nm" value="'+esc(c.name)+'" placeholder="胜任力名称（用行为命名，别用特质词）" oninput="updComp('+i+',\'name\',this.value)">'
+      +'<span class="wt">权重 <input class="wv" value="'+esc(c.weight)+'" oninput="updComp('+i+',\'weight\',this.value)">%</span>'
+      +'<button class="del" onclick="delComp('+i+')">删除</button></div>'
+      +'<div class="fl">强证据（5 分 · 可观察的具体行为）</div>'
+      +'<textarea oninput="updComp('+i+',\'strong\',this.value)">'+esc(c.strong)+'</textarea>'
+      +'<div class="fl">合格证据（3 分 · 能接受的最低表现）</div>'
+      +'<textarea oninput="updComp('+i+',\'ok\',this.value)">'+esc(c.ok)+'</textarea>'
+      +'<div class="fl">弱证据（1 分 · 明显不达标的信号）</div>'
+      +'<textarea oninput="updComp('+i+',\'weak\',this.value)">'+esc(c.weak)+'</textarea>'
+      +'<div class="g2"><div><div class="fl">面试题 1（追问过去真实行为）</div>'
+      +'<textarea oninput="updComp('+i+',\'q1\',this.value)">'+esc(c.q1)+'</textarea></div>'
+      +'<div><div class="fl">面试题 2（追问失败与修正）</div>'
+      +'<textarea oninput="updComp('+i+',\'q2\',this.value)">'+esc(c.q2)+'</textarea></div></div>'
+      +'</div>';
+  });
+  host.innerHTML=html;
+  renderGuardOnly();
+}
+function renderGuardOnly(){
+  var box=$('guardBox'); if(!box) return;
+  var ws=wsum();
+  var cls=Math.abs(ws-100)<0.01?'good':'bad';
+  var g=runGuards(), gh='';
+  g.forEach(function(x){ gh+='<div class="guard '+x.lv+'"><b>'+x.t+'</b><br>'+x.d+'</div>'; });
+  box.innerHTML='<div class="wsum '+cls+'">权重合计 <b>'+ws+'%</b>　'+(cls==='good'?'✓ 已配平，可用于综合分计算':'✗ 必须调整为 100，否则综合分失真')+'</div>'+gh;
+}
+var _ot=null;
+function updComp(i,k,v){
+  if(state.comps[i]) state.comps[i][k]=v;
+  renderGuardOnly();
+  clearTimeout(_ot);
+  _ot=setTimeout(function(){ renderOutputs(); saveLocal(); },450);
+}
+function delComp(i){ state.comps.splice(i,1); renderComps(); renderOutputs(); saveLocal(); }
+function addComp(){
+  state.comps.push({name:'',weight:'0',strong:'',ok:'',weak:'',q1:'',q2:''});
+  renderComps(); renderOutputs(); saveLocal();
+}
+function autoWeight(){
+  var n=state.comps.length; if(!n) return;
+  var base=Math.floor(100/n*100)/100, used=0;
+  state.comps.forEach(function(c,i){
+    if(i===n-1){ c.weight=String(Math.round((100-used)*100)/100); }
+    else { c.weight=String(base); used+=base; }
+  });
+  renderComps(); renderOutputs(); saveLocal(); toast('已均分权重，请按岗位实际排序后手工调整');
+}
+
+/* ---------- 雷达图 ---------- */
+function radarSVG(comps,size){
+  var n=comps.length; if(n<3) return '';
+  var cx=size/2, cy=size/2, R=size*0.32;
+  function pt(i,r){ var a=-Math.PI/2 + i*2*Math.PI/n; return [cx+r*Math.cos(a), cy+r*Math.sin(a)]; }
+  var rings='';
+  [0.25,0.5,0.75,1].forEach(function(f){
+    var p=[]; for(var i=0;i<n;i++){ p.push(pt(i,R*f).map(function(x){return x.toFixed(1);}).join(',')); }
+    rings+='<polygon points="'+p.join(' ')+'" fill="none" stroke="#E3E6EA" stroke-width="0.5"/>';
+  });
+  var axes='', labels='';
+  for(var i=0;i<n;i++){
+    var e=pt(i,R);
+    axes+='<line x1="'+cx+'" y1="'+cy+'" x2="'+e[0].toFixed(1)+'" y2="'+e[1].toFixed(1)+'" stroke="#E3E6EA" stroke-width="0.5"/>';
+    var lp=pt(i,R+18);
+    var anchor = Math.abs(lp[0]-cx)<6 ? 'middle' : (lp[0]>cx?'start':'end');
+    var nm=comps[i].name||('项'+(i+1));
+    if(nm.length>7) nm=nm.slice(0,6)+'…';
+    labels+='<text x="'+lp[0].toFixed(1)+'" y="'+lp[1].toFixed(1)+'" text-anchor="'+anchor+'" dominant-baseline="central" font-size="10" fill="#5F6B7A" font-family="Microsoft YaHei">'+esc(nm)+'</text>';
+  }
+  var poly=[]; for(var j=0;j<n;j++){ poly.push(pt(j,R*0.78).map(function(x){return x.toFixed(1);}).join(',')); }
+  var dots='';
+  for(var k=0;k<n;k++){ var d=pt(k,R*0.78); dots+='<circle cx="'+d[0].toFixed(1)+'" cy="'+d[1].toFixed(1)+'" r="2.6" fill="#2E5C8A"/>'; }
+  return '<svg viewBox="0 0 '+size+' '+size+'" width="100%" style="max-width:340px" role="img">'
+    +'<title>岗位胜任力雷达图</title>'+rings+axes
+    +'<polygon points="'+poly.join(' ')+'" fill="#2E5C8A" fill-opacity="0.14" stroke="#2E5C8A" stroke-width="1.5"/>'
+    +dots+labels+'</svg>';
+}
+
+/* ---------- 模块渲染（占位，见下方 MODULES 段） ---------- */
+var MODULES = [
+  {id:'a1',  code:'A1',  name:'任职资格标准',       tag:'核心 7 件套', cls:'reuse'},
+  {id:'a2',  code:'A2',  name:'人才精准画像',       tag:'核心 7 件套', cls:'reuse'},
+  {id:'a3',  code:'A3',  name:'结构化面试手册',     tag:'核心 7 件套', cls:'reuse'},
+  {id:'a4',  code:'A4',  name:'内推文案包',         tag:'核心 7 件套', cls:'new'},
+  {id:'a5',  code:'A5',  name:'面试评估表',         tag:'核心 7 件套', cls:'new'},
+  {id:'a6',  code:'A6',  name:'试用期考核表',       tag:'核心 7 件套', cls:'new'},
+  {id:'a7',  code:'A7',  name:'试用期带教计划',     tag:'核心 7 件套', cls:'new'},
+  {id:'b8',  code:'B8',  name:'面试官速查卡',       tag:'加值 5 件',   cls:'reuse'},
+  {id:'b9',  code:'B9',  name:'面试题库+笔试库',    tag:'加值 5 件',   cls:'reuse'},
+  {id:'b10', code:'B10', name:'候选人话术包',       tag:'加值 5 件',   cls:'new'},
+  {id:'b11', code:'B11', name:'招聘漏斗看板',       tag:'加值 5 件',   cls:'reuse'},
+  {id:'b12', code:'B12', name:'校准会操作指引',     tag:'加值 5 件',   cls:'new'},
+  {id:'c13', code:'C13', name:'胜任力锚点字典',     tag:'组织级 3 件', cls:'new'},
+  {id:'c14', code:'C14', name:'面试官认证机制',     tag:'组织级 3 件', cls:'new'},
+  {id:'c15', code:'C15', name:'AI 素养评估',        tag:'组织级 3 件', cls:'new'}
+];
+
+function buildNav(){
+  var nav=$('nav'); if(!nav) return;
+  var h='<button class="on" onclick="showSec(\'s_design\',this)">评分卡设计台</button>';
+  MODULES.forEach(function(m){
+    h+='<button onclick="showSec(\''+m.id+'\',this)">'+m.code+' '+m.name+'</button>';
+  });
+  nav.innerHTML=h;
+  var main=document.querySelector('.main');
+  MODULES.forEach(function(m){
+    var s=document.createElement('section');
+    s.id=m.id; s.className='sec';
+    s.innerHTML='<div class="sec-head"><h2>'+m.code+' · '+m.name+'</h2>'
+      +'<span class="tag '+m.cls+'">'+m.tag+'</span>'
+      +'<button class="btn" onclick="copySec(\''+m.id+'\')">复制正文</button>'
+      +'<button class="btn pri" onclick="exportSec(\''+m.id+'\',\''+m.code+'\',\''+m.name+'\')">导出 Word</button>'
+      +'</div><div class="doc-body" id="'+m.id+'-body"></div>';
+    main.appendChild(s);
+  });
+}
+function showSec(id,btn){
+  document.querySelectorAll('.sec').forEach(function(s){ s.classList.remove('on'); });
+  var s=$(id); if(s) s.classList.add('on');
+  document.querySelectorAll('nav button').forEach(function(b){ b.classList.remove('on'); });
+  if(btn) btn.classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function copySec(id){
+  var b=$(id+'-body'); if(!b) return;
+  var t=b.innerText;
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(t).then(function(){ toast('已复制到剪贴板'); },function(){ prompt('请手动复制：',t); });
+  } else prompt('请手动复制：',t);
+}
+
+/* ---------- 全量渲染 ---------- */
+function renderAll(){
+  syncSideToState();
+  renderComps();
+  renderDesignBody();
+  if(typeof renderOutputs==='function') renderOutputs();
+  var hc=$('hCo'); if(hc) hc.textContent = state.company.name ? (state.company.name+' · '+state.post.name) : '未填写企业信息';
+}
+
+function syncSideToState(){
+  state.company={name:$('c_name').value,industry:$('c_industry').value,size:$('c_size').value,revenue:$('c_revenue').value};
+  state.post={dept:$('p_dept').value,name:$('p_name').value,level:$('p_level').value,
+    edu:$('p_edu').value,exp:$('p_exp').value,report:$('p_report').value,
+    hcPlan:$('p_hc_plan').value,hcNow:$('p_hc_now').value,
+    salMin:$('p_sal_min').value,salMax:$('p_sal_max').value,purpose:$('p_purpose').value};
+  state.funnel={resume:$('f_resume').value,screen:$('f_screen').value,i1:$('f_i1').value,i2:$('f_i2').value,
+    offer:$('f_offer').value,onboard:$('f_onboard').value,days:$('f_days').value,cost:$('f_cost').value};
+  state.calibDone=$('calib_done').checked;
+  parseVeto();
+}
+function syncStateToSide(){
+  $('c_name').value=state.company.name; $('c_industry').value=state.company.industry;
+  $('c_size').value=state.company.size; $('c_revenue').value=state.company.revenue;
+  $('p_dept').value=state.post.dept; $('p_name').value=state.post.name;
+  $('p_level').value=state.post.level; $('p_edu').value=state.post.edu;
+  $('p_exp').value=state.post.exp; $('p_report').value=state.post.report;
+  $('p_hc_plan').value=state.post.hcPlan; $('p_hc_now').value=state.post.hcNow;
+  $('p_sal_min').value=state.post.salMin; $('p_sal_max').value=state.post.salMax;
+  $('p_purpose').value=state.post.purpose;
+  $('f_resume').value=state.funnel.resume; $('f_screen').value=state.funnel.screen;
+  $('f_i1').value=state.funnel.i1; $('f_i2').value=state.funnel.i2;
+  $('f_offer').value=state.funnel.offer; $('f_onboard').value=state.funnel.onboard;
+  $('f_days').value=state.funnel.days; $('f_cost').value=state.funnel.cost;
+  $('calib_done').checked=!!state.calibDone;
+  $('b_raw').value=state.battles.map(function(b){ return [b.code,b.name,b.metric,b.target,b.owner].join('\t'); }).join('\n');
+  $('v_raw').value=state.veto.map(function(v){ return v.name+'\t'+v.rule; }).join('\n');
+}
+
+/* ---------- 评分卡七步自检（设计台正文） ---------- */
+function renderDesignBody(){
+  var b=$('s_design-body'); if(!b) return;
+  var ws=wsum();
+  var top=state.comps.slice().sort(function(a,b2){ return num(b2.weight)-num(a.weight); });
+  var h='';
+  h+='<h3>一、这个岗位的 12 个月胜负手</h3>';
+  h+='<p>'+(state.post.purpose?esc(state.post.purpose):'<span style="color:#C0392B">尚未填写岗位一句话使命。没有它，后面所有标准都是无根之木。</span>')+'</p>';
+  h+='<h3>二、七步自检</h3>';
+  h+='<table><tr><th style="width:40px">步</th><th style="width:190px">动作</th><th>自检问题</th><th style="width:80px">状态</th></tr>';
+  var steps=[
+    ['1','写一句话使命','12 个月后，这个人做出什么，你会说这一岗招对了？', state.post.purpose?'已填':'待填'],
+    ['2','列 4-6 项胜任力','能不能砍到 6 项以内？砍不动说明还没想清楚。', state.comps.length>=4&&state.comps.length<=6?'合规':(state.comps.length?'待调':'待填')],
+    ['3','配权重（和=100）','如果只能保住一项，是哪一项？那就是权重最高的。', Math.abs(ws-100)<0.01?'已配平':'待调'],
+    ['4','写三档行为锚点','每档描述的是能看见的行为，还是形容词？', state.comps.length&&state.comps.every(function(c){return c.strong&&c.ok&&c.weak;})?'已写':'待写'],
+    ['5','每题挂到锚点上','这道题问出来的回答，能不能直接对照某一档锚点打分？', state.comps.length&&state.comps.every(function(c){return c.q1;})?'已挂':'待挂'],
+    ['6','设一票否决红线','诚信/资金/安全类红线是否已独立列出？', state.veto.length?'已设':'待设'],
+    ['7','用历史录用者校准','高绩效者回测能拿高分吗？低绩效者会被筛掉吗？', state.calibDone?'已完成':'未完成']
+  ];
+  steps.forEach(function(s){
+    var ok = s[3].indexOf('已')===0||s[3]==='合规';
+    h+='<tr><td>'+s[0]+'</td><td>'+s[1]+'</td><td>'+s[2]+'</td><td><span class="badge '+(ok?'s':'w')+'">'+s[3]+'</span></td></tr>';
+  });
+  h+='</table>';
+  if(top.length){
+    h+='<h3>三、权重排序（想清楚「靠什么赢」）</h3>';
+    h+='<table><tr><th style="width:50px">序</th><th>胜任力</th><th style="width:70px">权重</th><th>面试时间建议分配</th></tr>';
+    top.forEach(function(c,i){
+      var t = num(c.weight)/100*45;
+      h+='<tr><td>'+(i+1)+'</td><td>'+esc(c.name)+'</td><td>'+esc(c.weight)+'%</td><td>约 '+t.toFixed(0)+' 分钟（按 45 分钟面试折算）</td></tr>';
+    });
+    h+='</table>';
+    h+='<div class="note">面试时间应按权重分配。权重 30% 的胜任力只问 3 分钟，是结构化面试最常见的执行走样。</div>';
+  }
+  h+='<h3>四、这个岗位靠什么赢（由硬仗反推）</h3>';
+  if(state.battles.length){
+    h+='<table><tr><th style="width:50px">编号</th><th style="width:130px">硬仗</th><th>衡量指标与目标</th><th style="width:120px">对岗位的要求</th></tr>';
+    state.battles.forEach(function(x){
+      h+='<tr><td>'+esc(x.code)+'</td><td>'+esc(x.name)+'</td><td>'+esc(x.metric)+'：'+esc(x.target)+'</td><td>'+(state.comps[0]?esc(state.comps[0].name):'—')+'</td></tr>';
+    });
+    h+='</table>';
+    h+='<div class="note">硬仗是招聘的唯一合法起点。写不出这个岗位承接哪条硬仗，说明这个岗位可能不该招。</div>';
+  } else {
+    h+='<div class="warn">尚未录入部门硬仗清单。请在左侧「03 部门硬仗清单」粘贴，或点顶部「载入样例」。</div>';
+  }
+  b.innerHTML=withScrollableTables(h);
+}
+
+/* ============================================================
+   A 档 · 核心 7 件套
+   ============================================================ */
+
+function renderOutputs(){
+  try{ renderA1(); }catch(e){ errBox('a1',e); }
+  try{ renderA2(); }catch(e){ errBox('a2',e); }
+  try{ renderA3(); }catch(e){ errBox('a3',e); }
+  try{ renderA4(); }catch(e){ errBox('a4',e); }
+  try{ renderA5(); }catch(e){ errBox('a5',e); }
+  try{ renderA6(); }catch(e){ errBox('a6',e); }
+  try{ renderA7(); }catch(e){ errBox('a7',e); }
+  try{ renderB8(); }catch(e){ errBox('b8',e); }
+  try{ renderB9(); }catch(e){ errBox('b9',e); }
+  try{ renderB10(); }catch(e){ errBox('b10',e); }
+  try{ renderB11(); }catch(e){ errBox('b11',e); }
+  try{ renderB12(); }catch(e){ errBox('b12',e); }
+  try{ renderC13(); }catch(e){ errBox('c13',e); }
+  try{ renderC14(); }catch(e){ errBox('c14',e); }
+  try{ renderC15(); }catch(e){ errBox('c15',e); }
+}
+function errBox(id,e){
+  var b=$(id+'-body');
+  if(b) b.innerHTML='<div class="warn">本模块渲染异常：'+esc(e&&e.message?e.message:e)+'。请检查左侧参数填写是否完整。</div>';
+}
+function withScrollableTables(h){
+  return h.replace(/<table(?=[ >])/g,'<div class="table-scroll" role="region" aria-label="内容表格，可横向滚动" tabindex="0"><table').replaceAll('</table>','</table></div>');
+}
+function setB(id,h){ var b=$(id+'-body'); if(b) b.innerHTML=withScrollableTables(h); }
+function co(){ return state.company.name||'XX 公司'; }
+function po(){ return state.post.name||'XX 岗位'; }
+
+/* ---------- A1 任职资格标准 ---------- */
+function renderA1(){
+  var p=state.post, c=state.company;
+  var h='';
+  h+='<h3>一、岗位基本信息</h3>';
+  h+='<div class="kv">'
+    +'<div>岗位名称</div><div>'+esc(po())+'</div>'
+    +'<div>所属部门</div><div>'+esc(p.dept||'—')+'</div>'
+    +'<div>岗位层级</div><div>'+esc(p.level)+'</div>'
+    +'<div>汇报对象</div><div>'+esc(p.report||'—')+'</div>'
+    +'<div>编制 / 在编</div><div>'+esc(p.hcPlan||'—')+' 人 / '+esc(p.hcNow||'—')+' 人</div>'
+    +'<div>适用企业</div><div>'+esc(co())+'（'+esc(c.industry||'—')+'）</div>'
+    +'</div>';
+
+  h+='<h3>二、岗位使命与硬仗承接</h3>';
+  h+='<p>'+(p.purpose?esc(p.purpose):'<span style="color:#C0392B">未填写岗位使命。</span>')+'</p>';
+  if(state.battles.length){
+    h+='<table><tr><th style="width:56px">硬仗</th><th style="width:140px">名称</th><th>衡量指标</th><th style="width:190px">目标值</th><th style="width:110px">责任部门</th></tr>';
+    state.battles.forEach(function(x){
+      h+='<tr><td>'+esc(x.code)+'</td><td>'+esc(x.name)+'</td><td>'+esc(x.metric)+'</td><td>'+esc(x.target)+'</td><td>'+esc(x.owner)+'</td></tr>';
+    });
+    h+='</table>';
+    h+='<div class="note">任职资格标准不是照抄行业模板，而是从这 '+state.battles.length+' 条硬仗反推出来的。硬仗变了，标准必须跟着变。</div>';
+  }
+
+  h+='<h3>三、任职资格四级标准</h3>';
+  h+='<p>本标准分四级：门槛条件（不满足直接不进入流程）、知识技能（可培训、可验证）、行为能力（面试主要评估对象）、业绩成果（用过去的结果验证能力真实性）。</p>';
+  h+='<table><tr><th style="width:110px">级别</th><th>标准内容</th><th style="width:96px">验证方式</th></tr>';
+  h+='<tr><td>第一级 · 门槛条件</td><td>学历：'+esc(p.edu||'—')+'<br>经验：'+esc(p.exp||'—')+'<br>汇报关系认知：能接受向'+esc(p.report||'上级')+'汇报并按周复盘</td><td>简历核验 + 证件核验</td></tr>';
+  var ks = state.comps.filter(function(x){ return /技术|方案|专业|知识|工艺|设计|研发/.test(x.name); });
+  h+='<tr><td>第二级 · 知识技能</td><td>'
+    + (ks.length? ks.map(function(x){ return '掌握「'+esc(x.name)+'」所需的专业知识与工具方法'; }).join('<br>') : '掌握本岗位所需的专业知识、行业规则与常用工具')
+    + '<br>能独立完成岗位核心交付物的初稿</td><td>笔试题 + 案例分析</td></tr>';
+  h+='<tr><td>第三级 · 行为能力</td><td>'
+    + (state.comps.length? state.comps.map(function(x,i){ return (i+1)+'. '+esc(x.name)+'（权重 '+esc(x.weight)+'%）'; }).join('<br>') : '—')
+    + '</td><td>结构化面试（本手册）</td></tr>';
+  h+='<tr><td>第四级 · 业绩成果</td><td>'
+    + (state.battles.length? state.battles.slice(0,3).map(function(x){ return '在「'+esc(x.name)+'」上有可追溯的历史战绩：'+esc(x.metric)+' 达到过 '+esc(x.target); }).join('<br>') : '在同类岗位上有可追溯、可验证的历史业绩')
+    + '</td><td>业绩举证 + 背调</td></tr>';
+  h+='</table>';
+
+  h+='<h3>四、行为标准（分级行为描述）</h3>';
+  h+='<table><tr><th style="width:150px">行为项</th><th>达标行为（合格）</th><th>卓越行为（优秀）</th></tr>';
+  state.comps.forEach(function(x){
+    h+='<tr><td>'+esc(x.name)+'</td><td>'+esc(x.ok||'—')+'</td><td>'+esc(x.strong||'—')+'</td></tr>';
+  });
+  h+='</table>';
+
+  h+='<h3>五、一票否决红线</h3>';
+  if(state.veto.length){
+    h+='<ul>';
+    state.veto.forEach(function(v){ h+='<li><b>'+esc(v.name)+'</b>：'+esc(v.rule)+'</li>'; });
+    h+='</ul>';
+    h+='<div class="warn">红线独立判定，不参与加权综合分。任一条触发即终止流程，无论综合分多高。</div>';
+  } else {
+    h+='<div class="warn">尚未设置红线。诚信、资金、安全类红线缺失，是中小企业招聘最大的隐性风险敞口。</div>';
+  }
+
+  h+='<h3>六、本标准的使用与维护</h3>';
+  h+='<ul>'
+    +'<li><b>用于招聘</b>：门槛条件做简历初筛，行为能力做面试评估，业绩成果做背调验证。</li>'
+    +'<li><b>用于内部评级</b>：同一标准可作为在职员工的评级与晋升依据，实现「外招与内评同一把尺子」。</li>'
+    +'<li><b>用于薪酬定档</b>：四级标准对应薪酬带宽，达标者落带宽中位，卓越者落上四分位。</li>'
+    +'<li><b>维护周期</b>：每年度战略解码后同步修订一次；硬仗发生重大变化时即时修订。</li>'
+    +'</ul>';
+  setB('a1',h);
+}
+
+/* ---------- A2 人才精准画像 ---------- */
+function renderA2(){
+  var p=state.post;
+  var h='';
+  var smin=num(p.salMin), smax=num(p.salMax);
+  h+='<h3>一、一句话画像</h3>';
+  var top3=state.comps.slice().sort(function(a,b){ return num(b.weight)-num(a.weight); }).slice(0,3);
+  h+='<p>我们要找的人：<b>'+(top3.length?top3.map(function(x){ return esc(x.name); }).join(' + '):'（待定）')+'</b> 三项都站得住，'
+    +(state.battles.length? '能在「'+esc(state.battles[0].name)+'」这条硬仗上直接出结果':'能在本岗位核心硬仗上直接出结果')
+    +'，且经得起历史业绩的追问。</p>';
+
+  h+='<h3>二、五维精准画像</h3>';
+  h+='<table><tr><th style="width:110px">维度</th><th>画像内容</th><th style="width:150px">初筛判定方式</th></tr>';
+  h+='<tr><td>① 硬条件画像</td><td>学历 '+esc(p.edu||'—')+'；经验 '+esc(p.exp||'—')+'；汇报对象 '+esc(p.report||'—')+'</td><td>简历 + 证件核验，不满足不进流程</td></tr>';
+  h+='<tr><td>② 胜任力画像</td><td>'+(state.comps.length? state.comps.map(function(x){ return esc(x.name)+'（'+esc(x.weight)+'%）'; }).join('；') : '—')+'</td><td>结构化面试评分卡</td></tr>';
+  h+='<tr><td>③ 动机画像</td><td>'
+    + (p.purpose? '认可「'+esc(p.purpose.slice(0,60))+'…」这件事本身，而不是只看底薪；在上一份工作中主动争取过同类挑战。' : '主动争取过与本岗位同类的挑战，而非被安排。')
+    + '</td><td>追问「为什么选这件事」，看是主动还是被动</td></tr>';
+  h+='<tr><td>④ 风险画像</td><td>'
+    + (state.veto.length? state.veto.map(function(v){ return esc(v.name); }).join('；')+'——三类硬风险，触发即否决' : '诚信、资金、履历真实性三类硬风险')
+    + '；另关注：频繁跳槽（近 3 年超 3 段）、业绩无法举证、对回款/风险类问题回避</td><td>背调 + 压力追问</td></tr>';
+  h+='<tr><td>⑤ 薪酬带宽画像</td><td>公司带宽 '+ (smin||smax? esc(p.salMin||'?')+'–'+esc(p.salMax||'?')+' 万元/年' : '未填') +'；建议 offer 落带宽中位（'+(smin&&smax? ((smin+smax)/2).toFixed(1)+' 万元' : '—')+'）；卓越者可上浮至带宽上四分位（'+(smin&&smax? (smax-(smax-smin)*0.25).toFixed(1)+' 万元' : '—')+'）</td><td>薪酬期望探询 + 带宽比对</td></tr>';
+  h+='</table>';
+
+  h+='<h3>三、胜任力权重雷达图</h3>';
+  h+= state.comps.length>=3 ? radarSVG(state.comps,320) : '<div class="warn">胜任力少于 3 项，无法生成雷达图。请在评分卡设计台补足。</div>';
+  h+='<div class="note">雷达图展示的是「岗位对各胜任力的要求强度」，不是「候选人得分」。候选人得分见 A5 面试评估表。</div>';
+
+  h+='<h3>四、要什么样的人 / 不要什么样的人</h3>';
+  h+='<table><tr><th style="width:50%">要（画像正向）</th><th>不要（画像负向）</th></tr>';
+  state.comps.forEach(function(x){
+    h+='<tr><td>'+esc(x.strong||'—')+'</td><td>'+esc(x.weak||'—')+'</td></tr>';
+  });
+  h+='</table>';
+  h+='<div class="note">把「不要什么样」写清楚，比写「要什么样」更能防止招错人。多数招聘失误不是没找到好的，而是没拦住明显不对的。</div>';
+
+  h+='<h3>五、三类画像对照（用于快速识人）</h3>';
+  h+='<table><tr><th style="width:110px">类型</th><th>典型特征</th><th style="width:130px">处理建议</th></tr>';
+  h+='<tr><td><span class="badge s">A 类 · 直接要</span></td><td>三项最高权重胜任力均达「强证据」档，且有可举证的历史业绩</td><td>加速流程，可上浮薪酬</td></tr>';
+  h+='<tr><td><span class="badge o">B 类 · 可培养</span></td><td>核心项达「合格证据」档，最高权重项不弱，其余项有明确成长轨迹</td><td>可录用，但试用期考核表须针对性加压</td></tr>';
+  h+='<tr><td><span class="badge w">C 类 · 不建议</span></td><td>最高权重项仅为「弱证据」档，或存在红线触发</td><td>终止，归档人才库并记录原因</td></tr>';
+  h+='</table>';
+  setB('a2',h);
+}
+
+/* ---------- A3 结构化面试手册 ---------- */
+function renderA3(){
+  var p=state.post;
+  var h='';
+  h+='<h3>一、面试基本信息</h3>';
+  h+='<div class="kv">'
+    +'<div>岗位</div><div>'+esc(po())+'（'+esc(p.dept||'—')+'）</div>'
+    +'<div>面试形式</div><div>结构化面试（同一岗位同一套题、同一套评分卡）</div>'
+    +'<div>建议时长</div><div>45–60 分钟</div>'
+    +'<div>面试官</div><div>用人部门负责人 + HRBP（双人独立评分）</div>'
+    +'<div>评估对象</div><div>第三级「行为能力」四项标准</div>'
+    +'</div>';
+
+  h+='<h3>二、时间分配（按权重）</h3>';
+  var tot=num(state.comps.reduce(function(a,c){ return a+num(c.weight); },0))||100;
+  h+='<table><tr><th style="width:150px">环节</th><th style="width:70px">时长</th><th>目的</th></tr>';
+  h+='<tr><td>开场与背景确认</td><td>5 分钟</td><td>建立信任，确认履历关键节点，说明本次面试的评估维度</td></tr>';
+  state.comps.forEach(function(c){
+    var t=Math.max(3, Math.round(num(c.weight)/tot*40));
+    h+='<tr><td>'+esc(c.name)+'</td><td>'+t+' 分钟</td><td>权重 '+esc(c.weight)+'%，按三档行为锚点取证</td></tr>';
+  });
+  h+='<tr><td>候选人提问</td><td>5 分钟</td><td>观察其关心什么（关心成长还是只关心待遇）</td></tr>';
+  h+='<tr><td>收尾与告知</td><td>3 分钟</td><td>说明后续流程与时限，无论结果均给反馈</td></tr>';
+  h+='</table>';
+  h+='<div class="warn">权重 30% 的胜任力只问 3 分钟，是结构化面试最常见的执行走样。时间必须按权重分。</div>';
+
+  h+='<h3>三、各维度提问与三层追问</h3>';
+  h+='<p>三层追问体系：<b>第一层追结果</b>（做出过什么水平的成果，能力就是什么水平）→ <b>第二层追行为</b>（过程是否真实、行为逻辑能否支撑结果）→ <b>第三层追出发点</b>（主动想做还是被动应付，判断自驱力）。</p>';
+  state.comps.forEach(function(c,i){
+    h+='<h4>'+ (i+1) +'. '+esc(c.name)+'（权重 '+esc(c.weight)+'%）</h4>';
+    h+='<table><tr><th style="width:90px">评分档</th><th>行为锚点（对照候选人原话打分）</th></tr>';
+    h+='<tr><td><span class="badge s">5 分 · 强</span></td><td>'+esc(c.strong||'—')+'</td></tr>';
+    h+='<tr><td><span class="badge o">3 分 · 合格</span></td><td>'+esc(c.ok||'—')+'</td></tr>';
+    h+='<tr><td><span class="badge w">1 分 · 弱</span></td><td>'+esc(c.weak||'—')+'</td></tr>';
+    h+='</table>';
+    h+='<ul>'
+      +'<li><b>主问题</b>：'+esc(c.q1||'（待补）')+'</li>'
+      +'<li><b>第二问题</b>：'+esc(c.q2||'（待补）')+'</li>'
+      +'<li><b>追问①（追结果）</b>：这件事最后的结果是什么？具体数字是多少？占你当年业绩的比重？</li>'
+      +'<li><b>追问②（追行为）</b>：那段时间你每周具体做了哪几件事？见了谁？给了对方什么价值？</li>'
+      +'<li><b>追问③（追出发点）</b>：这件事是你自己选的还是公司派的？为什么选它？如果没人考核你，你还会做吗？</li>'
+      +'</ul>';
+  });
+
+  h+='<h3>四、评分与判定规则</h3>';
+  h+='<table><tr><th style="width:120px">判定</th><th style="width:110px">条件</th><th>处理</th></tr>';
+  h+='<tr><td><span class="badge w">红线淘汰</span></td><td>任一红线触发</td><td>立即终止，不看综合分。记录触发事由与证据。</td></tr>';
+  h+='<tr><td><span class="badge s">建议录用</span></td><td>加权综合分 ≥ 4.0，且最高权重项 ≥ 4 分</td><td>进入薪酬谈判与背调</td></tr>';
+  h+='<tr><td><span class="badge o">待定复核</span></td><td>加权综合分 3.0–4.0</td><td>补充一轮专项面试，或由更高层级面试官复核</td></tr>';
+  h+='<tr><td><span class="badge w">不录用</span></td><td>加权综合分 &lt; 3.0，或最高权重项 ≤ 2 分</td><td>终止，归档人才库并写明原因</td></tr>';
+  h+='</table>';
+
+  h+='<h3>五、面试官注意事项</h3>';
+  h+='<ul>'
+    +'<li><b>只记录原话，不记录印象</b>：评分卡证据栏里写的应该是候选人说的具体事实，不是「感觉不错」。</li>'
+    +'<li><b>同一岗位同一套题</b>：为某个候选人临时加题，会让分数失去可比性，也让决策无法向他人解释。</li>'
+    +'<li><b>不追问受保护特征</b>：婚育计划、家庭状况、籍贯、年龄、疾病史均不得询问。</li>'
+    +'<li><b>追问要追到具体</b>：候选人说「我们团队完成了」，要追问「你个人具体做了什么」。</li>'
+    +'<li><b>双人独立打分后再对表</b>：先各自打分，再比对。差异超过 1.5 分的项要回听原话找原因。</li>'
+    +'<li><b>45 分钟内留出 5 分钟给候选人提问</b>：这是观察其关注点的最好窗口。</li>'
+    +'</ul>';
+  setB('a3',h);
+}
+
+/* ---------- A4 内推文案包 ---------- */
+function renderA4(){
+  var p=state.post, c=state.company;
+  var smin=num(p.salMin), smax=num(p.salMax);
+  var sal = (smin||smax) ? (p.salMin+'–'+p.salMax+' 万元/年（含提成）') : '面议';
+  var h='';
+  h+='<h3>一、内推方案（正式版）</h3>';
+  h+='<h4>1. 为什么设这个奖</h4>';
+  h+='<p>'+esc(co())+' 今年要打赢「'
+    + (state.battles.length? state.battles.slice(0,2).map(function(x){return esc(x.name);}).join('、') : '核心硬仗')
+    +'」，最缺的不是简历，是<b>靠得住的人</b>。员工推荐的人，留存率与上手速度普遍高于渠道投递，所以公司愿意把渠道费直接发给推荐人。</p>';
+
+  h+='<h4>2. 在招岗位</h4>';
+  h+='<table><tr><th style="width:110px">项目</th><th>内容</th></tr>';
+  h+='<tr><td>岗位</td><td>'+esc(po())+'（'+esc(p.dept||'—')+'）</td></tr>';
+  h+='<tr><td>编制</td><td>'+esc(p.hcPlan||'—')+' 人（现到岗 '+esc(p.hcNow||'0')+' 人）</td></tr>';
+  h+='<tr><td>薪酬</td><td>'+esc(sal)+'</td></tr>';
+  h+='<tr><td>硬性要求</td><td>'+esc(p.edu||'—')+'；'+esc(p.exp||'—')+'</td></tr>';
+  h+='<tr><td>汇报对象</td><td>'+esc(p.report||'—')+'</td></tr>';
+  h+='<tr><td>核心考察</td><td>'+(state.comps.length? state.comps.map(function(x){return esc(x.name);}).join('、') : '—')+'</td></tr>';
+  h+='</table>';
+
+  h+='<h4>3. 推荐奖励</h4>';
+  h+='<table><tr><th style="width:130px">节点</th><th style="width:110px">奖金</th><th>说明</th></tr>';
+  h+='<tr><td>候选人通过初筛并到场面试</td><td>—</td><td>不设奖，避免为拿奖乱推人</td></tr>';
+  h+='<tr><td>候选人入职满 1 个月</td><td>500 元</td><td>发放首笔</td></tr>';
+  h+='<tr><td>候选人通过试用期转正</td><td>2000 元</td><td>发放主笔</td></tr>';
+  h+='<tr><td>候选人转正满 12 个月且在职</td><td>1500 元</td><td>发放尾款，鼓励推荐能留下来的人</td></tr>';
+  h+='</table>';
+  h+='<div class="note">奖金分三段发，是把推荐人的利益和「这个人能不能留下来」绑在一起。一次性发完的推荐奖，会诱导只推不管。</div>';
+
+  h+='<h4>4. 推荐流程</h4>';
+  h+='<ul>'
+    +'<li>推荐人把候选人简历发至 HR 邮箱或企业微信，注明「内推 + 推荐人姓名 + 与被推荐人关系」。</li>'
+    +'<li>HR 在 2 个工作日内反馈简历是否进入面试。</li>'
+    +'<li>候选人面试全程，推荐人可向 HR 询问进度。</li>'
+    +'<li>奖金在节点达成后随当月工资发放，个税由公司承担部分按规定处理。</li>'
+    +'</ul>';
+  h+='<h4>5. 规则边界</h4>';
+  h+='<ul>'
+    +'<li>HR 部门员工不参与本岗位内推奖（避免角色冲突）。</li>'
+    +'<li>候选人须为首次接触公司，此前 6 个月内已在公司人才库中的不计奖。</li>'
+    +'<li>推荐人不得参与该候选人的面试评分。</li>'
+    +'<li>如候选人入职后触发红线被辞退，未发奖金不予发放。</li>'
+    +'</ul>';
+
+  h+='<h3>二、内推短文案（可直接复制）</h3>';
+  h+='<h4>文案一 · 朋友圈版（口语、有画面）</h4>';
+  h+='<p>'+esc(co())+' 在找一个能「从零啃下大客户」的人。</p>';
+  h+='<p>我们做 '+esc(c.industry||'B 端非标件')+'，单子大、周期长，一单跟一年多是常事。所以我们要的不是能说会道的人，是<b>能把一个陌生客户从冷脸跟到签合同、再跟到回款的人</b>。</p>';
+  h+='<p>薪酬 '+esc(sal)+'。难的地方在：客户的决策链你得自己摸清，回款你得自己盯，方案你得自己看懂。</p>';
+  h+='<p>如果你身边有这样的人，推荐给我，入职转正我给推荐人 2000 元。直接私信我。</p>';
+
+  h+='<h4>文案二 · 部门群版（点名要谁）</h4>';
+  h+='<p>各位，'+esc(p.dept||'本部门')+' 还差 '+(num(p.hcPlan)-num(p.hcNow)>0?num(p.hcPlan)-num(p.hcNow):'若干')+' 个人。</p>';
+  h+='<p>我把话说具体点，免得推来的人不对路。我们要的是这四件事都干过的人：</p>';
+  h+='<ol style="font-size:13px;line-height:1.75;padding-left:22px;margin:0 0 10px">'
+    + (state.comps.length? state.comps.slice(0,4).map(function(x){ return '<li>'+esc(x.name)+'</li>'; }).join('') : '<li>（待补）</li>')
+    + '</ol>';
+  h+='<p>别推「做过销售」的，要推「<b>拿下过新客户、追回过欠款</b>」的。有这种人，直接找我。</p>';
+
+  h+='<h4>文案三 · 海报版（短句，适合发群公告/张贴）</h4>';
+  h+='<p style="font-size:15px;font-weight:500;line-height:2">'
+    +esc(co())+' · 招 '+esc(po())+'<br>'
+    +'不需要你能说会道，需要你能把陌生客户跟到签约、跟到回款<br>'
+    +esc(p.exp||'5 年以上 B 端销售经验')+'<br>'
+    +esc(sal)+'<br>'
+    +'内推成功，转正即奖 2000 元<br>'
+    +'推荐联系：'+esc(p.report||'人力资源部')+'</p>';
+  h+='<div class="note">三条文案的用法不同：朋友圈版讲「难在哪」，让人自己判断合不合适；部门群版讲「不要什么样」，减少无效推荐；海报版只留关键信息，用于快速传播。</div>';
+  setB('a4',h);
+}
+
+/* ---------- A5 面试评估表 ---------- */
+function setScore(i,v){ state.scores[i]=v; renderA5(); renderA7(); saveLocal(); }
+function setEv(i,v){ state.ev=state.ev||{}; state.ev[i]=v; }
+function scoreTotal(){
+  var s=0,w=0;
+  state.comps.forEach(function(c,i){
+    var sc=num(state.scores[i]);
+    if(sc>0){ s+=sc*num(c.weight); w+=num(c.weight); }
+  });
+  return {score: w? (s/w):0, covered:w};
+}
+function renderA5(){
+  var p=state.post;
+  var t=scoreTotal();
+  var verdict, vcls;
+  if(t.covered===0){ verdict='尚未评分'; vcls='n'; }
+  else if(t.score>=4.0){ verdict='建议录用'; vcls='s'; }
+  else if(t.score>=3.0){ verdict='待定 · 需复核'; vcls='o'; }
+  else { verdict='不建议录用'; vcls='w'; }
+
+  var h='';
+  h+='<h3>一、候选人信息</h3>';
+  h+='<div class="kv">'
+    +'<div>姓名</div><div>＿＿＿＿＿＿</div>'
+    +'<div>应聘岗位</div><div>'+esc(po())+'</div>'
+    +'<div>面试日期</div><div>＿＿＿＿年＿＿月＿＿日</div>'
+    +'<div>面试官</div><div>用人部门：＿＿＿＿＿　HRBP：＿＿＿＿＿</div>'
+    +'</div>';
+
+  h+='<h3>二、逐项评分（1-5 分，对照 A3 手册的行为锚点）</h3>';
+  h+='<div class="metric">'
+    +'<div class="m"><div class="l">加权综合分</div><div class="v">'+(t.covered?t.score.toFixed(2):'—')+'</div><div class="d">已评权重 '+t.covered+'%</div></div>'
+    +'<div class="m"><div class="l">综合结论</div><div class="v" style="font-size:15px"><span class="badge '+vcls+'">'+verdict+'</span></div><div class="d">≥4.0 绿 / 3.0-4.0 黄 / &lt;3.0 红</div></div>'
+    +'<div class="m"><div class="l">一票否决</div><div class="v" style="font-size:15px"><span class="badge '+(state.veto.length?'o':'n')+'">'+(state.veto.length?'待判定':'未设红线')+'</span></div><div class="d">红线独立于综合分</div></div>'
+    +'</div>';
+  h+='<table><tr><th style="width:150px">胜任力</th><th style="width:60px">权重</th><th style="width:110px">评分</th><th style="width:80px">加权得分</th><th>证据（记录候选人原话）</th></tr>';
+  state.comps.forEach(function(c,i){
+    var sc=num(state.scores[i]);
+    var opts='<option value="0">未评</option>';
+    for(var k=5;k>=1;k--){ opts+='<option value="'+k+'"'+(sc===k?' selected':'')+'>'+k+' 分</option>'; }
+    h+='<tr><td>'+esc(c.name)+'</td><td>'+esc(c.weight)+'%</td>'
+      +'<td><select onchange="setScore('+i+',this.value)">'+opts+'</select></td>'
+      +'<td>'+(sc? (sc*num(c.weight)/100).toFixed(2) : '—')+'</td>'
+      +'<td><textarea class="imp" style="height:52px" placeholder="记原话，不记印象" oninput="setEv('+i+',this.value)">'+esc((state.ev&&state.ev[i])||'')+'</textarea></td></tr>';
+  });
+  h+='<tr><td colspan="3" style="text-align:right"><b>加权合计（已评项归一）</b></td><td><b>'+(t.covered?t.score.toFixed(2):'—')+'</b></td><td class="hint">未评分项不计入，已评权重 '+t.covered+'%</td></tr>';
+  h+='</table>';
+
+  h+='<h3>三、一票否决判定</h3>';
+  if(state.veto.length){
+    h+='<table><tr><th style="width:130px">红线</th><th>判定规则</th><th style="width:130px">是否触发</th></tr>';
+    state.veto.forEach(function(v,i2){
+      h+='<tr><td>'+esc(v.name)+'</td><td>'+esc(v.rule)+'</td><td>□ 是　□ 否</td></tr>';
+    });
+    h+='</table>';
+    h+='<div class="warn">任一条勾「是」，无论综合分多高，均终止流程，并在下方记录触发事由与证据。</div>';
+  } else {
+    h+='<div class="warn">本岗位尚未设置一票否决红线。请在左侧「04 一票否决红线」补充，否则诚信与资金类风险无法拦截。</div>';
+  }
+
+  h+='<h3>四、面试官综合评语</h3>';
+  h+='<p>1. 候选人最突出的优势（对应哪项胜任力的「强证据」档）：</p>';
+  h+='<p style="border-bottom:1px solid #E3E6EA;height:26px"></p>';
+  h+='<p>2. 最明显的短板或存疑点（需在试用期重点验证）：</p>';
+  h+='<p style="border-bottom:1px solid #E3E6EA;height:26px"></p>';
+  h+='<p>3. 与岗位画像的匹配度（A 类直接要 / B 类可培养 / C 类不建议）：</p>';
+  h+='<p style="border-bottom:1px solid #E3E6EA;height:26px"></p>';
+
+  h+='<h3>五、双人评分一致性校验</h3>';
+  h+='<table><tr><th style="width:150px">胜任力</th><th style="width:90px">用人部门</th><th style="width:90px">HRBP</th><th style="width:90px">差值</th><th>处理</th></tr>';
+  state.comps.forEach(function(c){
+    h+='<tr><td>'+esc(c.name)+'</td><td>＿＿</td><td>＿＿</td><td>＿＿</td><td>差值 ≥1.5 分须回听原话，找出一致性偏差来源</td></tr>';
+  });
+  h+='</table>';
+  h+='<div class="note">双人独立评分再对表，是提高人机一致性与面试官一致性的最低成本手段。差异大的项，往往不是候选人模糊，而是锚点写得不够可观察。</div>';
+
+  h+='<h3>六、录用决策</h3>';
+  h+='<p>□ 建议录用，进入薪酬谈判与背调　　□ 待定，需补充一轮专项面试　　□ 不建议录用，归档人才库</p>';
+  h+='<p>面试官签字：＿＿＿＿＿＿　　日期：＿＿＿＿＿＿</p>';
+  setB('a5',h);
+}
+
+/* ---------- A6 试用期考核表 ---------- */
+function renderA6(){
+  var h='';
+  h+='<h3>一、设计说明</h3>';
+  h+='<p>本表与 A3 面试手册<b>同源同维度</b>：面试时评估什么，试用期就考核什么。这样做的价值是——面试承诺的能力，在试用期有明确的验证方式；试用期不合格，有可追溯的判断依据。</p>';
+  h+='<div class="note">市面多数工具的断点就在这里：面试评估和试用期考核是两套体系，面试官凭感觉打分，试用期靠主管印象决定去留，中间的承诺无人对账。</div>';
+
+  h+='<h3>二、考核结构与权重</h3>';
+  h+='<table><tr><th style="width:130px">阶段</th><th style="width:80px">时点</th><th style="width:80px">权重</th><th>核心验证目标</th></tr>';
+  h+='<tr><td>第一阶段 · 上手</td><td>第 30 天</td><td>20%</td><td>业务知识、客户/项目基本盘掌握，能独立完成基础动作</td></tr>';
+  h+='<tr><td>第二阶段 · 出活</td><td>第 60 天</td><td>35%</td><td>独立承担核心任务，产出可验证的中间成果</td></tr>';
+  h+='<tr><td>第三阶段 · 结果</td><td>第 90 天</td><td>45%</td><td>在硬仗上有实际推进，达成阶段性量化目标</td></tr>';
+  h+='</table>';
+
+  h+='<h3>三、分阶段考核明细（与面试胜任力对应）</h3>';
+  state.comps.forEach(function(c,i){
+    var lead = (i===0);
+    h+='<h4>'+(i+1)+'. '+esc(c.name)+'（面试权重 '+esc(c.weight)+'%）</h4>';
+    h+='<table><tr><th style="width:80px">时点</th><th>验收标准（做到什么算过）</th><th style="width:80px">评分</th></tr>';
+    h+='<tr><td>第 30 天</td><td>熟悉本岗位相关的基础信息与流程；能说清 '+esc(c.name)+' 在本公司的具体做法与边界</td><td>＿＿</td></tr>';
+    h+='<tr><td>第 60 天</td><td>独立完成一次完整的 '+esc(c.name)+' 实践动作，产出可被主管验证的中间成果</td><td>＿＿</td></tr>';
+    h+='<tr><td>第 90 天</td><td>'+(lead? '在最高权重维度上达成阶段性量化结果：'+(state.battles[0]?esc(state.battles[0].metric)+' 达到 '+esc(state.battles[0].target):'达成岗位约定的量化目标') : '稳定达到「'+esc(c.ok||'合格证据')+'」档描述的水平')+'</td><td>＿＿</td></tr>';
+    h+='</table>';
+  });
+
+  h+='<h3>四、90 天量化目标（转正硬指标）</h3>';
+  if(state.battles.length){
+    h+='<table><tr><th style="width:60px">硬仗</th><th style="width:130px">名称</th><th>90 天应达成的阶段性目标</th><th style="width:110px">实际完成</th></tr>';
+    state.battles.forEach(function(x){
+      h+='<tr><td>'+esc(x.code)+'</td><td>'+esc(x.name)+'</td><td>'+esc(x.metric)+' 阶段性达成 30%（年度目标：'+esc(x.target)+'）</td><td>＿＿＿＿</td></tr>';
+    });
+    h+='</table>';
+    h+='<div class="note">90 天定年度目标的 30%，是给长周期岗位的合理节奏。销售、项目类岗位尤其不能要求 90 天出全年结果，但必须看到可验证的推进轨迹。</div>';
+  } else {
+    h+='<div class="warn">尚未录入硬仗清单，无法生成量化目标。请在左侧「03 部门硬仗清单」补充。</div>';
+  }
+
+  h+='<h3>五、转正评定</h3>';
+  h+='<table><tr><th style="width:130px">评定结论</th><th style="width:110px">条件</th><th>处理</th></tr>';
+  h+='<tr><td><span class="badge s">准予转正</span></td><td>三阶段加权 ≥ 4.0，且无红线触发</td><td>按带宽中位定档，进入正式考核周期</td></tr>';
+  h+='<tr><td><span class="badge o">延长试用</span></td><td>加权 3.0–4.0，或某一阶段明显不达标但可补救</td><td>延长 1 个月，明确补齐项与验收时点（须在法定试用期内）</td></tr>';
+  h+='<tr><td><span class="badge w">不予转正</span></td><td>加权 &lt; 3.0，或触发红线</td><td>依法依规办理解除，留存考核记录与沟通签字</td></tr>';
+  h+='</table>';
+  h+='<div class="warn">试用期考核记录是劳动争议中的关键证据。三次阶段性面谈均须双方签字确认，且考核标准须在入职时书面告知。</div>';
+
+  h+='<h3>六、阶段性面谈签字</h3>';
+  h+='<table><tr><th style="width:90px">时点</th><th style="width:130px">直接主管签字</th><th style="width:130px">员工签字</th><th>面谈要点记录</th></tr>';
+  h+='<tr><td>第 30 天</td><td>＿＿＿＿＿</td><td>＿＿＿＿＿</td><td>＿＿＿＿＿＿＿＿＿＿</td></tr>';
+  h+='<tr><td>第 60 天</td><td>＿＿＿＿＿</td><td>＿＿＿＿＿</td><td>＿＿＿＿＿＿＿＿＿＿</td></tr>';
+  h+='<tr><td>第 90 天</td><td>＿＿＿＿＿</td><td>＿＿＿＿＿</td><td>＿＿＿＿＿＿＿＿＿＿</td></tr>';
+  h+='</table>';
+  setB('a6',h);
+}
+
+/* ---------- A7 试用期带教培训计划 ---------- */
+function renderA7(){
+  var h='';
+  h+='<h3>一、带教机制</h3>';
+  h+='<div class="kv">'
+    +'<div>带教人</div><div>'+(state.post.report?esc(state.post.report):'直接主管')+'（第一责任人）＋ 同岗位资深员工 1 名（日常答疑）</div>'
+    +'<div>带教周期</div><div>90 天，分四段推进</div>'
+    +'<div>带教人职责</div><div>每周 1 次 30 分钟一对一；每月 1 次复盘；对阶段验收结果签字</div>'
+    +'<div>带教人激励</div><div>新人按期转正，带教人获 1000 元带教奖；提前达标另奖 500 元</div>'
+    +'</div>';
+
+  h+='<h3>二、分周培训计划</h3>';
+  h+='<table><tr><th style="width:80px">阶段</th><th style="width:150px">学习内容</th><th style="width:130px">带教方式</th><th>验收标准</th></tr>';
+  h+='<tr><td>第 1 周</td><td>公司概况、组织架构、'+esc(state.post.dept||'部门')+'职能与协作关系；本岗位职责边界</td><td>集中讲解 + 文档自学</td><td>能画出本岗位上下游协作图并说明接口</td></tr>';
+  h+='<tr><td>第 2 周</td><td>产品/业务知识、行业规则、客户画像；'+esc(po())+' 的标准作业流程</td><td>带教人带教 + 跟岗</td><td>能独立完成一次标准作业流程演练</td></tr>';
+  h+='<tr><td>第 3–4 周</td><td>核心工具与系统操作；历史案例复盘（成功与失败各 2 个）</td><td>跟岗实操 + 案例研讨</td><td>能复盘一个历史案例并指出关键动作</td></tr>';
+  h+='<tr><td>第 5–8 周</td><td>独立承担一项完整任务；每周复盘会汇报进展与卡点</td><td>授权实操 + 每周一对一</td><td>产出可被主管验证的中间成果</td></tr>';
+  h+='<tr><td>第 9–12 周</td><td>承接硬仗相关的量化目标；跨部门协作实践</td><td>独立推进 + 月度复盘</td><td>达成 90 天阶段性量化目标</td></tr>';
+  h+='</table>';
+
+  h+='<h3>三、能力补强清单（依据面试短板定制）</h3>';
+  h+='<p>面试时评为「弱证据」或存疑的维度，在试用期须针对性补强。下表由面试评估结果自动带入。</p>';
+  h+='<table><tr><th style="width:150px">需补强维度</th><th>补强方式</th><th style="width:110px">验证时点</th><th style="width:90px">带教人确认</th></tr>';
+  state.comps.forEach(function(c,i){
+    var sc=num(state.scores[i]);
+    if(sc>0 && sc<=3){
+      h+='<tr><td>'+esc(c.name)+'</td><td>安排专项跟岗与案例训练；每周一对一重点复盘该项</td><td>第 60 天</td><td>＿＿＿</td></tr>';
+    }
+  });
+  if(!state.comps.some(function(c,i){ var s=num(state.scores[i]); return s>0&&s<=3; })){
+    h+='<tr><td colspan="4" class="hint">暂无。请在 A5 面试评估表完成评分后，本表会自动带入评分为 3 分及以下的维度。</td></tr>';
+  }
+  h+='</table>';
+
+  h+='<h3>四、带教人操作要点</h3>';
+  h+='<ul>'
+    +'<li><b>第一周不做评价</b>：先让新人建立安全感，观察其提问方式比评价其表现更有价值。</li>'
+    +'<li><b>每周一对一固定时间</b>：不因忙而取消。取消一次，新人下次就不主动说了。</li>'
+    +'<li><b>给任务不给答案</b>：新人问「这个客户怎么跟」，先反问「你打算先做哪一步」。</li>'
+    +'<li><b>失败要复盘不要追责</b>：前 60 天犯的错，是公司交的学费，要变成案例而不是把柄。</li>'
+    +'<li><b>第 60 天必须给明确反馈</b>：合格就肯定，不合格就直说并给改进路径，不要拖到 90 天。</li>'
+    +'</ul>';
+
+  h+='<h3>五、新人 90 天自检清单</h3>';
+  h+='<ul>'
+    +'<li>我能否说清本岗位承接的是哪条硬仗，以及我的贡献如何被衡量？</li>'
+    +'<li>我是否已经独立完成过一次完整的核心作业流程？</li>'
+    +'<li>遇到问题时，我是否知道该找谁、按什么顺序找？</li>'
+    +'<li>我是否已经和至少 3 位跨部门同事建立了工作关系？</li>'
+    +'<li>90 天的量化目标，我完成了多少？差距的原因是什么？</li>'
+    +'</ul>';
+  setB('a7',h);
+}
+/* ============================================================
+   B 档 · 加值 5 件 + C 档 · 组织级 3 件
+   ============================================================ */
+
+/* ---------- B8 面试官速查卡（一页纸） ---------- */
+function renderB8(){
+  var p=state.post;
+  var tot=num(state.comps.reduce(function(a,c){ return a+num(c.weight); },0))||100;
+  var h='';
+  h+='<h3>面试官一页纸速查卡 · '+esc(po())+'</h3>';
+  h+='<div class="note">打印这一页带进面试间。左边是「问什么、怎么追」，右边是「对照什么打分」。不要在面试现场翻手册。</div>';
+
+  h+='<h4>开场（5 分钟）</h4>';
+  h+='<p>「今天大概 45 分钟，我会围绕 '+state.comps.length+' 个方面问一些具体做过的事，最后留时间给你提问。我们开始。」</p>';
+  h+='<p class="hint">说明评估维度是透明化的一部分，也是候选人体验的加分项。</p>';
+
+  h+='<h4>主体提问（按权重分配时间）</h4>';
+  h+='<table><tr><th style="width:150px">维度 / 权重</th><th style="width:60px">时长</th><th>主问题</th><th style="width:230px">三层追问（结果→行为→出发点）</th></tr>';
+  state.comps.forEach(function(c){
+    var t=Math.max(3, Math.round(num(c.weight)/tot*40));
+    h+='<tr><td>'+esc(c.name)+'<br><span class="hint">'+esc(c.weight)+'%</span></td><td>'+t+' 分</td>'
+      +'<td>'+esc(c.q1||'—')+'</td>'
+      +'<td>①结果：具体数字？占当年多少？<br>②行为：那段时间每周做什么？<br>③出发点：自己选的还是派的？</td></tr>';
+  });
+  h+='</table>';
+
+  h+='<h4>打分锚点速查</h4>';
+  h+='<table><tr><th style="width:150px">维度</th><th>5 分（强）</th><th>3 分（合格）</th><th>1 分（弱）</th></tr>';
+  state.comps.forEach(function(c){
+    h+='<tr><td>'+esc(c.name)+'</td><td>'+esc(c.strong||'—')+'</td><td>'+esc(c.ok||'—')+'</td><td>'+esc(c.weak||'—')+'</td></tr>';
+  });
+  h+='</table>';
+
+  h+='<h4>必须避开的五句话</h4>';
+  h+='<ul>'
+    +'<li>「你觉得自己最大的缺点是什么？」——标准答案题，问不出真信息。改问「上一次别人指出你的问题是什么，你怎么处理的？」</li>'
+    +'<li>「如果遇到 X 你会怎么做？」——假设题预测力极低。改问「你上次遇到 X 是怎么做的？」</li>'
+    +'<li>「你能接受加班吗？」——诱导表态。改问「上一个项目最忙的时候，你的时间是怎么安排的？」</li>'
+    +'<li>「你结婚了吗 / 打算要孩子吗？」——涉及受保护特征，禁止询问。</li>'
+    +'<li>「我们公司节奏很快，你行吗？」——自我宣传，不是提问。</li>'
+    +'</ul>';
+
+  h+='<h4>收尾（8 分钟）</h4>';
+  h+='<p>「你有什么想问我的？」——观察其关注点：问成长路径、问团队协作、问业务难点的，通常更合适；只问薪资与假期的，需要结合动机维度再判断。</p>';
+  h+='<p>「无论结果如何，我们会在 ＿ 个工作日内给你明确答复。」——说到做到，这是雇主品牌最便宜的投入。</p>';
+
+  h+='<h4>面试官自查（面试后 5 分钟内完成）</h4>';
+  h+='<ul>'
+    +'<li>我的每条评分，证据栏里写的是候选人原话还是我的印象？</li>'
+    +'<li>我是否因为候选人表达流畅而给了高于证据的分数？</li>'
+    +'<li>我是否因为候选人紧张而给了低于证据的分数？</li>'
+    +'<li>如果被问到「为什么给他这个分」，我能指出具体是哪句话吗？</li>'
+    +'</ul>';
+  setB('b8',h);
+}
+
+/* ---------- B9 面试题库 + 笔试库 ---------- */
+function renderB9(){
+  var h='';
+  h+='<h3>一、结构化面试题库（按维度）</h3>';
+  h+='<div class="note">题库不是拿来「多问几道」的，是拿来「同一岗位问同一套」的。给某个候选人临时加题，分数就失去了可比性。</div>';
+  state.comps.forEach(function(c,i){
+    h+='<h4>'+(i+1)+'. '+esc(c.name)+'</h4>';
+    h+='<table><tr><th style="width:90px">题型</th><th>题目</th><th style="width:200px">考察点</th></tr>';
+    h+='<tr><td>行为题</td><td>'+esc(c.q1||'—')+'</td><td>是否做过、做到什么水平</td></tr>';
+    h+='<tr><td>行为题</td><td>'+esc(c.q2||'—')+'</td><td>面对失败与意外的真实反应</td></tr>';
+    h+='<tr><td>情境题</td><td>假设你入职后接手一个停滞了 3 个月的'+esc(c.name)+'相关任务，你第一周会做什么？</td><td>方法论与优先级判断</td></tr>';
+    h+='<tr><td>压力题</td><td>你刚才讲的这件事，听起来主要是团队完成的。你个人具体做了哪一步？</td><td>是否夸大个人贡献</td></tr>';
+    h+='</table>';
+  });
+
+  h+='<h3>二、笔试题库</h3>';
+  h+='<p>笔试用于验证「第二级 · 知识技能」，安排在面试前或面试后，30 分钟内完成。不建议作为淘汰依据，只作为面试追问的线索来源。</p>';
+  h+='<h4>（一）客观题（建议 10 题，用于快速筛查基础认知）</h4>';
+  h+='<table><tr><th style="width:60px">序号</th><th>题目</th><th style="width:150px">参考要点</th></tr>';
+  h+='<tr><td>1</td><td>本岗位在「'+(state.battles[0]?esc(state.battles[0].name):'核心硬仗')+'」上最直接贡献的一个衡量指标是什么？</td><td>能说出量化指标而非形容词</td></tr>';
+  h+='<tr><td>2</td><td>判断下面哪个行为属于「合格」而非「卓越」：A 完成既定目标 / B 提前并超额完成且沉淀了可复用方法 / C 完成但过程依赖他人</td><td>B</td></tr>';
+  h+='<tr><td>3</td><td>一个项目周期长达 12 个月，你认为最需要在哪个时点做风险检查？为什么？</td><td>能说出里程碑与检查逻辑</td></tr>';
+  h+='<tr><td>4</td><td>'+esc(po())+' 的产出，最终由谁验收、按什么标准？</td><td>清楚交付对象与标准</td></tr>';
+  h+='<tr><td>5</td><td>下列哪项不属于岗位红线：A 履历造假 / B 业绩未达标 / C 收受回扣</td><td>B（业绩不达标属能力问题，非红线）</td></tr>';
+  h+='</table>';
+
+  h+='<h4>（二）案例题（建议 1-2 题，用于观察分析结构）</h4>';
+  h+='<p><b>案例题：</b>某客户已跟进 5 个月，对方技术部门认可方案，但采购以「预算未批」为由一直不推进。请你写出接下来 30 天的行动计划，包括你要见谁、问什么问题、以及判断该客户是否值得继续投入的标准。</p>';
+  h+='<p class="hint">参考评分：是否区分「真预算未批」与「托词」；是否有明确的客户内部决策链判断动作；是否设置了止损条件。</p>';
+
+  h+='<h4>（三）论述题（建议 1 题，用于观察自我认知）</h4>';
+  h+='<p><b>论述题：</b>请描述一次你原本判断正确但结果失败的'+esc(state.comps[0]?state.comps[0].name:'核心工作')+'经历。你认为失败的关键原因是什么？如果重来你会改哪一步？</p>';
+  h+='<p class="hint">参考评分：能否具体归因（而非归因于外部）；是否诚实承认自己的判断失误；改进动作是否具体可执行。</p>';
+  setB('b9',h);
+}
+
+/* ---------- B10 候选人沟通话术包 ---------- */
+function renderB10(){
+  var p=state.post, c=state.company;
+  var smin=num(p.salMin), smax=num(p.salMax);
+  var h='';
+  h+='<h3>一、电话邀约（首次接触）</h3>';
+  h+='<p><b>开场：</b>「您好，请问是 ＿＿ 先生/女士吗？我是 '+esc(co())+' 的 HR ＿＿＿。看到您投递了我们 '+esc(po())+' 的岗位，想跟您约个时间聊一聊，大概 10 分钟，现在方便吗？」</p>';
+  h+='<p><b>了解意向：</b>「您目前是看机会的状态，还是先了解一下？如果合适，大概什么时候可以到岗？」</p>';
+  h+='<p><b>说明评估方式（透明化）：</b>「我们的面试是结构化的，会围绕 '+state.comps.length+' 个方面问一些具体做过的事，大概 45 分钟。提前跟您说一下，您可以准备一些实际案例。」</p>';
+  h+='<p><b>约时间：</b>「您看 ＿ 月 ＿ 日（周＿）上午 10 点或下午 3 点，哪个方便？我把地址和面试官信息发您微信。」</p>';
+  h+='<p><b>结束：</b>「好的，我稍后把面试安排发您。如果临时有事，提前跟我说一声就行，我们改期。」</p>';
+
+  h+='<h3>二、面试前 1 天提醒</h3>';
+  h+='<p>「＿＿ 您好，提醒一下明天 ＿ 点在我们公司（地址：＿＿＿＿）的面试。面试官是 '+esc(p.report||'用人部门负责人')+' 和 HRBP，大概 45 分钟。带一份简历就行，不用准备材料。到了联系我，我来接您。」</p>';
+
+  h+='<h3>三、面试后反馈（通过 · 进入下一轮）</h3>';
+  h+='<p>「＿＿ 您好，跟您同步一下，昨天的面试反馈是正面的。我们想安排下一轮和 ＿＿ 的沟通，主要聊一下具体的业务方向，大概 30 分钟。您看 ＿ 时间方便吗？」</p>';
+
+  h+='<h3>四、面试后反馈（不通过 · 必须给明确答复）</h3>';
+  h+='<p>「＿＿ 您好，感谢您昨天专程过来。跟您坦诚说一下，这次我们在 '+(state.comps[0]?esc(state.comps[0].name):'核心能力')+' 这个维度上，更倾向于找有 ＿＿ 经验的候选人，所以这次可能不太合适。」</p>';
+  h+='<p>「不过您 ＿＿ 这块的表现我们印象很深，如果后续有更合适的岗位，我会第一时间联系您。也祝您找到合适的平台。」</p>';
+  h+='<div class="note">给不通过的人明确答复，是雇主品牌里最便宜也最少人做的事。含糊拖延造成的口碑损失，远大于一句坦诚的拒绝。</div>';
+
+  h+='<h3>五、Offer 沟通</h3>';
+  h+='<p><b>开场：</b>「＿＿ 您好，我们内部已经确认了，正式向您发出 '+esc(po())+' 的录用意向。」</p>';
+  h+='<p><b>说明薪酬结构：</b>「我们的年薪区间是 '+ (smin||smax? esc(p.salMin)+'–'+esc(p.salMax)+' 万元' : '＿＿') +'，您的定档是 ＿ 万元。结构是 ＿＿。」</p>';
+  h+='<p><b>说明考核与成长：</b>「试用期 3 个月，我们会给您一份明确的 30/60/90 天计划，每阶段有一次面谈。您入职第一天就能拿到这份计划，知道自己被怎么衡量。」</p>';
+  h+='<p><b>确认意向：</b>「您这边还有什么顾虑？薪酬、通勤、还是入职时间？」</p>';
+
+  h+='<h3>六、被拒绝时的挽回话术</h3>';
+  h+='<p>「理解，这个决定对您来说肯定也是综合考虑的。方便问一下主要是什么原因吗？如果是我们这边可以调整的，我想争取一下。」</p>';
+  h+='<p>（若对方因薪酬）「您的期望是 ＿ 万，我们目前的带宽上限是 ＿ 万。我可以帮您争取一次性签约金，或者约定 6 个月后按考核结果调档，您觉得哪种方式更合适？」</p>';
+  h+='<p>（若确实无法挽回）「好的，尊重您的选择。方便的话，希望能保持联系，未来有合适机会我再找您。」</p>';
+
+  h+='<h3>七、透明化声明（可在邀约时一并告知）</h3>';
+  h+='<ul>'
+    +'<li>本次面试评估的维度是：'+(state.comps.length? state.comps.map(function(x){return esc(x.name);}).join('、') : '（待补）')+'。</li>'
+    +'<li>评分依据是您描述的具体行为事实，不是主观印象。</li>'
+    +'<li>我们不会询问婚育计划、家庭状况、籍贯、年龄、疾病史等与岗位无关的信息。</li>'
+    +'<li>您有权要求我们对评估结果作出解释，也可以申请由更高层级面试官复核。</li>'
+    +'</ul>';
+  setB('b10',h);
+}
+
+/* ---------- B11 招聘漏斗与单 hires 成本看板 ---------- */
+function renderB11(){
+  var f=state.funnel;
+  var r=num(f.resume), s=num(f.screen), i1=num(f.i1), i2=num(f.i2), of=num(f.offer), on=num(f.onboard);
+  var cost=num(f.cost), days=num(f.days);
+  var hcPlan=num(state.post.hcPlan), hcNow=num(state.post.hcNow);
+  var occupy = hcPlan? (hcNow/hcPlan*100) : 0;
+  var cph = on? (cost*10000/on) : 0;
+  var h='';
+  h+='<h3>一、核心指标</h3>';
+  h+='<div class="metric">'
+    +'<div class="m"><div class="l">编制占用率</div><div class="v">'+(hcPlan?occupy.toFixed(0)+'<small>%</small>':'—')+'</div><div class="d">在编 '+esc(state.post.hcNow||'0')+' / 编制 '+esc(state.post.hcPlan||'0')+'</div></div>'
+    +'<div class="m"><div class="l">单 hires 成本</div><div class="v">'+(cph? (cph/10000).toFixed(2)+'<small>万</small>' : '—')+'</div><div class="d">投入 '+esc(f.cost||'0')+' 万 / 到岗 '+esc(f.onboard||'0')+' 人</div></div>'
+    +'<div class="m"><div class="l">平均招聘周期</div><div class="v">'+esc(f.days||'—')+'<small>天</small></div><div class="d">从发布到到岗</div></div>'
+    +'<div class="m"><div class="l">Offer 接受率</div><div class="v">'+(of? (on/of*100).toFixed(0)+'<small>%</small>':'—')+'</div><div class="d">到岗 '+esc(f.onboard||'0')+' / offer '+esc(f.offer||'0')+'</div></div>'
+    +'</div>';
+
+  h+='<h3>二、漏斗转化</h3>';
+  h+='<table><tr><th style="width:130px">环节</th><th style="width:80px">人数</th><th style="width:100px">本环节转化率</th><th style="width:100px">累计转化率</th><th>解读</th></tr>';
+  var steps=[
+    ['收到简历', r, 0, 1, '简历总量反映渠道覆盖度'],
+    ['初筛通过', s, s/r, s/r, '初筛通过率过低（<20%）说明 JD 或渠道不精准'],
+    ['进入一面', i1, i1/s, i1/r, '一面邀约到面率低，多为电话邀约质量或时间安排问题'],
+    ['进入二面', i2, i2/i1, i2/r, '一面到二面流失大，通常是硬条件或核心胜任力不达标'],
+    ['发出 offer', of, of/i2, of/r, '二面到 offer 转化低，多为薪酬预期或决策慢'],
+    ['实际到岗', on, on/of, on/r, 'offer 接受率低于 70% 需复盘薪酬竞争力与雇主形象']
+  ];
+  steps.forEach(function(x){
+    var label = x[2]? (x[2]*100).toFixed(1)+'%' : '—';
+    var cum = x[3]? (x[3]*100).toFixed(2)+'%' : '—';
+    h+='<tr><td>'+x[0]+'</td><td>'+x[1]+'</td><td>'+label+'</td><td>'+cum+'</td><td class="hint">'+x[4]+'</td></tr>';
+  });
+  h+='</table>';
+
+  h+='<h3>三、健康度诊断</h3>';
+  var diags=[];
+  if(r&&s/r<0.2) diags.push(['P0','初筛通过率仅 '+(s/r*100).toFixed(1)+'%，低于 20%。','JD 与实际要求不匹配，或渠道选错了人群。先改 JD 的硬条件表述，再换渠道。']);
+  if(s&&i1/s<0.5) diags.push(['P1','邀约到面率仅 '+(i1/s*100).toFixed(1)+'%，低于 50%。','电话邀约话术需优化：说清评估维度与时间成本，比反复强调公司好更能提高到面率。']);
+  if(i1&&i2/i1<0.4) diags.push(['P1','一面到二面转化仅 '+(i2/i1*100).toFixed(1)+'%。','一面筛选过松，或核心胜任力锚点写得不够可观察，导致面试官凭感觉放人。']);
+  if(i2&&of/i2<0.4) diags.push(['P0','二面到 offer 转化仅 '+(of/i2*100).toFixed(1)+'%。','多为薪酬预期差距或决策链过长。建议在二面前就完成薪酬预期探询。']);
+  if(of&&on/of<0.7) diags.push(['P0','Offer 接受率仅 '+(on/of*100).toFixed(0)+'%，低于 70%。','说明 offer 竞争力或雇主形象存在硬伤。需复盘被拒原因，这是最贵的漏斗漏点——前面所有投入都在这里流失。']);
+  if(days&&days>45) diags.push(['P1','招聘周期 '+days+' 天，超过 45 天。','优质候选人平均在 10 天内被抢走。压缩决策链条比加渠道更有效。']);
+  if(hcPlan&&occupy<80) diags.push(['P1','编制占用率 '+(occupy).toFixed(0)+'%，编制未填满。','该岗位长期空缺会持续消耗现有团队。若连续 2 个季度招不到，需回到岗位设计环节重新审视标准是否过高。']);
+  if(cph&&cph>20000) diags.push(['P1','单 hires 成本 '+(cph/10000).toFixed(2)+' 万元，偏高。','对比行业基准（一般岗位 1-2 万元）。若长期偏高，考虑提高内推占比。']);
+
+  if(diags.length){
+    h+='<table><tr><th style="width:60px">级别</th><th style="width:250px">现象</th><th>处方</th></tr>';
+    diags.forEach(function(d){ h+='<tr><td><span class="badge '+(d[0]==='P0'?'w':'o')+'">'+d[0]+'</span></td><td>'+d[1]+'</td><td>'+d[2]+'</td></tr>'; });
+    h+='</table>';
+  } else {
+    h+='<div class="ok">各项转化指标均在健康区间，漏斗无明显漏点。</div>';
+  }
+  h+='<div class="note">漏斗诊断的价值不在于「知道哪里漏」，而在于「知道该先补哪里」。按 P0 → P1 的顺序动手，一次只改一个环节，改完再看数据。</div>';
+
+  h+='<h3>四、内推占比建议</h3>';
+  h+='<p>健康的内推占比应在 30%–50%。当前若内推几乎为零，说明员工不知道在招什么、或者不信任推荐有用。前者靠 A4 文案包解决，后者靠「推荐奖真的发出去」解决。</p>';
+  setB('b11',h);
+}
+
+/* ---------- B12 校准会操作指引 ---------- */
+function renderB12(){
+  var h='';
+  h+='<h3>一、为什么要开校准会</h3>';
+  h+='<p>评分卡刚写出来时，权重和锚点都只是<b>假设</b>。校准会是唯一能验证假设的方法：拿已经知道绩效结果的人回测，如果高绩效者只能拿到 3 分，说明锚点写错了；如果低绩效者拿了高分，说明权重错了。</p>';
+  h+='<div class="note">这一小时 AI 替代不了。因为只有你记得当时团队里到底发生了什么。</div>';
+
+  h+='<h3>二、会前准备（提前 1 天）</h3>';
+  h+='<ul>'
+    +'<li>挑选 2–4 名 12–24 个月前入职、现在绩效已知的员工。至少包含 1 名高绩效、1 名不合格（或已离职）。</li>'
+    +'<li>准备他们的原始面试记录（若无，用主管回忆补）。</li>'
+    +'<li>参会人：用人部门负责人、HRBP、直属主管。不超过 5 人。</li>'
+    +'<li>时长：60–90 分钟。不要压缩。</li>'
+    +'</ul>';
+
+  h+='<h3>三、会议流程</h3>';
+  h+='<table><tr><th style="width:60px">环节</th><th style="width:130px">时长</th><th>动作</th></tr>';
+  h+='<tr><td>1</td><td>5 分钟</td><td>明确本次目标：只校准标准，不评价人。不讨论该员工现在的表现好坏。</td></tr>';
+  h+='<tr><td>2</td><td>10 分钟</td><td>逐项读权重与锚点，每个人独立写出「我认为这项应该占多少权重」，再对表。</td></tr>';
+  h+='<tr><td>3</td><td>30 分钟</td><td>用高绩效者回测：对照锚点逐项打分，看总分是否落在「建议录用」区间。</td></tr>';
+  h+='<tr><td>4</td><td>20 分钟</td><td>用不合格者回测：看总分是否被有效筛掉。若未被筛掉，找出是哪一项锚点太松。</td></tr>';
+  h+='<tr><td>5</td><td>15 分钟</td><td>修订锚点与权重。记录修订前后对照，形成版本。</td></tr>';
+  h+='<tr><td>6</td><td>5 分钟</td><td>约定下次校准时点（建议 6 个月后，或累计面试 10 人后）。</td></tr>';
+  h+='</table>';
+
+  h+='<h3>四、回测记录表</h3>';
+  h+='<table><tr><th style="width:110px">回测对象</th><th style="width:100px">实际绩效</th><th style="width:100px">回测总分</th><th style="width:100px">是否命中</th><th>偏差分析与修订</th></tr>';
+  h+='<tr><td>高绩效者 A</td><td>优秀</td><td>＿＿</td><td>□ 命中 □ 未命中</td><td>若未达 4.0，说明哪一项锚点定得过高？＿＿＿＿</td></tr>';
+  h+='<tr><td>合格者 B</td><td>合格</td><td>＿＿</td><td>□ 命中 □ 未命中</td><td>＿＿＿＿</td></tr>';
+  h+='<tr><td>不合格者 C</td><td>不合格</td><td>＿＿</td><td>□ 命中 □ 未命中</td><td>若达 4.0 以上，说明哪一项权重或锚点失效？＿＿＿＿</td></tr>';
+  h+='</table>';
+
+  h+='<h3>五、修订记录</h3>';
+  h+='<table><tr><th style="width:150px">胜任力</th><th style="width:80px">原权重</th><th style="width:80px">新权重</th><th>锚点修订内容</th></tr>';
+  state.comps.forEach(function(c){
+    h+='<tr><td>'+esc(c.name)+'</td><td>'+esc(c.weight)+'%</td><td>＿＿%</td><td>＿＿＿＿＿＿＿＿</td></tr>';
+  });
+  h+='</table>';
+
+  h+='<h3>六、常见校准结论与处理</h3>';
+  h+='<table><tr><th style="width:250px">现象</th><th>结论与处理</th></tr>';
+  h+='<tr><td>高绩效者在某维度只拿 3 分</td><td>该维度的「5 分锚点」写得过高，把卓越当成了及格。下调锚点或拆分维度。</td></tr>';
+  h+='<tr><td>低绩效者在某维度拿了 4-5 分</td><td>该维度对岗位结果没有预测力。降低权重，或删除该维度。</td></tr>';
+  h+='<tr><td>所有人都集中在 3-4 分</td><td>锚点区分度不足。检查三档描述是否真的对应不同水平的行为。</td></tr>';
+  h+='<tr><td>面试官之间差异普遍 >1.5 分</td><td>锚点不够可观察，或面试官训练不足。优先修锚点，再做面试官认证（见 C14）。</td></tr>';
+  h+='<tr><td>某项权重始终争不下来</td><td>通常说明这个岗位本身就存在角色模糊。回到岗位设计环节，先把职责理清。</td></tr>';
+  h+='</table>';
+  setB('b12',h);
+}
+
+/* ---------- C13 胜任力与行为锚点字典 ---------- */
+function renderC13(){
+  var LIB=[
+    {n:'大客户攻坚与关系经营',d:'从零开发新客户并推动其决策的能力。',s:'独立拿下过单笔 500 万元以上新客户，能画出完整决策链地图与破局动作。',o:'主导过百万元级新客户开发，能复盘关键节点。',w:'主要靠老客户续单或渠道分配。'},
+    {n:'长周期项目管控',d:'对跨年、非标类项目的里程碑与风险管控能力。',s:'主导 12 个月以上项目，说清里程碑设置与防烂尾机制。',o:'参与跨年项目，说清自己负责的节点。',w:'只做短周期标准品，或项目一拖就甩手。'},
+    {n:'回款风险意识与催收执行',d:'签约前识别回款风险、签约后有效催收的能力。',s:'能识别付款条件/客户资金/行业账期三类风险，有追回逾期账款战绩。',o:'关注账期，有常规催收动作。',w:'认为回款是财务的事。'},
+    {n:'技术方案理解与转化',d:'理解技术指标并翻译为客户可感知价值的能力。',s:'能独立看懂图纸与工况，把技术指标翻译成省多少钱、少停多少机。',o:'能借助技术同事完成方案讲解。',w:'完全依赖技术支持。'},
+    {n:'韧性抗压与自驱',d:'长期无产出或高频拒绝下的自我驱动能力。',s:'能讲清最长无产出期每天的具体动作与支撑方式。',o:'能描述压力下的调整方式。',w:'遇连续拒绝易情绪化或放弃。'},
+    {n:'数据驱动与复盘',d:'用数据发现问题并形成改进闭环的能力。',s:'能说出自己建过的数据看板或分析模型，并说明它带来了什么决策改变。',o:'能定期做数据复盘并调整动作。',w:'凭感觉做事，说不出关键数字。'},
+    {n:'跨部门推动',d:'在无直接汇报关系下推动他人配合的能力。',s:'能说清一次推动平级部门改变原有做法的完整过程，包括对方为何最终配合。',o:'有跨部门协作经验，能说清接口。',w:'习惯抱怨其他部门不配合。'},
+    {n:'团队带教与标准沉淀',d:'把个人经验转化为团队可复用标准的能力。',s:'写过被团队实际使用的 SOP 或培训材料，并带出过至少 1 名合格接任者。',o:'带过新人，有基本带教动作。',w:'只管自己业绩，不愿分享方法。'},
+    {n:'成本与效率意识',d:'在完成任务的同时关注投入产出比的能力。',s:'能举出通过改变做法而实际降低成本的案例，并给出金额。',o:'有成本意识，会主动比价或优化流程。',w:'只问结果不问投入。'},
+    {n:'合规与风险底线',d:'对规则红线的敬畏与主动识别风险的能力。',s:'能主动指出自己曾遇到过的合规风险并说明当时的处理与上报动作。',o:'知道基本红线，遇事会请示。',w:'认为规则可以变通，习惯先做后报。'},
+    {n:'AI 工具应用',d:'用 AI 工具提升信息处理与方案产出效率的能力。',s:'能说出具体用 AI 解决了哪个工作问题、节省了多少时间，并知道什么情况下不能信 AI 输出。',o:'日常使用 AI 辅助整理与起草。',w:'未使用过，或完全照搬 AI 输出不做核查。'},
+    {n:'客户视角与需求洞察',d:'透过客户表述识别其真实需求的能力。',s:'能举出一次识别出客户「说的」与「要的」不一致，并因此改变方案方向的案例。',o:'会主动了解客户业务场景。',w:'只按客户明说的要求执行。'}
+  ];
+  var h='';
+  h+='<h3>一、字典用途</h3>';
+  h+='<p>这是跨岗位复用的底层库。做新岗位评分卡时，先从字典里选，再按岗位特点改写锚点。避免每次从零写，也避免不同岗位用同一句话描述却含义不同。</p>';
+  h+='<div class="note">字典的价值在于「一致性」：同一个「跨部门推动」，销售岗和研发岗用同一套三档描述，跨部门比较人才时才站得住。</div>';
+
+  h+='<h3>二、行为锚点库（'+LIB.length+' 项）</h3>';
+  h+='<table><tr><th style="width:130px">胜任力</th><th style="width:150px">定义</th><th>5 分 · 强证据</th><th>3 分 · 合格</th><th>1 分 · 弱</th></tr>';
+  LIB.forEach(function(x){
+    h+='<tr><td>'+esc(x.n)+'</td><td>'+esc(x.d)+'</td><td>'+esc(x.s)+'</td><td>'+esc(x.o)+'</td><td>'+esc(x.w)+'</td></tr>';
+  });
+  h+='</table>';
+
+  h+='<h3>三、当前岗位已选用的胜任力</h3>';
+  h+='<table><tr><th style="width:50px">序</th><th style="width:150px">胜任力</th><th style="width:70px">权重</th><th>是否在字典中</th></tr>';
+  state.comps.forEach(function(c,i){
+    var inLib = LIB.some(function(x){ return x.n===c.name; });
+    h+='<tr><td>'+(i+1)+'</td><td>'+esc(c.name)+'</td><td>'+esc(c.weight)+'%</td><td>'+(inLib?'<span class="badge s">是</span>':'<span class="badge o">否 · 建议补入字典</span>')+'</td></tr>';
+  });
+  h+='</table>';
+
+  h+='<h3>四、写锚点的三条铁律</h3>';
+  h+='<ul>'
+    +'<li><b>写行为，不写特质</b>：「沟通能力强」不可评分；「能向非技术背景的采购讲清技术方案并推动其向上汇报」可评分。</li>'
+    +'<li><b>三档必须有区分度</b>：如果 3 分和 5 分的描述读起来差不多，说明还没写到位。合格与卓越的差别，应该在「有没有可复用方法」「有没有带出人」这类维度上。</li>'
+    +'<li><b>锚点必须能被原话验证</b>：面试官听完回答，能指着某一档说「他说的这句对应这一档」。做不到，就还要再改。</li>'
+    +'</ul>';
+  setB('c13',h);
+}
+
+/* ---------- C14 面试官认证与评分一致性校验 ---------- */
+function renderC14(){
+  var h='';
+  h+='<h3>一、为什么要做面试官认证</h3>';
+  h+='<p>评分卡再好，落在没受过训练的面试官手里也会失效。认证不是为了考试，是为了让「谁面试」这件事不再影响招聘质量。</p>';
+  h+='<div class="note">判断标准很朴素：同一段回答，两位面试官打出的分数差异是否在 1.5 分以内。这不是靠天赋，是靠训练。</div>';
+
+  h+='<h3>二、认证三级</h3>';
+  h+='<table><tr><th style="width:110px">等级</th><th style="width:180px">准入条件</th><th>权限</th></tr>';
+  h+='<tr><td>见习面试官</td><td>完成 2 小时培训 + 旁听 3 场</td><td>可参与面试，评分需与认证面试官共同签字</td></tr>';
+  h+='<tr><td>认证面试官</td><td>独立面试 5 场，与他人评分差异 ≤1.5 分</td><td>可独立面试并出具评分</td></tr>';
+  h+='<tr><td>校准面试官</td><td>主持过 1 次校准会，累计面试 20 场</td><td>可主持校准会、带教见习面试官</td></tr>';
+  h+='</table>';
+
+  h+='<h3>三、评分一致性校验表</h3>';
+  h+='<p>每季度抽 5 场面试，比对双人评分。差异超过 1.5 分的项，须回听原话找原因。</p>';
+  h+='<table><tr><th style="width:150px">胜任力</th><th style="width:100px">面试官甲均分</th><th style="width:100px">面试官乙均分</th><th style="width:90px">平均差异</th><th>处理</th></tr>';
+  state.comps.forEach(function(c){
+    h+='<tr><td>'+esc(c.name)+'</td><td>＿＿</td><td>＿＿</td><td>＿＿</td><td>□ 达标　□ 需回听原话　□ 需修订锚点</td></tr>';
+  });
+  h+='</table>';
+
+  h+='<h3>四、偏差来源诊断</h3>';
+  h+='<table><tr><th style="width:180px">偏差现象</th><th style="width:200px">可能原因</th><th>处理</th></tr>';
+  h+='<tr><td>甲普遍高于乙</td><td>甲的评分标准偏松，或存在「晕轮效应」（表达流畅就给高分）</td><td>用同一段录音做统一评分练习，逐句对照锚点</td></tr>';
+  h+='<tr><td>两人在同一维度持续分歧</td><td>该维度锚点不够可观察</td><td>修订锚点（见 B12），把描述具体到「说了哪句话算 5 分」</td></tr>';
+  h+='<tr><td>两人整体都偏高</td><td>锚点的 3 分档写得过高，把合格当成了优秀</td><td>下调 3 分锚点，或增加「不合格」档示例</td></tr>';
+  h+='<tr><td>分数集中在 3 分</td><td>面试官怕担责，倾向给中间分</td><td>明确「3 分即合格即可录用」，降低给高分的心理负担</td></tr>';
+  h+='<tr><td>某面试官对所有候选人评分高度雷同</td><td>未真正追问，或提前形成了整体印象</td><td>强制逐项记录证据栏，无证据不得评分</td></tr>';
+  h+='</table>';
+
+  h+='<h3>五、面试官培训要点（2 小时）</h3>';
+  h+='<table><tr><th style="width:80px">时段</th><th>内容</th></tr>';
+  h+='<tr><td>0–20 分</td><td>为什么结构化：非结构化面试的预测效度只有结构化的一半，而多数企业还在用非结构化</td></tr>';
+  h+='<tr><td>20–50 分</td><td>三层追问演练：给出候选人回答，练习追结果、追行为、追出发点</td></tr>';
+  h+='<tr><td>50–80 分</td><td>用锚点打分演练：同一段回答，全员独立打分再对表</td></tr>';
+  h+='<tr><td>80–110 分</td><td>反偏见训练：识别受保护特征代理词、晕轮效应、首因效应</td></tr>';
+  h+='<tr><td>110–120 分</td><td>合规红线：什么不能问、什么不能记、记录如何保存</td></tr>';
+  h+='</table>';
+  setB('c14',h);
+}
+
+/* ---------- C15 AI 素养评估 ---------- */
+function renderC15(){
+  var AI=[
+    {n:'AI 工具的信息处理能力',s:'能用 AI 快速把零散的客户/行业信息整理成可决策的结构化结论，并能说明自己是如何校验的。',o:'日常使用 AI 辅助信息整理与初稿撰写。',w:'未使用过，或完全照搬 AI 输出不做核查。'},
+    {n:'AI 输出的风险意识',s:'能明确说出什么情况下不能信 AI（数据时效、专业判断、法律与财务结论），并有一套核查动作。',o:'知道 AI 会出错，会做基本核对。',w:'认为 AI 说的就是对的。'},
+    {n:'用 AI 放大产出效率',s:'能举出具体案例：某项工作原来需要 4 小时，用 AI 后缩短到 40 分钟，且质量不降。',o:'尝试过用 AI 提速，有效果但不稳定。',w:'认为 AI 与自己的岗位无关。'},
+    {n:'把 AI 用对场景的判断力',s:'能区分哪些环节适合交给 AI（整理、起草、归纳），哪些必须自己做（判断、承诺、担责）。',o:'大致知道 AI 的适用边界。',w:'要么完全不用，要么什么都问 AI。'}
+  ];
+  var h='';
+  h+='<h3>一、为什么单列这一维</h3>';
+  h+='<p>2026 年企业招聘的一个新现实：几乎每份简历都会写「熟练使用 AI」。自我描述已经失去区分度，企业需要的是<b>可评估的 AI 素养</b>——不是会不会用工具，而是能不能用 AI 处理复杂信息、分析业务问题、优化沟通表达，以及知不知道什么时候不能信它。</p>';
+  h+='<div class="note">这一维度建议作为<b>可选加分项</b>而非淘汰项。它回答的是「这个人未来三年的成长性」，不是「今天能不能干活」。</div>';
+
+  h+='<h3>二、评估维度与锚点</h3>';
+  h+='<table><tr><th style="width:150px">维度</th><th>5 分 · 强证据</th><th>3 分 · 合格</th><th>1 分 · 弱</th></tr>';
+  AI.forEach(function(x){
+    h+='<tr><td>'+esc(x.n)+'</td><td>'+esc(x.s)+'</td><td>'+esc(x.o)+'</td><td>'+esc(x.w)+'</td></tr>';
+  });
+  h+='</table>';
+
+  h+='<h3>三、面试问法（三题即可）</h3>';
+  h+='<ul>'
+    +'<li><b>问场景</b>：过去半年里，你用 AI 帮你完成的最复杂的一件事是什么？原来要多久，后来多久？</li>'
+    +'<li><b>问核查</b>：AI 给你的答案，你怎么判断它是不是对的？有没有发现过它错的地方？</li>'
+    +'<li><b>问边界</b>：你觉得在你的工作里，哪件事绝对不能交给 AI 做？为什么？</li>'
+    +'</ul>';
+  h+='<p class="hint">第三题最能区分人：答「不能交给 AI 做承诺和担责的事」的，通常有清晰的责任意识；答「都可以试试」的，风险意识偏弱。</p>';
+
+  h+='<h3>四、与传统测评的关系</h3>';
+  h+='<table><tr><th style="width:150px">评估层</th><th>回答什么问题</th></tr>';
+  h+='<tr><td>认知能力</td><td>学习速度与问题解决的基础盘</td></tr>';
+  h+='<tr><td>个性动机</td><td>责任感与主动性</td></tr>';
+  h+='<tr><td>心理韧性</td><td>变化环境中的稳定性</td></tr>';
+  h+='<tr><td><b>AI 素养</b></td><td><b>在 AI 时代持续适应变化的能力</b></td></tr>';
+  h+='</table>';
+  h+='<div class="note">AI 素养不能替代传统测评，也不能单独作为录用依据。它需要与传统维度立体结合，才能判断一个人「不仅今天准备充分，未来也有持续成长的潜力」。</div>';
+
+  h+='<h3>五、评分记录</h3>';
+  h+='<table><tr><th style="width:150px">维度</th><th style="width:90px">评分(1-5)</th><th>证据（候选人原话）</th></tr>';
+  AI.forEach(function(x){
+    h+='<tr><td>'+esc(x.n)+'</td><td>＿＿</td><td>＿＿＿＿＿＿＿＿＿＿</td></tr>';
+  });
+  h+='</table>';
+  h+='<p class="hint">建议本项不计入综合分，单独记录并在录用讨论时作为参考信息呈现。</p>';
+  setB('c15',h);
+}
+/* ============================================================
+   零依赖 Word 导出（store-zip + CRC32，断网可用）
+   规范：微软雅黑 / 标题 18pt 加粗居中 / 正文 14pt / 1.5 倍行距
+   ============================================================ */
+var CRC_T = null;
+function crc32(buf){
+  if(!CRC_T){
+    CRC_T=[];
+    for(var n=0;n<256;n++){ var c=n; for(var k=0;k<8;k++){ c = (c&1) ? (0xEDB88320 ^ (c>>>1)) : (c>>>1); } CRC_T[n]=c>>>0; }
+  }
+  var cc=0xFFFFFFFF;
+  for(var i=0;i<buf.length;i++){ cc = CRC_T[(cc ^ buf[i]) & 0xFF] ^ (cc>>>8); }
+  return (cc ^ 0xFFFFFFFF) >>> 0;
+}
+function u16(v){ return [v & 0xFF, (v>>>8) & 0xFF]; }
+function u32(v){ return [v & 0xFF, (v>>>8) & 0xFF, (v>>>16) & 0xFF, (v>>>24) & 0xFF]; }
+function cat(arrs){
+  var len=0; arrs.forEach(function(a){ len+=a.length; });
+  var out=new Uint8Array(len), p=0;
+  arrs.forEach(function(a){ out.set(a,p); p+=a.length; });
+  return out;
+}
+function zipStore(files){
+  var enc=new TextEncoder();
+  var parts=[], cdParts=[], offset=0;
+  files.forEach(function(f){
+    var nb=enc.encode(f.name), d=f.data, crc=crc32(d);
+    var lh=new Uint8Array([].concat(
+      u32(0x04034b50), u16(20), u16(0), u16(0), u16(0), u16(0),
+      u32(crc), u32(d.length), u32(d.length), u16(nb.length), u16(0)
+    ));
+    parts.push(lh, nb, d);
+    cdParts.push(new Uint8Array([].concat(
+      u32(0x02014b50), u16(20), u16(20), u16(0), u16(0), u16(0), u16(0),
+      u32(crc), u32(d.length), u32(d.length), u16(nb.length), u16(0), u16(0), u16(0), u16(0), u32(0), u32(offset)
+    )), nb);
+    offset += lh.length + nb.length + d.length;
+  });
+  var cdSize=0; cdParts.forEach(function(a){ cdSize+=a.length; });
+  var end=new Uint8Array([].concat(
+    u32(0x06054b50), u16(0), u16(0), u16(files.length), u16(files.length), u32(cdSize), u32(offset), u16(0)
+  ));
+  return cat(parts.concat(cdParts, [end]));
+}
+
+function xesc(s){
+  return String(s==null?'':s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&apos;');
+}
+var FONT='<w:rFonts w:ascii="微软雅黑" w:eastAsia="微软雅黑" w:hAnsi="微软雅黑" w:cs="微软雅黑"/>';
+function rPr(o){
+  o=o||{};
+  return '<w:rPr>'+FONT
+    +(o.bold?'<w:b/><w:bCs/>':'')
+    +(o.color?'<w:color w:val="'+o.color+'"/>':'')
+    +'<w:sz w:val="'+(o.sz||28)+'"/><w:szCs w:val="'+(o.sz||28)+'"/></w:rPr>';
+}
+function wPara(text,o){
+  o=o||{};
+  var pr='<w:pPr>'
+    +'<w:spacing w:line="360" w:lineRule="auto"'+(o.before?' w:before="'+o.before+'"':'')+' w:after="'+(o.after==null?80:o.after)+'"/>'
+    +(o.align?'<w:jc w:val="'+o.align+'"/>':'')
+    +(o.shd?'<w:shd w:val="clear" w:color="auto" w:fill="'+o.shd+'"/>':'')
+    +'</w:pPr>';
+  var runs='';
+  String(text==null?'':text).split('\n').forEach(function(line,i){
+    if(i>0) runs+='<w:r>'+rPr({sz:o.sz})+ '<w:br/></w:r>';
+    runs+='<w:r>'+rPr(o)+'<w:t xml:space="preserve">'+xesc(line)+'</w:t></w:r>';
+  });
+  return '<w:p>'+pr+runs+'</w:p>';
+}
+var TBL_BORDERS='<w:tblBorders>'
+  +'<w:top w:val="single" w:sz="4" w:space="0" w:color="BFC7D1"/>'
+  +'<w:left w:val="single" w:sz="4" w:space="0" w:color="BFC7D1"/>'
+  +'<w:bottom w:val="single" w:sz="4" w:space="0" w:color="BFC7D1"/>'
+  +'<w:right w:val="single" w:sz="4" w:space="0" w:color="BFC7D1"/>'
+  +'<w:insideH w:val="single" w:sz="4" w:space="0" w:color="BFC7D1"/>'
+  +'<w:insideV w:val="single" w:sz="4" w:space="0" w:color="BFC7D1"/>'
+  +'</w:tblBorders>';
+function wTable(rows, head){
+  if(!rows||!rows.length) return '';
+  var cols=rows[0].length;
+  var xml='<w:tbl><w:tblPr><w:tblStyle w:val="TableGrid"/><w:tblW w:w="5000" w:type="pct"/>'+TBL_BORDERS+'</w:tblPr>';
+  rows.forEach(function(r,ri){
+    var isHead = head!==false && ri===0;
+    xml+='<w:tr>';
+    for(var ci=0;ci<cols;ci++){
+      var cell = r[ci]==null?'':r[ci];
+      var shade = isHead ? '<w:shd w:val="clear" w:color="auto" w:fill="1F3A5F"/>' : (ri%2===0?'<w:shd w:val="clear" w:color="auto" w:fill="F7F9FB"/>':'');
+      xml+='<w:tc><w:tcPr><w:tcW w:w="0" w:type="auto"/>'+shade+'<w:vAlign w:val="center"/></w:tcPr>'
+        + wPara(cell,{bold:isHead, color:isHead?'FFFFFF':null, sz:21, after:0})
+        +'</w:tc>';
+    }
+    xml+='</w:tr>';
+  });
+  xml+='</w:tbl>'+wPara('',{sz:12,after:0});
+  return xml;
+}
+function buildDocumentXml(doc){
+  var body='';
+  body+=wPara(doc.title||'', {bold:true, align:'center', sz:36, after:120});
+  if(doc.sub) body+=wPara(doc.sub, {align:'center', sz:20, color:'5F6B7A', after:240});
+  (doc.blocks||[]).forEach(function(b){
+    if(b.t==='h3') body+=wPara(b.x,{bold:true, sz:28, color:'1F3A5F', before:240, after:80});
+    else if(b.t==='h4') body+=wPara(b.x,{bold:true, sz:24, color:'2E5C8A', before:160, after:60});
+    else if(b.t==='ul') (b.items||[]).forEach(function(it){ body+=wPara('· '+it,{sz:26, after:40}); });
+    else if(b.t==='note') body+=wPara(b.x,{sz:24, color:'1B3A5C', shd:'EAF1F9', before:80, after:120});
+    else if(b.t==='table') body+=wTable(b.rows, b.head!==false);
+    else body+=wPara(b.x,{sz:28, after:80});
+  });
+  var sect='<w:sectPr><w:pgSz w:w="11906" w:h="16838"/>'
+    +'<w:pgMar w:top="1440" w:right="1080" w:bottom="1440" w:left="1080" w:header="851" w:footer="992" w:gutter="0"/></w:sectPr>';
+  return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+    +'<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">'
+    +'<w:body>'+body+sect+'</w:body></w:document>';
+}
+var CT_XML='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+  +'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">'
+  +'<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>'
+  +'<Default Extension="xml" ContentType="application/xml"/>'
+  +'<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>'
+  +'</Types>';
+var RELS_XML='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+  +'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
+  +'<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>'
+  +'</Relationships>';
+function buildDocx(doc){
+  var enc=new TextEncoder();
+  var files=[
+    {name:'[Content_Types].xml', data:enc.encode(CT_XML)},
+    {name:'_rels/.rels', data:enc.encode(RELS_XML)},
+    {name:'word/document.xml', data:enc.encode(buildDocumentXml(doc))}
+  ];
+  var zip=zipStore(files);
+  if(typeof window!=='undefined' && typeof Blob!=='undefined'){
+    return new Blob([zip], {type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+  }
+  return zip;
+}
+
+/* 从已渲染的 DOM 抽取文档块，避免正文写两遍 */
+function blocksFromBody(id){
+  var body=$(id+'-body'), blocks=[];
+  if(!body) return blocks;
+  Array.prototype.forEach.call(body.children, function(el){
+    var tag=el.tagName.toLowerCase();
+    if(tag==='h3') blocks.push({t:'h3', x:el.textContent.trim()});
+    else if(tag==='h4') blocks.push({t:'h4', x:el.textContent.trim()});
+    else if(tag==='p'){ var tx=el.textContent.trim(); if(tx) blocks.push({t:'p', x:tx}); }
+    else if(tag==='ul'||tag==='ol'){
+      var items=[];
+      Array.prototype.forEach.call(el.children, function(li){ var s=li.textContent.trim(); if(s) items.push(s); });
+      if(items.length) blocks.push({t:'ul', items:items});
+    }
+    else if(tag==='table'){
+      var rows=[];
+      Array.prototype.forEach.call(el.rows, function(tr){
+        var cells=[];
+        Array.prototype.forEach.call(tr.cells, function(td){ cells.push(td.textContent.replace(/\s+/g,' ').trim()); });
+        rows.push(cells);
+      });
+      if(rows.length) blocks.push({t:'table', rows:rows});
+    }
+    else if(el.classList && (el.classList.contains('note')||el.classList.contains('warn')||el.classList.contains('ok'))){
+      blocks.push({t:'note', x:el.textContent.trim()});
+    }
+    else if(el.classList && el.classList.contains('kv')){
+      var kids=el.children, rows2=[];
+      for(var i=0;i+1<kids.length;i+=2){ rows2.push([kids[i].textContent.trim(), kids[i+1].textContent.trim()]); }
+      if(rows2.length) blocks.push({t:'table', rows:rows2, head:false});
+    }
+    else if(el.classList && el.classList.contains('metric')){
+      var ms=[];
+      Array.prototype.forEach.call(el.children, function(m){
+        var l=m.querySelector('.l'), v=m.querySelector('.v'), d=m.querySelector('.d');
+        ms.push([l?l.textContent.trim():'', v?v.textContent.trim():'', d?d.textContent.trim():'']);
+      });
+      if(ms.length) blocks.push({t:'table', rows:[['指标','数值','说明']].concat(ms)});
+    }
+  });
+  return blocks;
+}
+function today(){
+  var d=new Date();
+  return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);
+}
+function exportSec(id, code, name){
+  var blocks=blocksFromBody(id);
+  if(!blocks.length){ toast('本模块暂无内容可导出'); return; }
+  var doc={
+    title: co()+' · '+name,
+    sub: po()+'　|　'+code+'　|　生成日期 '+today(),
+    blocks: blocks
+  };
+  try{
+    var out=buildDocx(doc);
+    var url=URL.createObjectURL(out);
+    var a=document.createElement('a');
+    a.href=url;
+    a.download=co()+'-'+po()+'-'+name+'.docx';
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ URL.revokeObjectURL(url); if(a.parentNode) a.parentNode.removeChild(a); },1500);
+    toast('已生成 Word：'+name);
+  }catch(e){ toast('导出失败：'+(e&&e.message?e.message:e)); }
+}
+/* ============================================================
+   本地留存 · 数据接口 · 初始化
+   ============================================================ */
+function saveLocal(){
+  try{
+    localStorage.setItem(LS_KEY, JSON.stringify(state));
+    var f=$('diFlag'); if(f) f.textContent='· 已自动留存（本机浏览器）';
+  }catch(e){}
+}
+function loadLocal(){
+  try{
+    var raw=localStorage.getItem(LS_KEY);
+    if(!raw) return false;
+    var d=JSON.parse(raw);
+    if(!d||!d.company) return false;
+    var b=BLANK();
+    state={
+      company:Object.assign(b.company, d.company||{}),
+      post:Object.assign(b.post, d.post||{}),
+      funnel:Object.assign(b.funnel, d.funnel||{}),
+      battles:Array.isArray(d.battles)?d.battles:[],
+      comps:Array.isArray(d.comps)?d.comps:[],
+      veto:Array.isArray(d.veto)?d.veto:[],
+      calibDone:!!d.calibDone,
+      scores:d.scores||{},
+      ev:d.ev||{}
+    };
+    return true;
+  }catch(e){ return false; }
+}
+function loadSample(){
+  state=SAMPLE();
+  syncStateToSide();
+  renderComps();
+  renderAll();
+  saveLocal();
+  toast('已载入样例：新能源制造 · 大客户销售经理');
+}
+function resetAll(){
+  if(!window.confirm('将清空全部填写内容，确定吗？')) return;
+  state=BLANK();
+  syncStateToSide();
+  renderComps();
+  renderAll();
+  saveLocal();
+  toast('已重置');
+}
+
+/* ---------- 数据接口（粘贴导入 / 导出 TSV） ---------- */
+function labelOf(el){
+  var fr = el.closest ? el.closest('.frow') : null;
+  if(fr){ var l=fr.querySelector('label'); if(l) return l.textContent.replace(/[·•].*$/,'').trim(); }
+  return el.id;
+}
+function sideFields(){
+  var out=[];
+  var scope=document.querySelector('.side');
+  scope.querySelectorAll('input[id],select[id],textarea[id]').forEach(function(el){
+    if(el.closest('#diBox')) return;
+    out.push({el:el, label:labelOf(el)});
+  });
+  return out;
+}
+function diToggle(){
+  var b=$('diBox');
+  b.style.display = (b.style.display==='none' ? 'block' : 'none');
+}
+function diExport(){
+  var parts=['### 参数 ###'];
+  sideFields().forEach(function(f){
+    var v = f.el.tagName==='SELECT' ? f.el.value : (f.el.type==='checkbox' ? (f.el.checked?'1':'0') : f.el.value);
+    parts.push(f.label+'\t'+String(v).replace(/\t/g,' ').replace(/\n/g,' '));
+  });
+  parts.push('');
+  parts.push('### 胜任力 ###');
+  parts.push('名称\t权重\t强证据\t合格证据\t弱证据\t面试题1\t面试题2');
+  state.comps.forEach(function(c){
+    parts.push([c.name,c.weight,c.strong,c.ok,c.weak,c.q1,c.q2].map(function(x){ return String(x==null?'':x).replace(/\t/g,' ').replace(/\n/g,' '); }).join('\t'));
+  });
+  var txt=parts.join('\n');
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(function(){ toast('已复制全部数据，可粘贴回 Excel'); },function(){ window.prompt('请手动复制：',txt); });
+  } else window.prompt('请手动复制：',txt);
+}
+function splitLine(line){
+  line=line.replace(/\r/g,'');
+  var d = line.indexOf('\t')>=0 ? '\t' : (line.indexOf('，')>=0 ? '，' : (line.indexOf(',')>=0 ? ',' : '\t'));
+  return line.split(d).map(function(s){ return s.trim(); });
+}
+function diImport(){
+  var pv=$('diParams').value||'', cv=$('diComps').value||'';
+  var count=0;
+  if(pv.trim()){
+    var map={};
+    sideFields().forEach(function(f){ map[f.label]=f.el; });
+    pv.split('\n').forEach(function(line){
+      var c=splitLine(line);
+      if(c.length<2||!c[0]) return;
+      var el=map[c[0]];
+      if(!el) return;
+      if(el.tagName==='SELECT'){ el.value=c[1]; }
+      else if(el.type==='checkbox'){ el.checked=(c[1]==='1'||c[1]==='true'); }
+      else { el.value=c[1]; }
+      count++;
+    });
+  }
+  if(cv.trim()){
+    var rows=[];
+    cv.split('\n').forEach(function(line){
+      if(!line.trim()) return;
+      var c=splitLine(line);
+      if(c.length<2) return;
+      rows.push(c);
+    });
+    if(rows.length && rows[0][0].indexOf('名称')===0) rows.shift();
+    if(rows.length){
+      state.comps=rows.map(function(c){
+        return {name:c[0]||'', weight:c[1]||'0', strong:c[2]||'', ok:c[3]||'', weak:c[4]||'', q1:c[5]||'', q2:c[6]||''};
+      });
+      count+=rows.length;
+    }
+  }
+  if(!count){ toast('未识别到可导入内容，请检查格式'); return; }
+  syncSideToState();
+  renderComps();
+  renderAll();
+  saveLocal();
+  diToggle();
+  toast('已导入 '+count+' 项，并自动留存');
+}
+
+/* ---------- 事件绑定与启动 ---------- */
+var _rt=null;
+function debounceRender(){
+  clearTimeout(_rt);
+  _rt=setTimeout(function(){ renderAll(); saveLocal(); },420);
+}
+function bindSide(){
+  var scope=document.querySelector('.side');
+  scope.querySelectorAll('input,select,textarea').forEach(function(el){
+    if(el.closest('#diBox')) return;
+    el.addEventListener('input', function(){ if(el.id==='b_raw'||el.id==='v_raw'){ parseVeto(); renderOutputs(); } else { debounceRender(); } });
+    el.addEventListener('change', function(){ renderAll(); saveLocal(); });
+  });
+}
+function init(){
+  buildNav();
+  if(!loadLocal()) state=SAMPLE();
+  syncStateToSide();
+  renderComps();
+  renderAll();
+  bindSide();
+  saveLocal();
+  var f=$('diFlag'); if(f) f.textContent='· 已自动留存（本机浏览器）';
+}
+if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init);
+else init();
+</script>
+<script>window.WB_AGENT_KEY='recruit';</script>
+</body>
+</html>

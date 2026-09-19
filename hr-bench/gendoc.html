@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<script>window.WB_OFFLINE=true;</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="color-scheme" content="light">
+<title>生成企业专属制度 · HR自动化工作台</title>
+<link rel="stylesheet" href="shared.css?v=13">
+<style>
+.wrap { max-width: 920px; margin: 0 auto; padding: 28px 20px 60px; }
+.pagehead { margin: 8px 0 6px; }
+.pagehead h1 { font-size: 22px; font-weight: 700; }
+.pagehead .sub { color:#6B7280; font-size:13px; margin-top:4px; }
+.section { background:#fff; border:1px solid #ECEAE6; border-radius:14px; padding:18px 20px; margin:16px 0; }
+.section h2 { font-size:15px; font-weight:700; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+.section h2::before { content:""; width:8px; height:8px; border-radius:50%; background:#16A06A; display:inline-block; }
+.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:12px 18px; }
+.field { display:flex; flex-direction:column; gap:5px; }
+.field label { font-size:13px; color:#3D4450; }
+.field .hint { font-size:11px; color:#9AA0A6; }
+.field input, .field select { font-size:14px; padding:9px 11px; border:1px solid #DCDAD4; border-radius:9px; background:#fff; color:#1F2328; font-family:inherit; }
+.field input:focus, .field select:focus { outline:none; border-color:#16A06A; box-shadow:0 0 0 3px #EAF7F1; }
+.planbar { background:#EAF7F1; border:1px solid #C7E8D7; border-radius:10px; padding:10px 14px; font-size:13px; color:#118A5A; margin-bottom:6px; }
+.planbar b { color:#0B5844; }
+.docs { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.docitem { display:flex; align-items:flex-start; gap:10px; padding:11px 12px; border:1px solid #ECEAE6; border-radius:10px; cursor:pointer; background:#fff; }
+.docitem:hover { border-color:#16A06A; }
+.docitem input { margin-top:3px; }
+.docitem .t { font-size:13px; font-weight:600; }
+.docitem .d { font-size:11px; color:#9AA0A6; }
+.actions { display:flex; gap:12px; margin-top:18px; flex-wrap:wrap; }
+.btn { font-size:14px; padding:11px 22px; border-radius:11px; border:1px solid transparent; cursor:pointer; font-family:inherit; }
+.btn-primary { background:#16A06A; color:#fff; }
+.btn-primary:hover { background:#118A5A; }
+.btn-ghost { background:#fff; border-color:#DCDAD4; color:#3D4450; }
+.btn:disabled { opacity:.5; cursor:not-allowed; }
+.preview { font-size:13px; color:#3D4450; background:#FAFAF9; border:1px dashed #DCDAD4; border-radius:10px; padding:12px 14px; margin-top:12px; white-space:pre-wrap; max-height:240px; overflow:auto; }
+.warn { font-size:12px; color:#B45309; background:#FEF3E2; border:1px solid #FCE3C0; border-radius:8px; padding:8px 12px; margin-top:10px; }
+@media (max-width:640px){ .grid2,.docs{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="pagehead">
+    <h1>生成企业专属制度</h1>
+    <div class="sub">填企业信息 → 选制度 → 一键下载带贵公司名称、行业定制条款、智能体测算参数的 Word 制度文档。</div>
+  </div>
+
+  <div id="planbar" class="planbar" style="display:none"></div>
+
+  <div class="section">
+    <h2>一、企业基本信息</h2>
+    <div class="grid2">
+      <div class="field"><label>企业名称 *</label><input id="company" placeholder="如：上海示例科技有限公司"></div>
+      <div class="field"><label>所属行业</label>
+        <select id="industry">
+          <option value="制造业">制造业</option>
+          <option value="零售业">零售业</option>
+          <option value="科技互联网">科技 / 互联网</option>
+          <option value="建筑工程">建筑工程</option>
+          <option value="服务业">服务业（专业服务）</option>
+          <option value="医疗健康">医疗健康</option>
+          <option value="教育培训">教育培训</option>
+          <option value="贸易进出口">贸易 / 进出口</option>
+          <option value="电商新零售">电商 / 新零售</option>
+          <option value="餐饮酒店">餐饮酒店</option>
+          <option value="其他">其他</option>
+        </select>
+      </div>
+      <div class="field"><label>生效日期</label><input id="effect" placeholder="如：2026 年 9 月 3 日"></div>
+      <div class="field"><label>签发人</label><input id="signer" placeholder="如：董事长 / 总裁：张三"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>二、智能体关键参数（由各工具算出，可手填或自动带入）</h2>
+    <div class="warn">这些数字来自您用「人效账速算表 / 组织诊断 / 岗位设计 / 用工合规」等工具算出的方案。填得越准，生成制度的「本企业定制要点」越贴合。</div>
+    <div class="grid2" style="margin-top:12px">
+      <div class="field"><label>员工人数</label><input id="headcount" type="number" placeholder="如：320"></div>
+      <div class="field"><label>年营收（万元）</label><input id="revenue" type="number" placeholder="如：18000"></div>
+      <div class="field"><label>年人工成本总包（万元）</label><input id="payroll" type="number" placeholder="如：5400"></div>
+      <div class="field"><label>关键岗位数量</label><input id="keypost" type="number" placeholder="如：12"></div>
+      <div class="field"><label>识别出的合规风险点（个）</label><input id="risks" type="number" placeholder="如：3"></div>
+      <div class="field"><label>合规风险预估赔付（万元）</label><input id="claim" type="number" placeholder="如：65"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>三、选择要生成的制度</h2>
+    <div class="docs" id="doclist"></div>
+    <label style="display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;color:#3D4450;cursor:pointer">
+      <input type="checkbox" id="all"> 一键全套 5 份（事·岗·人·钱·险）
+    </label>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-primary" id="gen">生成并下载</button>
+    <button class="btn btn-ghost" id="preview">预览摘要</button>
+  </div>
+  <div class="preview" id="pv" style="display:none"></div>
+</main>
+
+<script src="docxgen.js?v=12"></script>
+<script src="resources.js?v=13"></script>
+<script src="shared.js?v=13"></script>
+<script>
+var TEMPLATES = [
+  { key:'sg-01', name:'年度战略解码与硬仗管理制度', dim:'事', d:'把目标拆成硬仗、落到部门与岗位' },
+  { key:'sg-02', name:'组织架构与编制管理制度', dim:'岗', d:'部门定位、编制倒推、管理幅度' },
+  { key:'sg-03', name:'关键岗位管理与继任制度', dim:'人', d:'关键岗识别、继任梯队、九宫格' },
+  { key:'sg-04', name:'人工成本总包管控制度', dim:'钱', d:'工资包上限、人事费用率红线' },
+  { key:'sg-05', name:'用工合规风险管理制度', dim:'险', d:'10 大风险点、三色评估、赔偿预估' }
+];
+// 行业定制要点
+var INDUSTRY = {
+  '制造业':['硬仗须绑定产能利用率 / 良率 / 单位人工成本，编制测算以产线节拍为准','一线技能岗推行五级评定，关键设备岗强制继任备份'],
+  '零售业':['门店人效以坪效 / 人效双指标考核，排班与客流强绑定','用工合规重点防控小时工、兼职、促销临时工超时与社保'],
+  '科技互联网':['硬仗须绑定研发人效与需求交付周期，编制向核心研发倾斜','关键岗位突出技术领军人与产品经理继任，股权 / 项目分红写入制度'],
+  '建筑工程':['项目制编制随中标波动，设机动编制池与分包边界','合规重区：劳务外包、挂靠、工伤与农民工工资专户'],
+  '服务业':['人效以单人服务产出 / 客户满意度衡量，关键岗在客户接口','合规重区：劳务派遣比例、加班与排班合规'],
+  '医疗健康':['关键岗位含主诊医师与院感岗，继任须有资质背书','合规重区：执业资质、排班时长、隐私与数据合规'],
+  '教育培训':['师训比与人效双控，关键岗在教研与续费','合规重区：教师资格、预收费监管、用工分类'],
+  '贸易进出口':['编制随订单波动，设贸易合规岗把关关税与制裁清单','关键岗在跟单与合规，继任强调交叉培养'],
+  '电商新零售':['人效以 GMV / 单人产出衡量，大促临时编制需预案','合规重区：直播用工、个体户合作、数据合规'],
+  '餐饮酒店':['门店人效以翻台 / 间夜衡量，排班强绑定峰谷','合规重区：工时、社保、实习生与临时工'],
+  '其他':['按五维通用规则执行，行业特性由企业自行补充条款']
+};
+
+function val(id){ var e=document.getElementById(id); return e?e.value.trim():''; }
+function num(id){ var v=parseFloat(val(id)); return isNaN(v)?null:v; }
+
+function planItems(){
+  var items=[]; var h=num('headcount'), r=num('revenue'), p=num('payroll');
+  if(h&&r){ var perR=Math.round(r*10000/h); items.push('人均营收约 '+perR.toLocaleString()+' 元/人·年（年营收 '+r+' 万 ÷ '+h+' 人）'); }
+  if(r&&p){ var rate=(p/r*100); items.push('人事费用率约 '+rate.toFixed(1)+'%（人工成本 '+p+' 万 ÷ 营收 '+r+' 万）'); }
+  if(h&&p){ var perC=Math.round(p*10000/h); items.push('人均人工成本约 '+perC.toLocaleString()+' 元/人·年'); }
+  var k=num('keypost'); if(k) items.push('关键岗位 '+k+' 个，须建立继任梯队与九宫格盘点');
+  var rk=num('risks'); if(rk) items.push('识别合规风险点 '+rk+' 个'+(num('claim')?'，预估赔付约 '+num('claim')+' 万元':''));
+  if(!items.length) items.push('（未填写智能体参数，可在各工具算出后填入，或点工具页「存入方案」自动带入）');
+  return items;
+}
+
+function dimFromSub(s){ var m=/之「(.+)」/.exec(s||''); return m?m[1]:''; }
+
+function buildDocFor(t, company){
+  var obj = window.__TPL[t.key];
+  if(!obj) return null;
+  var blocks = obj.blocks.slice(4); // 跳过 标题/副标/说明/元信息表
+  var ind = INDUSTRY[val('industry')||'其他'] || INDUSTRY['其他'];
+  blocks = [{t:'note', title:'行业适用要点（'+ (val('industry')||'通用') +'）', items: ind}]
+    .concat([{t:'note', title:'本企业定制测算要点', items: planItems()}])
+    .concat(blocks);
+  return {
+    company: company,
+    coverTag: obj.subtitle,
+    title: obj.title,
+    meta:[
+      {k:'制度编号', v: t.key.toUpperCase()},
+      {k:'所属维度', v: '事-岗-人-钱-险 之「'+(dimFromSub(obj.subtitle)||t.dim)+'」'},
+      {k:'生效日期', v: val('effect') || '＿＿＿＿ 年 ＿＿ 月 ＿＿ 日'},
+      {k:'签发人', v: val('signer') || '董事长 / 总裁：＿＿＿＿＿＿'},
+      {k:'解释部门', v: '人力资源部'}
+    ],
+    note: obj.blocks[2] ? obj.blocks[2].text : '本制度为HR管理参考模板，请结合企业实际修订、审核后使用。',
+    blocks: blocks
+  };
+}
+
+function loadPlanBar(){
+  try{
+    var raw=localStorage.getItem('hr_bench_plan_v1'); if(!raw) return;
+    var p=JSON.parse(raw); var ks=Object.keys(p||{}); if(!ks.length) return;
+    var bar=document.getElementById('planbar');
+    bar.style.display='block';
+    bar.textContent='已从工具页带入 '+(p._from||'HR工具')+' 的方案：'+ks.map(function(k){return k+'='+p[k];}).join('；');
+    // 回填表单
+    if(p.员工人数!=null) document.getElementById('headcount').value=p.员工人数;
+    if(p.年营收!=null) document.getElementById('revenue').value=p.年营收;
+    if(p.人工成本!=null) document.getElementById('payroll').value=p.人工成本;
+    if(p.关键岗位数!=null) document.getElementById('keypost').value=p.关键岗位数;
+    if(p.合规风险点!=null) document.getElementById('risks').value=p.合规风险点;
+    if(p.预估赔付!=null) document.getElementById('claim').value=p.预估赔付;
+  }catch(e){}
+}
+
+function renderList(){
+  var box=document.getElementById('doclist'); box.innerHTML='';
+  TEMPLATES.forEach(function(t){
+    var lab=document.createElement('label'); lab.className='docitem';
+    lab.innerHTML='<input type="checkbox" class="docchk" value="'+t.key+'" checked>'+
+      '<div><div class="t">'+t.name+'</div><div class="d">'+t.dim+' · '+t.d+'</div></div>';
+    box.appendChild(lab);
+  });
+  document.getElementById('all').addEventListener('change',function(){
+    document.querySelectorAll('.docchk').forEach(function(c){ c.checked=document.getElementById('all').checked; });
+  });
+}
+
+function selectedKeys(){ return Array.prototype.slice.call(document.querySelectorAll('.docchk')).filter(function(c){return c.checked;}).map(function(c){return c.value;}); }
+
+function downloadDoc(doc, filename){
+  var blob=WBDocx.build(doc);
+  var url=URL.createObjectURL(blob); var a=document.createElement('a');
+  a.href=url; a.download=filename; document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(url); a.remove(); }, 1500);
+}
+
+function generate(){
+  var company=val('company');
+  if(!company){ alert('请先填写企业名称'); document.getElementById('company').focus(); return; }
+  var keys=selectedKeys(); if(!keys.length){ alert('请至少选择一份制度'); return; }
+  var missing=keys.filter(function(k){return !window.__TPL[k];});
+  if(missing.length){ alert('所选模板尚未加载完成，请稍后重试。'); return; }
+  keys.forEach(function(k,i){
+    var t=TEMPLATES.filter(function(x){return x.key===k;})[0];
+    var doc=buildDocFor(t, company);
+    if(!doc) return;
+    setTimeout(function(){ downloadDoc(doc, company+'_'+t.name+'.docx'); }, i*600);
+  });
+  var names=keys.map(function(k){return TEMPLATES.filter(function(x){return x.key===k;})[0].name;}).join('、');
+  document.getElementById('pv').style.display='block';
+  document.getElementById('pv').textContent='已为「'+company+'」生成：'+names+'\n（行业：'+(val('industry')||'通用')+'）\n文件已逐份下载，请用 Word / WPS 打开，按企业实际微调后发布。';
+}
+
+function preview(){
+  var company=val('company')||'【贵公司】';
+  var keys=selectedKeys();
+  var txt='预览：'+company+' 的制度文档将包含\n';
+  txt+='封面：公司名 + 制度名 + 编号/维度/生效日期/签发人\n';
+  txt+='行业适用要点（'+(val('industry')||'通用')+'）：\n  · '+(INDUSTRY[val('industry')||'其他']||[]).join('\n  · ')+'\n';
+  txt+='本企业定制测算要点：\n  · '+planItems().join('\n  · ')+'\n';
+  txt+='正文：所选 '+keys.length+' 份制度的原版条款（含表格）。';
+  var pv=document.getElementById('pv'); pv.style.display='block'; pv.textContent=txt;
+}
+
+// 载入模板数据
+window.__TPL={};
+(function(){
+  var pending=TEMPLATES.length, done=0;
+  TEMPLATES.forEach(function(t){
+    fetch('templates/'+t.key+'.json').then(function(r){if(!r.ok) throw new Error('模板读取失败'); return r.json();}).then(function(j){
+      window.__TPL[t.key]=j; if(++done===pending) ready();
+    }).catch(function(e){ if(++done===pending) ready(); });
+  });
+})();
+function ready(){
+  renderList(); loadPlanBar();
+  var missing=TEMPLATES.filter(function(t){return !window.__TPL[t.key];});
+  if(missing.length){
+    var pv=document.getElementById('pv'); pv.style.display='block';
+    pv.textContent='未能读取以下模板：'+missing.map(function(t){return t.name;}).join('、')+'。请检查页面与模板是否在同一本地服务或网站中打开。';
+    document.querySelectorAll('.docchk').forEach(function(c){if(!window.__TPL[c.value]){c.checked=false;c.disabled=true;}});
+  }
+}
+
+document.getElementById('gen').addEventListener('click', generate);
+document.getElementById('preview').addEventListener('click', preview);
+
+wbShell('生成企业专属制度');
+wbSidebar();
+</script>
+
+<script></script>
+</body>
+</html>

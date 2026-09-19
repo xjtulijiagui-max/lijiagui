@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="color-scheme" content="light">
+<meta name="supported-color-schemes" content="light">
+<meta name="darkreader-lock">
+<meta name="darkreader" content="lock">
+<title>HR自动化工作台</title>
+<meta name="description" content="16个HR实务工具，覆盖组织设计、岗位、薪酬绩效、招聘与人才发展；配套制度模板和资料下载。">
+<script>window.WB_OFFLINE=true;</script>
+<link rel="stylesheet" href="shared.css?v=13">
+<script>(function(){
+  // 兜底：某些浏览器/预览框的 auto-dark 会无视 color-scheme，强制用 JS 把首页背景刷成浅色
+  var s=document.documentElement.style; s.setProperty('background','#FFFFFF','important');
+  function forceLight(){
+    document.documentElement.style.setProperty('background','#FFFFFF','important');
+    document.body.style.setProperty('background','#FFFFFF','important');
+    document.body.style.setProperty('color','#23272E','important');
+    var b=document.querySelector('.lp-bg'); if(b){ b.style.setProperty('background','#FFFFFF','important'); }
+  }
+  if(document.body) forceLight(); else document.addEventListener('DOMContentLoaded',forceLight);
+})();</script>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+html, body {
+  font-family:"Microsoft YaHei","微软雅黑","PingFang SC",sans-serif;
+  background:#FFFFFF !important; color:#23272E !important; line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+body { padding-left:0 !important; }
+
+/* 明确纯白背景，与测试页保持一致 */
+.lp-bg {
+  position:fixed; inset:0; z-index:-1;
+  background:#FFFFFF !important;
+}
+
+/* 顶部导航 */
+.lp-nav {
+  position:sticky; top:0; z-index:40;
+  background:rgba(255,255,255,.86);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(0,0,0,.08);
+}
+.lp-nav .inner { max-width:1120px; margin:0 auto; padding:14px 20px; display:flex; align-items:center; gap:18px; }
+.lp-logo { display:flex; align-items:center; gap:10px; font-size:16px; font-weight:700; color:#1F2328; text-decoration:none; }
+.lp-logo i { width:30px; height:30px; border-radius:8px; background:linear-gradient(135deg,#16A06A,#2DD4A0); display:grid; place-items:center; font-style:normal; font-size:14px; }
+.lp-nav a { color:#4A525C; text-decoration:none; font-size:14px; transition:color .15s; }
+.lp-nav a:hover { color:#111418; }
+.lp-nav .nav { display:flex; gap:26px; margin-left:auto; }
+.lp-cta {
+  background:linear-gradient(135deg,#F5B945,#D99A2B); color:#1A1206; border:none;
+  padding:8px 18px; border-radius:8px; font-size:14px; font-weight:700; cursor:pointer;
+  text-decoration:none; transition:transform .15s, box-shadow .15s;
+}
+.lp-cta:hover { transform:translateY(-1px); box-shadow:0 8px 24px rgba(245,185,69,.32); }
+
+/* Hero 区 */
+.lp-hero { text-align:center; padding:64px 20px 44px; position:relative; background:#FFFFFF !important; }
+.lp-pill {
+  display:inline-flex; align-items:center; gap:8px;
+  border:1px solid rgba(200,134,11,.35); background:rgba(245,185,69,.12);
+  border-radius:999px; padding:7px 16px; font-size:13px; color:#9A6B07; margin-bottom:18px;
+}
+.lp-pill span { width:6px; height:6px; border-radius:50%; background:#D99A2B; }
+.lp-hero h1 { font-size:54px; font-weight:800; line-height:1.12; letter-spacing:-1px; margin-bottom:14px; color:#1A1E24 !important; }
+.lp-hero h1 .gold { color:#C8860B !important; background:none; -webkit-background-clip:initial; background-clip:initial; }
+.lp-subtitle { font-size:18px; color:#3C454E !important; margin-bottom:34px; letter-spacing:.5px; }
+
+/* 主操作区域 */
+.lp-cta-sec { text-align:center; padding:0 20px 44px; background:#FFFFFF !important; }
+.lp-cta-sec h2 { font-size:28px; font-weight:800; margin-bottom:10px; color:#1A1E24; }
+.lp-cta-sec h2 .grn { color:#0D8A5A; }
+.lp-cta-sec p { font-size:15px; color:#3C454E; max-width:640px; margin:0 auto 24px; }
+.lp-btns { display:flex; justify-content:center; gap:14px; flex-wrap:wrap; }
+.lp-btn {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:12px 26px; border-radius:10px; font-size:15px; font-weight:600; text-decoration:none;
+  transition:transform .15s, box-shadow .15s;
+}
+.lp-btn:hover { transform:translateY(-2px); }
+.lp-btn.prime { background:linear-gradient(135deg,#16A06A,#0D8A5A); color:#fff; box-shadow:0 10px 30px rgba(22,160,106,.28); }
+.lp-btn.gold { background:linear-gradient(135deg,#F5B945,#D99A2B); color:#1A1206; box-shadow:0 10px 30px rgba(245,185,69,.25); }
+.lp-btn.ghost { border:1px solid rgba(0,0,0,.14); color:#23272E; background:rgba(0,0,0,.03); }
+.lp-btn.ghost:hover { border-color:rgba(0,0,0,.26); background:rgba(0,0,0,.06); }
+
+/* 分栏标题 */
+.lp-sec { max-width:1120px; margin:0 auto; padding:52px 20px 0; background:#FFFFFF !important; }
+.lp-sec .head { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:26px; }
+.lp-sec h2 { font-size:24px; font-weight:700; color:#1A1E24; }
+.lp-sec h2 span { color:#0D8A5A; }
+.lp-sec .more { font-size:13px; color:#8A9098; }
+
+/* 卡片网格 */
+.lp-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:18px; padding-bottom:18px; }
+/* 智能体分类分隔条 */
+.lp-agent-cat { display:flex; align-items:center; gap:10px; margin:6px 0 14px; }
+.lp-agent-cat .line { width:4px; height:17px; border-radius:2px; background:#16A06A; flex-shrink:0; }
+.lp-agent-cat .name { font-size:15.5px; font-weight:700; color:#103b33; }
+.lp-agent-cat .cnt { font-size:12px; color:#6B7480; background:#F1F5F3; border-radius:10px; padding:2px 9px; }
+.lp-agent-row { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:18px; padding-bottom:22px; }
+@media (max-width:760px){ .lp-agent-row { grid-template-columns:1fr; } }
+.lp-card {
+  display:flex; flex-direction:column; gap:14px;
+  background:#FFFFFF; border:1px solid rgba(0,0,0,.08);
+  border-radius:18px; padding:22px; text-decoration:none; color:#23272E;
+  transition:transform .18s, background .18s, border-color .18s, box-shadow .18s;
+}
+.lp-card:hover { transform:translateY(-4px); background:#FBFDFC; border-color:rgba(22,160,106,.35); box-shadow:0 16px 40px rgba(0,0,0,.10); }
+.lp-card .top { display:flex; align-items:center; gap:12px; }
+.lp-card .icon { width:42px; height:42px; border-radius:12px; font-size:20px; display:grid; place-items:center; background:rgba(22,160,106,.12); }
+.lp-card .title { font-size:16px; font-weight:700; color:#1A1E24; }
+.lp-card .tag {
+  margin-left:auto; font-size:11px; padding:3px 10px; border-radius:20px;
+  background:rgba(0,0,0,.05); color:#4A525C;
+}
+.lp-card .tag.ok { background:rgba(22,160,106,.14); color:#0D8A5A; }
+.lp-card .tag.soon { background:rgba(0,0,0,.04); color:#8A9098; }
+.lp-card p { font-size:13px; color:#3C454E; line-height:1.7; margin-top:auto; }
+.lp-card .foot { display:flex; align-items:center; justify-content:space-between; margin-top:4px; }
+.lp-card .arrow { font-size:14px; color:#0D8A5A; }
+.lp-card .meta { font-size:12px; color:#8A9098; }
+.lp-card.res { border-color:rgba(22,160,106,.14); }
+
+/* 页脚 */
+.lp-foot { border-top:1px solid rgba(0,0,0,.08); margin-top:70px; padding:40px 20px; text-align:center; color:#8A9098 !important; font-size:13px; background:#FFFFFF !important; }
+.lp-foot b { color:#1A1E24 !important; font-weight:700; }
+
+/* 首页侧栏默认收起 */
+#wb-sidebar { transform:translateX(-100%) !important; }
+#wb-sidebar.open { transform:translateX(0) !important; }
+#wb-sb-toggle { display:inline-flex !important; position:fixed; top:14px; left:14px; z-index:1001; align-items:center; gap:6px; background:#fff; border:1px solid rgba(0,0,0,.08); border-radius:8px; padding:7px 12px; font:13px Microsoft YaHei,sans-serif; cursor:pointer; box-shadow:0 1px 4px rgba(0,0,0,.1); }
+
+@media (max-width:900px){
+  .lp-nav .nav { display:none; }
+  .lp-hero h1 { font-size:40px; }
+  .lp-shuangbai { grid-template-columns:1fr; }
+  .lp-method-grid { grid-template-columns:repeat(2,1fr); }
+  .funnel-grid { grid-template-columns:repeat(2,1fr); }
+  .lp-host { flex-direction:column; text-align:center; }
+}
+@media (max-width:520px){
+  .lp-hero h1 { font-size:30px; }
+  .lp-method-grid { grid-template-columns:1fr; }
+  .funnel-grid { grid-template-columns:1fr; }
+  .lp-grid { grid-template-columns:1fr; }
+}
+
+:root{--hr-primary:#16A06A;--hr-ink:#23272E;--hr-muted:#6B7480;--hr-border:rgba(0,0,0,.08);--hr-radius:12px;--hr-width:1120px}
+.lp-nav .inner{padding-left:110px}.lp-logo i{color:white;font-size:12px}.lp-hero{padding-bottom:0}.lp-hero h1{font-size:44px}.hr-intro{max-width:740px;margin:0 auto 24px;color:var(--hr-muted);font-size:14px}.lp-subtitle{margin-bottom:14px}.lp-cta{background:var(--hr-primary);color:white!important}.hr-search{display:flex;align-items:center;gap:16px;margin-bottom:24px;font-size:14px;color:var(--hr-muted)}.hr-search input{flex:1;min-width:0;max-width:520px;border:1px solid var(--hr-border);border-radius:var(--hr-radius);padding:12px 14px;font:inherit;background:white;color:var(--hr-ink)}.hr-search input:focus{outline:2px solid var(--hr-primary);outline-offset:2px}.lp-sec{scroll-margin-top:82px}.lp-foot{margin-top:40px;padding-bottom:80px}.lp-sec .head{gap:16px;flex-wrap:wrap}.lp-grid,.lp-agent-row{min-width:0}.lp-card .top{flex-wrap:wrap}.lp-card .title{flex:1;min-width:120px}.lp-card .tag{margin-left:0}.lp-hero .lp-pill{border-color:var(--hr-primary);background:#F1F5F3;color:#0D8A5A}
+@media(max-width:760px){.lp-hero h1{font-size:32px}.lp-subtitle{font-size:16px}.lp-nav .inner{padding-left:94px;gap:8px}.lp-logo{font-size:14px}.lp-logo i{display:none}.lp-cta{font-size:12px;padding:7px 10px}.lp-sec{padding-top:34px}.lp-card{padding:18px}.hr-search{align-items:flex-start;flex-direction:column;gap:8px}.hr-search input{width:100%}.lp-sec h2{font-size:21px}.lp-sec h2 span{display:block;font-size:15px}.lp-hero{padding-top:40px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="lp-bg"></div>
+
+<nav class="lp-nav">
+  <div class="inner">
+    <a class="lp-logo" href="index.html"><i>HR</i> HR自动化工作台</a>
+    <div class="nav"><a href="#agents">HR工具</a><a href="#library">制度与模板</a><a href="#how">使用说明</a></div>
+    <a class="lp-cta" href="https://xjtulijiagui-max.github.io/lijiagui/list/">内容导航</a>
+  </div>
+</nav>
+<main>
+<section class="lp-hero">
+  <div class="lp-pill"><span></span>HR实务 · 工具与内容分享</div>
+  <h1>HR自动化工作台</h1>
+  <p class="lp-subtitle">把组织、岗位、人才与薪酬工作，变成可操作的表格和方案。</p>
+  <p class="hr-intro">从具体任务开始：填写数据、查看测算、调整方案，再导出结果。演示组织统一为「XXAI原生组织」，示例数据仅用于演练。</p>
+  <div class="lp-btns"><a class="lp-btn prime" href="#agents">选择HR工具 →</a><a class="lp-btn ghost" href="#library">查找制度模板</a></div>
+</section>
+<section class="lp-sec" id="agents">
+  <div class="head"><h2>HR工具 <span>· 按业务场景选择</span></h2><span class="more" id="agent-tip">正在加载…</span></div>
+  <label class="hr-search" for="tool-search">查找工具<input id="tool-search" type="search" placeholder="输入岗位、招聘、绩效等关键词" autocomplete="off"></label><div id="agent-cat-box"></div>
+  <div id="agent-grid"></div>
+</section>
+
+<section class="lp-sec" id="library">
+  <div class="head"><h2>制度与模板 <span>· 查看、生成和下载</span></h2><span class="more">制度生成 / HR模板 / 配套表单</span></div>
+  <div class="lp-grid" id="res-grid"></div>
+</section>
+
+<section class="lp-sec" id="how">
+  <div class="head"><h2>使用说明</h2></div>
+  <div class="lp-grid">
+    <div class="lp-card">
+      <div class="top"><div class="icon">①</div><div class="title">诊断先行</div></div>
+      <p>先选一项具体任务。需要梳理组织问题时，可从「组织人效诊断」开始，再进入岗位、绩效或人才工具。</p>
+    </div>
+    <div class="lp-card">
+      <div class="top"><div class="icon">②</div><div class="title">边算边存</div></div>
+      <p>支持「存入方案」的工具可汇总关键参数，供制度生成器带入；其他工具可分别导出结果。</p>
+    </div>
+    <div class="lp-card">
+      <div class="top"><div class="icon">③</div><div class="title">下载模板</div></div>
+      <p>进入资料分类，可下载单份文件或整套打包。模板需结合企业实际修订；网页下载需要网络，本地副本可通过附带启动器使用。</p>
+    </div>
+  </div>
+</section>
+
+</main><footer class="lp-foot"><p><b>HR自动化工作台</b> · HR内容分享</p><p>支持保存的表单留存在当前浏览器，重要结果请导出备份。规则测算和演示数据供参考，请按实际情况复核。</p></footer>
+
+<script src="agents.js"></script>
+<script src="resources.js?v=13"></script>
+<script src="shared.js?v=13"></script>
+<script>
+(function(){
+  var g = document.getElementById('agent-grid');
+  var box = document.getElementById('agent-cat-box');
+
+  function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+  function cardHTML(a, idx){
+    var tag = a.link ? '外部工具' : '可直接使用';
+    var href = a.link ? a.page : a.page;
+    var target = a.link ? ' target="_blank" rel="noopener"' : '';
+    var num = String(idx+1).padStart(2,'0');
+    return '<a class="lp-card" href="' + esc(href) + '"' + target + '>' +
+        '<div class="top"><div class="icon">' + esc(a.icon||'🧩') + '</div><div class="title">' + esc(a.name) + '</div><span class="tag ok">' + tag + '</span></div>' +
+        '<p>' + esc(a.desc) + '</p>' +
+        '<div class="foot"><span class="meta">' + (a.link ? '外部工具' : 'HR工具 ' + num) + '</span><span class="arrow">' + (a.link ? '前往 →' : '→') + '</span></div>' +
+      '</a>';
+  }
+
+  function render(agents, cats, logged){
+    if(!agents.length){
+      g.innerHTML = '<div style="grid-column:1/-1;padding:28px;text-align:center;color:#6B7480;font-size:13.5px;line-height:1.9;">' +
+        '没有找到匹配的HR工具，请换一个关键词。</div>'; document.getElementById('agent-tip').textContent='共 0 个HR工具';
+      return;
+    }
+    var html = '', idx = 0;
+    var used = {};
+    (cats||[]).forEach(function(cat){
+      var items = agents.filter(function(a){ return a.cat===cat; });
+      if(!items.length) return;
+      used[cat]=1;
+      html += '<div class="lp-agent-cat"><span class="line"></span><span class="name">' + esc(cat) + '</span><span class="cnt">' + items.length + ' 个</span></div>';
+      html += '<div class="lp-agent-row">';
+      items.forEach(function(a){ html += cardHTML(a, idx++); });
+      html += '</div>';
+    });
+    var rest = agents.filter(function(a){ return !used[a.cat||'未分类']; });
+    if(rest.length){
+      html += '<div class="lp-agent-cat"><span class="line"></span><span class="name">其他</span><span class="cnt">' + rest.length + ' 个</span></div>';
+      html += '<div class="lp-agent-row">';
+      rest.forEach(function(a){ html += cardHTML(a, idx++); });
+      html += '</div>';
+    }
+    g.innerHTML = html;
+    var tip = document.getElementById('agent-tip');
+    if(tip) tip.textContent = '共 ' + agents.length + ' 个HR工具';
+  }
+
+  var allAgents = window.HR_AGENTS || [];
+  var categories = window.HR_CATEGORIES || [];
+  render(allAgents, categories, true);
+  document.getElementById('tool-search').addEventListener('input', function(event){
+    var keyword = event.target.value.trim().toLowerCase();
+    var matches = allAgents.filter(function(a){ return (a.name + ' ' + a.desc + ' ' + a.cat).toLowerCase().indexOf(keyword) >= 0; });
+    render(matches, categories, true);
+  });
+
+  var RES = window.WB_RESOURCES || [];
+  var r = document.getElementById('res-grid');
+  RES.forEach(function(cat){
+    var ready = (cat.items || []).filter(function(it){ return it.ready; }).length;
+    var meta = ready + ' 个入口';
+    if (cat.cat.indexOf('人力资源') >= 0) meta = '68 份模板 · 可打包';
+    else if (cat.cat.indexOf('制度包') >= 0) meta = '10 份制度 · 可下载';
+    else if (cat.cat.indexOf('生成') >= 0) meta = '5 份制度 · 可生成';
+    var cls = ready ? 'ok' : 'soon';
+    r.innerHTML +=
+      '<a class="lp-card res" href="cat.html?cat=' + encodeURIComponent(cat.cat) + '">' +
+        '<div class="top"><div class="icon">' + (cat.icon || '📦') + '</div><div class="title">' + cat.cat + '</div><span class="tag ' + cls + '">' + (ready?'已开放':'待上传') + '</span></div>' +
+        '<p>' + (cat.desc || '点击进入展开全部条目') + '</p>' +
+        '<div class="foot"><span class="meta">' + meta + '</span><span class="arrow">进入展开 →</span></div>' +
+      '</a>';
+  });
+})();
+</script>
+<script>wbSidebar();</script>
+
+
+</body>
+</html>

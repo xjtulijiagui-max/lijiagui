@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<script>window.WB_OFFLINE=true;</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="color-scheme" content="light">
+<title>技工评定智能体 · 技能→薪酬总装台 · HR自动化工作台</title>
+<link rel="stylesheet" href="shared.css?v=13">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:"Microsoft YaHei","微软雅黑","PingFang SC",sans-serif; background:#FAFAF9; color:#1F2328; line-height:1.6; -webkit-font-smoothing:antialiased; font-size:14px; }
+main { max-width:1280px; margin:0 auto; padding:24px 20px 70px; }
+.layout { display:grid; grid-template-columns:380px 1fr; gap:20px; align-items:start; }
+.panel { background:#FFFFFF; border:1px solid #ECEAE6; border-radius:10px; padding:18px; }
+.side { position:sticky; top:74px; }
+.ptitle { font-size:15px; font-weight:700; margin-bottom:4px; }
+.pnote { font-size:12px; color:#8A8F98; margin-bottom:14px; }
+.fgroup { margin-bottom:15px; }
+.flabel { font-size:12px; font-weight:700; color:#5F5E5A; margin-bottom:7px; display:flex; align-items:center; }
+.flabel .dot { width:5px; height:5px; border-radius:50%; background:#16A06A; margin-right:6px; }
+.frow { display:flex; align-items:center; gap:8px; margin-bottom:7px; }
+.frow label { flex:0 0 70px; font-size:12px; color:#6B7280; }
+.frow input, .frow select { flex:1; min-width:0; font-family:inherit; font-size:13px; padding:6px 9px; border:1px solid #DCDAD4; border-radius:5px; background:#FCFCFB; color:#1F2328; }
+.frow input:focus, .frow select:focus { outline:none; border-color:#16A06A; background:#fff; }
+.frow .unit { flex:0 0 34px; font-size:11px; color:#A0A4AC; }
+.hint { font-size:11.5px; color:#8A8F98; margin-top:2px; line-height:1.5; }
+table.rst { width:100%; border-collapse:collapse; font-size:13px; margin-top:4px; }
+table.rst th { background:#F5F5F3; font-size:12px; font-weight:700; color:#3D4450; padding:8px 10px; text-align:right; border-bottom:1px solid #ECEAE6; white-space:nowrap; }
+table.rst th:first-child { text-align:left; }
+table.rst td { padding:8px 10px; text-align:right; border-bottom:1px solid #F0EEE9; }
+table.rst td:first-child { text-align:left; color:#3D4450; }
+table.rst tr.hl td { background:#EAF7F1; font-weight:700; color:#16A06A; }
+table.rst tr.hl td:first-child { color:#118A5A; }
+table.rst td.num { font-variant-numeric:tabular-nums; }
+.badge { display:inline-block; font-size:11px; padding:2px 8px; border-radius:20px; font-weight:700; }
+.b-good { background:#EAF7F1; color:#16A06A; } .b-mid { background:#FAEEDA; color:#854F0B; } .b-bad { background:#FCEBEB; color:#A32D2D; }
+.callout { background:#F5F5F3; border-radius:8px; padding:13px 15px; font-size:13px; color:#3D4450; margin-top:12px; }
+.callout.green { background:#EAF7F1; color:#118A5A; } .callout.red { background:#FCEBEB; color:#791F1F; }
+.callout b { font-weight:700; }
+.concl { background:#16A06A; color:#fff; border-radius:10px; padding:20px 22px; margin-top:16px; }
+.concl h3 { font-size:15px; font-weight:700; margin-bottom:14px; }
+.concl ol { margin-left:18px; } .concl li { margin-bottom:11px; font-size:14px; } .concl li:last-child { margin-bottom:0; } .concl b { font-weight:700; }
+section { background:#FFFFFF; border:1px solid #ECEAE6; border-radius:10px; padding:20px; margin-bottom:16px; }
+.sec-h { display:flex; align-items:center; gap:9px; margin-bottom:14px; }
+.sec-n { width:22px; height:22px; flex:0 0 22px; border-radius:5px; background:#16A06A; color:#fff; font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+.sec-t { font-size:15px; font-weight:700; }
+.sec-sub { font-size:12px; color:#8A8F98; margin-left:auto; text-align:right; }
+.kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; margin-bottom:16px; }
+.kpi { background:#fff; border:1px solid #ECEAE6; border-radius:10px; padding:14px 15px; }
+.kpi .k { font-size:12px; color:#8A8F98; } .kpi .v { font-size:22px; font-weight:700; margin:3px 0 2px; font-variant-numeric:tabular-nums; } .kpi .d { font-size:11.5px; color:#6B7280; }
+.kpi.g .v { color:#16A06A; } .kpi.r .v { color:#A32D2D; } .kpi.a .v { color:#BA7517; }
+.emp-tb { width:100%; border-collapse:collapse; font-size:13px; }
+.emp-tb th { background:#F5F5F3; font-size:12px; font-weight:700; color:#3D4450; padding:6px 6px; text-align:left; }
+.emp-tb td { padding:4px 5px; }
+.emp-tb input { width:100%; font-family:inherit; font-size:13px; padding:5px 6px; border:1px solid #DCDAD4; border-radius:5px; background:#FCFCFB; }
+.emp-tb input:focus { outline:none; border-color:#16A06A; }
+.emp-tb .x { color:#A32D2D; cursor:pointer; font-weight:700; text-align:center; }
+.addbtn { margin-top:8px; font-size:12px; color:#16A06A; cursor:pointer; font-weight:700; }
+@media (max-width:980px){ .layout{grid-template-columns:1fr;} .side{position:static;} }
+@media print { .wb-head,.wb-foot{display:none!important;} body{background:#fff;} .layout{display:block;} .side{display:none;} section{border:1px solid #ccc; page-break-inside:avoid;} }
+</style>
+<style>
+.layout > *, .panel, section, .fgroup, #out { min-width:0; }
+.hr-table-scroll { max-width:100%; overflow-x:auto; overscroll-behavior-inline:contain; }
+.hr-table-scroll:focus-visible { outline:2px solid #16A06A; outline-offset:2px; }
+.hr-table-scroll table.rst, .hr-table-scroll .emp-tb { min-width:460px; }
+@media(max-width:600px){ .sec-h{flex-wrap:wrap;} .sec-sub{margin-left:31px;text-align:left;} .rk{grid-template-columns:24px minmax(0,1fr) 70px 55px 75px;} }
+@media print { .hr-table-scroll{overflow:visible;} .hr-table-scroll table.rst{min-width:0;} }
+</style>
+</head>
+<body>
+<main>
+<div class="layout">
+  <div class="side">
+    <div class="panel">
+      <div class="ptitle">填评定参数</div>
+      <div class="pnote">把生产工人的考核分，自动算成五级定级 + 334 月薪 + 计件分配。</div>
+
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>企业名称</div>
+        <div class="frow"><input id="company" placeholder="如：XXAI原生组织"></div>
+      </div>
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>四维权重（和=100）</div>
+        <div class="frow"><label>理论</label><input id="wL" type="number" value="30"><span class="unit">%</span></div>
+        <div class="frow"><label>实操</label><input id="wO" type="number" value="30"><span class="unit">%</span></div>
+        <div class="frow"><label>年度</label><input id="wY" type="number" value="20"><span class="unit">%</span></div>
+        <div class="frow"><label>面试</label><input id="wM" type="number" value="20"><span class="unit">%</span></div>
+      </div>
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>五级分数线</div>
+        <div class="frow"><label>初级≥</label><input id="c1" type="number" value="60"><span class="unit">分</span></div>
+        <div class="frow"><label>中级≥</label><input id="c2" type="number" value="70"><span class="unit">分</span></div>
+        <div class="frow"><label>高级≥</label><input id="c3" type="number" value="80"><span class="unit">分</span></div>
+        <div class="frow"><label>技师≥</label><input id="c4" type="number" value="90"><span class="unit">分</span></div>
+        <div class="hint">比例红线：高级 ≤20%、技师 ≤10%（制造型企业技能→薪酬总装台口径）。</div>
+      </div>
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>计件池</div>
+        <div class="frow"><label>总额</label><input id="pool" type="number" value="63464"><span class="unit">元</span></div>
+        <div class="hint">计件奖金按各等级技能系数二次分配，Σ个人 = 池（守恒校验）。</div>
+      </div>
+
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>参评员工（理论/实操/年/面）</div>
+        <div class="hr-table-scroll" tabindex="0" role="region" aria-label="数据表，可左右滚动"><table class="emp-tb">
+          <thead><tr><th>姓名</th><th>理论</th><th>实操</th><th>年</th><th>面</th><th></th></tr></thead>
+          <tbody id="empRows"></tbody>
+        </table></div>
+        <div class="addbtn" onclick="addEmp()">＋ 加一名员工</div>
+      </div>
+
+      <button class="wb-btn wb-primary" style="width:100%" onclick="calc()">生成技工评定决议</button>
+    </div>
+  </div>
+
+  <div>
+    <div id="out"></div>
+    <div class="callout" style="margin-top:14px;">
+      <b>用法</b>：填四维权重、五级分数线和计件池，逐人填分，点生成——自动定级、校验比例红线、并把计件池按技能系数配平。
+    </div>
+  </div>
+</div>
+</main>
+
+<script src="shared.js?v=13"></script>
+<script>
+wbShell('技工评定');
+
+var EMPS=[['王强',82,88,76,80],['李伟',75,80,70,72],['张敏',90,92,85,88],['赵磊',68,72,65,60],['陈静',78,84,74,76],['刘洋',85,90,82,84]];
+function addEmp(n,a,b,c,d){ var tb=document.getElementById('empRows'); var tr=document.createElement('tr');
+  tr.innerHTML='<td><input class="e-n" value="'+(n||'')+'"></td><td><input class="e-1" type="number" value="'+(a!=null?a:'')+'"></td><td><input class="e-2" type="number" value="'+(b!=null?b:'')+'"></td><td><input class="e-3" type="number" value="'+(c!=null?c:'')+'"></td><td><input class="e-4" type="number" value="'+(d!=null?d:'')+'"></td><td class="x" onclick="this.parentNode.remove()">✕</td>';
+  tb.appendChild(tr); }
+EMPS.forEach(function(e){ addEmp(e[0],e[1],e[2],e[3],e[4]); });
+
+// 等级技能系数（用于 334 月薪与计件分配）
+var COEF=[1.0,1.1,1.25,1.5,1.8]; // 学徒/初级/中级/高级/技师
+function grade(s,c1,c2,c3,c4){ if(s>=c4) return 4; if(s>=c3) return 3; if(s>=c2) return 2; if(s>=c1) return 1; return 0; }
+var GNAME=['学徒工','初级工','中级工','高级工','技师'];
+
+function num(v,d){ var x=parseFloat(v); return isFinite(x)?x:(d||0); }
+
+function calc(){
+  var company=wbVal('company')||'贵公司';
+  var w=[num(wbVal('wL'),30),num(wbVal('wO'),30),num(wbVal('wY'),20),num(wbVal('wM'),20)];
+  var wt=w[0]+w[1]+w[2]+w[3]; if(wt<=0) wt=100;
+  var c=[num(wbVal('c1'),60),num(wbVal('c2'),70),num(wbVal('c3'),80),num(wbVal('c4'),90)];
+  var pool=num(wbVal('pool'),63464);
+
+  var rows=document.querySelectorAll('#empRows tr'); var emps=[]; var sumCoef=0;
+  rows.forEach(function(tr){
+    var n=tr.querySelector('.e-n').value.trim();
+    var s4=[num(tr.querySelector('.e-1').value,0),num(tr.querySelector('.e-2').value,0),num(tr.querySelector('.e-3').value,0),num(tr.querySelector('.e-4').value,0)];
+    if(!n && s4[0]===0 && s4[1]===0) return;
+    var comp=(s4[0]*w[0]+s4[1]*w[1]+s4[2]*w[2]+s4[3]*w[3])/wt;
+    var g=grade(comp,c[0],c[1],c[2],c[3]);
+    emps.push({name:n||'未命名', score:comp, g:g, coef:COEF[g]});
+    sumCoef+=COEF[g];
+  });
+  var n=emps.length;
+  // 等级分布
+  var dist=[0,0,0,0,0]; emps.forEach(function(e){ dist[e.g]++; });
+  var seniorPct = n? dist[3]/n*100 : 0;
+  var techPct = n? dist[4]/n*100 : 0;
+  var seniorOk = seniorPct<=20, techOk = techPct<=10;
+  // 计件分配守恒
+  var alloc=emps.map(function(e){ return sumCoef? pool*e.coef/sumCoef : 0; });
+  var allocSum=alloc.reduce(function(a,b){return a+b;},0);
+  var balanced = Math.abs(allocSum-pool)<1;
+
+  var R={company:company, n:n, emps:emps, dist:dist, seniorPct:seniorPct, techPct:techPct, seniorOk:seniorOk, techOk:techOk, pool:pool, allocSum:allocSum, balanced:balanced};
+  window.__jigong=R;
+
+  var h='';
+  h+='<section><div class="sec-h"><span class="sec-n">★</span><span class="sec-t">评定总览</span><span class="sec-sub">'+wbEsc(company)+'</span></div>';
+  h+='<div class="kpis">'
+    +'<div class="kpi"><div class="k">参评人数</div><div class="v">'+n+'</div><div class="d">人</div></div>'
+    +'<div class="kpi"><div class="k">高级工</div><div class="v">'+dist[3]+'</div><div class="d">'+(seniorOk?'≤20% ✓':'超红线 ⚠')+'</div></div>'
+    +'<div class="kpi"><div class="k">技师</div><div class="v">'+dist[4]+'</div><div class="d">'+(techOk?'≤10% ✓':'超红线 ⚠')+'</div></div>'
+    +'<div class="kpi"><div class="k">计件池配平</div><div class="v">'+(balanced?'守恒':'失衡')+'</div><div class="d">Σ='+allocSum.toFixed(0)+'元</div></div>'
+    +'</div></section>';
+
+  h+='<section><div class="sec-h"><span class="sec-n">1</span><span class="sec-t">员工评定结果</span></div>';
+  h+='<div class="hr-table-scroll" tabindex="0" role="region" aria-label="数据表，可左右滚动"><table class="rst"><thead><tr><th>姓名</th><th>综合分</th><th>等级</th><th>技能系数</th><th>计件分配(元)</th></tr></thead><tbody>';
+  emps.forEach(function(e,i){ h+='<tr><td>'+wbEsc(e.name)+'</td><td class="num">'+e.score.toFixed(1)+'</td><td style="text-align:left">'+(e.g===0?'<span class="badge b-bad">未达标</span>':GNAME[e.g])+'</td><td class="num">'+e.coef.toFixed(2)+'</td><td class="num">'+alloc[i].toFixed(0)+'</td></tr>'; });
+  h+='<tr class="hl"><td>合计</td><td class="num">—</td><td>—</td><td class="num">'+sumCoef.toFixed(2)+'</td><td class="num">'+allocSum.toFixed(0)+'</td></tr>';
+  h+='</tbody></table></div>';
+  h+='<div class="callout '+(balanced?'green':'red')+'">计件池守恒校验：Σ个人奖金 = '+allocSum.toFixed(0)+' 元，池 = '+pool.toFixed(0)+' 元，'+(balanced?'配平 ✓':'差额 '+((allocSum-pool).toFixed(0))+' 元，需调整系数')+'。</div></section>';
+
+  h+='<section><div class="sec-h"><span class="sec-n">2</span><span class="sec-t">等级分布与红线</span></div>';
+  h+='<div class="hr-table-scroll" tabindex="0" role="region" aria-label="数据表，可左右滚动"><table class="rst"><thead><tr><th>等级</th><th>人数</th><th>占比</th><th>红线</th></tr></thead><tbody>';
+  for(var g=4;g>=0;g--){ var pct=n?dist[g]/n*100:0; var red=(g===3?'≤20%':(g===4?'≤10%':'—'));
+    h+='<tr><td style="text-align:left">'+GNAME[g]+'</td><td class="num">'+dist[g]+'</td><td class="num">'+pct.toFixed(1)+'%</td><td style="text-align:left">'+(g>=3?( (g===3&&seniorOk||g===4&&techOk)?'<span class="badge b-good">达标</span>':'<span class="badge b-bad">超线</span>'):red)+'</td></tr>'; }
+  h+='</tbody></table></div></section>';
+
+  var concl=[];
+  concl.push('参评 <b>'+n+'</b> 人，定级分布：高级工 '+dist[3]+' 人（'+(seniorPct).toFixed(1)+'%，'+(seniorOk?'达标':'超 20% 红线')+'）、技师 '+dist[4]+' 人（'+(techPct).toFixed(1)+'%，'+(techOk?'达标':'超 10% 红线')+'）。');
+  concl.push('计件池 '+pool.toFixed(0)+' 元按技能系数二次分配，'+(balanced?'Σ=池 守恒 ✓':'需配平')+'；334 月薪（技能工资占 30%）随等级系数联动。');
+  concl.push('比例越红线时，应提高分数门槛或限额评聘，避免技能工资总额失控；未达标者安排补考或特批通道。');
+  h+='<div class="concl"><h3>三条能拿去开会的结论</h3><ol>';
+  concl.forEach(function(c){ h+='<li>'+c+'</li>'; });
+  h+='</ol></div>';
+
+  document.getElementById('out').innerHTML=h;
+}
+calc();
+</script>
+<script src="dataIface.js?v=12"></script>
+<script>wbDataIface.setup({ pageKey:'jigong_v1', tables:[{id:'empRows', label:'参评员工(姓名/理论/实操/年/面)', rowSel:'tr', cellSel:'input', cols:['姓名','理论','实操','年','面']}], afterLoad:function(){ if(typeof calc==='function') calc(); } });</script>
+
+<script>window.WB_AGENT_KEY='jigong';</script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+/* HR 自动化工作台 · 公共外壳（幕布风：近白底、大留白、细分割线、单一克制绿、圆点质感） */
+:root{
+  --wb-green:#16A06A;
+  --wb-green-d:#118A5A;
+  --wb-green-tint:#EAF7F1;
+  --wb-green-bd:#C7E8D7;
+  --wb-bg:#FAFAF9;
+  --wb-card:#FFFFFF;
+  --wb-border:#ECEAE6;
+  --wb-text:#1F2328;
+  --wb-muted:#8A8F98;
+  --wb-ink:#3D4450;
+}
+* { -webkit-tap-highlight-color: transparent; }
+html, body { color-scheme: light only; background:#fff !important; color:#1F2328 !important; }
+body { -webkit-font-smoothing: antialiased; background:#fff !important; color:#1F2328 !important; }
+@media (prefers-color-scheme: dark) {
+  html, body { background:#fff !important; color:#1F2328 !important; }
+}
+
+.wb-head {
+  background:#FFFFFF; border-bottom:1px solid var(--wb-border);
+  padding:15px 0; position:sticky; top:0; z-index:999;
+  font-family:"Microsoft YaHei","微软雅黑","PingFang SC",sans-serif;
+}
+.wb-hwrap {
+  max-width:1080px; margin:0 auto; padding:0 20px;
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+}
+.wb-back { color:var(--wb-muted); text-decoration:none; font-size:13px; white-space:nowrap; }
+.wb-back:hover { color:var(--wb-green); }
+/* 幕布式「从一个圆点开始」的小绿点 */
+.wb-title { font-size:16px; font-weight:700; color:var(--wb-text); letter-spacing:.2px; display:flex; align-items:center; gap:9px; }
+.wb-title::before {
+  content:""; width:9px; height:9px; border-radius:50%;
+  background:var(--wb-green); display:inline-block; flex:0 0 9px;
+}
+.wb-space { flex:1; }
+
+.wb-btn {
+  font-family:"Microsoft YaHei","微软雅黑",sans-serif;
+  font-size:13px; padding:8px 16px; border-radius:8px;
+  border:1px solid var(--wb-border); background:#fff; color:var(--wb-ink); cursor:pointer;
+  white-space:nowrap; transition:all .15s;
+}
+.wb-btn:hover { border-color:var(--wb-green); color:var(--wb-green); }
+.wb-btn.wb-primary { background:var(--wb-green); border-color:var(--wb-green); color:#fff; }
+.wb-btn.wb-primary:hover { background:var(--wb-green-d); color:#fff; }
+
+.wb-foot {
+  border-top:1px solid var(--wb-border); background:#FFFFFF; padding:20px 0; margin-top:40px;
+  font-family:"Microsoft YaHei","微软雅黑",sans-serif;
+}
+.wb-fwrap { max-width:1080px; margin:0 auto; padding:0 20px;
+  font-size:12.5px; color:var(--wb-muted); line-height:1.8; }
+.wb-fwrap b { color:var(--wb-text); font-weight:700; }
+
+@media print {
+  .wb-head, .wb-foot { display:none !important; }
+}
+
+/* ===== 左侧资源栏（幕布风：浅底、细线、圆点分类、可展开列表） ===== */
+#wb-sidebar{
+  position:fixed; left:0; top:0; bottom:0; width:240px;
+  background:#FFFFFF; border-right:1px solid var(--wb-border);
+  padding:18px 0; overflow-y:auto; z-index:50;
+  font-family:"Microsoft YaHei","微软雅黑","PingFang SC",sans-serif;
+}
+#wb-sidebar .sb-head{
+  display:flex; align-items:center; gap:9px;
+  font-size:14px; font-weight:700; color:var(--wb-text);
+  padding:0 18px 14px; border-bottom:1px solid var(--wb-border); margin-bottom:6px;
+}
+#wb-sidebar .sb-head::before{
+  content:""; width:9px; height:9px; border-radius:50%;
+  background:var(--wb-green); display:inline-block; flex:0 0 9px;
+}
+#wb-sidebar .sb-cat{
+  padding:9px 18px; font-size:13px; font-weight:600; color:var(--wb-ink);
+  cursor:pointer; display:flex; align-items:center; gap:8px; user-select:none;
+}
+#wb-sidebar .sb-cat:hover{ color:var(--wb-green); }
+#wb-sidebar .sb-cat .ar{ margin-left:auto; font-size:11px; color:var(--wb-muted); transition:transform .15s; }
+#wb-sidebar .sb-cat.collapsed .ar{ transform:rotate(-90deg); }
+#wb-sidebar .sb-items{ overflow:hidden; }
+#wb-sidebar .sb-cat.collapsed + .sb-items{ display:none; }
+#wb-sidebar .sb-item{
+  display:block; padding:7px 18px 7px 40px; font-size:13px; color:var(--wb-ink);
+  text-decoration:none; line-height:1.5;
+}
+#wb-sidebar .sb-item:hover{ background:var(--wb-green-tint); color:var(--wb-green-d); }
+#wb-sidebar .sb-item.pending{ color:var(--wb-muted); cursor:default; }
+#wb-sidebar .sb-item.pending:hover{ background:none; color:var(--wb-muted); }
+#wb-sidebar .sb-note{ display:block; font-size:11px; color:var(--wb-muted); margin-top:2px; }
+#wb-sidebar .sb-tip{
+  padding:10px 18px; font-size:11.5px; color:var(--wb-muted); line-height:1.6;
+  border-top:1px solid var(--wb-border); margin-top:10px;
+}
+
+/* 主内容区给左侧栏让位 */
+body{ padding-left:240px; }
+
+/* 移动端：侧栏默认收起，汉堡按钮唤出 + 遮罩 */
+#wb-sb-toggle{ display:none; }
+@media (max-width:900px){
+  body{ padding-left:0; }
+  header, .wb-head{ padding-left:56px; }
+  #wb-sidebar{
+    transform:translateX(-100%); transition:transform .2s;
+    box-shadow:2px 0 14px rgba(0,0,0,.14);
+  }
+  #wb-sidebar.open{ transform:translateX(0); z-index:1000; }
+  #wb-sb-toggle{
+    display:inline-flex; align-items:center; gap:6px;
+    position:fixed; top:12px; left:12px; z-index:1001;
+    background:#fff; border:1px solid var(--wb-border); border-radius:8px;
+    padding:7px 12px; font-size:13px; color:var(--wb-ink); cursor:pointer;
+    font-family:"Microsoft YaHei","微软雅黑",sans-serif; box-shadow:0 1px 4px rgba(0,0,0,.1);
+  }
+  #wb-sb-mask{ display:none; position:fixed; inset:0; background:rgba(0,0,0,.32); z-index:999; }
+  #wb-sb-mask.open{ display:block; }
+}

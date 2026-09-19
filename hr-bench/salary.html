@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<script>window.WB_OFFLINE=true;</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="color-scheme" content="light">
+<title>薪酬方案助手 · 把工资包分对 · HR自动化工作台</title>
+<link rel="stylesheet" href="shared.css?v=13">
+<script src="shared.js?v=13"></script>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:"Microsoft YaHei","微软雅黑","PingFang SC",sans-serif;
+  background:#FAFAF9; color:#1F2328; line-height:1.6; font-size:14px; }
+main { max-width:1280px; margin:0 auto; padding:24px 20px 60px; }
+.layout { display:grid; grid-template-columns:330px 1fr; gap:20px; align-items:start; }
+.panel { background:#fff; border:1px solid #ECEAE6; border-radius:10px; padding:18px; }
+.side { position:sticky; top:74px; }
+.ptitle { font-size:15px; font-weight:700; margin-bottom:4px; }
+.pnote { font-size:12px; color:#8A8F98; margin-bottom:14px; }
+.fgroup { margin-bottom:15px; }
+.flabel { font-size:12px; font-weight:700; color:#5F5E5A; margin-bottom:7px; display:flex; align-items:center; }
+.flabel .dot { width:5px; height:5px; border-radius:50%; background:#16A06A; margin-right:6px; }
+.frow { display:flex; align-items:center; gap:8px; margin-bottom:6px; }
+.frow label { flex:0 0 92px; font-size:12px; color:#6B7280; }
+.frow input, .frow select {
+  flex:1; min-width:0; font-family:inherit; font-size:13px; padding:6px 9px;
+  border:1px solid #DCDAD4; border-radius:5px; background:#FCFCFB; color:#1F2328;
+}
+.frow input:focus, .frow select:focus { outline:none; border-color:#16A06A; background:#fff; }
+.frow .unit { flex:0 0 30px; font-size:11px; color:#A0A4AC; }
+.tip { background:#E6F1FB; border-left:3px solid #378ADD; color:#0C447C;
+  padding:9px 12px; border-radius:0 6px 6px 0; font-size:12px; margin-bottom:14px; line-height:1.6; }
+
+section { background:#fff; border:1px solid #ECEAE6; border-radius:10px; padding:20px; margin-bottom:16px; }
+.sec-h { display:flex; align-items:center; gap:9px; margin-bottom:14px; }
+.sec-n { width:22px; height:22px; flex:0 0 22px; border-radius:5px; background:#16A06A; color:#fff;
+  font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+.sec-t { font-size:15px; font-weight:700; }
+.sec-sub { font-size:12px; color:#8A8F98; margin-left:auto; }
+
+table.rst { width:100%; border-collapse:collapse; font-size:13px; }
+table.rst th { background:#F5F5F3; font-size:12px; font-weight:700; color:#3D4450;
+  padding:8px 10px; text-align:right; border-bottom:1px solid #ECEAE6; }
+table.rst th:first-child { text-align:left; }
+table.rst td { padding:8px 10px; text-align:right; border-bottom:1px solid #F0EEE9; }
+table.rst td:first-child { text-align:left; color:#3D4450; }
+table.rst tr.hl td { background:#EAF7F1; font-weight:700; color:#16A06A; }
+.up { color:#16A06A; font-weight:700; }
+.down { color:#A32D2D; font-weight:700; }
+.mid { color:#BA7517; font-weight:700; }
+.muted { color:#A0A4AC; }
+
+.badge { display:inline-block; font-size:11px; padding:2px 8px; border-radius:20px; font-weight:700; }
+.b-good { background:#EAF7F1; color:#16A06A; }
+.b-mid { background:#FAEEDA; color:#854F0B; }
+.b-bad { background:#FCEBEB; color:#A32D2D; }
+
+.callout { background:#F5F5F3; border-radius:8px; padding:13px 15px; font-size:13px; color:#3D4450; margin-top:12px; }
+.callout.green { background:#EAF7F1; color:#118A5A; }
+.callout.red { background:#FCEBEB; color:#791F1F; }
+.callout b { font-weight:700; }
+
+.kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-bottom:16px; }
+.kpi { background:#fff; border:1px solid #ECEAE6; border-radius:10px; padding:14px 15px; }
+.kpi .k { font-size:12px; color:#8A8F98; }
+.kpi .v { font-size:23px; font-weight:700; margin:3px 0 2px; font-variant-numeric:tabular-nums; }
+.kpi .d { font-size:11.5px; color:#6B7280; }
+.kpi.g .v { color:#16A06A; }
+.kpi.r .v { color:#A32D2D; }
+.kpi.a .v { color:#BA7517; }
+
+.concl { background:#16A06A; color:#fff; border-radius:10px; padding:20px 22px; }
+.concl h3 { font-size:15px; font-weight:700; margin-bottom:14px; }
+.concl ol { margin-left:18px; }
+.concl li { margin-bottom:11px; font-size:14px; }
+.concl b { font-weight:700; }
+
+.diag { border:1px solid #ECEAE6; border-radius:8px; padding:13px 15px; margin-bottom:10px; }
+.diag.bad { background:#FCEBEB; border-color:#F09595; }
+.diag.ok { background:#EAF7F1; border-color:#C7E8D7; }
+.diag .dh { font-size:13.5px; font-weight:700; margin-bottom:4px; }
+.diag.bad .dh { color:#A32D2D; }
+.diag.ok .dh { color:#16A06A; }
+.diag .db { font-size:12.5px; color:#3D4450; line-height:1.65; }
+
+@media (max-width:980px) { .layout { grid-template-columns:1fr; } .side { position:static; } }
+@media print { .side { display:none; } .layout { display:block; } section { page-break-inside:avoid; } }
+</style>
+<style>
+.layout > *, .panel, section, .fgroup, #out { min-width:0; }
+.hr-table-scroll { max-width:100%; overflow-x:auto; overscroll-behavior-inline:contain; }
+.hr-table-scroll:focus-visible { outline:2px solid #16A06A; outline-offset:2px; }
+.hr-table-scroll table.rst, .hr-table-scroll .emp-tb { min-width:460px; }
+@media(max-width:600px){ .sec-h{flex-wrap:wrap;} .sec-sub{margin-left:31px;text-align:left;} .rk{grid-template-columns:24px minmax(0,1fr) 70px 55px 75px;} }
+@media print { .hr-table-scroll{overflow:visible;} .hr-table-scroll table.rst{min-width:0;} }
+</style>
+</head>
+<body>
+
+<main>
+<div class="layout">
+
+  <div class="side">
+    <div class="panel">
+      <div class="tip">
+        工资包上限不知道填多少？先去「人效账速算表」算，那里算出来的「明年工资包上限」直接填到下面第一个框。
+      </div>
+
+      <div class="ptitle">填这些数</div>
+      <div class="pnote">金额单位：万元。人数含派遣与外包常驻。</div>
+
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>公司名称</div>
+        <div class="frow"><input id="company" placeholder="例：XXAI原生组织"></div>
+      </div>
+
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>工资包</div>
+        <div class="frow"><label>明年工资包上限</label><input type="number" id="pack"><span class="unit">万</span></div>
+        <div class="frow"><label>本年人工成本</label><input type="number" id="curCost"><span class="unit">万</span></div>
+        <div class="frow"><label>明年目标营收增速</label><input type="number" id="revGrow"><span class="unit">%</span></div>
+      </div>
+
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>人数分布</div>
+        <div class="frow"><label>高层（总监+）</label><input type="number" id="nTop"><span class="unit">人</span></div>
+        <div class="frow"><label>中层（经理主管）</label><input type="number" id="nMid"><span class="unit">人</span></div>
+        <div class="frow"><label>一线（业务/生产）</label><input type="number" id="nLine"><span class="unit">人</span></div>
+      </div>
+
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>现状</div>
+        <div class="frow"><label>固定薪酬占比</label><input type="number" id="fixRate" value="79"><span class="unit">%</span></div>
+        <div class="frow"><label>主力岗位类型</label>
+          <select id="jobType">
+            <option value="sales">销售（结果导向）</option>
+            <option value="rd">研发（创新驱动）</option>
+            <option value="mgmt">管理层（战略导向）</option>
+            <option value="prod">生产一线（效率导向）</option>
+          </select>
+        </div>
+        <div class="frow"><label>目标完成率</label><input type="number" id="achieve" value="105"><span class="unit">%</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="out"></div>
+
+</div>
+</main>
+
+<script>
+var IDS = ['company','pack','curCost','revGrow','nTop','nMid','nLine','fixRate','jobType','achieve'];
+
+var JOB = {
+  sales: { name:'销售岗位', desc:'结果导向 · 短期见效',
+    struct:[['固定工资',35],['业绩提成',55],['超额奖金',10]],
+    key:'提成阶梯设计，超额部分加速激励' },
+  rd: { name:'研发岗位', desc:'创新驱动 · 中长期绑定',
+    struct:[['固定工资',65],['项目奖金',20],['创新激励/期权',15]],
+    key:'项目里程碑奖金 + 长期期权绑定' },
+  mgmt: { name:'管理层', desc:'战略导向 · 长期绑定公司命运',
+    struct:[['固定工资',55],['绩效奖金',25],['IPS/股权',20]],
+    key:'绩效奖金挂钩公司指标 + IPS 长期激励' },
+  prod: { name:'生产一线', desc:'效率导向 · 多劳多得',
+    struct:[['固定工资',65],['计件/绩效',25],['安全/质量奖',10]],
+    key:'计件制 + 安全质量奖双轨激励' }
+};
+
+var RANKS = [
+  { id:'P3', name:'成长级', mid:0.70 },
+  { id:'P4', name:'专业级', mid:1.00 },
+  { id:'P5', name:'管理级', mid:1.35 },
+  { id:'P6', name:'高管级', mid:1.80 }
+];
+
+function num(id){ var v = parseFloat(document.getElementById(id).value); return isNaN(v) ? null : v; }
+function f0(v){ return v==null ? '—' : Math.round(v).toLocaleString('zh-CN'); }
+function f1(v){ return v==null ? '—' : v.toFixed(1); }
+function f2(v){ return v==null ? '—' : v.toFixed(2); }
+
+function accel(rate){
+  if(rate < 80) return 0;
+  if(rate < 100) return 1.0;
+  if(rate < 120) return 1.2;
+  if(rate < 150) return 1.5;
+  return 2.0;
+}
+
+function calc(){
+  var co = document.getElementById('company').value || '（未填公司名）';
+  var pack = num('pack'), curCost = num('curCost'), revGrow = num('revGrow');
+  var nTop = num('nTop'), nMid = num('nMid'), nLine = num('nLine');
+  var fixRate = num('fixRate'), achieve = num('achieve');
+  var jt = document.getElementById('jobType').value, J = JOB[jt];
+
+  if(pack == null){
+    document.getElementById('out').innerHTML =
+      '<div class="panel" style="text-align:center;padding:50px 20px;color:#8A8F98">'+
+      '先填「明年工资包上限」，结果会立刻算出来。</div>';
+    return;
+  }
+
+  var totalPeople = (nTop||0) + (nMid||0) + (nLine||0);
+  var floatRate = fixRate == null ? null : 100 - fixRate;
+  var bonusPool = floatRate == null ? null : pack * floatRate / 100;
+
+  var packGrow = (curCost && pack) ? (pack - curCost) / curCost * 100 : null;
+  var avgPay = totalPeople ? pack / totalPeople : null;
+  var avgCur = (totalPeople && curCost) ? curCost / totalPeople : null;
+
+  var tiers = [];
+  if(bonusPool != null){
+    tiers.push({ n:'一线战力（基层）', pct:50, ppl:nLine });
+    tiers.push({ n:'中坚力量（中层）', pct:30, ppl:nMid });
+    tiers.push({ n:'战略决策（高层）', pct:20, ppl:nTop });
+    tiers.forEach(function(t){
+      t.amt = bonusPool * t.pct / 100;
+      t.perHead = t.ppl ? t.amt / t.ppl : null;
+    });
+  }
+
+  var f1_ = accel(achieve == null ? 0 : achieve);
+  var baseBonus = avgPay ? avgPay * (floatRate||0) / 100 : null;
+
+  var diags = [];
+  if(fixRate != null && fixRate > 80){
+    diags.push({ bad:true, h:'失败模式 1 · 平均主义',
+      b:'固定薪酬占比 '+fixRate+'%，超过 80% 警戒线。干多干少差不多，年终奖人人有份与绩效无关——<b>结果一定是劣币驱逐良币</b>，优秀人才先走，平庸的沉淀下来。建议把固浮比往 65/35 方向调。' });
+  } else if(fixRate != null){
+    diags.push({ bad:false, h:'失败模式 1 · 平均主义 — 未触发',
+      b:'固定薪酬占比 '+fixRate+'%，在合理区间内。' });
+  }
+
+  if(tiers.length && tiers[1].perHead != null && tiers[0].perHead != null &&
+     tiers[1].perHead < tiers[0].perHead){
+    diags.push({ bad:true, h:'失败模式 2 · 激励断层',
+      b:'中层人均奖金 '+f1(tiers[1].perHead)+' 万，<b>低于</b>一线人均 '+f1(tiers[0].perHead)+' 万。这意味着<b>晋升 = 降薪</b>，谁还愿意担责？中层是承上启下的一层，收入必须高于一线，否则管理岗会空心化。' });
+  } else if(tiers.length){
+    diags.push({ bad:false, h:'失败模式 2 · 激励断层 — 未触发',
+      b:'中层人均奖金高于一线，晋升有正向激励。' });
+  }
+
+  if(packGrow != null && revGrow != null && packGrow > revGrow){
+    diags.push({ bad:true, h:'失败模式 3 · 成本失控',
+      b:'工资包增速 '+f1(packGrow)+'%，<b>超过</b>营收增速 '+f1(revGrow)+'%。加薪越多利润越少，这条路走三年，企业会被人力成本拖垮。薪酬增长必须锚定人效增长。' });
+  } else if(packGrow != null){
+    diags.push({ bad:false, h:'失败模式 3 · 成本失控 — 未触发',
+      b:'工资包增速 '+f1(packGrow)+'%，未超过营收增速。' });
+  }
+
+  var h = '';
+
+  h += '<div class="kpis">';
+  h += '<div class="kpi"><div class="k">明年工资包</div><div class="v">'+f0(pack)+'</div><div class="d">万元</div></div>';
+  h += '<div class="kpi '+(packGrow!=null&&revGrow!=null&&packGrow>revGrow?'r':'g')+'"><div class="k">较本年</div><div class="v">'+(packGrow==null?'—':(packGrow>0?'+':'')+f1(packGrow)+'%')+'</div><div class="d">'+(revGrow!=null?'营收增速 '+f1(revGrow)+'%':'填了营收增速才能比对')+'</div></div>';
+  h += '<div class="kpi '+(fixRate!=null&&fixRate>80?'r':'g')+'"><div class="k">固定占比</div><div class="v">'+(fixRate==null?'—':f1(fixRate)+'%')+'</div><div class="d">警戒线 80%</div></div>';
+  h += '<div class="kpi a"><div class="k">人均薪酬</div><div class="v">'+(avgPay==null?'—':f2(avgPay))+'</div><div class="d">万元/年'+(avgCur!=null?'（本年 '+f2(avgCur)+'）':'')+'</div></div>';
+  h += '</div>';
+
+  h += '<section><div class="sec-h"><div class="sec-n">1</div><div class="sec-t">三大失败模式体检</div>'+
+       '<div class="sec-sub">薪酬没与岗位价值和人效挂钩，就会得这三种病</div></div>';
+  diags.forEach(function(d){
+    h += '<div class="diag '+(d.bad?'bad':'ok')+'"><div class="dh">'+
+         (d.bad?'⚠ ':'✓ ')+d.h+'</div><div class="db">'+d.b+'</div></div>';
+  });
+  h += '<div class="callout">三种病的<b>共同根源是同一个</b>：薪酬没有与岗位价值 + 人效产出挂钩。'+
+       '分错钱比招错人更可怕——招错人损失一个人，分错钱会赶走一群人。</div></section>';
+
+  if(bonusPool != null && totalPeople){
+    h += '<section><div class="sec-h"><div class="sec-n">2</div><div class="sec-t">奖金池 532 纵向分配</div>'+
+         '<div class="sec-sub">不是按职级高低分，是按价值创造权重分</div></div>';
+    h += '<div class="hr-table-scroll" tabindex="0" role="region" aria-label="数据表，可左右滚动"><table class="rst"><tr><th>层级</th><th>分配比例</th><th>奖金池</th><th>人数</th><th>人均奖金</th></tr>';
+    tiers.forEach(function(t){
+      h += '<tr'+(t.pct===50?' class="hl"':'')+'><td>'+t.n+'</td><td class="num">'+t.pct+'%</td>'+
+           '<td class="num">'+f0(t.amt)+' 万</td><td class="num">'+(t.ppl==null?'—':f0(t.ppl)+' 人')+'</td>'+
+           '<td class="num">'+(t.perHead==null?'<span class="muted">填人数才算</span>':f2(t.perHead)+' 万')+'</td></tr>';
+    });
+    h += '</table></div>';
+    h += '<div class="callout green">可分配奖金池 <b>'+f0(bonusPool)+' 万</b>（工资包 '+f0(pack)+
+         ' 万 × 浮动占比 '+f1(floatRate)+'%）。<br>'+
+         '<b>一线拿 50%</b>——谁离客户近、谁直接创造收入，谁就拿更多。高层只拿 20%，因为战略价值最终要靠一线落地。</div></section>';
+  }
+
+  h += '<section><div class="sec-h"><div class="sec-n">3</div><div class="sec-t">个人薪酬结构（'+J.name+'）</div>'+
+       '<div class="sec-sub">'+J.desc+'</div></div>';
+  h += '<div class="hr-table-scroll" tabindex="0" role="region" aria-label="数据表，可左右滚动"><table class="rst"><tr><th>薪酬构成</th><th>基准比例</th>'+(avgPay!=null?'<th>年金额（按人均）</th><th>月金额</th>':'')+'</tr>';
+  J.struct.forEach(function(s){
+    h += '<tr><td>'+s[0]+'</td><td class="num">'+s[1]+'%</td>'+
+      (avgPay!=null ? '<td class="num">'+f2(avgPay*s[1]/100)+' 万</td><td class="num">'+f0(avgPay*s[1]/100*10000/12)+' 元</td>' : '')+
+      '</tr>';
+  });
+  h += '</table></div>';
+  h += '<div class="callout"><b>设计关键：'+J.key+'</b></div></section>';
+
+  if(avgPay != null){
+    h += '<section><div class="sec-h"><div class="sec-n">4</div><div class="sec-t">宽带薪酬职级表</div>'+
+         '<div class="sec-sub">以人均薪酬 '+f2(avgPay)+' 万为 P4 中位值，级差 35%，带宽 50%</div></div>';
+    h += '<div class="hr-table-scroll" tabindex="0" role="region" aria-label="数据表，可左右滚动"><table class="rst"><tr><th>职级</th><th>定位</th><th>中位值</th><th>下限</th><th>上限</th><th>带宽</th></tr>';
+    RANKS.forEach(function(r){
+      var mid = avgPay * r.mid;
+      h += '<tr'+(r.id==='P4'?' class="hl"':'')+'><td>'+r.id+'</td><td>'+r.name+'</td>'+
+           '<td class="num">'+f2(mid)+' 万</td><td class="num">'+f2(mid*0.75)+' 万</td>'+
+           '<td class="num">'+f2(mid*1.25)+' 万</td><td class="num muted">50%</td></tr>';
+    });
+    h += '</table></div>';
+    h += '<div class="callout">相邻职级重叠度约 <b>30%</b>——让业绩好的 P3 可以拿到比平庸 P4 更高的薪酬，'+
+         '<b>同岗可差异化激励，晋升有薪酬跳跃感</b>，这就是宽带薪酬的核心。</div></section>';
+  }
+
+  h += '<section><div class="sec-h"><div class="sec-n">5</div><div class="sec-t">增量激励 · 超越平衡点加速分配</div>'+
+       '<div class="sec-sub">基础薪酬保障生存，增量激励驱动奋斗</div></div>';
+  h += '<div class="hr-table-scroll" tabindex="0" role="region" aria-label="数据表，可左右滚动"><table class="rst"><tr><th>目标完成率</th><th>加速系数</th><th>含义</th>'+
+       (baseBonus!=null?'<th>增量奖金（人均）</th>':'')+'</tr>';
+  [[80,100,1.0,'达到平衡点，拿基础激励（尽职报酬）'],
+   [100,120,1.2,'超越平衡点，加速分配'],
+   [120,150,1.5,'显著超越，大幅加速'],
+   [150,999,2.0,'超额完成，顶格激励']].forEach(function(r){
+    var cur = (achieve!=null && achieve>=r[0] && achieve<r[1]);
+    h += '<tr'+(cur?' class="hl"':'')+'><td>'+r[0]+'%'+(r[1]===999?' 以上':(' ~ '+r[1]+'%'))+'</td>'+
+         '<td class="num">×'+r[2].toFixed(1)+'</td><td class="muted">'+r[3]+'</td>'+
+         (baseBonus!=null?'<td class="num">'+f2(baseBonus*r[2])+' 万</td>':'')+'</tr>';
+  });
+  h += '</table></div>';
+  if(achieve != null){
+    h += '<div class="callout '+(f1_===0?'red':'green')+'">当前目标完成率 <b>'+f1(achieve)+'%</b>，'+
+      (f1_===0
+        ? '<b>低于 80%，不触发增量激励。</b>这是设计意图——没做出增量就不该分增量，否则激励变福利。'
+        : '适用加速系数 <b>×'+f1_.toFixed(1)+'</b>，人均增量奖金约 <b>'+f2(baseBonus*f1_)+' 万</b>。')+
+      '</div>';
+  }
+  h += '<div class="callout">系数可按行业和岗位自行调整，这张表只是起点。'+
+       '<b>KSF 的精髓是：每个指标都有平衡点</b>，达到拿基础、超越加速、低于打折，不是"做好了拿固定工资"。</div></section>';
+
+  if(tiers.length && tiers[0].perHead != null){
+    h += '<section><div class="concl"><h3>三条可以直接拿去开会的结论</h3><ol>';
+    h += '<li>明年工资包 <b>'+f0(pack)+' 万</b>'+(packGrow!=null?('，较本年 '+(packGrow>0?'+':'')+f1(packGrow)+'%'):'')+
+         (revGrow!=null?('，营收增速 '+f1(revGrow)+'%，'+(packGrow>revGrow?'<b>包涨得比营收快，要压</b>':'包增速在营收增速之内，安全')):'')+'。</li>';
+    h += '<li>奖金池 <b>'+f0(bonusPool)+' 万</b>按 532 分：一线 <b>'+f0(tiers[0].amt)+' 万</b>、中层 <b>'+
+         f0(tiers[1].amt)+' 万</b>、高层 <b>'+f0(tiers[2].amt)+' 万</b>。一线人均 <b>'+f2(tiers[0].perHead)+
+         ' 万</b>，是激励的主战场。</li>';
+    h += '<li>'+J.name+'固浮比按 <b>'+J.struct.map(function(s){return s[1]}).join('/')+
+         '</b> 设计，关键动作：<b>'+J.key+'</b>。</li>';
+    h += '</ol></div></section>';
+  }
+
+  document.getElementById('out').innerHTML = h;
+  window.__salary = {co:co, pack:pack, curCost:curCost, packGrow:packGrow, revGrow:revGrow,
+    fixRate:fixRate, floatRate:floatRate, bonusPool:bonusPool, tiers:tiers, avgPay:avgPay, J:J,
+    ranks:RANKS, diags:diags, achieve:achieve, f1_:f1_};
+}
+
+function wbExport(){
+  var S = window.__salary;
+  if(!S){ alert('先填入数据再导出。'); return; }
+  var rows = [];
+  rows.push(['薪酬方案测算 · ' + S.co]);
+  rows.push(['导出时间', new Date().toLocaleString('zh-CN')]);
+  rows.push([]);
+  rows.push(['一、工资包']);
+  rows.push(['明年工资包上限(万)', S.pack, '本年人工成本(万)', S.curCost]);
+  rows.push(['工资包增速', S.packGrow==null?'':S.packGrow.toFixed(2)+'%', '营收增速', S.revGrow==null?'':S.revGrow+'%']);
+  rows.push(['固定占比', S.fixRate==null?'':S.fixRate+'%', '浮动占比', S.floatRate==null?'':S.floatRate+'%']);
+  rows.push(['人均薪酬(万/年)', S.avgPay==null?'':S.avgPay.toFixed(2)]);
+  rows.push([]);
+  if(S.tiers && S.tiers.length){
+    rows.push(['二、奖金池 532 纵向分配']);
+    rows.push(['层级','比例','奖金池(万)','人数','人均(万)']);
+    S.tiers.forEach(function(t){
+      rows.push([t.n, t.pct+'%', Math.round(t.amt), t.ppl==null?'':t.ppl, t.perHead==null?'':t.perHead.toFixed(2)]);
+    });
+    rows.push([]);
+  }
+  rows.push(['三、个人薪酬结构（'+S.J.name+'）']);
+  rows.push(['构成','比例','年金额(万)','月金额(元)']);
+  S.J.struct.forEach(function(s){
+    rows.push([s[0], s[1]+'%',
+      S.avgPay==null?'':(S.avgPay*s[1]/100).toFixed(2),
+      S.avgPay==null?'':Math.round(S.avgPay*s[1]/100*10000/12)]);
+  });
+  rows.push(['设计关键', S.J.key]);
+  rows.push([]);
+  if(S.avgPay != null){
+    rows.push(['四、宽带薪酬职级表']);
+    rows.push(['职级','定位','中位值(万)','下限(万)','上限(万)','带宽']);
+    S.ranks.forEach(function(r){
+      var m = S.avgPay * r.mid;
+      rows.push([r.id, r.name, m.toFixed(2), (m*0.75).toFixed(2), (m*1.25).toFixed(2), '50%']);
+    });
+    rows.push([]);
+  }
+  rows.push(['五、三大失败模式体检']);
+  S.diags.forEach(function(d){ rows.push([d.h, d.b.replace(/<[^>]+>/g,'')]); });
+
+  wbCSV(rows, '薪酬方案_' + S.co + '_' + wbDate() + '.csv');
+}
+
+IDS.forEach(function(id){
+  var el = document.getElementById(id);
+  el.addEventListener('input', calc);
+  el.addEventListener('change', calc);
+});
+
+(function(){
+  var d = {company:'XXAI原生组织', pack:4550, curCost:4200, revGrow:25,
+           nTop:8, nMid:45, nLine:367, fixRate:79, jobType:'prod', achieve:105};
+  for(var k in d) document.getElementById(k).value = d[k];
+})();
+wbShell('薪酬方案助手');
+calc();
+</script>
+<script src="dataIface.js?v=12"></script>
+<script>wbDataIface.setup({ pageKey:'salary_v1', tables:[], afterLoad:function(){ if(typeof calc==='function') calc(); } });</script>
+
+<script>window.WB_AGENT_KEY='salary';</script>
+</body>
+</html>

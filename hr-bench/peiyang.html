@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<script>window.WB_OFFLINE=true;</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="color-scheme" content="light">
+<title>人才培养助手 · 九宫格盘点与继任准备度 · HR自动化工作台</title>
+<link rel="stylesheet" href="shared.css?v=13">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:"Microsoft YaHei","微软雅黑","PingFang SC",sans-serif; background:#FAFAF9; color:#1F2328; line-height:1.6; -webkit-font-smoothing:antialiased; font-size:14px; }
+main { max-width:1280px; margin:0 auto; padding:24px 20px 70px; }
+.layout { display:grid; grid-template-columns:380px 1fr; gap:20px; align-items:start; }
+.panel { background:#FFFFFF; border:1px solid #ECEAE6; border-radius:10px; padding:18px; }
+.side { position:sticky; top:74px; }
+.ptitle { font-size:15px; font-weight:700; margin-bottom:4px; }
+.pnote { font-size:12px; color:#8A8F98; margin-bottom:14px; }
+.fgroup { margin-bottom:15px; }
+.flabel { font-size:12px; font-weight:700; color:#5F5E5A; margin-bottom:7px; display:flex; align-items:center; }
+.flabel .dot { width:5px; height:5px; border-radius:50%; background:#16A06A; margin-right:6px; }
+.frow { display:flex; align-items:center; gap:8px; margin-bottom:7px; }
+.frow label { flex:0 0 84px; font-size:12px; color:#6B7280; }
+.frow input, .frow select { flex:1; min-width:0; font-family:inherit; font-size:13px; padding:6px 9px; border:1px solid #DCDAD4; border-radius:5px; background:#FCFCFB; color:#1F2328; }
+.frow input:focus, .frow select:focus { outline:none; border-color:#16A06A; background:#fff; }
+.frow .unit { flex:0 0 34px; font-size:11px; color:#A0A4AC; }
+.hint { font-size:11.5px; color:#8A8F98; margin-top:2px; line-height:1.5; }
+table.rst { width:100%; border-collapse:collapse; font-size:13px; margin-top:4px; }
+table.rst th { background:#F5F5F3; font-size:12px; font-weight:700; color:#3D4450; padding:8px 10px; text-align:right; border-bottom:1px solid #ECEAE6; white-space:nowrap; }
+table.rst th:first-child { text-align:left; }
+table.rst td { padding:8px 10px; text-align:right; border-bottom:1px solid #F0EEE9; }
+table.rst td:first-child { text-align:left; color:#3D4450; }
+table.rst tr.hl td { background:#EAF7F1; font-weight:700; color:#16A06A; }
+table.rst tr.hl td:first-child { color:#118A5A; }
+table.rst td.num { font-variant-numeric:tabular-nums; }
+.badge { display:inline-block; font-size:11px; padding:2px 8px; border-radius:20px; font-weight:700; }
+.b-good { background:#EAF7F1; color:#16A06A; } .b-mid { background:#FAEEDA; color:#854F0B; } .b-bad { background:#FCEBEB; color:#A32D2D; }
+.callout { background:#F5F5F3; border-radius:8px; padding:13px 15px; font-size:13px; color:#3D4450; margin-top:12px; }
+.callout.green { background:#EAF7F1; color:#118A5A; } .callout.red { background:#FCEBEB; color:#791F1F; }
+.callout b { font-weight:700; }
+.concl { background:#16A06A; color:#fff; border-radius:10px; padding:20px 22px; margin-top:16px; }
+.concl h3 { font-size:15px; font-weight:700; margin-bottom:14px; }
+.concl ol { margin-left:18px; } .concl li { margin-bottom:11px; font-size:14px; } .concl li:last-child { margin-bottom:0; } .concl b { font-weight:700; }
+section { background:#FFFFFF; border:1px solid #ECEAE6; border-radius:10px; padding:20px; margin-bottom:16px; }
+.sec-h { display:flex; align-items:center; gap:9px; margin-bottom:14px; }
+.sec-n { width:22px; height:22px; flex:0 0 22px; border-radius:5px; background:#16A06A; color:#fff; font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+.sec-t { font-size:15px; font-weight:700; }
+.sec-sub { font-size:12px; color:#8A8F98; margin-left:auto; text-align:right; }
+.kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; margin-bottom:16px; }
+.kpi { background:#fff; border:1px solid #ECEAE6; border-radius:10px; padding:14px 15px; }
+.kpi .k { font-size:12px; color:#8A8F98; } .kpi .v { font-size:22px; font-weight:700; margin:3px 0 2px; font-variant-numeric:tabular-nums; } .kpi .d { font-size:11.5px; color:#6B7280; }
+.kpi.g .v { color:#16A06A; } .kpi.r .v { color:#A32D2D; } .kpi.a .v { color:#BA7517; }
+.emp-tb { width:100%; border-collapse:collapse; font-size:13px; }
+.emp-tb th { background:#F5F5F3; font-size:12px; font-weight:700; color:#3D4450; padding:6px 6px; text-align:left; }
+.emp-tb td { padding:4px 5px; }
+.emp-tb input { width:100%; font-family:inherit; font-size:13px; padding:5px 6px; border:1px solid #DCDAD4; border-radius:5px; background:#FCFCFB; }
+.emp-tb input:focus { outline:none; border-color:#16A06A; }
+.emp-tb .x { color:#A32D2D; cursor:pointer; font-weight:700; text-align:center; }
+.addbtn { margin-top:8px; font-size:12px; color:#16A06A; cursor:pointer; font-weight:700; }
+@media (max-width:980px){ .layout{grid-template-columns:1fr;} .side{position:static;} }
+@media print { .wb-head,.wb-foot{display:none!important;} body{background:#fff;} .layout{display:block;} .side{display:none;} section{border:1px solid #ccc; page-break-inside:avoid;} }
+</style>
+<style>
+.layout > *, .panel, section, .fgroup, #out { min-width:0; }
+.hr-table-scroll { max-width:100%; overflow-x:auto; overscroll-behavior-inline:contain; }
+.hr-table-scroll:focus-visible { outline:2px solid #16A06A; outline-offset:2px; }
+.hr-table-scroll table.rst, .hr-table-scroll .emp-tb { min-width:460px; }
+@media(max-width:600px){ .sec-h{flex-wrap:wrap;} .sec-sub{margin-left:31px;text-align:left;} .rk{grid-template-columns:24px minmax(0,1fr) 70px 55px 75px;} }
+@media print { .hr-table-scroll{overflow:visible;} .hr-table-scroll table.rst{min-width:0;} }
+</style>
+</head>
+<body>
+<main>
+<div class="layout">
+  <div class="side">
+    <div class="panel">
+      <div class="ptitle">填人才与继任数据</div>
+      <div class="pnote">九宫格盘点（绩效×潜力）× 关键岗继任 × 培养预算联动。</div>
+
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>企业名称</div>
+        <div class="frow"><input id="company" placeholder="如：XXAI原生组织"></div>
+      </div>
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>关键岗与继任</div>
+        <div class="frow"><label>关键岗数</label><input id="kk" type="number" value="5"><span class="unit">个</span></div>
+        <div class="frow"><label>合格继任</label><input id="succ" type="number" value="5"><span class="unit">人</span></div>
+        <div class="frow"><label>单人替代</label><input id="rc" type="number" value="30"><span class="unit">万</span></div>
+        <div class="hint">合格继任 = Ready now 或 1 年内的继任者；继任深度 = 合格继任 ÷ 关键岗。</div>
+      </div>
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>培养预算</div>
+        <div class="frow"><label>总预算</label><input id="budget" type="number" value="120"><span class="unit">万</span></div>
+        <div class="hint">五层占比：明星35% / 核心骨干25% / 高潜新秀20% / 骨干15% / 其他5%。</div>
+      </div>
+
+      <div class="fgroup">
+        <div class="flabel"><span class="dot"></span>参评人才（绩效档 / 潜力档，1–5）</div>
+        <div class="hr-table-scroll" tabindex="0" role="region" aria-label="数据表，可左右滚动"><table class="emp-tb">
+          <thead><tr><th>姓名</th><th>绩效</th><th>潜力</th><th></th></tr></thead>
+          <tbody id="empRows"></tbody>
+        </table></div>
+        <div class="addbtn" onclick="addEmp()">＋ 加一名人才</div>
+      </div>
+
+      <button class="wb-btn wb-primary" style="width:100%" onclick="calc()">生成人才培养决议</button>
+    </div>
+  </div>
+
+  <div>
+    <div id="out"></div>
+    <div class="callout" style="margin-top:14px;">
+      <b>用法</b>：填关键岗/继任/预算，逐人填绩效与潜力档，点生成——自动归九宫格、识别高潜、算继任深度与风险敞口、把培养预算按五层配平。
+    </div>
+  </div>
+</div>
+</main>
+
+<script src="shared.js?v=13"></script>
+<script>
+wbShell('人才培养');
+
+var EMPS=[['陈明',5,5],['林芳',5,4],['黄涛',4,5],['徐静',4,4],['马俊',3,5],['胡兵',4,3],['高翔',3,4],['何丽',5,3],['梁宇',2,4],['罗成',3,3],['宋佳',4,2],['唐磊',2,3],['韩雪',3,2],['冯刚',2,2],['邓超',1,3],['曹颖',2,1],['彭勇',1,2],['袁泉',3,1],['汪洋',1,1],['顾盼',2,2]];
+function addEmp(n,a,b){ var tb=document.getElementById('empRows'); var tr=document.createElement('tr');
+  tr.innerHTML='<td><input class="e-n" value="'+(n||'')+'"></td><td><input class="e-1" type="number" value="'+(a!=null?a:'')+'"></td><td><input class="e-2" type="number" value="'+(b!=null?b:'')+'"></td><td class="x" onclick="this.parentNode.remove()">✕</td>';
+  tb.appendChild(tr); }
+EMPS.forEach(function(x){ addEmp(x[0],x[1],x[2]); });
+
+// 九宫格：行=潜力档(1-5 上→下)，列=绩效档(1-5 左→右)
+function num(v,d){ var x=parseFloat(v); return isFinite(x)?x:(d||0); }
+
+function calc(){
+  var company=wbVal('company')||'贵公司';
+  var kk=num(wbVal('kk'),5), succ=num(wbVal('succ'),5), rc=num(wbVal('rc'),30), budget=num(wbVal('budget'),120);
+  var rows=document.querySelectorAll('#empRows tr'); var emps=[];
+  rows.forEach(function(tr){
+    var n=tr.querySelector('.e-n').value.trim();
+    var p=num(tr.querySelector('.e-1').value,0), pot=num(tr.querySelector('.e-2').value,0);
+    if(!n && p===0 && pot===0) return;
+    emps.push({name:n||'未命名', p:p, pot:pot, high:pot>=4});
+  });
+  var n=emps.length;
+  // 九宫格 3x3（潜力高/中/低 × 绩效高/中/低）
+  var grid=[[0,0,0],[0,0,0],[0,0,0]]; // [潜力档0低/1中/2高][绩效档0低/1中/2高]
+  emps.forEach(function(e){
+    var pi= e.pot>=4?2 : (e.pot>=3?1:0);
+    var ci= e.p>=4?2 : (e.p>=3?1:0);
+    grid[pi][ci]++;
+  });
+  var highN=emps.filter(function(e){return e.high;}).length;
+  var highPct= n? highN/n*100 : 0;
+  // 继任
+  var depth = kk? succ/kk : 0;
+  var redKK = Math.max(0, kk-succ); // 红区关键岗（无合格继任）
+  var risk = redKK*rc;
+  // 预算五层
+  var layers=[['明星(高绩效高潜力)',0.35],['核心骨干(高绩效中潜力)',0.25],['高潜新秀(中绩效高潜力)',0.20],['骨干(中绩效中潜力)',0.15],['其他',0.05]];
+  var layerCnt=[0,0,0,0,0];
+  emps.forEach(function(e){
+    var pi= e.pot>=4?1:0, ci=e.p>=4?1:0;
+    if(ci&&pi) layerCnt[0]++; else if(ci) layerCnt[1]++; else if(pi) layerCnt[2]++; else if(e.p>=3&&e.pot>=3) layerCnt[3]++; else layerCnt[4]++;
+  });
+  var layerBudget=layers.map(function(l,i){ return budget*l[1]; });
+  var balanced=Math.abs(layerBudget.reduce(function(a,b){return a+b;},0)-budget)<1;
+
+  var R={company:company, n:n, highN:highN, highPct:highPct, kk:kk, succ:succ, depth:depth, risk:risk, budget:budget, layerBudget:layerBudget, balanced:balanced};
+  window.__peiyang=R;
+
+  var h='';
+  h+='<section><div class="sec-h"><span class="sec-n">★</span><span class="sec-t">人才总览</span><span class="sec-sub">'+wbEsc(company)+'</span></div>';
+  h+='<div class="kpis">'
+    +'<div class="kpi"><div class="k">参评人数</div><div class="v">'+n+'</div><div class="d">人</div></div>'
+    +'<div class="kpi g"><div class="k">高潜人才</div><div class="v">'+highN+'</div><div class="d">'+(highPct).toFixed(0)+'%</div></div>'
+    +'<div class="kpi '+(depth>=1?'g':'r')+'"><div class="k">继任深度</div><div class="v">'+depth.toFixed(2)+'</div><div class="d">'+(depth>=1?'达标':'不足')+'</div></div>'
+    +'<div class="kpi '+(risk>0?'r':'g')+'"><div class="k">风险敞口</div><div class="v">'+risk.toFixed(0)+'</div><div class="d">万</div></div>'
+    +'</div></section>';
+
+  h+='<section><div class="sec-h"><span class="sec-n">1</span><span class="sec-t">九宫格分布（潜力×绩效）</span></div>';
+  h+='<div class="hr-table-scroll" tabindex="0" role="region" aria-label="数据表，可左右滚动"><table class="rst"><thead><tr><th>潜力 \\ 绩效</th><th>低(1-2)</th><th>中(3)</th><th>高(4-5)</th><th>合计</th></tr></thead><tbody>';
+  var labels=['低','中','高'];
+  for(var pi=2;pi>=0;pi--){ h+='<tr><td style="text-align:left"><b>'+labels[pi]+'</b></td>'; var s=0; for(var ci=0;ci<3;ci++){ s+=grid[pi][ci]; h+='<td class="num">'+grid[pi][ci]+'</td>'; } h+='<td class="num">'+s+'</td></tr>'; }
+  h+='<tr class="hl"><td style="text-align:left">高潜(潜力≥4)</td><td class="num">'+grid[2][0]+'</td><td class="num">'+grid[2][1]+'</td><td class="num">'+grid[2][2]+'</td><td class="num">'+highN+'</td></tr>';
+  h+='</tbody></table></div>';
+  h+='<div class="callout green">高潜人才 '+highN+' 人（'+(highPct).toFixed(1)+'%），须纳入重点保留与加速培养名单。</div></section>';
+
+  h+='<section><div class="sec-h"><span class="sec-n">2</span><span class="sec-t">关键岗继任地图</span></div>';
+  h+='<div class="hr-table-scroll" tabindex="0" role="region" aria-label="数据表，可左右滚动"><table class="rst"><thead><tr><th>指标</th><th>数值</th><th>说明</th></tr></thead><tbody>';
+  h+='<tr><td style="text-align:left">关键岗数</td><td class="num">'+kk+'</td><td style="text-align:left">A 类岗</td></tr>';
+  h+='<tr><td style="text-align:left">合格继任者</td><td class="num">'+succ+'</td><td style="text-align:left">Ready now / 1 年内</td></tr>';
+  h+='<tr class="'+(depth>=1?'hl':'')+'"><td style="text-align:left">继任深度</td><td class="num">'+depth.toFixed(2)+'</td><td style="text-align:left">'+(depth>=1?'达标（≥1.00）':'不足，需补继任者')+'</td></tr>';
+  h+='<tr><td style="text-align:left">风险敞口</td><td class="num">'+risk.toFixed(0)+' 万</td><td style="text-align:left">红区关键岗 '+redKK+' × 单人替代 '+rc+' 万</td></tr>';
+  h+='</tbody></table></div></section>';
+
+  h+='<section><div class="sec-h"><span class="sec-n">3</span><span class="sec-t">培养预算分配（守恒）</span></div>';
+  h+='<div class="hr-table-scroll" tabindex="0" role="region" aria-label="数据表，可左右滚动"><table class="rst"><thead><tr><th>人才分层</th><th>人数</th><th>预算(万)</th><th>占比</th></tr></thead><tbody>';
+  layers.forEach(function(l,i){ h+='<tr><td style="text-align:left">'+l[0]+'</td><td class="num">'+layerCnt[i]+'</td><td class="num">'+layerBudget[i].toFixed(1)+'</td><td class="num">'+(l[1]*100).toFixed(0)+'%</td></tr>'; });
+  h+='<tr class="hl"><td style="text-align:left">合计</td><td class="num">'+n+'</td><td class="num">'+layerBudget.reduce(function(a,b){return a+b;},0).toFixed(1)+'</td><td class="num">100%</td></tr>';
+  h+='</tbody></table></div>';
+  h+='<div class="callout '+(balanced?'green':'red')+'">守恒校验：Σ分层预算 = '+layerBudget.reduce(function(a,b){return a+b;},0).toFixed(1)+' 万，总预算 '+budget.toFixed(1)+' 万，'+(balanced?'配平 ✓':'差额需调整')+'。</div></section>';
+
+  var concl=[];
+  concl.push('参评 <b>'+n+'</b> 人，高潜 <b>'+highN+'</b> 人（'+(highPct).toFixed(1)+'%），须纳入重点保留与加速培养名单。');
+  concl.push('关键岗 <b>'+kk+'</b> 个，合格继任 <b>'+succ+'</b> 人，继任深度 <b>'+depth.toFixed(2)+'</b>'+(depth>=1?'（达标）':'（不足，需补继任者）')+'；风险敞口 <b>'+risk.toFixed(0)+' 万</b>。');
+  concl.push('培养总预算 <b>'+budget.toFixed(0)+' 万</b>已按五层分配并守恒（明星35%+核心25%+高潜20%=80% 投向高价值人才）；晋升准入硬门槛：绩效≥4、潜力≥3、司龄≥2。');
+  h+='<div class="concl"><h3>三条能拿去开会的结论</h3><ol>';
+  concl.forEach(function(c){ h+='<li>'+c+'</li>'; });
+  h+='</ol></div>';
+
+  document.getElementById('out').innerHTML=h;
+}
+calc();
+</script>
+<script src="dataIface.js?v=12"></script>
+<script>wbDataIface.setup({ pageKey:'peiyang_v1', tables:[{id:'empRows', label:'参评人才(姓名/绩效/潜力)', rowSel:'tr', cellSel:'input', cols:['姓名','绩效','潜力']}], afterLoad:function(){ if(typeof calc==='function') calc(); } });</script>
+
+<script>window.WB_AGENT_KEY='peiyang';</script>
+</body>
+</html>
