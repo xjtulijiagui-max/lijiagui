@@ -8,6 +8,7 @@
 body{font-family:Arial,"Microsoft YaHei",sans-serif;background:#f5f7fb;color:#1f2937;margin:0}
 .header{background:#0b2f5b;color:white;padding:38px 7vw 32px}
 .header h1{margin:0 0 10px;font-size:32px}
+.keep-phrase{white-space:nowrap}
 .header p{margin:6px 0;line-height:1.7}
 .wrap{max-width:1180px;margin:0 auto;padding:26px}
 .card{background:white;border-radius:16px;padding:24px;margin-bottom:20px;box-shadow:0 4px 18px rgba(0,0,0,.06)}
@@ -27,16 +28,28 @@ pre{background:#0f172a;color:#e5e7eb;padding:18px;border-radius:12px;white-space
 @media(max-width:800px){.grid{grid-template-columns:1fr 1fr}}
 </style>
 <script>
-function copyPrompt(){
+function fallbackCopy(text){
+ const area=document.createElement("textarea");
+ area.value=text; area.setAttribute("readonly",""); area.style.position="fixed"; area.style.opacity="0";
+ document.body.appendChild(area); area.select();
+ const ok=document.execCommand("copy"); area.remove();
+ if(!ok) throw new Error("copy failed");
+}
+async function copyPrompt(btn){
  const txt=document.getElementById("prompt").innerText;
- navigator.clipboard.writeText(txt);
- alert("提示词已复制");
+ const old=btn.textContent;
+ try{
+  if(navigator.clipboard?.writeText){try{await navigator.clipboard.writeText(txt)}catch(error){fallbackCopy(txt)}}
+  else fallbackCopy(txt);
+  btn.textContent="已复制";
+ }catch(error){btn.textContent="复制失败，请手动选择"}
+ setTimeout(()=>btn.textContent=old,1600);
 }
 </script>
 </head>
 <body>
 <div class="header">
-  <h1>信用卡异常交易数据分析与洞察练习</h1>
+  <h1><span class="keep-phrase">信用卡异常交易</span><wbr><span class="keep-phrase">数据分析</span><wbr><span class="keep-phrase">与洞察练习</span></h1>
   <p>目标：从“逐笔核查”升级为“批量数据分析 + 风险模式发现 + 管理洞察”。</p>
   <p>课堂模拟数据，仅用于训练，不代表真实客户、真实商户或真实风险判断。</p>
 </div>
@@ -84,8 +97,8 @@ function copyPrompt(){
   </div>
 
   <div class="card">
-    <h2>五、WorkBuddy 提示词</h2>
-    <button class="btn" onclick="copyPrompt()">复制完整提示词</button>
+    <h2>五、WorkBuddy <span class="keep-phrase">提示词</span></h2>
+    <button class="btn" onclick="copyPrompt(this)">复制完整提示词</button>
     <pre id="prompt"># WorkBuddy练习提示词：信用卡异常交易数据分析与洞察
 
 你是一名“信用卡交易异常数据分析与洞察助手”。

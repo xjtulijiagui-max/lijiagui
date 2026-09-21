@@ -79,7 +79,7 @@ footer{font-size:13px;color:var(--muted);padding:8px 0 40px}
       </div>
       <div class="case-title">中国证监会行政处罚决定书（紫晶存储及相关责任人员）</div>
       <div class="case-point">练习重点：欺诈发行、财务造假、信息披露违法违规</div>
-      <a class="url" href="http://www.csrc.gov.cn/csrc/c101928/c7404371/content.shtml" target="_blank">http://www.csrc.gov.cn/csrc/c101928/c7404371/content.shtml</a>
+<a class="url" href="http://www.csrc.gov.cn/csrc/c101928/c7404371/content.shtml" target="_blank" rel="noopener">http://www.csrc.gov.cn/csrc/c101928/c7404371/content.shtml</a>
       <button class="copy-url" onclick='copyText("http://www.csrc.gov.cn/csrc/c101928/c7404371/content.shtml", this)'>复制网页地址</button>
     </div>
 
@@ -93,7 +93,7 @@ footer{font-size:13px;color:var(--muted);padding:8px 0 40px}
       </div>
       <div class="case-title">中国证监会行政处罚决定书（富春投资、缪品章）</div>
       <div class="case-point">练习重点：内幕交易</div>
-      <a class="url" href="http://www.csrc.gov.cn/csrc/c101928/c7439652/content.shtml" target="_blank">http://www.csrc.gov.cn/csrc/c101928/c7439652/content.shtml</a>
+<a class="url" href="http://www.csrc.gov.cn/csrc/c101928/c7439652/content.shtml" target="_blank" rel="noopener">http://www.csrc.gov.cn/csrc/c101928/c7439652/content.shtml</a>
       <button class="copy-url" onclick='copyText("http://www.csrc.gov.cn/csrc/c101928/c7439652/content.shtml", this)'>复制网页地址</button>
     </div>
 
@@ -107,7 +107,7 @@ footer{font-size:13px;color:var(--muted);padding:8px 0 40px}
       </div>
       <div class="case-title">中国证监会行政处罚决定书（汤丽君）</div>
       <div class="case-point">练习重点：上市公司实控人内幕交易</div>
-      <a class="url" href="http://www.csrc.gov.cn/csrc/c101928/c7444304/content.shtml" target="_blank">http://www.csrc.gov.cn/csrc/c101928/c7444304/content.shtml</a>
+<a class="url" href="http://www.csrc.gov.cn/csrc/c101928/c7444304/content.shtml" target="_blank" rel="noopener">http://www.csrc.gov.cn/csrc/c101928/c7444304/content.shtml</a>
       <button class="copy-url" onclick='copyText("http://www.csrc.gov.cn/csrc/c101928/c7444304/content.shtml", this)'>复制网页地址</button>
     </div>
 
@@ -121,7 +121,7 @@ footer{font-size:13px;color:var(--muted);padding:8px 0 40px}
       </div>
       <div class="case-title">中国证监会行政处罚决定书（森源集团、楚金甫、杨合岭、崔付军、孙威威）</div>
       <div class="case-point">练习重点：操纵证券市场</div>
-      <a class="url" href="http://www.csrc.gov.cn/csrc/c101928/c7448170/content.shtml" target="_blank">http://www.csrc.gov.cn/csrc/c101928/c7448170/content.shtml</a>
+<a class="url" href="http://www.csrc.gov.cn/csrc/c101928/c7448170/content.shtml" target="_blank" rel="noopener">http://www.csrc.gov.cn/csrc/c101928/c7448170/content.shtml</a>
       <button class="copy-url" onclick='copyText("http://www.csrc.gov.cn/csrc/c101928/c7448170/content.shtml", this)'>复制网页地址</button>
     </div>
 
@@ -135,7 +135,7 @@ footer{font-size:13px;color:var(--muted);padding:8px 0 40px}
       </div>
       <div class="case-title">中国证监会行政处罚决定书（中兴华所及相关责任人员）</div>
       <div class="case-point">练习重点：审计机构执业违法违规</div>
-      <a class="url" href="http://www.csrc.gov.cn/csrc/c101928/c7446796/content.shtml" target="_blank">http://www.csrc.gov.cn/csrc/c101928/c7446796/content.shtml</a>
+<a class="url" href="http://www.csrc.gov.cn/csrc/c101928/c7446796/content.shtml" target="_blank" rel="noopener">http://www.csrc.gov.cn/csrc/c101928/c7446796/content.shtml</a>
       <button class="copy-url" onclick='copyText("http://www.csrc.gov.cn/csrc/c101928/c7446796/content.shtml", this)'>复制网页地址</button>
     </div>
     </div>
@@ -228,15 +228,28 @@ Excel 每个网页对应一行，列顺序严格按照固定字段排列。
 
 <script>
 const promptText = "# WorkBuddy 系统提示词｜证监会行政处罚决定书网页批量信息抽取\n\n## 任务目标\n用户会提供一个或多个中国证监会行政处罚决定书网页 URL。\n请逐个读取网页正文，抽取指定字段，形成统一 JSON，并最终汇总为 Excel。\n\n## 核心原则\n1. 严格基于网页正文中的“已知文本”抽取，不得使用常识、外部知识或搜索结果补全。\n2. 网页正文中没有明确出现的字段，统一填写空字符串 \"\"。\n3. 禁止推断法律依据、人员身份、法定代表人、主要负责人、处罚金额、违法所得、日期等。\n4. 文号按网页正文原样抽取，不擅自修改格式。\n5. “董事长”“总经理”“负责人”等身份，只有网页正文明确写为“法定代表人”或“主要负责人”时，才填写对应字段。\n6. “被处罚当事人（个人）”只填写明确属于处罚对象的自然人。\n7. 多个自然人使用英文逗号 , 连接。\n8. 同一份处罚决定书默认输出一条记录，不因多人被处罚而拆成多条。\n9. 多项违法事实按原顺序合并，可用分号连接，不新增法律定性。\n10. 若网页无法访问、正文抓取失败或字段无法确认，不得猜测，应标记该网页“读取失败/待人工确认”。\n\n## 固定输出字段\n{\n  \"行政处罚决定书文号\": \"\",\n  \"被处罚机构\": \"\",\n  \"被处罚机构法定代表人(主要负责人姓名)\": \"\",\n  \"被处罚当事人（个人）\": \"\",\n  \"主要违法违规事实（案由）\": \"\",\n  \"行政处罚依据\": \"\",\n  \"行政处罚决定\": \"\",\n  \"作出处罚决定的机关名称\": \"\",\n  \"作出处罚决定的日期\": \"\",\n  \"来源网页\": \"\"\n}\n\n## 工作流程\n### 第一步：读取网页\n逐个访问用户提供的 URL，只读取行政处罚决定书正文。\n\n### 第二步：字段抽取\n对每个网页分别抽取固定字段。\n\n### 第三步：严格自检\n输出前逐项检查：\n- 该字段能否在网页正文中找到直接依据？\n- 是否发生了常识补全？\n- 是否把“董事长”等身份自动认定为法定代表人？\n- 是否遗漏处罚金额、没收、警告、责令改正等关键信息？\n- 是否擅自纠正文号？\n\n### 第四步：统一输出\n先输出 JSON 数组；再将所有记录汇总为 Excel。\nExcel 每个网页对应一行，列顺序严格按照固定字段排列。\n\n## 重要规则\n如果原文没有写“行政处罚依据”，必须输出：\n\"行政处罚依据\": \"\"\n\n绝对不能自动补写：\n\"《中华人民共和国证券法》相关规定\"\n\n因为本任务是“信息抽取”，不是“法律知识补全”。\n";
+function fallbackCopy(text){
+  const area=document.createElement("textarea");
+  area.value=text; area.setAttribute("readonly",""); area.style.position="fixed"; area.style.opacity="0";
+  document.body.appendChild(area); area.select();
+  const ok=document.execCommand("copy"); area.remove();
+  if(!ok) throw new Error("copy failed");
+}
+async function copyToClipboard(text){
+  if(navigator.clipboard?.writeText){try{return await navigator.clipboard.writeText(text)}catch(error){}}
+  fallbackCopy(text);
+}
+async function showCopyResult(text,btn){
+  const old=btn.textContent;
+  try{await copyToClipboard(text);btn.textContent="已复制"}
+  catch(error){btn.textContent="复制失败，请手动选择"}
+  setTimeout(()=>btn.textContent=old,1600);
+}
 async function copyPrompt(btn){
-  await navigator.clipboard.writeText(promptText);
-  const old=btn.textContent; btn.textContent="已复制";
-  setTimeout(()=>btn.textContent=old,1200);
+  await showCopyResult(promptText,btn);
 }
 async function copyText(text, btn){
-  await navigator.clipboard.writeText(text);
-  const old=btn.textContent; btn.textContent="已复制";
-  setTimeout(()=>btn.textContent=old,1000);
+  await showCopyResult(text,btn);
 }
 </script>
 </body>
