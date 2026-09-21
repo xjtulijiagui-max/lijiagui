@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>泰康人寿 · WorkBuddy 跟做网页</title>
+<style>
+  :root {
+    --dark:#0B3157; --mid:#0B62A3; --cyan:#11A3C6; --accent:#EE7700;
+    --pale:#F7FAFD; --line:#D6E4F0; --gray:#4B5563; --green:#2E7D32;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; background:var(--pale); color:var(--dark);
+    font-family:-apple-system,"Microsoft YaHei","PingFang SC",sans-serif;
+    line-height:1.65; -webkit-font-smoothing:antialiased;
+  }
+  /* ---------- 顶部 ---------- */
+  header {
+    background:linear-gradient(135deg,#0B3157 0%,#0B62A3 100%);
+    color:#fff; padding:38px 40px 30px; position:relative;
+  }
+  header::after { content:""; position:absolute; left:0; right:0; bottom:0; height:4px; background:var(--accent); }
+  .kicker { font-size:13px; color:#9DC3E8; letter-spacing:.5px; }
+  header h1 { margin:8px 0 6px; font-size:30px; letter-spacing:.5px; }
+  header .sub { color:#CFE3F7; font-size:15px; }
+  .stats { display:flex; gap:26px; margin-top:20px; flex-wrap:wrap; }
+  .stat { background:rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.18);
+           border-radius:10px; padding:9px 16px; font-size:13px; color:#E6F1FA; }
+  .stat b { color:#fff; font-size:16px; margin-right:5px; }
+  /* ---------- 布局 ---------- */
+  .wrap { display:grid; grid-template-columns:252px 1fr; gap:26px;
+           max-width:1420px; margin:0 auto; padding:26px 26px 70px; }
+  nav { position:sticky; top:20px; align-self:start; }
+  nav .navtitle { font-size:12px; color:var(--gray); letter-spacing:1px; margin:0 0 10px 4px; }
+  nav a { display:flex; align-items:center; gap:9px; padding:10px 12px; margin-bottom:6px;
+           border-radius:9px; text-decoration:none; color:var(--dark); background:#fff;
+           border:1px solid var(--line); font-size:13px; transition:.16s; }
+  nav a:hover { border-color:var(--mid); transform:translateX(2px); }
+  nav a.active { background:var(--mid); color:#fff; border-color:var(--mid); }
+  nav a.active .d { color:#CFE3F7; }
+  nav a .n { font-weight:700; font-size:12px; opacity:.75; }
+  nav a .t { flex:1; }
+  nav a .d { font-size:11px; color:var(--gray); }
+  /* ---------- 阶段 ---------- */
+  .stage { background:#fff; border:1px solid var(--line); border-radius:14px;
+            padding:22px 24px; margin-bottom:22px; border-left:6px solid var(--c);
+            scroll-margin-top:18px; }
+  .stage-head { display:flex; align-items:center; gap:16px; }
+  .stage-no { background:var(--c); color:#fff; font-size:19px; font-weight:700;
+               width:50px; height:50px; border-radius:11px; display:flex;
+               align-items:center; justify-content:center; flex-shrink:0; }
+  .stage-meta h3 { margin:0; font-size:20px; }
+  .stage-meta p { margin:3px 0 0; font-size:13.5px; color:var(--gray); }
+  .stage-time { margin-left:auto; font-size:13px; color:var(--c); font-weight:700;
+                 background:color-mix(in srgb, var(--c) 10%, white);
+                 padding:5px 12px; border-radius:20px; white-space:nowrap; }
+  .points { margin:16px 0 0; padding-left:0; list-style:none;
+             display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:7px 20px; }
+  .points li { font-size:13.5px; color:var(--dark); padding-left:16px; position:relative; }
+  .points li::before { content:"●"; position:absolute; left:0; color:var(--c); font-size:9px; top:5px; }
+  .action-bar { margin-top:16px; background:#FDF1E3; border:1px solid #F5D2A8;
+                 color:#B25B00; border-radius:10px; padding:11px 15px; font-size:13.5px; }
+  .action-bar .ico { margin-right:6px; }
+  .no-prompt { margin-top:14px; font-size:13px; color:var(--gray);
+                padding:12px 15px; background:var(--pale); border-radius:10px; }
+  /* ---------- 提示词卡 ---------- */
+  .card { margin-top:16px; border:1px solid var(--line); border-radius:12px; overflow:hidden; }
+  .card-top { background:var(--pale); border-bottom:1px solid var(--line);
+               padding:9px 15px; display:flex; align-items:center; gap:12px;
+               flex-wrap:wrap; font-size:12.5px; }
+  .tag { background:var(--accent); color:#fff; font-weight:700;
+          padding:2px 9px; border-radius:5px; font-size:12px; }
+  .scene { color:var(--accent); font-weight:700; }
+  .need { color:var(--gray); margin-left:auto; }
+  .card h4 { margin:14px 15px 4px; font-size:16.5px; }
+  .tip { margin:0 15px 12px; font-size:13px; color:var(--gray); }
+  .code-wrap { position:relative; margin:0 15px 13px; }
+  .code { background:#F4F8FC; border:1px solid var(--line); border-left:3px solid var(--mid);
+           border-radius:9px; padding:15px 16px; margin:0; white-space:pre-wrap;
+           word-break:break-word; font-family:Consolas,"Courier New",monospace;
+           font-size:13px; line-height:1.75; color:#16324F; max-height:none; }
+  .copy { position:absolute; top:10px; right:10px; background:var(--mid); color:#fff;
+           border:none; border-radius:7px; padding:7px 14px; font-size:12.5px;
+           cursor:pointer; font-family:inherit; transition:.16s; }
+  .copy:hover { background:var(--dark); }
+  .copy.done { background:var(--green); }
+  .check { background:#F0F7FD; border-top:1px solid var(--line);
+            padding:10px 15px; font-size:12.5px; color:var(--gray); }
+  .check b { color:var(--mid); }
+  /* ---------- 模拟数据下载 ---------- */
+  .dl-box { margin:0 15px 14px; background:#F3FBF5; border:1px solid #BFE3C8;
+             border-radius:10px; padding:12px 14px; }
+  .dl-head { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .dl-badge { background:var(--green); color:#fff; font-size:11.5px; font-weight:700;
+               padding:3px 10px; border-radius:5px; letter-spacing:.3px; }
+  .dl-tip { font-size:12px; color:#3D6B49; }
+  .dl-chips { display:flex; gap:10px; flex-wrap:wrap; margin-top:11px; }
+  .dl-chip { display:flex; align-items:center; gap:9px; background:#fff;
+              border:1px solid #A9D6B5; border-radius:9px; padding:9px 14px 9px 11px;
+              text-decoration:none; color:var(--dark); transition:.16s; }
+  .dl-chip:hover { border-color:var(--green); box-shadow:0 3px 10px rgba(46,125,50,.16);
+                    transform:translateY(-1px); }
+  .dl-chip.primary { background:#E8F5E9; border-color:#7FBF8E; }
+  .dl-ico { background:var(--green); color:#fff; width:23px; height:23px; border-radius:6px;
+             display:flex; align-items:center; justify-content:center; font-size:14px;
+             font-weight:700; flex-shrink:0; }
+  .dl-txt { display:flex; flex-direction:column; line-height:1.35; }
+  .dl-txt b { font-size:13px; font-weight:700; }
+  .dl-txt i { font-style:normal; font-size:11px; color:#5B7A63; }
+  .dl-note { margin-top:9px; font-size:11.5px; color:#5B7A63; line-height:1.6; }
+  .dl-top { display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+             background:#F3FBF5; border:1px solid #BFE3C8; border-radius:12px;
+             padding:14px 18px; margin:0 0 20px; }
+  .dl-top .txt { font-size:13.5px; color:#2C5B38; }
+  .dl-top .txt b { color:#1B4B27; }
+  .dl-top .dl-chips { margin-top:0; }
+  /* ---------- 底部 ---------- */
+  footer { background:var(--dark); color:#8AA8C8; text-align:center;
+            padding:26px; font-size:13px; }
+  footer b { color:#fff; }
+  .totop { position:fixed; right:26px; bottom:26px; background:var(--mid); color:#fff;
+            border:none; width:44px; height:44px; border-radius:50%; font-size:18px;
+            cursor:pointer; box-shadow:0 4px 14px rgba(11,98,163,.35); display:none; }
+  @media (max-width:900px) {
+    .wrap { grid-template-columns:1fr; }
+    nav { position:static; display:flex; gap:6px; overflow-x:auto; padding-bottom:4px; }
+    nav .navtitle { display:none; }
+    nav a { flex-shrink:0; margin-bottom:0; }
+    nav a .d { display:none; }
+    header { padding:26px 20px 22px; }
+    header h1 { font-size:23px; }
+  }
+  @media print {
+    nav,.copy,.totop { display:none; }
+    .wrap { grid-template-columns:1fr; }
+    .code { background:#fff; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="kicker">「新寿险」集团公开课 · AI 实战课（五）· 办公赋能篇</div>
+  <h1>WorkBuddy 跟做网页</h1>
+  <div class="sub">照着进度走 · 到哪一步就复制哪一条 · 粘进 WorkBuddy 看效果</div>
+  <div class="stats">
+    <div class="stat"><b>5</b>个环节</div>
+    <div class="stat"><b>120</b>分钟</div>
+    <div class="stat"><b>8</b>条可复制提示词</div>
+    <div class="stat"><b>7</b>份配套模拟数据</div>
+    <div class="stat"><b>3</b>大代理人任务</div>
+  </div>
+</header>
+
+<div class="wrap">
+  <nav>
+    <p class="navtitle">课程进度 · 点一下跳转</p>
+    <a href="#s0" data-nav="s0"><span class="n">01</span><span class="t">认识 WorkBuddy</span><span class="d">10 分钟</span></a><a href="#s1" data-nav="s1"><span class="n">02</span><span class="t">基础速览</span><span class="d">20 分钟</span></a><a href="#s2" data-nav="s2"><span class="n">03</span><span class="t">任务一：客户经营</span><span class="d">30 分钟</span></a><a href="#s3" data-nav="s3"><span class="n">04</span><span class="t">任务二：展业内容</span><span class="d">30 分钟</span></a><a href="#s4" data-nav="s4"><span class="n">05</span><span class="t">任务三：方案与团队</span><span class="d">30 分钟</span></a>
+  </nav>
+
+  <main>
+    <div class="action-bar" style="margin:0 0 16px;background:#F0F7FD;border-color:#BBD9EE;color:#0B62A3">
+      <span class="ico">ⓘ</span> 使用方法：讲到哪个环节，就点左侧对应进度，先下载配套数据，再复制提示词，粘进 WorkBuddy 直接跑。
+      提示词里的资料路径按你自己的文件夹改一下即可。
+    </div>
+
+    <div class="dl-top">
+      <div class="txt">
+        <b>配套模拟数据已备好</b>　7 份课堂数据集，全部为虚构人物与虚构保单，不含任何真实客户信息。
+        不需要的部分不用下，下面的提示词会标出哪一条要用哪份数据。
+      </div>
+      <div class="dl-chips"><a class="dl-chip primary" href="assets/dataset-pack.zip" download="泰康人寿_WorkBuddy模拟数据集.zip"><span class="dl-ico">↓</span><span class="dl-txt"><b>下载全部模拟数据（压缩包）</b><i>泰康人寿_WorkBuddy模拟数据集.zip · 34.1 KB</i></span></a></div>
+    </div>
+    
+    <section class="stage" id="s0" style="--c:#0B62A3">
+      <div class="stage-head">
+        <div class="stage-no">01</div>
+        <div class="stage-meta">
+          <h3>认识 WorkBuddy</h3>
+          <p>先搞清楚它跟聊天框的区别，看懂三栏</p>
+        </div>
+        <div class="stage-time">10 分钟</div>
+      </div>
+      <ul class="points"><li>它是工作台不是聊天框：交付的是文件</li><li>左边找任务 · 中间说需求 · 右边验结果</li><li>结果区能展开、收起，文件在「全部文件」里</li></ul>
+      <div class="action-bar">
+            <span class="ico">▶</span> 打开 WorkBuddy，新建一个空任务，说出左中右三块区域分别有什么用。
+          </div><div class="no-prompt">本部分不涉及提示词，也不需要下载数据，先跟着讲一遍界面即可。</div>
+    </section>
+    <section class="stage" id="s1" style="--c:#11A3C6">
+      <div class="stage-head">
+        <div class="stage-no">02</div>
+        <div class="stage-meta">
+          <h3>基础速览</h3>
+          <p>把一句模糊需求变成它能执行的指令</p>
+        </div>
+        <div class="stage-time">20 分钟</div>
+      </div>
+      <ul class="points"><li>好任务 = 目标 + 输入 + 输出格式 + 约束</li><li>三开关：模式日常办公 / 模型 Auto / 权限默认</li><li>追问在原任务里改；交付前按六项验收</li></ul>
+      <div class="action-bar on">
+            <span class="ico">▶</span> 现在复制下面两条提示词，先跑通流程，不追求结果完美。
+          </div>
+      <article class="card" id="p1">
+        <div class="card-top">
+          <span class="tag">P1</span>
+          <span class="scene">新手起步</span>
+          <span class="need">需要准备：无需资料，直接粘贴</span>
+        </div>
+        <h4>第一次下任务：认一遍工作台</h4>
+        <p class="tip">先跑通流程，不追求结果完美。重点看它会不会自己拆步骤。</p>
+        <div class="code-wrap">
+          <pre class="code" id="code-p1">请帮我梳理一份「保险代理人日常事务清单」，按下面要求输出：
+
+1. 先列出我一天里最常重复的 5 件事，用一句话描述每件事。
+2. 每件事标注：大概花多久、是否涉及客户隐私信息、是否可以交给 AI 先做一版。
+3. 最后给出建议：哪 3 件事最适合优先交给 AI，为什么。
+
+输出格式：一张 Markdown 表格 + 三段简短说明。
+不要编造我没有提到的业务场景，不确定的地方标注「待确认」。</pre>
+          <button class="copy" data-target="code-p1">复制提示词</button>
+        </div>
+        <div class="check"><b>课堂回测看这里：</b>看它是否先拆步骤再执行；右侧结果区是否出现文件。</div>
+      </article>
+      <article class="card" id="p2">
+        <div class="card-top">
+          <span class="tag">P2</span>
+          <span class="scene">结果打磨</span>
+          <span class="need">需要准备：承接上一条任务，直接粘贴</span>
+        </div>
+        <h4>追问修改：把初稿改成能交的版本</h4>
+        <p class="tip">不要重开任务，在原任务里追问，上下文才不丢。</p>
+        <div class="code-wrap">
+          <pre class="code" id="code-p2">在上一条结果的基础上继续修改，不要重做：
+
+1. 把「最适合优先交给 AI」的 3 件事展开成行动清单，每件事写清：第一步做什么、需要准备什么资料、预计省多少时间。
+2. 用「结论 — 依据 — 下一步动作」三段式重新组织，控制在 1 页以内。
+3. 把涉及客户姓名、电话、保单号的部分全部替换成占位符（如「客户A」「保单X」）。
+
+最后导出一份 Word 版本，文件名：代理人AI事务清单_v1。</pre>
+          <button class="copy" data-target="code-p2">复制提示词</button>
+        </div>
+        <div class="check"><b>课堂回测看这里：</b>看能否在原任务里连续改；导出文件是否真能打开。</div>
+      </article>
+    </section>
+    <section class="stage" id="s2" style="--c:#EE7700">
+      <div class="stage-head">
+        <div class="stage-no">03</div>
+        <div class="stage-meta">
+          <h3>任务一：客户经营</h3>
+          <p>把散在各处的客户信息，变成能照着打的跟进表</p>
+        </div>
+        <div class="stage-time">30 分钟</div>
+      </div>
+      <ul class="points"><li>客户台账盘点：分层 + 排跟进优先级</li><li>单客画像：找保障缺口 + 面谈切入话题</li><li>合规要点：姓名脱敏，缺失信息标「待确认」</li></ul>
+      <div class="action-bar on">
+            <span class="ico">▶</span> 先下载配套的客户台账与客户A保障资料，放进同一个文件夹，再复制提示词 3 跑一遍。
+          </div>
+      <article class="card" id="p3">
+        <div class="card-top">
+          <span class="tag">P3</span>
+          <span class="scene">客户经营盘点</span>
+          <span class="need">需要准备：上传：客户台账 Excel（姓名、保单、保费、最近联系时间）</span>
+        </div>
+        <h4>客户台账盘点：排出本周跟进优先级</h4>
+        <p class="tip">这是代理人最高频的场景：把散在各处的客户信息，变成一张能照着打的表。</p>
+        <div class="code-wrap">
+          <pre class="code" id="code-p3">请读取当前文件夹里的客户台账，帮我做一份「客户经营盘点表」。
+
+按下面要求处理：
+1. 字段识别：先告诉我表格里有哪些字段，哪些字段缺失或需要补充。
+2. 客户分层：按「最近联系时间 + 已购保单数 + 年缴保费」三个维度分四层：
+   A 重点维护 / B 稳定经营 / C 待激活 / D 长期未联系。
+3. 输出一张盘点表，列为：客户编号 | 分层 | 关键事实 | 跟进优先级（1-3）| 建议动作。
+4. 最后给出本周优先跟进的 5 位客户，每位写一句理由。
+
+约束：
+- 客户姓名统一显示为「客户A、客户B」，不要出现真实姓名。
+- 台账里没有的信息不要推测，缺失处填「待确认」。
+- 不修改原始台账文件，结果另存为：客户经营盘点表_v1。</pre>
+          <button class="copy" data-target="code-p3">复制提示词</button>
+        </div>
+        <div class="dl-box">
+          <div class="dl-head"><span class="dl-badge">配套模拟数据</span>
+            <span class="dl-tip">点一下即可下载，无需登录。下载后放进 WorkBuddy 的同一个文件夹即可。</span>
+          </div>
+          <div class="dl-chips"><a class="dl-chip" href="assets/customer-ledger.xlsx" download="客户台账_模拟数据.xlsx"><span class="dl-ico">↓</span><span class="dl-txt"><b>客户台账</b><i>客户台账_模拟数据.xlsx · 8.9 KB</i></span></a></div>
+          <div class="dl-note">· 15 位客户，12 个字段，含 2 个尚未成交与 2 个长期未联系客户</div>
+        </div>
+        <div class="check"><b>课堂回测看这里：</b>分层是否合理、是否编造了不存在的信息、原始文件有没有被改动。</div>
+      </article>
+      <article class="card" id="p4">
+        <div class="card-top">
+          <span class="tag">P4</span>
+          <span class="scene">面谈前准备</span>
+          <span class="need">需要准备：上传：该客户的保障清单 + 家庭情况笔记（脱敏）</span>
+        </div>
+        <h4>单客画像：找出保障缺口和切入话题</h4>
+        <p class="tip">拜访前 5 分钟跑一遍，面谈时心里有底。</p>
+        <div class="code-wrap">
+          <pre class="code" id="code-p4">请根据我上传的客户资料，生成一份「客户画像与保障缺口分析」。
+
+按下面结构输出：
+1. 家庭结构与责任期：家庭成员、主要经济来源、可能的风险敞口。
+2. 已有保障梳理：用表格列出已购险种、保额、缴费情况，并标出信息缺失项。
+3. 保障缺口判断：从「重疾、医疗、意外、寿险、养老」五个维度，分别判断
+   是否充足，并说明判断依据（引用资料原文，不要自行假设）。
+4. 面谈切入话题：给出 3 个自然的开场话题，语气要像顾问不像推销。
+5. 待确认清单：列出我还需要向客户补充了解的信息。
+
+约束：
+- 所有保额、保费数字必须来自我上传的文件，不得估算。
+- 缺口判断只做提示，不下结论，最终以公司核保规则为准。
+- 客户信息全程脱敏，用「客户A」指代。</pre>
+          <button class="copy" data-target="code-p4">复制提示词</button>
+        </div>
+        <div class="dl-box">
+          <div class="dl-head"><span class="dl-badge">配套模拟数据</span>
+            <span class="dl-tip">点一下即可下载，无需登录。下载后放进 WorkBuddy 的同一个文件夹即可。</span>
+          </div>
+          <div class="dl-chips"><a class="dl-chip" href="assets/coverage-a.xlsx" download="客户保障清单_客户A_模拟数据.xlsx"><span class="dl-ico">↓</span><span class="dl-txt"><b>保障清单（客户A）</b><i>客户保障清单_客户A_模拟数据.xlsx · 7.9 KB</i></span></a><a class="dl-chip" href="assets/family-notes-a.md" download="客户家庭情况笔记_客户A_模拟数据.md"><span class="dl-ico">↓</span><span class="dl-txt"><b>家庭情况笔记（客户A）</b><i>客户家庭情况笔记_客户A_模拟数据.md · 2.3 KB</i></span></a></div>
+          <div class="dl-note">· 已购保障 + 家庭信息 + 信息缺口，共 3 个工作表　· 面谈记录、客户原话、观察到的细节、待确认清单</div>
+        </div>
+        <div class="check"><b>课堂回测看这里：</b>数字是否都能溯源、有没有替你下承保结论、话题是否像推销。</div>
+      </article>
+    </section>
+    <section class="stage" id="s3" style="--c:#EE7700">
+      <div class="stage-head">
+        <div class="stage-no">04</div>
+        <div class="stage-meta">
+          <h3>任务二：展业内容</h3>
+          <p>把产品和异议素材，变成张嘴就能用的话术与文案</p>
+        </div>
+        <div class="stage-time">30 分钟</div>
+      </div>
+      <ul class="points"><li>异议话术库：8 类拒绝理由逐条给应答</li><li>朋友圈与口播稿：一次产出多条不同风格</li><li>合规要点：收益表述必须引用原文，不得改写</li></ul>
+      <div class="action-bar on">
+            <span class="ico">▶</span> 先下载产品资料摘要和客户异议记录，再复制提示词 5 跑一遍。
+          </div>
+      <article class="card" id="p5">
+        <div class="card-top">
+          <span class="tag">P5</span>
+          <span class="scene">话术生成</span>
+          <span class="need">需要准备：上传：产品资料 + 你记录的客户异议（脱敏）</span>
+        </div>
+        <h4>异议处理话术库：把被拒的理由变成应答</h4>
+        <p class="tip">把客户最常说的拒绝理由整理进去，得到一套自己的应答手册。</p>
+        <div class="code-wrap">
+          <pre class="code" id="code-p5">请根据我上传的产品资料和客户异议记录，生成一份「异议处理话术库」。
+
+按下面要求组织：
+1. 先归纳出客户最常见的 8 类异议（例如：太贵了、要跟家人商量、已有保险了、
+   不着急、担心理赔、不信任业务员、收益不如理财、身体健康不需要）。
+2. 每一类异议按四列输出表格：
+   异议类型 | 客户真实顾虑 | 应答话术（口语化，2-3 句） | 合规提示
+3. 应答话术要求：先共情、再澄清、后提供信息，不要说教，不要贬低竞品。
+4. 最后附一段「面谈自检清单」：哪 5 句话绝对不能说。
+
+约束（非常重要）：
+- 收益演示、保障责任、免责条款必须逐字引用我上传文件里的原文，不得改写。
+- 文件里没有的表述，一律不要自行发挥，标注「待补充」。
+- 话术只是参考稿，必须经公司审核后才能对客使用。</pre>
+          <button class="copy" data-target="code-p5">复制提示词</button>
+        </div>
+        <div class="dl-box">
+          <div class="dl-head"><span class="dl-badge">配套模拟数据</span>
+            <span class="dl-tip">点一下即可下载，无需登录。下载后放进 WorkBuddy 的同一个文件夹即可。</span>
+          </div>
+          <div class="dl-chips"><a class="dl-chip" href="assets/product-brief.md" download="产品资料摘要_模拟数据.md"><span class="dl-ico">↓</span><span class="dl-txt"><b>产品资料摘要</b><i>产品资料摘要_模拟数据.md · 2.9 KB</i></span></a><a class="dl-chip" href="assets/objection-log.xlsx" download="客户异议记录_模拟数据.xlsx"><span class="dl-ico">↓</span><span class="dl-txt"><b>客户异议记录</b><i>客户异议记录_模拟数据.xlsx · 7.9 KB</i></span></a></div>
+          <div class="dl-note">· 5 个产品方向 + 条款原文摘录 + 合规红线（无真实产品名与费率）　· 10 条真实感异议流水，含客户原话、场景、当时应答与结果</div>
+        </div>
+        <div class="check"><b>课堂回测看这里：</b>话术是否口语化、收益表述是否严格来自原文、有没有违规承诺。</div>
+      </article>
+      <article class="card" id="p6">
+        <div class="card-top">
+          <span class="tag">P6</span>
+          <span class="scene">内容创作</span>
+          <span class="need">需要准备：上传：产品资料或客户案例（脱敏）</span>
+        </div>
+        <h4>朋友圈与短视频文案：一次产出多条</h4>
+        <p class="tip">同一批素材，让它出不同风格的版本，你挑能用的。</p>
+        <div class="code-wrap">
+          <pre class="code" id="code-p6">请根据我上传的资料，帮我写一批可用于朋友圈和短视频的口播文案。
+
+分三组输出，每组 3 条：
+1. 「知识科普型」——讲一个保险常识或常见误区，每条 60–80 字。
+2. 「客户故事型」——用脱敏后的真实场景讲一个转变，每条 80–100 字。
+3. 「日常经营型」——服务提醒、节日问候、理赔协助等，每条 40–60 字。
+
+另外再输出：
+4. 三条短视频口播稿，每条 30 秒左右（约 90–120 字），开头 3 秒必须抓人，
+   并标注适合的拍摄场景（如办公室、客户家里、户外）。
+
+约束：
+- 不得出现「保证收益」「稳赚不赔」「最好」「第一」等违规用语。
+- 不得使用未经授权的客户真实姓名、照片、保单信息。
+- 涉及产品的表述以我上传的资料为准，不自行添加卖点。
+- 每条文案后面标注：适合发布时间。</pre>
+          <button class="copy" data-target="code-p6">复制提示词</button>
+        </div>
+        <div class="dl-box">
+          <div class="dl-head"><span class="dl-badge">配套模拟数据</span>
+            <span class="dl-tip">点一下即可下载，无需登录。下载后放进 WorkBuddy 的同一个文件夹即可。</span>
+          </div>
+          <div class="dl-chips"><a class="dl-chip" href="assets/product-brief.md" download="产品资料摘要_模拟数据.md"><span class="dl-ico">↓</span><span class="dl-txt"><b>产品资料摘要</b><i>产品资料摘要_模拟数据.md · 2.9 KB</i></span></a></div>
+          <div class="dl-note">· 5 个产品方向 + 条款原文摘录 + 合规红线（无真实产品名与费率）</div>
+        </div>
+        <div class="check"><b>课堂回测看这里：</b>有没有违规词、能不能直接用、口播稿开头 3 秒是否抓人。</div>
+      </article>
+    </section>
+    <section class="stage" id="s4" style="--c:#EE7700">
+      <div class="stage-head">
+        <div class="stage-no">05</div>
+        <div class="stage-meta">
+          <h3>任务三：方案与团队</h3>
+          <p>把零散信息组织成能交出去的方案书与周报</p>
+        </div>
+        <div class="stage-time">30 分钟</div>
+      </div>
+      <ul class="points"><li>保障方案建议书：从需求分析到方案框架</li><li>团队周报：分类归纳 + 算达成率 + 排位次</li><li>合规要点：不承诺承保、不出现具体产品与费率</li></ul>
+      <div class="action-bar on">
+            <span class="ico">▶</span> 先下载家庭情况、保障清单与产品资料；团队周报另需工作记录与业绩表，再复制提示词 7 跑一遍。
+          </div>
+      <article class="card" id="p7">
+        <div class="card-top">
+          <span class="tag">P7</span>
+          <span class="scene">方案建议</span>
+          <span class="need">需要准备：上传：客户家庭与保障情况（脱敏）+ 公司产品资料</span>
+        </div>
+        <h4>保障方案建议书：从需求到初稿</h4>
+        <p class="tip">这是它的强项：把一堆零散信息组织成一份结构完整的建议书。</p>
+        <div class="code-wrap">
+          <pre class="code" id="code-p7">请帮我起草一份「家庭保障方案建议书」初稿，用于面谈时向客户讲解。
+
+按下面结构写，输出为 Word 文档：
+1. 家庭情况概述：成员、责任期、主要风险关注点（只写资料里有的）。
+2. 需求分析：从重疾、医疗、意外、寿险、养老五个维度，逐项说明
+   「为什么需要」和「大概需要多少保额」，并写明测算依据。
+3. 方案框架：给出建议配置的险种方向和优先级排序，说明理由。
+   （只写险种方向与理由，不写具体产品名称和价格）
+4. 预算区间建议：按低、中、高三档给出年缴保费区间。
+5. 下一步动作：列出面谈时需要与客户确认的 5 个关键问题。
+
+约束（非常重要）：
+- 不承诺任何承保结果，不出现具体产品名称、费率和收益数字。
+- 所有保额测算必须写明假设条件（收入、负债、家庭结构等）。
+- 涉及公司产品与核保规则的部分标注「以公司正式文件为准」。
+- 客户信息全程脱敏。文件名：保障方案建议书_客户A_初稿。</pre>
+          <button class="copy" data-target="code-p7">复制提示词</button>
+        </div>
+        <div class="dl-box">
+          <div class="dl-head"><span class="dl-badge">配套模拟数据</span>
+            <span class="dl-tip">点一下即可下载，无需登录。下载后放进 WorkBuddy 的同一个文件夹即可。</span>
+          </div>
+          <div class="dl-chips"><a class="dl-chip" href="assets/family-notes-a.md" download="客户家庭情况笔记_客户A_模拟数据.md"><span class="dl-ico">↓</span><span class="dl-txt"><b>家庭情况笔记（客户A）</b><i>客户家庭情况笔记_客户A_模拟数据.md · 2.3 KB</i></span></a><a class="dl-chip" href="assets/coverage-a.xlsx" download="客户保障清单_客户A_模拟数据.xlsx"><span class="dl-ico">↓</span><span class="dl-txt"><b>保障清单（客户A）</b><i>客户保障清单_客户A_模拟数据.xlsx · 7.9 KB</i></span></a><a class="dl-chip" href="assets/product-brief.md" download="产品资料摘要_模拟数据.md"><span class="dl-ico">↓</span><span class="dl-txt"><b>产品资料摘要</b><i>产品资料摘要_模拟数据.md · 2.9 KB</i></span></a></div>
+          <div class="dl-note">· 面谈记录、客户原话、观察到的细节、待确认清单　· 已购保障 + 家庭信息 + 信息缺口，共 3 个工作表　· 5 个产品方向 + 条款原文摘录 + 合规红线（无真实产品名与费率）</div>
+        </div>
+        <div class="check"><b>课堂回测看这里：</b>有没有承诺承保、是否出现具体产品、假设条件是否写清。</div>
+      </article>
+      <article class="card" id="p8">
+        <div class="card-top">
+          <span class="tag">P8</span>
+          <span class="scene">团队管理 / 增员</span>
+          <span class="need">需要准备：上传：本周工作记录 + 团队业绩表</span>
+        </div>
+        <h4>团队周报与业绩汇总：一次生成</h4>
+        <p class="tip">主管岗最省时间的用法：把零散记录变成一份能直接发的周报。</p>
+        <div class="code-wrap">
+          <pre class="code" id="code-p8">请读取当前文件夹里的工作记录和业绩表，生成团队周报。
+
+按下面结构输出：
+1. 本周完成事项：按「增员、培训、陪访、业绩、客户服务」分类归纳。
+2. 数据一览：团队出勤、拜访量、成交件数、保费达成率，用表格呈现，
+   并对比上周与月度目标，标出差距。
+3. 业绩排位：按保费达成率排出团队前 5 名，并标注与上月名次变化。
+   （此部分仅用于内部管理，不对外传播）
+4. 风险与卡点：列出本周暴露的 3 个主要问题及可能原因。
+5. 下周计划：给出可执行的 5 条动作，标注负责人和完成时间。
+
+另外单独生成：
+6. 一段 150 字左右的《增员邀约话术》，用于邀请候选人参加事业说明会，
+   语气诚恳、不夸大收益、不承诺收入。
+
+约束：
+- 所有数字必须来自我上传的表格，不得估算或补全，缺失填「待确认」。
+- 业绩排位结果仅供内部管理使用。
+- 不修改原始文件，结果另存为：团队周报_v1。</pre>
+          <button class="copy" data-target="code-p8">复制提示词</button>
+        </div>
+        <div class="dl-box">
+          <div class="dl-head"><span class="dl-badge">配套模拟数据</span>
+            <span class="dl-tip">点一下即可下载，无需登录。下载后放进 WorkBuddy 的同一个文件夹即可。</span>
+          </div>
+          <div class="dl-chips"><a class="dl-chip" href="assets/weekly-log.md" download="本周工作记录_模拟数据.md"><span class="dl-ico">↓</span><span class="dl-txt"><b>本周工作记录</b><i>本周工作记录_模拟数据.md · 2.1 KB</i></span></a><a class="dl-chip" href="assets/team-performance.xlsx" download="团队业绩表_模拟数据.xlsx"><span class="dl-ico">↓</span><span class="dl-txt"><b>团队业绩表</b><i>团队业绩表_模拟数据.xlsx · 7.0 KB</i></span></a></div>
+          <div class="dl-note">· 主管手册：周一到周五的流水记录 + 待暴露的问题　· 10 位成员的本周数据 + 上周对比，含 2 位零成交成员</div>
+        </div>
+        <div class="check"><b>课堂回测看这里：</b>数字是否都能对上、达成率计算是否正确、增员话术有没有承诺收入。</div>
+      </article>
+    </section>
+  </main>
+</div>
+
+<footer>
+  <b>泰康人寿 AI 实战课（五）</b> · 办公赋能篇 · WorkBuddy 实战 &nbsp;|&nbsp; 李 家 贵<br>
+  <span style="font-size:12px">提示词仅作课堂练习参考。对客使用前，收益演示、保障责任与免责表述必须经公司审核。</span>
+</footer>
+
+<button class="totop" id="totop" title="回到顶部">↑</button>
+
+<script>
+// 一键复制
+document.querySelectorAll('.copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = document.getElementById(btn.dataset.target);
+    var text = pre.innerText;
+    var done = function () {
+      btn.textContent = '已复制 ✓';
+      btn.classList.add('done');
+      setTimeout(function () { btn.textContent = '复制提示词'; btn.classList.remove('done'); }, 1800);
+    };
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(done).catch(function () { fallback(text, done); });
+    } else {
+      fallback(text, done);
+    }
+  });
+});
+function fallback(text, cb) {
+  var ta = document.createElement('textarea');
+  ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); cb(); } catch (e) { alert('复制失败，请手动选中复制'); }
+  document.body.removeChild(ta);
+}
+// 进度高亮 + 回到顶部
+var links = document.querySelectorAll('nav a');
+var secs = document.querySelectorAll('.stage');
+var totop = document.getElementById('totop');
+function onScroll() {
+  var y = window.scrollY + 140, cur = '';
+  secs.forEach(function (s) { if (s.offsetTop <= y) cur = s.id; });
+  links.forEach(function (a) { a.classList.toggle('active', a.dataset.nav === cur); });
+  totop.style.display = window.scrollY > 420 ? 'block' : 'none';
+}
+window.addEventListener('scroll', onScroll); onScroll();
+totop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+</script>
+</body>
+</html>
