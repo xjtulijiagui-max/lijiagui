@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>WorkBuddy 工作台搭建｜学员练习</title>
+<style>
+:root{--blue:#0b3a82;--blue2:#1453b8;--light:#f4f7fb;--line:#dbe4f0;--text:#182230;--muted:#667085;--green:#087a55;}
+*{box-sizing:border-box} body{margin:0;font-family:"Microsoft YaHei","PingFang SC",Arial,sans-serif;background:#eef3f9;color:var(--text)}
+.hero{background:linear-gradient(135deg,#082d68,#1558bd);color:#fff;padding:44px 24px}
+.wrap{max-width:1180px;margin:auto} h1{font-size:34px;margin:0 0 12px} .sub{font-size:17px;line-height:1.7;opacity:.92;max-width:900px}
+.flow{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px} .flow .item{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);padding:16px;border-radius:14px}
+.num{font-size:12px;font-weight:700;opacity:.8} .flow b{display:block;font-size:19px;margin:5px 0}
+main{padding:24px} .card{background:white;border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px;box-shadow:0 4px 18px rgba(20,40,80,.04)}
+.card h2{color:var(--blue);margin:0 0 10px;font-size:24px} .tip{background:#edf5ff;border-left:4px solid var(--blue2);padding:12px 14px;border-radius:8px;margin:12px 0;line-height:1.7}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px} .mini{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:16px}
+textarea{width:100%;min-height:330px;border:1px solid #cbd5e1;border-radius:10px;padding:14px;font:14px/1.65 Consolas,"Microsoft YaHei",monospace;resize:vertical;background:#fbfdff}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0} button,.btn{appearance:none;border:0;border-radius:9px;padding:10px 15px;font-weight:700;cursor:pointer;background:var(--blue);color:white;text-decoration:none;display:inline-block}
+button.secondary,.btn.secondary{background:#eaf1fb;color:var(--blue)} .tag{display:inline-block;padding:4px 9px;border-radius:99px;background:#eaf1fb;color:var(--blue);font-size:12px;font-weight:700;margin-right:6px}
+table{width:100%;border-collapse:collapse;font-size:14px} th,td{border-bottom:1px solid var(--line);padding:10px;text-align:left} th{background:#f8fafc}
+.callout{border:1px solid #bbdfcf;background:#f0fbf6;padding:16px;border-radius:12px} .callout b{color:var(--green)}
+.checks label{display:block;padding:7px 0} footer{text-align:center;color:var(--muted);padding:30px}
+@media(max-width:760px){.flow,.grid2{grid-template-columns:1fr} h1{font-size:28px} main{padding:14px}}
+</style>
+</head>
+<body>
+<section class="hero"><div class="wrap">
+<span class="tag" style="background:rgba(255,255,255,.16);color:#fff">课堂练习</span>
+<h1>WorkBuddy 工作台搭建：三步就够了</h1>
+<div class="sub">不要一开始就写代码。先把业务需求整理成“定制工作包”，再交给 WorkBuddy 真正搭建，最后持续试用、哪里不对改哪里。需要长期数据、多人权限或 API 时，要明确采用前后端分离；完成后别忘了执行“发布”动作。</div>
+<div class="flow">
+<div class="item"><span class="num">STEP 01</span><b>业务需求 → 定制工作包</b><span>IPO 最好；没有 IPO 就用业务需求描述 + 标准输出包。</span></div>
+<div class="item"><span class="num">STEP 02</span><b>定制工作包 → 工作台</b><span>把定制包交给 WorkBuddy，直接开发、运行、测试。</span></div>
+<div class="item"><span class="num">STEP 03</span><b>试用 → 修改 → 发布</b><span>哪里不对改哪里；跑通后发布为可访问站点。</span></div>
+</div></div></section>
+
+<main><div class="wrap">
+
+<section class="card">
+<h2>练习任务</h2>
+<div class="grid2">
+<div class="mini"><b>你的目标</b><p>用下面提供的模拟业务需求和数据，做出一个“销售线索跟进工作台”。重点不是做得复杂，而是完整走通三步流程。</p></div>
+<div class="mini"><b>最终结果</b><p>至少完成：上传数据 → 展示列表 → 修改一条线索 → 首页统计 → 导出 → 发布站点。</p></div>
+</div>
+<div class="tip"><b>记忆口诀：</b> 需求/IPO + 标准包 → 定制工作包 → WorkBuddy 搭建 → 试用修改 → 发布。</div>
+</section>
+
+<section class="card">
+<h2>Step 1｜先生成“我的定制工作包”</h2>
+<p>先下载“工作台搭建输入标准模板.zip”。把业务需求、IPO（如果有）和这个标准输出包一起交给 AI。第一步不是直接做网页，而是先生成属于当前业务的定制工作包。</p>
+<div class="actions"><a class="btn" href="工作台搭建输入标准模板.zip" download>下载标准 .zip 模板</a><button class="secondary" onclick="copyText('p1')">复制 Step 1 提示词</button></div>
+<textarea id="p1"># Step 1｜生成“我的定制工作包”
+
+你是我的业务分析师、产品经理和 WorkBuddy 工作台需求设计师。
+
+请根据我提供的业务资料，先生成一个“给 WorkBuddy 搭建工作台使用的定制工作包”，本步骤不要急着直接开发网页。
+
+## 一、你将收到的资料
+资料可能包括：
+1. IPO 文档；
+2. 如果没有 IPO，则使用业务需求描述；
+3. SOP、Excel、Word、PDF、现有报表、截图、参考页面；
+4. 工作台标准输出包/标准模板；
+5. 输入样本、输出样本；
+6. 我补充的业务规则和修改意见。
+
+## 二、先整理 IPO
+如果已有 IPO，优先使用已有 IPO。
+如果没有 IPO，请根据业务需求描述自动整理：
+
+### I｜Input 输入
+- 谁使用？
+- 输入什么文件、数据或信息？
+- 文件格式是什么？
+- 核心字段是什么？
+- 有没有样本？
+- 哪些信息必须人工确认？
+
+### P｜Process 处理
+- 业务流程是什么？
+- 先做什么、后做什么？
+- 判断规则是什么？
+- 计算规则是什么？
+- 异常怎么处理？
+- 哪些步骤必须人工确认？
+- 数据如何新增、修改、删除、查询？
+
+### O｜Output 输出
+- 最终要生成什么？
+- 页面需要展示什么？
+- 是否需要列表、详情、统计、图表、报告、导出？
+- 输出给谁使用？
+- 验收标准是什么？
+
+无法确定的内容写“待确认”，不要自行编造。
+
+## 三、生成定制工作包
+请结合“业务需求/IPO + 工作台标准输出包”，生成一个完整的定制工作包，建议至少包含：
+
+00_启动提示词.md
+01_业务需求与IPO.md
+02_业务流程与规则.md
+03_输入字段与数据结构.md
+04_页面与功能说明.md
+05_输入样本/
+06_模拟数据/
+07_验收标准.md
+08_发布与使用说明.md
+
+如果适合当前环境，也可以直接生成 ZIP 包。
+
+## 四、设计原则
+1. 只围绕当前业务场景，不要擅自扩展一堆无关模块。
+2. 页面、字段、流程、规则必须来源于业务需求或明确标注的设计假设。
+3. 优先做一个最小可运行闭环。
+4. 输入尽量支持 Excel / Word / PDF / 中文表单，不要求业务人员填写 JSON。
+5. 输出必须可验证，关键功能要给出验收标准。
+6. 如果需要数据长期保存，请考虑 WorkBuddy 当前可用的资料库/数据库能力。
+7. 如果系统明显需要前后端，请在工作包中明确标注“需要前后端分离架构”。
+
+最后请输出：
+- 首版工作台范围；
+- 生成的工作包文件清单；
+- 仍需确认的问题；
+- 下一步交给 WorkBuddy 的启动方式。
+</textarea>
+</section>
+
+<section class="card">
+<h2>模拟业务需求与 IPO</h2>
+<p>课堂练习直接用这个案例，也可以替换成自己的业务需求。</p>
+<div class="actions"><button onclick="copyText('ipo')">复制模拟 IPO</button><button class="secondary" onclick="downloadText('模拟业务需求_IPO.md',document.getElementById('ipo').value)">下载 IPO</button></div>
+<textarea id="ipo" style="min-height:420px"># 模拟业务需求｜销售线索跟进工作台
+
+## 业务需求描述
+销售团队目前使用 Excel 管理客户线索。每天由销售人员补充跟进记录，销售经理每周汇总线索数量、重点客户、逾期未跟进客户和下一步行动。现状是 Excel 版本多、字段不统一、汇总慢。
+
+希望搭建一个简单工作台：
+- 可以上传销售线索 Excel；
+- 自动识别并展示线索；
+- 销售人员可以修改跟进状态和下一步行动；
+- 首页自动统计线索总数、重点线索、7天未跟进、已成交；
+- 可以按负责人、状态、客户级别筛选；
+- 可以导出最新台账；
+- 数据能够持续保存。
+
+## IPO
+
+### I｜Input
+- 销售线索 Excel
+- 字段：线索编号、客户名称、客户级别、负责人、联系方式、线索来源、当前阶段、最近跟进日期、下一步行动、预计金额
+- 更新频率：每天
+- 使用角色：销售人员、销售经理
+
+### P｜Process
+1. 上传 Excel；
+2. 校验线索编号是否重复；
+3. 预览字段映射；
+4. 确认后导入；
+5. 销售人员更新阶段、跟进日期和下一步行动；
+6. 系统计算“7天未跟进”；
+7. 销售经理查看统计和筛选结果；
+8. 导出最新台账。
+
+### O｜Output
+- 首页经营概览；
+- 线索列表；
+- 线索详情；
+- 重点/逾期提醒；
+- 最新 Excel 台账导出。
+
+## 首版验收
+- 能导入模拟 Excel/CSV；
+- 10 条线索全部显示；
+- 可以修改其中一条并保存；
+- 首页统计随数据变化；
+- 可以筛选；
+- 可以导出。
+</textarea>
+</section>
+
+<section class="card">
+<h2>模拟数据集｜销售线索</h2>
+<p>共 10 条模拟线索，用来测试导入、筛选、统计、编辑和导出。全部为课堂模拟数据。</p>
+<div class="actions"><button onclick="downloadText('模拟数据_销售线索.csv',document.getElementById('csv').value,true)">下载 CSV</button><button class="secondary" onclick="copyText('csv')">复制 CSV</button></div>
+<textarea id="csv" style="min-height:260px">线索编号,客户名称,客户级别,负责人,线索来源,当前阶段,最近跟进日期,下一步行动,预计金额
+L001,华东智造有限公司,A,张伟,老客户转介绍,方案沟通,2026-09-20,发送第二版方案,350000
+L002,远航科技股份有限公司,A,李娜,官网咨询,需求确认,2026-09-12,安排技术交流,500000
+L003,星河供应链有限公司,B,王强,展会,初步接触,2026-09-18,补充客户需求,180000
+L004,启明零售集团,A,张伟,合作伙伴,商务谈判,2026-09-19,确认商务条款,680000
+L005,新程教育科技有限公司,C,陈晨,线上活动,初步接触,2026-09-08,电话确认预算,90000
+L006,博远医药有限公司,B,李娜,客户推荐,方案沟通,2026-09-16,补充实施计划,260000
+L007,恒瑞工业设备有限公司,B,王强,官网咨询,需求确认,2026-09-10,预约现场调研,420000
+L008,云启数字服务有限公司,C,陈晨,公开活动,已成交,2026-09-20,安排项目交接,120000
+L009,南方食品集团,A,张伟,老客户转介绍,方案沟通,2026-09-13,确认决策人会议,560000
+L010,北辰物业服务有限公司,B,李娜,电话拓展,初步接触,2026-09-17,发送案例资料,150000
+</textarea>
+</section>
+
+<section class="card">
+<h2>Step 2｜把定制工作包交给 WorkBuddy 搭建</h2>
+<p>把 Step 1 生成的定制工作包设为工作空间，然后复制下面提示词。重点是“直接开发、运行和测试”，不要只输出设计说明。</p>
+<div class="actions"><button onclick="copyText('p2')">复制 Step 2 提示词</button></div>
+<textarea id="p2"># Step 2｜基于定制工作包，直接搭建 WorkBuddy 工作台
+
+请完整读取当前工作空间中的“定制工作包”，尤其是：
+- 00_启动提示词.md
+- 01_业务需求与IPO.md
+- 02_业务流程与规则.md
+- 03_输入字段与数据结构.md
+- 04_页面与功能说明.md
+- 05_输入样本/
+- 06_模拟数据/
+- 07_验收标准.md
+- 08_发布与使用说明.md
+
+不要只输出方案，不要只写 PRD，请直接开始搭建、运行、测试工作台。
+
+## 搭建要求
+1. 严格按照定制工作包开发，不随意改变已经确认的业务规则。
+2. 先完成最小闭环：输入 → 处理 → 保存 → 展示 → 修改 → 导出。
+3. 页面要让业务人员直接使用，中文、清晰、简单。
+4. 对 Excel / Word / PDF 等输入，能直接上传就不要让用户手工改成 JSON。
+5. 如果需要持久化数据，请使用当前 WorkBuddy 实际可用的资料库/数据库能力，并验证真实保存。
+6. 不允许用 localStorage 或演示假数据冒充正式数据保存。
+
+## 如果需要前后端
+如果这个工作台涉及以下任一情况：
+- 多人协同；
+- 登录、权限；
+- 数据库长期保存；
+- 大量数据查询；
+- API 调用；
+- 文件长期存储；
+- 复杂业务计算；
+- 企业系统对接；
+
+请采用“前后端分离”的方式实现，并明确：
+- 前端负责页面与交互；
+- 后端负责业务逻辑、数据读写、权限与 API；
+- 数据库/资料库负责持久化；
+- 前端不得暴露密钥。
+
+请先把核心闭环跑通，再继续补充其它页面。
+
+## 完成后必须做
+1. 实际试跑核心流程；
+2. 修复能复现的问题；
+3. 输出当前完成情况；
+4. 列出未完成项；
+5. 准备发布。
+
+不要把“代码生成完成”等同于“工作台已经可用”。
+</textarea>
+<div class="callout"><b>前后端提醒：</b> 如果涉及多人协同、登录权限、数据库长期保存、API、复杂计算或企业系统对接，请明确要求“前后端分离”。前端做页面，后端做逻辑和数据，密钥不能放在前端。</div>
+</section>
+
+<section class="card">
+<h2>Step 3｜持续迭代：哪里不对就改哪里</h2>
+<p>不需要重新写一大段 PRD。学员直接用自然语言说问题，WorkBuddy 按问题局部修改，并重新测试相关功能。</p>
+<div class="actions"><button onclick="copyText('p3')">复制迭代提示词</button></div>
+<textarea id="p3"># Step 3｜持续迭代：哪里不对就改哪里
+
+现在进入迭代阶段。
+
+原则非常简单：
+“哪个地方不对，就改哪个地方；已经正确的地方不要乱动。”
+
+请根据我每一轮的反馈执行：
+
+1. 先复述我指出的问题；
+2. 定位涉及的页面、字段、业务规则、数据和前后端模块；
+3. 只修改相关部分；
+4. 保留已经确认正确的功能和数据；
+5. 修改完成后重新测试受影响流程；
+6. 如果修改影响其它页面或统计结果，要一起回归检查；
+7. 每轮修改后给出简短变更记录。
+
+我可能会用自然语言直接反馈，例如：
+- “这个字段应该改成下拉框。”
+- “这里不应该自动保存。”
+- “这张表还少一个负责人字段。”
+- “首页统计不对。”
+- “Excel 导入以后少了 3 条。”
+- “手机上按钮太挤。”
+- “这一步应该先让业务人员确认。”
+- “这个页面要增加导出 Excel。”
+- “这里需要前后端分离。”
+- “数据必须保存到资料库，不能只存在浏览器里。”
+
+请直接修改，不要每次重新做一个新系统。
+</textarea>
+</section>
+
+<section class="card">
+<h2>最后一步｜一定要做“发布”动作</h2>
+<p>代码做完不等于别人能访问。确认试跑通过后，再要求 WorkBuddy 执行发布/部署/分享站点动作。</p>
+<div class="actions"><button onclick="copyText('pub')">复制发布提示词</button></div>
+<textarea id="pub" style="min-height:300px"># 发布动作｜把工作台发布成 WorkBuddy 可访问站点
+
+当前工作台完成试跑后，请执行发布动作。
+
+要求：
+1. 检查工作台是否可以正常运行；
+2. 检查输入、保存、查询、修改、导出等核心功能；
+3. 如果采用前后端分离，确认前端、后端、数据库/资料库连接正常；
+4. 检查是否存在写死的本地路径、测试账号、演示数据或前端密钥；
+5. 检查访问权限和敏感数据；
+6. 使用 WorkBuddy 当前实际支持的“发布/部署/分享站点”能力进行发布；
+7. 发布后重新打开站点，做一次最小回归测试；
+8. 给我最终的站点访问入口，并说明：
+   - 谁可以访问；
+   - 谁可以编辑；
+   - 数据保存在哪里；
+   - 当前版本号；
+   - 仍有哪些限制。
+
+如果当前账号或环境不具备正式发布能力，请明确告诉我缺少什么，不要假装已经发布成功。
+</textarea>
+</section>
+
+
+</div></main>
+<footer>WorkBuddy 工作台搭建学员练习｜课堂模拟数据，不代表真实业务</footer>
+<script>
+function copyText(id){
+ const el=document.getElementById(id); el.select(); el.setSelectionRange(0,999999);
+ navigator.clipboard.writeText(el.value).then(()=>{alert('已复制');});
+}
+function downloadText(name,text,bom=false){
+ const content=(bom?'\uFEFF':'')+text;
+ const blob=new Blob([content],{type:'text/plain;charset=utf-8'});
+ const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name; a.click();
+ setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+</script>
+</body></html>

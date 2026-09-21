@@ -1,0 +1,14 @@
+{
+  "id": "workbuddy-higher",
+  "title": "Workbuddy进阶练习",
+  "shortTitle": "WorkBuddy进阶练习",
+  "category": "金融保险与支付",
+  "description": "四项连续实战：多表关联、证监网页信息抽取、信用卡异常交易洞察与 WorkBuddy 工作台搭建。",
+  "tags": ["WorkBuddy", "进阶练习", "数据分析", "工作台", "平安银行", "信用卡"],
+  "type": "客户项目",
+  "client": "平安银行信用卡",
+  "featured": true,
+  "order": 224,
+  "updated": "2026-09-21",
+  "url": "https://xjtulijiagui-max.github.io/lijiagui/workbuddy-higher/"
+}

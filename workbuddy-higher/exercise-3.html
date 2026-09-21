@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>信用卡异常交易数据分析与洞察练习</title>
+<style>
+body{font-family:Arial,"Microsoft YaHei",sans-serif;background:#f5f7fb;color:#1f2937;margin:0}
+.header{background:#0b2f5b;color:white;padding:38px 7vw 32px}
+.header h1{margin:0 0 10px;font-size:32px}
+.header p{margin:6px 0;line-height:1.7}
+.wrap{max-width:1180px;margin:0 auto;padding:26px}
+.card{background:white;border-radius:16px;padding:24px;margin-bottom:20px;box-shadow:0 4px 18px rgba(0,0,0,.06)}
+h2{color:#0b2f5b;border-left:5px solid #0b2f5b;padding-left:12px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.metric{background:#eef4fb;border-radius:12px;padding:18px}
+.metric b{display:block;font-size:26px;color:#0b2f5b;margin-top:6px}
+.btn{display:inline-block;background:#0b2f5b;color:white;padding:11px 18px;border-radius:9px;text-decoration:none;margin:6px 8px 6px 0}
+.btn.secondary{background:#315f8d}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{border:1px solid #d9e2ec;padding:10px;text-align:left;font-size:14px}
+th{background:#eaf1f8}
+pre{background:#0f172a;color:#e5e7eb;padding:18px;border-radius:12px;white-space:pre-wrap;max-height:420px;overflow:auto}
+.step{padding:14px 16px;background:#f8fafc;border:1px solid #dbe4ee;border-radius:10px;margin:10px 0}
+.tag{display:inline-block;background:#eaf1f8;color:#0b2f5b;padding:5px 9px;border-radius:999px;margin:3px}
+.note{font-size:14px;color:#64748b;line-height:1.7}
+@media(max-width:800px){.grid{grid-template-columns:1fr 1fr}}
+</style>
+<script>
+function copyPrompt(){
+ const txt=document.getElementById("prompt").innerText;
+ navigator.clipboard.writeText(txt);
+ alert("提示词已复制");
+}
+</script>
+</head>
+<body>
+<div class="header">
+  <h1>信用卡异常交易数据分析与洞察练习</h1>
+  <p>目标：从“逐笔核查”升级为“批量数据分析 + 风险模式发现 + 管理洞察”。</p>
+  <p>课堂模拟数据，仅用于训练，不代表真实客户、真实商户或真实风险判断。</p>
+</div>
+<div class="wrap">
+  <div class="card">
+    <h2>一、练习数据</h2>
+    <div class="grid">
+      <div class="metric">数据行数<b>10,000</b></div>
+      <div class="metric">异常交易<b>4,115</b></div>
+      <div class="metric">高风险交易<b>1,251</b></div>
+      <div class="metric">总交易金额<b>¥16,922,849</b></div>
+    </div>
+    <p class="note">数据包含：金额不符、重复扣款、商户争议、疑似盗刷、诈骗诱导，以及正常交易。字段中包含跨境、失败次数、客户否认、钓鱼特征、风险评分等可供分析的特征。</p>
+    <a class="btn" href="信用卡异常交易模拟数据_10000行.csv" download>下载 10,000 行模拟数据 CSV</a>
+    <a class="btn secondary" href="WorkBuddy_信用卡异常交易数据分析提示词.md" download>下载 WorkBuddy 提示词</a>
+  </div>
+
+  <div class="card">
+    <h2>二、数据分布</h2>
+    <table>
+      <tr><th>异常类型</th><th>记录数</th></tr>
+      <tr><td>正常交易</td><td>5,885</td></tr><tr><td>疑似盗刷</td><td>1,003</td></tr><tr><td>金额不符</td><td>861</td></tr><tr><td>商户争议</td><td>812</td></tr><tr><td>重复扣款</td><td>772</td></tr><tr><td>诈骗诱导</td><td>667</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>三、学员练习任务</h2>
+    <div class="step"><b>任务1｜数据体检</b><br/>检查数据量、字段、缺失值、重复值、时间范围和金额异常。</div>
+    <div class="step"><b>任务2｜异常画像</b><br/>分析异常类型、风险等级、金额、渠道、地区、商户的分布。</div>
+    <div class="step"><b>任务3｜风险模式识别</b><br/>重点查找跨境+否认、连续失败、高额异常、疑似钓鱼、重复扣款、规则冲突等模式。</div>
+    <div class="step"><b>任务4｜趋势分析</b><br/>按日/周查看异常交易量和金额变化，并找异常峰值。</div>
+    <div class="step"><b>任务5｜管理洞察</b><br/>输出最值得关注的5类风险模式、规则优化点、待补字段和下一步建议。</div>
+  </div>
+
+  <div class="card">
+    <h2>四、建议输出成果</h2>
+    <span class="tag">数据概况</span>
+    <span class="tag">异常分布</span>
+    <span class="tag">风险模式</span>
+    <span class="tag">趋势洞察</span>
+    <span class="tag">代表性交易</span>
+    <span class="tag">规则优化</span>
+    <span class="tag">管理层摘要</span>
+    <p class="note">重点要求：必须区分“数据事实 / 分析判断 / 待核实事项”，不得直接把高风险交易认定为盗刷。</p>
+  </div>
+
+  <div class="card">
+    <h2>五、WorkBuddy 提示词</h2>
+    <button class="btn" onclick="copyPrompt()">复制完整提示词</button>
+    <pre id="prompt"># WorkBuddy练习提示词：信用卡异常交易数据分析与洞察
+
+你是一名“信用卡交易异常数据分析与洞察助手”。
+
+你的任务不是逐笔做最终盗刷认定，而是对导入的信用卡交易数据进行数据质量检查、异常模式识别、风险分层、趋势分析和管理洞察，辅助客服、风控和运营人员发现值得进一步核查的交易模式。
+
+## 一、重要边界
+1. 不做最终盗刷认定，不承诺退款、撤单或责任归属。
+2. 不输出客户密码、验证码、完整卡号等敏感信息。
+3. 对正在发生的高风险情况，只给出“建议通过正式渠道挂失、冻结、转人工客服或转风控”的建议。
+4. “跨境、连续小额、多笔失败、客户否认交易、疑似钓鱼、高额异常、设备异常”等特征需要重点标记。
+5. 所有结论必须区分：数据事实、分析判断、待核实事项，不得把模型推测写成事实。
+
+## 二、输入
+用户会上传 Excel 或 CSV 数据集。常见字段包括：
+交易编号、客户编号、卡片编号_脱敏、交易时间、交易金额、商户、地区、渠道、异常类型、客户反馈摘要、客户否认交易、持卡在身、疑似点击钓鱼链接、失败尝试次数、跨境交易、系统风控提示、风险评分、风险等级、重复交易组。
+
+## 三、分析任务
+### 任务1：数据质量检查
+- 统计总行数、字段数、缺失值、重复值、异常值。
+- 检查交易时间、金额、风险评分等字段格式。
+- 检查“异常类型”和“风险等级”分布是否明显失衡。
+
+### 任务2：总体异常画像
+- 各异常类型数量、占比。
+- 各风险等级数量、占比。
+- 平均交易金额、中位数、P90、P95、P99。
+- 异常交易与正常交易的金额、渠道、地区、商户差异。
+
+### 任务3：重点风险模式
+重点分析：
+1. 跨境 + 客户否认交易
+2. 多笔失败 + 高额交易
+3. 连续小额 + 同一客户/卡片短时聚集
+4. 疑似钓鱼 + 快捷支付/线上支付
+5. 同一商户/相同金额的重复扣款
+6. 高风险评分但异常类型为“正常交易”的冲突数据
+7. 低风险评分但具备多个高风险特征的漏标数据
+
+### 任务4：趋势洞察
+- 按日/周统计异常交易量和金额。
+- 查找异常峰值日期。
+- 分析高风险交易是否集中在某些商户、地区、渠道。
+- 分析异常类型随时间变化的趋势。
+
+### 任务5：管理洞察
+输出：
+- 最值得关注的5类风险模式
+- 可能的规则优化点
+- 需要客服补问的信息
+- 需要转风控/反欺诈进一步核查的情形
+- 数据字段还缺什么
+
+## 四、输出格式
+# 信用卡异常交易数据分析报告
+
+## 一、数据概况
+用表格展示总行数、字段数、时间范围、总交易金额、异常交易占比、高风险交易占比。
+
+## 二、异常类型与风险等级分布
+用表格展示数量、占比、金额。
+
+## 三、重点风险模式
+| 风险模式 | 涉及交易数 | 涉及金额 | 主要特征 | 风险原因 | 建议动作 |
+|---|---:|---:|---|---|---|
+
+## 四、异常趋势与集中度
+至少从时间、地区、商户、渠道四个维度分析。
+
+## 五、值得进一步核查的交易
+列出10-20条代表性记录，只展示脱敏字段，不输出完整卡号或敏感信息。
+
+## 六、管理洞察
+分为：
+1. 数据事实
+2. 分析判断
+3. 待核实事项
+4. 建议新增规则
+5. 建议新增数据字段
+
+## 七、一页管理层摘要
+用300字以内总结：
+- 发生了什么
+- 风险集中在哪里
+- 当前最优先处理什么
+- 下一步建议
+</pre>
+  </div>
+
+  <div class="card">
+    <h2>六、推荐课堂流程</h2>
+    <div class="step"><b>第1步：</b>下载 CSV，先让学员不用提示词，自行提出3-5个分析问题。</div>
+    <div class="step"><b>第2步：</b>把 CSV 上传到 WorkBuddy，粘贴本页提示词。</div>
+    <div class="step"><b>第3步：</b>要求 AI 输出第一版分析报告和关键图表。</div>
+    <div class="step"><b>第4步：</b>学员人工检查：是否把相关性写成因果、是否把高风险直接写成盗刷、是否漏掉重要异常。</div>
+    <div class="step"><b>第5步：</b>二次追问，让 AI 给出规则优化、数据字段补充和管理层摘要。</div>
+  </div>
+</div>
+</body>
+</html>
