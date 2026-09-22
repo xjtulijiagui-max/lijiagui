@@ -1,0 +1,14 @@
+{
+  "id": "spec",
+  "title": "Spec Workspace｜从 PRD 到规范开发",
+  "shortTitle": "Spec Workspace",
+  "category": "AI场景与智能体",
+  "description": "PRD 加 Spec 标准包，先生成 Workspace 初始化输入包，再用 Superpowers 完成计划、TDD、审查和验收。",
+  "path": "spec/",
+  "tags": ["spec", "研发", "AI原生研发", "日丰"],
+  "type": "使用指南",
+  "client": "日丰",
+  "featured": true,
+  "order": 266,
+  "updated": "2026-09-22"
+}
