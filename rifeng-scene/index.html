@@ -804,6 +804,28 @@
         display: grid;
       }
 
+      .mini-table,
+      .mini-table tbody,
+      .mini-table tr,
+      .mini-table td {
+        display: block;
+        width: 100%;
+      }
+
+      .mini-table thead {
+        display: none;
+      }
+
+      .mini-table tr + tr {
+        border-top: 1px solid var(--border-subtle);
+      }
+
+      .mini-table td:first-child {
+        color: var(--accent-green);
+        font-weight: 650;
+        padding-bottom: 0;
+      }
+
       .flow-node {
         grid-template-columns: 38px 1fr;
       }
@@ -1001,7 +1023,7 @@
 
       <section class="section" id="scene-lake" aria-labelledby="scene-lake-title">
         <div class="section-head">
-          <h2 id="scene-lake-title">Step3：场景湖：用小浣熊输出 Excel 清单</h2>
+          <h2 id="scene-lake-title">Step3：场景湖：生成 Excel 清单</h2>
           <p>这一步输入三类材料：场景湖示例表格、前面讨论的会议纪要或录音内容、第二步输出的 AI 改造 Mermaid 代码。注意给小浣熊的是代码，不是图片。</p>
           <div class="tool-tags" aria-label="Step3 工具入口">
             <a class="tool-tag" href="https://xiaohuanxiong.com" target="_blank" rel="noopener">小浣熊</a>
