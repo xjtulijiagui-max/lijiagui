@@ -1,73 +1,56 @@
-# Lijiagui Training Portal Design System
+# 日丰集团管材场景创新练习台设计系统
 
-## 1. Atmosphere & Identity
+## 1. 氛围与识别
 
-这是一个企业培训工作台，不做炫技式展示。页面应该像一份经过认真编排的工作手册：入口明确、顺序可靠、长内容读得下去，也方便学员马上复制执行。识别性来自“蓝色流程轨道”，用连续的步骤标记把分散的提示词串成一条能实际跑通的链路。
+这是课堂上的长页实操工作台，沿用原 `/scene` 的深色、克制、工程化视觉，不做品牌宣传页。识别点是左侧连续步骤轨道与深色卡片：学员能从流程生成一路走到场景湖和 ROI 评分，不会在长内容里迷路。
 
-## 2. Color
+## 2. 色彩令牌
 
-| Role | Token | Value | Usage |
+| 角色 | CSS Token | 值 | 用法 |
 |---|---|---|---|
-| Canvas | `--surface-page` | `#f5f8fd` | 页面背景 |
-| Primary surface | `--surface-primary` | `#ffffff` | 主要阅读区 |
-| Secondary surface | `--surface-secondary` | `#eef5ff` | 提示与选中状态 |
-| Dark surface | `--surface-dark` | `#061b46` | 页头与深色导航 |
-| Text primary | `--text-primary` | `#15223a` | 标题与正文 |
-| Text secondary | `--text-secondary` | `#5f6f89` | 说明与元数据 |
-| Text on dark | `--text-on-dark` | `#ffffff` | 深色背景正文 |
-| Text on dark muted | `--text-on-dark-muted` | `#cddcff` | 深色背景次级文字 |
-| Text on dark soft | `--text-on-dark-soft` | `#d4e2ff` | Hero 导语 |
-| Text on dark accent | `--text-on-dark-accent` | `#a9c7ff` | 深色背景提示标签 |
-| Informational text | `--text-info` | `#173762` | 信息提示文字 |
-| Warning text | `--text-warning` | `#5e3900` | 风险提示文字 |
-| Border | `--border-default` | `#d8e4f7` | 分隔线与控件边界 |
-| Border strong | `--border-strong` | `#b8c9e4` | 提示词面板边界 |
-| Border on dark | `--border-on-dark` | `#6d89bd` | 深色背景控件边界 |
-| Accent | `--accent-primary` | `#0f62fe` | 主按钮、链接、当前步骤 |
-| Accent hover | `--accent-hover` | `#0043ce` | 悬停与按下状态 |
-| Success | `--status-success` | `#16854b` | 复制成功 |
-| Warning | `--status-warning` | `#a15c00` | 风险和待确认事项 |
-| Warning surface | `--surface-warning` | `#fff6e5` | 风险提示底色 |
-| Code surface | `--code-bg` | `#07152e` | Markdown 提示词底色 |
-| Code text | `--code-text` | `#e7efff` | Markdown 提示词文字 |
+| 页面底色 | `--surface-primary` | `#08090a` | 页面与长页背景 |
+| 次级底色 | `--surface-secondary` | `#0f1011` | 导航与辅助区 |
+| 卡片底色 | `--surface-elevated` | `#191a1b` | 提示词、说明、交付卡片 |
+| 内嵌底色 | `--surface-inset` | `#111316` | 文本框、截图占位 |
+| 主文字 | `--text-primary` | `#f7f8f8` | 标题与正文 |
+| 次文字 | `--text-secondary` | `#d0d6e0` | 导语与说明 |
+| 弱文字 | `--text-muted` | `#8a8f98` | 元数据与辅助提示 |
+| 主强调 | `--accent-primary` | `#7170ff` | 主按钮、步骤编号、焦点 |
+| 业务提示 | `--accent-green` | `#2dd4bf` | 下载资料与正向提示 |
+| 风险提示 | `--accent-amber` | `#f7b955` | 必交、截图与风险提示 |
 
-规则：只使用一套蓝色作为交互色；背景层级表达深度，不添加装饰性渐变；新颜色先登记后使用。
+半透明边框、状态背景与 Hero 光带允许使用令牌颜色的 alpha 变体，但不得引入新的品牌色。
 
-## 3. Typography
+## 3. 字体
 
-| Level | Size | Weight | Line Height | Usage |
-|---|---|---|---|---|
-| Display | `clamp(36px, 6vw, 64px)` | 600 | 1.08 | 页面主标题 |
-| H1 | `32px` | 600 | 1.25 | 大区块标题 |
-| H2 | `24px` | 600 | 1.35 | 步骤标题 |
-| H3 | `18px` | 600 | 1.45 | 卡片与提示标题 |
-| Body large | `18px` | 400 | 1.75 | 导语 |
-| Body | `16px` | 400 | 1.75 | 正文 |
-| Body small | `14px` | 400 | 1.6 | 说明文字 |
-| Caption | `12px` | 600 | 1.4 | 标签和元数据 |
-| Code | `14px` | 400 | 1.75 | Markdown 提示词 |
+- 正文字体：`Arial, Microsoft YaHei, PingFang SC, system-ui, sans-serif`。
+- 提示词字体：`Cascadia Mono, Microsoft YaHei Mono, Consolas, monospace`。
+- 主标题使用 `clamp(42px, 6vw, 86px)`、紧凑行高；步骤标题 24–36px；正文不小于 14px。
+- 中文标题按完整语义换行，避免一个汉字单独落行。
 
-主字体使用 `"Microsoft YaHei", "PingFang SC", "Noto Sans SC", Arial, sans-serif`；代码与提示词使用 `"Cascadia Code", "SFMono-Regular", Consolas, monospace`。正文不得小于 14px。
+## 4. 间距与布局
 
-## 4. Spacing & Layout
+- 间距令牌：`--space-1` 至 `--space-16`，以 4px 为基础递增。
+- 桌面最大宽度 1480px，左侧步骤轨道 284px，正文自适应。
+- 主断点：1100px、720px；小屏改为单列，步骤导航回到文档流。
+- 移动端正文边距 12px，按钮和链接保持可触控高度，不允许页面级横向溢出。
 
-以 4px 为最小单位，主要使用 8px 递增：`4, 8, 12, 16, 24, 32, 48, 64, 80, 96`。内容最大宽度 1184px，长文阅读列最大宽度 840px。桌面采用 12 列思路，移动端保持 16px 页边距。断点为 640px、768px、1024px。
+## 5. 组件与状态
 
-## 5. Components
+- `WorkflowRail`：五步锚点导航、修改提醒、提交入口；桌面吸顶，小屏回到顶部。
+- `Hero`：日丰管材练习主题、四步概览、复制全部与模板入口。
+- `PromptCard`：标题、可编辑提示词、复制按钮、操作提示和 `aria-live` 反馈。
+- `ToolTag`：DeepSeek、豆包、小浣熊入口；必须是真实链接并保留键盘焦点。
+- `DownloadCard`：模板说明与真实下载链接。
+- `ScreenshotFrame`：只在有课堂原图时加载图片；缺图显示明确占位，不伪造示例。
+- `ArtifactCard`：最终提交清单，文件名统一使用 `日丰-{业务主题}`。
 
-- `Masthead`：48px 高深蓝导航，含返回列表与当前页面名；链接具备 hover、focus、active 状态。
-- `WorkflowRail`：四步锚点导航；当前或悬停步骤变为主蓝，移动端允许横向滚动。
-- `StepSection`：步骤编号、标题、说明与操作区；用背景层级和左侧蓝线表达顺序。
-- `PromptPanel`：提示词标题、使用说明、复制按钮、可滚动 Markdown 内容；复制中、成功、失败三种反馈齐全。
-- `Callout`：信息、风险、成功三种语义；不能只靠颜色传达含义。
-- `CaseLink`：案例标题、来源、外链动作；具备清晰的键盘焦点。
-- `Toast`：复制结果提示，使用 `aria-live="polite"`，3 秒内自动消失。
-- `ExerciseCard`：用于课程练习入口；由练习编号、能力层级、标题、说明、标签和唯一主操作组成。默认白底描边，hover 仅轻微上移并加深边框，focus 使用可见蓝色轮廓，移动端改为单列且取消固定高度。
+默认、hover、active、focus、复制成功与复制失败状态沿用原 `/scene` 行为，颜色之外必须有文字或轮廓反馈。
 
-## 6. Motion
+## 6. 动效
 
-动效只服务于状态反馈：按钮 160ms 颜色变化，步骤锚点 180ms 位移与底色变化，Toast 180ms 淡入淡出。禁止滚动监听动画；尊重 `prefers-reduced-motion`，此时关闭平滑滚动和位移动画。
+只允许服务交互的 160–180ms 颜色、边框和轻微位移过渡。尊重 `prefers-reduced-motion`；不添加装饰性循环动画或滚动触发动画。
 
-## 7. Depth, Responsive Behavior & Accepted Debt
+## 7. 响应式、无障碍与继承边界
 
-新页面主要依赖白、浅蓝、浅灰三层背景和 1px 分隔线，不给内容卡片加重阴影。浮层 Toast 可使用一层轻阴影。移动端所有交互目标至少 44px，流程导航横向滚动，提示词保留横向滚动而不压缩字体。仓库内历史页面仍有圆角、渐变和独立配色，本次不做全站迁移；`/ipo` 与新增的 `/list` 卡片保持现有门户兼容，后续页面按本文件执行。
+页面保持真实 DOM、语义化标题层级和键盘可达性。所有提示词仍可编辑，复制与下载走真实控件。为保证“复制一份”的视觉一致性，本页面继承 `/scene` 的既有 CSS 结构；本次只改业务内容、页面身份与清单，不重构原页面的历史样式实现。

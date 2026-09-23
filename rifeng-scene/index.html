@@ -173,6 +173,10 @@
       transform: translateX(2px);
     }
 
+    .nav-item > span:last-child {
+      white-space: nowrap;
+    }
+
     .nav-index {
       width: 34px;
       height: 34px;
@@ -341,6 +345,10 @@
       flex-wrap: wrap;
       gap: var(--space-3);
       align-items: center;
+    }
+
+    .submit-actions {
+      margin-top: var(--space-4);
     }
 
     .primary {
@@ -996,7 +1004,7 @@
           <h2 id="scene-lake-title">Step3：场景湖：用小浣熊输出 Excel 清单</h2>
           <p>这一步输入三类材料：场景湖示例表格、前面讨论的会议纪要或录音内容、第二步输出的 AI 改造 Mermaid 代码。注意给小浣熊的是代码，不是图片。</p>
           <div class="tool-tags" aria-label="Step3 工具入口">
-            <a class="tool-tag" href="https://xiaohuanxiong.om" target="_blank" rel="noopener">小浣熊</a>
+            <a class="tool-tag" href="https://xiaohuanxiong.com" target="_blank" rel="noopener">小浣熊</a>
           </div>
         </div>
         <div class="grid-two">
@@ -1043,7 +1051,7 @@
           <h2 id="roi-title">Step4：高 ROI 场景：同一对话继续打分</h2>
           <p>第四步继续在第三步的小浣熊对话里完成。追加评分标准模板和输出格式模板，再输入提示词，让它返回评分后的 Excel。</p>
           <div class="tool-tags" aria-label="Step4 工具入口">
-            <a class="tool-tag" href="https://xiaohuanxiong.om" target="_blank" rel="noopener">小浣熊</a>
+            <a class="tool-tag" href="https://xiaohuanxiong.com" target="_blank" rel="noopener">小浣熊</a>
           </div>
         </div>
         <div class="grid-two">
@@ -1064,7 +1072,7 @@
             <ul class="hint-list">
               <li><span class="mark">+</span><span>先下载并上传下方两份资料：评分表和综合评价参考表。</span></li>
               <li><span class="mark">+</span><span>确认评分理由不要空，便于老师看出判断依据。</span></li>
-              <li><span class="mark">+</span><span>输出文件建议命名为：04-{企业名称}-高ROI场景评分结果.xls。</span></li>
+              <li><span class="mark">+</span><span>输出文件建议命名为：04-日丰-{业务主题}-高ROI场景评分结果.xls。</span></li>
             </ul>
             <div class="step-downloads" aria-label="Step4 下载资料">
               <div class="step-download">
@@ -1109,21 +1117,21 @@
           <article class="artifact-card">
             <h3>两个流程图附件 <span class="badge">SVG</span></h3>
             <ul class="check-list">
-              <li><span class="mark">1</span><span>01-{企业名称}-流程生成.svg</span></li>
-              <li><span class="mark">2</span><span>02-{企业名称}-AI化改造.svg</span></li>
+              <li><span class="mark">1</span><span>01-日丰-{业务主题}-流程生成.svg</span></li>
+              <li><span class="mark">2</span><span>02-日丰-{业务主题}-AI化改造.svg</span></li>
             </ul>
           </article>
           <article class="artifact-card">
             <h3>两个 Excel 附件 <span class="badge">xls</span></h3>
             <ul class="check-list">
-              <li><span class="mark">1</span><span>03-{企业名称}-场景湖清单.xls</span></li>
-              <li><span class="mark">2</span><span>04-{企业名称}-高ROI场景评分结果.xls</span></li>
+              <li><span class="mark">1</span><span>03-日丰-{业务主题}-场景湖清单.xls</span></li>
+              <li><span class="mark">2</span><span>04-日丰-{业务主题}-高ROI场景评分结果.xls</span></li>
             </ul>
           </article>
           <article class="artifact-card warning">
             <h3>飞书提交入口 <span class="badge amber">必交</span></h3>
             <p>最终提交链接：<br><a href="https://lijiagui.feishu.cn/share/base/form/shrcnT1NSzknu8leovmgkkebnwh" target="_blank" rel="noopener">https://lijiagui.feishu.cn/share/base/form/shrcnT1NSzknu8leovmgkkebnwh</a></p>
-            <div class="card-actions" style="margin-top: 16px;">
+            <div class="card-actions submit-actions">
               <a class="button-link primary" href="https://lijiagui.feishu.cn/share/base/form/shrcnT1NSzknu8leovmgkkebnwh" target="_blank" rel="noopener">打开提交表单</a>
             </div>
           </article>
