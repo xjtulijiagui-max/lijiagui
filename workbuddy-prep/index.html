@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WorkBuddy 课前准备</title>
+<style>
+  :root{
+    --blue:#0564CD;
+    --blue-deep:#03407F;
+    --blue-soft:#E8F1FD;
+    --blue-line:#C7DDF7;
+    --ink:#16202F;
+    --ink-2:#3D4C63;
+    --muted:#6B7A92;
+    --bg:#F4F7FC;
+    --card:#FFFFFF;
+    --line:#E2E9F3;
+    --amber:#8A5A00;
+    --amber-bg:#FFF8E8;
+    --amber-line:#F0D69A;
+    --red:#A32020;
+    --red-bg:#FDF0F0;
+    --red-line:#F0C4C4;
+    --green:#1F7A4D;
+    --green-bg:#EDF8F1;
+    --green-line:#BFE3CE;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Microsoft YaHei","PingFang SC","Hiragino Sans GB",system-ui,-apple-system,"Segoe UI",sans-serif;
+    font-size:16px;
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--blue);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px 80px;}
+
+  /* ---------- 顶部 ---------- */
+  header.hero{
+    background:linear-gradient(160deg,#0564CD 0%,#0A4FA0 55%,#033B78 100%);
+    color:#fff;
+    padding:30px 0 26px;
+    position:relative;
+    overflow:hidden;
+  }
+  header.hero::after{
+    content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;
+    border-radius:50%;background:rgba(255,255,255,.07);
+  }
+  .hero-inner{max-width:960px;margin:0 auto;padding:0 20px;position:relative;z-index:1;}
+  .hero-tag{
+    display:inline-block;font-size:19px;letter-spacing:.04em;font-weight:700;
+    border:1px solid rgba(255,255,255,.55);border-radius:999px;
+    padding:7px 22px;margin-bottom:18px;color:#fff;
+  }
+  .hero-meta{display:flex;flex-wrap:wrap;gap:10px;}
+  .chip{
+    background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+    border-radius:8px;padding:5px 12px;font-size:13.5px;color:#fff;
+  }
+
+  /* ---------- 导航 ---------- */
+  nav.steps{
+    background:#fff;border-bottom:1px solid var(--line);
+    position:sticky;top:0;z-index:20;box-shadow:0 1px 8px rgba(16,48,96,.05);
+  }
+  .steps-inner{max-width:960px;margin:0 auto;padding:0 20px;display:flex;gap:6px;overflow-x:auto;}
+  .steps-inner a{
+    flex:0 0 auto;padding:14px 12px;font-size:14.5px;color:var(--ink-2);
+    border-bottom:3px solid transparent;white-space:nowrap;
+  }
+  .steps-inner a:hover{color:var(--blue);border-bottom-color:var(--blue-line);text-decoration:none;}
+  .steps-inner a b{color:var(--blue);font-weight:700;margin-right:4px;}
+
+  /* ---------- 折叠 ---------- */
+  .fold-head{cursor:pointer;user-select:none;align-items:center;}
+  .fold-head:hover h2{color:var(--blue);}
+  .fold-hint{
+    margin-left:auto;align-self:center;flex:0 0 auto;
+    font-size:13.5px;color:var(--blue);background:#fff;
+    border:1px solid var(--blue-line);border-radius:999px;padding:4px 14px;
+    white-space:nowrap;transition:.16s;
+  }
+  .fold-head:hover .fold-hint{border-color:var(--blue);background:var(--blue-soft);}
+  .fold-hint::after{content:" ▾";}
+  .fold-head.open .fold-hint::after{content:" ▴";}
+  .fold-body{overflow:hidden;}
+
+  /* ---------- 通用块 ---------- */
+  section{margin-top:38px;}
+  .sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:6px;}
+  .sec-num{
+    font-family:"华文楷体","KaiTi",serif;font-size:30px;font-weight:700;color:var(--blue);
+    line-height:1;letter-spacing:.04em;
+  }
+  .sec-head h2{
+    font-family:"华文楷体","KaiTi","STKaiti",serif;
+    font-size:25px;margin:0;font-weight:700;letter-spacing:.02em;color:var(--blue-deep);
+  }
+  .sec-lead{color:var(--muted);font-size:15px;margin:0 0 18px;padding-left:2px;}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:24px;box-shadow:0 1px 3px rgba(16,48,96,.04);
+  }
+  .card + .card{margin-top:16px;}
+  h3{font-size:18px;margin:0 0 12px;color:var(--blue-deep);font-weight:700;}
+  h3 .dot{display:inline-block;width:8px;height:8px;background:var(--blue);border-radius:2px;margin-right:8px;vertical-align:middle;}
+  p{margin:0 0 12px;}
+  p:last-child{margin-bottom:0;}
+  ul,ol{margin:0 0 12px;padding-left:22px;}
+  li{margin-bottom:7px;}
+  li:last-child{margin-bottom:0;}
+  strong{color:var(--blue-deep);}
+  code{
+    background:var(--blue-soft);color:var(--blue-deep);border:1px solid var(--blue-line);
+    border-radius:5px;padding:1px 6px;font-size:13.5px;
+    font-family:Consolas,"Courier New",monospace;
+  }
+
+  /* ---------- 表格 ---------- */
+  .tbl-scroll{overflow-x:auto;margin:0 -4px;}
+  table{width:100%;border-collapse:separate;border-spacing:0;font-size:14.5px;min-width:560px;}
+  thead th{
+    background:var(--blue-soft);color:var(--blue-deep);text-align:left;font-weight:700;
+    padding:11px 14px;border-bottom:1px solid var(--blue-line);white-space:nowrap;
+  }
+  thead th:first-child{border-top-left-radius:9px;}
+  thead th:last-child{border-top-right-radius:9px;}
+  tbody td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-2);}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:hover td{background:#FAFCFF;}
+  td strong{color:var(--ink);}
+
+  /* ---------- 提示块 ---------- */
+  .note{
+    border-radius:11px;padding:15px 18px;margin:16px 0;font-size:14.5px;
+    border:1px solid var(--line);background:#FAFCFF;color:var(--ink-2);
+  }
+  .note .ttl{font-weight:700;display:block;margin-bottom:5px;}
+  .note.warn{background:var(--amber-bg);border-color:var(--amber-line);color:var(--amber);}
+  .note.warn .ttl{color:#7A4E00;}
+  .note.stop{background:var(--red-bg);border-color:var(--red-line);color:var(--red);}
+  .note.stop .ttl{color:#8A1A1A;}
+  .note.ok{background:var(--green-bg);border-color:var(--green-line);color:var(--green);}
+  .note.ok .ttl{color:#166139;}
+
+  /* ---------- 设备选择器 ---------- */
+  .device-pick{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 14px;}
+  .device-pick button{
+    font-family:inherit;font-size:14px;cursor:pointer;
+    border:1px solid var(--blue-line);background:#fff;color:var(--blue-deep);
+    border-radius:9px;padding:9px 15px;transition:.16s;
+  }
+  .device-pick button:hover{border-color:var(--blue);background:var(--blue-soft);}
+  .device-pick button.on{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:700;}
+  .pick-result{
+    border:1px dashed var(--blue-line);background:var(--blue-soft);border-radius:11px;
+    padding:16px 18px;font-size:15px;color:var(--blue-deep);display:none;
+  }
+  .pick-result.show{display:block;}
+  .pick-result .big{font-size:17px;font-weight:700;display:block;margin-bottom:6px;color:var(--blue-deep);}
+  .pick-result .tagstop{color:var(--red);font-weight:700;}
+
+  /* ---------- 步骤流程 ---------- */
+  .flow{display:grid;gap:12px;grid-template-columns:repeat(3,1fr);margin:6px 0 4px;}
+  .flow .f{
+    background:#fff;border:1px solid var(--line);border-radius:11px;padding:16px 16px 14px;position:relative;
+  }
+  .flow .f .n{
+    display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;
+    background:var(--blue);color:#fff;font-size:13px;font-weight:700;margin-bottom:9px;
+  }
+  .flow .f h4{margin:0 0 6px;font-size:15.5px;color:var(--blue-deep);}
+  .flow .f p{font-size:13.5px;color:var(--muted);margin:0;line-height:1.65;}
+  .flow .f::after{
+    content:"→";position:absolute;right:-14px;top:50%;transform:translateY(-50%);
+    color:var(--blue-line);font-size:17px;font-weight:700;
+  }
+  .flow .f:last-child::after{display:none;}
+
+  /* ---------- 清单 ---------- */
+  .checklist{list-style:none;padding:0;margin:0;}
+  .checklist li{
+    display:flex;gap:12px;align-items:flex-start;padding:12px 4px;border-bottom:1px dashed var(--line);
+    margin:0;cursor:pointer;user-select:none;
+  }
+  .checklist li:last-child{border-bottom:none;}
+  .checklist .box{
+    flex:0 0 auto;width:20px;height:20px;border:2px solid var(--blue-line);border-radius:6px;
+    margin-top:3px;display:flex;align-items:center;justify-content:center;transition:.16s;background:#fff;
+  }
+  .checklist li.done .box{background:var(--blue);border-color:var(--blue);}
+  .checklist li.done .box::after{content:"✓";color:#fff;font-size:13px;font-weight:700;line-height:1;}
+  .checklist .txt{font-size:15px;color:var(--ink-2);line-height:1.7;}
+  .checklist li.done .txt{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--blue-line);}
+  .progress-bar{height:8px;background:var(--blue-soft);border-radius:99px;overflow:hidden;margin:16px 0 6px;}
+  .progress-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#0564CD,#3E8EE8);transition:.3s;}
+  .progress-txt{font-size:13.5px;color:var(--muted);text-align:right;}
+
+  /* ---------- 图片 ---------- */
+  .img-row{display:grid;gap:18px;grid-template-columns:1fr 1fr;align-items:start;margin-top:6px;}
+  figure{margin:0;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center;}
+  figure img{max-width:100%;height:auto;border-radius:8px;display:block;margin:0 auto;}
+  figure figcaption{font-size:13px;color:var(--muted);margin-top:10px;line-height:1.6;}
+  .qr-box{max-width:320px;}
+
+  /* ---------- 按钮 ---------- */
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--blue);color:#fff;border-radius:10px;padding:12px 22px;
+    font-size:15px;font-weight:700;transition:.16s;border:1px solid var(--blue);
+  }
+  .btn:hover{background:var(--blue-deep);border-color:var(--blue-deep);text-decoration:none;}
+  .btn.ghost{background:#fff;color:var(--blue);border-color:var(--blue-line);}
+  .btn.ghost:hover{background:var(--blue-soft);border-color:var(--blue);}
+  .btn-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px;}
+
+  footer{
+    margin-top:52px;padding-top:24px;border-top:1px solid var(--line);
+    color:var(--muted);font-size:13.5px;line-height:1.9;
+  }
+  footer strong{color:var(--ink-2);}
+
+  @media (max-width:760px){
+    .sec-head h2{font-size:21px;}
+    .sec-num{font-size:25px;}
+    .flow{grid-template-columns:1fr;}
+    .flow .f::after{content:"↓";right:auto;left:50%;top:auto;bottom:-15px;transform:translateX(-50%);}
+    .img-row{grid-template-columns:1fr;}
+    .card{padding:18px;}
+    .hero{padding:24px 0 22px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <span class="hero-tag">WorkBuddy 课前准备</span>
+    <div class="hero-meta">
+      <span class="chip">必修：带笔记本电脑到场</span>
+    </div>
+  </div>
+</header>
+
+<nav class="steps">
+  <div class="steps-inner">
+    <a href="#step1"><b>01</b>装好 WorkBuddy</a>
+    <a href="#step2"><b>02</b>读通用介绍</a>
+    <a href="#step3"><b>03</b>IPO 转 Skill 案例</a>
+    <a href="#step4"><b>04</b>做课前作业</a>
+    <a href="#onsite"><b>05</b>现场须知</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <!-- ============ 步骤一 ============ -->
+  <section id="step1">
+    <div class="sec-head fold-head" id="fold1Head">
+      <span class="sec-num">01</span>
+      <h2>装好 WorkBuddy，下载正确的版本</h2>
+      <span class="fold-hint" id="fold1Hint">展开</span>
+    </div>
+    <p class="sec-lead">这一步最容易出问题。上次课最大的坑就是：电脑里装的不是最新版，界面和大家不一样，一节课都在找按钮。</p>
+    <div class="fold-body" id="fold1">
+
+    <div class="card">
+      <h3><span class="dot"></span>先检查你的系统和硬件</h3>
+      <p>WorkBuddy 的主形态是<strong>电脑桌面端</strong>，课程实操要求 Windows 或 macOS 电脑。开工前先对一遍：</p>
+      <div class="tbl-scroll">
+        <table>
+          <thead>
+            <tr><th>检查项</th><th>最低要求</th><th>怎么查</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Windows 系统</strong></td>
+              <td>Windows 10 及以上<br><span style="color:var(--red)">不支持 Windows 7 / 8 / 8.1</span></td>
+              <td>设置 → 系统 → 关于 → Windows 规格</td>
+            </tr>
+            <tr>
+              <td><strong>macOS 系统</strong></td>
+              <td>macOS 12.0 及以上</td>
+              <td>左上角 苹果菜单 → 关于本机</td>
+            </tr>
+            <tr>
+              <td><strong>Mac 芯片类型</strong></td>
+              <td>必须分清 Apple 芯片 / Intel</td>
+              <td>关于本机 → 「芯片」显示 Apple M 系列=Apple 芯片；显示 Intel=Intel 芯片</td>
+            </tr>
+            <tr>
+              <td><strong>网络</strong></td>
+              <td>可正常联网（调用 AI 模型服务）</td>
+              <td>浏览器能正常打开网页即可</td>
+            </tr>
+            <tr>
+              <td><strong>账号</strong></td>
+              <td>已注册并登录 WorkBuddy 账号</td>
+              <td>首次登录即完成注册</td>
+            </tr>
+            <tr>
+              <td><strong>版本</strong></td>
+              <td>升级到<strong>最新版本</strong></td>
+              <td>客户端内检查更新；旧版本界面与课程演示不一致</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note warn">
+        <span class="ttl">⚠️ 必须提前装，不要留到课堂上</span>
+        安装、登录、升级这类事，一个人卡十分钟，全班就要等十分钟。请在开课前全部完成，并确认能正常发起一次任务。
+      </div>
+    </div>
+
+    <div class="card">
+      <h3><span class="dot"></span>选你的设备，看该下哪个包</h3>
+      <p>点一下你的设备，直接看结论：</p>
+      <div class="device-pick" id="devicePick">
+        <button data-k="win">Windows 10 / 11</button>
+        <button data-k="macarm">Mac（Apple 芯片）</button>
+        <button data-k="macintel">Mac（Intel 芯片）</button>
+        <button data-k="uos">统信 UOS / 银河麒麟</button>
+        <button data-k="harmony">鸿蒙设备</button>
+        <button data-k="ipad">iPad 或其他平板</button>
+      </div>
+      <div class="pick-result" id="pickResult"></div>
+
+      <div class="tbl-scroll" style="margin-top:18px">
+        <table>
+          <thead>
+            <tr><th>你的设备</th><th>下载哪个</th><th>关键提醒</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Windows 10 / 11</strong><br>（含 ARM 架构设备）</td>
+              <td>Windows x64（兼容 ARM64）</td>
+              <td>官网会自动识别并标注「当前设备」，直接下这一个就行</td>
+            </tr>
+            <tr>
+              <td><strong>Mac · M 系列芯片</strong><br>（M1 / M2 / M3 / M4）</td>
+              <td>Mac ARM64（<code>.dmg</code>）</td>
+              <td>下错成 Intel 包会装不上或运行异常</td>
+            </tr>
+            <tr>
+              <td><strong>Mac · Intel 芯片</strong></td>
+              <td>Mac x64（<code>.dmg</code>）</td>
+              <td>官网认不出芯片时<strong>默认给 x64</strong>，务必自己核一遍「关于本机」</td>
+            </tr>
+            <tr>
+              <td><strong>统信 UOS / 银河麒麟</strong></td>
+              <td>到系统应用商店里搜索 WorkBuddy</td>
+              <td>官网不提供安装包，不要到处找 exe</td>
+            </tr>
+            <tr>
+              <td><strong>iOS / Android 手机</strong></td>
+              <td>App Store / 华为·小米·应用宝 搜「WorkBuddy」</td>
+              <td>手机端是配套工具，<strong>不能替代电脑做课程实操</strong></td>
+            </tr>
+            <tr>
+              <td><strong>鸿蒙桌面版 / 鸿蒙移动版</strong></td>
+              <td>华为应用市场搜索下载</td>
+              <td>部分版本功能不全，以电脑端为准</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="img-row" style="margin-top:20px">
+        <figure>
+          <img src="assets/download-menu.png" alt="WorkBuddy 官网下载菜单截图，包含 Mac x64、Mac ARM64、Windows x64（兼容 ARM64）、Linux、iOS、Android、鸿蒙桌面版、鸿蒙移动版">
+          <figcaption>官网下载菜单：Mac 分 x64 与 ARM64 两个包，Windows 只有一个包，鸿蒙分桌面版与移动版。认准你的设备再点。</figcaption>
+        </figure>
+        <div>
+          <div class="note stop" style="margin-top:0">
+            <span class="ttl">🚫 平板：最好不要鸿蒙或者苹果的平板</span>
+            官方没有 iPad 版。目前市面上<strong>只有华为 MatePad Edge</strong> 这一款平板能接入 WorkBuddy PC 版（需 HarmonyOS 6.1.0.135SP9 patch03 及以上）。其余鸿蒙平板和苹果平板只能跑网页版或小程序，功能不全，做不了课程实操。
+          </div>
+          <div class="note warn">
+            <span class="ttl">⚠️ 鸿蒙：分两件事看</span>
+            鸿蒙 PC 版已上架，但<strong>部分版本功能不全</strong>；鸿蒙移动版是手机端，属于配套工具。课堂实操请用 Windows 或 macOS 笔记本，尽量不要只带鸿蒙设备来。
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <a class="btn" href="https://www.workbuddy.cn/work/" target="_blank" rel="noopener">前往官网下载 WorkBuddy</a>
+        <a class="btn ghost" href="https://www.workbuddy.cn/docs/workbuddyapp/Overview" target="_blank" rel="noopener">查看官方文档</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3><span class="dot"></span>登录与注册：一次扫码就完事</h3>
+      <ol>
+        <li>打开电脑客户端，点「登录」，会自动拉起浏览器打开 <a href="https://www.workbuddy.cn" target="_blank" rel="noopener">workbuddy.cn</a>。</li>
+        <li>用<strong>微信扫码</strong>登录。也支持手机号、邮箱或企业 SSO。</li>
+        <li>首次登录即完成注册，<strong>不需要单独注册账号</strong>。</li>
+        <li>如果还要用手机 App：请确保 App 登录的微信账号与电脑端<strong>是同一个</strong>，否则「连接电脑」功能用不了。</li>
+      </ol>
+      <div class="note ok">
+        <span class="ttl">✓ 装完怎么算合格</span>
+        打开客户端 → 已登录 → 能正常发起一次任务并拿到结果。这三点都通了，才算准备工作完成。
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <!-- ============ 步骤二 ============ -->
+  <section id="step2">
+    <div class="sec-head"><span class="sec-num">02</span><h2>花十分钟，读懂 WorkBuddy 是什么</h2></div>
+    <p class="sec-lead">别带着「不就是个聊天机器人」的印象来上课。</p>
+
+    <div class="card">
+      <h3><span class="dot"></span>它不是聊天框，是会动手的同事</h3>
+      <p>WorkBuddy 是腾讯推出的全场景职场 AI 智能体桌面工作台。你说一句话，它自己拆任务、自己规划步骤、自己去操作文件，最后交给你可以直接用的文档、表格、PPT。</p>
+      <p>课程里用到的核心能力有三条：</p>
+      <ul>
+        <li><strong>读写本地文件</strong>——能处理你授权文件夹里的真实资料，不是空谈。</li>
+        <li><strong>Skill 扩展</strong>——把一套做法固化成技能包，这就是我们课程要教你的重点产出。</li>
+        <li><strong>多端协同</strong>——桌面端干活，手机 App 下指令、远程遥控。</li>
+      </ul>
+      <div class="btn-row">
+        <a class="btn" href="https://www.workbuddy.cn/work/" target="_blank" rel="noopener">WorkBuddy 通用介绍</a>
+        <a class="btn ghost" href="https://www.workbuddy.cn/docs/workbuddyapp/Overview" target="_blank" rel="noopener">移动端 App 文档</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3><span class="dot"></span>视频资源与视频号</h3>
+      <p>我录制了成套的工具操作视频，案例全部来自真实金融业务场景，完全适配本次课程。关注视频号即可查看合集。</p>
+      <div class="img-row">
+        <figure class="qr-box">
+          <img src="assets/video-channel-qr.jpg" alt="AI商业落地李家贵 视频号二维码，扫一扫二维码关注我的视频号">
+          <figcaption>扫码关注「AI商业落地李家贵」视频号，收藏工具操作视频合集。</figcaption>
+        </figure>
+        <div>
+          <div class="note">
+            <span class="ttl">建议学习顺序</span>
+            先看视频号里的工具操作视频，把 WorkBuddy 的基础操作走一遍；再打开 IPO 转 Skill 应用案例，自己动手跑一次完整流程。两步都做完了，第二天的实操你只需要专注在业务场景本身。
+          </div>
+          <div class="note ok">
+            <span class="ttl">✓ 课上不重复讲基础操作</span>
+            基础工具操作放到课前，线下两天才能装下原本三天的内容量。你课前走得越远，课上能解决的问题就越核心。
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 步骤三 ============ -->
+  <section id="step3">
+    <div class="sec-head"><span class="sec-num">03</span><h2>提前走一遍 IPO 转 Skill 应用案例</h2></div>
+    <p class="sec-lead">这一步不复杂，但课前体验过，第二天实操会顺很多。</p>
+
+    <div class="card">
+      <h3><span class="dot"></span>IPO 转 Skill 应用案例 · 三步走</h3>
+      <div class="flow">
+        <div class="f">
+          <span class="n">1</span>
+          <h4>输入文档</h4>
+          <p>扔给它一份真实业务文档。表格、流程说明、你现在天天在做的那件事，都可以。</p>
+        </div>
+        <div class="f">
+          <span class="n">2</span>
+          <h4>写提示词转 SOP</h4>
+          <p>写一段提示词，让 AI 把这份文档整理成标准作业流程 SOP。</p>
+        </div>
+        <div class="f">
+          <span class="n">3</span>
+          <h4>再写提示词转 Skill</h4>
+          <p>再写一段提示词，把 SOP 变成可直接调用的 Skill。到这一步，智能体就成型了。</p>
+        </div>
+      </div>
+      <p style="margin-top:16px">过程本身很简单。<strong>重点是先体验一遍「业务 → 智能体」的完整链路</strong>，知道每一步在干什么，第二天上手不慌。</p>
+      <div class="btn-row">
+        <a class="btn" href="https://workbuddy.link/p/uti5CMSxprD59qjuUoOhRX?ext2=copy_link" target="_blank" rel="noopener">打开 IPO 转 Skill 应用案例</a>
+      </div>
+      <div class="note ok">
+        <span class="ttl">✓ 课上不重复讲基础操作</span>
+        基础工具操作放到课前，线下两天才能装下原本三天的内容量。你课前走得越远，课上能解决的问题就越核心。
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 步骤四 ============ -->
+  <section id="step4">
+    <div class="sec-head"><span class="sec-num">04</span><h2>完成课前 IPO 作业</h2></div>
+    <p class="sec-lead">只填三格，填多少算多少，不强制、不设门槛。</p>
+
+    <div class="card">
+      <h3><span class="dot"></span>只填输入、处理、输出</h3>
+      <p>从一个你熟悉的真实业务场景出发，拆出三件事：</p>
+      <div class="tbl-scroll">
+        <table>
+          <thead>
+            <tr><th>要素</th><th>要写什么</th><th>举个小例子</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>I · 输入（Input）</strong></td>
+              <td>这件事的起点是什么资料、什么请求、什么数据</td>
+              <td>客户递交的一沓申请材料</td>
+            </tr>
+            <tr>
+              <td><strong>P · 处理（Process）</strong></td>
+              <td>中间要经过哪些判断、核对、计算、流转步骤</td>
+              <td>核对要素是否齐全 → 查规则 → 出结论</td>
+            </tr>
+            <tr>
+              <td><strong>O · 输出（Output）</strong></td>
+              <td>最后要交出去什么结果、给谁、以什么形式</td>
+              <td>一份审核意见 / 一张明细表 / 一段可复制的话术</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note warn">
+        <span class="ttl">⚠️ 量力而行，但请尽量提交</span>
+        模板里其他字段是<strong>拓展参考，不强制填</strong>。我会根据大家提交的内容，制作一份泛金融领域的参考 Demo，课上给到每个人。你课前填得越具体，这份 Demo 对你越有用。
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 步骤五 ============ -->
+  <section id="onsite">
+    <div class="sec-head"><span class="sec-num">05</span><h2>现场须知与自检清单</h2></div>
+    <p class="sec-lead">下面每一条都踩过坑。出发前逐条打勾。</p>
+
+    <div class="card">
+      <h3><span class="dot"></span>带什么</h3>
+      <ul>
+        <li><strong>笔记本电脑</strong>——Windows 或 macOS，必须带。<strong>最好不要鸿蒙或者苹果的平板。</strong></li>
+        <li><strong>电源适配器</strong>——现场有插线板，但适配器得自己带。</li>
+        <li><strong>已装好并升级到最新版的 WorkBuddy</strong>——并已登录成功。</li>
+        <li><strong>一个你真实的业务场景</strong>——课上拆的就是它，别空手来。</li>
+      </ul>
+      <p style="color:var(--muted);font-size:14.5px">现场我们准备：插线板、HDMI 线、白板，网络已提前调试。50 人同时联网，网络会做冗余保障。</p>
+    </div>
+
+    <div class="card">
+      <h3><span class="dot"></span>课前自检清单（点一下打勾）</h3>
+      <ul class="checklist" id="checklist">
+        <li data-k="c1"><span class="box"></span><span class="txt">我的电脑是 Windows 10 及以上，或 macOS 12.0 及以上</span></li>
+        <li data-k="c2"><span class="box"></span><span class="txt">如果是 Mac，我确认过芯片类型（Apple 芯片 / Intel），下的是对应安装包</span></li>
+        <li data-k="c3"><span class="box"></span><span class="txt">我装的是最新版本，不是几个月前的旧版</span></li>
+        <li data-k="c4"><span class="box"></span><span class="txt">我用微信扫码登录成功，能正常发起一次任务</span></li>
+        <li data-k="c5"><span class="box"></span><span class="txt">我看过 WorkBuddy 通用介绍，知道它和聊天机器人的区别</span></li>
+        <li data-k="c6"><span class="box"></span><span class="txt">我关注了视频号，并看了工具操作视频</span></li>
+        <li data-k="c7"><span class="box"></span><span class="txt">我打开 IPO 转 Skill 应用案例，自己走过一遍「文档 → SOP → Skill」</span></li>
+        <li data-k="c8"><span class="box"></span><span class="txt">我填完了 IPO 三要素（输入 / 处理 / 输出）并提交</span></li>
+        <li data-k="c9"><span class="box"></span><span class="txt">我会带笔记本电脑和电源适配器到场</span></li>
+      </ul>
+      <div class="progress-bar"><i id="bar"></i></div>
+      <div class="progress-txt" id="barTxt">已完成 0 / 9</div>
+      <div class="note ok" id="doneTip" style="display:none">
+        <span class="ttl">✓ 全部完成</span>
+        准备得很扎实。课上我们直接进入核心问题，不再花时间走流程。
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>课程主线：工具 → 场景筛选 → IPO 拆解 → 生成智能体。第一天讲工具与理论，第二天端到端实操。<br>
+    常见卡点、安装问题，可在课程学员微信群中提出，助教会统一汇总处理。</p>
+    <p style="margin-top:10px">系统版本与下载要求以 <a href="https://www.workbuddy.cn/work/" target="_blank" rel="noopener">workbuddy.cn</a> 官方页面为准；文档说明以 <a href="https://www.workbuddy.cn/docs/workbuddyapp/Overview" target="_blank" rel="noopener">官方文档</a> 为准。</p>
+  </footer>
+</div>
+
+<script>
+/* ---------- 01 折叠面板 ---------- */
+(function(){
+  var head = document.getElementById('fold1Head');
+  var body = document.getElementById('fold1');
+  var hint = document.getElementById('fold1Hint');
+  if(!head || !body || !hint) return;
+
+  var open = false;
+  body.style.overflow = 'hidden';
+  body.style.transition = 'max-height .32s ease, opacity .24s ease';
+  body.style.maxHeight = '0px';
+  body.style.opacity = '0';
+
+  function setOpen(v){
+    open = v;
+    head.classList.toggle('open', v);
+    hint.textContent = v ? '收起' : '展开';
+    if(v){
+      body.style.maxHeight = body.scrollHeight + 'px';
+      body.style.opacity = '1';
+      window.setTimeout(function(){ if(open) body.style.maxHeight = 'none'; }, 360);
+    } else {
+      body.style.maxHeight = body.scrollHeight + 'px';
+      window.requestAnimationFrame(function(){
+        body.style.maxHeight = '0px';
+        body.style.opacity = '0';
+      });
+    }
+  }
+
+  head.addEventListener('click', function(){ setOpen(!open); });
+
+  var navLink = document.querySelector('.steps-inner a[href="#step1"]');
+  if(navLink){
+    navLink.addEventListener('click', function(){ if(!open) setOpen(true); });
+  }
+  setOpen(false);
+})();
+
+/* ---------- 设备选择器 ---------- */
+var deviceData = {
+  win:{
+    title:"Windows 10 / 11 → 下载 Windows x64（兼容 ARM64）",
+    body:"官网会自动识别你的系统并标注「当前设备」，直接下载标注的那一个。ARM 架构的 Windows 设备也用同一个包。<br><strong>注意：</strong>Windows 7 / 8 / 8.1 不支持，请先换设备或升级系统。"
+  },
+  macarm:{
+    title:"Mac（Apple 芯片）→ 下载 Mac ARM64",
+    body:"关于本机里「芯片」显示 <code>Apple M1 / M2 / M3 / M4</code> 的，选 <strong>Mac ARM64</strong> 那个 .dmg。<br><strong>别下成 Intel 包</strong>，装不上或者运行异常，课堂上没人能帮你临时救。"
+  },
+  macintel:{
+    title:"Mac（Intel 芯片）→ 下载 Mac x64",
+    body:"关于本机里显示 <code>处理器 Intel ...</code> 的，选 <strong>Mac x64</strong> 那个 .dmg。<br><strong>提醒：</strong>官网认不出芯片时默认给 x64，看起来「好像下对了」，但你仍然要自己核一遍，别猜。"
+  },
+  uos:{
+    title:"统信 UOS / 银河麒麟 → 到系统应用商店下载",
+    body:"官网不提供 Linux 安装包。<span class='tagstop'>不要在网上到处找安装文件。</span><br>打开系统的应用商店，搜索 WorkBuddy 安装即可。"
+  },
+  harmony:{
+    title:"鸿蒙设备 → 华为应用市场下载，但功能不全",
+    body:"鸿蒙 PC 版已上架，分<strong>鸿蒙桌面版</strong>和<strong>鸿蒙移动版</strong>，均在华为应用市场下载。<br><span class='tagstop'>部分版本功能不全。</span>平板端目前只有华为 MatePad Edge 能接入 PC 版，且需 HarmonyOS 6.1.0.135SP9 patch03 及以上。<br><strong>最好不要用鸿蒙平板来上课，请带 Windows 或 macOS 笔记本。</strong>"
+  },
+  ipad:{
+    title:"iPad 或其他苹果平板 → 不建议用于课程实操",
+    body:"官方没有 iPad 版。iPad 上只能跑网页版或小程序，功能不全。<br><span class='tagstop'>最好不要鸿蒙或者苹果的平板。</span>课堂实操请带笔记本电脑。如果只有平板，请提前向对接人说明。"
+  }
+};
+(function(){
+  var wrap = document.getElementById('devicePick');
+  var box  = document.getElementById('pickResult');
+  if(!wrap) return;
+  wrap.addEventListener('click', function(e){
+    var btn = e.target.closest('button');
+    if(!btn) return;
+    Array.prototype.forEach.call(wrap.querySelectorAll('button'), function(b){ b.classList.remove('on'); });
+    btn.classList.add('on');
+    var d = deviceData[btn.getAttribute('data-k')];
+    box.innerHTML = '<span class="big">' + d.title + '</span>' + d.body;
+    box.classList.add('show');
+  });
+})();
+
+/* ---------- 自检清单 ---------- */
+(function(){
+  var list = document.getElementById('checklist');
+  if(!list) return;
+  var items = list.querySelectorAll('li');
+  var bar = document.getElementById('bar');
+  var barTxt = document.getElementById('barTxt');
+  var doneTip = document.getElementById('doneTip');
+  var KEY = 'wb_prep_checklist_v1';
+  var state = {};
+  try{ state = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; }catch(e){ state = {}; }
+
+  function render(){
+    var n = 0;
+    Array.prototype.forEach.call(items, function(li){
+      if(li.classList.contains('done')) n++;
+    });
+    var total = items.length;
+    var pct = Math.round(n / total * 100);
+    bar.style.width = pct + '%';
+    barTxt.textContent = '已完成 ' + n + ' / ' + total;
+    doneTip.style.display = (n === total) ? 'block' : 'none';
+  }
+  Array.prototype.forEach.call(items, function(li){
+    var k = li.getAttribute('data-k');
+    if(state[k]) li.classList.add('done');
+    li.addEventListener('click', function(){
+      li.classList.toggle('done');
+      state[k] = li.classList.contains('done');
+      try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+      render();
+    });
+  });
+  render();
+})();
+</script>
+</body>
+</html>
