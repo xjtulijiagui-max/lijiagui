@@ -1,0 +1,30 @@
+{
+  "id": "marketing-skill",
+  "title": "Marketing Skills 营销 Skill 资源库",
+  "shortTitle": "Marketing Skills",
+  "category": "营销与增长",
+  "description": "50 个营销 Skill 资源入口，覆盖广告投放、SEO、内容策略、CRO、邮件、社媒、定价、留存、RevOps 和增长系统。",
+  "url": "https://xjtulijiagui-max.github.io/lijiagui/marketing-skill/",
+  "tags": [
+    "营销",
+    "Marketing",
+    "Skill",
+    "增长",
+    "SEO",
+    "广告投放",
+    "CRO",
+    "内容策略",
+    "邮件营销",
+    "社媒",
+    "RevOps"
+  ],
+  "type": "提示词库",
+  "client": "通用",
+  "status": "正常",
+  "featured": false,
+  "updated": "2026-09-29",
+  "source": "https://github.com/coreyhaines31/marketingskills",
+  "sourceBranch": "main",
+  "sourceFileCount": 466,
+  "skillCount": 50
+}
