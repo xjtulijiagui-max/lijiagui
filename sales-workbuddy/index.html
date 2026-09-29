@@ -1,0 +1,3141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>【收藏】WorkBuddy 能帮销售做什么？一篇讲清楚 97 个真实工作场景</title>
+<style>
+  :root {
+    --blue: #0564CD; --blue-light: #EAF2FC; --ink: #1f2329;
+    --muted: #646a73; --border: #e5e6eb; --bg: #f7f8fa;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+    line-height: 1.85; font-size: 15.5px;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 32px 20px 80px; }
+  header.article-head {
+    background: #fff; border: 1px solid var(--border); border-radius: 14px;
+    padding: 36px 40px 28px; margin-bottom: 24px;
+  }
+  h1 { font-size: 26px; line-height: 1.5; margin: 0 0 14px; }
+  .meta { color: var(--muted); font-size: 13.5px; }
+  .meta a { color: var(--blue); text-decoration: none; }
+  .toc {
+    background: #fff; border: 1px solid var(--border); border-radius: 14px;
+    padding: 26px 32px; margin-bottom: 24px;
+  }
+  .toc h2 { font-size: 17px; margin: 0 0 14px; color: var(--blue); }
+  .toc ol { margin: 0; padding-left: 22px; }
+  .toc li { margin: 4px 0; }
+  .toc a { color: var(--ink); text-decoration: none; display: flex; justify-content: space-between; gap: 12px; }
+  .toc a:hover { color: var(--blue); }
+  .toc-sec { flex: 1; }
+  .toc-range { color: var(--muted); font-size: 13px; white-space: nowrap; }
+  article {
+    background: #fff; border: 1px solid var(--border); border-radius: 14px;
+    padding: 36px 40px;
+  }
+  article > p { margin: 0 0 18px; }
+  .lead { font-weight: 600; }
+  .chapter { margin-top: 36px; }
+  .chapter:first-of-type { margin-top: 8px; }
+  .chapter-title {
+    font-size: 20px; color: var(--blue); border-left: 4px solid var(--blue);
+    padding-left: 12px; margin: 0 0 14px;
+  }
+  .chapter-intro { color: var(--muted); font-size: 14.5px; background: var(--blue-light);
+    border-radius: 10px; padding: 12px 16px; margin-bottom: 20px; }
+  .scene-card {
+    border: 1px solid var(--border); border-radius: 12px;
+    padding: 22px 24px 20px; margin: 0 0 20px; background: #fff;
+  }
+  .scene-card:target { outline: 2px solid var(--blue); }
+  .scene-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .scene-num {
+    background: var(--blue); color: #fff; border-radius: 8px;
+    font-size: 13px; font-weight: 700; padding: 3px 9px; letter-spacing: .5px;
+  }
+  .scene-head h3 { margin: 0; font-size: 17px; }
+  .scene-label {
+    font-size: 13px; font-weight: 700; margin-bottom: 6px;
+    display: inline-block; padding: 2px 10px; border-radius: 6px;
+  }
+  .label-problem { background: #FFF3D6; color: #8a5a00; }
+  .label-prompt { background: var(--blue-light); color: var(--blue); }
+  .scene-problem { margin: 0 0 14px; }
+  .prompt-box { position: relative; }
+  .prompt-box pre {
+    margin: 0; background: #0d1117; color: #e6edf3; border-radius: 10px;
+    padding: 18px 18px 16px; overflow-x: auto; font-size: 13.5px; line-height: 1.75;
+    font-family: "Cascadia Code", Consolas, "Microsoft YaHei Mono", monospace;
+    white-space: pre-wrap; word-break: break-word;
+  }
+  .copy-btn {
+    position: absolute; top: 10px; right: 10px;
+    background: var(--blue); color: #fff; border: none; border-radius: 7px;
+    font-size: 12.5px; padding: 5px 12px; cursor: pointer; opacity: .92;
+  }
+  .copy-btn:hover { opacity: 1; }
+  .copy-btn.copied { background: #1a7f37; }
+  footer.note {
+    margin-top: 24px; color: var(--muted); font-size: 13px; text-align: center;
+  }
+  @media (max-width: 640px) {
+    header.article-head, article, .toc { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="article-head">
+    <h1>【收藏】WorkBuddy 能帮销售做什么？一篇讲清楚 97 个真实工作场景</h1>
+    <div class="meta">作者：曾俊（曾俊AI实战笔记） · 2026-09-28 ·
+      原文：<a href="https://mp.weixin.qq.com/s/PgVxy_0dYTKurV3Y-OOz7g" target="_blank">mp.weixin.qq.com/s/PgVxy_0dYTKurV3Y-OOz7g</a>
+      · 本页为清洗版：97 个场景已整理为「场景描述 + 可复制提示词」</div>
+  </header>
+
+  <nav class="toc">
+    <h2>目录 · 17 大板块 / 97 个场景</h2>
+    <ol>
+<li><a href="#sec-0"><span class="toc-sec">一、目标与计划</span><span class="toc-range">001–003</span></a></li>
+<li><a href="#sec-1"><span class="toc-sec">二、行业、客户与机会研究</span><span class="toc-range">004–008</span></a></li>
+<li><a href="#sec-2"><span class="toc-sec">三、客户画像与线索获取</span><span class="toc-range">009–012</span></a></li>
+<li><a href="#sec-3"><span class="toc-sec">四、线索清洗、评分与分层</span><span class="toc-range">013–017</span></a></li>
+<li><a href="#sec-4"><span class="toc-sec">五、首次触达与初步意向</span><span class="toc-range">018–019</span></a></li>
+<li><a href="#sec-5"><span class="toc-sec">六、需求访谈与会议处理</span><span class="toc-range">020–023</span></a></li>
+<li><a href="#sec-6"><span class="toc-sec">七、商机资格与推进判断</span><span class="toc-range">024–027</span></a></li>
+<li><a href="#sec-7"><span class="toc-sec">八、方案、演示与价值表达</span><span class="toc-range">028–034</span></a></li>
+<li><a href="#sec-8"><span class="toc-sec">九、报价、投标与商务材料</span><span class="toc-range">035–043</span></a></li>
+<li><a href="#sec-9"><span class="toc-sec">十、客户跟进与关系推进</span><span class="toc-range">044–050</span></a></li>
+<li><a href="#sec-10"><span class="toc-sec">十一、异议处理与商务谈判</span><span class="toc-range">051–054</span></a></li>
+<li><a href="#sec-11"><span class="toc-sec">十二、合同、签约、订单与回款</span><span class="toc-range">055–062</span></a></li>
+<li><a href="#sec-12"><span class="toc-sec">十三、成交交接、续约与增购</span><span class="toc-range">063–069</span></a></li>
+<li><a href="#sec-13"><span class="toc-sec">十四、销售数据、预测与复盘</span><span class="toc-range">070–079</span></a></li>
+<li><a href="#sec-14"><span class="toc-sec">十五、团队管理与能力提升</span><span class="toc-range">080–086</span></a></li>
+<li><a href="#sec-15"><span class="toc-sec">十六、CRM 与销售流程运营</span><span class="toc-range">087–092</span></a></li>
+<li><a href="#sec-16"><span class="toc-sec">十七、销售知识库与经验沉淀</span><span class="toc-range">093–097</span></a></li>
+    </ol>
+  </nav>
+
+  <article>
+    <p class="lead">很多人一提销售岗位用 AI，就想到批量写开发信、自动跟进客户。但销售真正的工作远不止发消息，还包括：目标如何落到商机、客户值不值得投入、需求是否真的确认、方案和报价有没有依据、合同承诺能否交付、成交以后怎样续约、管理者如何看清预测与团队问题等，这些环节都可以逐一拆开。</p>
+    <p>我把销售工作按业务链整理成 <strong>17 个板块、97 个具体场景</strong>。本页每个场景包含两部分：<strong>场景描述</strong>（解决什么问题）和<strong>可复制的提示词</strong>（由原文"怎么用"整理而成，复制后粘贴到 WorkBuddy 即可直接使用）。</p>
+
+    <h2 class="chapter-title">怎样使用这份场景清单</h2>
+    <p>这 97 个场景并不处在同一个落地难度，会议记录整理、询价缺项检查、日报周报等任务，通常只需要准备材料、写清要求并由销售复核，就可以先做小范围试用。</p>
+    <p>CRM 写入、自动提醒和跨系统数据分析还需要数据接口、账号权限与统一口径。价格、合同、开票、回款和人员评价则必须接入企业原有审批与责任体系。</p>
+    <p>选择第一个试点时，可以先问五个问题：这项工作是否高频发生？输入材料能否合法取得？处理规则能否说清？输出结果能否由业务人员快速核对？即使 AI 出错，是否仍能在正式动作前被人工拦住？五个问题大部分能回答清楚，才适合开始。</p>
+    <p>真正执行时，建议保持同一条基本链路：先提供一小批脱敏材料和当前规则，让 WorkBuddy 生成预览；业务人员逐项核对，记录遗漏和误判；修改要求后再次运行；结果稳定后再沉淀为固定模板、知识库或工作流。不要第一天就接管全部数据，也不要因为一次演示成功就跳过后续验收。</p>
+    <p>下面的每个场景都可以独立使用，你也可以沿着完整销售链路组合：从目标和行业研究开始，进入线索、需求、商机、方案、报价与合同，再连接成交交接、客户经营、销售分析和知识沉淀。</p>
+
+<section class="chapter" id="sec-0">
+<h2 class="chapter-title">一、目标与计划</h2>
+<p class="chapter-intro">目标与计划解决的是“团队接下来把时间和资源放在哪里”。WorkBuddy 可以帮助统一口径、拆解目标、计算商机缺口和整理行动，但不能替管理层决定目标是否合理，也不能替销售判断临时变化。</p>
+
+<div class="scene-card" id="sc001">
+  <div class="scene-head">
+    <span class="scene-num">001</span>
+    <h3>销售目标分解与商机缺口测算</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">年度目标只有一个总金额，销售团队却不知道现有商机够不够、缺口来自哪里，也容易把目标平均分给每个月和每个人。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「001 销售目标分解与商机缺口测算」这项销售工作。
+
+【场景背景】
+年度目标只有一个总金额，销售团队却不知道现有商机够不够、缺口来自哪里，也容易把目标平均分给每个月和每个人。
+
+【任务与要求】
+统一签约、开票或回款口径，准备目标、历史结果、当前商机和销售周期。请你按产品、区域、客户类型和时间拆分目标，测算现有商机覆盖及缺口，并把转化率、客单价等假设单独列出。结果用于讨论资源与行动，不把测算值当成必然完成结果。
+输出至少包括目标拆解表、商机覆盖表、缺口说明和补缺动作。完成后要核对各层级目标能否加回总目标，商机金额有没有重复计算，预测期间是否与销售周期匹配。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc002">
+  <div class="scene-head">
+    <span class="scene-num">002</span>
+    <h3>重点客户攻坚计划</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">重点客户名单常只有名称和金额，没有决策链、当前障碍、内部责任与下一步，资源投入容易停在口号。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「002 重点客户攻坚计划」这项销售工作。
+
+【场景背景】
+重点客户名单常只有名称和金额，没有决策链、当前障碍、内部责任与下一步，资源投入容易停在口号。
+
+【任务与要求】
+汇总客户背景、历史沟通、需求、关系人、竞争情况和内部资源，请你形成目标、关键人、阶段证据、主要障碍、行动、负责人和日期。把已确认事实与假设分开，逐项安排验证；价格、资源和高层介入由负责人决定。
+最终应形成一张客户作战图和一份未来几周的推进计划。每个动作都要说明希望改变什么客户状态、需要谁参与、怎样判断完成，避免把“拜访一次”“保持联系”当成攻坚动作。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc003">
+  <div class="scene-head">
+    <span class="scene-num">003</span>
+    <h3>销售行动计划与优先级安排</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">销售每天有很多待办，但紧急消息会挤掉真正影响成交的动作，计划表也容易只剩“继续跟进”。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「003 销售行动计划与优先级安排」这项销售工作。
+
+【场景背景】
+销售每天有很多待办，但紧急消息会挤掉真正影响成交的动作，计划表也容易只剩“继续跟进”。
+
+【任务与要求】
+把目标、商机阶段、客户承诺、近期节点和内部依赖放在一起，请你按影响、紧迫度和前置关系排列本周行动，写清对象、目的、准备材料、负责人和完成日期。优先级只是工作草案，不自动联系客户或改变 CRM 状态。
+可以要求它分别生成今日清单、本周清单和等待他人事项，并解释排序依据。执行后回填实际结果和新的下一步，长期延期的任务单独进入问题清单，不能每天原样顺延。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+</section>
+<section class="chapter" id="sec-1">
+<h2 class="chapter-title">二、行业、客户与机会研究</h2>
+<p class="chapter-intro">这一组任务把公开信息转成销售可以验证的问题。重点是区分可核验事实、销售假设和下一步访谈问题，让资料真正服务拜访、选客和资源判断，避免无目的堆积。</p>
+
+<div class="scene-card" id="sc004">
+  <div class="scene-head">
+    <span class="scene-num">004</span>
+    <h3>目标行业研究与机会判断</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">只看行业规模和热门趋势，很难判断具体客户为什么现在会买、企业能力是否匹配。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「004 目标行业研究与机会判断」这项销售工作。
+
+【场景背景】
+只看行业规模和热门趋势，很难判断具体客户为什么现在会买、企业能力是否匹配。
+
+【任务与要求】
+收集行业政策、市场变化、业务链、典型问题、采购方式和公开案例，请你区分事实、信号与推测，整理机会、进入障碍、优先细分市场和待验证问题。来源要保留日期，市场数字不能脱离口径使用。
+输出可以是一份行业机会地图：哪些角色正在为什么问题付出代价，通常在什么事件发生后启动采购，现有替代方案是什么。销售再用访谈验证这些判断，避免把行业趋势直接套到每一家企业。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc005">
+  <div class="scene-head">
+    <span class="scene-num">005</span>
+    <h3>目标企业背景与经营问题研究</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">拜访前只看官网简介，销售容易带着通用方案见客户，无法提出贴近经营的问题。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「005 目标企业背景与经营问题研究」这项销售工作。
+
+【场景背景】
+拜访前只看官网简介，销售容易带着通用方案见客户，无法提出贴近经营的问题。
+
+【任务与要求】
+从官网、年报、招聘、新闻和公开活动中整理企业业务、产品、客户、区域、近期变化和可能挑战。请你输出已确认事实、合理假设及访谈问题，不把招聘岗位、新闻标题或行业共性直接写成该企业的真实痛点。
+报告中要为每条事实附上来源和发布日期，并把可能过期、相互矛盾或只有转载的信息单独列出。最终产物应能直接支持一次拜访准备，而非堆成一份与销售行动无关的公司百科。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc006">
+  <div class="scene-head">
+    <span class="scene-num">006</span>
+    <h3>客户组织与公开关键人研究</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">知道联系人姓名，不等于理解谁使用、谁评估、谁影响预算、谁最终决策。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「006 客户组织与公开关键人研究」这项销售工作。
+
+【场景背景】
+知道联系人姓名，不等于理解谁使用、谁评估、谁影响预算、谁最终决策。
+
+【任务与要求】
+整理官网组织信息、公开任职信息和已有沟通记录，请你生成初步角色图，标出已确认关系、可能角色和缺失信息。职位只能作为线索，不能自动推断决策权或私人关系；真正的决策链要在客户沟通中验证。
+关系图至少区分使用者、业务负责人、技术评估者、预算影响者和最终决策者，并记录信息来源、最后确认时间和下一步核实问题。公开资料不足时保留空白，不借用其他企业的组织结构补全。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc007">
+  <div class="scene-head">
+    <span class="scene-num">007</span>
+    <h3>竞争对手与替代方案研究</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">销售只盯同类产品，容易忽略客户继续手工处理、自建、外包或暂不行动这些真实替代方案。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「007 竞争对手与替代方案研究」这项销售工作。
+
+【场景背景】
+销售只盯同类产品，容易忽略客户继续手工处理、自建、外包或暂不行动这些真实替代方案。
+
+【任务与要求】
+收集竞品官方资料、客户反馈和现有做法，按能力、适用场景、实施条件、服务和风险比较。你应标明来源和日期，区分公开事实与内部判断，不编造对手缺点，也不生成无法证明的贬损话术。
+除了同类产品，还要纳入客户自建、外包、人工处理和暂不行动。最终形成对比表、客户选择不同方案的条件和需要继续核实的问题，销售据此准备差异化说明，而非背诵竞品攻击话术。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc008">
+  <div class="scene-head">
+    <span class="scene-num">008</span>
+    <h3>拜访前客户情报简报</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">客户资料分散，销售临出发才翻聊天记录，容易忘记历史承诺和本次拜访目的。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「008 拜访前客户情报简报」这项销售工作。
+
+【场景背景】
+客户资料分散，销售临出发才翻聊天记录，容易忘记历史承诺和本次拜访目的。
+
+【任务与要求】
+把企业研究、联系人、历史沟通、当前商机、产品资料和会议目标交给 AI，压缩成一页简报：已知事实、关键角色、核心假设、本次问题、可用案例、风险和希望确认的下一步。客户最新情况仍需销售核实。
+简报还应列出上次双方承诺、这次需要携带的材料和不能现场承诺的事项。会前由参会销售逐条确认，会后将新信息回填，避免下次继续使用已经失效的背景和关系判断。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+</section>
+<section class="chapter" id="sec-2">
+<h2 class="chapter-title">三、客户画像与线索获取</h2>
+<p class="chapter-intro">这一阶段先明确什么客户值得寻找，再从公开渠道、活动和合作伙伴中取得线索。所有名单都要保留来源与日期，公开出现的企业或联系人不代表已经授权联系，更不代表存在采购意向。</p>
+
+<div class="scene-card" id="sc009">
+  <div class="scene-head">
+    <span class="scene-num">009</span>
+    <h3>理想客户画像与排除标准</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">“大企业”“有预算”这类画像过于宽泛，无法指导获客，还会让团队把不适合交付的客户也当成重点。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「009 理想客户画像与排除标准」这项销售工作。
+
+【场景背景】
+“大企业”“有预算”这类画像过于宽泛，无法指导获客，还会让团队把不适合交付的客户也当成重点。
+
+【任务与要求】
+结合已成交、流失和交付困难案例，整理行业、规模、业务问题、触发事件、购买条件、交付适配和排除因素。请你为每项标准保留证据和待验证问题，画像用于筛选方向，不给单个客户自动下结论。
+最终画像应同时包含“适合谁”和“暂时不适合谁”，并说明每项标准为什么影响销售或交付。可以拿历史客户回测，检查画像是否只是在描述已经成交的大客户，还是确实能帮助团队减少无效投入。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc010">
+  <div class="scene-head">
+    <span class="scene-num">010</span>
+    <h3>公开渠道潜在客户名单收集</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">公开搜索很容易得到大量公司名称，但其中可能有重复、过期或与目标画像无关的信息。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「010 公开渠道潜在客户名单收集」这项销售工作。
+
+【场景背景】
+公开搜索很容易得到大量公司名称，但其中可能有重复、过期或与目标画像无关的信息。
+
+【任务与要求】
+先确定地区、行业、规模和公开触发信号，再从合规公开来源收集公司、来源链接、发布日期和匹配依据。你负责整理与初筛，销售逐条核验企业是否真实、当前是否相关；公开出现不等于有采购意向。
+名单至少保留企业名称、官网、所在地区、业务简介、命中条件和原始链接，并把重复、注销、信息过期和无法确认的企业分开。私人联系方式和来源不明的数据不要补入，更不能生成虚构联系人。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc011">
+  <div class="scene-head">
+    <span class="scene-num">011</span>
+    <h3>展会、活动与名片线索整理</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">活动结束后，名片、签到表和现场笔记分散，重要承诺和跟进时间容易丢失。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「011 展会、活动与名片线索整理」这项销售工作。
+
+【场景背景】
+活动结束后，名片、签到表和现场笔记分散，重要承诺和跟进时间容易丢失。
+
+【任务与要求】
+把获授权的名单、名片信息和现场记录合并，按公司与联系人去重，提取客户原话、兴趣点、承诺和下一步。你生成待确认的 CRM 草稿和跟进清单，销售核对身份与意向后再写入系统或联系客户。
+整理时还要保留活动名称、时间、负责销售和原始记录位置，区分仅交换名片、明确要求资料和已经约定下一次沟通。完成后核对原始人数与输出记录数，防止漏录或将同名联系人错误合并。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc012">
+  <div class="scene-head">
+    <span class="scene-num">012</span>
+    <h3>转介绍与渠道伙伴线索汇总</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">转介绍常散落在聊天中，介绍人、客户归属和后续反馈没有记录，容易造成重复联系或伙伴争议。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「012 转介绍与渠道伙伴线索汇总」这项销售工作。
+
+【场景背景】
+转介绍常散落在聊天中，介绍人、客户归属和后续反馈没有记录，容易造成重复联系或伙伴争议。
+
+【任务与要求】
+整理介绍人、被介绍客户、时间、背景、授权范围和已约定的归属规则。请你合并重复线索并生成待核实项，明确哪些信息可以向谁披露。客户分配、保护期和返佣仍按正式规则由负责人确认。
+最终台账应同时记录介绍关系、首次有效接触、当前负责人、伙伴反馈和冲突状态。若同一客户被多个渠道提交，先并列展示时间和依据，不能请你自动选择归属或向伙伴透露客户敏感进展。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+</section>
+<section class="chapter" id="sec-3">
+<h2 class="chapter-title">四、线索清洗、评分与分层</h2>
+<p class="chapter-intro">线索进入团队后，需要先解决重复、缺项、口径混乱和无法联系的问题，再讨论评分与分层。评分必须显示依据，分层必须对应不同下一步，不能用一个总分代替销售核实。</p>
+
+<div class="scene-card" id="sc013">
+  <div class="scene-head">
+    <span class="scene-num">013</span>
+    <h3>多来源线索合并、去重与栏目统一</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">同一客户从活动、官网、销售个人表和渠道多次进入，名称和联系方式写法不同，数量被重复计算。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「013 多来源线索合并、去重与栏目统一」这项销售工作。
+
+【场景背景】
+同一客户从活动、官网、销售个人表和渠道多次进入，名称和联系方式写法不同，数量被重复计算。
+
+【任务与要求】
+保留每份原始表和来源，先统一公司名、联系人、电话、日期和来源写法，再按明确规则找出确定重复与疑似重复。你只生成合并建议和冲突清单，人工确认后再写入正式 CRM，不能直接覆盖原记录。
+合并结果要保留原值、统一值、来源文件和原行号，同时将退订、禁止联系、来源不明和可能无效的线索放进隔离清单。完成后核对记录数变化及各来源数量，确保没有把同名不同主体误合并。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc014">
+  <div class="scene-head">
+    <span class="scene-num">014</span>
+    <h3>线索资料完整性检查与公开信息补全</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">线索只有公司名或手机号，销售无法判断是否值得联系；随意补全又可能把同名企业和私人信息混进来。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「014 线索资料完整性检查与公开信息补全」这项销售工作。
+
+【场景背景】
+线索只有公司名或手机号，销售无法判断是否值得联系；随意补全又可能把同名企业和私人信息混进来。
+
+【任务与要求】
+先定义销售真正需要的最少信息，检查每条线索缺什么，再从企业官网和可信公开来源补充企业级资料。每项补充内容保留来源和日期，无法确认的保持空白，不猜测私人手机号、预算或采购计划。
+可以把结果分成“可以开始联系”“需要先补资料”和“信息冲突待核实”三类，并为缺项生成具体查询任务。补全后再次检查企业主体、官网域名和联系人公司是否一致，避免把搜索到的相似企业资料拼错。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc015">
+  <div class="scene-head">
+    <span class="scene-num">015</span>
+    <h3>线索匹配度、价值与意向评分</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">把客户规模、潜在价值和当前意向混成一个总分，会让大企业天然高分，也让礼貌回复被误判为强意向。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「015 线索匹配度、价值与意向评分」这项销售工作。
+
+【场景背景】
+把客户规模、潜在价值和当前意向混成一个总分，会让大企业天然高分，也让礼貌回复被误判为强意向。
+
+【任务与要求】
+分别定义画像匹配、潜在价值和行为意向的证据与权重，请你逐项引用来源，标出未知和矛盾信息。先用历史线索校正规则，再由销售负责人决定优先级；评分不能预测必然成交。
+评分表应展示每个分项、证据、日期、规则版本和人工调整理由，不能只给一个总分。高分但存在合规、交付或回款风险的线索要单独提示，资料缺失也不能简单按零分处理。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc016">
+  <div class="scene-head">
+    <span class="scene-num">016</span>
+    <h3>线索分层、分配与培育策略</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">所有线索都用同一频率跟进，成熟机会得不到足够投入，尚未到时机的客户又被过度打扰。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「016 线索分层、分配与培育策略」这项销售工作。
+
+【场景背景】
+所有线索都用同一频率跟进，成熟机会得不到足够投入，尚未到时机的客户又被过度打扰。
+
+【任务与要求】
+依据匹配度、价值、意向证据、地区和团队能力，将线索分为优先沟通、持续培育、补充资料和暂不投入。你为每层建议目标、内容与复核时间，负责人和跟进频率由团队确认，不自动分配客户。
+分层结果要回答每组线索下一步做什么：高优先线索进入需求确认，待培育线索提供相关材料，信息不足线索先核验。执行一段时间后比较实际推进情况，调整规则，而非长期沿用第一次分类。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc017">
+  <div class="scene-head">
+    <span class="scene-num">017</span>
+    <h3>沉睡线索识别与激活名单</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">长期未联系不一定等于无价值，但一次性批量触达所有旧线索既浪费时间，也可能打扰已经拒绝或退订的人。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「017 沉睡线索识别与激活名单」这项销售工作。
+
+【场景背景】
+长期未联系不一定等于无价值，但一次性批量触达所有旧线索既浪费时间，也可能打扰已经拒绝或退订的人。
+
+【任务与要求】
+结合最后联系、历史需求、停止原因、近期公开变化和合规状态，筛出值得人工复核的候选线索。你生成激活理由和沟通草稿，明确拒绝、退订和无合法联系依据的线索直接排除。
+输出中要保留原始背景、沉睡时长、可能变化信号、建议渠道和停止条件。销售先抽查一小批，记录真实回复，再决定是否扩大；不能把“很久没联系”本身当成值得重新打扰的理由。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+</section>
+<section class="chapter" id="sec-4">
+<h2 class="chapter-title">五、首次触达与初步意向</h2>
+<p class="chapter-intro">首次沟通的目标是验证相关性并获得一个轻量下一步。WorkBuddy 适合根据真实资料准备草稿和整理回复，发送时机、渠道、频率及客户状态仍由销售决定。</p>
+
+<div class="scene-card" id="sc018">
+  <div class="scene-head">
+    <span class="scene-num">018</span>
+    <h3>个性化首次触达内容准备</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">只替换客户姓名的批量开发信缺少真实相关性，也容易编造客户痛点来制造紧迫感。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「018 个性化首次触达内容准备」这项销售工作。
+
+【场景背景】
+只替换客户姓名的批量开发信缺少真实相关性，也容易编造客户痛点来制造紧迫感。
+
+【任务与要求】
+准备目标客户的公开事实、联系理由、可提供价值和期望下一步，请你生成简短触达草稿，并逐句标出依据。销售审核收件人、事实、语气和渠道后亲自发送，不使用未经核验的效果数字。
+同一客户可以准备邮件、微信或电话开场的不同版本，但核心事实和承诺必须一致。发送前检查是否明确说明为什么联系对方、能提供什么相关信息，以及下一步是否足够轻量，避免整段都在介绍自己。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc019">
+  <div class="scene-head">
+    <span class="scene-num">019</span>
+    <h3>客户回复与初步意向分类</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">客户一句“以后再说”可能代表时机不对、无需求或礼貌拒绝，机械分类会导致错误跟进。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「019 客户回复与初步意向分类」这项销售工作。
+
+【场景背景】
+客户一句“以后再说”可能代表时机不对、无需求或礼貌拒绝，机械分类会导致错误跟进。
+
+【任务与要求】
+保留客户原话和上下文，请你区分明确需求、待补信息、暂缓、拒绝、转交他人和无法判断，并列出分类证据及建议下一步。模糊回复保持待确认，正式 CRM 状态和回复内容由销售决定。
+结果应包含回复原文、建议类别、判断依据、需要追问的问题和最晚处理时间。礼貌回应、自动回复和“有空再看”不能直接算成意向；明确拒绝或退订要停止后续触达并按规则记录。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+</section>
+<section class="chapter" id="sec-5">
+<h2 class="chapter-title">六、需求访谈与会议处理</h2>
+<p class="chapter-intro">这组任务负责把客户模糊表达转成可确认的问题、影响、目标和限制。会议记录只是原料，真正有用的结果应包括双方共识、分歧、行动项和仍需客户确认的内容。</p>
+
+<div class="scene-card" id="sc020">
+  <div class="scene-head">
+    <span class="scene-num">020</span>
+    <h3>客户需求访谈提纲与资料清单</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">访谈只问“有什么需求”，容易得到宽泛答案；照着固定问卷逐题念，又会忽略客户真正关心的问题。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「020 客户需求访谈提纲与资料清单」这项销售工作。
+
+【场景背景】
+访谈只问“有什么需求”，容易得到宽泛答案；照着固定问卷逐题念，又会忽略客户真正关心的问题。
+
+【任务与要求】
+结合客户背景、当前流程和会议目标，请你从业务场景、问题表现、影响、目标、限制、决策过程和成功标准设计提纲，并列出会前需要的资料。销售按客户回答调整顺序，不用问题暗示客户接受预设方案。
+提纲应包含主问题、追问、需要验证的已有假设和会议结束前必须确认的事项。会前让参会同事分工谁主持、谁记录、谁回答专业问题；资料不齐时先形成追问清单，不假装已经理解客户需求。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc021">
+  <div class="scene-head">
+    <span class="scene-num">021</span>
+    <h3>客户需求、影响、目标与约束分析</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">客户说“效率低”“想上系统”，这些只是问题入口。直接据此写方案，容易把现象当根因，也可能遗漏预算、时间和现有系统限制。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「021 客户需求、影响、目标与约束分析」这项销售工作。
+
+【场景背景】
+客户说“效率低”“想上系统”，这些只是问题入口。直接据此写方案，容易把现象当根因，也可能遗漏预算、时间和现有系统限制。
+
+【任务与要求】
+把访谈原话、流程资料和业务数据放在一起，请你按现状、问题、影响、目标、限制、成功标准和待确认项整理。事实与推断分开，多个部门观点不一致时并列呈现，再由客户确认需求版本。
+最终应形成需求分析表和待确认问题，而非直接生成解决方案。重点检查问题与影响之间是否有证据、目标能否验收、限制条件是否会改变方案，并将客户尚未确认的内容明确标注。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc022">
+  <div class="scene-head">
+    <span class="scene-num">022</span>
+    <h3>销售会议记录整理与行动项提取</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">会议纪要只记录讨论内容，没有负责人、完成时间和验收结果，会后很快变成无人执行的文字。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「022 销售会议记录整理与行动项提取」这项销售工作。
+
+【场景背景】
+会议纪要只记录讨论内容，没有负责人、完成时间和验收结果，会后很快变成无人执行的文字。
+
+【任务与要求】
+将获授权的录音转写或笔记交给 AI，区分客户原话、我方说明、双方共识、分歧、待确认事项和行动项。每项行动写明责任方、负责人、日期与交付物；模糊承诺保留原话，不擅自补成正式结论。
+整理后要回到录音或原始笔记抽查人名、数字、否定表达和时间。输出会议摘要、完整纪要、行动清单三层内容，分别服务快速阅读、事实追溯和后续执行。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc023">
+  <div class="scene-head">
+    <span class="scene-num">023</span>
+    <h3>需求确认纪要与会后跟进草稿</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">内部会议记录直接发给客户，可能夹杂推测和敏感备注；过度精简又容易漏掉双方真正需要确认的内容。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「023 需求确认纪要与会后跟进草稿」这项销售工作。
+
+【场景背景】
+内部会议记录直接发给客户，可能夹杂推测和敏感备注；过度精简又容易漏掉双方真正需要确认的内容。
+
+【任务与要求】
+基于已核对的会议记录，生成客户可读的背景、已确认需求、待确认问题、双方行动和下一次节点，并单独起草跟进消息。销售逐项核对承诺、收件人和附件后再发送，客户未确认的内容不写成共识。
+内部判断、敏感备注和责任讨论要从客户版本中移除。发送后保留客户确认与修订意见，再同步更新正式纪要和行动台账，避免多个版本同时流转。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+</section>
+<section class="chapter" id="sec-6">
+<h2 class="chapter-title">七、商机资格与推进判断</h2>
+<p class="chapter-intro">客户愿意交流以后，销售还要判断它是否值得进入正式商机、当前处在哪一阶段、缺少什么决策条件。AI 的作用是整理证据和风险，阶段、资源投入和退出仍是业务决定。</p>
+
+<div class="scene-card" id="sc024">
+  <div class="scene-head">
+    <span class="scene-num">024</span>
+    <h3>商机资格判断与阶段建议</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">客户愿意交流不等于形成商机，阶段只凭销售感觉推进，会让漏斗和预测失真。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「024 商机资格判断与阶段建议」这项销售工作。
+
+【场景背景】
+客户愿意交流不等于形成商机，阶段只凭销售感觉推进，会让漏斗和预测失真。
+
+【任务与要求】
+依据企业自己的资格条件，核对问题、影响、预算、决策角色、时间和竞争情况，逐项列出证据、未知和风险。你可以给出建议阶段和缺口，正式阶段、资源投入与退出决定由销售负责人确认。
+输出要说明“为什么建议进入这一阶段”和“还缺什么证据”，并为不合格商机建议培育、暂停或退出。企业尚未统一阶段定义时，应先确认规则，不能请你从历史记录猜出正式标准。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc025">
+  <div class="scene-head">
+    <span class="scene-num">025</span>
+    <h3>客户决策链与关键人分析</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">只围绕一个联系人推进，可能到了报价或签约才发现使用人、技术、财务和最终决策者从未参与。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「025 客户决策链与关键人分析」这项销售工作。
+
+【场景背景】
+只围绕一个联系人推进，可能到了报价或签约才发现使用人、技术、财务和最终决策者从未参与。
+
+【任务与要求】
+从会议、邮件和公开资料中整理角色、关注点、影响力、立场证据和接触状态，形成关系地图与缺口。职位不能自动等同于决策权，敏感关系判断只在内部使用，并通过后续访谈验证。
+关系地图还应标出谁掌握哪类信息、谁能引荐下一位角色、哪些判断已经过期。销售据此安排接触顺序和问题，不自动越级沟通，也不把“愿意交流”写成支持我方方案。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc026">
+  <div class="scene-head">
+    <span class="scene-num">026</span>
+    <h3>商机风险、停滞原因与下一步行动</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">“客户没回复”“项目卡住了”不足以指导行动，销售可能只靠增加联系次数维持表面推进。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「026 商机风险、停滞原因与下一步行动」这项销售工作。
+
+【场景背景】
+“客户没回复”“项目卡住了”不足以指导行动，销售可能只靠增加联系次数维持表面推进。
+
+【任务与要求】
+比较阶段要求、最近客户信号、行动逾期和内部依赖，请你区分关键人、需求、预算、技术、商务、竞争与资源风险。每个原因附证据或标为假设，并设计一个最小验证动作，而不是直接判断商机失败。
+最终风险清单要写清影响、验证问题、负责人和时间，并区分客户侧与我方侧问题。连续没有可验证进展时，应重新评估资格和资源投入，不能用增加拜访次数维持表面状态。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc027">
+  <div class="scene-head">
+    <span class="scene-num">027</span>
+    <h3>商机评审与近期成交判断</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">销售周会容易变成逐人报数字，近期成交判断靠乐观程度，真正缺失的客户证据没有被讨论。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「027 商机评审与近期成交判断」这项销售工作。
+
+【场景背景】
+销售周会容易变成逐人报数字，近期成交判断靠乐观程度，真正缺失的客户证据没有被讨论。
+
+【任务与要求】
+准备当前阶段、客户确认、决策链、预算、方案、报价、合同和下一步，请你生成支持近期成交的证据、反对证据、缺失条件和需要管理层决策的事项。预测只用于内部安排，不能写成确定结果。
+评审材料应让会议聚焦少数关键问题，例如谁还未确认、哪个条件会推迟签约、需要什么内部支持。经理校正判断时保留理由，方便后续比较当时依据与实际结果。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+</section>
+<section class="chapter" id="sec-7">
+<h2 class="chapter-title">八、方案、演示与价值表达</h2>
+<p class="chapter-intro">方案阶段要把客户问题与真实产品能力连接起来，并把适用条件和限制讲清楚。文案写得完整不代表能力已经确认，所有参数、案例、周期和承诺都要回到批准资料。</p>
+
+<div class="scene-card" id="sc028">
+  <div class="scene-head">
+    <span class="scene-num">028</span>
+    <h3>客户问题与产品能力匹配表</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">方案从产品功能清单开始，容易把客户未确认的问题和产品尚不具备的能力一起写进去。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「028 客户问题与产品能力匹配表」这项销售工作。
+
+【场景背景】
+方案从产品功能清单开始，容易把客户未确认的问题和产品尚不具备的能力一起写进去。
+
+【任务与要求】
+将客户问题、影响和目标逐项对应到当前产品能力、适用条件、限制、证据和待验证内容。你输出可直接支持、需配置或定制、暂不支持三类结果；产品负责人核对后再进入方案。
+匹配表要保留客户原话和产品资料位置，避免销售把相似功能写成已经满足。需要配置、接口或第三方能力的项目单独列出依赖、成本和验证方式。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc029">
+  <div class="scene-head">
+    <span class="scene-num">029</span>
+    <h3>定制销售方案或建议书初稿</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">每份方案从空白开始耗时很长，照搬旧方案又容易带入其他客户的事实和承诺。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「029 定制销售方案或建议书初稿」这项销售工作。
+
+【场景背景】
+每份方案从空白开始耗时很长，照搬旧方案又容易带入其他客户的事实和承诺。
+
+【任务与要求】
+基于已确认需求和能力匹配表，请你生成客户背景、问题、目标方案、实施范围、阶段、双方责任、验收和风险草稿。所有价格、工期、参数、案例效果和交付承诺都要回到批准资料核对。
+可以先生成目录和证据清单，经销售、产品和交付确认后再扩成正文。最终方案应同时写清包含与不包含内容、客户需要提供什么，以及哪些结论仍需测试，避免文案完整掩盖事实缺口。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc030">
+  <div class="scene-head">
+    <span class="scene-num">030</span>
+    <h3>面向不同客户角色改写方案</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">同一份长方案同时发给老板、业务、技术和采购，每个人都很难快速找到自己关心的内容。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「030 面向不同客户角色改写方案」这项销售工作。
+
+【场景背景】
+同一份长方案同时发给老板、业务、技术和采购，每个人都很难快速找到自己关心的内容。
+
+【任务与要求】
+保持事实和承诺一致，分别为管理者突出目标、价值与决策，为业务突出流程改变，为技术突出条件与风险，为采购突出范围和商务边界。你负责重组表达，不能为迎合不同角色改变数字或承诺。
+改写后应建立一张版本对照表，检查产品名称、范围、价格、时间和案例在各版本中是否一致。每一版都要明确读者看完需要做什么，不能只是把长方案机械删短。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc031">
+  <div class="scene-head">
+    <span class="scene-num">031</span>
+    <h3>客户演示流程与讲解脚本</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">产品演示按菜单逐项讲功能，客户看完仍不知道与自己的工作有什么关系。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「031 客户演示流程与讲解脚本」这项销售工作。
+
+【场景背景】
+产品演示按菜单逐项讲功能，客户看完仍不知道与自己的工作有什么关系。
+
+【任务与要求】
+从客户最关心的一条工作链出发，设计开场、问题回顾、场景演示、关键结果、限制说明和下一步。为每个环节准备演示数据、讲解要点和失败备用方案；正式演示前用脱敏材料完整试跑。
+演示脚本还要写明每一步希望客户确认的问题，以及不同角色关注什么。现场出现环境或数据异常时切换备用材料，不能为了继续演示而把测试结果说成生产能力。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc032">
+  <div class="scene-head">
+    <span class="scene-num">032</span>
+    <h3>客户案例筛选与适配说明</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">行业相同不代表案例可复制，省略实施条件和差异会让案例变成不可靠的效果承诺。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「032 客户案例筛选与适配说明」这项销售工作。
+
+【场景背景】
+行业相同不代表案例可复制，省略实施条件和差异会让案例变成不可靠的效果承诺。
+
+【任务与要求】
+按客户问题、规模、流程、产品、实施条件和结果口径筛选案例，说明相似点、差异、能证明什么和不能证明什么。你帮助比较，销售只使用已授权案例，不把历史结果承诺给当前客户。
+最终案例卡应包含背景、问题、做法、结果、数据口径、适用前提和授权范围。若案例只有结果数字却缺少过程和条件，应降级为线索材料，不作为方案核心证据。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc033">
+  <div class="scene-head">
+    <span class="scene-num">033</span>
+    <h3>产品功能转客户价值说明</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">销售只讲“支持自动化、智能分析”，客户很难理解功能会改变哪一步工作，又需要什么条件。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「033 产品功能转客户价值说明」这项销售工作。
+
+【场景背景】
+销售只讲“支持自动化、智能分析”，客户很难理解功能会改变哪一步工作，又需要什么条件。
+
+【任务与要求】
+把每项功能连接到客户当前动作、问题、改变方式、可观察结果和实施前提。你生成多种表达时，要保留限制和人工责任；没有客户数据支撑时，不给出确定的节省比例或收益金额。
+输出可以按老板、业务和一线使用者分别表述，但都要说明“原来谁怎么做、哪一步改变、怎样验收”。功能无法直接对应当前问题时，不要硬凑价值点。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc034">
+  <div class="scene-head">
+    <span class="scene-num">034</span>
+    <h3>方案事实、参数与承诺检查</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">多人共同修改方案后，产品参数、报价、案例和实施范围可能互相矛盾，营销表达也可能越过交付能力。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「034 方案事实、参数与承诺检查」这项销售工作。
+
+【场景背景】
+多人共同修改方案后，产品参数、报价、案例和实施范围可能互相矛盾，营销表达也可能越过交付能力。
+
+【任务与要求】
+将方案逐项对照当前产品资料、批准报价、合同模板和案例授权，列出有依据、冲突、缺失和越权承诺。你只给出问题位置与修改建议，产品、交付、商务和法务分别确认自己的部分。
+检查表要覆盖产品名称、参数、范围、接口、实施条件、周期、价格和案例表述，并引用权威来源。修订后再次核对受影响段落，防止只改正文而遗漏图表、摘要和附件。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+</section>
+<section class="chapter" id="sec-8">
+<h2 class="chapter-title">九、报价、投标与商务材料</h2>
+<p class="chapter-intro">报价和投标涉及大量明细、版本与跨部门协作，最适合用 WorkBuddy 做提取、对照、清单和一致性检查。定价、折扣、法律判断和最终提交始终保留专业人员审批。</p>
+
+<div class="scene-card" id="sc035">
+  <div class="scene-head">
+    <span class="scene-num">035</span>
+    <h3>客户询价信息提取与缺项检查</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">客户询价散落在邮件、附件和聊天中，型号、数量、单位、交付地或税务要求缺一项，报价就可能整体返工。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「035 客户询价信息提取与缺项检查」这项销售工作。
+
+【场景背景】
+客户询价散落在邮件、附件和聊天中，型号、数量、单位、交付地或税务要求缺一项，报价就可能整体返工。
+
+【任务与要求】
+请你从原始询价中提取产品、规格、数量、单位、交期、地点、税务和商务条件，并保留原文位置。无法确认的内容进入缺项清单，由销售向客户确认，不自行猜测型号和数量。
+输出应区分客户明确提出、附件推断和企业内部待定三类信息。多份邮件或附件冲突时并列展示版本与时间，确认前不要进入定价和报价生成。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc036">
+  <div class="scene-head">
+    <span class="scene-num">036</span>
+    <h3>产品配置、价格与客户规则匹配</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">知道客户要什么，并不代表可以直接套用价格表；配置、区域、客户等级和审批条件可能互相影响。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「036 产品配置、价格与客户规则匹配」这项销售工作。
+
+【场景背景】
+知道客户要什么，并不代表可以直接套用价格表；配置、区域、客户等级和审批条件可能互相影响。
+
+【任务与要求】
+把已确认需求与当前产品目录、价格政策、折扣权限和客户规则逐项匹配，列出适用配置、标准价格、需审批项目和冲突。你只生成匹配底稿，最终配置与价格由产品和商务负责人确认。
+底稿要保留价格表版本、生效日期、区域、客户等级和组合规则。找不到完全匹配的配置时列出差异和待审批项，不从相似产品价格自行推算。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc037">
+  <div class="scene-head">
+    <span class="scene-num">037</span>
+    <h3>标准报价单草稿生成</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">人工复制报价模板容易漏项、错单位，或把旧客户价格带进新报价。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「037 标准报价单草稿生成」这项销售工作。
+
+【场景背景】
+人工复制报价模板容易漏项、错单位，或把旧客户价格带进新报价。
+
+【任务与要求】
+使用批准模板，将已确认的配置、数量、单价、税率、有效期、付款和交付条件生成报价草稿，并保留价格来源与版本。销售和审批人复核计算、客户名称与附件后再发送，你不自动发报价。
+生成后重新计算行金额、折扣、税额和总额，核对币种、单位及大小写金额。不同客户版本独立保存，避免旧价格、旧收件人或其他客户信息残留。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc038">
+  <div class="scene-head">
+    <span class="scene-num">038</span>
+    <h3>多版本报价方案比较</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">基础版、推荐版和扩展版只改总价，客户看不出范围、条件与风险差异，内部也难判断让步代价。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「038 多版本报价方案比较」这项销售工作。
+
+【场景背景】
+基础版、推荐版和扩展版只改总价，客户看不出范围、条件与风险差异，内部也难判断让步代价。
+
+【任务与要求】
+请你在相同口径下比较功能范围、数量、服务、实施、价格、付款、交期和限制，明确每版适合什么条件。版本差异必须来自批准配置和政策，不能为了拉开梯度虚构权益。
+最终对比表应让客户和内部审批者一眼看到“多花或少花的钱换来了什么”。同时检查最低版本是否仍能交付基本目标，最高版本是否超出真实能力。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc039">
+  <div class="scene-head">
+    <span class="scene-num">039</span>
+    <h3>报价金额、条件与完整性检查</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">报价总额算对了，仍可能存在数量乘价错误、税费遗漏、有效期冲突或正文与附件不一致。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「039 报价金额、条件与完整性检查」这项销售工作。
+
+【场景背景】
+报价总额算对了，仍可能存在数量乘价错误、税费遗漏、有效期冲突或正文与附件不一致。
+
+【任务与要求】
+对照询价、配置、价格表和审批记录，重新计算明细、折扣、税费与总额，并检查交付、付款、有效期和附件。你标出差异与未知，不能自行修改价格、批准折扣或把未知费用填成零。
+检查完成后输出问题位置、原值、依据、建议处理人和严重程度。所有修改应回到报价源文件完成，再运行一次核对，不能只在检查报告中写“已修正”。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc040">
+  <div class="scene-head">
+    <span class="scene-num">040</span>
+    <h3>招标文件要求与废标风险提取</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">招标要求分散在正文、附件、表格、脚注和澄清文件中，漏掉签章、格式或截止时间可能直接影响投标有效性。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「040 招标文件要求与废标风险提取」这项销售工作。
+
+【场景背景】
+招标要求分散在正文、附件、表格、脚注和澄清文件中，漏掉签章、格式或截止时间可能直接影响投标有效性。
+
+【任务与要求】
+逐份登记文件版本，请你按资格、技术、商务、报价、格式、递交和时间提取要求，附页码与原文，并标出冲突和待澄清项。投标、法务和技术人员仍需逐章终审，你不能作废标结论。
+除了正文，还要覆盖附件、表格、脚注和后续澄清。最终形成要求矩阵和高风险清单，签章、密封、平台上传与截止时间必须由投标专员按原文件确认。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc041">
+  <div class="scene-head">
+    <span class="scene-num">041</span>
+    <h3>投标材料清单、分工与时间表</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">投标文件多、参与部门多，只有一个截止日期会导致证照、技术方案和报价集中到最后补。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「041 投标材料清单、分工与时间表」这项销售工作。
+
+【场景背景】
+投标文件多、参与部门多，只有一个截止日期会导致证照、技术方案和报价集中到最后补。
+
+【任务与要求】
+把招标要求转成材料、来源、负责人、审核人、前置条件和内部截止时间，生成倒排计划。你提醒缺项和依赖，项目负责人确认资源并持续更新状态，不能把“已分配”当成“已完成”。
+计划要预留合稿、校对、签章和上传时间，并明确技术、商务、法务之间的依赖。每天更新实际状态和阻塞原因，临近截止仍缺材料时立即升级，而非继续生成普通提醒。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc042">
+  <div class="scene-head">
+    <span class="scene-num">042</span>
+    <h3>投标应答覆盖与前后一致性检查</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">技术、商务和报价由不同人员编写，容易出现漏答、参数冲突、名称不一致或一处承诺另一处保留。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「042 投标应答覆盖与前后一致性检查」这项销售工作。
+
+【场景背景】
+技术、商务和报价由不同人员编写，容易出现漏答、参数冲突、名称不一致或一处承诺另一处保留。
+
+【任务与要求】
+建立招标要求与应答位置的对应表，检查每项是否覆盖、是否附证据，并横向比较正文、偏离表、报价和附件。你标出问题，专业人员确认修改，不能只看关键词命中就判定满足。
+每项应答至少记录原要求、强制程度、应答结论、所在页码和支持附件。修改一处参数或承诺后，要反查所有引用位置，防止技术、商务和报价口径再次分叉。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc043">
+  <div class="scene-head">
+    <span class="scene-num">043</span>
+    <h3>投标合同条款偏离与内部决策清单</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">合同条款散在招标文件中，销售可能在未评估责任、付款和违约风险前默认接受。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「043 投标合同条款偏离与内部决策清单」这项销售工作。
+
+【场景背景】
+合同条款散在招标文件中，销售可能在未评估责任、付款和违约风险前默认接受。
+
+【任务与要求】
+将招标合同与公司标准条款对照，按付款、验收、交付、知识产权、保密、违约和终止整理偏离，标出影响、建议立场和决策人。法务与管理层决定接受、澄清或保留，你不作法律结论。
+内部清单还要写明每项偏离是否影响价格、资源和交付能力，以及最晚决策时间。未经批准的建议不能直接写进投标承诺，最终结论回填到偏离表和合同版本。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+</section>
+<section class="chapter" id="sec-9">
+<h2 class="chapter-title">十、客户跟进与关系推进</h2>
+<p class="chapter-intro">客户跟进的核心是让每次沟通都产生可验证的下一步。AI 可以整理上下文、双方承诺和提醒清单，但不能代替销售建立关系，也不能未经审核自动触达客户。</p>
+
+<div class="scene-card" id="sc044">
+  <div class="scene-head">
+    <span class="scene-num">044</span>
+    <h3>客户沟通记录与 CRM 跟进草稿</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">销售沟通后只写一句“已联系”，接手人看不到客户说了什么、谁承诺了什么和下一步是什么。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「044 客户沟通记录与 CRM 跟进草稿」这项销售工作。
+
+【场景背景】
+销售沟通后只写一句“已联系”，接手人看不到客户说了什么、谁承诺了什么和下一步是什么。
+
+【任务与要求】
+将获授权的沟通记录整理为客户原话、需求、异议、角色、双方承诺、下一步、负责人和日期，并生成待写入 CRM 的草稿。销售核对客户、商机和阶段后再写入，不请你覆盖正式记录。
+草稿中保留沟通渠道、时间和原始记录位置，把确定事实、客户可能表达和我方判断分开。录入后抽查客户归属和日期，避免一段沟通被错误关联到同名客户。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc045">
+  <div class="scene-head">
+    <span class="scene-num">045</span>
+    <h3>基于客户进展生成下一次跟进内容</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">跟进消息只问“考虑得怎么样”，既没有新价值，也没有回应客户上次关注的问题。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「045 基于客户进展生成下一次跟进内容」这项销售工作。
+
+【场景背景】
+跟进消息只问“考虑得怎么样”，既没有新价值，也没有回应客户上次关注的问题。
+
+【任务与要求】
+结合最近沟通、客户承诺、当前阶段和可提供材料，请你先确定本次唯一主要目的，再起草简洁内容和备选下一步。销售审核事实、语气和时机后亲自发送，不制造虚假紧迫感。
+生成前先判断客户是在等待资料、内部讨论、解决异议还是确认商务条件。内容应回应上次问题并提供一个有价值的新信息，发送后记录客户反馈和新的节点。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc046">
+  <div class="scene-head">
+    <span class="scene-num">046</span>
+    <h3>双方承诺、行动项与跟进节点追踪</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">客户和我方都说了很多“回头给你”，但没有责任人、日期与完成证据，下一次会议只能重复确认。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「046 双方承诺、行动项与跟进节点追踪」这项销售工作。
+
+【场景背景】
+客户和我方都说了很多“回头给你”，但没有责任人、日期与完成证据，下一次会议只能重复确认。
+
+【任务与要求】
+从会议和聊天中提取双方承诺，区分明确承诺、暂定事项和待确认内容，建立事项、责任方、负责人、期限和交付物台账。你生成提醒清单，责任人与对外确认由相关人员决定。
+每次更新要保留状态、完成证据、延期原因和新的日期。客户承诺与我方承诺分别展示，跨部门事项明确内部接收人，避免所有责任都停留在销售名下。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc047">
+  <div class="scene-head">
+    <span class="scene-num">047</span>
+    <h3>今日回访与逾期未跟进清单</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">销售每天靠记忆翻客户，容易漏掉已约好日期的回访，也可能把普通客户排在关键节点之前。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「047 今日回访与逾期未跟进清单」这项销售工作。
+
+【场景背景】
+销售每天靠记忆翻客户，容易漏掉已约好日期的回访，也可能把普通客户排在关键节点之前。
+
+【任务与要求】
+按团队确认的跟进规则筛选今日到期、已经超期和临近报价或合同节点的客户，并附最近沟通、回访目的和建议准备。销售确认联系顺序与方式，清单完成不等于商机已经推进。
+清单还应排除已关闭、明确暂停和禁止联系的客户，合并同一商机的重复提醒。执行后填写实际结果和下一日期，长期逾期事项进入资格或风险复核。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc048">
+  <div class="scene-head">
+    <span class="scene-num">048</span>
+    <h3>长期未回复客户重新触达</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">客户长期沉默后反复发送相同消息，会消耗关系；直接认定丢单，又可能错过时机变化后的机会。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「048 长期未回复客户重新触达」这项销售工作。
+
+【场景背景】
+客户长期沉默后反复发送相同消息，会消耗关系；直接认定丢单，又可能错过时机变化后的机会。
+
+【任务与要求】
+核对最后沟通、沉默前的问题、是否明确拒绝、近期公开变化和联系合规性。你为值得尝试的客户准备带有新信息的轻量触达草稿，明确拒绝或退订者排除，发送仍由销售决定。
+候选名单应说明为什么此时值得重启、准备提供什么新价值，以及几次无回应后停止。先小批量测试真实反馈，再决定是否扩大，避免把激活做成批量骚扰。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc049">
+  <div class="scene-head">
+    <span class="scene-num">049</span>
+    <h3>客户关系地图与关键角色变化更新</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">项目推进过程中，联系人离职、职责变化或新角色加入，旧关系图很快失效。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「049 客户关系地图与关键角色变化更新」这项销售工作。
+
+【场景背景】
+项目推进过程中，联系人离职、职责变化或新角色加入，旧关系图很快失效。
+
+【任务与要求】
+根据最新会议、邮件和公开资料更新使用者、影响者、评估者、预算人与决策者，保留变化来源和待核实项。你提示关键角色空白和关系风险，不根据职位自动判断立场，也不越级联系客户。
+更新前后要保留版本，说明谁发生了什么变化、可能影响哪个决策节点、由谁核实。离职或职责变化等敏感信息必须回到可靠来源，不能凭传闻调整客户策略。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc050">
+  <div class="scene-head">
+    <span class="scene-num">050</span>
+    <h3>重点客户阶段性回顾</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">重点客户资料很多，但管理层仍看不清本期进展、关系变化、关键风险和需要投入的资源。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「050 重点客户阶段性回顾」这项销售工作。
+
+【场景背景】
+重点客户资料很多，但管理层仍看不清本期进展、关系变化、关键风险和需要投入的资源。
+
+【任务与要求】
+将阶段目标、已完成动作、客户反馈、关键人、方案商务进展、风险和下一阶段计划压缩成回顾材料。每项结论附依据，资源投入、阶段调整和对外承诺由销售与主管确认。
+回顾应同时展示本期变化和仍未解决的问题，并明确需要管理层决定的事项。下一阶段计划写到负责人、日期和客户状态变化，不能只列“继续推进”。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+</section>
+<section class="chapter" id="sec-10">
+<h2 class="chapter-title">十一、异议处理与商务谈判</h2>
+<p class="chapter-intro">异议与谈判包含大量语境和权限问题。WorkBuddy 适合帮助销售还原客户原话、准备追问、比较交换条件和记录分歧，现场判断与正式让步仍由有权限的人完成。</p>
+
+<div class="scene-card" id="sc051">
+  <div class="scene-head">
+    <span class="scene-num">051</span>
+    <h3>客户异议原话、类型与真实问题分析</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">客户说“价格高”“再考虑”，销售容易立刻反驳，却没有判断背后是预算、价值、信任、权限还是时机问题。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「051 客户异议原话、类型与真实问题分析」这项销售工作。
+
+【场景背景】
+客户说“价格高”“再考虑”，销售容易立刻反驳，却没有判断背后是预算、价值、信任、权限还是时机问题。
+
+【任务与要求】
+保留异议原话、上下文、提出者和商机阶段，请你区分表面表达、可能原因、已有证据和需要追问的问题。原因没有证据时只能作为假设，不能给客户贴上“没预算”或“没意向”的标签。
+输出异议分析表时，要同时记录客户已经认可的内容、真正阻塞的决定和下一步验证问题。相同一句“价格高”在不同阶段可能含义不同，不能直接套用固定分类。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc052">
+  <div class="scene-head">
+    <span class="scene-num">052</span>
+    <h3>客户异议应对准备</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">临场应对容易变成背话术，同一句回答面对不同角色和真实原因可能完全无效。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「052 客户异议应对准备」这项销售工作。
+
+【场景背景】
+临场应对容易变成背话术，同一句回答面对不同角色和真实原因可能完全无效。
+
+【任务与要求】
+根据异议原话、客户目标、产品证据和权限边界，准备承接、澄清、回应和下一步四部分草稿，并列出不能承诺的内容。销售结合现场对话选择使用，价格、竞品、合同和交付表述仍需核准。
+每种回应都要注明适用前提、可引用证据和希望客户确认什么，并准备客户继续质疑时的追问。回应完成后记录真实反馈，不能用话术是否说完判断异议已经解决。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc053">
+  <div class="scene-head">
+    <span class="scene-num">053</span>
+    <h3>商务谈判准备与让步矩阵</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">没有事先确定底线和交换条件，谈判现场容易只降价格，或者不同人员给出互相冲突的承诺。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「053 商务谈判准备与让步矩阵」这项销售工作。
+
+【场景背景】
+没有事先确定底线和交换条件，谈判现场容易只降价格，或者不同人员给出互相冲突的承诺。
+
+【任务与要求】
+整理双方目标、可谈事项、不可突破项、审批权限和替代方案，请你把价格、付款、范围、交付和服务做成让步矩阵：每项能让什么、换回什么、谁批准。矩阵是内部准备，正式让步必须按权限确认。
+谈判前还应准备理想结果、可接受结果、退出条件和不同情景下的顺序。现场记录客户条件和暂定事项，不能将未经审批的交换方案当场承诺。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc054">
+  <div class="scene-head">
+    <span class="scene-num">054</span>
+    <h3>谈判记录、分歧与暂定事项整理</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">谈判中大量口头表态容易被误写成最终同意，下一轮双方对“已经谈妥什么”产生不同理解。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「054 谈判记录、分歧与暂定事项整理」这项销售工作。
+
+【场景背景】
+谈判中大量口头表态容易被误写成最终同意，下一轮双方对“已经谈妥什么”产生不同理解。
+
+【任务与要求】
+将获授权的记录整理为已确认、仍有分歧、暂定、待内部审批和双方行动，保留关键原话与提出者。你生成内部纪要和对外确认草稿，参会销售核对后再发送，不能假设发言人有最终权限。
+每项分歧要写清当前立场、影响的合同或报价位置、负责人和下一轮讨论时间。对外纪要发出后保留客户修订，最终条款仍以双方正式文件为准。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+</section>
+<section class="chapter" id="sec-11">
+<h2 class="chapter-title">十二、合同、签约、订单与回款</h2>
+<p class="chapter-intro">这一阶段的重点是准确和可追溯。合同摘要、版本差异和节点台账都必须能回到原文；涉及签署、用印、开票、到账和法律判断时，AI 只能提供检查与准备材料。</p>
+
+<div class="scene-card" id="sc055">
+  <div class="scene-head">
+    <span class="scene-num">055</span>
+    <h3>合同关键信息与履约节点提取</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">合同签完后，销售、交付和财务仍可能不知道具体何时交付、怎样验收、何时开票与回款。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「055 合同关键信息与履约节点提取」这项销售工作。
+
+【场景背景】
+合同签完后，销售、交付和财务仍可能不知道具体何时交付、怎样验收、何时开票与回款。
+
+【任务与要求】
+从合同原文提取主体、范围、金额、付款、交付、验收、开票、变更、违约和终止事项，附条款位置并生成履约节点草稿。你不补写缺失日期，也不作法律解释，法务和业务负责人确认后再建正式任务。
+提取结果要关联原文页码或条款号，并将模糊、冲突和依赖附件的内容单独列出。节点表经确认后再分配责任人，不能用摘要替代合同原文。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc056">
+  <div class="scene-head">
+    <span class="scene-num">056</span>
+    <h3>合同版本差异对比</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">来回修订合同后，只看“修订模式”仍可能漏掉附件、表格和整段删除，旧版本也可能被误当作最终版。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「056 合同版本差异对比」这项销售工作。
+
+【场景背景】
+来回修订合同后，只看“修订模式”仍可能漏掉附件、表格和整段删除，旧版本也可能被误当作最终版。
+
+【任务与要求】
+先锁定文件名称、时间和发送方，再逐条比较新增、删除和改写，按商务、交付、法律和附件分类并定位原文。你说明可能影响，不决定接受与否，也不覆盖任何原文件。
+对比不仅覆盖正文，还要检查表格、附件编号、引用条款和签署页。最终输出差异表、重大变更清单和待确认问题，选择哪一版继续由负责人决定。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc057">
+  <div class="scene-head">
+    <span class="scene-num">057</span>
+    <h3>销售合同商务条款初步检查</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">销售最熟悉交易背景，却可能只关注金额，遗漏付款条件、验收前提、服务范围和客户特殊要求。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「057 销售合同商务条款初步检查」这项销售工作。
+
+【场景背景】
+销售最熟悉交易背景，却可能只关注金额，遗漏付款条件、验收前提、服务范围和客户特殊要求。
+
+【任务与要求】
+将合同与已批准报价、方案和商务规则对照，检查主体、金额、税费、付款、交付、验收、续费和退出安排。你生成问题清单与待法务确认项，不能代替法律审查或批准签署。
+每个问题要注明合同位置、对照依据、可能业务影响和应由谁判断。检查完成不代表合同已经通过，销售、财务、交付和法务仍需按职责终审。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc058">
+  <div class="scene-head">
+    <span class="scene-num">058</span>
+    <h3>报价、审批、合同与附件一致性核对</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">每份文件单独看都合理，放在一起却可能出现金额、范围、付款、交期和服务承诺不一致。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「058 报价、审批、合同与附件一致性核对」这项销售工作。
+
+【场景背景】
+每份文件单独看都合理，放在一起却可能出现金额、范围、付款、交期和服务承诺不一致。
+
+【任务与要求】
+建立同一事项的横向对照表，分别引用报价、审批、合同和附件原文，标出一致、冲突、缺失和口径不明。你不根据“多数文件”选择正确答案，责任人确认后再修改正式文件。
+重点核对主体、产品、数量、价格、税费、交付、验收和非标准承诺。修订后再次运行核对，并保留最终权威版本，防止不同团队继续引用旧附件。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc059">
+  <div class="scene-head">
+    <span class="scene-num">059</span>
+    <h3>签约材料完整性检查</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">到了签约才发现主体证照、授权、附件、审批或签署页缺失，会拖延项目并产生版本风险。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「059 签约材料完整性检查」这项销售工作。
+
+【场景背景】
+到了签约才发现主体证照、授权、附件、审批或签署页缺失，会拖延项目并产生版本风险。
+
+【任务与要求】
+依据企业签约清单核对合同正文、附件、报价审批、主体信息、授权材料和签署方式，列出已有、缺失、过期和待确认项。你只能检查材料是否出现，不能验证印章真伪或代替电子签。
+清单要区分签署前必须完成和可在后续补充的事项，注明材料来源、有效期和负责人。正式用印或电子签前，投标、法务与授权人员仍需检查签署主体和最终版本。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc060">
+  <div class="scene-head">
+    <span class="scene-num">060</span>
+    <h3>交付范围、验收条件与责任清单</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">销售承诺散落在方案、合同和聊天里，交付团队接手后才发现范围、客户配合和验收标准不清。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「060 交付范围、验收条件与责任清单」这项销售工作。
+
+【场景背景】
+销售承诺散落在方案、合同和聊天里，交付团队接手后才发现范围、客户配合和验收标准不清。
+
+【任务与要求】
+把合同、附件、最终方案和已确认变更对照，整理交付物、不包含内容、双方责任、前置条件、里程碑和验收证据。口头承诺单独列出待确认，不自动扩大合同范围。
+最终责任清单要说明谁提供数据、谁配置、谁测试、谁验收，以及未满足前置条件会影响什么。销售和交付共同确认后再用于启动会，分歧未解决前不要写成确定范围。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc061">
+  <div class="scene-head">
+    <span class="scene-num">061</span>
+    <h3>开票与回款节点台账</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">合同金额不等于已开票或已到账，销售台账、发票和银行记录不同步时，很难判断真正差额。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「061 开票与回款节点台账」这项销售工作。
+
+【场景背景】
+合同金额不等于已开票或已到账，销售台账、发票和银行记录不同步时，很难判断真正差额。
+
+【任务与要求】
+按合同和付款节点整理应收、开票条件、计划日期、已开票、已到账和差额，并保留合同、发票和财务记录来源。你可以生成核对清单，正式开票、到账认定和催款由财务与销售执行。
+台账应支持按客户、合同和节点回查，并单列部分付款、抵扣、退款和不明款项。完成后与财务正式记录核对总额，个人销售表不能覆盖到账状态。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc062">
+  <div class="scene-head">
+    <span class="scene-num">062</span>
+    <h3>逾期应收分层与催收优先级</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">只按逾期天数批量催款，会忽略争议、验收、发票和客户关系差异，也可能错误判断客户信用。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「062 逾期应收分层与催收优先级」这项销售工作。
+
+【场景背景】
+只按逾期天数批量催款，会忽略争议、验收、发票和客户关系差异，也可能错误判断客户信用。
+
+【任务与要求】
+结合合同到期日、到账、争议、承诺付款日、客户反馈和业务影响，将应收分为待核对、正常提醒、重点协同和管理升级。你提供排序与沟通准备，不自动发催款消息、暂停交付或启动法律行动。
+每笔应收要显示账龄口径、未收原因证据、客户承诺和建议责任人。涉及争议、信用或法律行动时交给财务与法务，不能仅凭逾期天数给客户定性。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+</section>
+<section class="chapter" id="sec-12">
+<h2 class="chapter-title">十三、成交交接、续约与增购</h2>
+<p class="chapter-intro">成交以后，销售工作进入承诺交接、价值实现和客户长期经营。所有增购与续约判断都要建立在客户确认、交付事实和真实需求上，不能把使用数据直接解释成购买意向。</p>
+
+<div class="scene-card" id="sc063">
+  <div class="scene-head">
+    <span class="scene-num">063</span>
+    <h3>成交客户内部交接包生成</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">成交后只把合同扔给交付，客户背景、关键人、成功标准和销售沟通中的风险会在交接中丢失。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「063 成交客户内部交接包生成」这项销售工作。
+
+【场景背景】
+成交后只把合同扔给交付，客户背景、关键人、成功标准和销售沟通中的风险会在交接中丢失。
+
+【任务与要求】
+汇总合同、最终方案、客户目标、范围、关键人、双方承诺、风险和近期节点，形成销售、交付和客户成功共同确认的交接包。未经确认的口头承诺单独列出，不能直接写入交付范围。
+交接包还要包括订单信息、开票要求、沟通偏好、未决问题和原始资料入口。交接会议逐项确认，记录接收人和补充期限，不能以文件已发送代替交接完成。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc064">
+  <div class="scene-head">
+    <span class="scene-num">064</span>
+    <h3>客户健康与价值实现回顾</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">客户成功只看是否投诉或是否续费，往往到期前才发现使用不足、目标未达或关键人变化。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「064 客户健康与价值实现回顾」这项销售工作。
+
+【场景背景】
+客户成功只看是否投诉或是否续费，往往到期前才发现使用不足、目标未达或关键人变化。
+
+【任务与要求】
+结合合同目标、交付里程碑、使用与服务记录、客户反馈和未解决问题，按已实现价值、风险和下一步整理回顾。你只根据可用证据提示，健康状态和客户沟通由负责人确认。
+回顾要把“已完成交付”和“客户确认获得价值”分开，并列出证据不足的结论。最终形成客户沟通材料、内部风险清单和下一阶段行动，而非只给红黄绿状态。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc065">
+  <div class="scene-head">
+    <span class="scene-num">065</span>
+    <h3>续约与流失风险识别</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">续约风险常凭客户经理感觉判断，合同到期、使用下降、问题积压和关系变化没有被放在一起看。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「065 续约与流失风险识别」这项销售工作。
+
+【场景背景】
+续约风险常凭客户经理感觉判断，合同到期、使用下降、问题积压和关系变化没有被放在一起看。
+
+【任务与要求】
+统一合同制续约和非合同制复购的观察窗口，汇总到期日、使用、服务、付款、客户反馈和关键人变化。你为每个风险附证据和待核实项，不把风险分写成客户一定流失。
+输出要说明触发信号、可能影响、最近一次客户确认和建议核实动作。风险规则先用历史案例校准，大量客户突然升高时先检查数据或规则变化。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc066">
+  <div class="scene-head">
+    <span class="scene-num">066</span>
+    <h3>正常续约沟通材料准备</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">续约沟通如果只提醒到期和报价，客户很难回顾已获得的价值，也看不到下一阶段安排。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「066 正常续约沟通材料准备」这项销售工作。
+
+【场景背景】
+续约沟通如果只提醒到期和报价，客户很难回顾已获得的价值，也看不到下一阶段安排。
+
+【任务与要求】
+整理合同范围、已完成成果、客户确认、未完成问题和下一周期计划，形成回顾与续约讨论草稿。未经核实的效果不写入材料，价格和续约条件按正式政策审批。
+材料应先讲双方已确认的价值和遗留问题，再进入下一阶段范围、时间与需要客户决定的事项。销售核对联系人、合同状态和报价版本后再使用。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc067">
+  <div class="scene-head">
+    <span class="scene-num">067</span>
+    <h3>高风险客户挽回方案准备</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">发现客户风险后立刻降价或高层拜访，可能没有处理真正问题，还会造成新的无法兑现承诺。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「067 高风险客户挽回方案准备」这项销售工作。
+
+【场景背景】
+发现客户风险后立刻降价或高层拜访，可能没有处理真正问题，还会造成新的无法兑现承诺。
+
+【任务与要求】
+先核对客户原话、服务问题、价值缺口、合同与关系变化，再区分可解决、需协商和无法控制的原因。你生成备选挽回动作、资源和风险，客户负责人决定沟通与升级方式。
+每套方案写清目标、投入、审批、客户需要配合什么以及停止条件。高风险不等于立即降价或高层介入，先验证原因，再选择正常沟通、专项解决或管理升级。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc068">
+  <div class="scene-head">
+    <span class="scene-num">068</span>
+    <h3>增购与交叉销售机会识别</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">看到客户使用良好就推更多产品，容易忽略实际需求、交付能力和客户时机。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「068 增购与交叉销售机会识别」这项销售工作。
+
+【场景背景】
+看到客户使用良好就推更多产品，容易忽略实际需求、交付能力和客户时机。
+
+【任务与要求】
+从已实现价值、尚未解决的问题、业务变化和已有产品边界中找出候选机会，说明依据、需要验证的问题和可能方案。你只形成机会假设，销售先与客户确认需求，不把使用数据直接等同于购买意向。
+候选清单还要评估交付适配、客户时机、决策角色和现有问题是否已经解决。只有客户确认问题与优先级后，才进入方案和报价流程。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc069">
+  <div class="scene-head">
+    <span class="scene-num">069</span>
+    <h3>客户流失原因与挽回结果复盘</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">客户流失后简单归因于价格，会遮住产品、交付、关系、时机和资格判断中的真实问题。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「069 客户流失原因与挽回结果复盘」这项销售工作。
+
+【场景背景】
+客户流失后简单归因于价格，会遮住产品、交付、关系、时机和资格判断中的真实问题。
+
+【任务与要求】
+还原客户原话、关键事件、我方动作、竞争和最终决定，将已确认原因、内部判断和未知分开。同步复盘挽回动作是否改变客户状态，形成流程与知识改进，不把单个案例泛化为全部客户规律。
+复盘产物应包含时间线、原因证据、有效与无效动作、可改进环节和待验证经验。涉及个人责任时必须结合当时资源和规则，不能由 你直接定责。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+</section>
+<section class="chapter" id="sec-13">
+<h2 class="chapter-title">十四、销售数据、预测与复盘</h2>
+<p class="chapter-intro">分析之前先统一数据口径和来源。AI 能计算、对比和发现异常，但原因仍需回到客户、业务和系统记录核实；预测是资源安排依据，不能包装成确定成交。</p>
+
+<div class="scene-card" id="sc070">
+  <div class="scene-head">
+    <span class="scene-num">070</span>
+    <h3>销售数据合并、清洗与口径检查</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">CRM、订单、合同和回款数据直接拼在一起，客户重复、日期不同、金额口径不一，会让后续分析全部失真。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「070 销售数据合并、清洗与口径检查」这项销售工作。
+
+【场景背景】
+CRM、订单、合同和回款数据直接拼在一起，客户重复、日期不同、金额口径不一，会让后续分析全部失真。
+
+【任务与要求】
+先定义客户、商机、订单、签约、开票和回款口径，再保留来源合并、去重并检查缺失、异常和跨系统冲突。你生成待核对清单，不能根据方便自行选择权威数据。
+结果中要保留原表、统一值和关联规则，并核对记录数、金额小计和时间范围。清洗过程不得覆盖原数据，确认后的口径需要形成说明供后续报表复用。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc071">
+  <div class="scene-head">
+    <span class="scene-num">071</span>
+    <h3>销售业绩、结构与区域渠道分析</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">只看总销售额，无法判断增长来自哪个产品、区域、渠道或少数大客户，也看不出结构风险。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「071 销售业绩、结构与区域渠道分析」这项销售工作。
+
+【场景背景】
+只看总销售额，无法判断增长来自哪个产品、区域、渠道或少数大客户，也看不出结构风险。
+
+【任务与要求】
+按一致期间分析金额、数量、客户、产品、区域和渠道，比较本期、上期与目标，并拆出主要贡献和拖累。你描述可观察变化，价格、季节和一次性大单等原因仍需业务核实。
+报告应同时展示总量和结构，避免增长被少数大单掩盖。每个原因结论都附可下钻明细和待业务回答的问题，无法解释的变化明确保留。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc072">
+  <div class="scene-head">
+    <span class="scene-num">072</span>
+    <h3>销售漏斗、阶段停留与周期分析</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">漏斗只统计各阶段数量，会掩盖阶段定义混乱、长期停留和倒退记录，无法指导推进。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「072 销售漏斗、阶段停留与周期分析」这项销售工作。
+
+【场景背景】
+漏斗只统计各阶段数量，会掩盖阶段定义混乱、长期停留和倒退记录，无法指导推进。
+
+【任务与要求】
+统一阶段进入条件和日期，计算进入、转化、流失、停留与完整周期，按产品和客户类型比较。你找出异常阶段和重点商机，不能把相关性写成原因，也不能自动回退阶段。
+分析前检查阶段历史是否完整、重复商机是否剔除、关闭规则是否一致。最终输出瓶颈阶段、长期停留清单和需要验证的流程问题。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc073">
+  <div class="scene-head">
+    <span class="scene-num">073</span>
+    <h3>异常销售数据识别与原因追查</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">销售数据突然升降，可能是业务变化，也可能是重复导入、口径调整或集中补录，直接解读容易误判。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「073 异常销售数据识别与原因追查」这项销售工作。
+
+【场景背景】
+销售数据突然升降，可能是业务变化，也可能是重复导入、口径调整或集中补录，直接解读容易误判。
+
+【任务与要求】
+先按历史范围和业务规则找出异常点，再回查原始记录、系统变更、人员说明和同期事件。你将数据问题、已确认业务原因和待验证假设分开，异常不能直接等同于销售违规。
+每个异常记录指标、期间、影响范围、来源和追查路径。若集中出现在某次导入或口径变更，应先修复数据，再讨论业务原因。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc074">
+  <div class="scene-head">
+    <span class="scene-num">074</span>
+    <h3>销售预测生成与人工校正</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">预测只汇总销售个人判断，数字会随主观乐观程度变化；只靠模型又会忽略客户内部变化。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「074 销售预测生成与人工校正」这项销售工作。
+
+【场景背景】
+预测只汇总销售个人判断，数字会随主观乐观程度变化；只靠模型又会忽略客户内部变化。
+
+【任务与要求】
+结合阶段证据、金额、预计日期、历史周期、客户承诺和风险生成基准预测，同时列出缺失条件。销售经理可以校正，但要记录理由；正式预测和资源安排仍由管理者批准。
+预测应区分已承诺、最佳判断和风险情景，并显示可能延期的重点商机。每期保留预测版本与实际结果，用于改进规则，而非追究销售是否猜对。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc075">
+  <div class="scene-head">
+    <span class="scene-num">075</span>
+    <h3>销售日报生成：从活动记录到问题和次日行动</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">日报逐条罗列电话和拜访数量，管理者看不到结果、问题和第二天需要什么支持。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「075 销售日报生成：从活动记录到问题和次日行动」这项销售工作。
+
+【场景背景】
+日报逐条罗列电话和拜访数量，管理者看不到结果、问题和第二天需要什么支持。
+
+【任务与要求】
+从当天沟通、会议、CRM 变化和行动项中整理已完成、客户信号、商机变化、风险、未完成原因和次日重点。你压缩材料并保留依据，不用活动数量自动评价销售表现。
+日报要突出“客户状态发生了什么变化”和“明天最重要的动作”，并把需要支持的问题单独列出。生成后由销售确认，不自动群发或写入绩效系统。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc076">
+  <div class="scene-head">
+    <span class="scene-num">076</span>
+    <h3>销售周报、月报与重点变化分析</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">周报和月报只是把日报相加，会充满活动数量，却看不出目标差距、结构变化、重点商机和需要管理层解决的问题。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「076 销售周报、月报与重点变化分析」这项销售工作。
+
+【场景背景】
+周报和月报只是把日报相加，会充满活动数量，却看不出目标差距、结构变化、重点商机和需要管理层解决的问题。
+
+【任务与要求】
+统一本期、上期和目标口径，汇总业绩、漏斗、重点客户、风险和上期行动，请你提炼主要变化、可能原因、待核实项与管理议题。原因由业务负责人确认，报告不能自动改变责任人或期限。
+周报侧重近期行动和异常，月报增加结构、周期和趋势。每条结论都应能回到明细，上期行动长期未关闭时进入管理议题。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc077">
+  <div class="scene-head">
+    <span class="scene-num">077</span>
+    <h3>成交与丢单动作复盘</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">复盘只写“关系好”“价格高”，既无法指导下一单，也容易把结果倒推成看似正确的故事。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「077 成交与丢单动作复盘」这项销售工作。
+
+【场景背景】
+复盘只写“关系好”“价格高”，既无法指导下一单，也容易把结果倒推成看似正确的故事。
+
+【任务与要求】
+还原关键事件、客户原话、阶段证据、我方动作、竞争与最终结果，区分有效动作、无效动作、外部因素和未知。你提炼待验证经验，单个案例不能直接升级为团队标准。
+成交和丢单使用同一套框架，避免只研究失败或只包装成功。输出候选动作、适用条件和下次验证计划，再由负责人决定是否沉淀。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc078">
+  <div class="scene-head">
+    <span class="scene-num">078</span>
+    <h3>销售会议议题、材料与行动闭环</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">销售会逐人汇报全部客户，时间很长，真正需要决策和跨部门支持的事项却没有结论。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「078 销售会议议题、材料与行动闭环」这项销售工作。
+
+【场景背景】
+销售会逐人汇报全部客户，时间很长，真正需要决策和跨部门支持的事项却没有结论。
+
+【任务与要求】
+会前从目标差距、重点商机、预测变化、异常数据和逾期行动中筛选议题，为每项准备事实、分歧和需要的决定。会后记录决定、负责人、日期和验收结果，下次会议先检查旧行动是否关闭。
+每个议题应有明确会议出口：确认事实、作出决定或分配核实任务。没有决策价值的常规明细放入会前材料，避免逐人念报表。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc079">
+  <div class="scene-head">
+    <span class="scene-num">079</span>
+    <h3>管理层销售经营简报</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">管理层拿到几十页明细，仍看不清目标能否完成、风险集中在哪里、需要做什么决定。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「079 管理层销售经营简报」这项销售工作。
+
+【场景背景】
+管理层拿到几十页明细，仍看不清目标能否完成、风险集中在哪里、需要做什么决定。
+
+【任务与要求】
+将业绩、结构、漏斗、预测、重点客户、回款和团队问题压缩为一页核心结论及必要附表，每个结论保留数据口径和来源。你可以组织材料，正式经营判断和资源决策由管理层负责。
+简报应明确目标差距、主要变化、最重要风险、需要的决定和建议负责人。管理者需要追问时能够下钻到原始明细，不能用漂亮图表隐藏数据缺口。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+</section>
+<section class="chapter" id="sec-14">
+<h2 class="chapter-title">十五、团队管理与能力提升</h2>
+<p class="chapter-intro">团队管理场景需要同时看结果、过程、业务条件和员工说明。WorkBuddy 可以准备证据、训练材料和辅导问题，评分、奖惩、晋升和纪律处理不能交给模型自动决定。</p>
+
+<div class="scene-card" id="sc080">
+  <div class="scene-head">
+    <span class="scene-num">080</span>
+    <h3>销售人员过程行为分析</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">只看成交额无法发现过程问题，只看电话和拜访数量又会鼓励无效忙碌。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「080 销售人员过程行为分析」这项销售工作。
+
+【场景背景】
+只看成交额无法发现过程问题，只看电话和拜访数量又会鼓励无效忙碌。
+
+【任务与要求】
+结合岗位目标，观察需求确认、关键人覆盖、下一步明确度、阶段证据和承诺完成等过程动作，并与商机情境一起分析。你提示差异和待辅导主题，不根据单一活动量评价态度或绩效。
+分析要比较相似业务条件，并列出支持每项判断的具体记录。最终产物用于找到流程和辅导问题，不能把通话数、拜访数或系统填写数量直接变成员工标签。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc081">
+  <div class="scene-head">
+    <span class="scene-num">081</span>
+    <h3>销售目标进度与差距诊断</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">目标落后时直接要求“多打电话”，没有判断差距来自商机量、转化、客单价、周期还是回款。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「081 销售目标进度与差距诊断」这项销售工作。
+
+【场景背景】
+目标落后时直接要求“多打电话”，没有判断差距来自商机量、转化、客单价、周期还是回款。
+
+【任务与要求】
+把目标、实际、在手商机和历史转化按同一口径拆解，测算缺口来自哪里，并列出数据、流程、能力和资源方面的待验证原因。管理者根据证据选择行动，不把全部差距归因于个人努力。
+输出应包括差距构成、影响最大的环节、可在本周期采取的动作和需要管理层解决的条件。情景测算中的转化率与金额是假设，不写成确定收益。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc082">
+  <div class="scene-head">
+    <span class="scene-num">082</span>
+    <h3>销售一对一辅导准备与跟踪</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">一对一谈话容易凭主管印象泛泛而谈，员工听完不知道该改变哪个具体动作。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「082 销售一对一辅导准备与跟踪」这项销售工作。
+
+【场景背景】
+一对一谈话容易凭主管印象泛泛而谈，员工听完不知道该改变哪个具体动作。
+
+【任务与要求】
+准备近期商机、沟通记录、目标进度、已完成行动和员工自评，请你提炼事实、进步、困难、可讨论问题和候选行动。主管与员工共同确认一两个改进目标、练习方式和复查日期，不把草稿当成正式评价。
+会前材料要区分数据事实、主管观察和员工解释。会后只保留双方确认的行动与支持需求，并在下一次一对一检查实际变化。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc083">
+  <div class="scene-head">
+    <span class="scene-num">083</span>
+    <h3>新人销售学习路径与上岗检查</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">新人只读产品资料和听课，很难证明能否独立完成客户研究、需求访谈、方案准备与系统记录。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「083 新人销售学习路径与上岗检查」这项销售工作。
+
+【场景背景】
+新人只读产品资料和听课，很难证明能否独立完成客户研究、需求访谈、方案准备与系统记录。
+
+【任务与要求】
+按真实销售任务设计产品、客户、流程、合规和工具学习路径，每阶段安排练习、材料和可观察验收。你可生成个性化练习与检查清单，主管通过真实或模拟任务确认上岗，不能仅凭答题分数放行。
+学习路径从基础知识走向客户研究、需求访谈、方案、跟进和系统记录，每阶段都有样例、练习、反馈和补练条件。涉及真实客户前，还要完成数据权限和对外沟通边界检查。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc084">
+  <div class="scene-head">
+    <span class="scene-num">084</span>
+    <h3>AI 客户角色模拟与销售陪练</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">团队培训听懂了方法，面对强势采购、技术质疑或模糊需求时仍不会追问和推进。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「084 AI 客户角色模拟与销售陪练」这项销售工作。
+
+【场景背景】
+团队培训听懂了方法，面对强势采购、技术质疑或模糊需求时仍不会追问和推进。
+
+【任务与要求】
+基于脱敏案例设定客户角色、背景、目标、隐藏顾虑和评价标准，请你与销售进行多轮模拟，并在结束后按提问、倾听、证据和下一步反馈。模拟表现只用于训练，不能替代真实客户验证或直接进入绩效。
+可以逐轮增加模糊需求、价格异议、技术质疑和多角色冲突，但每次只训练少数能力。复盘引用具体对话，给出可重练动作，再使用同一标准比较下一轮变化。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc085">
+  <div class="scene-head">
+    <span class="scene-num">085</span>
+    <h3>销售录音复盘与能力反馈</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">主管无法听完所有录音，销售自我复盘又容易只关注说得是否流畅，忽略客户信号和关键追问。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「085 销售录音复盘与能力反馈」这项销售工作。
+
+【场景背景】
+主管无法听完所有录音，销售自我复盘又容易只关注说得是否流畅，忽略客户信号和关键追问。
+
+【任务与要求】
+在取得合法授权后，将录音转写按开场、发现需求、价值说明、异议和下一步整理，引用原话分析做得好的动作、遗漏和可练习点。主管抽查转写与结论，录音不能未经确认写入人事或绩效系统。
+先核对说话人、关键数字和否定语气，再生成时间线、客户信号、销售动作和反馈。能力建议必须落到具体片段和替代做法，不能推断员工性格或态度。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc086">
+  <div class="scene-head">
+    <span class="scene-num">086</span>
+    <h3>销售绩效复盘材料准备</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">绩效复盘只看结果，可能忽略市场和资源条件；只看过程，又可能把忙碌当成果。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「086 销售绩效复盘材料准备」这项销售工作。
+
+【场景背景】
+绩效复盘只看结果，可能忽略市场和资源条件；只看过程，又可能把忙碌当成果。
+
+【任务与要求】
+按正式制度整理目标结果、质量、关键过程、协作、改进和外部条件，为每项保留证据与员工说明。你生成复盘底稿和待讨论问题，评分、奖金、晋升、调岗和纪律处理由管理者与人事决定。
+材料中要同时保留成果、未达成事项、影响因素和下一周期计划，避免只挑支持某个结论的数据。员工确认事实和补充说明后，管理者再按制度形成正式评价。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+</section>
+<section class="chapter" id="sec-15">
+<h2 class="chapter-title">十六、CRM 与销售流程运营</h2>
+<p class="chapter-intro">CRM 运营关注数据是否可信、动作是否闭环和流程是否真正执行。AI 能生成录入草稿、质量报告和提醒，正式写入、阶段变化、责任认定与规则修改仍由负责人确认。</p>
+
+<div class="scene-card" id="sc087">
+  <div class="scene-head">
+    <span class="scene-num">087</span>
+    <h3>历史客户资料批量整理与去重</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">多年客户表、通讯录和离职员工交接文件重复混杂，直接导入 CRM 会制造大量脏数据。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「087 历史客户资料批量整理与去重」这项销售工作。
+
+【场景背景】
+多年客户表、通讯录和离职员工交接文件重复混杂，直接导入 CRM 会制造大量脏数据。
+
+【任务与要求】
+保留原文件和来源，统一公司、联系人、电话、阶段和日期写法，识别确定重复、疑似重复与冲突记录。你生成合并建议和待核实清单，数据负责人确认后再导入，原始资料不被覆盖。
+导入前先用小批量测试客户编号、联系人关系和历史记录是否正确，导入后核对数量与抽查重点客户。无法确认归属的记录进入隔离区，不强行合并或删除。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc088">
+  <div class="scene-head">
+    <span class="scene-num">088</span>
+    <h3>沟通记录自动整理为 CRM 录入草稿</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">电话、微信和会议结束后靠销售回忆录入，容易遗漏；直接自动写入又可能选错客户、阶段和下一次日期。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「088 沟通记录自动整理为 CRM 录入草稿」这项销售工作。
+
+【场景背景】
+电话、微信和会议结束后靠销售回忆录入，容易遗漏；直接自动写入又可能选错客户、阶段和下一次日期。
+
+【任务与要求】
+从获授权的沟通内容中提取客户原话、需求、预算、角色、异议、承诺和下一步，匹配候选客户并生成待确认草稿。销售核对客户、商机、日期和栏目后再正式写入。
+不确定表达保留原强度，日期歧义、金额和阶段变化单独提示。系统应记录原始沟通位置和确认人，匹配不到客户时只生成待关联记录。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc089">
+  <div class="scene-head">
+    <span class="scene-num">089</span>
+    <h3>CRM 栏目、阶段和必填证据质量检查</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">CRM 有很多记录，却存在缺项、矛盾、过期和没有证据的阶段变化，管理层据此看漏斗和预测会失真。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「089 CRM 栏目、阶段和必填证据质量检查」这项销售工作。
+
+【场景背景】
+CRM 有很多记录，却存在缺项、矛盾、过期和没有证据的阶段变化，管理层据此看漏斗和预测会失真。
+
+【任务与要求】
+依据当前栏目说明、阶段条件和必备证据，检查异常值、跨来源冲突、信息过期和阶段跳转，按负责人生成待补清单。你不自动回退阶段或修改金额，规则变化由销售运营批准。
+检查结果区分格式错误、待补材料、系统不同步和业务例外，并说明可能影响的预测或跟进。整改后用同一规则复查，保留修改前后和确认记录。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc090">
+  <div class="scene-head">
+    <span class="scene-num">090</span>
+    <h3>销售待办、跟进和商务节点提醒</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">客户跟进、报价有效期、合同审批、签约、开票和回款分散在不同系统，关键节点容易被普通待办淹没。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「090 销售待办、跟进和商务节点提醒」这项销售工作。
+
+【场景背景】
+客户跟进、报价有效期、合同审批、签约、开票和回款分散在不同系统，关键节点容易被普通待办淹没。
+
+【任务与要求】
+将未完成事项按今日、超期、近期节点和需要升级分类，附上依据、责任人、影响与建议动作。正式状态以对应系统为准，你不联系客户、不承诺日期，也不代替审批和催款。
+每条提醒写清为什么现在处理、先查看什么、完成后更新哪里。销售执行后关闭或更新事项，每周汇总反复超期和无人负责的问题，用于流程改进。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc091">
+  <div class="scene-head">
+    <span class="scene-num">091</span>
+    <h3>销售流程执行检查</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">有销售流程不等于真实执行，跳步、超期、缺少证据和跨部门责任断点可能长期没人发现。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「091 销售流程执行检查」这项销售工作。
+
+【场景背景】
+有销售流程不等于真实执行，跳步、超期、缺少证据和跨部门责任断点可能长期没人发现。
+
+【任务与要求】
+把阶段条件、必做动作、时限和责任人与商机时间线逐项对照，区分确定偏差、资料缺失和有理由的例外。你输出受影响商机和改进建议，不将所有偏差视为违规，也不自动评价人员。
+检查时使用动作发生当时有效的流程版本，并向责任人核实没有记录的事项。共性偏差需要判断规则、系统、培训或资源问题，再决定整改方式。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc092">
+  <div class="scene-head">
+    <span class="scene-num">092</span>
+    <h3>个人或小团队客户跟进工作台搭建</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">个人销售和小团队使用复杂 CRM 成本高，只用通讯录又缺少阶段、记录和提醒。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「092 个人或小团队客户跟进工作台搭建」这项销售工作。
+
+【场景背景】
+个人销售和小团队使用复杂 CRM 成本高，只用通讯录又缺少阶段、记录和提醒。
+
+【任务与要求】
+用客户、公司、阶段、上次与下次跟进、备注等最少栏目建立客户表，导入去重后设置每日到期与超期清单，再用实际客户试跑。多人权限、复杂审批和审计需求仍应使用正式 CRM。
+先选择少量客户测试新增、更新、提醒和周期汇总，确认阶段名称符合个人流程。正式使用前设置备份和访问权限，不能通过公开链接暴露客户数据。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+</section>
+<section class="chapter" id="sec-16">
+<h2 class="chapter-title">十七、销售知识库与经验沉淀</h2>
+<p class="chapter-intro">知识库的价值取决于资料是否有效、权限是否正确、答案是否可追溯。先确定准入和责任，再整理版本、运行问答、提炼经验并持续复审，避免把知识库做成一个更难搜索的网盘。</p>
+
+<div class="scene-card" id="sc093">
+  <div class="scene-head">
+    <span class="scene-num">093</span>
+    <h3>销售知识库范围、权限和知识类型设计</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">把网盘全部文件交给 AI，旧价格、内部成本、客户合同和未审批政策可能混入回答。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「093 销售知识库范围、权限和知识类型设计」这项销售工作。
+
+【场景背景】
+把网盘全部文件交给 AI，旧价格、内部成本、客户合同和未审批政策可能混入回答。
+
+【任务与要求】
+先选一个业务场景，按客户、产品、流程、案例、竞品和制度建立知识地图，再制定允许、审核后、隔离和禁止入库规则。外部客户、渠道和内部销售使用不同权限，准入与授权由企业负责人确认。
+每类知识还要指定提交人、审核人、可见角色、有效期和失效方式。用真实问题测试不同角色能看到什么，底价、合同和客户敏感资料不进入通用空间。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc094">
+  <div class="scene-head">
+    <span class="scene-num">094</span>
+    <h3>销售资料治理、版本和整理入库</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">原始文件存在重复、旧版、多个叫法、图片和表格，直接上传后很难稳定找到正确答案。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「094 销售资料治理、版本和整理入库」这项销售工作。
+
+【场景背景】
+原始文件存在重复、旧版、多个叫法、图片和表格，直接上传后很难稳定找到正确答案。
+
+【任务与要求】
+确认正式版本，清理噪声但保留生效和作废信息，建立术语表，并按 FAQ、参数、案例、报价和竞品应答分别整理。每项保留来源、版本、有效期、权限和负责人，参数、价格和表格由业务人员抽查。
+FAQ 保持一问一答，参数表保留型号、数值、单位与条件，案例保留背景和适用前提。先用一条产品线和真实问题试查，通过后再扩大入库。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc095">
+  <div class="scene-head">
+    <span class="scene-num">095</span>
+    <h3>销售问答与历史经验检索</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">通用 AI 能快速组织语言，却不知道企业当前价格、最新政策和授权边界，容易把常识写成企业承诺。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「095 销售问答与历史经验检索」这项销售工作。
+
+【场景背景】
+通用 AI 能快速组织语言，却不知道企业当前价格、最新政策和授权边界，容易把常识写成企业承诺。
+
+【任务与要求】
+先确认提问者、产品、客户场景和用途，只在有权限且当前有效的资料中查找。回答列出结论、条件、限制、来源和待确认项；价格、折扣、交期、非标定制和合同问题默认人工复核。
+测试既要包含能回答的问题，也要包含无资料、版本冲突和越权问题。系统能在证据不足时停止并转人工，与找到正确答案同样重要。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc096">
+  <div class="scene-head">
+    <span class="scene-num">096</span>
+    <h3>从复盘和优秀案例中提炼标准动作</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">复盘停在一句“做得好”，经验离开当事人就无法复用；一次成功又可能被错误升级为强制标准。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「096 从复盘和优秀案例中提炼标准动作」这项销售工作。
+
+【场景背景】
+复盘停在一句“做得好”，经验离开当事人就无法复用；一次成功又可能被错误升级为强制标准。
+
+【任务与要求】
+还原背景、时间线、客户原话、关键动作、结果和外部因素，将经验写成适用情形、负责人、动作、完成证据和检查标准。先在相似商机中多次验证，再决定进入流程、话术或训练材料。
+案例卡要保留失败尝试和不适用条件，不能只留下漂亮结果。新销售能够看懂何时做、怎样做、做到什么程度，候选动作才具备进一步验证价值。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+
+<div class="scene-card" id="sc097">
+  <div class="scene-head">
+    <span class="scene-num">097</span>
+    <h3>销售知识库更新、复审和失效管理</h3>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-problem">场景描述 · 解决什么问题</div>
+    <p class="scene-problem">知识库上线后没有人持续维护，新政策没人补、旧价格未失效，销售很快不再信任检索结果。</p>
+  </div>
+  <div class="scene-block">
+    <div class="scene-label label-prompt">提示词 · 复制后粘贴到 WorkBuddy 直接使用</div>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">复制提示词</button>
+      <pre><code>请帮我完成「097 销售知识库更新、复审和失效管理」这项销售工作。
+
+【场景背景】
+知识库上线后没有人持续维护，新政策没人补、旧价格未失效，销售很快不再信任检索结果。
+
+【任务与要求】
+同时建立业务变化触发更新和定期复审，为每项知识设置负责人、版本、有效期和审核记录。到期未确认的内容暂停默认使用，旧版本标记失效并归档；自动同步提高速度，业务审核保证正确。
+每期输出新增、更新、待复核、冲突和失效清单，并从错误回答与未答问题补充知识。提醒已发送不等于已经更新，价格、产品、政策和流程必须由对应负责人审核发布。
+
+【输出要求】
+- 用表格或清单结构化输出，便于逐项核对；
+- 无法确认的信息标注"待确认"，不要编造；
+- 涉及价格、合同、审批、对外发送等正式动作前，结果需由人工复核后使用。</code></pre>
+    </div>
+  </div>
+</div>
+</section>
+    <h2 class="chapter-title">从哪里开始</h2>
+<p>97 个场景不需要一次全部上线。先选一个高频、资料能够取得、结果容易核对、风险可控的任务，例如会议记录、询价缺项检查、客户跟进清单或销售周报。用少量真实材料跑通“输入—处理—人工复核—正式使用—反馈更新”，再扩大范围。</p>
+<p>判断一个场景是否值得继续，不看 AI 写得多快，而看三件事：销售是否减少了重复整理，输出是否能回到可靠证据，关键决定是否仍由正确的人负责。做到这三点，AI 才真正进入销售流程，而不只是多了一个写文案的工具。</p>
+<p>如果你正在负责销售、销售运营或企业 AI 落地，可以先从这 97 项里选出当前最耗时间的一项，再用对应教程跑一轮真实材料。也欢迎把这篇文章转给销售负责人，一起圈出最值得先验证的三个场景。先把一个任务做稳，再谈整条销售链的自动化。</p>
+  </article>
+
+  <footer class="note">清洗自微信公众号「曾俊AI实战笔记」 · 提示词由原文"怎么用"转写，仅调整人称，未改变业务规则</footer>
+</div>
+<script>
+function copyPrompt(btn) {
+  var code = btn.parentElement.querySelector('pre code');
+  var text = code.innerText;
+  function done() {
+    btn.textContent = '已复制 ✓'; btn.classList.add('copied');
+    setTimeout(function() { btn.textContent = '复制提示词'; btn.classList.remove('copied'); }, 1600);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done).catch(function() { fallback(); });
+  } else { fallback(); }
+  function fallback() {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); done(); } catch (e) { alert('复制失败，请手动选择复制'); }
+    document.body.removeChild(ta);
+  }
+}
+</script>
+</body>
+</html>
