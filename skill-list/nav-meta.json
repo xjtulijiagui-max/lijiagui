@@ -1,0 +1,22 @@
+{
+  "id": "skill-list",
+  "title": "Skill 技能分类目录",
+  "shortTitle": "Skill 技能目录",
+  "category": "AI工具与开发",
+  "description": "227 项技能定义、10 个功能分类，包含中文名称、原名与主要功能，支持搜索、侧栏分类和清单下载。",
+  "url": "https://xjtulijiagui-max.github.io/lijiagui/skill-list/",
+  "tags": [
+    "Skill",
+    "技能",
+    "分类目录",
+    "课程",
+    "视频",
+    "开发"
+  ],
+  "type": "资料中心",
+  "client": "通用",
+  "status": "正常",
+  "featured": false,
+  "updated": "2026-10-03",
+  "sourceHash": "d283ce5be893255632c81da95851f2c136bc88cc7602aa51370319ce2f0e5a21"
+}

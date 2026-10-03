@@ -1,0 +1,2791 @@
+{
+  "updated": "2026-10-03",
+  "total": 227,
+  "categories": [
+    {
+      "id": "course",
+      "label": "课程与知识萃取",
+      "icon": "book-open",
+      "count": 18
+    },
+    {
+      "id": "video",
+      "label": "视频与音频",
+      "icon": "clapperboard",
+      "count": 43
+    },
+    {
+      "id": "docs",
+      "label": "文档与交付",
+      "icon": "file-text",
+      "count": 15
+    },
+    {
+      "id": "data",
+      "label": "经营、数据与财务",
+      "icon": "chart-column",
+      "count": 21
+    },
+    {
+      "id": "hr",
+      "label": "人力与组织",
+      "icon": "users",
+      "count": 10
+    },
+    {
+      "id": "content",
+      "label": "营销、写作与思考",
+      "icon": "pen-line",
+      "count": 16
+    },
+    {
+      "id": "collab",
+      "label": "协作与知识库",
+      "icon": "messages-square",
+      "count": 41
+    },
+    {
+      "id": "design",
+      "label": "网页与设计",
+      "icon": "palette",
+      "count": 32
+    },
+    {
+      "id": "dev",
+      "label": "开发与智能体",
+      "icon": "code",
+      "count": 19
+    },
+    {
+      "id": "system",
+      "label": "系统与发布",
+      "icon": "upload",
+      "count": 12
+    }
+  ],
+  "skills": [
+    {
+      "id": "skill-podcast-transcript-txt-public",
+      "name": "podcast-transcript-txt-public",
+      "category": "course",
+      "title": "播客转写公开版",
+      "features": [
+        "提取播客音频",
+        "对接自有转写环境",
+        "整理文本输出"
+      ],
+      "categoryLabel": "课程与知识萃取"
+    },
+    {
+      "id": "skill-podcast-transcript-txt",
+      "name": "podcast-transcript-txt",
+      "category": "course",
+      "title": "播客转写与云文档",
+      "features": [
+        "获取播客内容",
+        "转写与提炼文本",
+        "生成飞书文档"
+      ],
+      "categoryLabel": "课程与知识萃取"
+    },
+    {
+      "id": "skill-lijiagui-ppt",
+      "name": "lijiagui-ppt",
+      "category": "course",
+      "title": "加贵授课 PPT",
+      "features": [
+        "复用原页模块",
+        "应用指定母版",
+        "制作可编辑授课课件"
+      ],
+      "categoryLabel": "课程与知识萃取"
+    },
+    {
+      "id": "skill-pingan-knowledge-extraction",
+      "name": "pingan-knowledge-extraction",
+      "category": "course",
+      "title": "金融机构知识萃取",
+      "features": [
+        "分析业务实践",
+        "提炼规则与经验",
+        "形成培训知识资产"
+      ],
+      "categoryLabel": "课程与知识萃取"
+    },
+    {
+      "id": "skill-proactive-training-ai",
+      "name": "proactive-training-ai",
+      "category": "course",
+      "title": "课程设计智能体",
+      "features": [
+        "梳理培训主题",
+        "组织课程内容",
+        "辅助课程设计"
+      ],
+      "categoryLabel": "课程与知识萃取"
+    },
+    {
+      "id": "skill-course-requirement-recorder",
+      "name": "course-requirement-recorder",
+      "category": "course",
+      "title": "课程需求记录",
+      "features": [
+        "识别需求字段",
+        "提取主题标签",
+        "写入飞书需求库"
+      ],
+      "categoryLabel": "课程与知识萃取"
+    },
+    {
+      "id": "skill-course-outline-generator",
+      "name": "course-outline-generator",
+      "category": "course",
+      "title": "课程需求批量生成大纲",
+      "features": [
+        "读取需求记录",
+        "生成 Word 课纲",
+        "更新处理状态"
+      ],
+      "categoryLabel": "课程与知识萃取"
+    },
+    {
+      "id": "skill-课堂练习网页生成器",
+      "name": "课堂练习网页生成器",
+      "category": "course",
+      "title": "课堂练习网页",
+      "features": [
+        "提取课程原有提示词",
+        "按章节组织练习",
+        "生成 HTML 与发布包"
+      ],
+      "categoryLabel": "课程与知识萃取"
+    },
+    {
+      "id": "skill-课程大纲-ima-lijiagui专用",
+      "name": "课程大纲-ima-lijiagui专用",
+      "category": "course",
+      "title": "李家贵课程大纲",
+      "features": [
+        "分析客户培训需求",
+        "检索 IMA 参考",
+        "生成标准 Word 大纲"
+      ],
+      "categoryLabel": "课程与知识萃取"
+    },
+    {
+      "id": "skill-custom-course-outline",
+      "name": "custom-course-outline",
+      "category": "course",
+      "title": "模板化定制课程大纲",
+      "features": [
+        "解析客户需求",
+        "匹配课程模板",
+        "生成 Word 大纲"
+      ],
+      "categoryLabel": "课程与知识萃取"
+    },
+    {
+      "id": "skill-product-manual",
+      "name": "product-manual",
+      "category": "course",
+      "title": "培训产品手册",
+      "features": [
+        "整合课纲与说课材料",
+        "说明采购与交付",
+        "生成培训产品手册"
+      ],
+      "categoryLabel": "课程与知识萃取"
+    },
+    {
+      "id": "skill-enterprise-ai-scenario-map-skill",
+      "name": "enterprise-ai-scenario-map",
+      "category": "course",
+      "title": "企业 AI 场景地图",
+      "features": [
+        "调研企业业务",
+        "提炼应用场景",
+        "输出 Word 与 HTML 报告"
+      ],
+      "categoryLabel": "课程与知识萃取"
+    },
+    {
+      "id": "skill-course-extractor-perspective",
+      "name": "course-extractor-perspective",
+      "category": "course",
+      "title": "企业课程萃取",
+      "features": [
+        "从访谈提炼模块",
+        "重构教学逻辑",
+        "形成可授课方法"
+      ],
+      "categoryLabel": "课程与知识萃取"
+    },
+    {
+      "id": "skill-knowledge-extraction",
+      "name": "knowledge-extraction",
+      "category": "course",
+      "title": "企业知识萃取",
+      "features": [
+        "访谈业务经验",
+        "提炼规则与方法",
+        "形成结构化知识资产"
+      ],
+      "categoryLabel": "课程与知识萃取"
+    },
+    {
+      "id": "skill-zhongwen-content",
+      "name": "zhongwen-content",
+      "category": "course",
+      "title": "知识萃取报告网页",
+      "features": [
+        "读取结构化萃取数据",
+        "组织中文报告",
+        "生成 HTML 阅读页"
+      ],
+      "categoryLabel": "课程与知识萃取"
+    },
+    {
+      "id": "skill-knowledge-interviewer",
+      "name": "knowledge-interviewer",
+      "category": "course",
+      "title": "知识萃取访谈",
+      "features": [
+        "分析访谈文本",
+        "关联多份材料",
+        "输出结构化萃取数据"
+      ],
+      "categoryLabel": "课程与知识萃取"
+    },
+    {
+      "id": "skill-training-material-searcher",
+      "name": "training-material-searcher",
+      "category": "course",
+      "title": "AI 培训资料检索",
+      "features": [
+        "搜索前沿主题",
+        "查找播客与社交材料",
+        "整理课程素材"
+      ],
+      "categoryLabel": "课程与知识萃取"
+    },
+    {
+      "id": "skill-生成课程大纲-ima",
+      "name": "生成课程大纲-ima",
+      "category": "course",
+      "title": "IMA 课程大纲与课件",
+      "features": [
+        "检索历史课程",
+        "生成模板化 Word",
+        "大纲确认后衔接授课 PPT"
+      ],
+      "categoryLabel": "课程与知识萃取"
+    },
+    {
+      "id": "skill-whiteboard-animation-maker-variant",
+      "name": "whiteboard-animation-maker",
+      "category": "video",
+      "title": "白板手绘讲解视频",
+      "features": [
+        "提炼讲解结构",
+        "绘制文字与图形",
+        "生成配音与竖屏动画"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-podcast-to-audio",
+      "name": "podcast-to-audio",
+      "category": "video",
+      "title": "播客音频提取",
+      "features": [
+        "读取播客链接",
+        "定位音频文件",
+        "下载音频素材"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-video-shotcraft",
+      "name": "video-shotcraft",
+      "category": "video",
+      "title": "产品视频镜头导演",
+      "features": [
+        "选择镜头与模板",
+        "使用真实产品页面",
+        "制作产品宣传成片"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-multicam-sync",
+      "name": "multicam-sync",
+      "category": "video",
+      "title": "多机位素材同步",
+      "features": [
+        "分析拍摄会话",
+        "同步相机与录音",
+        "组织剪辑素材"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-guizang-product-video-skill",
+      "name": "guizang-product-video-skill",
+      "category": "video",
+      "title": "归藏产品视频",
+      "features": [
+        "分析真实产品功能",
+        "制作代码驱动动效",
+        "输出产品与版本宣传片"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-guizang-course-video-skill",
+      "name": "guizang-course-video-skill",
+      "category": "video",
+      "title": "归藏课程视频·李家贵版",
+      "features": [
+        "提炼课程方法",
+        "结合真实课堂证据",
+        "交付课程介绍成片"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-jianying-editor-skill",
+      "name": "jianying-editor",
+      "category": "video",
+      "title": "剪映自动化剪辑",
+      "features": [
+        "导入素材与录屏",
+        "生成字幕与动效",
+        "导出剪辑项目"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-talking-head-guide",
+      "name": "talking-head-guide",
+      "category": "video",
+      "title": "口播与访谈剪辑",
+      "features": [
+        "保留说话节奏",
+        "组织叙事与镜头",
+        "处理访谈和教学视频"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-recording-to-training-video",
+      "name": "recording-to-training-video",
+      "category": "video",
+      "title": "录音重建培训视频",
+      "features": [
+        "按语义组织原声",
+        "匹配与补充课件画面",
+        "校正字幕并输出成片"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-video-translation",
+      "name": "video-translation",
+      "category": "video",
+      "title": "视频翻译与配音",
+      "features": [
+        "翻译语音内容",
+        "生成配音与字幕",
+        "按需同步口型"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-shader-gen",
+      "name": "shader-gen",
+      "category": "video",
+      "title": "视频着色器与调色",
+      "features": [
+        "生成 WebGL 效果",
+        "制作转场与遮罩",
+        "调整视频色彩"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-digital-human",
+      "name": "digital-human",
+      "category": "video",
+      "title": "数字人视频制作",
+      "features": [
+        "使用授权人物形象",
+        "驱动配音或脚本",
+        "管理数字人视频"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-waapi",
+      "name": "waapi",
+      "category": "video",
+      "title": "网页动画视频适配",
+      "features": [
+        "编排 Web Animations 动画",
+        "控制时间轴",
+        "同步视频帧"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-website-to-hyperframes",
+      "name": "website-to-hyperframes",
+      "category": "video",
+      "title": "网页转宣传视频",
+      "features": [
+        "采集真实网页",
+        "组织视频画面",
+        "制作 HyperFrames 视频"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-srt-whiteboard-animation",
+      "name": "srt-whiteboard-animation",
+      "category": "video",
+      "title": "字幕转白板动画",
+      "features": [
+        "按字幕组织画面",
+        "生成手绘线稿",
+        "编排逐笔动画"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-video-gen",
+      "name": "video-gen",
+      "category": "video",
+      "title": "AI 视频片段生成",
+      "features": [
+        "从文字或图片生成视频",
+        "制作首尾帧过渡",
+        "管理生成片段"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-music",
+      "name": "music",
+      "category": "video",
+      "title": "AI 音乐与配乐",
+      "features": [
+        "生成主题与背景音乐",
+        "制作音乐段落",
+        "衔接 ChatCut 配乐"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-animejs",
+      "name": "animejs",
+      "category": "video",
+      "title": "Anime.js 视频动画",
+      "features": [
+        "编排动画时间线",
+        "适配 HyperFrames",
+        "控制逐帧播放"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-product-help",
+      "name": "product-help",
+      "category": "video",
+      "title": "ChatCut 产品帮助",
+      "features": [
+        "查询官方文档",
+        "核对界面与功能",
+        "定位产品使用问题"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-verification",
+      "name": "verification",
+      "category": "video",
+      "title": "ChatCut 成果核验",
+      "features": [
+        "检查时间线",
+        "核对素材与成片",
+        "明确未通过项"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-create-motion-graphics",
+      "name": "create-motion-graphics",
+      "category": "video",
+      "title": "ChatCut 动效制作",
+      "features": [
+        "制作 JSX 动效",
+        "修改动态字卡",
+        "放入剪辑时间线"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-known-errors",
+      "name": "known-errors",
+      "category": "video",
+      "title": "ChatCut 故障诊断",
+      "features": [
+        "分析工具失败",
+        "处理拒绝与异常响应",
+        "定位导入与渲染阻碍"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-widget-forms",
+      "name": "widget-forms",
+      "category": "video",
+      "title": "ChatCut 结构化表单",
+      "features": [
+        "收集制作参数",
+        "组织选项与输入",
+        "辅助视频工作流"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-chatcut-plugin-basics",
+      "name": "chatcut-plugin-basics",
+      "category": "video",
+      "title": "ChatCut 连接与基础流程",
+      "features": [
+        "检查插件授权",
+        "创建与打开项目",
+        "衔接视频制作流程"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-voice",
+      "name": "voice",
+      "category": "video",
+      "title": "ChatCut 配音与音效",
+      "features": [
+        "生成语音与旁白",
+        "使用授权声音",
+        "制作并同步声音效果"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-export",
+      "name": "export",
+      "category": "video",
+      "title": "ChatCut 视频导出",
+      "features": [
+        "发起导出",
+        "等待渲染结果",
+        "核对交付文件"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-asset-import",
+      "name": "asset-import",
+      "category": "video",
+      "title": "ChatCut 素材导入",
+      "features": [
+        "导入本地媒体",
+        "处理下载素材",
+        "重连缺失素材"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-transcription",
+      "name": "transcription",
+      "category": "video",
+      "title": "ChatCut 音视频转写",
+      "features": [
+        "读取素材语音",
+        "生成转写结果",
+        "衔接字幕制作"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-css-animations",
+      "name": "css-animations",
+      "category": "video",
+      "title": "CSS 视频动画",
+      "features": [
+        "编排关键帧",
+        "控制动画时序",
+        "适配 HyperFrames 渲染"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-typegpu",
+      "name": "typegpu",
+      "category": "video",
+      "title": "GPU 视频画面",
+      "features": [
+        "创建 WebGPU 场景",
+        "编写图形效果",
+        "控制确定性画面渲染"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-gsap",
+      "name": "gsap",
+      "category": "video",
+      "title": "GSAP 视频动画",
+      "features": [
+        "编排缓动与时间线",
+        "控制动画节奏",
+        "适配视频渲染"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-hyperframes-registry",
+      "name": "hyperframes-registry",
+      "category": "video",
+      "title": "HyperFrames 复用模块",
+      "features": [
+        "安装模块与组件",
+        "连接动效配置",
+        "复用视频效果"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-hyperframes-cli",
+      "name": "hyperframes-cli",
+      "category": "video",
+      "title": "HyperFrames 工程与渲染",
+      "features": [
+        "初始化视频工程",
+        "执行校验与预览",
+        "渲染和环境诊断"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-contribute-catalog",
+      "name": "contribute-catalog",
+      "category": "video",
+      "title": "HyperFrames 模块贡献",
+      "features": [
+        "编写复用动效块",
+        "创建组件",
+        "整理上游贡献"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-hyperframes",
+      "name": "hyperframes",
+      "category": "video",
+      "title": "HyperFrames 视频创作",
+      "features": [
+        "用 HTML 编排画面",
+        "制作字卡与字幕",
+        "生成视频动画"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-hyperframes-media",
+      "name": "hyperframes-media",
+      "category": "video",
+      "title": "HyperFrames 素材预处理",
+      "features": [
+        "生成语音",
+        "转写音视频",
+        "去除图片背景"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-lottie",
+      "name": "lottie",
+      "category": "video",
+      "title": "Lottie 视频动画",
+      "features": [
+        "嵌入动画文件",
+        "控制动画帧",
+        "适配 HyperFrames"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-remotion-video-toolkit",
+      "name": "remotion-video-toolkit",
+      "category": "video",
+      "title": "Remotion 编程视频工具箱",
+      "features": [
+        "制作动画与数据视频",
+        "处理字幕与素材",
+        "配置渲染输出"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-remotion-best-practices",
+      "name": "remotion-best-practices",
+      "category": "video",
+      "title": "Remotion 视频最佳实践",
+      "features": [
+        "组织 React 视频组件",
+        "编排动画与字幕",
+        "规范视频渲染"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-remotion-to-hyperframes",
+      "name": "remotion-to-hyperframes",
+      "category": "video",
+      "title": "Remotion 转 HyperFrames",
+      "features": [
+        "迁移现有视频结构",
+        "转换组件与动画",
+        "核对转换结果"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-tailwind",
+      "name": "tailwind",
+      "category": "video",
+      "title": "Tailwind 视频样式",
+      "features": [
+        "编写视频布局类",
+        "管理画面样式",
+        "适配 HyperFrames 工程"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-three",
+      "name": "three",
+      "category": "video",
+      "title": "Three.js 视频场景",
+      "features": [
+        "创建三维画面",
+        "控制相机与动画",
+        "适配确定性渲染"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-voicebox",
+      "name": "voicebox",
+      "category": "video",
+      "title": "Voicebox 本地声音",
+      "features": [
+        "选择语音与声音档案",
+        "读取口述记录",
+        "衔接本地语音工作流"
+      ],
+      "categoryLabel": "视频与音频"
+    },
+    {
+      "id": "skill-business-blueprint-from-research",
+      "name": "business-blueprint-from-research",
+      "category": "docs",
+      "title": "电商项目业务蓝图",
+      "features": [
+        "分析调研与访谈",
+        "映射业务范围",
+        "生成客户确认稿"
+      ],
+      "categoryLabel": "文档与交付"
+    },
+    {
+      "id": "skill-markitdown",
+      "name": "markitdown",
+      "category": "docs",
+      "title": "多格式转 Markdown",
+      "features": [
+        "提取文档内容",
+        "转换音视频与网页",
+        "输出 Markdown"
+      ],
+      "categoryLabel": "文档与交付"
+    },
+    {
+      "id": "skill-pptx-generator",
+      "name": "pptx-generator",
+      "category": "docs",
+      "title": "结构化 PPT 生成",
+      "features": [
+        "用 JSON 驱动页面",
+        "制作图表与表格",
+        "生成 PPTX"
+      ],
+      "categoryLabel": "文档与交付"
+    },
+    {
+      "id": "skill-gorden-ppt",
+      "name": "gorden-ppt-skill",
+      "category": "docs",
+      "title": "模板化 PPT 制作",
+      "features": [
+        "复用内置或指定模板",
+        "生成可编辑幻灯片",
+        "检查文字出框"
+      ],
+      "categoryLabel": "文档与交付"
+    },
+    {
+      "id": "skill-bid-proposal-creator",
+      "name": "bid-proposal-creator",
+      "category": "docs",
+      "title": "投标文件生成",
+      "features": [
+        "分析招标要求",
+        "检索相似标书",
+        "生成 Word 投标初稿"
+      ],
+      "categoryLabel": "文档与交付"
+    },
+    {
+      "id": "skill-doc-coauthoring",
+      "name": "doc-coauthoring",
+      "category": "docs",
+      "title": "文档协作写作",
+      "features": [
+        "梳理背景与目标",
+        "组织提案结构",
+        "迭代技术与决策文档"
+      ],
+      "categoryLabel": "文档与交付"
+    },
+    {
+      "id": "skill-htmlify",
+      "name": "htmlify",
+      "category": "docs",
+      "title": "文字与 Markdown 转网页",
+      "features": [
+        "组织文章结构",
+        "生成阅读页面",
+        "优化 HTML 排版"
+      ],
+      "categoryLabel": "文档与交付"
+    },
+    {
+      "id": "skill-gov-funding-application",
+      "name": "gov-funding-application",
+      "category": "docs",
+      "title": "政府资金申报材料",
+      "features": [
+        "解析申报通知",
+        "整理资质与项目材料",
+        "生成申报书"
+      ],
+      "categoryLabel": "文档与交付"
+    },
+    {
+      "id": "skill-payment-cooperation-proposal",
+      "name": "payment-cooperation-proposal",
+      "category": "docs",
+      "title": "支付三方合作方案",
+      "features": [
+        "定义通道与分账",
+        "明确参与方职责",
+        "生成合作方案"
+      ],
+      "categoryLabel": "文档与交付"
+    },
+    {
+      "id": "skill-xlsx",
+      "name": "xlsx",
+      "category": "docs",
+      "title": "Excel 表格处理",
+      "features": [
+        "读写工作簿",
+        "维护公式与格式",
+        "输出可用电子表格"
+      ],
+      "categoryLabel": "文档与交付"
+    },
+    {
+      "id": "skill-md-to-word",
+      "name": "md-to-word",
+      "category": "docs",
+      "title": "Markdown 转 Word",
+      "features": [
+        "转换标题与正文",
+        "整理文档排版",
+        "生成 Word 文件"
+      ],
+      "categoryLabel": "文档与交付"
+    },
+    {
+      "id": "skill-pdf",
+      "name": "pdf",
+      "category": "docs",
+      "title": "PDF 文档处理",
+      "features": [
+        "提取文字与表格",
+        "合并拆分文件",
+        "制作与检查 PDF"
+      ],
+      "categoryLabel": "文档与交付"
+    },
+    {
+      "id": "skill-pptx",
+      "name": "pptx",
+      "category": "docs",
+      "title": "PowerPoint 文档处理",
+      "features": [
+        "读取与编辑幻灯片",
+        "组织内容与版式",
+        "生成可编辑演示文稿"
+      ],
+      "categoryLabel": "文档与交付"
+    },
+    {
+      "id": "skill-docx",
+      "name": "docx",
+      "category": "docs",
+      "title": "Word 文档处理",
+      "features": [
+        "创建与编辑文档",
+        "读取表格内容",
+        "整理正式交付文件"
+      ],
+      "categoryLabel": "文档与交付"
+    },
+    {
+      "id": "skill-workbench-package-phase-a",
+      "name": "workbench-package-phase-a",
+      "category": "docs",
+      "title": "WorkBuddy 定制需求包",
+      "features": [
+        "整理 SOP 与业务资料",
+        "生成规格与模拟样本",
+        "打包工作台需求"
+      ],
+      "categoryLabel": "文档与交付"
+    },
+    {
+      "id": "skill-jinan-metro-bill-refresh",
+      "name": "jinan-metro-bill-refresh",
+      "category": "data",
+      "title": "餐费商城账单刷新",
+      "features": [
+        "整理餐补与主账单",
+        "套用客户模板",
+        "生成账单与验收清单"
+      ],
+      "categoryLabel": "经营、数据与财务"
+    },
+    {
+      "id": "skill-portfolio-daily-pnl",
+      "name": "portfolio-daily-pnl",
+      "category": "data",
+      "title": "持仓盈亏摘要",
+      "features": [
+        "读取持仓表",
+        "核对行情与市值",
+        "计算当日盈亏"
+      ],
+      "categoryLabel": "经营、数据与财务"
+    },
+    {
+      "id": "skill-invoice-collector",
+      "name": "invoice-collector",
+      "category": "data",
+      "title": "电子发票收集",
+      "features": [
+        "检索邮件附件",
+        "下载电子发票",
+        "汇总采集结果"
+      ],
+      "categoryLabel": "经营、数据与财务"
+    },
+    {
+      "id": "skill-invoice-organizer",
+      "name": "invoice-organizer",
+      "category": "data",
+      "title": "电子发票整理",
+      "features": [
+        "提取票面信息",
+        "识别重复与异常",
+        "生成报销汇总表"
+      ],
+      "categoryLabel": "经营、数据与财务"
+    },
+    {
+      "id": "skill-yinsheng-reconciliation-root-cause",
+      "name": "yinsheng-reconciliation-root-cause",
+      "category": "data",
+      "title": "对账差异归因",
+      "features": [
+        "分类对账差异",
+        "归集证据",
+        "分流责任与处理事项"
+      ],
+      "categoryLabel": "经营、数据与财务"
+    },
+    {
+      "id": "skill-gf-stock-f10",
+      "name": "gf-stock-f10",
+      "category": "data",
+      "title": "股票基础资料查询",
+      "features": [
+        "查询公司与板块",
+        "读取上市与行业信息",
+        "整理主营业务资料"
+      ],
+      "categoryLabel": "经营、数据与财务"
+    },
+    {
+      "id": "skill-partner-management-2bdf8a",
+      "name": "partner management",
+      "category": "data",
+      "title": "合作伙伴洞察",
+      "features": [
+        "梳理合作关系",
+        "分析伙伴情况",
+        "形成管理建议"
+      ],
+      "categoryLabel": "经营、数据与财务"
+    },
+    {
+      "id": "skill-biz-ops-cockpit",
+      "name": "biz-ops-cockpit",
+      "category": "data",
+      "title": "经营分析驾驶舱",
+      "features": [
+        "检查数据质量",
+        "计算经营指标",
+        "输出离线分析网页"
+      ],
+      "categoryLabel": "经营、数据与财务"
+    },
+    {
+      "id": "skill-operational-data-anlysis-5aa407",
+      "name": "operational data anlysis",
+      "category": "data",
+      "title": "经营数据分析",
+      "features": [
+        "检查经营数据",
+        "分析业务变化",
+        "整理管理建议"
+      ],
+      "categoryLabel": "经营、数据与财务"
+    },
+    {
+      "id": "skill-hotel-ops-cockpit",
+      "name": "hotel-ops-cockpit",
+      "category": "data",
+      "title": "酒店经营诊断驾驶舱",
+      "features": [
+        "分析客房与餐饮经营",
+        "识别异常与渠道问题",
+        "输出诊断网页"
+      ],
+      "categoryLabel": "经营、数据与财务"
+    },
+    {
+      "id": "skill-generic-mall-bill-template-refresh",
+      "name": "generic-mall-bill-template-refresh",
+      "category": "data",
+      "title": "商城客户账单模板",
+      "features": [
+        "读取原始账单",
+        "映射客户格式",
+        "生成结算与验收表"
+      ],
+      "categoryLabel": "经营、数据与财务"
+    },
+    {
+      "id": "skill-data-analysis-plus",
+      "name": "数据分析大师",
+      "category": "data",
+      "title": "市场与多平台数据分析",
+      "features": [
+        "整合公开数据",
+        "分析舆情与趋势",
+        "评估营销投入产出"
+      ],
+      "categoryLabel": "经营、数据与财务"
+    },
+    {
+      "id": "skill-ubo-screening-qcc",
+      "name": "ubo-screening-qcc",
+      "category": "data",
+      "title": "受益所有人尽调辅助",
+      "features": [
+        "查询公开企业关系",
+        "整理所有权证据",
+        "输出合规档案供复核"
+      ],
+      "categoryLabel": "经营、数据与财务"
+    },
+    {
+      "id": "skill-bill-inmon-perspective",
+      "name": "bill-inmon-perspective",
+      "category": "data",
+      "title": "数据仓库思维顾问",
+      "features": [
+        "分析数据架构",
+        "评审治理与建模",
+        "提供决策视角"
+      ],
+      "categoryLabel": "经营、数据与财务"
+    },
+    {
+      "id": "skill-data-analysis-skill-variant",
+      "name": "data-analysis-skill",
+      "category": "data",
+      "title": "数据分析与报告",
+      "features": [
+        "采集与清洗数据",
+        "生成可视化",
+        "整理分析报告"
+      ],
+      "categoryLabel": "经营、数据与财务"
+    },
+    {
+      "id": "skill-qclaw-data-analyst-pro",
+      "name": "data-analyst-pro",
+      "category": "data",
+      "title": "通用表格分析",
+      "features": [
+        "检查与清洗数据",
+        "分析异常与趋势",
+        "输出图表与结论"
+      ],
+      "categoryLabel": "经营、数据与财务"
+    },
+    {
+      "id": "skill-credit-card-anomaly-analysis",
+      "name": "credit-card-anomaly-analysis",
+      "category": "data",
+      "title": "信用卡异常交易分析",
+      "features": [
+        "检查数据真实性",
+        "识别风险模式",
+        "生成报告与底表"
+      ],
+      "categoryLabel": "经营、数据与财务"
+    },
+    {
+      "id": "skill-branch-performance-scorecard",
+      "name": "branch-performance-scorecard",
+      "category": "data",
+      "title": "银行支行绩效评分",
+      "features": [
+        "按组计算指标",
+        "比较排名与差距",
+        "反推改善增量"
+      ],
+      "categoryLabel": "经营、数据与财务"
+    },
+    {
+      "id": "skill-branch-weekly-report",
+      "name": "branch-weekly-report",
+      "category": "data",
+      "title": "银行支行周报汇总",
+      "features": [
+        "核对文件与字段",
+        "汇总经营数据",
+        "输出异常与来源追溯"
+      ],
+      "categoryLabel": "经营、数据与财务"
+    },
+    {
+      "id": "skill-strategy-management-ab2589",
+      "name": "strategy management",
+      "category": "data",
+      "title": "战略洞察",
+      "features": [
+        "分析业务环境",
+        "梳理战略问题",
+        "提出经营判断"
+      ],
+      "categoryLabel": "经营、数据与财务"
+    },
+    {
+      "id": "skill-yinsheng-competitor-intelligence",
+      "name": "yinsheng-competitor-intelligence",
+      "category": "data",
+      "title": "支付行业竞品情报",
+      "features": [
+        "检索公开资料",
+        "整理友商对比",
+        "记录来源与机会判断"
+      ],
+      "categoryLabel": "经营、数据与财务"
+    },
+    {
+      "id": "skill-generate-performance-ipo-standards",
+      "name": "generate-performance-ipo-standards",
+      "category": "hr",
+      "title": "岗位绩效 IPO 标准",
+      "features": [
+        "定义 KPI 与权重",
+        "建立五级评价标尺",
+        "整理计算口径与风险"
+      ],
+      "categoryLabel": "人力与组织"
+    },
+    {
+      "id": "skill-jd-generation-assistant",
+      "name": "jd-generation-assistant",
+      "category": "hr",
+      "title": "岗位说明书生成",
+      "features": [
+        "定义岗位使命",
+        "整理职责与任职资格",
+        "输出 Word 岗位说明书"
+      ],
+      "categoryLabel": "人力与组织"
+    },
+    {
+      "id": "skill-resume-screening",
+      "name": "简历初筛助手",
+      "category": "hr",
+      "title": "简历初筛助手",
+      "features": [
+        "对照岗位要求",
+        "整理候选人证据",
+        "提出人工复核与追问建议"
+      ],
+      "categoryLabel": "人力与组织"
+    },
+    {
+      "id": "skill-talent-profile-generator",
+      "name": "talent-profile-generator",
+      "category": "hr",
+      "title": "人才画像生成",
+      "features": [
+        "分析岗位战略价值",
+        "定义能力与行为标准",
+        "支持招聘培养与盘点"
+      ],
+      "categoryLabel": "人力与组织"
+    },
+    {
+      "id": "skill-hr-offboarding",
+      "name": "hr-offboarding",
+      "category": "hr",
+      "title": "员工离职辅助",
+      "features": [
+        "整理流程事项",
+        "生成访谈与交接清单",
+        "提示风险与改进方向"
+      ],
+      "categoryLabel": "人力与组织"
+    },
+    {
+      "id": "skill-performance-managment-152fd0",
+      "name": "performance managment",
+      "category": "hr",
+      "title": "战略执行监督",
+      "features": [
+        "跟踪目标执行",
+        "分析绩效偏差",
+        "整理改进行动"
+      ],
+      "categoryLabel": "人力与组织"
+    },
+    {
+      "id": "skill-recruiting-resume-workflow",
+      "name": "recruiting-resume-workflow",
+      "category": "hr",
+      "title": "招聘与简历工作流",
+      "features": [
+        "组织岗位与候选材料",
+        "辅助初筛",
+        "整理面试验证线索"
+      ],
+      "categoryLabel": "人力与组织"
+    },
+    {
+      "id": "skill-hr-scenario-ipo-generator",
+      "name": "hr-scenario-ipo-generator",
+      "category": "hr",
+      "title": "HR 场景 IPO 需求书",
+      "features": [
+        "转写机会卡",
+        "定义输入处理与输出",
+        "生成需求书与缺口清单"
+      ],
+      "categoryLabel": "人力与组织"
+    },
+    {
+      "id": "skill-hr-star-interview",
+      "name": "hr-star-interview",
+      "category": "hr",
+      "title": "HR 智能体 STAR 面试题",
+      "features": [
+        "按能力等级出题",
+        "覆盖 HR 工作模块",
+        "设计行为证据追问"
+      ],
+      "categoryLabel": "人力与组织"
+    },
+    {
+      "id": "skill-hr-ai-scenario-card",
+      "name": "hr-ai-scenario-card",
+      "category": "hr",
+      "title": "HR AI 场景机会卡",
+      "features": [
+        "定义业务问题",
+        "整理机会卡",
+        "辅导与批改场景作业"
+      ],
+      "categoryLabel": "人力与组织"
+    },
+    {
+      "id": "skill-grill-me",
+      "name": "grill-me",
+      "category": "content",
+      "title": "方案深度追问",
+      "features": [
+        "澄清方案假设",
+        "追问关键分支",
+        "形成共同理解"
+      ],
+      "categoryLabel": "营销、写作与思考"
+    },
+    {
+      "id": "skill-grill-me-plus-variant",
+      "name": "grill-me",
+      "category": "content",
+      "title": "方案深度追问增强版",
+      "features": [
+        "持续访谈需求",
+        "检验设计逻辑",
+        "细化执行计划"
+      ],
+      "categoryLabel": "营销、写作与思考"
+    },
+    {
+      "id": "skill-boss-audit",
+      "name": "boss-audit",
+      "category": "content",
+      "title": "老板标准审核",
+      "features": [
+        "诊断思路与结构",
+        "评审分析深度",
+        "提出重写建议"
+      ],
+      "categoryLabel": "营销、写作与思考"
+    },
+    {
+      "id": "skill-koubo-script-generator-variant",
+      "name": "koubo-script-generator",
+      "category": "content",
+      "title": "李家贵口播脚本",
+      "features": [
+        "提炼核心观点",
+        "组织讲解结构",
+        "生成口播稿"
+      ],
+      "categoryLabel": "营销、写作与思考"
+    },
+    {
+      "id": "skill-elon-musk-perspective",
+      "name": "elon-musk-perspective",
+      "category": "content",
+      "title": "马斯克思维评审",
+      "features": [
+        "运用第一性原理",
+        "评审方案假设",
+        "提出执行建议"
+      ],
+      "categoryLabel": "营销、写作与思考"
+    },
+    {
+      "id": "skill-moment-writer-variant",
+      "name": "moments-writer-lite",
+      "category": "content",
+      "title": "朋友圈写作助手",
+      "features": [
+        "从问答中提炼选题",
+        "生成朋友圈内容",
+        "同步飞书记录"
+      ],
+      "categoryLabel": "营销、写作与思考"
+    },
+    {
+      "id": "skill-anjian-tweet-polisher",
+      "name": "anjian-tweet-polisher",
+      "category": "content",
+      "title": "品牌推文润色",
+      "features": [
+        "多平台文案改写",
+        "核对品牌事实",
+        "脱敏与合规初审"
+      ],
+      "categoryLabel": "营销、写作与思考"
+    },
+    {
+      "id": "skill-internal-comms",
+      "name": "internal-comms",
+      "category": "content",
+      "title": "企业内部沟通写作",
+      "features": [
+        "撰写进展与通知",
+        "组织内部报告",
+        "适配企业表达格式"
+      ],
+      "categoryLabel": "营销、写作与思考"
+    },
+    {
+      "id": "skill-marketing-huoke-allinone",
+      "name": "marketing-huoke-allinone",
+      "category": "content",
+      "title": "全链路营销文案",
+      "features": [
+        "分析话题与渠道",
+        "生成获客内容",
+        "适配多平台文案"
+      ],
+      "categoryLabel": "营销、写作与思考"
+    },
+    {
+      "id": "skill-chenglingfeng-style-writing",
+      "name": "chenglingfeng-style-writing",
+      "category": "content",
+      "title": "商业观察长文写作",
+      "features": [
+        "提炼核心判断",
+        "组织短段落",
+        "撰写公众号深度评论"
+      ],
+      "categoryLabel": "营销、写作与思考"
+    },
+    {
+      "id": "skill-social-media-caption-variant",
+      "name": "social-media-caption",
+      "category": "content",
+      "title": "社交媒体配文",
+      "features": [
+        "提炼内容重点",
+        "编写朋友圈文案",
+        "适配社交表达"
+      ],
+      "categoryLabel": "营销、写作与思考"
+    },
+    {
+      "id": "skill-ascii-illustration",
+      "name": "ascii-illustration",
+      "category": "content",
+      "title": "文章字符插图",
+      "features": [
+        "判断配图位置",
+        "绘制字符示意图",
+        "嵌入正文"
+      ],
+      "categoryLabel": "营销、写作与思考"
+    },
+    {
+      "id": "skill-self-coach-a927a6",
+      "name": "self coach",
+      "category": "content",
+      "title": "CEO AI 教练",
+      "features": [
+        "澄清经营目标",
+        "通过提问辅助判断",
+        "整理行动方向"
+      ],
+      "categoryLabel": "营销、写作与思考"
+    },
+    {
+      "id": "skill-icar-short-video-workflow",
+      "name": "icar-short-video-workflow",
+      "category": "content",
+      "title": "iCAR 汽车短视频文案",
+      "features": [
+        "读取汽车新闻",
+        "生成多种故事文案",
+        "更新飞书记录"
+      ],
+      "categoryLabel": "营销、写作与思考"
+    },
+    {
+      "id": "skill-ip-huoke-wenan",
+      "name": "ip-huoke-wenan",
+      "category": "content",
+      "title": "IP 获客文案",
+      "features": [
+        "拆解话题与痛点",
+        "策划内容选题",
+        "生成多渠道获客文案"
+      ],
+      "categoryLabel": "营销、写作与思考"
+    },
+    {
+      "id": "skill-prep-report",
+      "name": "prep-report",
+      "category": "content",
+      "title": "PREP 口头汇报",
+      "features": [
+        "整理零散素材",
+        "采用结论先行结构",
+        "生成会议汇报稿"
+      ],
+      "categoryLabel": "营销、写作与思考"
+    },
+    {
+      "id": "skill-getnote-note",
+      "name": "getnote-note",
+      "category": "collab",
+      "title": "得到大脑笔记管理",
+      "features": [
+        "保存文字与链接",
+        "读取原文与转写",
+        "更新笔记与会议待办"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-getnote-tag",
+      "name": "getnote-tag",
+      "category": "collab",
+      "title": "得到大脑标签管理",
+      "features": [
+        "读取现有标签",
+        "为笔记加标签",
+        "安全移除指定标签"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-getnote-auth",
+      "name": "getnote-auth",
+      "category": "collab",
+      "title": "得到大脑连接与诊断",
+      "features": [
+        "完成账号授权",
+        "检查环境与配额",
+        "升级 CLI 与技能"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-getnote-search",
+      "name": "getnote-search",
+      "category": "collab",
+      "title": "得到大脑语义搜索",
+      "features": [
+        "搜索全部或指定知识库",
+        "返回相关笔记",
+        "提供可打开来源"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-getnote-kb",
+      "name": "getnote-kb",
+      "category": "collab",
+      "title": "得到大脑知识库管理",
+      "features": [
+        "管理知识库与文件夹",
+        "归档笔记",
+        "处理资料入库"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-lark-markdown",
+      "name": "lark-markdown",
+      "category": "collab",
+      "title": "飞书 Markdown 文件",
+      "features": [
+        "创建与上传文件",
+        "编辑内容",
+        "比较文档差异"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-lark-okr",
+      "name": "lark-okr",
+      "category": "collab",
+      "title": "飞书 OKR 管理",
+      "features": [
+        "维护目标与关键结果",
+        "检查对齐关系",
+        "更新指标与进展"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-lark-sheets",
+      "name": "lark-sheets",
+      "category": "collab",
+      "title": "飞书电子表格",
+      "features": [
+        "读写单元格与公式",
+        "维护行列与工作表",
+        "批量调整格式"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-lark-base",
+      "name": "lark-base",
+      "category": "collab",
+      "title": "飞书多维表格",
+      "features": [
+        "管理字段与记录",
+        "设置视图与公式",
+        "维护表单与工作流"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-lark-whiteboard",
+      "name": "lark-whiteboard",
+      "category": "collab",
+      "title": "飞书画板",
+      "features": [
+        "读取画板结构",
+        "导出预览图片",
+        "更新可编辑图形"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-lark-slides",
+      "name": "lark-slides",
+      "category": "collab",
+      "title": "飞书幻灯片",
+      "features": [
+        "创建演示文稿",
+        "读取页面内容",
+        "编辑与组织幻灯片"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-lark-workflow-meeting-summary",
+      "name": "lark-workflow-meeting-summary",
+      "category": "collab",
+      "title": "飞书会议纪要汇总",
+      "features": [
+        "按时间收集纪要",
+        "整理决策与待办",
+        "生成会议报告"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-lark-note",
+      "name": "lark-note",
+      "category": "collab",
+      "title": "飞书会议纪要直查",
+      "features": [
+        "按纪要 ID 查询",
+        "关联会议文档",
+        "读取原始逐字记录"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-lark-vc-agent",
+      "name": "lark-vc-agent",
+      "category": "collab",
+      "title": "飞书会中机器人",
+      "features": [
+        "加入与离开会议",
+        "读取会中事件",
+        "发送会中消息"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-lark-attendance",
+      "name": "lark-attendance",
+      "category": "collab",
+      "title": "飞书考勤查询",
+      "features": [
+        "读取自己的打卡记录",
+        "检查考勤情况"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-lark-vc",
+      "name": "lark-vc",
+      "category": "collab",
+      "title": "飞书历史视频会议",
+      "features": [
+        "检索已结束会议",
+        "读取会议纪要",
+        "查询参会人记录"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-lark-shared",
+      "name": "lark-shared",
+      "category": "collab",
+      "title": "飞书连接与身份",
+      "features": [
+        "配置 CLI 授权",
+        "区分用户与机器人身份",
+        "检查服务权限"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-lark-minutes",
+      "name": "lark-minutes",
+      "category": "collab",
+      "title": "飞书妙记",
+      "features": [
+        "检索会议音视频",
+        "读取转写产物",
+        "管理录制与查看权限"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-feishu-lightweight-kb",
+      "name": "feishu-lightweight-kb",
+      "category": "collab",
+      "title": "飞书轻量知识问答",
+      "features": [
+        "检索文档关键词",
+        "基于原文回答",
+        "返回来源片段"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-lark-task",
+      "name": "lark-task",
+      "category": "collab",
+      "title": "飞书任务管理",
+      "features": [
+        "创建与分配待办",
+        "组织子任务与清单",
+        "更新协作状态"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-lark-workflow-standup-report",
+      "name": "lark-workflow-standup-report",
+      "category": "collab",
+      "title": "飞书日程待办摘要",
+      "features": [
+        "汇总指定日期日程",
+        "读取未完成任务",
+        "生成安排摘要"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-lark-calendar",
+      "name": "lark-calendar",
+      "category": "collab",
+      "title": "飞书日历与会议室",
+      "features": [
+        "管理日程与参会人",
+        "查询忙闲",
+        "预定会议室"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-lark-approval",
+      "name": "lark-approval",
+      "category": "collab",
+      "title": "飞书审批",
+      "features": [
+        "查询审批待办",
+        "处理审批实例",
+        "发起已存在的审批流程"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-lark-event",
+      "name": "lark-event",
+      "category": "collab",
+      "title": "飞书实时事件",
+      "features": [
+        "订阅平台事件",
+        "读取实时消息流",
+        "处理事件消费"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-lark-contact",
+      "name": "lark-contact",
+      "category": "collab",
+      "title": "飞书通讯录",
+      "features": [
+        "查询人员与部门",
+        "解析用户身份",
+        "读取可见联系信息"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-lark-unified",
+      "name": "lark-unified",
+      "category": "collab",
+      "title": "飞书统一工具入口",
+      "features": [
+        "统一消息与文档操作",
+        "处理日程与任务",
+        "路由平台命令"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-lark-im",
+      "name": "lark-im",
+      "category": "collab",
+      "title": "飞书消息与群聊",
+      "features": [
+        "发送与搜索消息",
+        "管理群聊成员",
+        "处理附件与互动卡片"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-lark-mail",
+      "name": "lark-mail",
+      "category": "collab",
+      "title": "飞书邮箱",
+      "features": [
+        "撰写与发送邮件",
+        "搜索邮箱内容",
+        "管理邮件文件夹与标签"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-lark-drive",
+      "name": "lark-drive",
+      "category": "collab",
+      "title": "飞书云空间",
+      "features": [
+        "上传与下载文件",
+        "整理文件夹",
+        "管理版本与权限"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-lark-doc",
+      "name": "lark-doc",
+      "category": "collab",
+      "title": "飞书云文档",
+      "features": [
+        "读取与编辑正文",
+        "插入图片与附件",
+        "创建文档"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-lark-wiki",
+      "name": "lark-wiki",
+      "category": "collab",
+      "title": "飞书知识空间",
+      "features": [
+        "管理知识库与成员",
+        "组织文档节点",
+        "维护层级与快捷方式"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-meeting-minutes-cd88a4",
+      "name": "meeting minutes",
+      "category": "collab",
+      "title": "会议纪要分析",
+      "features": [
+        "梳理会议内容",
+        "提取决策与待办",
+        "整理业务摘要"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-meeting-minutes",
+      "name": "meeting-minutes",
+      "category": "collab",
+      "title": "录音生成会议纪要",
+      "features": [
+        "转写会议音频",
+        "提炼会议要点",
+        "输出 Word 纪要"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-tencent-meeting-skill",
+      "name": "tencent-meeting-skill",
+      "category": "collab",
+      "title": "腾讯会议管理",
+      "features": [
+        "预约与管理会议",
+        "查询录制与转写",
+        "获取会议纪要"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-tencent-docs-mcp",
+      "name": "tencent-docs-mcp",
+      "category": "collab",
+      "title": "腾讯文档连接器",
+      "features": [
+        "读取与编辑云文档",
+        "处理 OCR 与网页剪藏",
+        "生成文档与幻灯片"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-tencent-survey",
+      "name": "tencent-survey",
+      "category": "collab",
+      "title": "腾讯问卷",
+      "features": [
+        "创建与修改问卷",
+        "配置题目与逻辑",
+        "读取回收与测评数据"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-tencent-docs",
+      "name": "tencent-docs",
+      "category": "collab",
+      "title": "腾讯在线文档",
+      "features": [
+        "创建多种云文档",
+        "管理知识空间",
+        "组织文档与表格"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-wechat-intelligence-hub",
+      "name": "wechat-intelligence-hub",
+      "category": "collab",
+      "title": "微信个人情报库",
+      "features": [
+        "检索人与主题",
+        "整理商机与待回复事项",
+        "维护来源与跟进记录"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-wechat-cli",
+      "name": "wechat-cli",
+      "category": "collab",
+      "title": "微信聊天只读检索",
+      "features": [
+        "连接本人授权数据",
+        "搜索聊天记录",
+        "整理未发送回复草稿"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-ima-skill",
+      "name": "ima-skill",
+      "category": "collab",
+      "title": "IMA 知识库与笔记",
+      "features": [
+        "上传与检索资料",
+        "管理知识库",
+        "创建与编辑笔记"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-qq-email",
+      "name": "qq-email",
+      "category": "collab",
+      "title": "QQ 邮件收发",
+      "features": [
+        "读取邮件与附件",
+        "发送邮件",
+        "检查邮箱连接"
+      ],
+      "categoryLabel": "协作与知识库"
+    },
+    {
+      "id": "skill-arrange",
+      "name": "arrange",
+      "category": "design",
+      "title": "布局与间距整理",
+      "features": [
+        "优化信息层级",
+        "统一元素间距",
+        "改善视觉节奏"
+      ],
+      "categoryLabel": "网页与设计"
+    },
+    {
+      "id": "skill-idea-to-prototype",
+      "name": "idea-to-prototype",
+      "category": "design",
+      "title": "产品想法转原型",
+      "features": [
+        "定义设计系统",
+        "制作低保真线框",
+        "生成高保真界面"
+      ],
+      "categoryLabel": "网页与设计"
+    },
+    {
+      "id": "skill-algorithmic-art",
+      "name": "algorithmic-art",
+      "category": "design",
+      "title": "代码生成艺术",
+      "features": [
+        "用 p5.js 生成画面",
+        "控制随机种子",
+        "探索交互参数"
+      ],
+      "categoryLabel": "网页与设计"
+    },
+    {
+      "id": "skill-multi-page-hub",
+      "name": "multi-page-hub",
+      "category": "design",
+      "title": "多页面导航中心",
+      "features": [
+        "整合独立 HTML",
+        "创建统一入口",
+        "组织页面目录"
+      ],
+      "categoryLabel": "网页与设计"
+    },
+    {
+      "id": "skill-overdrive",
+      "name": "overdrive",
+      "category": "design",
+      "title": "高级交互与视觉效果",
+      "features": [
+        "设计着色器效果",
+        "编排滚动动画",
+        "实现物理交互"
+      ],
+      "categoryLabel": "网页与设计"
+    },
+    {
+      "id": "skill-canvas-design",
+      "name": "canvas-design",
+      "category": "design",
+      "title": "海报与静态视觉设计",
+      "features": [
+        "设计海报画面",
+        "创建静态艺术",
+        "输出 PNG 与 PDF"
+      ],
+      "categoryLabel": "网页与设计"
+    },
+    {
+      "id": "skill-animate",
+      "name": "animate",
+      "category": "design",
+      "title": "界面动效优化",
+      "features": [
+        "补充过渡动画",
+        "设计微交互",
+        "改善操作反馈"
+      ],
+      "categoryLabel": "网页与设计"
+    },
+    {
+      "id": "skill-audit",
+      "name": "audit",
+      "category": "design",
+      "title": "界面技术质量审计",
+      "features": [
+        "检查可访问性",
+        "分析性能与响应式",
+        "输出分级问题报告"
+      ],
+      "categoryLabel": "网页与设计"
+    },
+    {
+      "id": "skill-distill",
+      "name": "distill",
+      "category": "design",
+      "title": "界面简化",
+      "features": [
+        "删减无效元素",
+        "精简信息层级",
+        "保留关键功能"
+      ],
+      "categoryLabel": "网页与设计"
+    },
+    {
+      "id": "skill-harden",
+      "name": "harden",
+      "category": "design",
+      "title": "界面健壮性优化",
+      "features": [
+        "处理错误状态",
+        "修复文字溢出",
+        "覆盖国际化与边界情况"
+      ],
+      "categoryLabel": "网页与设计"
+    },
+    {
+      "id": "skill-polish",
+      "name": "polish",
+      "category": "design",
+      "title": "界面交付精修",
+      "features": [
+        "检查对齐与间距",
+        "统一组件细节",
+        "完成视觉收尾"
+      ],
+      "categoryLabel": "网页与设计"
+    },
+    {
+      "id": "skill-colorize",
+      "name": "colorize",
+      "category": "design",
+      "title": "界面配色优化",
+      "features": [
+        "改善单调色彩",
+        "建立主辅色",
+        "突出交互重点"
+      ],
+      "categoryLabel": "网页与设计"
+    },
+    {
+      "id": "skill-clarify",
+      "name": "clarify",
+      "category": "design",
+      "title": "界面文案澄清",
+      "features": [
+        "改善标签说明",
+        "重写错误提示",
+        "减少操作歧义"
+      ],
+      "categoryLabel": "网页与设计"
+    },
+    {
+      "id": "skill-delight",
+      "name": "delight",
+      "category": "design",
+      "title": "界面细节与体验优化",
+      "features": [
+        "补充友好反馈",
+        "改善交互细节",
+        "增强产品识别度"
+      ],
+      "categoryLabel": "网页与设计"
+    },
+    {
+      "id": "skill-contextweave-interactive-architecture-variant",
+      "name": "interactive-architecture-diagram",
+      "category": "design",
+      "title": "可编辑架构图",
+      "features": [
+        "提取结构与关系",
+        "绘制流程与架构",
+        "导出 PPTX 与 Visio"
+      ],
+      "categoryLabel": "网页与设计"
+    },
+    {
+      "id": "skill-frontend-design",
+      "name": "frontend-design",
+      "category": "design",
+      "title": "前端界面设计",
+      "features": [
+        "确定设计方向",
+        "实现网页组件",
+        "优化排版与交互"
+      ],
+      "categoryLabel": "网页与设计"
+    },
+    {
+      "id": "skill-normalize",
+      "name": "normalize",
+      "category": "design",
+      "title": "设计系统对齐",
+      "features": [
+        "检查组件规范",
+        "统一间距与变量",
+        "修复样式偏差"
+      ],
+      "categoryLabel": "网页与设计"
+    },
+    {
+      "id": "skill-extract",
+      "name": "extract",
+      "category": "design",
+      "title": "设计组件萃取",
+      "features": [
+        "识别复用组件",
+        "整理设计变量",
+        "维护组件规范"
+      ],
+      "categoryLabel": "网页与设计"
+    },
+    {
+      "id": "skill-quieter",
+      "name": "quieter",
+      "category": "design",
+      "title": "视觉强度调整",
+      "features": [
+        "降低过强视觉刺激",
+        "平衡重点与背景",
+        "保留内容层级"
+      ],
+      "categoryLabel": "网页与设计"
+    },
+    {
+      "id": "skill-onboard",
+      "name": "onboard",
+      "category": "design",
+      "title": "首次使用体验设计",
+      "features": [
+        "改善空状态",
+        "设计入门流程",
+        "减少初次操作阻碍"
+      ],
+      "categoryLabel": "网页与设计"
+    },
+    {
+      "id": "skill-imagegen",
+      "name": "imagegen",
+      "category": "design",
+      "title": "图像生成与编辑",
+      "features": [
+        "生成位图素材",
+        "按要求编辑图片",
+        "制作透明背景资产"
+      ],
+      "categoryLabel": "网页与设计"
+    },
+    {
+      "id": "skill-html-to-png",
+      "name": "html-to-png",
+      "category": "design",
+      "title": "网页截图输出",
+      "features": [
+        "渲染 HTML 页面",
+        "检查视觉布局",
+        "输出 PNG 截图"
+      ],
+      "categoryLabel": "网页与设计"
+    },
+    {
+      "id": "skill-optimize",
+      "name": "optimize",
+      "category": "design",
+      "title": "网页性能优化",
+      "features": [
+        "诊断加载与渲染",
+        "优化图片与动画",
+        "降低资源体积"
+      ],
+      "categoryLabel": "网页与设计"
+    },
+    {
+      "id": "skill-theme-factory",
+      "name": "theme-factory",
+      "category": "design",
+      "title": "文档与网页主题",
+      "features": [
+        "选择主题风格",
+        "应用配色与字体",
+        "统一成果外观"
+      ],
+      "categoryLabel": "网页与设计"
+    },
+    {
+      "id": "skill-typeset",
+      "name": "typeset",
+      "category": "design",
+      "title": "文字排版优化",
+      "features": [
+        "调整字体与字号",
+        "建立标题层级",
+        "改善中文可读性"
+      ],
+      "categoryLabel": "网页与设计"
+    },
+    {
+      "id": "skill-adapt",
+      "name": "adapt",
+      "category": "design",
+      "title": "响应式适配",
+      "features": [
+        "适配屏幕与设备",
+        "调整断点布局",
+        "优化触控区域"
+      ],
+      "categoryLabel": "网页与设计"
+    },
+    {
+      "id": "skill-teach-impeccable",
+      "name": "teach-impeccable",
+      "category": "design",
+      "title": "项目设计规范初始化",
+      "features": [
+        "收集设计背景",
+        "明确界面偏好",
+        "建立持续使用的设计规则"
+      ],
+      "categoryLabel": "网页与设计"
+    },
+    {
+      "id": "skill-critique",
+      "name": "critique",
+      "category": "design",
+      "title": "用户体验设计评审",
+      "features": [
+        "评估信息架构",
+        "检查认知负担",
+        "提出分级改进建议"
+      ],
+      "categoryLabel": "网页与设计"
+    },
+    {
+      "id": "skill-bolder",
+      "name": "bolder",
+      "category": "design",
+      "title": "增强视觉表现",
+      "features": [
+        "改善平淡界面",
+        "突出重点",
+        "保留可用性"
+      ],
+      "categoryLabel": "网页与设计"
+    },
+    {
+      "id": "skill-font-generator",
+      "name": "font-generator",
+      "category": "design",
+      "title": "字体设计提示生成",
+      "features": [
+        "分析文字与风格",
+        "生成设计提示",
+        "制作字体图像"
+      ],
+      "categoryLabel": "网页与设计"
+    },
+    {
+      "id": "skill-brand-guidelines",
+      "name": "brand-guidelines",
+      "category": "design",
+      "title": "Anthropic 品牌规范",
+      "features": [
+        "应用官方配色",
+        "统一字体排版",
+        "检查品牌一致性"
+      ],
+      "categoryLabel": "网页与设计"
+    },
+    {
+      "id": "skill-slack-gif-creator",
+      "name": "slack-gif-creator",
+      "category": "design",
+      "title": "Slack 动图制作",
+      "features": [
+        "制作 GIF 动画",
+        "检查尺寸与文件体积",
+        "适配消息展示"
+      ],
+      "categoryLabel": "网页与设计"
+    },
+    {
+      "id": "skill-review-agent",
+      "name": "review-agent",
+      "category": "dev",
+      "title": "代码缺陷审查",
+      "features": [
+        "只读检查代码变更",
+        "识别行为回归",
+        "输出可执行问题清单"
+      ],
+      "categoryLabel": "开发与智能体"
+    },
+    {
+      "id": "skill-web-artifacts-builder",
+      "name": "web-artifacts-builder",
+      "category": "dev",
+      "title": "多组件网页应用",
+      "features": [
+        "搭建 React 页面",
+        "组织路由与状态",
+        "制作可操作网页成果"
+      ],
+      "categoryLabel": "开发与智能体"
+    },
+    {
+      "id": "skill-lark-skill-maker",
+      "name": "lark-skill-maker",
+      "category": "dev",
+      "title": "飞书技能封装",
+      "features": [
+        "封装平台接口",
+        "编排多步流程",
+        "创建复用 Skill"
+      ],
+      "categoryLabel": "开发与智能体"
+    },
+    {
+      "id": "skill-lark-openapi-explorer",
+      "name": "lark-openapi-explorer",
+      "category": "dev",
+      "title": "飞书开放接口探索",
+      "features": [
+        "查询官方接口",
+        "寻找未封装能力",
+        "验证调用方式"
+      ],
+      "categoryLabel": "开发与智能体"
+    },
+    {
+      "id": "skill-lark-apps",
+      "name": "lark-apps",
+      "category": "dev",
+      "title": "飞书妙搭应用",
+      "features": [
+        "创建与发布应用",
+        "集成平台能力",
+        "检查日志与运行指标"
+      ],
+      "categoryLabel": "开发与智能体"
+    },
+    {
+      "id": "skill-nuwa-skill",
+      "name": "nuwa-skill",
+      "category": "dev",
+      "title": "女娲人物思维技能",
+      "features": [
+        "调研人物与主题",
+        "提炼思维框架",
+        "生成可调用技能"
+      ],
+      "categoryLabel": "开发与智能体"
+    },
+    {
+      "id": "skill-nuwa-skill-variant",
+      "name": "nuwa-skill",
+      "category": "dev",
+      "title": "女娲人物思维技能原版",
+      "features": [
+        "调研人物资料",
+        "萃取观点与决策模型",
+        "生成视角技能"
+      ],
+      "categoryLabel": "开发与智能体"
+    },
+    {
+      "id": "skill-skill-creator-variant",
+      "name": "skill-creator",
+      "category": "dev",
+      "title": "通用技能创建指南",
+      "features": [
+        "设计技能说明",
+        "整理领域知识",
+        "封装可复用工作流"
+      ],
+      "categoryLabel": "开发与智能体"
+    },
+    {
+      "id": "skill-webapp-testing",
+      "name": "webapp-testing",
+      "category": "dev",
+      "title": "网页应用测试",
+      "features": [
+        "检查功能与行为",
+        "读取浏览器日志",
+        "保存界面测试证据"
+      ],
+      "categoryLabel": "开发与智能体"
+    },
+    {
+      "id": "skill-import-package-workbench",
+      "name": "import-package-workbench",
+      "category": "dev",
+      "title": "业务工作包转应用",
+      "features": [
+        "读取功能与数据模板",
+        "搭建业务工作台",
+        "完成可用性验收"
+      ],
+      "categoryLabel": "开发与智能体"
+    },
+    {
+      "id": "skill-zhipu-chatbot-agent",
+      "name": "zhipu-chatbot-agent",
+      "category": "dev",
+      "title": "智谱对话应用",
+      "features": [
+        "将提示词转为网页",
+        "实现流式对话",
+        "在服务端管理密钥"
+      ],
+      "categoryLabel": "开发与智能体"
+    },
+    {
+      "id": "skill-claude-api",
+      "name": "claude-api",
+      "category": "dev",
+      "title": "Claude API 应用开发",
+      "features": [
+        "接入模型接口",
+        "使用官方 SDK",
+        "构建智能体应用"
+      ],
+      "categoryLabel": "开发与智能体"
+    },
+    {
+      "id": "skill-code-better-practices",
+      "name": "claude-code-best-practices",
+      "category": "dev",
+      "title": "Claude Code 配置实践",
+      "features": [
+        "维护项目规则",
+        "配置 Agent 与 Hooks",
+        "诊断常见问题"
+      ],
+      "categoryLabel": "开发与智能体"
+    },
+    {
+      "id": "skill-plugin-creator",
+      "name": "plugin-creator",
+      "category": "dev",
+      "title": "Codex 插件创建",
+      "features": [
+        "搭建插件目录",
+        "整理插件清单",
+        "配置配套技能资源"
+      ],
+      "categoryLabel": "开发与智能体"
+    },
+    {
+      "id": "skill-skill-creator",
+      "name": "skill-creator",
+      "category": "dev",
+      "title": "Codex 技能创建",
+      "features": [
+        "定义技能适用范围",
+        "组织执行步骤",
+        "维护配套资源"
+      ],
+      "categoryLabel": "开发与智能体"
+    },
+    {
+      "id": "skill-mcp-builder",
+      "name": "mcp-builder",
+      "category": "dev",
+      "title": "MCP 服务开发",
+      "features": [
+        "设计工具接口",
+        "连接外部服务",
+        "实现与验证 MCP 服务器"
+      ],
+      "categoryLabel": "开发与智能体"
+    },
+    {
+      "id": "skill-openai-docs",
+      "name": "openai-docs",
+      "category": "dev",
+      "title": "OpenAI 产品文档查询",
+      "features": [
+        "查询官方使用说明",
+        "核对接口与模型",
+        "诊断 Codex 配置问题"
+      ],
+      "categoryLabel": "开发与智能体"
+    },
+    {
+      "id": "skill-workspace-personalizer",
+      "name": "workspace-personalizer",
+      "category": "dev",
+      "title": "OpenClaw 工作区配置",
+      "features": [
+        "收集岗位与输出需求",
+        "维护工作区规则",
+        "初始化个性化配置"
+      ],
+      "categoryLabel": "开发与智能体"
+    },
+    {
+      "id": "skill-vue-element-app",
+      "name": "vue-element-app",
+      "category": "dev",
+      "title": "Vue 业务应用原型",
+      "features": [
+        "生成登录与表单",
+        "组织表格和图表",
+        "搭建业务应用页面"
+      ],
+      "categoryLabel": "开发与智能体"
+    },
+    {
+      "id": "skill-agentkey-variant",
+      "name": "agentkey",
+      "category": "system",
+      "title": "外部数据与接口查询",
+      "features": [
+        "发现可用数据服务",
+        "检索实时信息",
+        "调用外部接口"
+      ],
+      "categoryLabel": "系统与发布"
+    },
+    {
+      "id": "skill-website-change-monitor",
+      "name": "website-change-monitor",
+      "category": "system",
+      "title": "网站内容变化检查",
+      "features": [
+        "抓取网站快照",
+        "比较内容变化",
+        "生成本地变更报告"
+      ],
+      "categoryLabel": "系统与发布"
+    },
+    {
+      "id": "skill-baoyu-post-to-wechat",
+      "name": "baoyu-post-to-wechat",
+      "category": "system",
+      "title": "微信公众号图文发布",
+      "features": [
+        "发布文章与图文",
+        "转换 Markdown",
+        "通过接口或浏览器上传"
+      ],
+      "categoryLabel": "系统与发布"
+    },
+    {
+      "id": "skill-wechat-channels-publisher",
+      "name": "wechat-channels-publisher",
+      "category": "system",
+      "title": "微信视频号发布",
+      "features": [
+        "上传并保存草稿",
+        "安排定时发表",
+        "维护去重与发布记录"
+      ],
+      "categoryLabel": "系统与发布"
+    },
+    {
+      "id": "skill-browserskill-variant",
+      "name": "browser-skill",
+      "category": "system",
+      "title": "已登录浏览器操作",
+      "features": [
+        "读取与操作网页",
+        "填写表单",
+        "检查页面交互"
+      ],
+      "categoryLabel": "系统与发布"
+    },
+    {
+      "id": "skill-skill-installer",
+      "name": "skill-installer",
+      "category": "system",
+      "title": "Codex 技能安装",
+      "features": [
+        "查询可安装技能",
+        "从仓库安装",
+        "检查目标目录"
+      ],
+      "categoryLabel": "系统与发布"
+    },
+    {
+      "id": "skill-github-publisher",
+      "name": "github-publisher",
+      "category": "system",
+      "title": "GitHub 中文资源发布",
+      "features": [
+        "提取并中文化内容",
+        "发布子页面",
+        "同步导航与标签"
+      ],
+      "categoryLabel": "系统与发布"
+    },
+    {
+      "id": "skill-github-pages-publisher",
+      "name": "github-pages-publisher",
+      "category": "system",
+      "title": "GitHub Pages 静态发布",
+      "features": [
+        "识别发布源",
+        "上传静态文件",
+        "排查部署与 404"
+      ],
+      "categoryLabel": "系统与发布"
+    },
+    {
+      "id": "skill-kimi-webbridge",
+      "name": "kimi-webbridge",
+      "category": "system",
+      "title": "Kimi 浏览器桥接",
+      "features": [
+        "读取真实浏览器",
+        "操作页面与标签页",
+        "检查网页交互"
+      ],
+      "categoryLabel": "系统与发布"
+    },
+    {
+      "id": "skill-wechat-publisher",
+      "name": "wechat-publisher",
+      "category": "system",
+      "title": "Markdown 公众号草稿",
+      "features": [
+        "转换文章样式",
+        "上传正文图片",
+        "保存公众号草稿"
+      ],
+      "categoryLabel": "系统与发布"
+    },
+    {
+      "id": "skill-find-skill-skillhub-variant",
+      "name": "find-skill-skillhub",
+      "category": "system",
+      "title": "SkillHub 技能搜索",
+      "features": [
+        "按关键词查找",
+        "筛选技能分类",
+        "组合检索条件"
+      ],
+      "categoryLabel": "系统与发布"
+    },
+    {
+      "id": "skill-windows-disk-cleanup",
+      "name": "windows-disk-cleanup",
+      "category": "system",
+      "title": "Windows 空间清理",
+      "features": [
+        "盘点指定目录",
+        "识别占用与重复文件",
+        "核验授权清理结果"
+      ],
+      "categoryLabel": "系统与发布"
+    }
+  ]
+}

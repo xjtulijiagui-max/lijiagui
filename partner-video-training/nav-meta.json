@@ -1,0 +1,28 @@
+{
+  "id": "partner-video-training",
+  "title": "合伙人视频技能培训",
+  "shortTitle": "合伙人视频培训",
+  "category": "培训与组织",
+  "description": "9 条视频制作路线与 22 条安装、使用提示词，讲清工具区别、选型、安装验证及课堂实操。",
+  "url": "https://xjtulijiagui-max.github.io/lijiagui/partner-video-training/",
+  "tags": [
+    "合伙人",
+    "视频",
+    "培训",
+    "Skill",
+    "提示词",
+    "video-shotcraft",
+    "HyperFrames",
+    "Remotion",
+    "ChatCut",
+    "Voicebox",
+    "归藏"
+  ],
+  "type": "教学资料",
+  "client": "通用",
+  "status": "正常",
+  "featured": false,
+  "updated": "2026-10-03",
+  "sourceHash": "7937da378a0c70936cb524e4c2373196c4d26a495ac876fbf23d702876b96b90",
+  "sourceFile": "合伙人视频技能培训.html"
+}
