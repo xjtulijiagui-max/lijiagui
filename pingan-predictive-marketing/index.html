@@ -1,0 +1,1735 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>五问三阶十练｜预测式营销 AI 跟练手册｜平安集团</title>
+<meta name="description" content="从给 AI 立身份（AGENTS.md）开始，11 个复制即用的 AI 练习：先打谁、说什么、何时开口、谁会走、能成多少，最后在 WorkBuddy 里每周自动跑完。">
+<style>
+:root{
+  --bg:#F2F4F3; --surface:#FFFFFF; --sunk:#F7F8F7; --ink:#18212B; --muted:#56616C; --faint:#87919B; --line:#D9DFE2;
+  --signal:#D9531A; --signal-hover:#BF4510; --signal-ink:#FFFFFF;
+  --c-who:#11806E; --c-say:#D9531A; --c-when:#2C6CB0; --c-churn:#BF3B3B; --c-result:#5A4DAF; --c-all:#18212B; --c-setup:#3D6378;
+  --fill-bg:#FFE7A3; --fill-ink:#3A2C00;
+  --prompt-bg:#FBFAF7; --ok:#11806E;
+  --serif:"Noto Serif SC","Noto Serif CJK SC","Source Han Serif SC","Songti SC","STSong","SimSun",serif;
+  --sans:"PingFang SC","HarmonyOS Sans SC","Microsoft YaHei","Noto Sans SC","Noto Sans CJK SC",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#11161B; --surface:#182027; --sunk:#141B21; --ink:#E7ECEF; --muted:#A3AEB8; --faint:#76828D; --line:#2A343D;
+    --signal:#FF7A3D; --signal-hover:#FF915E; --signal-ink:#1A0E06;
+    --c-who:#3CC2A8; --c-say:#FF8A52; --c-when:#6FA8EA; --c-churn:#F07A72; --c-result:#A99DF4; --c-all:#E7ECEF; --c-setup:#8FC1D8;
+    --fill-bg:#594612; --fill-ink:#FFF1C7;
+    --prompt-bg:#151C22; --ok:#3CC2A8;
+    color-scheme: dark;
+  }
+}
+*{box-sizing:border-box}
+html{font-size:100%; -webkit-text-size-adjust:100%; scroll-behavior:smooth}
+html.big{font-size:118%}
+body{
+  margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans);
+  font-size:1rem; line-height:1.75;
+  padding-left:env(safe-area-inset-left,0px); padding-right:env(safe-area-inset-right,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{transition:none!important; animation:none!important} }
+a{color:inherit}
+button,input,select,textarea{font:inherit; color:inherit}
+:focus-visible{outline:3px solid var(--c-when); outline-offset:2px; border-radius:4px}
+.wrap{max-width:1240px; margin:0 auto; padding:0 24px}
+h1,h2,h3{font-family:var(--serif); font-weight:700; letter-spacing:.01em; margin:0}
+.muted{color:var(--muted)}
+.sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+
+/* ===== Top strip ===== */
+.topline{border-bottom:1px solid var(--line); background:var(--surface)}
+.topline .wrap{display:flex; flex-wrap:wrap; gap:6px 18px; align-items:center; justify-content:space-between; padding-top:10px; padding-bottom:10px; font-size:.875rem; color:var(--muted)}
+.topline b{color:var(--ink); font-weight:600}
+
+/* ===== Hero ===== */
+.hero{padding:56px 0 40px}
+.hero-grid{display:grid; grid-template-columns:minmax(0,5fr) minmax(0,6fr); gap:48px; align-items:start}
+.hero h1{font-size:clamp(2rem,4.2vw,3.1rem); line-height:1.2; margin-bottom:18px}
+.hero h1{letter-spacing:.06em}
+.hero .subtitle{font-family:var(--serif); font-size:clamp(1.15rem,2vw,1.45rem); color:var(--ink); margin:-6px 0 18px}
+.hero .lead{font-size:1.075rem; color:var(--muted); max-width:30em; margin:0 0 14px}
+.hero .lead.small{font-size:.95rem; margin-bottom:26px}
+.hero-actions{display:flex; flex-wrap:wrap; gap:12px}
+.qgroup + .qgroup{margin-top:22px}
+.qg-title{font-family:var(--sans); font-size:.95rem; font-weight:700; display:flex; gap:12px; align-items:baseline; margin:0 0 6px}
+.qg-title span{font-weight:400; color:var(--muted); font-size:.875rem}
+.qlist{list-style:none; margin:0; padding:0; border-top:2px solid var(--ink)}
+.qlist li{border-bottom:1px solid var(--line)}
+.qlist a{display:grid; grid-template-columns:8px 1fr auto; gap:18px; align-items:center; padding:12px 4px 12px 0; text-decoration:none}
+.qlist .bar{width:8px; align-self:stretch; border-radius:2px; background:var(--qc)}
+.qlist .qt{font-family:var(--serif); font-weight:700; font-size:clamp(1.3rem,2.4vw,1.8rem); line-height:1.25}
+.qlist .qt small{display:block; font-family:var(--sans); font-weight:400; font-size:.95rem; color:var(--muted); margin-top:2px}
+.qlist .qx{font-size:.9rem; color:var(--muted); text-align:right; white-space:nowrap}
+.qlist a:hover .qt{color:var(--qc)}
+.qnote{font-size:.875rem; color:var(--faint); margin:12px 0 0}
+
+/* ===== Buttons ===== */
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:44px; padding:0 18px; border-radius:8px; border:1px solid var(--line); background:var(--surface); color:var(--ink); font-weight:600; font-size:.95rem; cursor:pointer; text-decoration:none; transition:background .15s, border-color .15s}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--signal); border-color:var(--signal); color:var(--signal-ink)}
+.btn.primary:hover{background:var(--signal-hover); border-color:var(--signal-hover)}
+.btn.dark{background:var(--ink); border-color:var(--ink); color:var(--bg)}
+.btn.small{min-height:36px; padding:0 12px; font-size:.875rem; font-weight:500}
+.btn.ghost{background:transparent}
+.btn[aria-pressed="true"]{background:var(--ink); color:var(--bg); border-color:var(--ink)}
+
+
+/* ===== 记忆主线 ===== */
+.spine{list-style:none; margin:0 0 24px; padding:0; display:flex; flex-wrap:wrap; gap:8px}
+.spine a{display:flex; flex-direction:column; justify-content:center; min-height:48px; padding:6px 12px; text-decoration:none; background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--qc); border-radius:8px}
+.spine a:hover{border-color:var(--qc)}
+.spine b{font-family:var(--serif); font-size:.98rem; line-height:1.3}
+.spine small{color:var(--muted); font-size:.8rem; line-height:1.3}
+.spine-cap{margin:0 0 8px; font-size:.85rem; color:var(--faint)}
+/* ===== 底座卡 ===== */
+.kitem.base-item{border:2px solid var(--c-setup)}
+.idparts{list-style:none; margin:0 0 16px; padding:0; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; counter-reset:ip}
+.idparts li{counter-increment:ip; background:var(--sunk); border-radius:8px; padding:10px 14px; font-size:.9rem; color:var(--muted); line-height:1.6}
+.idparts li b{display:block; color:var(--ink); font-size:.98rem}
+.idparts li b::before{content:counter(ip) " "; font-family:var(--serif); color:var(--c-setup)}
+@media (max-width:1000px){ .idparts{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:720px){ .idparts{grid-template-columns:1fr} }
+
+/* ===== Framework ===== */
+.frame{padding:8px 0 44px}
+.frame-head{border-bottom:2px solid var(--ink); padding-bottom:12px; margin-bottom:18px}
+.frame-head h2{font-size:1.7rem}
+.frame-head p{margin:6px 0 0; color:var(--muted); max-width:52em}
+.fscroll{overflow-x:auto}
+.fmatrix{width:100%; min-width:760px; border-collapse:collapse; background:var(--surface); border:1px solid var(--line)}
+.fmatrix th,.fmatrix td{border:1px solid var(--line); padding:12px 14px; vertical-align:top; text-align:left}
+.fmatrix thead th{font-family:var(--serif); font-size:1.1rem; background:var(--sunk)}
+.fmatrix th small{display:block; font-family:var(--sans); font-weight:400; font-size:.82rem; color:var(--muted); margin-top:2px; line-height:1.5}
+.fmatrix tbody th{width:16%; font-size:.95rem; background:var(--sunk)}
+.fmatrix td{width:28%}
+.fmatrix .span-row td{display:table-cell}
+.fmatrix .span-row em{font-style:normal; color:var(--muted); font-size:.88rem; margin-left:6px}
+.fx{display:grid; grid-template-columns:auto 1fr; gap:10px; align-items:start; text-decoration:none; padding:6px 8px; margin:0 0 4px; border-radius:6px; border-left:4px solid var(--qc)}
+.span-row .fx{display:inline-grid; margin:0}
+.fx:hover{background:var(--sunk)}
+.fx b{font-family:var(--serif); font-size:1.25rem; line-height:1.2; color:var(--qc)}
+.fx span{font-weight:600; font-size:.95rem; line-height:1.4}
+.fx small{display:block; font-weight:400; font-size:.8rem; color:var(--qc)}
+.fnone{font-size:.85rem; color:var(--faint)}
+.fhint{display:none; margin:8px 0 0; font-size:.85rem; color:var(--faint)}
+@media (max-width:820px){ .fhint{display:block} }
+.fbase{display:inline-block; padding:4px 10px; margin:0 6px; border-radius:6px; border:1px solid var(--c-setup); color:var(--c-setup); text-decoration:none; font-weight:600; font-size:.9rem}
+.recipe{margin-top:20px; display:grid; grid-template-columns:auto 1fr; gap:6px 24px; align-items:center}
+.recipe h3{font-size:1.1rem}
+.recipe ol{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:8px; counter-reset:rc}
+.recipe li{counter-increment:rc; background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:8px 10px; font-size:.85rem; color:var(--muted); line-height:1.5}
+.recipe li b{display:block; color:var(--ink); font-size:.95rem}
+.recipe li b::before{content:counter(rc) " "; color:var(--signal); font-family:var(--serif)}
+.recipe p{grid-column:1/-1; margin:0; font-size:.88rem; color:var(--faint)}
+
+/* ===== How to ===== */
+.howto{background:var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
+.howto ol{list-style:none; margin:0; padding:22px 0; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:28px; counter-reset:s}
+.howto li{counter-increment:s; display:grid; grid-template-columns:auto 1fr; gap:12px; align-items:start; font-size:.95rem}
+.howto li::before{content:counter(s); font-family:var(--serif); font-weight:700; font-size:1.6rem; line-height:1; color:var(--signal); padding-top:2px}
+.howto strong{display:block; font-size:1rem}
+
+/* ===== Settings ===== */
+.settings{position:sticky; top:0; z-index:20; background:color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter:saturate(1.2) blur(8px); -webkit-backdrop-filter:saturate(1.2) blur(8px); border-bottom:1px solid var(--line); padding-top:env(safe-area-inset-top,0px)}
+@supports not (background:color-mix(in srgb, red 50%, white)){ .settings{background:var(--bg)} }
+.settings .wrap{display:flex; flex-wrap:wrap; gap:10px 18px; align-items:center; padding-top:10px; padding-bottom:10px}
+.settings label{display:flex; align-items:center; gap:8px; font-size:.875rem; color:var(--muted); white-space:nowrap}
+.settings select,.settings input{min-height:38px; border:1px solid var(--line); border-radius:8px; background:var(--surface); padding:0 10px; font-size:.95rem; color:var(--ink)}
+.settings input{width:15em; min-width:0}
+.settings .grow input{flex:1; width:auto; max-width:22em}
+.settings .grow{flex:1}
+.progress-pill{display:flex; align-items:center; gap:10px; font-size:.875rem; color:var(--muted); white-space:nowrap}
+.pbar{width:110px; height:8px; background:var(--line); border-radius:99px; overflow:hidden}
+.pbar i{display:block; height:100%; width:0; background:var(--ok); transition:width .3s}
+
+/* ===== Main layout ===== */
+.main{display:grid; grid-template-columns:250px minmax(0,1fr); gap:40px; padding:36px 0 24px; align-items:start}
+.index{position:sticky; top:76px; font-size:.9rem; max-height:calc(100vh - 96px); overflow:auto; padding-right:4px}
+.index h2{font-size:1.05rem; margin-bottom:6px}
+.index .lv{margin:16px 0 4px; font-size:.8rem; color:var(--faint); font-weight:600}
+.index a{display:grid; grid-template-columns:22px 1fr 14px; gap:6px; align-items:center; padding:6px 8px; border-radius:6px; text-decoration:none; color:var(--muted); line-height:1.4}
+.index a:hover{background:var(--surface); color:var(--ink)}
+.index a.current{background:var(--surface); color:var(--ink); font-weight:600}
+.index .n{font-family:var(--serif); font-weight:700; color:var(--ink)}
+.index .done{width:12px; height:12px; border-radius:50%; border:1.5px solid var(--line)}
+.index a.is-done .done{background:var(--ok); border-color:var(--ok)}
+
+.filters{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 26px}
+.chip{min-height:34px; padding:0 14px; border-radius:99px; border:1px solid var(--line); background:var(--surface); font-size:.875rem; cursor:pointer; display:inline-flex; align-items:center; gap:8px}
+.chip .dot{width:8px; height:8px; border-radius:50%; background:var(--qc,var(--ink))}
+.chip[aria-pressed="true"]{background:var(--ink); color:var(--bg); border-color:var(--ink)}
+
+.layer{margin:0 0 40px}
+.layer-head{display:grid; grid-template-columns:auto 1fr; gap:4px 16px; align-items:baseline; margin:0 0 14px; padding-bottom:12px; border-bottom:2px solid var(--ink)}
+.layer-head h2{font-size:1.5rem}
+.layer-head .tag{font-size:.85rem; font-weight:600; color:var(--signal)}
+.layer-head p{grid-column:1/-1; margin:0; color:var(--muted); font-size:.95rem}
+
+/* ===== Exercise ===== */
+.ex{background:var(--surface); border:1px solid var(--line); border-left:6px solid var(--qc); border-radius:10px; margin:0 0 14px; scroll-margin-top:80px}
+.ex > summary{list-style:none; cursor:pointer; display:grid; grid-template-columns:auto 1fr auto; gap:6px 18px; align-items:center; padding:18px 20px}
+.ex > summary::-webkit-details-marker{display:none}
+.ex .exn{font-family:var(--serif); font-weight:700; font-size:2rem; line-height:1; color:var(--qc); min-width:1.4em}
+.ex .ext{font-family:var(--serif); font-size:1.2rem; line-height:1.4}
+.ex .exm{display:flex; flex-wrap:wrap; gap:4px 14px; font-size:.85rem; color:var(--muted); margin-top:4px; font-family:var(--sans)}
+.ex .exm .q{color:var(--qc); font-weight:600}
+.ex .toggle{font-size:.85rem; color:var(--muted); white-space:nowrap; display:flex; align-items:center; gap:8px}
+.ex .toggle::after{content:""; width:9px; height:9px; border-right:2px solid currentColor; border-bottom:2px solid currentColor; transform:rotate(45deg); margin-top:-4px; transition:transform .2s}
+.ex[open] .toggle::after{transform:rotate(225deg); margin-top:4px}
+.ex .donebadge{display:none; font-size:.8rem; color:var(--ok); font-weight:700}
+.ex.is-done .donebadge{display:inline}
+.exbody{padding:0 20px 22px; border-top:1px solid var(--line)}
+.pain{margin:18px 0 6px; font-size:1.05rem}
+.pain b{font-weight:700}
+.getline{margin:0 0 16px; color:var(--muted); font-size:.95rem}
+.steps{list-style:none; counter-reset:st; margin:0 0 20px; padding:0; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px}
+.steps li{counter-increment:st; background:var(--sunk); border-radius:8px; padding:10px 12px; font-size:.9rem; line-height:1.6}
+.steps li::before{content:"第" counter(st) "步"; display:block; font-weight:700; color:var(--qc); font-size:.8rem}
+
+.fields{display:grid; gap:14px; margin:0 0 18px}
+.field .frow{display:flex; flex-wrap:wrap; justify-content:space-between; gap:6px 12px; align-items:baseline; margin-bottom:6px}
+.field .frow label{font-weight:600; font-size:.9rem}
+.field .tools{display:flex; gap:8px; flex-wrap:wrap; font-weight:400}
+.field .tools button{border:none; background:none; padding:0; font-size:.85rem; color:var(--c-when); cursor:pointer; text-decoration:underline; text-underline-offset:3px}
+.field textarea,.field input,.field select{width:100%; border:1px solid var(--line); border-radius:8px; background:var(--sunk); padding:10px 12px; font-size:.95rem; line-height:1.65}
+.field textarea{resize:vertical; font-family:var(--sans); tab-size:4; white-space:pre; overflow-x:auto}
+.field textarea.wrap-text{white-space:pre-wrap}
+.field input,.field select{min-height:42px}
+.field .hint{font-size:.82rem; color:var(--faint); margin-top:4px}
+.presets{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 8px}
+.preset{min-height:34px; padding:0 12px; border-radius:99px; border:1px solid var(--line); background:var(--surface); font-size:.875rem; cursor:pointer}
+.preset:hover{border-color:var(--qc)}
+.preset[aria-pressed="true"]{background:var(--qc); border-color:var(--qc); color:var(--surface)}
+
+.pbox{margin:0 0 16px; border:1px solid var(--line); border-radius:10px; background:var(--prompt-bg); overflow:hidden}
+.pbox-head{display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between; padding:10px 14px; border-bottom:1px solid var(--line); background:var(--surface)}
+.pbox-head h3{font-family:var(--sans); font-size:.95rem; font-weight:700}
+.pbox-head .acts{display:flex; flex-wrap:wrap; gap:8px}
+.ptext{margin:0; padding:16px 18px; white-space:pre-wrap; word-break:break-word; font-family:var(--sans); font-size:.95rem; line-height:1.85; max-height:520px; overflow:auto}
+.ptext .fill{background:var(--fill-bg); color:var(--fill-ink); border-radius:3px; padding:0 2px; box-decoration-break:clone; -webkit-box-decoration-break:clone}
+.ptext .empty{background:transparent; color:var(--c-churn); border:1px dashed var(--c-churn); padding:0 4px}
+.pbox-foot{padding:8px 14px; font-size:.82rem; color:var(--faint); border-top:1px dashed var(--line)}
+
+.twocol{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:16px; margin:0 0 16px}
+.panel{background:var(--sunk); border-radius:10px; padding:14px 16px}
+.panel h4{margin:0 0 8px; font-size:.9rem; font-weight:700}
+.panel ul{margin:0; padding-left:1.2em; font-size:.92rem}
+.panel li{margin:2px 0}
+.panel.sample{background:transparent; border:1px dashed var(--line)}
+.panel.sample pre{margin:0; white-space:pre-wrap; font-family:var(--sans); font-size:.9rem; line-height:1.75; color:var(--muted)}
+.panel.human{border-left:4px solid var(--c-churn)}
+.panel.where{background:transparent; border:1px solid var(--line); margin:0 0 16px}
+.panel.where dl{margin:0; display:grid; grid-template-columns:minmax(0,15em) minmax(0,1fr); gap:0}
+.panel.where dt{font-weight:700; font-size:.92rem; padding:10px 14px 10px 0; border-top:1px solid var(--line)}
+.panel.where dd{margin:0; font-size:.92rem; color:var(--muted); padding:10px 0; border-top:1px solid var(--line)}
+@media (max-width:720px){ .panel.where dl{grid-template-columns:1fr} .panel.where dd{border-top:none; padding-top:0} }
+
+.follow h4{margin:0 0 8px; font-size:.9rem}
+.follow .list{display:flex; flex-direction:column; gap:8px; margin:0 0 16px}
+.fbtn{display:grid; grid-template-columns:1fr auto; gap:12px; align-items:center; text-align:left; width:100%; border:1px solid var(--line); background:var(--surface); border-radius:8px; padding:10px 14px; cursor:pointer; font-size:.92rem; line-height:1.6}
+.fbtn:hover{border-color:var(--qc)}
+.fbtn span:last-child{font-size:.8rem; color:var(--muted); white-space:nowrap}
+
+.exfoot{display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between; padding-top:14px; border-top:1px solid var(--line)}
+.compliance{font-size:.85rem; color:var(--muted); margin:0}
+.compliance b{color:var(--c-churn)}
+.markdone{display:inline-flex; align-items:center; gap:10px; min-height:44px; padding:0 16px; border-radius:8px; border:1.5px solid var(--ok); color:var(--ok); background:transparent; font-weight:700; cursor:pointer}
+.markdone .box{width:18px; height:18px; border:2px solid currentColor; border-radius:4px; display:inline-grid; place-items:center}
+.ex.is-done .markdone{background:var(--ok); color:var(--surface)}
+.ex.is-done .markdone .box::after{content:""; width:8px; height:4px; border-left:2px solid currentColor; border-bottom:2px solid currentColor; transform:rotate(-45deg) translate(1px,-1px)}
+
+/* ===== Toolkit ===== */
+.kit{padding:20px 0 56px}
+.kit-head{border-bottom:2px solid var(--ink); padding-bottom:12px; margin-bottom:22px}
+.kit-head h2{font-size:1.9rem}
+.kit-head p{margin:6px 0 0; color:var(--muted)}
+.kit-grid{display:grid; grid-template-columns:repeat(12,minmax(0,1fr)); gap:18px}
+.kitem{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:20px; grid-column:span 6}
+.kitem.wide{grid-column:span 12}
+.kitem.third{grid-column:span 4}
+.kitem h3{font-size:1.2rem; margin-bottom:6px}
+.kitem > p{margin:0 0 14px; color:var(--muted); font-size:.92rem}
+.kitem .row{display:flex; flex-wrap:wrap; gap:10px}
+.dl-list{list-style:none; margin:0; padding:0}
+.dl-list li{display:grid; grid-template-columns:1fr auto; gap:12px; align-items:center; padding:12px 0; border-bottom:1px solid var(--line)}
+.dl-list li:last-child{border-bottom:none}
+.dl-list b{display:block; font-size:.98rem}
+.dl-list small{color:var(--muted); font-size:.85rem}
+.redlines{list-style:none; margin:0; padding:0; counter-reset:r}
+.redlines li{counter-increment:r; display:grid; grid-template-columns:auto 1fr; gap:12px; padding:10px 0; border-bottom:1px solid var(--line); font-size:.95rem}
+.redlines li::before{content:counter(r); font-family:var(--serif); font-weight:700; color:var(--c-churn); font-size:1.3rem; line-height:1.3}
+.redlines b{display:block}
+.mask{display:grid; grid-template-columns:1fr auto 1fr; gap:10px; align-items:center; margin-top:14px; font-size:.88rem}
+.mask div{background:var(--sunk); border-radius:8px; padding:10px 12px}
+.mask .bad{text-decoration:line-through; text-decoration-color:var(--c-churn); color:var(--muted)}
+.mask .arrow{font-size:1.2rem; color:var(--faint); background:transparent; padding:0}
+.signals{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px}
+.signals div{background:var(--sunk); border-radius:8px; padding:12px 14px}
+.signals b{display:block; margin-bottom:4px}
+.signals p{margin:0; font-size:.9rem; color:var(--muted)}
+.chips{display:flex; flex-wrap:wrap; gap:8px}
+.chips button{border:1px solid var(--line); background:var(--sunk); border-radius:8px; padding:8px 12px; font-size:.9rem; cursor:pointer; text-align:left; line-height:1.5}
+.chips button:hover{border-color:var(--signal)}
+
+footer{border-top:1px solid var(--line); background:var(--surface); padding:26px 0 calc(26px + env(safe-area-inset-bottom,0px)); font-size:.88rem; color:var(--muted)}
+footer .wrap{display:flex; flex-wrap:wrap; gap:8px 24px; justify-content:space-between}
+footer b{color:var(--ink)}
+
+/* ===== Toast & dialog ===== */
+.toast{position:fixed; left:50%; bottom:calc(24px + env(safe-area-inset-bottom,0px)); transform:translate(-50%,20px); background:var(--ink); color:var(--bg); padding:12px 18px; border-radius:10px; font-size:.95rem; opacity:0; pointer-events:none; transition:opacity .2s, transform .2s; z-index:50; max-width:calc(100% - 32px); text-align:center}
+.toast.show{opacity:1; transform:translate(-50%,0)}
+dialog{border:1px solid var(--line); border-radius:12px; background:var(--surface); color:var(--ink); width:min(720px,calc(100% - 32px)); padding:20px}
+dialog::backdrop{background:rgba(0,0,0,.45)}
+dialog textarea{width:100%; height:300px; border:1px solid var(--line); border-radius:8px; padding:10px; background:var(--sunk); font-size:.92rem}
+dialog .row{display:flex; justify-content:flex-end; gap:10px; margin-top:12px}
+
+/* ===== Responsive ===== */
+@media (max-width:1000px){
+  .hero-grid{grid-template-columns:1fr; gap:28px}
+  .main{grid-template-columns:1fr; gap:10px}
+  .index{position:static; max-height:none; overflow:visible; display:flex; gap:6px; overflow-x:auto; padding-bottom:6px}
+  .index h2,.index .lv{display:none}
+  .index a{grid-template-columns:auto auto; white-space:nowrap; border:1px solid var(--line); background:var(--surface)}
+  .index a .t{display:none}
+  .index a .done{display:none}
+  .index a.is-done{border-color:var(--ok)}
+  .kitem,.kitem.third{grid-column:span 12}
+}
+@media (max-width:1000px){
+  .recipe{grid-template-columns:1fr}
+}
+@media (max-width:720px){
+  .recipe ol{grid-template-columns:1fr 1fr}
+  .wrap{padding:0 16px}
+  .hero{padding:34px 0 26px}
+  .howto ol{grid-template-columns:1fr; gap:14px}
+  .steps{grid-template-columns:1fr}
+  .twocol{grid-template-columns:1fr}
+  .settings{position:static}
+  .layer-head{grid-template-columns:1fr}
+  .layer-head h2{font-size:1.25rem}
+  .settings .grow{flex:1 1 100%; order:-1}
+  .settings .grow input{max-width:none}
+  .index{top:0}
+  .ex > summary{grid-template-columns:auto 1fr; padding:16px}
+  .ex .toggle{grid-column:2}
+  .exbody{padding:0 16px 18px}
+    .signals{grid-template-columns:1fr}
+  .mask{grid-template-columns:1fr}
+  .mask .arrow{display:none}
+  .qlist .qx{white-space:normal}
+}
+
+/* ===== Print ===== */
+@media print{
+  .fscroll{overflow:visible}
+  .fmatrix{min-width:0}
+  .settings,.filters,.index,.hero-actions,.pbox-head .acts,.field .tools,.markdone,.toast,.kitem .row,.dl-list .btn,.chips,.howto{display:none!important}
+  body{background:#fff; color:#000; font-size:11pt}
+  .main{display:block; padding:0}
+  .ex{break-inside:avoid-page; border-color:#999}
+  .ptext{max-height:none; overflow:visible}
+  .fields{display:none}
+  a{text-decoration:none}
+}
+</style>
+</head>
+<body>
+<div class="topline">
+  <div class="wrap">
+    <span><b>平安集团</b>《预测式营销：AI 前沿实践、实战工具及技巧》直播配套跟练手册</span>
+    <span>讲师：李家贵</span>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <h1>五问三阶十练</h1>
+      <p class="subtitle">单客 · 客群 · 业绩　预测式营销 AI 跟练手册</p>
+      <p class="lead">5 个销售问题是主线，3 阶（单客、客群、业绩预测式营销）是进度，10 个练习共用同一套提示词配方，最后固化成 WorkBuddy 里的「周一自动化」。开练前先用练习 0 写好 AGENTS.md 身份文件，它是整套练习的底座。</p>
+      <p class="lead small">每一练都是「改一改、复制、粘贴」：直播时跟着做一遍，课后换成自己的客户再做一遍。</p>
+      <p class="spine-cap">一条主线，五个台阶：</p>
+      <ol class="spine" aria-label="记忆主线">
+        <li><a href="#layer-0" style="--qc:var(--c-setup)"><b>立身份</b><small>AGENTS.md 底座</small></a></li>
+        <li><a href="#layer-1" style="--qc:var(--c-who)"><b>单客预测式营销</b><small>读懂一个人</small></a></li>
+        <li><a href="#layer-2" style="--qc:var(--c-when)"><b>客群预测式营销</b><small>排好一群人</small></a></li>
+        <li><a href="#layer-3" style="--qc:var(--c-result)"><b>业绩预测式营销</b><small>算准一个月</small></a></li>
+        <li><a href="#layer-4" style="--qc:var(--c-all)"><b>固流程</b><small>WorkBuddy 每周自动跑</small></a></li>
+      </ol>
+      <div class="hero-actions">
+        <a class="btn primary" href="#ex-0">先立底座：练习 0</a>
+        <a class="btn" href="#framework">看懂整体结构</a>
+      </div>
+    </div>
+    <div>
+      <div id="qgroups"></div>
+      <p class="qnote">五问分两类：前三问管触达，后两问管结果。点任意一行，直接看对应练习。</p>
+    </div>
+  </div>
+</header>
+
+<section class="frame" id="framework" aria-labelledby="fw-title">
+  <div class="wrap">
+    <div class="frame-head">
+      <h2 id="fw-title">一张表看懂五问三阶十练</h2>
+      <p>横着读：同一条预测链逐阶放大，单客读懂一个人，客群排好一批人，业绩算准一个月。竖着读：三条能力线贯穿三阶。每个格子里的彩色小字，是这一练回答五问中的哪一问。</p>
+    </div>
+    <div class="fscroll" id="fmatrix"></div>
+    <p class="fhint">表格较宽，左右滑动可以看到第二阶和第三阶。</p>
+    <div class="recipe">
+      <h3>十练共用一套提示词配方</h3>
+      <ol>
+        <li><b>角色</b>告诉 AI 它是谁、懂什么业务</li>
+        <li><b>输入</b>放进脱敏后的客户信息或名单</li>
+        <li><b>任务</b>按步骤拆清要它做的事</li>
+        <li><b>格式</b>规定输出的结构、长度和表格</li>
+        <li><b>约束</b>写进合规红线，不编造、不承诺</li>
+      </ol>
+      <p>学会这套配方，任何新场景都能照着写出自己的提示词。</p>
+    </div>
+  </div>
+</section>
+
+<section class="howto" aria-label="使用方法">
+  <div class="wrap">
+    <ol>
+      <li><span><strong>立好身份</strong>在下方「我的设置」选业务线、主推产品和常用的 AI 工具；再做练习 0，给 AI 一份你的 AGENTS.md 身份文件。</span></li>
+      <li><span><strong>放入客户</strong>打开一个练习，先用示例数据跑通；再把输入框换成你自己客户的信息（记得先脱敏）。</span></li>
+      <li><span><strong>复制粘贴</strong>点「复制提示词」，到 AI 对话框里按 Ctrl+V（手机长按粘贴）发送。做完点「标记完成」。</span></li>
+    </ol>
+  </div>
+</section>
+
+<div class="settings" role="region" aria-label="我的设置">
+  <div class="wrap">
+    <label class="inline">业务线
+      <select id="g-line">
+        <option>寿险</option><option>健康险</option><option>车险/产险</option><option>银行理财</option><option>信用卡</option><option>综合金融</option>
+      </select>
+    </label>
+    <label class="grow">主推产品
+      <input id="g-product" type="text" autocomplete="off">
+    </label>
+    <label class="inline">常用 AI
+      <select id="g-ai">
+        <option value="doubao">豆包</option><option value="deepseek">DeepSeek</option><option value="kimi">Kimi</option><option value="yuanbao">腾讯元宝</option><option value="none">公司内部 AI</option>
+      </select>
+    </label>
+    <button class="btn small" id="g-big" aria-pressed="false" type="button">投屏大字</button>
+    <div class="progress-pill" aria-live="polite"><span id="g-progress-text">已完成 0/11</span><span class="pbar"><i id="g-progress-bar"></i></span></div>
+  </div>
+</div>
+
+<div class="wrap main">
+  <nav class="index" id="index" aria-label="练习目录"></nav>
+  <main id="exercises">
+    <div class="filters" id="filters" role="toolbar" aria-label="按问题筛选练习"></div>
+    <div id="layers"></div>
+  </main>
+</div>
+
+<section class="kit" id="kit" aria-labelledby="kit-title">
+  <div class="wrap">
+    <div class="kit-head">
+      <h2 id="kit-title">一份底座，一包资料</h2>
+      <p>AGENTS.md 身份文件是整套练习的底座：先立身份，后面每一练、每周一次的自动化，都按它干活。其余资料都可以直接下载或复制，表格用 Excel 或 WPS 打开，打分公式已经写好。</p>
+    </div>
+    <div class="kit-grid">
+      <div class="kitem wide base-item">
+        <h3>底座：AGENTS.md 身份文件</h3>
+        <p>像给新同事写的一份岗位说明书，一次写清，之后每个练习和每周自动化都先读它。练习 0 里按你的设置自动生成，这里可以直接下载或复制。</p>
+        <ol class="idparts">
+          <li><b>你是谁</b>给 AI 定岗：我的专属销售助理，帮我做预测式营销</li>
+          <li><b>我是谁</b>业务线、主推产品、主要客户、每天能联系几位客户</li>
+          <li><b>怎么跟我说话</b>风格、先结论后理由、微信话术不超过 60 字</li>
+          <li><b>边界红线</b>不编造、不承诺、金额留空、先脱敏、不贬低同业、结果只是草案</li>
+          <li><b>快捷指令</b>画像、时机、朋友圈、打分、异议、跟进、预警、业绩、复盘、周一名单、本周客群</li>
+          <li><b>开工确认</b>读完回复「身份文件已读取」，并复述身份和三条红线</li>
+        </ol>
+        <div class="row">
+          <button class="btn small primary" type="button" id="dl-agents">下载 AGENTS.md</button>
+          <button class="btn small" type="button" id="copy-agents">复制全文</button>
+          <a class="btn small ghost" href="#ex-0">去练习 0 调整</a>
+        </div>
+      </div>
+      <div class="kitem">
+        <h3>一键下载</h3>
+        <p>文字版资料用记事本、Word 都能打开；表格版建议用 WPS 或 Excel 打开。</p>
+        <ul class="dl-list" id="downloads"></ul>
+      </div>
+      <div class="kitem">
+        <h3>四条边界</h3>
+        <p>写进 AGENTS.md 的第 4 节，每个练习的提示词里也带着这些约束。</p>
+        <ol class="redlines">
+          <li><span><b>先脱敏，再输入</b>身份证、银行卡、完整手机号、病历原文，一律不进公开 AI。</span></li>
+          <li><span><b>话术必须人工复核</b>收益演示、免责说明、条款表述，以公司口径为准。</span></li>
+          <li><span><b>不做承诺性表述</b>「保证」「一定赔」「稳赚」「最高收益」这类词，逐个删掉。</span></li>
+          <li><span><b>数据不外传</b>客户数据的使用范围遵守集团与监管要求。集团对 AI 工具另有规定的，以集团规定为准。</span></li>
+        </ol>
+        <div class="mask" aria-label="脱敏示范">
+          <div class="bad">张伟，138****5678，身份证 3301…，保单号 P2023…，病历：甲状腺结节 TI-RADS 3 类</div>
+          <div class="arrow" aria-hidden="true">⟶</div>
+          <div>客户 C04，34 岁，已婚 1 孩，已有重疾险 1 份，体检提示甲状腺结节</div>
+        </div>
+      </div>
+      <div class="kitem">
+        <h3>四类时机信号</h3>
+        <p>看到下面这些信号，就是该开口的时候。练习 2 会帮你从备注里自动找出来。</p>
+        <div class="signals">
+          <div><b>生命周期</b><p>结婚、怀孕生育、孩子入学升学或出国、退休、父母进入高龄</p></div>
+          <div><b>资产变动</b><p>跳槽换工作、涨薪发年终奖、买房换房、买车、企业扩张开新店、新增贷款</p></div>
+          <div><b>服务触点</b><p>理赔结案、保单周年和续期、车险到期、理财到期、体检异常、客户生日</p></div>
+          <div><b>行为信号</b><p>反复打开计划书、问完细节后沉默、朋友圈晒生活变化、转发健康或保险新闻、咨询减保退保</p></div>
+        </div>
+      </div>
+      <div class="kitem">
+        <h3>十句万能追问</h3>
+        <p>AI 第一次给的结果不满意，别重来，点一下复制，接着追问。</p>
+        <div class="chips" id="followups"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span><b>讲师：李家贵</b>　西安交大数字经济学院首席科学家</span>
+    <span>示例客户均为虚构。AI 输出是建议草案，打不打、怎么说、怎么承诺，以公司口径和你本人的判断为准。</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<dialog id="manual-copy" aria-labelledby="mc-title">
+  <h3 id="mc-title" style="font-size:1.1rem;margin-bottom:8px">请手动复制</h3>
+  <p class="muted" style="margin:0 0 10px;font-size:.9rem">浏览器没有允许自动复制。文字已经全部选中，按 Ctrl+C（Mac 按 ⌘+C）即可。</p>
+  <textarea id="mc-text" readonly></textarea>
+  <div class="row"><button class="btn dark" type="button" id="mc-close">好了，关闭</button></div>
+</dialog>
+<script>
+/* ========== 基础配置 ========== */
+const QUESTIONS = {
+  setup:  {pro:'立身份', name:'先让 AI 认识你',   color:'var(--c-setup)'},
+  who:    {pro:'测意向', name:'今天先打谁？',     color:'var(--c-who)',    group:'reach'},
+  say:    {pro:'测需求', name:'说什么、发什么？', color:'var(--c-say)',    group:'reach'},
+  when:   {pro:'测时机', name:'什么时候开口？',   color:'var(--c-when)',   group:'reach'},
+  churn:  {pro:'测流失', name:'谁可能要走？',     color:'var(--c-churn)',  group:'result'},
+  result: {pro:'测成交', name:'这个月能成多少？', color:'var(--c-result)', group:'result'},
+  all:    {pro:'固流程', name:'五问每周自动跑完', color:'var(--c-all)'}
+};
+const HERO_Q = ['who','say','when','churn','result'];
+const GROUPS = [
+  {id:'reach',  name:'触达三问', sub:'对谁、说什么、何时开口'},
+  {id:'result', name:'结果两问', sub:'谁会走、能成多少'}
+];
+const LINES = {
+  judge:   {name:'判断线', sub:'值不值得投入：读懂一个人，排一批人，算一笔业绩'},
+  signal:  {name:'信号线', sub:'该不该行动：从变化里读出开口、挽回、推进的信号'},
+  express: {name:'表达线', sub:'怎么说出口：把判断变成发得出去的话'}
+};
+
+const LAYERS = [
+  {id:0, step:'底座',   pro:'身份 MD',         name:'底座　身份 MD',         tag:'立身份：让 AI 认识你', desc:'像给新同事写一份岗位说明书：一次写清你是谁、怎么说话、哪些红线不能碰，存成一份 AGENTS.md 身份文件。之后每个练习、每周自动化，AI 都按这份文件干活。不计入十练，约 5 分钟。'},
+  {id:1, step:'第一阶', pro:'单客预测式营销', name:'第一阶　单客预测式营销', tag:'读懂一个人',           desc:'一位客户的情况、或一个想发的主题，复制提示词就能出判断和内容。练习 1—3，每个 3—5 分钟。'},
+  {id:2, step:'第二阶', pro:'客群预测式营销', name:'第二阶　客群预测式营销', tag:'排好一群人',           desc:'把客户名单、近况备注、存量清单一次交给 AI，批量排序、分层、预警，也为一类客户批量备好话术。练习 4—7，每个 5—8 分钟。'},
+  {id:3, step:'第三阶', pro:'业绩预测式营销', name:'第三阶　业绩预测式营销', tag:'算准一个月',           desc:'前两阶的升级靠数据变多：一条变一批。这一阶换了方向，不再判断“这个人怎样”，而是推演“这单能不能成、这个月能成多少”。练习 8—9，每个 8—10 分钟。'},
+  {id:4, step:'固化',   pro:'WorkBuddy 自动化', name:'固化　WorkBuddy 自动化', tag:'每周只丢一次客群',     desc:'把练习 1—9 装进 WorkBuddy 的一个自动化：每周一它先问一句“本周的客群是什么”，你把客群丢进去，上面的内容就自动跑完、自动存档。练习 10，约 10 分钟，只需设置一次。'}
+];
+
+const AI_TOOLS = {
+  doubao:  {name:'豆包',     url:'https://www.doubao.com/chat/'},
+  deepseek:{name:'DeepSeek', url:'https://chat.deepseek.com/'},
+  kimi:    {name:'Kimi',     url:'https://www.kimi.com/'},
+  yuanbao: {name:'腾讯元宝', url:'https://yuanbao.tencent.com/'},
+  none:    {name:'公司内部 AI', url:''}
+};
+
+const PRODUCT_BY_LINE = {
+  '寿险':'重疾险、增额终身寿险',
+  '健康险':'百万医疗险、重疾险',
+  '车险/产险':'车险续保、驾乘意外险',
+  '银行理财':'稳健型理财、大额存单',
+  '信用卡':'信用卡分期、权益卡升级',
+  '综合金融':'保险+理财的家庭组合方案'
+};
+
+/* ========== 示例数据（全部虚构、已脱敏） ========== */
+const DATA_LIST30 = `编号	年龄	家庭	职业	已有保障/产品	最近联系	近30天互动	备注
+C01	35	已婚，1孩(5岁)	外企HR	百万医疗	12天前	3次，问过教育金	孩子明年上小学
+C02	52	已婚，孩子已工作	个体餐饮	无商业保险	60天前	0次	去年说“等生意好点再说”
+C03	29	未婚	程序员	公司团险	5天前	5次，主动问重疾和医疗的区别	刚涨薪
+C04	41	已婚，2孩	私企老板	重疾30万(5年前买)	20天前	1次，点赞朋友圈	新开分店
+C05	33	已婚，怀孕5个月	公务员	社保	8天前	4次，问孕期能买什么	预产期在明年2月
+C06	46	离异，1孩(高二)	销售经理	年金险1份	45天前	0次	孩子准备出国留学
+C07	38	已婚，1孩	医生	重疾50万、医疗	3天前	2次，咨询父母的保险	父母65岁以上
+C08	27	未婚	新媒体运营	无	15天前	1次，问“月薪8千怎么配”	预算敏感
+C09	58	已婚	即将退休的教师	社保、少量理财	10天前	3次，问养老规划	明年4月退休
+C10	44	已婚，2孩	出租车司机	意外险	90天前	0次	电话常打不通
+C11	36	已婚，1孩	银行柜员	百万医疗、意外	25天前	2次，转发过理赔新闻	在意理赔效率
+C12	31	已婚，无孩	设计师	无	2天前	6次，比较了三家方案	近期要买房
+C13	49	已婚，1孩(大学)	工厂主管	寿险1份	35天前	1次	体检有三高
+C14	40	已婚，2孩	自由职业	无	7天前	2次，问“自由职业怎么交社保”	收入不稳定
+C15	63	丧偶	退休	医保	50天前	0次	子女在外地
+C16	34	已婚，1孩(1岁)	互联网产品经理	公司团险	4天前	3次，问少儿重疾	最近跳槽
+C17	37	已婚，1孩	律师	重疾、医疗、意外齐全	30天前	1次	保障较全
+C18	45	已婚，2孩	建材生意	理财为主	18天前	2次，问资产隔离	企业有贷款
+C19	26	未婚	护士	无	6天前	2次，夜班多	关注意外和医疗
+C20	50	已婚	公司财务总监	年金、重疾	40天前	1次，看了计划书未回	预算充足
+C21	32	已婚，1孩	小学老师	百万医疗	9天前	3次，问孩子意外险	孩子暑假出过小意外
+C22	39	已婚，2孩	外卖站长	意外险	22天前	1次	体力劳动强度大
+C23	55	已婚	个体超市	无	70天前	0次	曾拒绝过两次
+C24	30	已婚，孕中	会计	百万医疗	5天前	4次，问生育和教育金	家庭年收入较高
+C25	43	已婚，1孩	转业干部	重疾20万	28天前	1次	保额偏低
+C26	36	未婚	健身教练	意外险	12天前	2次，问运动受伤能否报销	收入是提成制
+C27	48	已婚，2孩	物流公司老板	多份他司保单	33天前	1次，问保单整理	保单较乱
+C28	28	新婚	公务员	社保	3天前	3次，问夫妻怎么配	刚办完婚礼
+C29	61	已婚	退休工程师	医保、理财	15天前	2次，问防癌险	有慢性病
+C30	35	已婚，1孩	网约车司机	意外险	40天前	0次	上次说“没空”`;
+
+const DATA_NOTES10 = `客户01 李先生 41岁：上月中旬理赔结案（住院医疗），赔款已到账，结案后一直没再联系。
+客户02 王女士 29岁：朋友圈晒了婚纱照，本月底办婚礼。
+客户03 陈先生 45岁：保单周年日在下月初，去年续期时问过能不能减保。
+客户04 赵女士 34岁：上个月体检提示甲状腺结节，问过“有结节还能买保险吗”。
+客户05 刘先生 38岁：刚从国企跳槽到互联网公司，原单位的团险随离职失效。
+客户06 孙女士 52岁：明年3月退休，最近两次问到养老金能领多少。
+客户07 周先生 31岁：车险下月中旬到期，去年在别家投保。
+客户08 吴女士 40岁：两周内3次打开我发的教育金计划书，但没回消息。
+客户09 郑先生 47岁：企业主，最近朋友圈发新厂房开工。
+客户10 冯女士 27岁：近3个月信用卡分期比较频繁，上月问过提额。`;
+
+const DATA_TAGS6 = `客户A：新手妈妈，宝宝8个月，关心孩子健康，说话温柔
+客户B：45岁私营业主，很忙，喜欢简短直接
+客户C：刚退休的中学老师，做事仔细，爱问细节
+客户D：28岁程序员，理性，反感营销味
+客户E：买了5年的老客户，上个月刚帮他办过理赔
+客户F：车险客户，只在续保时联系，平时不太回消息`;
+
+const DATA_STOCK12 = `编号	产品	年交/金额	下次缴费或到期	近90天互动	服务记录	最近一句话
+R01	重疾险	8,600元/年	18天后	0次	无	—
+R02	年金险	2万元/年	35天后	1次	正常	“最近手头有点紧”
+R03	医疗险	1,200元/年	9天后	2次	上月理赔到账慢，投诉过一次	“你们理赔太磨叽了”
+R04	车险	4,300元/年	12天后到期	0次	无	—
+R05	增额终身寿	5万元/年	60天后	3次	正常	“朋友说网上有更便宜的”
+R06	重疾险	1.2万元/年	25天后	0次	换了手机号未更新	—
+R07	理财产品	30万元	20天后到期	1次	正常	“别的银行利率好像更高”
+R08	信用卡	月均消费约6千	—	近2个月消费下降70%	—	—
+R09	两全险	6,000元/年	40天后	2次	正常	“孩子学费要用钱，能退吗？”
+R10	医疗险	900元/年	15天后	4次	刚理赔结案，满意	“谢谢你帮忙”
+R11	重疾险	9,800元/年	5天后	0次	扣款失败1次（余额不足）	—
+R12	年金险	3万元/年	50天后	1次	正常	“问过减保会怎样”`;
+
+const DATA_DEALS10 = `客户	预计金额(元)	阶段	上次推进	卡点
+D01 张姐	18,000	等签约	2天前	等先生签字
+D02 刘总	50,000	方案已讲	16天前	说要和财务商量，之后没回复
+D03 小陈	6,000	需求确认	5天前	预算有限
+D04 王老师	12,000	方案已讲	3天前	担心健康告知过不了
+D05 赵先生	30,000	初次接触	7天前	刚加微信
+D06 孙女士	9,000	等签约	9天前	体检报告还没出
+D07 周哥	15,000	需求确认	21天前	联系不上
+D08 吴女士	8,000	方案已讲	1天前	在比较两份方案
+D09 郑总	40,000	需求确认	4天前	关注资产传承
+D10 冯先生	5,000	初次接触	12天前	对保险印象不好`;
+
+const DATA_CHAT = `我：陈哥，上次说的重疾方案您看了吗？
+客户：看了，保费比我想的高。
+我：这个已经是性价比最高的了，很多客户都买的这款。
+客户：我单位有团险，是不是重复了？
+我：团险离职就没了，而且保额很低的。
+客户：嗯，我再研究研究。
+（3天后）
+客户：你们这个重疾，甲状腺结节能保吗？我体检有个小结节。
+我：应该没问题的，到时候投保的时候看看。
+客户：好的，我老婆也说要不要一起给她看看。
+我：可以啊，那我把两个人的方案都做一下？
+客户：先不急，等我年终奖下来再说吧。`;
+
+const DATA_WEEK8 = `编号	年龄	家庭	职业	已有保障/产品	最近联系	近30天互动	备注
+C01	35	已婚，1孩(5岁)	外企HR	百万医疗	12天前	3次，问过教育金	孩子明年上小学
+C03	29	未婚	程序员	公司团险	5天前	5次，问重疾和医疗区别	刚涨薪
+C05	33	已婚，怀孕5个月	公务员	社保	8天前	4次，问孕期能买什么	预产期明年2月
+C09	58	已婚	即将退休的教师	社保、少量理财	10天前	3次，问养老规划	明年4月退休
+C12	31	已婚，无孩	设计师	无	2天前	6次，比较了三家方案	近期要买房
+C16	34	已婚，1孩(1岁)	互联网产品经理	公司团险	4天前	3次，问少儿重疾	最近跳槽
+C20	50	已婚	公司财务总监	年金、重疾	40天前	1次，看了计划书未回	预算充足
+C28	28	新婚	公务员	社保	3天前	3次，问夫妻怎么配	刚办完婚礼`;
+
+const COMPLY = '要求：只根据我给的信息判断，不确定的地方写「待核实」，不要编造；不要出现「保证」「一定」「稳赚」「最高收益」等承诺性词语；涉及收益、条款、金额的地方用【】留空，由我按公司口径填写。';
+
+/* ========== 10 个练习 ========== */
+const EXERCISES = [
+{
+  id:0, layer:0, q:'setup', minutes:5, live:'开练前准备，对应直播模块三',
+  title:'AGENTS.md 身份文件：给 AI 立身份，写一份我的底座',
+  pain:'每次打开 AI 都要重新解释“我是谁、要什么格式、哪些话不能说”，换个对话它又全忘了。',
+  get:'一份 AGENTS.md 格式的身份文件（身份 MD）：你的身份、客户、说话风格、合规红线和快捷指令。放进 AI 一次，后面每个练习都更准、更合规。',
+  steps:['填好下面三项（说话方式可以点选，也可以自己写），业务线和主推产品会从「我的设置」自动带入','复制「第一段：我的身份文件」，在新对话的第一条发送；或者下载成 AGENTS.md 文件，放进支持它的工具','接着发送「第二段：验收测试」，看 AI 有没有记住你的身份和红线'],
+  fields:[
+    {key:'我的客群', label:'我的主要客户', type:'input', value:'30—50岁的城市家庭和小企业主'},
+    {key:'每日联系数', label:'每天能联系几位客户', type:'input', value:'15'},
+    {key:'我的风格', label:'我希望 AI 怎么跟我说话', type:'combo', options:['亲切口语，像朋友聊天','专业稳重，少用感叹号','简洁直接，先说结论','耐心细致，多举例子'], placeholder:'也可以自己写，比如：叫我小王；先给结论再解释；不用网络流行语；每次最多给 3 个选项', value:'亲切口语，像朋友聊天'}
+  ],
+  prompts:[
+    {label:'第一段：我的身份文件（AGENTS.md）', download:'AGENTS.md', tpl:
+`# AGENTS.md｜我的身份文件（AI 销售助理）
+
+## 1. 你是谁
+你是我的专属销售助理，熟悉{{业务线}}一线销售的客户经营、话术和合规要求。你的任务是帮我做预测式营销：判断先联系谁、第一句说什么、什么时候开口、谁可能流失、这个月能成多少。
+
+## 2. 我是谁
+- 岗位：{{业务线}}一线销售
+- 主推产品：{{主推产品}}
+- 主要客户：{{我的客群}}
+- 工作节奏：每天大约联系{{每日联系数}}位客户
+
+## 3. 怎么跟我说话
+- 风格：{{我的风格}}
+- 先给结论，再给理由；能用表格就用表格，方便我复制到 Excel
+- 写给客户的开场白、微信话术要像真人发的，单条不超过60字
+- 判断要写依据，引用我给的原话或字段
+
+## 4. 合规红线（任何时候都不能违反）
+1. 只用我提供的信息，不确定就标「待核实」，不编造客户情况
+2. 不出现「保证」「一定赔」「稳赚」「最高收益」等承诺性表述
+3. 涉及收益、条款、金额、现金价值，一律用【】留空，由我按公司口径填写
+4. 发现我贴了身份证号、银行卡号、完整手机号、病历原文，先提醒我删掉，再继续
+5. 不贬低同业，不建议任何返佣、送礼等违规做法
+6. 每次结尾提醒我：这是建议草案，打不打、怎么说由我决定
+
+## 5. 快捷指令
+- 「画像」+ 客户信息：一句话画像、3个隐藏担忧、3个切入话题、2句开场白
+- 「时机」+ 客户备注：找出时机信号，排出本周必联系名单
+- 「朋友圈」+ 客群和节点：预测客户关心的事，写7条朋友圈
+- 「打分」+ 客户名单：三维打分、A/B/C分层、今日攻坚名单
+- 「异议」+ 客群画像：预测5个异议，每个给共情、数据、提问三版回应
+- 「跟进」+ 通知内容和客户标签：一客一文，每位客户一条专属微信
+- 「预警」+ 存量名单：流失风险排序和挽回话术
+- 「业绩」+ 商机清单：加权预测月底完成额和追赶方案
+- 「复盘」+ 聊天记录：成交概率、卡点和下一步
+- 「周一名单」+ 客户名单：按洞察、打分、时机、话术、跟进五步输出
+- 「本周客群」+ 客群名单：一次跑完画像、时机、朋友圈、打分、异议、一客一文、预警；有本月目标和商机清单、聊天记录时，再加业绩和复盘；成品存进「本周成果」
+
+## 6. 开工确认
+读完这份文件后，回复「身份文件已读取」，再用一句话复述我的身份和你记住的3条红线。`},
+    {label:'第二段：验收测试', tpl:
+`验收测试，请依次完成：
+1. 用两句话说明：你是谁、我是谁。
+2. 一位客户问我：“买了你们的产品，能保证出了事一定赔吗？”按我的身份文件，给我一句可以直接对客户说的话。
+3. 列出你现在能听懂的快捷指令。`}
+  ],
+  whereTitle:'这份身份文件放在哪里',
+  where:[
+    ['WorkBuddy（练习 10 要用）','新建一个专用空间（工作目录），如「客户经营」，把下载好的 AGENTS.md 放进空间根目录。之后在自动化任务指令里写明「开工前先读 AGENTS.md」，不依赖自动加载也能生效。具体入口以你的版本为准。'],
+    ['豆包、DeepSeek、Kimi、腾讯元宝等对话 App','每次新开对话，第一条先粘贴整份文件，之后在同一个对话里连续干活。2026 年 7 月起，豆包、千问、元宝都已下线用户自建的「智能体」功能，不用再去找「创建智能体」的入口。'],
+    ['会读 AGENTS.md 的 AI 工作台和 Agent 工具','点「下载为 AGENTS.md」，把文件放进工作文件夹的根目录，或粘贴到工具的「工作手册」里，它每次开工都会先读。Claude Code 读的文件名是 CLAUDE.md，下载后改个名即可。'],
+    ['有「项目说明」或「自定义指令」的工具','把整份文件粘贴进去保存，之后在这个项目里新开的对话都会自动带上。'],
+    ['公司内部 AI 平台','按平台的「角色设定」或「系统提示词」入口填写，使用范围以集团规定为准。']
+  ],
+  check:['AI 回复了「身份文件已读取」，复述的身份和你填的一致','验收测试里，AI 没有说“保证赔”，而是给了“以合同条款和理赔审核为准”这类合规说法','直接发「画像」加一位客户信息，它能按练习 1 的格式出结果'],
+  human:'合规红线只能加、不能删。菜单名称会随 App 版本变化，找不到设置入口时，就用最稳的办法：新对话第一条先粘贴身份文件。',
+  sample:`身份文件已读取。我是你的寿险销售助理；你是寿险一线销售，主推重疾险、增额终身寿险，客户以 30—50 岁城市家庭和小企业主为主。我记住的三条红线：只用你给的信息不编造；不做任何承诺性表述；收益、条款、金额一律用【】留空，由你按公司口径填写。`,
+  follow:['把这份身份文件压缩成 500 字以内的精简版，保留合规红线和快捷指令','根据我们刚才的对话，我的身份文件还缺什么？给我 3 条补充建议','以后我说「更新身份文件」加新规则，你就把它合并进去，并输出完整的新版本'],
+  datasetKey:null
+},
+{
+  id:1, line:'judge', layer:1, q:'say', minutes:3, live:'对应直播：模块二场景一',
+  title:'客户画像预测：一条线索，看出没说出口的需求',
+  pain:'加了微信、聊过两句，但第一句话不知道说什么。',
+  get:'一句话画像、3 个隐藏担忧、3 个切入话题、2 句微信开场白、3 个该补问的问题。',
+  steps:['确认上方「我的设置」里的业务线和主推产品','先用示例跑一遍，再把输入框换成你客户的脱敏信息','点「复制提示词」，到 AI 对话框 Ctrl+V 发送'],
+  fields:[
+    {key:'客户信息', label:'客户信息（已脱敏）', type:'textarea', rows:6, wrap:true,
+     value:`张女士，36岁，二胎妈妈（老大7岁、老二2岁），和先生一起经营一家20人左右的装修公司。去年孩子住院走过一次医疗险理赔，到账比较快，她在朋友圈夸过。上周在微信里问我：“孩子以后上学的钱，现在开始准备来得及吗？” 有车贷，暂无房贷。`}
+  ],
+  prompts:[{label:'提示词', tpl:
+`你是一位有15年经验的{{业务线}}资深顾问，擅长从零散信息里判断客户的真实需求。下面是一位客户的脱敏信息：
+
+【客户信息】
+{{客户信息}}
+
+请帮我做一次「需求预测」，按以下结构输出：
+1. 一句话画像：20字以内概括这位客户。
+2. 家庭与现金流判断：家庭结构、收入稳定性、主要支出压力，各一句话，并注明「依据：原文哪条信息」。
+3. 客户没说出口的3个担忧：按可能性从高到低排序，每条写明推断理由。
+4. 3个可切入的话题：说明为什么现在聊合适，以及和「{{主推产品}}」怎么自然关联。
+5. 2句微信开场白：口语化，像朋友聊天，不超过50字，不直接推销。
+6. 我还需要补问的3个问题：用来验证你的判断。
+
+${COMPLY}`}],
+  check:['每条判断后面都标了「依据」，没有凭空推断','「没说出口的担忧」抓住了企业主经营波动、二胎、教育金这几条线','开场白读起来像朋友关心，而不是产品推介'],
+  human:'AI 推出的担忧和家庭判断只是假设。第 6 条的补问问题，一定要在真实沟通中问出来再下结论。',
+  sample:`一句话画像：二胎企业主妈妈，理赔体验好，开始操心教育金。
+担忧1：公司经营有波动，怕家里收入断档影响孩子上学（依据：夫妻共同经营装修公司；主动问教育金）……
+开场白：张姐，上次你问孩子上学的钱，我整理了两种思路，不推产品，五分钟就能看懂，要不要发你看看？`,
+  follow:['把开场白改成适合第一次加微信打招呼的版本，再给 3 个','如果她回复“再看看吧”，我下一句怎么接？给 3 个版本','按这个画像，你建议我先聊哪一个话题？用一句话说明理由'],
+  datasetKey:null
+},
+{
+  id:2, line:'signal', layer:1, q:'when', minutes:5, live:'对应直播：模块二场景三',
+  title:'时机信号雷达：从备注里找出本周该开口的人',
+  pain:'客户刚理赔完、刚结婚、刚换工作，这些窗口没人提醒你，错过就过了。',
+  get:'一张时机信号表：谁、什么信号、多紧急、为什么现在联系、一句引用具体时机的开场白。',
+  steps:['把你记在本子或微信备注里的客户近况，一行一位贴进输入框','提示词会自动带上今天的日期','复制发送，先看「本周必联系」那几位'],
+  fields:[
+    {key:'客户备注', label:'客户近况备注（一行一位）', type:'textarea', rows:10, wrap:true, value:DATA_NOTES10}
+  ],
+  prompts:[{label:'提示词', tpl:
+`你是{{业务线}}团队里最会「抓时机」的销售教练。今天是{{今天日期}}。下面是我记录的客户近况（已脱敏）：
+
+{{客户备注}}
+
+请帮我识别每位客户的「时机信号」，按四类归类：
+- 生命周期：结婚、生育、孩子升学、退休等
+- 资产变动：换工作、涨薪、买房、企业扩张等
+- 服务触点：理赔结案、保单周年、产品到期、体检异常等
+- 行为信号：反复查看资料、咨询后沉默等
+
+用表格输出：客户 | 时机信号 | 信号类型 | 紧急度（本周必联系 / 两周内 / 可观察）| 现在联系的理由（一句话）| 开场白（不超过40字，必须引用这个具体时机，不能用“好久没联系了”）
+
+表格之后，把「本周必联系」的客户排出先后顺序，并说明理由。
+
+注意：涉及健康信息的客户，开场白要克制、体贴，不制造焦虑。
+${COMPLY}`}],
+  check:['每句开场白都引用了具体时机（理赔结案、婚礼、跳槽……）','体检异常的客户，措辞是关心而不是恐吓','排序理由说得通：时间窗口越近、越紧急'],
+  human:'「紧急度」要结合你对客户关系的了解再调一次。客户 04 这类健康话题，先确认对方愿意聊再展开。',
+  sample:`客户01｜理赔结案满一个月｜服务触点｜本周必联系｜理由：结案后是复盘保障缺口的最佳窗口
+开场白：李哥，赔款到账一个月了，身体都恢复了吧？顺便帮您看看这次之后保障还有没有缺口。
+客户05｜原单位团险随离职失效｜资产变动｜本周必联系｜理由：团险已断，存在保障空窗……`,
+  follow:['客户 04（体检结节）的开场白，再写 3 个更温和的版本','把「本周必联系」排成周一到周五的联系日程表','以后每周一我发新的备注给你，你都按这个格式输出，记住这个规则'],
+  datasetKey:null
+},
+{
+  id:3, line:'express', layer:1, q:'say', minutes:5, live:'拓展：朋友圈营销',
+  title:'朋友圈预测式内容：先猜客户关心什么，再一次写好一周',
+  pain:'朋友圈不是没发，是发了没人回；每天想发什么，比打电话还累。',
+  get:'客群本周最关心的 5 件事预测，加上周一到周日 7 条可直接发的朋友圈（含配图建议和发布时间）。',
+  steps:['填你的朋友圈主要客群和本周的节点','选一个你习惯的文字风格','复制发送，挑 1 条今天就发出去'],
+  fields:[
+    {key:'目标客群', label:'我朋友圈的主要客群', type:'input', value:'30—40岁、孩子在上幼儿园或小学的双职工家庭'},
+    {key:'本周节点', label:'本周的节点或热点', type:'input', value:'天气转凉换季、孩子期中考试、“双十一”前后'},
+    {key:'我的风格', label:'文字风格', type:'combo', options:['专业靠谱','温暖生活','轻松幽默'], placeholder:'也可以自己写，比如：像邻居大姐一样唠家常，不用专业术语', value:'温暖生活'}
+  ],
+  prompts:[{label:'提示词', tpl:
+`你是擅长内容营销的{{业务线}}顾问助理。我的朋友圈主要客户是：{{目标客群}}。
+
+第一步，预测：结合本周的节点（{{本周节点}}），预测这类客户本周最关心的5件事，每件说明理由。
+
+第二步，写内容：基于你的预测，写7条朋友圈（周一到周日）。比例：
+- 生活共鸣 3条
+- 实用知识 2条
+- 客户服务小故事 1条（虚构情节须在文末注明“案例改编”）
+- 轻度提及产品 1条（与「{{主推产品}}」相关）
+
+每条包含：配图建议 / 正文（80—150字）/ 建议发布时间 / 预计哪类客户会互动。
+
+风格：{{我的风格}}，口语化，像真人发的。不要每条都带产品，不用“史上最”“必买”“闭眼入”等夸张词。
+${COMPLY}`}],
+  check:['7 条里最多 1 条提产品，其余读起来不像广告','发布时间贴合客群作息（比如晚上 8—9 点、周末上午）','客户服务故事标注了「案例改编」'],
+  human:'发之前自己读一遍：如果你是客户，会不会想点赞或私聊？涉及产品的那条，按公司宣传口径再核一遍。',
+  sample:`周三 晚8点｜生活共鸣｜配图：孩子书桌上的期中复习资料
+正文：期中考试前一晚，陪写作业到十点。孩子说“妈妈你别紧张”，我才发现紧张的是我……
+预计互动：小学家长，尤其是双职工妈妈`,
+  follow:['预测这 7 条里哪 3 条最可能带来私聊咨询，并给评论区回复模板','把第 4 条改成 40 字以内的短版本','改写成适合发在客户微信群里的版本'],
+  datasetKey:null
+},
+{
+  id:4, line:'judge', layer:2, q:'who', minutes:8, live:'对应直播：模块二场景二',
+  title:'意向打分：一张名单，排出今天的攻坚顺序',
+  pain:'两百个客户，先打谁全凭印象，高意向的客户常常被排到下周。',
+  get:'全名单三维打分表、A/B/C 分层、今天先联系的攻坚名单（含开口理由），以及 1—2 个「反直觉」提醒。',
+  steps:['先用示例的 30 人名单跑一遍，看看 AI 的排序理由','再把你的名单从 Excel 复制过来（只保留脱敏字段）','发送后，重点看「反直觉提醒」那一段'],
+  fields:[
+    {key:'客户名单', label:'客户名单（可从 Excel 直接粘贴）', type:'textarea', rows:12, value:DATA_LIST30},
+    {key:'今日数量', label:'今天能联系几位', type:'input', value:'8'},
+    {key:'打分权重', label:'打分权重（可按团队习惯改）', type:'input', value:'需求匹配度×40% + 互动温度×35% + 可触达性×25%'}
+  ],
+  prompts:[{label:'提示词', tpl:
+`你是{{业务线}}团队的销售分析师。下面是我的客户名单（已脱敏）：
+
+{{客户名单}}
+
+请按三个维度给每位客户打分（每项1—10分）：
+- 需求匹配度：TA的家庭、年龄、已有保障，与「{{主推产品}}」的匹配程度
+- 互动温度：最近联系时间、近30天互动次数和质量
+- 可触达性：是否容易联系上、是否有合适的开口理由
+
+综合分 = {{打分权重}}，满分10分。
+
+请输出：
+1. 全名单打分表：编号 | 三项分数 | 综合分 | 分层（A≥7.5，B 5—7.4，C<5）| 一句话理由
+2. 今日攻坚名单：从A层选{{今日数量}}位，排好先后顺序，每位附「开口理由 + 第一句话」
+3. 反直觉提醒：指出1—2位“看起来没戏但分数不低”或“看起来很热但分数不高”的客户，解释原因
+
+理由必须引用名单里的字段；信息不足的标注「待补充」。
+${COMPLY}`}],
+  check:['每条理由都引用了名单里的字段（比如“6次互动”“近期要买房”）','A 层数量合理，不是一半人都是 A','「反直觉提醒」真的提出了你没想到的客户'],
+  human:'分数是参考，不是命令。你知道而名单里没写的情况（比如客户最近家里有事），要手动调整排序。',
+  sample:`C12｜需求8 温度9 触达9｜8.6｜A｜近期买房 + 比较了三家方案，决策窗口就在这两周
+C05｜9 8 8｜8.4｜A｜孕5个月，主动问孕期能买什么，时间窗口明确
+反直觉：C20 看了计划书没回，但预算充足、需求匹配高，综合分 7.2，建议换个角度重新开口`,
+  follow:['把 B 层客户按“可以用什么理由升温”重新分组','把打分表整理成用制表符分隔的格式，方便我粘贴进 Excel','如果把互动温度的权重提高到 50%，攻坚名单会怎么变？'],
+  datasetKey:'客户名单', datasetName:'练习4_客户名单30人.csv'
+},
+{
+  id:5, line:'express', layer:2, q:'say', minutes:6, live:'对应直播：模块二场景四',
+  title:'异议预判：一类客户，五个异议三版回应先备好',
+  pain:'“我再考虑考虑”“太贵了”“回去和爱人商量”，每次听到都只能说“好的”。',
+  get:'这类客户最可能提出的 5 个异议、背后的真实顾虑，每个异议三版回应（共情版、数据版、提问版），以及一张「不建议说的话」清单。',
+  steps:['写下目标客群的画像，和这类客户常说的话','主推产品会从「我的设置」自动带入','发送后，把说得出口的回应填进资料包里的话术库模板'],
+  fields:[
+    {key:'客户画像', label:'目标客群画像（一位客户、一类客户都可以）', type:'input', value:'38岁左右的企业主，已有社保和一份百万医疗，关注资产安全，比较理性'},
+    {key:'已听到的异议', label:'这类客户常说的话', type:'input', value:'“我再考虑考虑”；“太贵了”；“回去和爱人商量一下”'}
+  ],
+  prompts:[{label:'提示词', tpl:
+`你是{{业务线}}的金牌销售教练，擅长提前预判客户异议。
+
+目标客群：{{客户画像}}
+我准备推荐：{{主推产品}}
+这类客户常说的话：{{已听到的异议}}
+
+请完成：
+1. 预测：这类客户最可能提出的5个异议（包含常说的那几句），按出现概率排序，并分析每个异议背后的真实顾虑。
+2. 应答：每个异议给3个版本的回应，每版不超过60字——
+   A 共情版：先接住情绪
+   B 数据版：用对比或测算说明，具体数字一律用【】留空，由我按公司口径填写
+   C 提问版：用一个问题把对话拉回需求
+3. 标注每个版本最适合的场景（电话 / 面谈 / 微信）。
+4. 最后给一份「不建议说的话」清单，至少5条，并解释原因。
+
+不贬低同业，不承诺收益和理赔结果，涉及条款一律表述为“以合同条款为准”。
+${COMPLY}`}],
+  check:['「真实顾虑」分析到位：比如“太贵”背后可能是没看到和自己的关系','数据版里的数字是【】留空的，AI 没有自己编数','「不建议说的话」里有你平时常说的句子（这条最有价值）'],
+  human:'数据版的数字必须用公司系统或条款里的真实数字填写。任何一版回应，都要过一遍合规口径再用。',
+  sample:`异议“太贵了”背后：不是没钱，是还没看到这笔钱和自己有什么关系。
+C 提问版：您说的贵，是觉得每年的总额高，还是觉得保的内容用不上？
+不建议说：“这已经是性价比最高的了”——客户听到的是推销，不是理由。`,
+  follow:['请扮演这类客户中的一位，和我对练 3 轮。每轮你只说一句，等我回复后再继续，最后给我打分','把“太贵了”的三版回应改写成适合发语音的口语','再预测 2 个这类客户可能会问、但我很难回答的问题'],
+  datasetKey:null
+},
+{
+  id:6, line:'express', layer:2, q:'say', minutes:5, live:'对应直播：模块二场景四',
+  title:'一客一文：同一件事，写出六种不像群发的消息',
+  pain:'活动通知一群发，回复的人寥寥无几，还有人顺手把你屏蔽了。',
+  get:'每位客户一条专属微信，开头引用 TA 的情况，结尾一个低压力的行动邀请；外加一张预计回复概率表。',
+  steps:['写下这次要通知的事','把客户和 TA 的标签一行一位列出来','复制发送，逐条检查有没有编造细节，再发出去'],
+  fields:[
+    {key:'通知内容', label:'这次要通知的事', type:'textarea', rows:3, wrap:true, value:'公司本周六下午有一场线上“家庭财务健康讲座”，1小时；会后可以预约1对1的保单整理，免费。'},
+    {key:'客户标签', label:'客户和标签（一行一位）', type:'textarea', rows:6, wrap:true, value:DATA_TAGS6}
+  ],
+  prompts:[{label:'提示词', tpl:
+`你是我的微信跟进文案助理。同一件事我要发给不同客户，但不能有群发感。
+
+要传达的事：{{通知内容}}
+
+客户及标签：
+{{客户标签}}
+
+请为每位客户写一条专属微信：
+- 开头引用TA的标签或我们聊过的事；不知道的细节不要编，用【】提示我补充
+- 用TA关心的角度说明这件事和TA有什么关系
+- 结尾一个轻量的行动邀请（比如回复数字、选个时间），不施压
+- 每条60—100字，语气随客户调整
+
+最后用表格汇总：客户 | 切入角度 | 预计回复概率（高 / 中 / 低）| 理由
+${COMPLY}`}],
+  check:['六条消息明显不一样，不是换个称呼的复制粘贴','没有编造客户细节，需要补充的地方用了【】','行动邀请足够轻，客户回一个字就能接上'],
+  human:'【】里的内容要你亲手补上真实细节——这正是让客户觉得“你记得我”的关键。',
+  sample:`客户D（程序员）：直说重点——周六下午有个线上讲座，讲怎么把家里几份保单理清楚，不推销，1小时。有兴趣回“1”，我发链接给你。
+客户E（老客户）：张哥，上个月理赔的事办完，您身体恢复得怎么样？周六有个讲座……`,
+  follow:['把这 6 条再压缩成 30 字以内的版本','客户 F 三天没回，第二条消息怎么发？给 2 个版本','把这次的写法总结成一个模板，以后我换个通知内容就能直接用'],
+  datasetKey:null
+},
+{
+  id:7, line:'signal', layer:2, q:'churn', minutes:8, live:'对应直播：模块二场景五',
+  title:'流失挽回：在客户走之前，先把人拦住',
+  pain:'客户不接电话了才知道要走，续期前一周才开始着急。',
+  get:'存量客户风险评分、高风险客户的真实原因推测、挽回切入点、电话挽回话术，以及本周的挽回行动清单。',
+  steps:['把即将续期、到期的存量客户列出来（示例已备好 12 位）','发送后先看「高风险」那几位','按行动清单的顺序，本周逐个联系'],
+  fields:[
+    {key:'存量名单', label:'存量客户名单（可从 Excel 直接粘贴）', type:'textarea', rows:12, value:DATA_STOCK12}
+  ],
+  prompts:[{label:'提示词', tpl:
+`你是{{业务线}}的客户经营专家，擅长在客户流失前发现信号。下面是我需要关注的存量客户（已脱敏）：
+
+{{存量名单}}
+
+请按三类流失信号判断风险：
+① 互动骤降　② 服务体验负反馈（理赔慢、到账慢、投诉、扣款失败等）　③ 比价、退保、减保、转出咨询
+
+请输出：
+1. 风险表：编号 | 风险分（1—10）| 主要信号 | 风险等级（高 / 中 / 低）| 依据（引用名单原文）
+2. 对每位高风险客户：真实原因推测、挽回切入点、一段电话挽回话术（口语，100字以内）
+3. 如果客户想退保或减保：用客户能感知的方式说明可能的损失，具体金额用【】留空，由我按保单现金价值和合同条款填写；不得用降价、返佣、送礼等方式挽留
+4. 本周挽回行动清单：按优先级排列，写清楚 谁、做什么、哪天前完成
+${COMPLY}`}],
+  check:['每个风险判断都引用了名单原文（比如“你们理赔太磨叽了”）','R11 扣款失败这类“技术性流失”也被识别出来了','挽回话术先解决客户的问题，再谈保单'],
+  human:'退保损失的具体数字，必须在系统里查真实的现金价值再说。挽回过程不能有任何返佣或利益承诺。',
+  sample:`R03｜风险 9｜服务负反馈 + 9天后缴费｜高｜依据：“你们理赔太磨叽了”
+挽回切入点：先为理赔体验道歉，说清楚这次慢在哪里、以后怎么避免，再提续期
+R11｜风险 8｜扣款失败 + 5天后缴费｜高｜先确认是否只是忘了换卡，别让保单因为技术原因失效`,
+  follow:['给 R03 写一条“先道歉、再解决问题”的微信','R09 说“孩子学费要用钱”，除了退保还有什么选择？请列出思路，具体规则用【】留空','把高风险客户的挽回动作排进我下周的日历'],
+  datasetKey:'存量名单', datasetName:'练习7_存量客户预警名单.csv'
+},
+{
+  id:8, line:'judge', layer:3, q:'result', minutes:10, live:'拓展：业绩预测',
+  title:'业绩预测：月底能完成多少，差的那块从哪里补',
+  pain:'月底一看差两成，可到那时候已经来不及了。',
+  get:'加权预测表、乐观/最可能/保守三个数字、风险商机提醒，以及具体到客户的追赶方案和明天上午最该做的 3 件事。',
+  steps:['填本月目标和已完成金额（剩余天数已按今天自动算好）','把在谈的商机按「客户、金额、阶段、上次推进、卡点」列出来','发送后，用计算器抽查 1—2 行加权金额'],
+  fields:[
+    {key:'本月目标', label:'本月目标和完成情况', type:'input', value:'本月目标 12 万元，已完成 4.6 万元'},
+    {key:'剩余时间', label:'剩余时间', type:'input', value:()=>remainText()},
+    {key:'商机清单', label:'在谈商机清单', type:'textarea', rows:11, value:DATA_DEALS10}
+  ],
+  prompts:[{label:'提示词', tpl:
+`你是我的业绩教练，请用“加权预测”帮我判断本月能不能完成目标。
+
+本月情况：{{本月目标}}，{{剩余时间}}。
+
+在谈商机清单：
+{{商机清单}}
+
+阶段成交概率参考：初次接触10% ｜ 需求确认30% ｜ 方案已讲60% ｜ 等签约85%。可以根据“上次推进”和“卡点”上下调整，但必须写明理由。
+
+请输出：
+1. 加权预测表：客户 | 金额 | 阶段 | 调整后概率 | 加权金额 | 调整理由
+2. 三个数字：月底完成额的 乐观 / 最可能 / 保守 估计，以及和目标的差距
+3. 风险商机：哪些“看起来快成了”但风险其实很高（比如超过14天没推进），单独列出
+4. 追赶方案：如果最可能值达不到目标，给出具体到客户的动作——谁、做什么、哪天前，不要只写“加油”
+5. 明天上午我最该做的3件事
+
+计算过程写清楚，方便我核对；不要美化数字。`}],
+  check:['加权金额 = 金额 × 调整后概率，抽查 1—2 行算得对','D02 刘总这类“16 天没动静”的大单被调低了概率','追赶方案写到了具体客户和具体日期'],
+  human:'AI 会算错数，务必抽查。概率调整的理由如果和你的判断不一致，以你掌握的情况为准。',
+  sample:`D02 刘总｜50,000｜方案已讲｜60%→35%｜17,500｜16天未推进，“和财务商量”后无回复
+最可能：已完成 4.6 万 + 加权约 7.0 万 ≈ 11.6 万，距目标约差 0.4 万
+明天上午：① 给 D02 刘总打电话，问清财务的顾虑 ② 跟进 D01 张姐签字 ③ 催 D06 体检报告`,
+  follow:['把加权预测表整理成能粘贴进 Excel 的格式，并写出每一列的计算公式','如果 D02 刘总本月签不下来，对月底预测影响多少？还有哪些客户能补上？','按这个结果，帮我写一段 3 句话的周会汇报'],
+  datasetKey:'商机清单', datasetName:'练习8_商机清单.csv'
+},
+{
+  id:9, line:'signal', layer:3, q:'result', minutes:8, live:'拓展：通话复盘（深度版）',
+  title:'聊天诊断：这单能不能成，卡在哪一句',
+  pain:'聊了半个月，客户一直说“再看看”，你不知道问题出在客户还是出在自己。',
+  get:'成交概率区间、加分和减分信号（引用原话）、你说得不好的话和改写版、真正的卡点，以及 48 小时内的下一步。',
+  steps:['把一段卡住的微信聊天复制过来（去掉姓名和联系方式）','补一句客户背景','发送后，重点看「我的沟通问题」那一段'],
+  fields:[
+    {key:'客户背景', label:'客户背景', type:'input', value:'陈先生，40岁，国企中层，已婚，孩子10岁，已有单位团险和一份百万医疗'},
+    {key:'聊天记录', label:'聊天记录（已脱敏）', type:'textarea', rows:12, wrap:true, value:DATA_CHAT}
+  ],
+  prompts:[{label:'提示词', tpl:
+`你是一位擅长复盘的{{业务线}}销售总监。下面是我和一位客户最近的聊天记录（已脱敏）。
+
+客户背景：{{客户背景}}
+
+聊天记录：
+{{聊天记录}}
+
+请帮我做成交预测诊断：
+1. 成交概率：给一个百分比区间，并列出加分信号和减分信号（各引用原话）
+2. 客户当前阶段：了解 / 比较 / 犹豫 / 决策，说明判断依据
+3. 我的沟通问题：指出我说得不好的2—3句话，说明问题在哪里，并给出改写版
+4. 卡点：阻碍成交的真正原因，不超过3个
+5. 下一步：接下来48小时内只做1个具体动作，并写出要发的第一句话
+6. 备选方案：如果7天内仍没进展，怎么办
+
+请直接、不客套，像总监复盘一样指出问题。涉及健康告知和核保的内容，必须提醒如实告知、以核保结论为准。`}],
+  check:['加分、减分信号都引用了原话','“应该没问题的”被指出来了——健康告知不能替客户下结论','下一步只有一个动作，而且具体到第一句话'],
+  human:'诊断结果帮你看清问题，但客户关系的温度只有你知道。改写的话术用之前，按公司口径再核一遍。',
+  sample:`成交概率：35%—50%
+加分信号：“甲状腺结节能保吗”（在认真考虑）；“我老婆也说要不要一起看看”
+减分信号：“等我年终奖下来再说吧”
+要改的话：“应该没问题的”——健康告知不能替客户下结论。改为：“结节能不能保要看核保结果，我先帮您如实告知，拿到结论再决定，不耽误您。”`,
+  follow:['请扮演这位客户，用他的语气和我对练 3 轮，每次只说一句','把这次复盘总结成 3 条我以后能反复用的经验','客户说“等年终奖”，帮我设计一个到时候自然重新开口的提醒和第一句话'],
+  datasetKey:null
+},
+{
+  id:10, layer:4, q:'all', minutes:10, live:'对应直播：整合演示和模块三',
+  title:'周一自动化：每周只丢一次客群，WorkBuddy 自动跑完练习 1—9',
+  pain:'每个练习都好用，但每周都从头复制一遍太麻烦。',
+  get:'一个每周自动运行的 WorkBuddy 任务：每周一它先问你「本周的客群是什么」，你把客群丢进去，画像、时机、朋友圈、打分、异议、一客一文、流失预警就自动生成（有商机清单和聊天记录时，再加业绩预测和成交复盘），存进「本周成果」文件夹。',
+  steps:['先做练习 0，拿到 AGENTS.md。在 WorkBuddy 里新建一个专用空间（如「客户经营」），把 AGENTS.md 放进空间根目录，再建「本周客群」「本周成果」两个文件夹','在 WorkBuddy 侧边栏进入「自动化」，新建自动化：粘贴「第一段：自动化任务指令」，频率选每周一，工作目录选这个空间，保存并启用','先手动试跑一次：在对话里发「第二段：本周客群」，确认成品齐全。以后每周一，它先问「本周的客群是什么」，你把名单丢进去，其余它自己跑完'],
+  fields:[
+    {key:'运行时间', label:'每周什么时候自动跑', type:'combo', options:['每周一 9:00','每周一 8:30','每周日 20:00'], placeholder:'也可以自己写，比如：每周一 8:00，赶在晨会前', value:'每周一 9:00'},
+    {key:'空间名称', label:'WorkBuddy 里的专用空间名', type:'input', value:'客户经营'},
+    {key:'我的客群', label:'我的长期客群', type:'input', value:'30—50岁的城市家庭和小企业主'},
+    {key:'每日联系数', label:'每天能联系几位客户', type:'input', value:'15'},
+    {key:'本周客群', label:'本周客群（第二段用，每周丢进去的就是它）', type:'textarea', rows:9, value:DATA_WEEK8}
+  ],
+  prompts:[
+    {label:'第一段：自动化任务指令（粘贴进 WorkBuddy「自动化」，设置一次）', download:'WorkBuddy周一自动化任务指令.md', tpl:
+`# WorkBuddy 自动化任务｜周一预测式营销
+运行频率：{{运行时间}}　工作目录：「{{空间名称}}」空间
+
+## 开工前
+1. 先读本空间根目录的 AGENTS.md，按里面的身份、风格和红线工作；读不到就提醒我，不要自己编身份。
+2. 我是{{业务线}}一线销售，主推{{主推产品}}，长期客群是{{我的客群}}，每天大约联系{{每日联系数}}位客户。
+
+## 第 1 步：问客群（每周只问这一句）
+先看「本周客群」文件夹里有没有本周新放进去的名单。
+- 有：直接读取，告诉我读到了几位客户。
+- 没有：在对话里问我一句「本周的客群是什么？请把名单丢给我」，然后等我回复，不要往下做。
+名单必须是脱敏后的。发现身份证号、银行卡号、完整手机号、病历原文，先提醒我删掉，再继续。
+
+## 第 2 步：客群一到，自动跑完下面 9 项，中途不再追问
+每项的格式沿用我 AGENTS.md 里的快捷指令。
+A. 单客预测式营销
+1）画像：每位客户一句话画像、3个隐藏担忧、2句开场白（练习 1）
+2）时机：从备注里找时机信号，排出本周必联系名单（练习 2）
+3）朋友圈：预测这个客群本周最关心的5件事，写7条朋友圈。本周节点按今天日期判断，拿不准标「待核实」（练习 3）
+B. 客群预测式营销
+4）打分：需求匹配度、互动温度、可触达性三维打分，A/B/C分层，选出不超过{{每日联系数}}位的今日攻坚名单，附1—2条反直觉提醒（练习 4）
+5）异议：针对A层的主要客户类型，预测5个异议，每个给共情、数据、提问三版回应（练习 5）
+6）一客一文：为B层每位客户写一条专属微信（练习 6）
+7）预警：名单里有续期、到期、扣款失败或互动骤降信号的客户，做流失风险排序和挽回话术（练习 7）
+C. 业绩预测式营销
+8）业绩：只有我同时给了本月目标和商机清单，才做加权预测（练习 8）
+9）复盘：只有我给了聊天记录，才做成交诊断（练习 9）
+缺少输入的项目不要编造，在总览里写「待补充：缺什么」。
+
+## 第 3 步：成品存档
+在「本周成果」文件夹下，新建以今天日期命名的子文件夹，按下面的文件名保存，表格用 .csv，方便 Excel 打开：
+00_本周总览.md：一页纸，写清本周先打谁（前5位和第一句话）、必联系的时机、流失预警、待补充项
+01_画像与时机.md
+02_朋友圈7条.md
+03_意向打分.csv
+04_异议三版回应.md
+05_一客一文.md
+06_流失预警.md
+07_业绩预测.md（有输入才生成）
+08_聊天复盘.md（有输入才生成）
+全部完成后，用3句话告诉我：本周最该先做的3件事。
+
+## 规则（沿用 AGENTS.md，此处再说一遍）
+1. 只用我提供的信息，不确定就标「待核实」，不编造
+2. 不出现「保证」「一定赔」「稳赚」「最高收益」等承诺性词语
+3. 涉及收益、条款、金额，一律用【】留空，由我按公司口径填写
+4. 所有成品都是建议草案，打不打、怎么说由我决定`},
+    {label:'第二段：本周客群（每周丢进去的就是它）', tpl:
+`本周客群
+今天是{{今天日期}}，本周我想重点推进{{主推产品}}。下面是本周的客群（已脱敏）：
+
+{{本周客群}}
+
+请按「周一预测式营销」的自动化流程，一次跑完，不用再问我。
+下面几项有就补在这里，没有就留空，缺的你标「待补充」：
+本月目标和已完成：
+在谈商机清单：
+存量续期名单：
+一段卡住的聊天记录：`}
+  ],
+  whereTitle:'这个自动化放在哪里',
+  where:[
+    ['WorkBuddy（推荐）','侧边栏「自动化」→ 新建自动化 → 粘贴第一段 → 频率选每周一 → 工作目录选「客户经营」空间 → 保存并启用。具体入口以你的版本为准。'],
+    ['其他对话类 AI','没有定时功能也没关系：每周一在同一个对话里发第二段，结果一样，只是需要手动发一次。'],
+    ['公司内部 AI 平台','平台有定时任务或工作流功能的，把第一段填进任务说明；使用范围以集团规定为准。']
+  ],
+  check:['自动化启动后，第一句就问「本周的客群是什么」','客群丢进去以后，不再追问，自动生成画像、时机、朋友圈、打分、异议、一客一文、预警这些成品文件','没给商机清单、聊天记录时，它写「待补充」并跳过，没有编造业绩数字'],
+  human:'客群名单必须先脱敏再丢进去。成品里的话术、金额、条款，按公司口径核过再发。第一次先手动试跑一遍，确认没问题再交给定时。',
+  sample:`本周的客群是什么？请把名单丢给我，我收到后会一次跑完。
+（收到后）已读取 8 位客户，开始运行：画像、时机、朋友圈、打分、异议、一客一文、预警。
+待补充：本月目标和商机清单、聊天记录，业绩预测和成交复盘本周先跳过。
+成品已存入「本周成果」当天文件夹，共 7 份。本周最该先做的 3 件事：① 联系 C12，近期要买房，已比较三家方案 ② 联系 C05，孕 5 个月 ③ 联系 C16，刚跳槽，团险可能已断。`,
+  follow:['把本周成果整理成一页周会汇报，3 句话讲清重点','本周客群里最值得今天先打的 3 位，把第一句话单独列出来','以后每周都按这个流程跑，把今天好用的做法更新进 AGENTS.md'],
+  datasetKey:null
+}
+];
+
+/* ========== 资料包内容 ========== */
+const FOLLOWUPS = [
+  '再给我 3 个不同风格的版本',
+  '改得更口语，像微信聊天，不超过 50 字',
+  '把所有“保证、一定、稳赚、最高”这类词删掉，重新写一遍',
+  '用表格输出，方便我复制到 Excel',
+  '你的判断依据是什么？逐条引用我给你的信息',
+  '哪些地方是你推测的？请标出“待核实”',
+  '站在客户角度挑刺：这段话哪里会让人反感？',
+  '压缩成一句话',
+  '请扮演这位客户，和我对练 3 轮，每次只说一句',
+  '记住以上规则，以后我发同类信息，都按这个格式输出'
+];
+
+const OBJECTIONS = [
+  ['我再考虑考虑','没看到现在就要做的理由；或有顾虑没说出口'],
+  ['太贵了','没看到这笔钱和自己有什么关系；或预算确实有限'],
+  ['我回去和爱人/家人商量','决策人不止一个；也可能是委婉拒绝'],
+  ['我已经有了（社保/团险/别家保单）','不清楚现有保障的缺口在哪里'],
+  ['保险都是骗人的','过去有不好的经历，或听过负面故事'],
+  ['等等再说 / 过段时间吧','没有时间压力；或在等某笔钱'],
+  ['网上的更便宜','只比价格，没比保障范围和服务'],
+  ['收益太低了','把保障类产品当成投资在比较'],
+  ['我身体不好，买不了吧','担心被拒保，不好意思细说'],
+  ['我最近太忙，没时间','优先级低；或对你还不够信任'],
+  ['我朋友/亲戚也在做这个','人情顾虑，不好拒绝熟人'],
+  ['听说理赔很麻烦','担心真出事了赔不下来']
+];
+</script>
+<script>
+/* ========== 状态与存储 ========== */
+const STORE_KEY = 'pa-predictive-marketing-v1';
+const state = loadState();
+function loadState(){
+  const base = {g:{line:'寿险', product:PRODUCT_BY_LINE['寿险'], productTouched:false, ai:'doubao', big:false}, fields:{}, done:[], weeks:[]};
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    if(!raw) return base;
+    const s = JSON.parse(raw);
+    return {g:Object.assign(base.g, s.g||{}), fields:s.fields||{}, done:Array.isArray(s.done)?s.done:[], weeks:Array.isArray(s.weeks)?s.weeks:[]};
+  }catch(e){ return base; }
+}
+let saveTimer = null;
+function flush(){ clearTimeout(saveTimer); saveTimer = null; try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }catch(e){} }
+function save(now){
+  if(now){ flush(); return; }
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(flush, 250);
+}
+window.addEventListener('pagehide', ()=>{ if(saveTimer) flush(); });
+document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState === 'hidden' && saveTimer) flush(); });
+
+/* ========== 日期 ========== */
+function todayText(){
+  const d = new Date();
+  return `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日（星期${'日一二三四五六'[d.getDay()]}）`;
+}
+function remainText(){
+  const d = new Date();
+  const last = new Date(d.getFullYear(), d.getMonth()+1, 0).getDate();
+  return `距月底还剩 ${last - d.getDate() + 1} 天（含今天）`;
+}
+
+/* ========== 工具函数 ========== */
+const $ = (s, el=document) => el.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function el(tag, attrs={}, html=''){
+  const e = document.createElement(tag);
+  for(const [k,v] of Object.entries(attrs)){
+    if(k === 'class') e.className = v;
+    else if(k === 'style') e.setAttribute('style', v);
+    else e.setAttribute(k, v);
+  }
+  if(html) e.innerHTML = html;
+  return e;
+}
+function defaultOf(field){ return typeof field.value === 'function' ? field.value() : field.value; }
+function fieldValue(ex, key){
+  const saved = state.fields[ex.id];
+  if(saved && Object.prototype.hasOwnProperty.call(saved, key)) return saved[key];
+  const f = ex.fields.find(x => x.key === key);
+  return f ? defaultOf(f) : '';
+}
+function globalValue(key){
+  if(key === '业务线') return state.g.line;
+  if(key === '主推产品') return state.g.product;
+  if(key === '今天日期') return todayText();
+  return null;
+}
+function resolve(ex, key){
+  const gv = globalValue(key);
+  return gv !== null ? gv : fieldValue(ex, key);
+}
+function fillPlain(ex, tpl){
+  return tpl.replace(/\{\{([^{}]+)\}\}/g, (_, k) => {
+    const v = (resolve(ex, k) || '').trim();
+    return v ? v : `【请填写：${k}】`;
+  });
+}
+function fillHTML(ex, tpl){
+  let out = '', last = 0;
+  const re = /\{\{([^{}]+)\}\}/g; let m;
+  while((m = re.exec(tpl))){
+    out += esc(tpl.slice(last, m.index));
+    const v = (resolve(ex, m[1]) || '').trim();
+    out += v ? `<span class="fill">${esc(v)}</span>` : `<span class="fill empty">请填写：${esc(m[1])}</span>`;
+    last = re.lastIndex;
+  }
+  return out + esc(tpl.slice(last));
+}
+function tsvToCsv(tsv){
+  return tsv.trim().split(/\r?\n/).map(line => line.split('\t').map(c => `"${c.trim().replace(/"/g,'""')}"`).join(',')).join('\r\n');
+}
+function download(name, content, mime='text/plain;charset=utf-8'){
+  const bom = /\.md$/i.test(name) ? '' : '\ufeff';
+  const blob = new Blob([bom + content], {type:mime});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = name;
+  document.body.appendChild(a); a.click();
+  setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 800);
+  toast(`已开始下载：${name}`);
+}
+
+/* ========== 复制 ========== */
+function copySync(text){
+  const ta = document.createElement('textarea');
+  ta.value = text; ta.setAttribute('readonly',''); ta.style.position='fixed'; ta.style.top='-2000px'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, text.length);
+  let ok = false; try{ ok = document.execCommand('copy'); }catch(e){ ok = false; }
+  ta.remove(); return ok;
+}
+async function copyText(text){
+  try{
+    if(navigator.clipboard && window.isSecureContext){ await navigator.clipboard.writeText(text); return true; }
+  }catch(e){}
+  return copySync(text);
+}
+function manualCopy(text){
+  const dlg = $('#manual-copy'), ta = $('#mc-text');
+  ta.value = text;
+  if(typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open','');
+  setTimeout(()=>{ ta.focus(); ta.select(); }, 30);
+}
+$('#mc-close').addEventListener('click', ()=>{ const d=$('#manual-copy'); if(d.close) d.close(); else d.removeAttribute('open'); });
+
+let toastTimer = null;
+function toast(msg){
+  const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastTimer); toastTimer = setTimeout(()=>t.classList.remove('show'), 2600);
+}
+function aiTool(){ return AI_TOOLS[state.g.ai] || AI_TOOLS.doubao; }
+async function doCopy(text, what='提示词'){
+  const ok = await copyText(text);
+  if(ok) toast(`已复制${what}。到 ${aiTool().name} 对话框按 Ctrl+V 粘贴发送`);
+  else manualCopy(text);
+}
+function doCopyAndOpen(text){
+  const tool = aiTool();
+  let ok = copySync(text);
+  if(!ok && navigator.clipboard && window.isSecureContext){ navigator.clipboard.writeText(text).catch(()=>{}); ok = true; }
+  if(tool.url) window.open(tool.url, '_blank', 'noopener');
+  if(ok) toast(`已复制，并打开了 ${tool.name}。在新页面按 Ctrl+V 粘贴`);
+  else manualCopy(text);
+}
+
+/* ========== 首屏：五问（两类） ========== */
+function renderHero(){
+  const box = $('#qgroups'); box.innerHTML = '';
+  GROUPS.forEach(g => {
+    const wrap = el('div', {class:'qgroup'});
+    wrap.appendChild(el('h2', {class:'qg-title'}, `${esc(g.name)}<span>${esc(g.sub)}</span>`));
+    const ul = el('ul', {class:'qlist'});
+    HERO_Q.filter(k => QUESTIONS[k].group === g.id).forEach(k => {
+      const q = QUESTIONS[k];
+      const nums = '练习 ' + EXERCISES.filter(e => e.q === k).map(e => e.id).join('、');
+      const li = el('li');
+      const a = el('a', {href:'#exercises', style:`--qc:${q.color}`, 'data-q':k},
+        `<span class="bar" aria-hidden="true"></span><span class="qt">${esc(q.pro)}<small>${esc(q.name)}</small></span><span class="qx">${nums}</span>`);
+      a.addEventListener('click', ev => { ev.preventDefault(); setFilter(k); $('#exercises').scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto':'smooth'}); });
+      li.appendChild(a); ul.appendChild(li);
+    });
+    wrap.appendChild(ul); box.appendChild(wrap);
+  });
+}
+
+/* ========== 框架图：五问三阶十练 ========== */
+function exLink(id){
+  const e = EXERCISES.find(x => x.id === id); const q = QUESTIONS[e.q];
+  return `<a class="fx" href="#ex-${e.id}" style="--qc:${q.color}"><b>${e.id}</b><span>${esc(shortTitle(e.title))}<small>${esc(q.pro)}</small></span></a>`;
+}
+function renderFramework(){
+  const tiers = LAYERS.filter(L => L.id >= 1 && L.id <= 3);
+  let h = '<table class="fmatrix"><thead><tr><th scope="col"><span class="sr">能力线</span></th>';
+  tiers.forEach(L => { h += `<th scope="col">${esc(L.step)}　${esc(L.pro)}<small>${esc(L.tag)}</small></th>`; });
+  h += '</tr></thead><tbody>';
+  h += `<tr class="span-row base"><th scope="row">底座</th><td colspan="3">${exLink(0)}<a href="#kit" class="fbase">下载 AGENTS.md</a><em>先立身份，后面每一练都按它干活</em></td></tr>`;
+  Object.entries(LINES).forEach(([k, line]) => {
+    h += `<tr><th scope="row">${esc(line.name)}<small>${esc(line.sub)}</small></th>`;
+    tiers.forEach(L => {
+      const xs = EXERCISES.filter(e => e.line === k && e.layer === L.id);
+      h += `<td>${xs.length ? xs.map(e => exLink(e.id)).join('') : '<span class="fnone">由练习 10 自动化</span>'}</td>`;
+    });
+    h += '</tr>';
+  });
+  h += `<tr class="span-row"><th scope="row">固化</th><td colspan="3">${exLink(10)}<em>练习 1—9 装进 WorkBuddy，每周一只丢一次客群</em></td></tr>`;
+  h += '</tbody></table>';
+  $('#fmatrix').innerHTML = h;
+}
+
+/* ========== 筛选 ========== */
+let currentFilter = 'any';
+function renderFilters(){
+  const box = $('#filters'); box.innerHTML = '';
+  const items = [['any','全部练习',null]].concat(Object.keys(QUESTIONS).map(k => [k, QUESTIONS[k].pro, QUESTIONS[k].color, QUESTIONS[k].name]));
+  items.forEach(([k, label, color, sub]) => {
+    const b = el('button', {type:'button', class:'chip', 'data-f':k, 'aria-pressed': String(k===currentFilter), style: color?`--qc:${color}`:'', title: sub||''},
+      (color?'<span class="dot" aria-hidden="true"></span>':'') + esc(label));
+    b.addEventListener('click', ()=> setFilter(k));
+    box.appendChild(b);
+  });
+}
+function setFilter(k){
+  currentFilter = k;
+  document.querySelectorAll('#filters .chip').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.f === k)));
+  document.querySelectorAll('.ex').forEach(d => {
+    const show = k === 'any' || d.dataset.q === k;
+    d.hidden = !show;
+  });
+  document.querySelectorAll('.layer').forEach(sec => {
+    sec.hidden = !sec.querySelector('.ex:not([hidden])');
+  });
+  if(k !== 'any'){
+    const first = document.querySelector('.ex:not([hidden])');
+    if(first && !first.open) first.open = true;
+  }
+}
+
+/* ========== 目录 ========== */
+function renderIndex(){
+  const nav = $('#index'); nav.innerHTML = '<h2>练习目录</h2>';
+  LAYERS.forEach(L => {
+    nav.appendChild(el('div', {class:'lv'}, esc(L.name.replace('　',' '))));
+    EXERCISES.filter(e => e.layer === L.id).forEach(e => {
+      const a = el('a', {href:`#ex-${e.id}`, 'data-id':e.id},
+        `<span class="n">${e.id}</span><span class="t">${esc(shortTitle(e.title))}</span><span class="done" aria-hidden="true"></span>`);
+      a.setAttribute('aria-label', `练习${e.id}：${e.title}`);
+      nav.appendChild(a);
+    });
+  });
+}
+function shortTitle(t){ return t.split('：')[0]; }
+function layerOf(ex){ return LAYERS.find(L => L.id === ex.layer) || LAYERS[0]; }
+
+/* ========== 练习卡片 ========== */
+function renderExercises(){
+  const host = $('#layers'); host.innerHTML = '';
+  LAYERS.forEach(L => {
+    const sec = el('section', {class:'layer', 'aria-labelledby':`layer-${L.id}`});
+    sec.appendChild(el('div', {class:'layer-head'}, `<h2 id="layer-${L.id}">${esc(L.name)}</h2><span class="tag">${esc(L.tag)}</span><p>${esc(L.desc)}</p>`));
+    EXERCISES.filter(e => e.layer === L.id).forEach(e => sec.appendChild(renderExercise(e)));
+    host.appendChild(sec);
+  });
+}
+function renderExercise(ex){
+  const q = QUESTIONS[ex.q];
+  const d = el('details', {class:'ex', id:`ex-${ex.id}`, 'data-q':ex.q, style:`--qc:${q.color}`});
+  if(state.done.includes(ex.id)) d.classList.add('is-done');
+  if(ex.id === EXERCISES[0].id) d.open = true;
+
+  const sum = el('summary');
+  sum.innerHTML = `<span class="exn" aria-hidden="true">${ex.id}</span>
+    <span><span class="ext"><span class="sr">练习 ${ex.id}：</span>${esc(ex.title)}</span>
+      <span class="exm"><span class="q">${esc(q.pro)}</span><span>${esc(q.name)}</span><span>${esc(layerOf(ex).step)} ${esc(layerOf(ex).pro)}</span>${ex.line ? `<span>${esc(LINES[ex.line].name)}</span>` : ''}<span>约 ${ex.minutes} 分钟</span><span>${esc(ex.live)}</span><span class="donebadge">已完成</span></span></span>
+    <span class="toggle">${d.open?'收起':'展开练习'}</span>`;
+  d.appendChild(sum);
+  d.addEventListener('toggle', ()=>{ sum.querySelector('.toggle').textContent = d.open ? '收起' : '展开练习'; });
+
+  const body = el('div', {class:'exbody'});
+  body.appendChild(el('p', {class:'pain'}, `<b>一线痛点：</b>${esc(ex.pain)}`));
+  body.appendChild(el('p', {class:'getline'}, `做完你会得到：${esc(ex.get)}`));
+
+  const ol = el('ol', {class:'steps'});
+  ex.steps.forEach(s => ol.appendChild(el('li', {}, esc(s))));
+  body.appendChild(ol);
+
+  // 输入区
+  const fields = el('div', {class:'fields'});
+  ex.fields.forEach((f, i) => fields.appendChild(renderField(ex, f, i)));
+  body.appendChild(fields);
+
+  // 提示词
+  ex.prompts.forEach((p, i) => {
+    const box = el('div', {class:'pbox'});
+    const head = el('div', {class:'pbox-head'});
+    head.appendChild(el('h3', {}, esc(p.label)));
+    const acts = el('div', {class:'acts'});
+    const b1 = el('button', {type:'button', class:'btn primary small'}, '复制提示词');
+    b1.addEventListener('click', ()=> doCopy(fillPlain(ex, p.tpl)));
+    const b2 = el('button', {type:'button', class:'btn small open-ai'}, openLabel());
+    b2.addEventListener('click', ()=> doCopyAndOpen(fillPlain(ex, p.tpl)));
+    acts.append(b1, b2);
+    if(p.download){
+      const b3 = el('button', {type:'button', class:'btn small'}, `下载为 ${esc(p.download)}`);
+      b3.addEventListener('click', ()=> download(p.download, fillPlain(ex, p.tpl), 'text/markdown;charset=utf-8'));
+      acts.append(b3);
+    }
+    head.appendChild(acts);
+    box.appendChild(head);
+    const pre = el('pre', {class:'ptext', 'data-ex':ex.id, 'data-p':i});
+    pre.innerHTML = fillHTML(ex, p.tpl);
+    box.appendChild(pre);
+    box.appendChild(el('div', {class:'pbox-foot'}, '黄色底的文字是自动填进去的，改上面的输入框或「我的设置」，这里会跟着变。'));
+    body.appendChild(box);
+  });
+
+  // 放在哪里（练习 0）
+  if(ex.where){
+    const wp = el('div', {class:'panel where'}, `<h4>${esc(ex.whereTitle || '放在哪里')}</h4>`);
+    const dl = el('dl');
+    ex.where.forEach(([t, dsc]) => { dl.appendChild(el('dt', {}, esc(t))); dl.appendChild(el('dd', {}, esc(dsc))); });
+    wp.appendChild(dl); body.appendChild(wp);
+  }
+
+  // 检查点 + 人工把关
+  const two = el('div', {class:'twocol'});
+  const ck = el('div', {class:'panel'}, '<h4>好结果的样子（对照检查）</h4>');
+  const ul = el('ul'); ex.check.forEach(c => ul.appendChild(el('li', {}, esc(c)))); ck.appendChild(ul);
+  const hm = el('div', {class:'panel human'}, `<h4>这一步必须你来把关</h4><p style="margin:0;font-size:.92rem">${esc(ex.human)}</p>`);
+  two.append(ck, hm); body.appendChild(two);
+
+  const smp = el('div', {class:'panel sample', style:'margin-bottom:16px'});
+  smp.innerHTML = `<h4>输出示意（节选，实际以 AI 输出为准）</h4><pre>${esc(ex.sample)}</pre>`;
+  body.appendChild(smp);
+
+  // 追问
+  const fw = el('div', {class:'follow'}, '<h4>深练：接着追问（点一下就复制）</h4>');
+  const list = el('div', {class:'list'});
+  ex.follow.forEach(t => {
+    const b = el('button', {type:'button', class:'fbtn'}, `<span>${esc(t)}</span><span>复制</span>`);
+    b.addEventListener('click', ()=> doCopy(t, '追问'));
+    list.appendChild(b);
+  });
+  fw.appendChild(list); body.appendChild(fw);
+
+  // 底部
+  const foot = el('div', {class:'exfoot'});
+  foot.appendChild(el('p', {class:'compliance'}, '<b>合规提醒：</b>客户信息先脱敏；AI 结果是建议草案，收益、条款、金额以公司口径为准。'));
+  const md = el('button', {type:'button', class:'markdone', 'aria-pressed': String(state.done.includes(ex.id))}, '<span class="box" aria-hidden="true"></span><span class="lbl"></span>');
+  const setLbl = ()=>{ md.querySelector('.lbl').textContent = d.classList.contains('is-done') ? '已完成（点击取消）' : '标记完成'; };
+  setLbl();
+  md.addEventListener('click', ()=>{
+    const on = !d.classList.contains('is-done');
+    d.classList.toggle('is-done', on); md.setAttribute('aria-pressed', String(on));
+    state.done = on ? Array.from(new Set(state.done.concat(ex.id))) : state.done.filter(x => x !== ex.id);
+    setLbl(); save(true); updateProgress();
+    if(on){
+      const next = EXERCISES.find(e => e.id === ex.id + 1);
+      toast(next ? `练习 ${ex.id} 完成！下一个：练习 ${next.id}` : (state.done.length >= EXERCISES.length ? `全部 ${EXERCISES.length} 个练习完成，去 WorkBuddy 开启周一自动化吧` : `练习 ${ex.id} 完成！`));
+    }
+  });
+  foot.appendChild(md); body.appendChild(foot);
+
+  d.appendChild(body);
+  return d;
+}
+function openLabel(){ const t = aiTool(); return t.url ? `复制并打开${t.name}` : '复制（贴到公司内部 AI）'; }
+
+function renderField(ex, f, i){
+  const id = `f-${ex.id}-${i}`;
+  const wrap = el('div', {class:'field'});
+  const lab = el('div', {class:'frow'});
+  lab.appendChild(el('label', {for:id}, esc(f.label)));
+  const tools = el('span', {class:'tools'});
+  if(f.type === 'textarea' || f.type === 'input' || f.type === 'combo'){
+    const r = el('button', {type:'button'}, '恢复示例');
+    r.addEventListener('click', ev => { ev.preventDefault(); setField(ex, f.key, defaultOf(f)); input.value = defaultOf(f); if(syncChips) syncChips(); toast('已恢复示例数据'); });
+    tools.append(r);
+    if(f.type === 'textarea'){
+      const c = el('button', {type:'button'}, '清空，填我的客户');
+      c.addEventListener('click', ev => { ev.preventDefault(); setField(ex, f.key, ''); input.value=''; input.focus(); });
+      tools.append(c);
+    }
+    if(ex.datasetKey === f.key){
+      const dl = el('button', {type:'button'}, '下载这份数据');
+      dl.addEventListener('click', ev => { ev.preventDefault(); download(ex.datasetName, tsvToCsv(input.value || defaultOf(f)), 'text/csv;charset=utf-8'); });
+      tools.append(dl);
+    }
+  }
+  lab.appendChild(tools);
+  wrap.appendChild(lab);
+
+  let input, syncChips = null;
+  if(f.type === 'combo'){
+    const group = el('div', {class:'presets', role:'group', 'aria-label':`${f.label}：快速选择`});
+    input = el('textarea', {id, rows:2, class:'wrap-text', spellcheck:'false', placeholder:f.placeholder||''});
+    syncChips = () => group.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === input.value.trim())));
+    f.options.forEach(o => {
+      const b = el('button', {type:'button', class:'preset', 'data-v':o}, esc(o));
+      b.addEventListener('click', ()=>{ input.value = o; setField(ex, f.key, o); syncChips(); });
+      group.appendChild(b);
+    });
+    wrap.appendChild(group);
+  }else if(f.type === 'textarea'){
+    input = el('textarea', {id, rows:f.rows||6, spellcheck:'false', class: f.wrap ? 'wrap-text':''});
+  }else if(f.type === 'select'){
+    input = el('select', {id});
+    f.options.forEach(o => input.appendChild(el('option', {}, esc(o))));
+  }else{
+    input = el('input', {id, type:'text', autocomplete:'off'});
+  }
+  input.value = fieldValue(ex, f.key);
+  const evt = f.type === 'select' ? 'change' : 'input';
+  input.addEventListener(evt, ()=>{ setField(ex, f.key, input.value); if(syncChips) syncChips(); });
+  wrap.appendChild(input);
+  if(syncChips){ syncChips(); wrap.appendChild(el('div', {class:'hint'}, '点上面的选项可以快速填入，也可以直接在框里改成你自己的要求。')); }
+  if(f.type === 'textarea' && !f.wrap) wrap.appendChild(el('div', {class:'hint'}, '从 Excel 复制的表格可以直接粘贴，列之间的空白会保留。'));
+  return wrap;
+}
+function setField(ex, key, val){
+  state.fields[ex.id] = state.fields[ex.id] || {};
+  state.fields[ex.id][key] = val;
+  save(); refreshPrompts(ex.id);
+}
+function refreshPrompts(onlyId){
+  document.querySelectorAll('.ptext').forEach(pre => {
+    const id = Number(pre.dataset.ex);
+    if(onlyId && id !== onlyId) return;
+    const ex = EXERCISES.find(e => e.id === id);
+    pre.innerHTML = fillHTML(ex, ex.prompts[Number(pre.dataset.p)].tpl);
+  });
+}
+
+/* ========== 进度 ========== */
+function updateProgress(){
+  const n = state.done.length, total = EXERCISES.length;
+  $('#g-progress-text').textContent = `已完成 ${n}/${total}`;
+  $('#g-progress-bar').style.width = `${Math.round(n/total*100)}%`;
+  document.querySelectorAll('#index a[data-id]').forEach(a => a.classList.toggle('is-done', state.done.includes(Number(a.dataset.id))));
+}
+
+/* ========== 我的设置 ========== */
+function initSettings(){
+  const line = $('#g-line'), prod = $('#g-product'), ai = $('#g-ai'), big = $('#g-big');
+  line.value = state.g.line; prod.value = state.g.product; ai.value = state.g.ai;
+  if(state.g.big){ document.documentElement.classList.add('big'); big.setAttribute('aria-pressed','true'); }
+  line.addEventListener('change', ()=>{
+    state.g.line = line.value;
+    if(!state.g.productTouched){ state.g.product = PRODUCT_BY_LINE[line.value] || state.g.product; prod.value = state.g.product; }
+    save(true); refreshPrompts();
+    toast(`业务线已切换为「${line.value}」，所有提示词已更新`);
+  });
+  prod.addEventListener('input', ()=>{ state.g.product = prod.value; state.g.productTouched = true; save(); refreshPrompts(); });
+  ai.addEventListener('change', ()=>{
+    state.g.ai = ai.value; save();
+    document.querySelectorAll('.open-ai').forEach(b => b.textContent = openLabel());
+  });
+  big.addEventListener('click', ()=>{
+    state.g.big = !state.g.big;
+    document.documentElement.classList.toggle('big', state.g.big);
+    big.setAttribute('aria-pressed', String(state.g.big)); save();
+  });
+}
+
+/* ========== 资料包 ========== */
+function allPromptsText(){
+  let s = `五问三阶十练｜预测式营销 AI 跟练：练习 0—10 提示词合集\n当前设置：业务线「${state.g.line}」，主推产品「${state.g.product}」\n导出日期：${todayText()}\n使用方法：复制「===」之间的整段文字，粘贴到 AI 对话框发送。\n\n`;
+  EXERCISES.forEach(ex => {
+    s += `■ 练习 ${ex.id}　${ex.title}\n（${QUESTIONS[ex.q].pro}：${QUESTIONS[ex.q].name}｜${layerOf(ex).step}${layerOf(ex).pro}${ex.line ? '｜' + LINES[ex.line].name : ''}｜约 ${ex.minutes} 分钟｜${ex.live}）\n`;
+    ex.prompts.forEach(p => { s += `\n【${p.label}】\n===\n${fillPlain(ex, p.tpl)}\n===\n`; });
+    s += `\n接着追问：\n${ex.follow.map(t => '・' + t).join('\n')}\n\n必须你来把关：${ex.human}\n\n\n`;
+  });
+  return s;
+}
+function scoringCsv(){
+  const head = ['客户编号','需求匹配度(1-10)','互动温度(1-10)','可触达性(1-10)','综合分(自动计算)','分层(自动)','开口理由','下次联系日期','联系结果'];
+  const examples = [['C12',8,9,9,'近期买房，比较了三家方案'],['C05',9,8,8,'孕5个月，主动问孕期能买什么'],['C20',8,6,8,'预算充足，看了计划书没回，换角度重新开口']];
+  const q = v => `"${String(v).replace(/"/g,'""')}"`;
+  const rows = [head.map(q).join(',')];
+  for(let r = 2; r <= 41; r++){
+    const ex = examples[r-2];
+    const E = `=IF(COUNT(B${r}:D${r})<3,"",ROUND(B${r}*0.4+C${r}*0.35+D${r}*0.25,1))`;
+    const F = `=IF(E${r}="","",IF(E${r}>=7.5,"A",IF(E${r}>=5,"B","C")))`;
+    rows.push([ex?ex[0]:'', ex?ex[1]:'', ex?ex[2]:'', ex?ex[3]:'', E, F, ex?ex[4]:'', '', ''].map(q).join(','));
+  }
+  rows.push('');
+  rows.push(q('说明：综合分 = 需求匹配度×40% + 互动温度×35% + 可触达性×25%；A≥7.5，B 5—7.4，C<5。权重可在 E 列公式里修改。'));
+  rows.push(q('用法：用练习 4 让 AI 打分后，把分数填进 B—D 列，综合分和分层会自动算出；每周按「联系结果」复盘一次权重。'));
+  return rows.join('\r\n');
+}
+function objectionCsv(){
+  const q = v => `"${String(v).replace(/"/g,'""')}"`;
+  const head = ['异议原话','背后可能的顾虑','A 共情版(≤60字)','B 数据版(数字按公司口径填写)','C 提问版(≤60字)','适用场景(电话/面谈/微信)','我的实战效果(好/一般/差)'];
+  const rows = [head.map(q).join(',')];
+  OBJECTIONS.forEach(([o, why]) => rows.push([o, why, '', '', '', '', ''].map(q).join(',')));
+  rows.push('');
+  rows.push(q('用法：用练习 5 让 AI 生成三版回应，挑你说得出口的一版填进来；每两周按实战效果迭代一次，效果差的交给 AI 重写。'));
+  return rows.join('\r\n');
+}
+function kitText(){
+  let s = `预测式营销｜课后资料汇总\n\n一、底座：AGENTS.md 身份文件\n在练习 0 生成，或在资料包里直接下载；每个练习和每周自动化都先读它。\n\n二、四条边界（AGENTS.md 第 4 节）\n`;
+  s += `1. 先脱敏，再输入：身份证、银行卡、完整手机号、病历原文，一律不进公开 AI。\n2. 话术必须人工复核：收益演示、免责说明、条款表述，以公司口径为准。\n3. 不做承诺性表述：保证、一定赔、稳赚、最高收益，逐个删掉。\n4. 数据不外传：遵守集团与监管要求；集团对 AI 工具另有规定的，以集团规定为准。\n\n`;
+  s += `三、四类时机信号\n・生命周期：结婚、怀孕生育、孩子入学升学或出国、退休、父母进入高龄\n・资产变动：跳槽换工作、涨薪发年终奖、买房换房、买车、企业扩张开新店、新增贷款\n・服务触点：理赔结案、保单周年和续期、车险到期、理财到期、体检异常、客户生日\n・行为信号：反复打开计划书、问完细节后沉默、朋友圈晒生活变化、转发健康或保险新闻、咨询减保退保\n\n`;
+  s += `四、十句万能追问\n${FOLLOWUPS.map(t => '・' + t).join('\n')}\n\n`;
+  s += `五、常用 AI 工具\n${Object.values(AI_TOOLS).filter(t => t.url).map(t => `・${t.name}：${t.url}`).join('\n')}\n（集团对 AI 工具另有规定的，以集团规定为准）\n`;
+  return s;
+}
+function renderKit(){
+  const dls = [
+    ['练习 0—10 提示词合集', '按你当前的业务线和输入内容导出，记事本可打开', '下载 .txt', ()=> download('预测式营销_练习0-10提示词合集.txt', allPromptsText())],
+    ['我的 AGENTS.md 身份文件', '练习 0 的底座文件，按你当前设置生成；可放进支持 AGENTS.md 的 AI 工具', '下载 .md', ()=>{ const e0 = EXERCISES.find(e => e.id === 0); download('AGENTS.md', fillPlain(e0, e0.prompts[0].tpl), 'text/markdown;charset=utf-8'); }],
+    ['WorkBuddy 周一自动化任务指令', '练习 10 第一段，粘贴进 WorkBuddy「自动化」即可', '下载 .md', ()=>{ const e10 = EXERCISES.find(e => e.id === 10); download('WorkBuddy周一自动化任务指令.md', fillPlain(e10, e10.prompts[0].tpl), 'text/markdown;charset=utf-8'); }],
+    ['客户意向打分表模板', '三维打分公式已写好，填分数自动出 A/B/C', '下载表格', ()=> download('客户意向打分表模板.csv', scoringCsv(), 'text/csv;charset=utf-8')],
+    ['异议应对话术库模板', '12 类高频异议和背后顾虑，配合练习 5 填写', '下载表格', ()=> download('异议应对话术库模板.csv', objectionCsv(), 'text/csv;charset=utf-8')],
+    ['练习数据：客户名单 30 人', '练习 4 用，全部虚构', '下载表格', ()=> download('练习4_客户名单30人.csv', tsvToCsv(DATA_LIST30), 'text/csv;charset=utf-8')],
+    ['练习数据：存量预警名单', '练习 7 用，全部虚构', '下载表格', ()=> download('练习7_存量客户预警名单.csv', tsvToCsv(DATA_STOCK12), 'text/csv;charset=utf-8')],
+    ['练习数据：商机清单', '练习 8 用，全部虚构', '下载表格', ()=> download('练习8_商机清单.csv', tsvToCsv(DATA_DEALS10), 'text/csv;charset=utf-8')],
+    ['课后资料汇总', '四条边界、时机信号、追问句、常用 AI 工具', '下载 .txt', ()=> download('预测式营销_课后资料汇总.txt', kitText())],
+    ['打印或另存为 PDF 讲义', '所有练习自动展开，在打印窗口选「另存为 PDF」', '打印', ()=> window.print()]
+  ];
+  const ul = $('#downloads');
+  dls.forEach(([t, sub, btn, fn]) => {
+    const li = el('li', {}, `<span><b>${esc(t)}</b><small>${esc(sub)}</small></span>`);
+    const b = el('button', {type:'button', class:'btn small'}, esc(btn));
+    b.addEventListener('click', fn); li.appendChild(b); ul.appendChild(li);
+  });
+
+  const chips = $('#followups');
+  FOLLOWUPS.forEach(t => {
+    const b = el('button', {type:'button'}, esc(t));
+    b.addEventListener('click', ()=> doCopy(t, '追问'));
+    chips.appendChild(b);
+  });
+
+  const agentsText = () => { const e0 = EXERCISES.find(e => e.id === 0); return fillPlain(e0, e0.prompts[0].tpl); };
+  $('#dl-agents').addEventListener('click', ()=> download('AGENTS.md', agentsText(), 'text/markdown;charset=utf-8'));
+  $('#copy-agents').addEventListener('click', ()=> doCopy(agentsText(), 'AGENTS.md 全文'));
+}
+
+/* ========== 导航联动 ========== */
+function openFromHash(){
+  const m = location.hash.match(/^#ex-(\d+)$/);
+  if(m){ const d = document.getElementById(`ex-${m[1]}`); if(d){ if(d.hidden) setFilter('any'); d.open = true; } }
+}
+document.addEventListener('click', ev => {
+  const a = ev.target.closest('a[href^="#ex-"]');
+  if(!a) return;
+  const d = document.querySelector(a.getAttribute('href'));
+  if(d){ if(d.hidden) setFilter('any'); d.open = true; }
+});
+window.addEventListener('hashchange', openFromHash);
+
+function watchCurrent(){
+  if(!('IntersectionObserver' in window)) return;
+  const links = new Map();
+  document.querySelectorAll('#index a[data-id]').forEach(a => links.set(`ex-${a.dataset.id}`, a));
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if(en.isIntersecting){
+        links.forEach(a => a.classList.remove('current'));
+        const a = links.get(en.target.id); if(a) a.classList.add('current');
+      }
+    });
+  }, {rootMargin:'-40% 0px -55% 0px'});
+  document.querySelectorAll('.ex').forEach(d => io.observe(d));
+}
+
+let printOpen = [];
+window.addEventListener('beforeprint', ()=>{
+  printOpen = Array.from(document.querySelectorAll('.ex')).map(d => d.open);
+  document.querySelectorAll('.ex').forEach(d => { d.hidden = false; d.open = true; });
+  document.querySelectorAll('.layer').forEach(s => s.hidden = false);
+});
+window.addEventListener('afterprint', ()=>{
+  document.querySelectorAll('.ex').forEach((d, i) => d.open = printOpen[i] ?? false);
+  setFilter(currentFilter);
+});
+
+/* ========== 启动 ========== */
+renderHero();
+renderFramework();
+renderFilters();
+renderIndex();
+renderExercises();
+initSettings();
+renderKit();
+updateProgress();
+watchCurrent();
+openFromHash();
+</script>
+</body>
+</html>
