@@ -1,0 +1,1824 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AI 工具操作手册（车商版）｜平安核心客户会 AI 主题专场</title>
+<meta name="description" content="二手车经销商 AI 工具操作手册：工具地图、四段式提问、收车/内容/线索/库存四大动作、31 条可复制提示词、30 天落地计划与使用红线。平安核心客户会 AI 主题专场配套资料。" />
+<style>
+:root{
+  --surface-page:#f5f8fd;--surface-primary:#ffffff;--surface-secondary:#eef5ff;
+  --surface-dark:#061b46;
+  --text-primary:#15223a;--text-secondary:#5f6f89;
+  --text-on-dark:#ffffff;--text-on-dark-muted:#cddcff;--text-on-dark-soft:#d4e2ff;
+  --border-default:#d8e4f7;--border-strong:#b8c9e4;
+  --accent-primary:#0f62fe;--accent-hover:#0043ce;
+  --status-success:#16854b;--status-warning:#a15c00;--surface-warning:#fff6e5;
+  --code-bg:#07152e;--code-text:#e7efff;
+  --radius:10px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--surface-page);color:var(--text-primary);
+  font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",Arial,sans-serif;
+  font-size:16px;line-height:1.75;-webkit-font-smoothing:antialiased;
+}
+a{color:var(--accent-hover);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font:inherit}
+code{font-family:"Cascadia Code",Consolas,"SFMono-Regular",monospace;font-size:.92em;background:#eef3fc;border:1px solid var(--border-default);border-radius:4px;padding:1px 4px;color:#173762}
+
+/* ---------- layout ---------- */
+.layout{display:grid;grid-template-columns:296px minmax(0,1fr);min-height:100vh}
+.sidebar{
+  position:sticky;top:0;height:100vh;overflow-y:auto;background:var(--surface-primary);
+  border-right:1px solid var(--border-default);padding:20px 16px 48px;
+}
+.brand{display:flex;gap:10px;align-items:center}
+.brand-mark{flex:0 0 auto;width:38px;height:38px;border-radius:9px;background:var(--surface-dark);color:#fff;display:grid;place-items:center;font-weight:700;font-size:12px;letter-spacing:.04em;line-height:1.1;text-align:center}
+.brand strong{display:block;font-size:14.5px;line-height:1.35}
+.brand span{display:block;font-size:11.5px;color:var(--text-secondary);margin-top:2px}
+.searchbox{position:relative;margin:16px 0 6px}
+.searchbox input{
+  width:100%;height:40px;padding:0 34px 0 34px;border:1px solid var(--border-strong);
+  border-radius:8px;background:#fff;font-size:14px;color:var(--text-primary);outline:0;
+}
+.searchbox input:focus{border-color:var(--accent-primary);box-shadow:0 0 0 3px rgba(15,98,254,.14)}
+.searchbox svg{position:absolute;left:10px;top:12px;width:16px;height:16px;color:#7b8db0;pointer-events:none}
+.searchbox #clearBtn{
+  position:absolute;right:5px;top:5px;width:30px;height:30px;border:0;border-radius:6px;
+  background:transparent;color:#7b8db0;cursor:pointer;font-size:17px;line-height:1;
+}
+.searchbox #clearBtn:hover{background:var(--surface-secondary);color:var(--accent-hover)}
+.result-line{font-size:11.5px;color:var(--text-secondary);min-height:16px;margin:0 0 4px;line-height:1.5}
+.navgroup{margin-top:18px}
+.navgroup h3{font-size:10.5px;letter-spacing:.14em;color:#8496b3;margin:0 0 6px;font-weight:700;text-transform:uppercase}
+.toc{display:grid;gap:2px}
+.toc a{display:block;padding:7px 10px;border-radius:7px;font-size:13.5px;color:#3b4a63;border-left:2px solid transparent;line-height:1.5}
+.toc a:hover{background:var(--surface-secondary);text-decoration:none}
+.toc a.active{background:var(--surface-secondary);border-left-color:var(--accent-primary);color:var(--accent-hover);font-weight:700}
+.side-note{margin-top:22px;padding-top:14px;border-top:1px solid var(--border-default);font-size:11.5px;color:var(--text-secondary);line-height:1.7}
+
+.main{min-width:0}
+.masthead{
+  position:sticky;top:0;z-index:30;height:52px;background:var(--surface-dark);color:#fff;
+  display:flex;align-items:center;gap:14px;padding:0 20px;
+}
+.masthead .mname{font-size:13px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.masthead .spacer{flex:1}
+.masthead a{font-size:12.5px;color:var(--text-on-dark-muted);white-space:nowrap}
+.masthead a:hover{color:#fff}
+.masthead .mbtn{
+  border:1px solid #6d89bd;background:transparent;color:#fff;border-radius:7px;
+  padding:5px 12px;font-size:12.5px;cursor:pointer;min-height:32px;white-space:nowrap;
+}
+.masthead .mbtn:hover{background:rgba(255,255,255,.1)}
+#menuBtn{display:none;border:1px solid #6d89bd;background:transparent;color:#fff;border-radius:7px;width:34px;height:32px;cursor:pointer;font-size:15px;line-height:1}
+
+/* ---------- hero ---------- */
+.hero{background:var(--surface-dark);color:#fff}
+.hero-inner{max-width:1040px;margin:0 auto;padding:46px 24px 42px}
+.hero .eyebrow{font-size:11.5px;letter-spacing:.16em;color:var(--text-on-dark-muted);font-weight:700}
+.hero h1{font-size:clamp(28px,4.3vw,42px);line-height:1.16;margin:12px 0 12px;color:#fff;font-weight:600;letter-spacing:-.01em}
+.hero .lead{font-size:16.5px;line-height:1.8;color:var(--text-on-dark-soft);max-width:780px;margin:0}
+.hero .meta{display:flex;flex-wrap:wrap;gap:6px 20px;margin-top:20px;font-size:12.5px;color:#a9c7ff}
+.quick{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px;margin-top:28px}
+.quick a{
+  display:block;padding:14px 16px;border:1px solid #6d89bd;border-radius:var(--radius);
+  background:rgba(255,255,255,.05);color:#fff;text-decoration:none;
+}
+.quick a:hover{background:rgba(255,255,255,.12);text-decoration:none}
+.quick b{display:block;font-size:14px;margin-bottom:4px}
+.quick span{font-size:12px;color:var(--text-on-dark-muted);line-height:1.6;display:block}
+
+/* ---------- content ---------- */
+.wrap{max-width:1040px;margin:0 auto;padding:8px 24px 90px}
+.section{background:var(--surface-primary);border:1px solid var(--border-default);border-radius:12px;padding:26px 28px 30px;margin-top:20px;scroll-margin-top:66px}
+.sec-head{display:flex;gap:12px;align-items:flex-start}
+.sec-num{flex:0 0 auto;width:36px;height:36px;border-radius:9px;background:var(--surface-secondary);border:1px solid #cfe0ff;color:var(--accent-hover);display:grid;place-items:center;font-weight:700;font-size:13.5px}
+.sec-head h2{font-size:21.5px;line-height:1.4;margin:0;font-weight:600}
+.sec-sub{color:var(--text-secondary);font-size:13.5px;margin:4px 0 0}
+.section h3{font-size:16.5px;margin:26px 0 8px;padding-left:11px;border-left:3px solid var(--accent-primary);line-height:1.5}
+.section h4{font-size:14.5px;margin:18px 0 6px}
+.section p{font-size:15.5px;line-height:1.85;color:#25334d;margin:10px 0}
+.section ul,.section ol{font-size:15px;line-height:1.85;color:#25334d;padding-left:22px;margin:10px 0}
+.section li{margin:5px 0}
+.lead-p{font-size:16px;color:#1d2c47}
+.muted{color:var(--text-secondary);font-size:13.5px}
+.steps{counter-reset:s;list-style:none;padding:0;margin:14px 0}
+.steps li{position:relative;padding-left:40px;margin:12px 0;font-size:15px;line-height:1.8}
+.steps li:before{
+  counter-increment:s;content:counter(s);position:absolute;left:0;top:3px;width:25px;height:25px;
+  border-radius:50%;background:var(--accent-primary);color:#fff;font-size:12.5px;font-weight:700;
+  display:grid;place-items:center;
+}
+.tablewrap{overflow-x:auto;border:1px solid var(--border-default);border-radius:var(--radius);margin:14px 0}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:600px}
+th{background:var(--surface-secondary);text-align:left;padding:10px 12px;font-size:12.5px;color:#173762;font-weight:700;white-space:nowrap}
+td{padding:10px 12px;border-top:1px solid var(--border-default);color:#25334d;vertical-align:top;line-height:1.7}
+tbody tr:hover td{background:#fafcff}
+.callout{border:1px solid;border-radius:var(--radius);padding:14px 16px;margin:16px 0;font-size:14.5px;line-height:1.8}
+.callout .tag{display:block;font-size:11.5px;font-weight:700;letter-spacing:.06em;margin-bottom:3px}
+.callout p{margin:0;font-size:14.5px}
+.callout p+p{margin-top:6px}
+.info{background:var(--surface-secondary);border-color:#cfe0ff;color:#173762}
+.info .tag{color:var(--accent-hover)}
+.warn{background:var(--surface-warning);border-color:#f0d9a8;color:#5e3900}
+.warn .tag{color:var(--status-warning)}
+.ok{background:#eefaf3;border-color:#bfe6d2;color:#0f5f37}
+.ok .tag{color:var(--status-success)}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+.panel{border:1px solid var(--border-default);border-radius:var(--radius);padding:14px 16px;background:#fbfcff}
+.panel.bad{border-color:#eccfcd;background:#fdf5f4}
+.panel.good{border-color:#bfe6d2;background:#f4fbf7}
+.panel h4{margin:0 0 6px;font-size:13.5px}
+.panel p{margin:0;font-size:14px;line-height:1.75}
+.bad h4{color:#9a2a24}
+.good h4{color:#0f5f37}
+
+/* ---------- prompt cards ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 4px}
+.chip{
+  border:1px solid var(--border-strong);background:#fff;border-radius:999px;padding:6px 13px;
+  font-size:13px;cursor:pointer;color:#3b4a63;min-height:36px;
+}
+.chip:hover{border-color:var(--accent-primary);color:var(--accent-hover)}
+.chip b{font-weight:700;color:var(--accent-hover);margin-left:5px;font-size:12px}
+.chip.is-active{background:var(--accent-primary);border-color:var(--accent-primary);color:#fff}
+.chip.is-active b{color:#fff}
+.pcard{border:1px solid var(--border-strong);border-radius:var(--radius);margin:14px 0;overflow:hidden;background:#fff}
+.pcard-head{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;padding:12px 15px;background:#fbfcff;border-bottom:1px solid var(--border-default)}
+.pid{font-family:"Cascadia Code",Consolas,monospace;font-size:11.5px;font-weight:700;color:var(--accent-hover);background:#e8f0ff;border:1px solid #cfe0ff;border-radius:6px;padding:2px 7px}
+.pcard-head h4{margin:0;font-size:15.5px}
+.pmeta{margin-left:auto;font-size:12px;color:var(--text-secondary)}
+pre.prompt{
+  margin:0;padding:16px 18px;background:var(--code-bg);color:var(--code-text);
+  font-family:"Cascadia Code",Consolas,"SFMono-Regular",monospace;font-size:13px;line-height:1.8;
+  white-space:pre-wrap;word-break:break-word;overflow-x:auto;
+}
+.pcard-foot{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:10px 15px;background:#fbfcff;border-top:1px solid var(--border-default)}
+.check{font-size:12.5px;color:#0f5f37;background:#eefaf3;border:1px solid #bfe6d2;border-radius:6px;padding:3px 9px;line-height:1.6}
+.btn{
+  border:1px solid var(--accent-primary);background:var(--accent-primary);color:#fff;
+  border-radius:8px;padding:7px 15px;font-size:13px;cursor:pointer;min-height:36px;
+}
+.btn:hover{background:var(--accent-hover);border-color:var(--accent-hover)}
+.btn.ghost{background:#fff;color:var(--accent-hover);border-color:var(--border-strong)}
+.btn.ghost:hover{background:var(--surface-secondary)}
+.empty{display:none;margin:16px 0;padding:22px;border:1px dashed var(--border-strong);border-radius:var(--radius);color:var(--text-secondary);font-size:14px;text-align:center}
+.empty.show{display:block}
+.hidden{display:none!important}
+
+/* ---------- footer / toast / overlay ---------- */
+.footer{max-width:1040px;margin:0 auto;padding:26px 24px 60px;color:var(--text-secondary);font-size:12.5px;line-height:1.9;border-top:1px solid var(--border-default)}
+.toast{
+  position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(12px);
+  background:var(--surface-dark);color:#fff;padding:10px 20px;border-radius:8px;font-size:13.5px;
+  opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;z-index:90;box-shadow:0 8px 24px rgba(6,27,70,.22);
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.overlay{position:fixed;inset:0;background:rgba(6,27,70,.42);z-index:55;display:none}
+.overlay.show{display:block}
+
+/* ---------- responsive ---------- */
+@media (max-width:959px){
+  .layout{grid-template-columns:1fr}
+  .sidebar{
+    position:fixed;top:0;left:0;bottom:0;width:290px;max-width:86vw;height:100%;
+    z-index:60;transform:translateX(-101%);transition:transform .2s ease;box-shadow:0 0 32px rgba(6,27,70,.2);
+  }
+  .sidebar.open{transform:none}
+  #menuBtn{display:block}
+  .hero-inner{padding:34px 18px 32px}
+  .wrap{padding:8px 14px 70px}
+  .section{padding:20px 16px 24px;border-radius:10px}
+  .sec-head h2{font-size:19px}
+  .twocol{grid-template-columns:1fr}
+  .pmeta{margin-left:0;width:100%}
+  table{min-width:520px}
+  .masthead .mbtn{font-size:12px;padding:4px 9px}
+  .masthead{padding:0 12px;gap:10px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition:none!important}
+}
+@media print{
+  body{background:#fff;font-size:11.5pt}
+  .sidebar,.masthead,.overlay,.toast,#menuBtn,.chips{display:none!important}
+  .layout{display:block}
+  .hero{background:#fff;color:#000;border-bottom:2px solid #000}
+  .hero h1,.hero .lead,.hero .meta,.hero .eyebrow{color:#000}
+  .quick{display:none}
+  .wrap{max-width:none;padding:0}
+  .section{border:0;border-top:1px solid #bbb;border-radius:0;padding:12px 0;break-inside:auto}
+  .sec-head h2{font-size:15pt}
+  pre.prompt{background:#f4f4f4;color:#000;border:1px solid #bbb;max-height:none;font-size:9pt}
+  .pcard,.callout,.tablewrap{break-inside:avoid}
+  a{color:#000;text-decoration:none}
+}
+</style>
+</head>
+<body>
+<div class="overlay" id="overlay"></div>
+<div class="layout">
+
+  <!-- ============ 侧边目录 ============ -->
+  <aside class="sidebar" id="sidebar" aria-label="手册目录">
+    <div class="brand">
+      <div class="brand-mark">AI<br>车商</div>
+      <div>
+        <strong>AI 工具操作手册</strong>
+        <span>车商版 · 平安核心客户会专场配套</span>
+      </div>
+    </div>
+
+    <div class="searchbox">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+      <input id="searchInput" type="search" placeholder="搜工具、提示词、场景" aria-label="搜索工具与提示词" autocomplete="off" />
+      <button id="clearBtn" type="button" aria-label="清空搜索" title="清空搜索">×</button>
+    </div>
+    <p class="result-line" id="resultLine" aria-live="polite"></p>
+
+    <nav class="toc-nav">
+      <div class="navgroup">
+        <h3>起步</h3>
+        <div class="toc">
+          <a href="#s00">00 这本手册怎么用</a>
+          <a href="#s01">01 工具地图：先上哪几件</a>
+          <a href="#s02">02 提问基本功</a>
+        </div>
+      </div>
+      <div class="navgroup">
+        <h3>四个业务动作</h3>
+        <div class="toc">
+          <a href="#s03">03 收车：看车、算价、写车况</a>
+          <a href="#s04">04 卖车：短视频、直播、朋友圈</a>
+          <a href="#s05">05 线索：分级、跟进、异议</a>
+          <a href="#s06">06 库存与经营：看懂表格</a>
+        </div>
+      </div>
+      <div class="navgroup">
+        <h3>工作台</h3>
+        <div class="toc">
+          <a href="#s07">07 门店 AI 工作台（含示例）</a>
+        </div>
+      </div>
+      <div class="navgroup">
+        <h3>拿来就用</h3>
+        <div class="toc">
+          <a href="#s08">08 提示词库（31 条）</a>
+          <a href="#s09">09 30 天落地计划</a>
+        </div>
+      </div>
+      <div class="navgroup">
+        <h3>边界与附录</h3>
+        <div class="toc">
+          <a href="#s10">10 红线：不能交给 AI 的事</a>
+          <a href="#s11">11 常见问题</a>
+          <a href="#s12">12 附录：练习与术语</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="side-note">
+      手册版本 v1.0 · 2026 年 10 月<br>
+      文中工具为编写时可用的版本，功能与价格以各家官网为准。<br>
+      客户资料、车况与价格承诺，一律以人工复核为准。
+    </div>
+  </aside>
+
+  <!-- ============ 主体 ============ -->
+  <div class="main">
+    <header class="masthead">
+      <button id="menuBtn" type="button" aria-label="打开目录" aria-expanded="false">☰</button>
+      <span class="mname">AI 工具操作手册（车商版）</span>
+      <span class="spacer"></span>
+      <a href="https://xjtulijiagui-max.github.io/lijiagui/list/" target="_blank" rel="noopener">更多资料</a>
+      <button class="mbtn" id="printBtn" type="button">打印 / PDF</button>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="eyebrow">平安核心客户会 · AI 主题专场 ｜ 配套操作手册</div>
+        <h1>AI 工具操作手册（车商版）</h1>
+        <p class="lead">把 10 月 13 日那堂课上的判断，翻译成店里明天就能做的动作。课程时间有限，工具部分只点到了方向；这份手册补上那一段——不讲原理，只讲：点哪里、写什么、怎么验收。</p>
+        <div class="meta">
+          <span>授课嘉宾：李家贵 · 西安交通大学数字经济研究院</span>
+          <span>适用对象：二手车 / 汽车流通门店</span>
+          <span>v1.0 · 2026 年 10 月</span>
+        </div>
+        <div class="quick">
+          <a href="#s01"><b>老板：先看 15 分钟</b><span>01 工具地图 → 07 工作台 → 10 红线。决定投哪、不投哪。</span></a>
+          <a href="#s05"><b>店长 / 主管：1 小时</b><span>02 提问基本功 → 05 线索 → 06 库存 → 09 计划。落成动作。</span></a>
+          <a href="#s08"><b>一线销售：每天 10 分钟</b><span>03 收车 → 04 内容 → 08 提示词库。照着复制就能用。</span></a>
+        </div>
+      </div>
+    </section>
+
+    <main class="wrap">
+
+      <!-- ========== 00 ========== -->
+      <section class="section" id="s00">
+        <div class="sec-head">
+          <div class="sec-num">00</div>
+          <div>
+            <h2>这本手册怎么用</h2>
+            <p class="sec-sub">三个原则、一张对照表，先花 3 分钟搞清楚它和那堂课的关系。</p>
+          </div>
+        </div>
+
+        <p class="lead-p">课上我们花了大部分时间讲判断：AI 从"会说话"走到"会做事"，四个跃迁，中国与海外两条路，以及汽车产业的机会和边界。工具部分因为时间关系没有展开。这本手册只做一件事：<strong>把判断变成动作。</strong></p>
+
+        <h3>三条使用原则</h3>
+        <ul>
+          <li><strong>先用手上有的。</strong>不要为了用 AI 换掉你现有的台账、微信群和习惯。工具是加法，不是重建。</li>
+          <li><strong>先做最赚钱的一段。</strong>收车定价、线索跟进、内容获客，这三段离钱最近，也最容易看到差别。先从一段开始，别全面铺开。</li>
+          <li><strong>每条都要有验收标准。</strong>没有验收标准的"用 AI"，最后都变成"玩了一下"，团队第二周就不用了。</li>
+        </ul>
+
+        <div class="callout info">
+          <span class="tag">统一验收口径</span>
+          <p>任何 AI 产出，先过"三问"：<strong>① 事实对不对</strong>（车型、里程、价格有没有编）；<strong>② 能不能用我们店里的话说</strong>（不像广告、不像公文）；<strong>③ 出问题谁负责</strong>（涉及价格、车况、合同的，必须人签字）。三问都过，才允许对外发。</p>
+        </div>
+
+        <h3>课上的判断 → 手册里的动作</h3>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>课上讲的</th><th>手册里对应做什么</th><th>在哪一节</th></tr></thead>
+            <tbody>
+              <tr class="srow" data-search="四个跃迁 会说话 会做事 提问基本功 给目标 验收"><td>AI 从"会说话"走向"会做事"（四个跃迁）</td><td>提问方式从"问一句"升级为"给目标 + 给数据 + 给验收"</td><td>02</td></tr>
+              <tr class="srow" data-search="边界 幻觉 越权 责任 红线"><td>能力越强越需要边界（幻觉、越权、责任归属）</td><td>写清哪些能交给 AI、哪些必须人拍板，做成门店规范</td><td>10</td></tr>
+              <tr class="srow" data-search="经销商 客户进店 试驾 成交 售后 业务动作"><td>别追概念，经销商要关心客户进店、试驾、成交、售后</td><td>只做收车、内容、线索、库存四个业务动作</td><td>03–06</td></tr>
+              <tr class="srow" data-search="先做营销 小步试点 三个月 ROI 内容 计划"><td>先做营销，小步试点，3 个月看到 ROI</td><td>内容流水线 + 30 天落地计划，先跑一家店</td><td>04、09</td></tr>
+              <tr class="srow" data-search="经营人 团队升级 执行者 专家 岗位清单 练习"><td>经营人：从"执行者"变成"AI + 专家"</td><td>岗位 AI 能力清单 + 每天 15 分钟练习表</td><td>08（P30）、12</td></tr>
+              <tr class="srow" data-search="不做决策 不承担责任 拍板"><td>AI 不做决策、不承担责任，最终拍板的永远是人</td><td>红线第 2、3 条：不做报价承诺、车况与合同必须人核</td><td>10</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="muted">关于费用：本手册不写具体价格，因为各家套餐和赠送额度变化很快，写下来就会过期。判断标准只有一条——<strong>先免费用满两周，再按"每周省了几个小时"决定要不要付费。</strong></p>
+      </section>
+
+      <!-- ========== 01 ========== -->
+      <section class="section" id="s01">
+        <div class="sec-head">
+          <div class="sec-num">01</div>
+          <div>
+            <h2>工具地图：车商先上哪几件</h2>
+            <p class="sec-sub">六类工具、每类一个"先用的"，不要一次全上。</p>
+          </div>
+        </div>
+
+        <p class="lead-p">市面上的 AI 工具上千个，车商真正用得上的只有六类。下面每类只推荐一个"先用"的，其余作为备选；选型的标准不是"哪个最强"，而是<strong>哪个不用培训、手机上就能用、出错成本低</strong>。</p>
+
+        <div class="tablewrap">
+          <table>
+            <thead>
+              <tr><th>类别</th><th>解决什么</th><th>常用工具（示例）</th><th>上手难度</th><th>谁先用</th></tr>
+            </thead>
+            <tbody>
+              <tr class="srow" data-search="通用对话 大模型 文案 话术 分析 DeepSeek 豆包 元宝 通义 千问 Kimi">
+                <td><strong>① 通用对话</strong></td>
+                <td>写文案、改话术、分析数据、列清单、做判断提纲</td>
+                <td>DeepSeek、豆包、腾讯元宝、通义千问、Kimi</td>
+                <td>★☆☆ 一学就会</td>
+                <td>全员，尤其是销售</td>
+              </tr>
+              <tr class="srow" data-search="图片 海报 设计 出图 即梦 豆包 可画 稿定">
+                <td><strong>② 图片与海报</strong></td>
+                <td>车源海报、活动图、朋友圈配图、封面</td>
+                <td>即梦、豆包（图片）、Canva 可画、稿定设计</td>
+                <td>★★☆ 要调几次</td>
+                <td>内容 / 市场</td>
+              </tr>
+              <tr class="srow" data-search="短视频 剪辑 字幕 剪映 即梦 可灵 口播">
+                <td><strong>③ 短视频与直播</strong></td>
+                <td>自动字幕、套模板出片、脚本、直播流程</td>
+                <td>剪映（自动字幕、图文成片、模板）、即梦、可灵</td>
+                <td>★★☆ 要练手</td>
+                <td>内容岗 / 店长</td>
+              </tr>
+              <tr class="srow" data-search="数字人 口播 分身 剪映数字人 HeyGen 老板IP">
+                <td><strong>④ 数字人与口播</strong></td>
+                <td>老板不出镜也能日更；把文字稿变成口播视频</td>
+                <td>剪映数字人、HeyGen（海外）</td>
+                <td>★★☆ 需定形象</td>
+                <td>老板本人 IP</td>
+              </tr>
+              <tr class="srow" data-search="表格 数据 台账 库存 毛利 WPS AI 飞书多维表格 Excel Copilot">
+                <td><strong>⑤ 表格与数据</strong></td>
+                <td>库存台账、毛利核算、线索统计、周报</td>
+                <td>WPS AI、飞书多维表格、Excel + Copilot</td>
+                <td>★★☆ 要有台账</td>
+                <td>店长 / 财务</td>
+              </tr>
+              <tr class="srow" data-search="工作台 智能体 Agent 扣子 Coze 元器 WorkBuddy 自动化">
+                <td><strong>⑥ 工作台与智能体</strong></td>
+                <td>把上面五类串成"每天打开就能看"的一页</td>
+                <td>WorkBuddy、扣子 Coze、腾讯元器</td>
+                <td>★★★ 要有人搭</td>
+                <td>老板 + 1 名骨干</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout warn">
+          <span class="tag">别踩这个坑</span>
+          <p>一家店同时试超过 2 个工具，基本等于一个都没用起来。顺序建议：<strong>先第 ① 类用满两周</strong>（把销售的话术、文案全部过一遍），稳定后再加第 ③ 类（内容），最后才考虑第 ⑥ 类（工作台）。</p>
+        </div>
+
+        <h3>第一次打开通用对话工具，只做这一件事</h3>
+        <ol class="steps">
+          <li>用手机号注册，选一个你顺手的（建议先用 DeepSeek 或豆包，中文场景够用、免费额度足）。</li>
+          <li>把今天要发的 3 条朋友圈文案，原话贴进去，加一句："帮我改成更口语、更像车商说话的版本，保留所有数字。"</li>
+          <li>对比一下，选一条你愿意发的——这就是你的第一个 AI 产出。</li>
+          <li>把这条"改写朋友圈"存成你手机里的常用语（备忘录即可），以后就是固定动作。</li>
+        </ol>
+        <div class="callout ok">
+          <span class="tag">验收</span>
+          <p>今天之内发出 1 条 AI 改过的朋友圈，并且你自己能说出"它改对了什么"。做不到就说明用法有问题，看下一节。</p>
+        </div>
+      </section>
+
+      <!-- ========== 02 ========== -->
+      <section class="section" id="s02">
+        <div class="sec-head">
+          <div class="sec-num">02</div>
+          <div>
+            <h2>提问基本功：四段式，一次到位</h2>
+            <p class="sec-sub">80% 的"AI 不好用"，不是模型不行，是问题问得太省。</p>
+          </div>
+        </div>
+
+        <p class="lead-p">课上讲第一个跃迁时说：以前你问一句它答一句，现在它能自己想清楚再给答案——<strong>你的角色从"一步步教它"，变成"定义问题、验收结果"。</strong>定义问题的方法，就是下面这个四段式。</p>
+
+        <div class="callout info">
+          <span class="tag">四段式公式</span>
+          <p><strong>身份</strong>（你是……）＋ <strong>背景</strong>（真实的车、客户、数据）＋ <strong>任务</strong>（只做一件事）＋ <strong>验收标准</strong>（什么样算合格，什么不许写）。</p>
+        </div>
+
+        <div class="twocol">
+          <div class="panel bad">
+            <h4>✗ 常见的问法</h4>
+            <p>"帮我写个二手车文案。"</p>
+            <p class="muted" style="margin-top:8px">结果：一段谁都能用、也谁都不想看的通用广告词。你会说"AI 就这水平"。</p>
+          </div>
+          <div class="panel good">
+            <h4>✓ 能用的问法</h4>
+            <p>"你是做了 10 年二手车的销售。我有一台 2019 款宝马 3 系，6.8 万公里，二次过户，右前叶子板补漆，收车价 14.5 万，本地同款挂牌 17-19 万。写一条 30 秒抖音口播稿，开头 3 秒必须提到'这台车我敢让你上架子看'，不许写'绝对无事故'，不许编造保养记录，不确定的写【待确认】。"</p>
+          </div>
+        </div>
+
+        <h3>五个动作，改掉"问得太省"</h3>
+        <ol class="steps">
+          <li><strong>先给身份和语气。</strong>"你是做了 10 年二手车的老销售"和"你是汽车营销专家"，写出来的东西完全不同。要口语就给口语身份。</li>
+          <li><strong>把数据贴进去。</strong>车型、年份、里程、过户次数、补漆情况、收车价、本地挂牌价、客户来源。AI 不知道你店里的数，只能靠你喂。</li>
+          <li><strong>一次只让它做一件事。</strong>先出 10 个开头，你选一个，再让它扩写成稿。一次要"完整方案"的结果通常是每段都空。</li>
+          <li><strong>禁止它编。</strong>固定加一句："不确定的信息标【待确认】，不要臆造数据、保养记录和事故结论。"这一句能挡掉大部分幻觉。</li>
+          <li><strong>让它自检。</strong>最后加："按上面的要求给自己打分，指出哪几条没做到。"通常它会自己改一轮，质量明显提升。</li>
+        </ol>
+
+        <h3>五个常见错误（对照自查）</h3>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>错误</th><th>表现</th><th>改法</th></tr></thead>
+            <tbody>
+              <tr><td>太笼统</td><td>"写个文案""帮我想个活动"</td><td>加车型、价位、客户、渠道、字数</td></tr>
+              <tr><td>一次要太多</td><td>一条指令要 10 条视频脚本 + 海报 + 朋友圈</td><td>拆成 5 次，每次一件</td></tr>
+              <tr><td>不给数据</td><td>只说"我的车便宜"</td><td>给具体价格、里程、对比车型</td></tr>
+              <tr><td>不核事实</td><td>直接照发，里程、过户次数写错</td><td>固定让 AI 标【待确认】，人核三项</td></tr>
+              <tr><td>不复用</td><td>每次都从零写</td><td>好用的存成模板，第 08 节直接抄</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout warn">
+          <span class="tag">一个必须知道的限制</span>
+          <p>AI 不联网、或者联网也不一定查到时，它给你的"市场行情价""同款在售数量"很可能是编的。凡是数字，要么你给，要么让它标【待确认】。<strong>报价这件事，永远以你店里的真实成交数据为准。</strong></p>
+        </div>
+      </section>
+
+      <!-- ========== 03 ========== -->
+      <section class="section" id="s03">
+        <div class="sec-head">
+          <div class="sec-num">03</div>
+          <div>
+            <h2>收车：看车、算价、谈判、写车况</h2>
+            <p class="sec-sub">离钱最近的一段。AI 做四件事：清单、算账、演练、成文。</p>
+          </div>
+        </div>
+
+        <p class="lead-p">收车是车商利润的起点，也是 AI 最容易帮上忙的地方——因为这一段有大量"结构化的重复动作"：问同样的问题、算同样的成本、应对同样的拒绝。这些都适合交给 AI 打初稿，你来拍板。</p>
+
+        <h3>四个环节，AI 各做什么</h3>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>环节</th><th>AI 做什么</th><th>人必须做什么</th><th>用哪条提示词</th></tr></thead>
+            <tbody>
+              <tr><td>看车前</td><td>生成现场追问清单、必查部位、复检项</td><td>带纸质清单去现场，实际看</td><td>P04、P05</td></tr>
+              <tr><td>算价</td><td>列出完整成本公式，给三条报价线</td><td>核对整备、资金成本、周转天数假设</td><td>P02</td></tr>
+              <tr><td>谈判</td><td>扮演卖家拒绝你，指出你哪句话让出了主动权</td><td>决定最终出价，签字</td><td>P03</td></tr>
+              <tr><td>入库</td><td>写成挂牌车况描述、整备清单</td><td>核里程、过户次数、结构件三项</td><td>P01</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>操作步骤（以"看一台 2019 款宝马 3 系"为例）</h3>
+        <ol class="steps">
+          <li>打开第 08 节的 <a href="#s08">P04 看车追问清单</a>，把车型年款、卖家描述填进去，生成 A4 清单，打印带着走。</li>
+          <li>现场看完，把看到的情况（补漆位置、轮胎、内饰、发动机舱痕迹）用语音转文字记下来，回店贴进 <a href="#s08">P05</a>，让它分"疑点 / 依据 / 复检项"。</li>
+          <li>把收车价、整备预算、周转天数贴进 <a href="#s08">P02</a>，拿到"可接受最高收车价"和三条报价线。</li>
+          <li>出价前用 <a href="#s08">P03</a> 演练一轮，重点看它指出你哪句话把主动权让出去了。</li>
+          <li>收进来后，用 <a href="#s08">P01</a> 生成挂牌车况描述，人工改一遍再上架。</li>
+        </ol>
+
+        <div class="callout warn">
+          <span class="tag">红线</span>
+          <p>AI 不知道你现场看到的漆膜仪读数、螺丝拆卸痕迹、内饰异味。所有涉及<strong>事故、水泡、火烧</strong>的结论，必须由有资质的人复检，AI 的输出只能作为"检查清单"，不能作为"检测报告"。市面上的估价工具（如各类二手车估价平台）给出的只是参考区间，不能作为成交依据。</p>
+        </div>
+
+        <div class="callout ok">
+          <span class="tag">这一段怎么验收</span>
+          <p>跑两周之后看三个数：<strong>单车看车时间有没有降</strong>、<strong>收车价与预估毛利的偏差有没有收窄</strong>、<strong>因车况误判返工的车有几台</strong>。只要有一台因为"信了 AI 的结论"而误收，这一段的用法就要改。</p>
+        </div>
+      </section>
+
+      <!-- ========== 04 ========== -->
+      <section class="section" id="s04">
+        <div class="sec-head">
+          <div class="sec-num">04</div>
+          <div>
+            <h2>卖车：一条车，出五条内容</h2>
+            <p class="sec-sub">课上说"先做营销"，因为这是最快见效的一段。这里给可执行的流水线。</p>
+          </div>
+        </div>
+
+        <p class="lead-p">课上的数据是：内容创作时间可以缩短 70% 以上。但对车商来说，重要的不是"省时间"，而是<strong>同样一台车，你能比别人多出几条内容、多几次被看见的机会</strong>。下面这条流水线，目标是一台车在 40 分钟内产出 5 条内容。</p>
+
+        <h3>内容矩阵：一台车 → 五条内容</h3>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>形式</th><th>时长 / 篇幅</th><th>核心任务</th><th>对应提示词</th></tr></thead>
+            <tbody>
+              <tr><td>钩子短视频</td><td>15 秒</td><td>只讲一个反差，把人停住</td><td>P08-1、P09</td></tr>
+              <tr><td>车况实拍</td><td>30 秒</td><td>证明"这台车我敢给你看"</td><td>P08-2</td></tr>
+              <tr><td>讲价视频</td><td>60 秒</td><td>说清贵在哪、便宜在哪</td><td>P08-3</td></tr>
+              <tr><td>图文海报</td><td>6 张图</td><td>私域转发、朋友圈</td><td>P08-4、P13</td></tr>
+              <tr><td>直播切片</td><td>30 秒</td><td>带留资话术，承接流量</td><td>P08-5</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>操作步骤（手机 + 剪映，40 分钟）</h3>
+        <ol class="steps">
+          <li><strong>拍 3 分钟素材。</strong>手机竖拍：绕车一圈（含补漆位置特写）、内饰、启动仪表、里程表、发动机舱。不用脚本，边走边说。</li>
+          <li><strong>剪映导入 → 智能字幕 → 套模板。</strong>先自动出字幕，再选一个竖版模板，把字幕字号调大。这一步不需要任何 AI 技巧。</li>
+          <li><strong>把字幕文字复制给 AI，改开头。</strong>用 <a href="#s08">P09</a> 要 8 个开头版本，选 1 个替换前 3 秒台词，重录一句口播即可。</li>
+          <li><strong>补齐其余四条。</strong>把车况信息贴进 <a href="#s08">P08</a>，一次性拿到 5 条脚本的结构，按需拍摄。</li>
+          <li><strong>发出去，24 小时后看两个数。</strong>3 秒完播率、评论区问价条数。这两个数决定下一条要不要沿用这个开头。</li>
+        </ol>
+
+        <div class="callout info">
+          <span class="tag">直播怎么做</span>
+          <p>开播前用 <a href="#s08">P11</a> 生成 60 分钟流程表，打印一页放手边；下播后把录屏转成文字，贴进 <a href="#s08">P10</a>，让它找出"最值钱的那 1 分钟断点"——通常是你讲了 3 分钟参数，观众已经划走了。下一场只改这一个地方，效果最明显。</p>
+        </div>
+
+        <div class="callout warn">
+          <span class="tag">平台与合规</span>
+          <p>各平台对"低价引流""虚假承诺""绝对化用语"都有明确限制。AI 生成的文案<strong>必须人工过一遍再发</strong>：不能出现"绝对无事故""全网最低""保证过户"，不要用虚假限时制造紧迫。发布责任在门店，不在工具。</p>
+        </div>
+      </section>
+
+      <!-- ========== 05 ========== -->
+      <section class="section" id="s05">
+        <div class="sec-head">
+          <div class="sec-num">05</div>
+          <div>
+            <h2>线索：分级、首响、七次跟进</h2>
+            <p class="sec-sub">同样的线索量，成交差在"谁先打、怎么跟"。</p>
+          </div>
+        </div>
+
+        <p class="lead-p">课上说得很直白：AI 销售辅助的四个落地场景是——自动跟进、线索筛选、实时话术推荐、流程分析。落到车商店里，不用买系统，先把<strong>规则</strong>和<strong>话术</strong>用 AI 写清楚，就能立刻见效。</p>
+
+        <h3>第一步：把线索分级写成规则</h3>
+        <p>别再用"感觉这个客户挺有戏"。用 <a href="#s08">P15</a> 生成一份可观察、可执行的分级规则，参考口径如下（可按你店里改）：</p>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>等级</th><th>判定条件（必须可观察）</th><th>24 小时内动作</th><th>谁负责</th></tr></thead>
+            <tbody>
+              <tr><td><strong>A</strong></td><td>预算明确 + 已确认车型 + 能说出到店时间</td><td>电话 + 微信双通道，约具体时段</td><td>主管跟进</td></tr>
+              <tr><td><strong>B</strong></td><td>预算明确，但车型还在比较（2–3 台）</td><td>发对比表 + 一条实拍视频，约试驾</td><td>销售本人</td></tr>
+              <tr><td><strong>C</strong></td><td>只问价、不说到店、不给预算</td><td>一条报价 + 一个具体信息，进入每周触达</td><td>销售本人</td></tr>
+              <tr><td><strong>D</strong></td><td>同行、无效、明显异地且不成交</td><td>不占用时间，归档</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>第二步：每天早上 10 分钟，让 AI 排今天的电话顺序</h3>
+        <ol class="steps">
+          <li>把昨天的聊天记录、通话要点，原样复制（不用整理，乱一点没关系），打到 AI 里。</li>
+          <li>贴一句指令："按我们的分级规则给每条线索定级，说明依据；输出'今天必须先打的 5 个'，并给每个人一句话理由。"</li>
+          <li>销售照着这 5 个打。打完回来把结果补一句进去，第二天顺序会自动变准。</li>
+          <li>周五用 <a href="#s08">P24</a> 把这周记录变成店长周报，标出"谁没记、缺什么"。</li>
+        </ol>
+
+        <h3>第三步：把话术固化成"三分钟首响 + 七次跟进"</h3>
+        <ul>
+          <li><a href="#s08">P16</a>：客户留言后 3 分钟内必须回，话术由 AI 现生成，三句以内，第一句就要回答他真正关心的（价格 / 车况 / 能不能贷款）。</li>
+          <li><a href="#s08">P17</a>：跨 30 天的 7 次跟进节奏，第 4 次之后必须带新信息（新车源、降价、行情），不能只问"考虑得怎么样"。</li>
+          <li><a href="#s08">P18</a>：异议四件套——价格、车况、家人反对、再等等，先判断真实顾虑，再给共情 / 数据 / 退一步三个版本。</li>
+          <li><a href="#s08">P19</a>：邀约三版——有具体理由、顺路、带置换评估，每个都要落到一个具体时间二选一，不许写"随时欢迎"。</li>
+        </ul>
+
+        <div class="callout warn">
+          <span class="tag">数据安全（这一段最容易出事）</span>
+          <p>不要把客户的<strong>手机号、身份证号、贷款流水、家庭住址</strong>贴进公开的 AI 工具。做分析时先打码：手机号写成 138****0001，姓名写"张先生"。需要完整信息的表格，放在本地或企业版工具里用。</p>
+        </div>
+
+        <div class="callout ok">
+          <span class="tag">这一段怎么验收</span>
+          <p>看两个数：<strong>首次响应时长</strong>（从留言到你回过去，目标 3 分钟内）和<strong>到店率</strong>。首响时长降不下来，后面所有话术都是白搭。</p>
+        </div>
+      </section>
+
+      <!-- ========== 06 ========== -->
+      <section class="section" id="s06">
+        <div class="sec-head">
+          <div class="sec-num">06</div>
+          <div>
+            <h2>库存与经营：让 AI 看懂你的表</h2>
+            <p class="sec-sub">不用学 BI 工具，Excel 复制粘贴就能问出结论。</p>
+          </div>
+        </div>
+
+        <p class="lead-p">车商手里的数据其实很全——收车价、在库天数、成交价、返佣，全在 Excel 里。问题是没人看。AI 的价值在这里很直接：<strong>它不替你决策，但它能在 30 秒内把"哪台车该动"排出来。</strong></p>
+
+        <h3>四件事，一张台账就能做</h3>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>要做的分析</th><th>你需要给的字段</th><th>AI 输出什么</th><th>提示词</th></tr></thead>
+            <tbody>
+              <tr><td>压库预警与处置</td><td>车型 / 收车价 / 收车日期 / 在库天数 / 挂牌价</td><td>最该处理的 5 台 + 每台 3 个处置方案 + 资金占用成本</td><td>P22</td></tr>
+              <tr><td>单车真实毛利</td><td>成交价 / 整备 / 资金成本 / 金融返佣 / 保险 / 精品 / 赠送</td><td>按毛利率排序的表 + "看着赚其实亏"的车</td><td>P23</td></tr>
+              <tr><td>收车偏好复盘</td><td>近 3 个月收车与结果（20–50 行）</td><td>主收 3 类 / 慎收 3 类 / 不碰 2 类</td><td>P06</td></tr>
+              <tr><td>销售周报</td><td>本周跟进记录原文</td><td>按人汇总 + 3 个下周必须解决的问题</td><td>P24</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>操作步骤</h3>
+        <ol class="steps">
+          <li>在 Excel 里选中台账（20–50 行就够，不用全量），复制。</li>
+          <li>粘贴到 AI，前面加一句："以下是我的库存台账，字段顺序是：车型 / 收车价 / 收车日期 / 在库天数 / 挂牌价。"</li>
+          <li>贴入 <a href="#s08">P22</a> 的完整指令，要求它"逐条写出计算公式"。</li>
+          <li>抽查 3 行，自己按公式算一遍。对得上，再拿去晨会用。</li>
+          <li>让它输出成表格格式，粘回 Excel，作为本周的"待处理清单"。</li>
+        </ol>
+
+        <div class="callout warn">
+          <span class="tag">必须知道</span>
+          <p>大模型做算术会出错，尤其是多行求和、百分比。所以本手册所有分析类提示词都要求它<strong>写出公式</strong>。凡是要进财务、进老板汇报的数字，必须自己复核或让财务复核一遍。<strong>AI 给结论，人给数字。</strong></p>
+        </div>
+
+        <div class="callout info">
+          <span class="tag">压库规则起步值</span>
+          <p>如果店里还没有规则，建议先用：<strong>在库 30 天＝黄色预警，45 天＝红色紧急，60 天以上＝必须处置。</strong>跑一个月后按你店的周转实际情况调整——这条规则本身就是可以问 AI 的："按我这三个月的周转数据，30/45 天这两个阈值合不合理？"</p>
+        </div>
+      </section>
+
+      <!-- ========== 07 ========== -->
+      <section class="section" id="s07">
+        <div class="sec-head">
+          <div class="sec-num">07</div>
+          <div>
+            <h2>门店 AI 工作台：把一店的事装进一页</h2>
+            <p class="sec-sub">一页纸看店的活例子，讲解时可投屏，也可直接发给学员自己点。</p>
+          </div>
+        </div>
+
+        <p class="lead-p">前面六节是"单点工具"。工作台是另一件事：<strong>把客户、库存、跟进、业绩和内容能力，收进每天打开就能看的一页。</strong>下面这个演示版就是一个二手车店的真实样例，讲解时可以直接投屏，也可以发给学员自己点。</p>
+
+        <div class="callout info">
+          <span class="tag">演示案例（可直接访问）</span>
+          <p><a href="https://usedcar-workbench-56330.app.workbuddy.host/" target="_blank" rel="noopener">https://usedcar-workbench-56330.app.workbuddy.host/</a></p>
+          <p style="margin-top:6px">二手车经销商 AI 工作台 · 演示版。数据是示例数据，用来演示"一页纸看店"长什么样。手机上可以打开，讲解时建议用投屏看第一屏。</p>
+        </div>
+
+        <h3>这一页上有七个区块</h3>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>区块</th><th>里面是什么</th><th>谁看</th></tr></thead>
+            <tbody>
+              <tr class="srow" data-search="指标 在库台数 压库 成交 收车 第一屏"><td><strong>顶部四个指标</strong></td><td>在库台数、压库超 30 天、累计成交（客）、本月收车</td><td>老板，每天开门第一眼</td></tr>
+              <tr class="srow" data-search="今日要关注的事 AI 推荐 预警 未跟进 压库"><td><strong>今日要关注的事</strong></td><td>AI 推荐的待办：哪台车压库到紧急（如"宝马 3 系 2019 款压库 62 天，建议降价促成交"）、哪个客户超期未跟进（如"张先生归属小王，已 10 天未跟进，意向 A"）</td><td>老板 + 店长</td></tr>
+              <tr class="srow" data-search="客户档案 姓名 手机 来源 关注车型 预算 意向 归属"><td><strong>客户档案</strong></td><td>姓名 / 手机 / 来源 / 关注车型 / 预算 / 意向等级 / 状态 / 归属销售。核心一句：客户归公司所有，销售离职也带不走——防飞单的基础</td><td>店长</td></tr>
+              <tr class="srow" data-search="跟进记录 客户 销售 日期 方式 要点 意向"><td><strong>跟进记录</strong></td><td>客户 / 销售 / 日期 / 方式 / 沟通要点 / 意向 / 是否成交</td><td>销售填写，店长抽查</td></tr>
+              <tr class="srow" data-search="库存台账 收车价 在库天数 预警 红黄绿"><td><strong>库存台账</strong></td><td>车型 / 收车价 / 状态 / 收车日期 / 入库天数 / 预警 / 归属。红＝压库超 45 天紧急，黄＝超 30 天预警，绿＝正常，天数与预警自动算</td><td>老板 + 收购</td></tr>
+              <tr class="srow" data-search="销售业绩 排行 成交 在库 提成"><td><strong>销售业绩排行</strong></td><td>按"成交客户数 + 在库归属"自动统计，按人排名；完整提成核算放到第二阶段接财务数据</td><td>店长 + 老板</td></tr>
+              <tr class="srow" data-search="AI 智能体能力墙 分身 短视频 直播 话术 选题 结构"><td><strong>AI 智能体能力墙</strong></td><td>围绕二手车新媒体的智能体矩阵，点卡片放大看界面。页面官方描述覆盖：爆款灵感、直播分析、开头钩子、话术拆解、跨行业借鉴、结构拆解、老朱 AI 分身、IP 思维克隆；示例中还包含「镜见 · 短视频结构分析」「二手车直播陪练大师」「人物现场档案室」</td><td>内容岗</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>三句话，讲给不同的人听</h3>
+        <div class="twocol">
+          <div class="panel">
+            <h4>对老板说</h4>
+            <p>你每天只看第一屏的"今日要关注的事"，5 分钟就知道今天该动哪台车、该催哪个客户。剩下六个区块是给团队用的。</p>
+          </div>
+          <div class="panel">
+            <h4>对店长说</h4>
+            <p>看库存台账的红黄绿、看业绩排行：谁的车压着、谁没跟进，一屏就清楚。开会不用再翻三个 Excel。</p>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:12px">
+          <h4>对销售说</h4>
+          <p>你只填两块——客户和跟进。填了系统就会帮你提醒，不填就没人知道你在忙什么。填表的时间，比你月底解释为什么没成交要少得多。</p>
+        </div>
+
+        <h3>怎么复制到自己店（三步，别一次做完）</h3>
+        <ol class="steps">
+          <li><strong>先有台账。</strong>把现有 Excel 按上面七个区块的字段整理成两张表：客户表、库存表。字段不齐没关系，先跑起来，缺的字段后面补。</li>
+          <li><strong>定规则。</strong>压库多少天算黄、多少天算红；客户几天没跟进算异常。<strong>起步值：30 天黄 / 45 天红 / 客户 2 天未跟进提醒</strong>，跑一个月再调。</li>
+          <li><strong>定责任人。</strong>一个人，每天下班前 10 分钟更新；老板每天开门看第一屏。没有这一个责任人，再好的工作台两周后就没人填了。</li>
+        </ol>
+
+        <div class="callout warn">
+          <span class="tag">示例的边界，讲课时要说清楚</span>
+          <p>这是<strong>演示版</strong>：预警是按你手工录入的数据算出来的规则，不是自动抓取；第二阶段接业务系统 / API 后才会自动推送。不要拿演示版当正式经营系统用——先在 1 家店跑 30 天，验证"老板每天真的会看"，再谈复制到其他店。</p>
+        </div>
+      </section>
+
+      <!-- ========== 08 ========== -->
+      <section class="section" id="s08">
+        <div class="sec-head">
+          <div class="sec-num">08</div>
+          <div>
+            <h2>提示词库：31 条，复制就能用</h2>
+            <p class="sec-sub">按五个场景分组。方括号【】里换成你店里的真实信息，其余照抄。</p>
+          </div>
+        </div>
+
+        <div class="callout info">
+          <span class="tag">使用方法</span>
+          <p>点卡片右上角的"复制"，粘到任意通用对话工具里（DeepSeek、豆包、元宝、千问等）。<strong>先把【】填完再发</strong>，否则 AI 会自己编。每张卡片下面的绿字是验收标准——达不到就重新问，别凑合。</p>
+        </div>
+
+        <div class="chips" id="catChips" role="group" aria-label="提示词分类筛选">
+          <button class="chip is-active" type="button" data-cat="all">全部 <b>31</b></button>
+          <button class="chip" type="button" data-cat="收车定价">收车定价 <b>6</b></button>
+          <button class="chip" type="button" data-cat="内容流量">内容流量 <b>8</b></button>
+          <button class="chip" type="button" data-cat="线索成交">线索成交 <b>7</b></button>
+          <button class="chip" type="button" data-cat="经营分析">经营分析 <b>6</b></button>
+          <button class="chip" type="button" data-cat="团队制度">团队制度 <b>4</b></button>
+        </div>
+
+        <div class="empty" id="emptyState">没有匹配的提示词。换个关键词试试，或点"全部"恢复。</div>
+
+        <h3>A · 收车定价</h3>
+
+        <article class="pcard" data-cat="收车定价" data-search="P01 车况描述 挂牌 文案 上架 卖点 瑕疵">
+          <div class="pcard-head">
+            <span class="pid">P01</span>
+            <h4>车况描述生成（挂牌用）</h4>
+            <span class="pmeta">收车入库 · 上架前</span>
+          </div>
+          <pre class="prompt">你是二手车门店的资深车况文案。请根据我提供的检测信息，写一段可直接用于挂牌的车况描述。
+
+检测信息：
+- 车型 / 年款：【】
+- 上牌时间：【】；表显里程：【】万公里；过户次数：【】
+- 车况：结构件【无异常 / 已更换】；外观【几处补漆，位置】；内饰【】
+- 已整备项目：【】
+- 目标客户：【家用代步 / 新手第一台 / 商务接待】
+- 本地同款挂牌价区间：【】
+
+要求：
+1. 先写一句 15 字以内的卖点标题；
+2. 正文 120–180 字，口语化，不夸大；
+3. 主动写出已知瑕疵，不隐瞒；
+4. 不写"绝对无事故""百分百原版漆"这类无法证明的承诺；
+5. 不确定的信息写【待确认】，不要编造保养记录。</pre>
+          <div class="pcard-foot">
+            <button class="btn copy-btn" type="button">复制提示词</button>
+            <span class="check">验收：念给店里老销售听，他不用改就能发</span>
+          </div>
+        </article>
+
+        <article class="pcard" data-cat="收车定价" data-search="P02 收车成本 报价区间 毛利 资金成本 周转天数">
+          <div class="pcard-head">
+            <span class="pid">P02</span>
+            <h4>收车成本与三条报价线</h4>
+            <span class="pmeta">出价前 · 算账</span>
+          </div>
+          <pre class="prompt">你是二手车收购核算员。帮我算这台车的收车成本与三条报价线。
+
+已知信息：
+- 车型 / 年款：【】
+- 本地车商挂牌均价【】万；本地同款在售【】台
+- 预计整备【】元；过户与检测【】元
+- 资金成本按月息【】%、预计周转【】天计
+- 目标毛利率【】%
+
+要求：
+1. 逐项列出完整成本公式，最后给出"可接受最高收车价"；
+2. 给出保守 / 标准 / 激进三条报价线，并写明各自对应的周转天数假设；
+3. 指出这个算法里最脆弱的两个假设，以及假设错了会亏多少；
+4. 只给区间建议，不做最终定价承诺。</pre>
+          <div class="pcard-foot">
+            <button class="btn copy-btn" type="button">复制提示词</button>
+            <span class="check">验收：公式抄进表格，自己抽查 3 个数字对得上</span>
+          </div>
+        </article>
+
+        <article class="pcard" data-cat="收车定价" data-search="P03 议价 谈判 演练 卖家 拒绝 主动权">
+          <div class="pcard-head">
+            <span class="pid">P03</span>
+            <h4>议价演练（让 AI 扮演卖家）</h4>
+            <span class="pmeta">出价前 · 谈判准备</span>
+          </div>
+          <pre class="prompt">你现在是要卖车给我的车主。车型【】，心理价【】万，卖车原因【换车 / 急用钱 / 闲置】。
+
+请分两轮回答：
+
+第一轮：用最典型的 3 句话拒绝我的报价，分别是
+"我再问问别家"、"网上都卖这个价"、"我不急着卖"的口吻。
+
+第二轮：逐句点评我刚才说的话（我说的是：【】），
+指出哪一句把谈判主动权让出去了，并给出替代表达。
+
+要求：站在卖家立场说真话，不要帮我说话；每条不超过 2 句。</pre>
+          <div class="pcard-foot">
+            <button class="btn copy-btn" type="button">复制提示词</button>
+            <span class="check">验收：第二轮的建议能直接背下来用</span>
+          </div>
+        </article>
+
+        <article class="pcard" data-cat="收车定价" data-search="P04 看车 追问清单 检测 部位 复检">
+          <div class="pcard-head">
+            <span class="pid">P04</span>
+            <h4>现场看车追问清单（A4 一页）</h4>
+            <span class="pmeta">看车前 · 打印带出去</span>
+          </div>
+          <pre class="prompt">你是 10 年经验的二手车检测顾问。我准备去看一台【车型 年款】，卖家描述为【】。
+
+请给我一份"现场 20 分钟看完"的清单：
+1. 必问卖家的 8 个问题，按"最容易暴露问题"的顺序排；
+2. 必查的 8 个部位，每个写清：看什么、正常长什么样、异常长什么样；
+3. 3 个当场不能下结论、必须复检的项目，以及去哪里复检；
+4. 一句既礼貌又能把价格压下来的话。
+
+要求：能打印成 A4 一页带走，不要长篇理论。</pre>
+          <div class="pcard-foot">
+            <button class="btn copy-btn" type="button">复制提示词</button>
+            <span class="check">验收：打印出来带着去现场，全程照着问</span>
+          </div>
+        </article>
+
+        <article class="pcard" data-cat="收车定价" data-search="P05 事故 水泡 火烧 风险 疑点 推测 证据">
+          <div class="pcard-head">
+            <span class="pid">P05</span>
+            <h4>事故 / 水泡 / 火烧疑点自检</h4>
+            <span class="pmeta">看车后 · 收车决策前</span>
+          </div>
+          <pre class="prompt">根据我提供的现场观察，判断这台车是否存在事故、水泡、火烧疑点，并给出复检建议。
+
+车况描述：【粘贴你的现场记录，越具体越好】
+
+要求：
+1. 分三类列出：疑点 / 依据 / 需要看什么才能排除；
+2. 严格区分"我看到的证据"和"你的推测"，推测必须标【推测】；
+3. 信息不足就直接说信息不足，不要为了给答案而补齐；
+4. 最后给一句结论：能不能收，取决于哪一项复检结果。
+
+注意：你输出的是检查清单，不是检测报告，不做车况定论。</pre>
+          <div class="pcard-foot">
+            <button class="btn copy-btn" type="button">复制提示词</button>
+            <span class="check">验收：所有【推测】项你自己都能复检一遍</span>
+          </div>
+        </article>
+
+        <article class="pcard" data-cat="收车定价" data-search="P06 收车偏好 复盘 周转 压库 主收 慎收">
+          <div class="pcard-head">
+            <span class="pid">P06</span>
+            <h4>收车偏好复盘（近 3 个月）</h4>
+            <span class="pmeta">月度复盘 · 收车会</span>
+          </div>
+          <pre class="prompt">你是门店经营分析师。以下是我近 3 个月收的车和结果，字段顺序是：
+车型 / 收车价 / 在库天数 / 是否成交 / 成交价
+
+【粘贴 20–50 行】
+
+请分析：
+1. 哪 3 类车周转最快、毛利最好；哪 3 类车最容易压库；
+2. 我的收车偏好里最该改的一条，用数据说明；
+3. 给一份"下月收车清单"：主收 3 类、慎收 3 类、不碰 2 类；
+4. 逐条写出你用的计算公式，方便我复核。</pre>
+          <div class="pcard-foot">
+            <button class="btn copy-btn" type="button">复制提示词</button>
+            <span class="check">验收：能直接在收车会上用，公式可复核</span>
+          </div>
+        </article>
+
+        <h3>B · 内容流量</h3>
+
+        <article class="pcard" data-cat="内容流量" data-search="P07 选题 30 条 本地化 抖音 视频号 拍摄">
+          <div class="pcard-head">
+            <span class="pid">P07</span>
+            <h4>本地化选题 30 条</h4>
+            <span class="pmeta">内容规划 · 排两周拍摄</span>
+          </div>
+          <pre class="prompt">你是二手车门店的新媒体编导。门店在【城市 / 区】，主营【价位段 / 车型】。
+
+请给我 30 条短视频选题，要求：
+1. 分四类：本地化（本地路况、限行、牌照、停车）、价格冲突（同款车为什么差 2 万）、
+   信任（验车过程、真实车况）、剧情（客户砍价、置换故事）；
+2. 每条写清"开头第一句"和"这条要证明什么"；
+3. 至少 10 条能用一台车一天拍完；
+4. 不要需要豪车、场地、演员的选题。
+
+最后按"拍摄成本从低到高"排序。</pre>
+          <div class="pcard-foot">
+            <button class="btn copy-btn" type="button">复制提示词</button>
+            <span class="check">验收：能直接排成两周拍摄计划，不需要再改</span>
+          </div>
+        </article>
+
+        <article class="pcard" data-cat="内容流量" data-search="P08 一台车 五条 脚本 15秒 30秒 60秒 图文 切片">
+          <div class="pcard-head">
+            <span class="pid">P08</span>
+            <h4>一台车，五条内容脚本</h4>
+            <span class="pmeta">核心流水线 · 每天用</span>
+          </div>
+          <pre class="prompt">这台车的信息如下：
+【粘贴 P01 生成的车况描述】
+
+请为同一台车写 5 条内容脚本：
+1. 15 秒钩子版：只讲一个反差，开头 3 秒必须让人停住；
+2. 30 秒车况实拍版：跟镜头走，标出每个镜头拍什么；
+3. 60 秒讲价版：讲清这台车贵在哪、便宜在哪；
+4. 图文版：6 张图，每张配一句文案；
+5. 直播切片版：30 秒，结尾带留资话术。
+
+每条都要写：开头 3 秒台词、镜头顺序、结尾一句引导。
+全部用口语，不出现"尊享""臻选""一站式"这类词。</pre>
+          <div class="pcard-foot">
+            <button class="btn copy-btn" type="button">复制提示词</button>
+            <span class="check">验收：拿手机照着拍，台词不用改</span>
+          </div>
+        </article>
+
+        <article class="pcard" data-cat="内容流量" data-search="P09 开头 三秒 钩子 改写 完播率">
+          <div class="pcard-head">
+            <span class="pid">P09</span>
+            <h4>开头 3 秒改造（8 个版本）</h4>
+            <span class="pmeta">发布前 · 提完播率</span>
+          </div>
+          <pre class="prompt">以下是我视频的开头文字稿：【粘贴】
+
+请做三件事：
+1. 判断这个开头能不能让人停住，指出它属于哪类问题
+   （太慢 / 太客气 / 没信息 / 没冲突 / 像广告）；
+2. 给 8 个改写版本，每条不超过 20 字，
+   并标注用了哪种手法（数字、反问、对比、场景、损失）；
+3. 指出哪一个版本最可能违规（夸大、绝对化、低价引流），并给出合规替代。
+
+不要解释修辞理论，直接给能念的句子。</pre>
+          <div class="pcard-foot">
+            <button class="btn copy-btn" type="button">复制提示词</button>
+            <span class="check">验收：选 1 条直接录，重录不超过两次</span>
+          </div>
+        </article>
+
+        <article class="pcard" data-cat="内容流量" data-search="P10 直播 复盘 断点 文字稿 划走">
+          <div class="pcard-head">
+            <span class="pid">P10</span>
+            <h4>直播复盘：找最值钱的断点</h4>
+            <span class="pmeta">下播后 · 30 分钟</span>
+          </div>
+          <pre class="prompt">以下是我一场直播的文字稿（带时间戳更好）：【粘贴】
+
+请做一份复盘：
+1. 找出本场最值钱的 1 个断点——观众最可能划走的那 1 分钟，
+   给出原文和原因；
+2. 列出 3 个"说了但没证据"的地方（如说车况好却没有画面支撑）；
+3. 给出下一场的 5 条具体修改：改哪句话、改成什么；
+4. 标出所有可能违反平台规则的话术。
+
+要求：引用原文，不要泛泛而谈。信息不足的地方写【待补录屏】。</pre>
+          <div class="pcard-foot">
+            <button class="btn copy-btn" type="button">复制提示词</button>
+            <span class="check">验收：下一场开播前，5 条修改全部落实</span>
+          </div>
+        </article>
+
+        <article class="pcard" data-cat="内容流量" data-search="P11 直播 流程 60 分钟 分段 留资 话术">
+          <div class="pcard-head">
+            <span class="pid">P11</span>
+            <h4>60 分钟直播流程表</h4>
+            <span class="pmeta">开播前 · 打印一页</span>
+          </div>
+          <pre class="prompt">我要播一场【车型 / 主题】专场，时长 60 分钟，观众是【本地买车人】。
+
+请给一份流程表：
+1. 分 6 个 10 分钟段，每段写：目标、说什么、做什么动作
+   （看车 / 试驾 / 答疑 / 留资）；
+2. 每段给 3 句话术：1 句留人、1 句逼单、1 句引导评论；
+3. 设计 3 次留资钩子，要求不违规、不承诺车况；
+4. 列出 5 个必须提前准备好的道具或资料。
+
+输出成表格，一页能打完。</pre>
+          <div class="pcard-foot">
+            <button class="btn copy-btn" type="button">复制提示词</button>
+            <span class="check">验收：打印一页，开播前对一遍流程不慌</span>
+          </div>
+        </article>
+
+        <article class="pcard" data-cat="内容流量" data-search="P12 朋友圈 一周 日历 内容 私域 群发">
+          <div class="pcard-head">
+            <span class="pid">P12</span>
+            <h4>朋友圈 7 天内容日历（14 条）</h4>
+            <span class="pmeta">私域运营 · 每周一次</span>
+          </div>
+          <pre class="prompt">帮我排一周朋友圈，每天 2 条，共 14 条。
+
+门店信息：城市【】；主营【】；在售车辆【】台；本月活动【】
+
+要求：
+1. 每天一条"专业"（车况知识、避坑、行情），
+   一条"成交或日常"（交车、验车、客户故事）；
+2. 每条 60–100 字，口语，第一句就要有信息；
+3. 不刷屏式广告，不写"最后一天"这种假紧迫；
+4. 留 3 个位置给我填真实照片，标出建议拍什么。
+
+按"周一 → 周日"输出。</pre>
+          <div class="pcard-foot">
+            <button class="btn copy-btn" type="button">复制提示词</button>
+            <span class="check">验收：一周照着发，不用再想内容</span>
+          </div>
+        </article>
+
+        <article class="pcard" data-cat="内容流量" data-search="P13 海报 文案 主标题 卖点 朋友圈图">
+          <div class="pcard-head">
+            <span class="pid">P13</span>
+            <h4>车源海报文案（配图用）</h4>
+            <span class="pmeta">设计前 · 出文案</span>
+          </div>
+          <pre class="prompt">给这台车写一张海报上的文案，我拿去做图。
+
+车辆信息：【粘贴车况描述】
+
+请输出：
+1. 主标题 6–10 字，给 2 版；
+2. 副标题 15 字以内；
+3. 3 个卖点，每个 8 字以内，按客户最在意的顺序排；
+4. 一行价格区文案（写"XX 万起"或"到店谈"，不要编具体优惠）；
+5. 一行行动引导，含【门店地址】和【电话】占位符。
+
+所有文字都要短，海报上放得下。</pre>
+          <div class="pcard-foot">
+            <button class="btn copy-btn" type="button">复制提示词</button>
+            <span class="check">验收：直接贴进模板，字不超框</span>
+          </div>
+        </article>
+
+        <article class="pcard" data-cat="内容流量" data-search="P14 数字人 口播稿 改写 45秒 老板IP">
+          <div class="pcard-head">
+            <span class="pid">P14</span>
+            <h4>数字人口播稿改写</h4>
+            <span class="pmeta">老板 IP · 每天一条</span>
+          </div>
+          <pre class="prompt">把下面这段书面文案改成口播稿，我用数字人播：【粘贴】
+
+要求：
+1. 改成 45 秒（约 180 字），句子短，一句一个信息；
+2. 去掉书面词（"致力于""一站式""赋能"），换成车主听得懂的话；
+3. 标出 3 个需要重读的词；
+4. 数字人念不顺的地方单独列出来，每个给 2 个替代说法。
+
+不要加"大家好""欢迎关注"这类开场。</pre>
+          <div class="pcard-foot">
+            <button class="btn copy-btn" type="button">复制提示词</button>
+            <span class="check">验收：自己先念一遍，不磕巴再交给数字人</span>
+          </div>
+        </article>
+
+        <h3>C · 线索成交</h3>
+
+        <article class="pcard" data-cat="线索成交" data-search="P15 线索 分级 ABCD 规则 判定 责任">
+          <div class="pcard-head">
+            <span class="pid">P15</span>
+            <h4>线索分级规则（一次定好，长期用）</h4>
+            <span class="pmeta">制度建设 · 主管必做</span>
+          </div>
+          <pre class="prompt">你是门店销售主管。根据我们的业务，写一份线索分级规则。
+
+业务信息：主营【价位段】；线索来源【抖音 / 视频号 / 到店 / 转介绍 / 平台】；
+平均成交周期【】天；销售【】人。
+
+要求：
+1. 定义 A / B / C / D 四级，每级写清三件事：
+   "判定条件（必须可观察）+ 24 小时内动作 + 谁负责"；
+2. 给出 10 条易混淆案例，逐条判定等级并说明理由；
+3. 设计 5 个字段，让销售在微信里就能记（手机端友好）；
+4. 规则要能防止"销售把好线索藏着不打"。</pre>
+          <div class="pcard-foot">
+            <button class="btn copy-btn" type="button">复制提示词</button>
+            <span class="check">验收：5 个销售判同一批 20 条线索，分歧不超过 2 条</span>
+          </div>
+        </article>
+
+        <article class="pcard" data-cat="线索成交" data-search="P16 三分钟 首响 私信 回复 话术 抖音">
+          <div class="pcard-head">
+            <span class="pid">P16</span>
+            <h4>三分钟首响话术</h4>
+            <span class="pmeta">客户留言后 · 立刻用</span>
+          </div>
+          <pre class="prompt">客户刚在【抖音 / 视频号】留言：【粘贴客户原话】，问的是【车型】。
+
+请给我 3 条首次回复（微信或私信），要求：
+1. 三句以内，第一句直接回应他真正关心的（价格 / 车况 / 能不能贷款）；
+2. 给一个具体信息（在售车型、里程、可看车时间），不要空转；
+3. 结尾用"二选一"式提问，不要问"您还有别的需求吗"；
+4. 不用"亲""老板"这类称呼，不承诺车况，不承诺价格。
+
+三个版本分别对应：只问价、在比较、想贷款。</pre>
+          <div class="pcard-foot">
+            <button class="btn copy-btn" type="button">复制提示词</button>
+            <span class="check">验收：发出去后，客户回复率高于你现有话术</span>
+          </div>
+        </article>
+
+        <article class="pcard" data-cat="线索成交" data-search="P17 七次 跟进 节奏 30 天 新信息 放手">
+          <div class="pcard-head">
+            <span class="pid">P17</span>
+            <h4>七次跟进节奏（跨 30 天）</h4>
+            <span class="pmeta">未成交客户 · 长期跟进</span>
+          </div>
+          <pre class="prompt">客户情况：【来源 / 关注车型 / 预算 / 已沟通内容 / 没成交的原因】
+
+请设计 7 次跟进（跨 30 天）：
+1. 每次写清：第几天、什么渠道、发什么（给 2–3 句可直接复制的）、目的是什么；
+2. 第 4 次之后必须带新信息（新车源、降价、行情变化），
+   不能只问"考虑得怎么样"；
+3. 标出 2 个"该放手"的信号，别让销售一直耗着；
+4. 标注哪些内容不适合发（太频繁、太促销）。</pre>
+          <div class="pcard-foot">
+            <button class="btn copy-btn" type="button">复制提示词</button>
+            <span class="check">验收：销售照着发，不用自己想词</span>
+          </div>
+        </article>
+
+        <article class="pcard" data-cat="线索成交" data-search="P18 异议 处理 太贵 再看看 车况 家人 不同意">
+          <div class="pcard-head">
+            <span class="pid">P18</span>
+            <h4>异议处理四件套</h4>
+            <span class="pmeta">接待与微信都用</span>
+          </div>
+          <pre class="prompt">客户说：【"太贵了" / "我再看看" / "车况不放心" / "家里不同意"】——按我选的那条来。
+
+请给：
+1. 这句话背后的真实顾虑，给 3 种可能，并说明怎么用一句话验证是哪一种；
+2. 3 个回应版本：共情版、数据版、退一步版；
+3. 每个版本后面接一个问题，把话头交回客户；
+4. 明确哪些话绝对不能说（贬低客户、承诺车况、承诺贷款一定批）。
+
+要求：话术要短，能直接背；不要"您的心情我完全理解"这种空话。</pre>
+          <div class="pcard-foot">
+            <button class="btn copy-btn" type="button">复制提示词</button>
+            <span class="check">验收：店里最弱的销售也能照着用</span>
+          </div>
+        </article>
+
+        <article class="pcard" data-cat="线索成交" data-search="P19 邀约 到店 试驾 二选一 时间">
+          <div class="pcard-head">
+            <span class="pid">P19</span>
+            <h4>到店 / 试驾邀约三版</h4>
+            <span class="pmeta">线上聊完 · 约到店</span>
+          </div>
+          <pre class="prompt">客户在【微信 / 电话】里已经问过价，但没到店。
+已知信息：【车型 / 客户住哪个区 / 有没有车置换 / 预算】
+
+请给 3 个邀约版本：
+1. 有具体理由版（这台车今天刚整备完 / 有另一位客户也在看）；
+2. 顺路版（结合他所在区域，说清怎么走）；
+3. 置换版（带旧车评估，给一个评估需要的时间）。
+
+每个版本三句以内，必须含一个明确时间二选一。
+不写"随时欢迎""您方便的时候过来"。</pre>
+          <div class="pcard-foot">
+            <button class="btn copy-btn" type="button">复制提示词</button>
+            <span class="check">验收：发出后能约到具体日期和时间</span>
+          </div>
+        </article>
+
+        <article class="pcard" data-cat="线索成交" data-search="P20 置换 金融 方案 首付 月供 返佣">
+          <div class="pcard-head">
+            <span class="pid">P20</span>
+            <h4>置换 + 金融组合方案</h4>
+            <span class="pmeta">高客单成交 · 组合报价</span>
+          </div>
+          <pre class="prompt">客户情况：旧车【车型 / 年份 / 里程 / 心理价】；
+想买【车源 / 预算 / 首付能力】。
+
+请给一套方案：
+1. 旧车处置三条路径（门店收 / 寄卖 / 帮卖），各自优缺点和对客户的好处；
+2. 金融方案 2 套（低首付 / 低月供），写清月供算法与所需资料；
+3. 用 5 句话把"置换 + 金融"讲成客户听得懂的一件事；
+4. 列出必须由人核对的 4 项：利率、手续费、保险、提前还款条款。
+
+注意：方案只是沟通框架，最终以金融机构审批和合同为准。</pre>
+          <div class="pcard-foot">
+            <button class="btn copy-btn" type="button">复制提示词</button>
+            <span class="check">验收：金融条款逐条与合同核对一致后才敢报给客户</span>
+          </div>
+        </article>
+
+        <article class="pcard" data-cat="线索成交" data-search="P21 老客户 激活 转介绍 回访 群发">
+          <div class="pcard-head">
+            <span class="pid">P21</span>
+            <h4>老客户激活与转介绍</h4>
+            <span class="pmeta">低成本获客 · 每季度一次</span>
+          </div>
+          <pre class="prompt">我有【N】位 12 个月内成交的客户，车型分布：【】。
+
+请设计一次低成本激活：
+1. 分 3 组（同车型 / 同价位 / 同用途），每组一条群发文案
+   （80 字内，不像广告）；
+2. 给 2 个转介绍钩子，不违规、不承诺返现；
+3. 设计 5 个电话回访问题，能问出"想换车 / 想卖车"的信号；
+4. 标出不建议群发的内容（太促销、太频繁）。
+
+要求：文案读起来像人发的，不像系统推送。</pre>
+          <div class="pcard-foot">
+            <button class="btn copy-btn" type="button">复制提示词</button>
+            <span class="check">验收：发完一周内能收到有效回复</span>
+          </div>
+        </article>
+
+        <h3>D · 经营分析</h3>
+
+        <article class="pcard" data-cat="经营分析" data-search="P22 压库 处置 库存 资金占用 降价 换渠道">
+          <div class="pcard-head">
+            <span class="pid">P22</span>
+            <h4>压库预警与处置建议</h4>
+            <span class="pmeta">晨会前 · 每周一次</span>
+          </div>
+          <pre class="prompt">以下是我的库存台账，字段顺序：车型 / 收车价 / 收车日期 / 在库天数 / 挂牌价 / 本地同款在售数。
+
+【粘贴 20–50 行】
+
+请：
+1. 按"压库天数 × 资金成本 × 同款在售数量"排出最该处理的 5 台；
+2. 每台给 3 个处置方案（降多少、换渠道、整备后重挂），写清各自代价；
+3. 算出如果都不动，未来 30 天的资金占用成本，写出公式；
+4. 给我一句能在晨会上直接说的结论，不超过 40 字。
+
+不确定的增长率或行情，标【待确认】，不要编。</pre>
+          <div class="pcard-foot">
+            <button class="btn copy-btn" type="button">复制提示词</button>
+            <span class="check">验收：晨会能落成 3 个具体动作，责任人明确</span>
+          </div>
+        </article>
+
+        <article class="pcard" data-cat="经营分析" data-search="P23 毛利 核算 单车 返佣 保险 精品 资金成本">
+          <div class="pcard-head">
+            <span class="pid">P23</span>
+            <h4>单车真实毛利核算</h4>
+            <span class="pmeta">月度核算 · 和财务一起看</span>
+          </div>
+          <pre class="prompt">帮我核算这批车的真实毛利。数据字段：
+车型 / 收车价 / 整备 / 过户检测 / 在库天数 / 成交价 /
+金融返佣 / 保险返佣 / 精品 / 赠送项目 / 资金成本率
+
+【粘贴数据】
+
+要求：
+1. 逐台算出"车价差 + 返佣 + 精品 − 整备 − 资金成本 − 赠送成本"；
+2. 输出一张表，按毛利率从高到低排；
+3. 指出哪几台是"看着赚、其实亏"的，说明原因；
+4. 写出完整公式，方便我和财务复核。</pre>
+          <div class="pcard-foot">
+            <button class="btn copy-btn" type="button">复制提示词</button>
+            <span class="check">验收：跟财务对一遍，差额能解释清楚</span>
+          </div>
+        </article>
+
+        <article class="pcard" data-cat="经营分析" data-search="P24 周报 汇总 销售 记录 缺失 店长">
+          <div class="pcard-head">
+            <span class="pid">P24</span>
+            <h4>销售周报自动汇总</h4>
+            <span class="pmeta">周五下午 · 给店长</span>
+          </div>
+          <pre class="prompt">以下是本周销售的跟进记录，原文粘贴，格式乱没关系：【粘贴】
+
+请整理成店长周报：
+1. 一句话总结本周：发生了什么、卡在哪；
+2. 按人列出：新增线索 / 有效沟通 / 到店 / 成交 / 最大卡点；
+3. 列出 3 个"下周必须解决"的问题，每个配 1 个动作；
+4. 标出记录缺失的地方（谁没记、缺什么），不要替他们编。
+
+输出要短：店长 1 分钟能看完。</pre>
+          <div class="pcard-foot">
+            <button class="btn copy-btn" type="button">复制提示词</button>
+            <span class="check">验收：店长看 1 分钟就能开周会</span>
+          </div>
+        </article>
+
+        <article class="pcard" data-cat="经营分析" data-search="P25 晨会 15 分钟 模板 提问 数字">
+          <div class="pcard-head">
+            <span class="pid">P25</span>
+            <h4>15 分钟晨会模板</h4>
+            <span class="pmeta">每天 · 店长主持</span>
+          </div>
+          <pre class="prompt">帮我设计一个 15 分钟晨会模板，门店【N】人，每天开。
+
+要求：
+1. 按分钟切分：0–3 数据回顾 / 3–8 昨日复盘 / 8–13 今日目标 / 13–15 收尾；
+2. 每天只讲 3 个数字，写清是哪 3 个，为什么是这 3 个；
+3. 给 5 个提问句，让销售自己说问题，而不是店长训话；
+4. 设计一张"晨会卡"，内容能打印出来贴墙上。
+
+要求：三天内不超时，销售不抵触。</pre>
+          <div class="pcard-foot">
+            <button class="btn copy-btn" type="button">复制提示词</button>
+            <span class="check">验收：连开三天，不超时、不冷场</span>
+          </div>
+        </article>
+
+        <article class="pcard" data-cat="经营分析" data-search="P26 新人 带教 30 天 考核 陪练">
+          <div class="pcard-head">
+            <span class="pid">P26</span>
+            <h4>新人 30 天带教计划</h4>
+            <span class="pmeta">招人后 · 第一个月</span>
+          </div>
+          <pre class="prompt">我要带一个没做过二手车的新人，目标 30 天能独立接客户。
+
+请给一份带教计划：
+1. 按周分 4 段，每周：学什么、练什么、考什么、谁带；
+2. 每天 30 分钟的具体练习（背参数、模拟砍价、看车实拍、写车况）；
+3. 3 个考核节点与通过标准，必须是可观察的行为，不靠"感觉还行"；
+4. 用 AI 做他陪练的 5 个场景，每个场景写一句启动指令。
+
+要求：带教人是店长，不是专职培训师，每天最多花 30 分钟。</pre>
+          <div class="pcard-foot">
+            <button class="btn copy-btn" type="button">复制提示词</button>
+            <span class="check">验收：第 30 天他能独立完成一次完整接待</span>
+          </div>
+        </article>
+
+        <article class="pcard" data-cat="经营分析" data-search="P27 同城 竞品 对比 维度 打分 差异化">
+          <div class="pcard-head">
+            <span class="pid">P27</span>
+            <h4>同城竞品对比框架</h4>
+            <span class="pmeta">季度 · 找差异化</span>
+          </div>
+          <pre class="prompt">给我一份同城竞品门店对比框架，我自己去填。
+我的城市与定位：【】
+
+要求：
+1. 列出 8 个可观察维度：在售车型与价位带、内容更新频率、直播时长、
+   话术风格、金融方案、整备标准、交车仪式、评价口碑；
+2. 每个维度写"怎么看"（在哪看、看什么、记什么）；
+3. 设计一张 1–5 分的打分表；
+4. 指出 3 个"看得见但学不了"的项，避免我照抄。
+
+输出成表格，A4 一页。</pre>
+          <div class="pcard-foot">
+            <button class="btn copy-btn" type="button">复制提示词</button>
+            <span class="check">验收：一周内能填完，并得出 1 个差异化动作</span>
+          </div>
+        </article>
+
+        <h3>E · 团队制度</h3>
+
+        <article class="pcard" data-cat="团队制度" data-search="P28 客户 归属 防飞单 离职 交接 企业微信">
+          <div class="pcard-head">
+            <span class="pid">P28</span>
+            <h4>客户归属与防飞单规则</h4>
+            <span class="pmeta">一页纸制度 · 全员签字</span>
+          </div>
+          <pre class="prompt">帮我写一份"客户归属与防飞单"规则，一页纸，门店【N】人。
+
+要求：
+1. "客户归公司所有"要写具体：存在哪、谁能看、谁能改、怎么导出；
+2. 归属判定：新客 / 老客复购 / 转介绍 / 离职交接，各写一条；
+3. 3 个防飞单机制（企业微信、客户联系方式归属、跟进留痕）；
+4. 离职交接清单 7 项；
+5. 写清违规处理方式，但金额留【】由我填。
+
+语言要员工看得懂，不要写法规条文。</pre>
+          <div class="pcard-foot">
+            <button class="btn copy-btn" type="button">复制提示词</button>
+            <span class="check">验收：全员签字，一周内开始执行</span>
+          </div>
+        </article>
+
+        <article class="pcard" data-cat="团队制度" data-search="P29 AI 使用 规范 红线 隐私 可以交给 人审">
+          <div class="pcard-head">
+            <span class="pid">P29</span>
+            <h4>门店 AI 使用规范（A4 一页）</h4>
+            <span class="pmeta">制度 · 新人必读</span>
+          </div>
+          <pre class="prompt">帮我写一份门店 AI 使用规范，A4 一页。
+门店情况：【N】人，主要用【工具名】。
+
+要求：
+1. 分三栏："可以交给 AI""必须人审""绝对不上传"，
+   每栏举 5 个二手车场景的具体例子；
+2. 写清 3 条最容易出事的红线：
+   客户隐私、车况承诺、价格承诺；
+3. 给一份"发布前 4 问"检查清单；
+4. 用员工看得懂的话，不要写法规条文。</pre>
+          <div class="pcard-foot">
+            <button class="btn copy-btn" type="button">复制提示词</button>
+            <span class="check">验收：新人入职 10 分钟能看懂并复述</span>
+          </div>
+        </article>
+
+        <article class="pcard" data-cat="团队制度" data-search="P30 岗位 能力 清单 老板 店长 销售 收购 内容">
+          <div class="pcard-head">
+            <span class="pid">P30</span>
+            <h4>岗位 AI 能力清单（五个岗位）</h4>
+            <span class="pmeta">考核表 · 培训计划</span>
+          </div>
+          <pre class="prompt">帮我列出二手车门店 5 个岗位各自该会的 AI 动作：
+老板 / 店长 / 销售 / 收购 / 内容运营。
+
+要求：
+1. 每岗 3 个动作，写到"打开什么、做什么、交付什么"；
+2. 每岗标 1 个"不必学"的动作，避免全员学全套；
+3. 给一份 30 天掌握顺序：谁先学、谁后学、为什么；
+4. 每个动作配一个验收标准（可观察）。
+
+输出成表格，能直接当考核表用。</pre>
+          <div class="pcard-foot">
+            <button class="btn copy-btn" type="button">复制提示词</button>
+            <span class="check">验收：月底按这张表逐人打勾，不打人情分</span>
+          </div>
+        </article>
+
+        <article class="pcard" data-cat="团队制度" data-search="P31 一页纸 落地 计划 30 天 止损 预算">
+          <div class="pcard-head">
+            <span class="pid">P31</span>
+            <h4>一页纸 AI 落地计划</h4>
+            <span class="pmeta">老板专用 · 贴墙</span>
+          </div>
+          <pre class="prompt">根据我的情况，生成一页纸 AI 落地计划。
+情况：【门店规模 / 主营车型 / 当前最痛的一个问题 /
+能投入的人和每天时间 / 预算档位】
+
+要求：
+1. 只解决 1 个最痛的问题，写清为什么是它，不做什么；
+2. 30 天内 4 个动作：谁、做什么、什么时候、怎么验收；
+3. 需要买的工具不超过 2 个，费用写"以官网为准"，
+   并给出免费替代方案；
+4. 明确止损条件：出现什么情况就停，不要硬撑；
+5. 输出成 A4 一页，能打印贴墙。</pre>
+          <div class="pcard-foot">
+            <button class="btn copy-btn" type="button">复制提示词</button>
+            <span class="check">验收：一周后能对着它检查进度，而不是躺在抽屉里</span>
+          </div>
+        </article>
+      </section>
+
+      <!-- ========== 09 ========== -->
+      <section class="section" id="s09">
+        <div class="sec-head">
+          <div class="sec-num">09</div>
+          <div>
+            <h2>30 天落地计划：一家店，一件事</h2>
+            <p class="sec-sub">不追求"全面 AI 化"，只求第 30 天有 3 个数字变了。</p>
+          </div>
+        </div>
+
+        <p class="lead-p">课上说"小步试点，3 个月能看到 ROI"。3 个月太长，先把第一个 30 天跑完。<strong>一家店、一个问题、一个人负责</strong>——这是最容易成的配置。</p>
+
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>时间</th><th>做什么</th><th>谁负责</th><th>怎么验收</th></tr></thead>
+            <tbody>
+              <tr class="srow" data-search="第1周 台账 规则 工具 选型"><td>第 1 周<br><span class="muted">打地基</span></td><td>① 选 1 个通用对话工具，全员注册；② 把客户表和库存表按七个字段整理好；③ 定压库 30/45 天、客户 2 天未跟进的规则</td><td>老板 + 1 名骨干</td><td>两张表能用；规则写成一页纸贴出来</td></tr>
+              <tr class="srow" data-search="第2周 内容 短视频 流水线 一天"><td>第 2 周<br><span class="muted">跑内容</span></td><td>用 P08 跑"一台车五条内容"，一周出 10 条；每天记录 3 秒完播率</td><td>内容岗 / 店长</td><td>产出 10 条，形成一条能重复的流水线</td></tr>
+              <tr class="srow" data-search="第3周 线索 分级 首响 三分钟"><td>第 3 周<br><span class="muted">管线线索</span></td><td>落地线索分级规则；每天早会用 AI 排"今天先打的 5 个"；推行 3 分钟首响</td><td>销售主管</td><td>首响时长中位数进入 5 分钟内</td></tr>
+              <tr class="srow" data-search="第4周 库存 复盘 工作台 试运行"><td>第 4 周<br><span class="muted">看数据</span></td><td>用 P22 做第一次压库复盘会；把七个区块的表挂到工作台试运行</td><td>老板 + 店长</td><td>超 45 天库存台数下降；老板每天真的会看第一屏</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>第 30 天，只看这四个数</h3>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>指标</th><th>怎么算</th><th>起步目标（按自己基线定）</th></tr></thead>
+            <tbody>
+              <tr><td>内容产出条数</td><td>本周发布条数 ÷ 上周</td><td>能稳定在一周 10 条以上</td></tr>
+              <tr><td>首次响应时长</td><td>客户留言到你回过去的中位分钟数</td><td>进入 5 分钟内</td></tr>
+              <tr><td>超 45 天库存台数</td><td>库存台账里红色车辆数</td><td>比第 1 周下降</td></tr>
+              <tr><td>团队自用率</td><td>不看老板，有几个人这周主动用过 AI</td><td>≥ 3 人（这个数最难，也最真实）</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout warn">
+          <span class="tag">最常见的失败原因（不是工具问题）</span>
+          <p>① 老板自己不用，只让员工学；② 一次上五个工具；③ 没有验收，第二周就回到老办法；④ 只培训不检查；⑤ 把 AI 当"写文案的"，没用在收车和线索这种离钱最近的地方。这五条里中一条，30 天计划基本作废。</p>
+        </div>
+      </section>
+
+      <!-- ========== 10 ========== -->
+      <section class="section" id="s10">
+        <div class="sec-head">
+          <div class="sec-num">10</div>
+          <div>
+            <h2>红线：不能交给 AI 的事</h2>
+            <p class="sec-sub">课上第一部分末尾专门讲了边界，这里是车商可执行的那一版。</p>
+          </div>
+        </div>
+
+        <p class="lead-p">课上那句话请记住：<strong>最大的风险不是"没用 AI"，而是把不该交给 AI 的事交给了 AI。</strong>下面六条，建议直接贴到店里，作为制度的一部分。</p>
+
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>#</th><th>红线</th><th>为什么</th><th>替代做法</th></tr></thead>
+            <tbody>
+              <tr class="srow" data-search="隐私 手机号 身份证 贷款 流水 打码"><td>1</td><td>不把客户隐私（手机号、身份证、贷款流水、住址）贴进公开 AI 工具</td><td>信息一旦上传就无法收回，泄露要担责</td><td>先打码：138****0001；需要完整表格就用本地或企业版工具</td></tr>
+              <tr class="srow" data-search="报价 承诺 最终 价格 保证 过户"><td>2</td><td>不让 AI 出最终报价、不做承诺</td><td>AI 不知道你的成本，也不会承担责任</td><td>AI 只出区间和话术，价格由你签</td></tr>
+              <tr class="srow" data-search="车况 合同 质保 法律 人核"><td>3</td><td>车况结论、合同条款、质保承诺必须人核</td><td>误判事故车、写错条款，损失是实打实的</td><td>AI 出清单，检测与合同由有资质的人确认</td></tr>
+              <tr class="srow" data-search="内容 发布 平台 违规 广告法 绝对化"><td>4</td><td>生成内容必须人审后发布</td><td>绝对化用语、虚假低价会被平台处罚，责任在店</td><td>发布前 4 问：事实对吗、有证据吗、有绝对化词吗、平台允许吗</td></tr>
+              <tr class="srow" data-search="自动 回复 外呼 微信 人工 接管"><td>5</td><td>不让 AI 直接对外发消息（自动回复需人工接管）</td><td>客户感受到"机器应付"，且出错无法解释</td><td>AI 起草，人一键发送；涉及价格与合同一律人回</td></tr>
+              <tr class="srow" data-search="权限 数据 导出 谁能看"><td>6</td><td>客户数据权限不开放（谁能看、谁能导）</td><td>防飞单的前提是数据在店里，不在个人手机里</td><td>先定规则再上工具：分角色、可追溯</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout info">
+          <span class="tag">一句可以贴在工位上的话</span>
+          <p>AI 可以起草、可以提醒、可以算、可以排顺序；<strong>签字、报价、承诺和道歉，只能是人。</strong></p>
+        </div>
+      </section>
+
+      <!-- ========== 11 ========== -->
+      <section class="section" id="s11">
+        <div class="sec-head">
+          <div class="sec-num">11</div>
+          <div>
+            <h2>常见问题</h2>
+            <p class="sec-sub">八条最常被问到的，直接给答案。</p>
+          </div>
+        </div>
+
+        <h3>1. 要不要花钱买会员？</h3>
+        <p>先免费用满两周，跑通一件事（比如朋友圈文案或车况描述），再决定。判断标准不是"功能多不多"，而是<strong>每周省了你几个小时</strong>。一个店先买 1 个账号，别全员买。</p>
+
+        <h3>2. 员工不会用怎么办？</h3>
+        <p>不要开大会培训。先教<strong>一个动作 + 一条提示词</strong>：比如"每天用 P16 回私信"。让他当天用一次、看到结果，比讲一小时原理有用。第二周再加第二个动作。</p>
+
+        <h3>3. AI 写出来都是一个味儿，怎么办？</h3>
+        <p>因为它没有你的语料。把你店里成交最好的 3 段聊天记录、2 条爆款视频文字稿贴给它，说"照这个语气写"。有了语料，风格才像你。</p>
+
+        <h3>4. AI 写的车况描述敢直接发吗？</h3>
+        <p>不敢。<strong>三项必须人核：里程、过户次数、有无事故/水泡/火烧。</strong>这三项错一个，后面全是纠纷。AI 只负责把已经核实的写成好读的话。</p>
+
+        <h3>5. 手机上能用吗？销售在外面怎么办？</h3>
+        <p>前五类工具都有手机 App 或小程序，销售在车上就能改话术。表格类稍微麻烦，建议在店里用电脑做，手机只看结果。</p>
+
+        <h3>6. 把客户资料放进去安全吗？</h3>
+        <p>看工具的用户协议和隐私条款，但更简单的做法是<strong>不放大头</strong>：手机号打码、姓名用"张先生"。分析用的是趋势，不是具体某个人。</p>
+
+        <h3>7. 用了 AI 还要不要招人？</h3>
+        <p>要，但招的人不一样了。AI 替掉的是"重复动作"，不是"判断"。课上说得很清楚：不是裁员，是让团队从执行者变成"AI + 专家"。招人时多看一条：他会不会用工具把自己的活干轻。</p>
+
+        <h3>8. 多久能看到效果？</h3>
+        <p>内容：2 周能看到产出量变化；线索：1 个月看首响时长和到店率；库存：1 个季度看周转。指望一周见效的，通常两周后就放弃了。</p>
+      </section>
+
+      <!-- ========== 12 ========== -->
+      <section class="section" id="s12">
+        <div class="sec-head">
+          <div class="sec-num">12</div>
+          <div>
+            <h2>附录：每日练习与术语</h2>
+            <p class="sec-sub">每天 15 分钟，一周养成习惯。</p>
+          </div>
+        </div>
+
+        <h3>每日 15 分钟练习表（贴在电脑边）</h3>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>时间</th><th>练什么</th><th>用哪条</th><th>当天交付</th></tr></thead>
+            <tbody>
+              <tr class="srow" data-search="周一 朋友圈 文案 练习"><td>周一</td><td>改写 3 条朋友圈，选 1 条发</td><td>P12</td><td>发出 1 条</td></tr>
+              <tr class="srow" data-search="周二 私信 回复 首响 练习"><td>周二</td><td>把昨天的私信重新回一遍</td><td>P16</td><td>回完 3 个客户</td></tr>
+              <tr class="srow" data-search="周三 车况 描述 上架 练习"><td>周三</td><td>给一台在库车写车况描述</td><td>P01</td><td>上架 1 台车</td></tr>
+              <tr class="srow" data-search="周四 异议 演练 练习"><td>周四</td><td>挑一个最难搞的客户，演练异议</td><td>P18</td><td>改一版话术</td></tr>
+              <tr class="srow" data-search="周五 库存 复盘 周报 练习"><td>周五</td><td>整理台账，出一份周报</td><td>P22、P24</td><td>晨会用的一页纸</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>术语表（说人话版）</h3>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>词</th><th>说人话</th></tr></thead>
+            <tbody>
+              <tr class="srow" data-search="提示词 prompt 是什么"><td>提示词（Prompt）</td><td>你让 AI 干活的说明书。写得越具体，结果越能用。</td></tr>
+              <tr class="srow" data-search="大模型 LLM"><td>大模型（LLM）</td><td>DeepSeek、豆包这类"会说话"的底层引擎。你用的是它的 App，不是引擎本身。</td></tr>
+              <tr class="srow" data-search="智能体 Agent 自己干活"><td>智能体（Agent）</td><td>给了目标就能自己拆任务、调工具、干完的 AI。课上的第二个跃迁。</td></tr>
+              <tr class="srow" data-search="工作台 看板 一页"><td>工作台</td><td>把客户、库存、跟进、业绩收进一页，每天打开就看。第 07 节有样例。</td></tr>
+              <tr class="srow" data-search="幻觉 编造 一本正经"><td>幻觉</td><td>AI 一本正经地编。它不会说"我不知道"，所以你必须核数字。</td></tr>
+              <tr class="srow" data-search="知识库 RAG 喂资料"><td>知识库</td><td>把你的车源、政策、话术存进去，让 AI 先看你的资料再回答。比每次粘贴更省事。</td></tr>
+              <tr class="srow" data-search="Token 计费 额度"><td>Token</td><td>AI 的计费单位，约等于字。用得越多越贵，所以别拿它当搜索引擎乱刷。</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout ok">
+          <span class="tag">最后一句</span>
+          <p>课上最后的结语是：<strong>老板不一定亲自做 AI，但必须能够判断 AI。</strong>这份手册的作用，是让你在判断之前，先亲手用过一遍——知道它哪里强、哪里会骗你、哪里必须你自己签字。</p>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="footer">
+      <p><strong>AI 工具操作手册（车商版）v1.0</strong> · 平安核心客户会 AI 主题专场配套资料</p>
+      <p>授课嘉宾：李家贵 · 西安交通大学数字经济研究院 · 2026 年 10 月 13 日 · 西安</p>
+      <p>本手册仅供参训学员及其门店内部学习使用。文中工具名称归各自厂商所有，功能与价格以官网为准；涉及车况、价格、金融方案与合同的内容，一律以人工复核和书面文件为准。</p>
+    </footer>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite">已复制</div>
+
+<script>
+(function(){
+  "use strict";
+  var sidebar=document.getElementById('sidebar');
+  var overlay=document.getElementById('overlay');
+  var menuBtn=document.getElementById('menuBtn');
+  var searchInput=document.getElementById('searchInput');
+  var clearBtn=document.getElementById('clearBtn');
+  var resultLine=document.getElementById('resultLine');
+  var printBtn=document.getElementById('printBtn');
+  var toast=document.getElementById('toast');
+  var pcards=Array.prototype.slice.call(document.querySelectorAll('.pcard'));
+  var rows=Array.prototype.slice.call(document.querySelectorAll('tr.srow'));
+  var chips=Array.prototype.slice.call(document.querySelectorAll('.chip[data-cat]'));
+  var emptyBox=document.getElementById('emptyState');
+  var activeCat='all';
+
+  function norm(s){return (s||'').toLowerCase();}
+
+  function match(card,q){
+    if(!q) return true;
+    var hay=norm(card.getAttribute('data-search'))+' '+norm(card.textContent);
+    return hay.indexOf(q)>-1;
+  }
+
+  function apply(){
+    var q=norm(searchInput.value.trim());
+    var nP=0,nR=0,i;
+    for(i=0;i<pcards.length;i++){
+      var c=pcards[i];
+      var okQ=match(c,q);
+      var okC=(activeCat==='all')||(c.getAttribute('data-cat')===activeCat);
+      var show=okQ&&okC;
+      c.classList.toggle('hidden',!show);
+      if(show) nP++;
+    }
+    for(i=0;i<rows.length;i++){
+      var ok=match(rows[i],q);
+      rows[i].classList.toggle('hidden',!ok);
+      if(ok) nR++;
+    }
+    for(i=0;i<chips.length;i++){
+      var cat=chips[i].getAttribute('data-cat');
+      var n=0;
+      for(var j=0;j<pcards.length;j++){
+        if(!match(pcards[j],q)) continue;
+        if(cat==='all'||pcards[j].getAttribute('data-cat')===cat) n++;
+      }
+      var b=chips[i].querySelector('b');
+      if(b) b.textContent=n;
+      chips[i].classList.toggle('is-active',cat===activeCat);
+    }
+    resultLine.textContent=q?('「'+searchInput.value.trim()+'」：提示词 '+nP+' 条 · 工具与清单 '+nR+' 项'):'';
+    if(emptyBox){
+      emptyBox.classList.toggle('show',(nP===0&&nR===0)&&(q!==''||activeCat!=='all'));
+    }
+  }
+
+  searchInput.addEventListener('input',apply);
+  clearBtn.addEventListener('click',function(){
+    searchInput.value='';
+    activeCat='all';
+    apply();
+    searchInput.focus();
+  });
+  for(var i=0;i<chips.length;i++){
+    chips[i].addEventListener('click',function(){
+      activeCat=this.getAttribute('data-cat');
+      apply();
+    });
+  }
+
+  /* 复制 */
+  function showToast(msg){
+    toast.textContent=msg;
+    toast.classList.add('show');
+    clearTimeout(showToast._t);
+    showToast._t=setTimeout(function(){toast.classList.remove('show');},1800);
+  }
+  function fallbackCopy(text,pre){
+    try{
+      var ta=document.createElement('textarea');
+      ta.value=text;
+      ta.setAttribute('readonly','');
+      ta.style.position='fixed';
+      ta.style.top='-1000px';
+      document.body.appendChild(ta);
+      ta.select();
+      var ok=document.execCommand('copy');
+      document.body.removeChild(ta);
+      if(ok){showToast('已复制，可直接粘贴');return;}
+    }catch(e){}
+    if(window.getSelection&&pre){
+      var r=document.createRange();
+      r.selectNodeContents(pre);
+      var sel=window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(r);
+    }
+    showToast('复制失败，已为你选中文字，请按 Ctrl+C 手动复制');
+  }
+  document.addEventListener('click',function(e){
+    var btn=e.target.closest?e.target.closest('.copy-btn'):null;
+    if(!btn) return;
+    var card=btn.closest('.pcard');
+    var pre=card?card.querySelector('pre.prompt'):null;
+    if(!pre) return;
+    var text=pre.textContent;
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){
+        showToast('已复制，可直接粘贴');
+      }).catch(function(){fallbackCopy(text,pre);});
+    }else{
+      fallbackCopy(text,pre);
+    }
+  });
+
+  /* 目录高亮 */
+  var tocLinks=Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+  var sections=Array.prototype.slice.call(document.querySelectorAll('section.section'));
+  if('IntersectionObserver' in window){
+    var map={};
+    tocLinks.forEach(function(a){map[a.getAttribute('href').slice(1)]=a;});
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){
+          tocLinks.forEach(function(a){a.classList.remove('active');});
+          var a=map[en.target.id];
+          if(a) a.classList.add('active');
+        }
+      });
+    },{rootMargin:'-64px 0px -72% 0px',threshold:0});
+    sections.forEach(function(s){io.observe(s);});
+  }
+
+  /* 移动端目录 */
+  function openDrawer(){
+    sidebar.classList.add('open');
+    overlay.classList.add('show');
+    menuBtn.setAttribute('aria-expanded','true');
+    document.body.style.overflow='hidden';
+  }
+  function closeDrawer(){
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+    menuBtn.setAttribute('aria-expanded','false');
+    document.body.style.overflow='';
+  }
+  menuBtn.addEventListener('click',function(){
+    if(sidebar.classList.contains('open')) closeDrawer(); else openDrawer();
+  });
+  overlay.addEventListener('click',closeDrawer);
+  tocLinks.forEach(function(a){a.addEventListener('click',function(){closeDrawer();});});
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){
+      if(sidebar.classList.contains('open')) closeDrawer();
+      if(document.activeElement===searchInput&&searchInput.value) {searchInput.value='';activeCat='all';apply();}
+    }
+    var typing=/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName);
+    if(e.key==='/'&&!typing){e.preventDefault();searchInput.focus();}
+  });
+  printBtn.addEventListener('click',function(){window.print();});
+
+  apply();
+})();
+</script>
+</body>
+</html>
