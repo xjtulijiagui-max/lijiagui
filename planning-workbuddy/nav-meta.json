@@ -1,0 +1,15 @@
+{
+  "id": "planning-workbuddy",
+  "title": "WorkBuddy练习 · 云溪镇规划（粤规院版）",
+  "shortTitle": "云溪镇WorkBuddy练习",
+  "category": "通用方法与沙盘",
+  "description": "面向规划设计机构的 WorkBuddy 课堂练习页：以模拟项目「云溪镇国土空间总体规划」为主线，覆盖任务卡、Plan、台账清洗、用地分析、汇报PPT、公示海报、短视频分镜与项目日报实操，含9个案例卡和资料包下载。",
+  "path": "planning-workbuddy/",
+  "tags": ["WorkBuddy", "规划院", "云溪镇", "国土空间规划", "课堂练习", "粤规院", "项目日报", "提示词"],
+  "type": "课堂练习",
+  "client": "粤规院",
+  "order": 272,
+  "status": "正常",
+  "featured": true,
+  "updated": "2026-10-24"
+}
