@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI 赋能汽车经销商实战手册 · 租赁业务版</title>
+<meta name="description" content="AI 赋能汽车经销商实战操作手册（租赁业务版）：工具箱、五段式提示词公式、六大客户旅程场景 16 条可复制提示词、银行分期与融资租赁双方案月供测算器、门店管理与 AI 陪练、五条合规红线、30 天落地计划。主讲：李家贵。" />
+<meta name="author" content="李家贵" />
+<meta name="theme-color" content="#2B3640" />
+<link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+<style>
+:root{
+  --paper:#F3F5F6;
+  --surface:#FFFFFF;
+  --ink:#17232B;
+  --muted:#5A6873;
+  --line:#D5DCE1;
+  --asphalt:#2B3640;
+  --sign:#1E5AA8;
+  --sign-soft:#E3ECF7;
+  --lane:#F2B705;
+  --go:#24855A;
+  --stop:#C2412D;
+  --stop-soft:#FBEAE6;
+  --code-bg:#EEF2F5;
+  --serif:"Source Han Serif SC","Songti SC","STSong","SimSun","Microsoft YaHei",serif;
+  --sans:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;
+  color-scheme: light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#12181D; --surface:#1A2229; --ink:#E6ECF0; --muted:#9AA8B3; --line:#2D3943;
+    --asphalt:#0C1115; --sign:#6FA3E8; --sign-soft:#1C2C40; --lane:#F2C230; --go:#4CC08A;
+    --stop:#F07A63; --stop-soft:#3A2420; --code-bg:#151D23; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#12181D; --surface:#1A2229; --ink:#E6ECF0; --muted:#9AA8B3; --line:#2D3943;
+  --asphalt:#0C1115; --sign:#6FA3E8; --sign-soft:#1C2C40; --lane:#F2C230; --go:#4CC08A;
+  --stop:#F07A63; --stop-soft:#3A2420; --code-bg:#151D23; color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75;-webkit-font-smoothing:antialiased}
+img{max-width:100%}
+a{color:var(--sign)}
+:focus-visible{outline:3px solid var(--lane);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+.prose{max-width:46em}
+h1,h2,h3{font-family:var(--serif);line-height:1.3;margin:0}
+h2{font-size:clamp(26px,4vw,36px);font-weight:900;letter-spacing:.02em}
+h3{font-size:20px;font-weight:700}
+p{margin:.6em 0}
+
+/* ---------- Hero ---------- */
+.hero{background:var(--asphalt);color:#EEF2F4;padding:64px 0 0;position:relative;overflow:hidden}
+.hero .kicker{display:inline-block;background:var(--lane);color:#1B1B1B;font-weight:700;font-size:14px;padding:4px 12px;border-radius:3px}
+.hero h1{font-size:clamp(34px,6.4vw,68px);font-weight:900;margin:18px 0 10px;letter-spacing:.03em;color:#FFFFFF}
+.hero .sub{font-size:clamp(16px,2vw,19px);color:#C9D3DA;max-width:38em}
+.hero .byline{margin-top:18px;color:#9FB0BC;font-size:14px}
+.road{margin-top:44px;position:relative;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.road ol{list-style:none;margin:0;padding:34px 20px 30px;display:flex;gap:0;min-width:760px;position:relative;
+  background:
+    linear-gradient(90deg,var(--lane) 0 50%,transparent 50% 100%) 0 50%/44px 4px repeat-x,
+    #39454F;}
+.road li{flex:1;position:relative;text-align:center}
+.road a{display:inline-flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none;color:#FFFFFF;padding:4px 6px;border-radius:6px}
+.road .pin{width:44px;height:44px;border-radius:50%;background:#FFFFFF;color:var(--asphalt);font-family:var(--serif);font-weight:900;font-size:18px;display:grid;place-items:center;border:4px solid #39454F;box-shadow:0 0 0 3px #FFFFFF}
+.road a:hover .pin,.road a:focus-visible .pin{background:var(--lane)}
+.road .lbl{font-weight:700;font-size:15px;background:#39454F;padding:0 6px}
+.road .hint{font-size:12px;color:#AFC0CB;background:#39454F;padding:0 6px}
+.road-caption{color:#9FB0BC;font-size:13px;padding:10px 0 18px}
+
+/* ---------- Sections ---------- */
+section{padding:72px 0 8px}
+.sec-head{display:flex;gap:18px;align-items:flex-start;margin-bottom:22px}
+.sign{flex:none;width:52px;height:52px;border-radius:8px;background:var(--sign);color:#fff;display:grid;place-items:center;font-family:var(--serif);font-weight:900;font-size:22px}
+.sec-head p{color:var(--muted);margin:.4em 0 0}
+
+/* tool table */
+.scroll-x{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:720px;font-size:15px}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--sign-soft);font-weight:700;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td:first-child{font-weight:700;white-space:nowrap}
+.tag{display:inline-block;font-size:12px;padding:1px 8px;border-radius:20px;border:1px solid var(--line);margin:2px 4px 2px 0;color:var(--muted)}
+.note{font-size:14px;color:var(--muted)}
+
+/* formula */
+.formula{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:22px 0;border:2px solid var(--ink);border-radius:10px;overflow:hidden;background:var(--surface)}
+.formula div{padding:16px 14px;border-right:2px solid var(--ink)}
+.formula div:last-child{border-right:none}
+.formula b{display:block;font-family:var(--serif);font-size:22px;font-weight:900}
+.formula span{font-size:14px;color:var(--muted)}
+@media (max-width:720px){.formula{grid-template-columns:1fr 1fr}.formula div{border-right:none;border-bottom:2px solid var(--ink)}.formula div:last-child{grid-column:1/-1;border-bottom:none}}
+.tips{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:10px}
+.tips div{border-left:4px solid var(--lane);padding:4px 0 4px 14px}
+.tips b{display:block}
+
+/* stage */
+.stage{border-top:1px solid var(--line);padding-top:30px;margin-top:30px}
+.stage:first-of-type{border-top:none;margin-top:0;padding-top:0}
+.stage-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;margin-bottom:18px}
+@media (max-width:760px){.stage-top{grid-template-columns:1fr}}
+.pain{background:var(--stop-soft);border-radius:8px;padding:12px 16px;font-size:15px}
+.pain b{color:var(--stop)}
+.how{font-size:15px}
+.how ul{margin:.3em 0;padding-left:1.2em}
+
+.prompt{background:var(--surface);border:1px solid var(--line);border-radius:10px;margin:14px 0;overflow:hidden}
+.prompt header{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid var(--line)}
+.prompt header h4{margin:0;font-size:16px}
+.prompt header .tool{font-size:13px;color:var(--muted);font-weight:400;margin-left:8px}
+.prompt pre{margin:0;padding:14px 16px;background:var(--code-bg);white-space:pre-wrap;word-break:break-word;font-family:var(--sans);font-size:14.5px;line-height:1.8;color:var(--ink)}
+.prompt .fill{background:var(--lane);color:#1B1B1B;border-radius:3px;padding:0 3px}
+.copy{flex:none;font:inherit;font-size:14px;font-weight:500;border:1.5px solid var(--sign);color:var(--sign);background:transparent;border-radius:6px;padding:4px 12px;cursor:pointer}
+.copy:hover{background:var(--sign);color:#fff}
+.copy.done{border-color:var(--go);background:var(--go);color:#fff}
+.prompt footer{padding:10px 16px;font-size:14px;color:var(--muted);border-top:1px dashed var(--line)}
+
+/* calculator */
+.calc{background:var(--surface);border:2px solid var(--ink);border-radius:12px;padding:20px;margin:18px 0}
+.calc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.calc fieldset{border:1px solid var(--line);border-radius:8px;padding:12px 14px 6px;margin:0}
+.calc legend{font-weight:700;padding:0 6px}
+.calc label{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 10px;font-size:15px}
+.calc input{width:110px;font:inherit;font-size:15px;padding:5px 8px;border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink);text-align:right}
+.price-row{margin-bottom:16px}
+.price-row label{justify-content:flex-start}
+.price-row input{width:150px}
+.results{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:18px}
+.res{border-radius:8px;padding:14px 16px;background:var(--sign-soft)}
+.res h4{margin:0 0 8px;font-size:16px}
+.res dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:15px}
+.res dt{color:var(--muted)}
+.res dd{margin:0;text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.res .big{font-size:24px;font-family:var(--serif);font-weight:900;color:var(--sign)}
+.script{margin-top:16px}
+.script pre{margin:0;background:var(--code-bg);border-radius:8px;padding:14px 16px;white-space:pre-wrap;font-family:var(--sans);font-size:15px}
+.script .row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:10px}
+
+/* red lines */
+.redlines{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.rl{background:var(--surface);border:1px solid var(--line);border-top:5px solid var(--stop);border-radius:8px;padding:14px 16px}
+.rl h3{font-size:17px;margin-bottom:4px}
+.rl p{font-size:15px;margin:.3em 0}
+.ok{color:var(--go);font-weight:700}
+.no{color:var(--stop);font-weight:700}
+
+/* timeline */
+.weeks{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0;border:2px solid var(--ink);border-radius:10px;overflow:hidden;background:var(--surface)}
+.weeks li{padding:16px;border-right:1px solid var(--line)}
+.weeks li:last-child{border-right:none}
+.weeks .wk{font-family:var(--serif);font-weight:900;font-size:20px}
+.weeks .goal{color:var(--sign);font-weight:700;font-size:15px;margin:2px 0 6px}
+.weeks ul{margin:0;padding-left:1.1em;font-size:15px}
+
+.objections{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 4px}
+.objections button{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:20px;padding:4px 12px;cursor:pointer}
+.objections button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+footer.end{margin-top:80px;background:var(--asphalt);color:#C9D3DA;padding:36px 0 44px;font-size:14px}
+footer.end b{color:#fff}
+
+
+/* ---------- 修正与站点适配 ---------- */
+/* 原稿 .road-caption 的 padding 覆盖了 .wrap 的左右内边距，手机上说明文字贴边 */
+.road-caption{padding:10px 20px 18px}
+/* ---------- 站点回链 / 页脚导航 ---------- */
+.hero .backline{margin-top:22px}
+.hero .backlink{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:#EEF2F4;
+  text-decoration:none;border:1px solid rgba(238,242,244,.4);border-radius:20px;padding:5px 14px;background:rgba(255,255,255,.06)}
+.hero .backlink:hover,.hero .backlink:focus-visible{background:var(--lane);border-color:var(--lane);color:#1B1B1B}
+.footnav{margin:0 0 22px;padding:0 0 18px;border-bottom:1px solid rgba(201,211,218,.25);display:flex;flex-wrap:wrap;gap:8px 10px}
+.footnav a{color:#C9D3DA;text-decoration:none;font-size:14px;border:1px solid rgba(201,211,218,.3);border-radius:16px;padding:3px 12px}
+.footnav a:hover,.footnav a:focus-visible{background:var(--lane);border-color:var(--lane);color:#1B1B1B}
+footer.end p a{color:#EEF2F4}
+
+@media print{
+  .hero{background:#fff;color:#000}.hero h1{color:#000}.road,.copy{display:none}
+  section{padding-top:28px;break-inside:avoid-page}
+  .prompt{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="kicker">租赁培训专场 · 课后配套手册</span>
+    <h1>AI 赋能汽车经销商<br>实战操作手册</h1>
+    <p class="sub">把课上讲到的 AI 工具，拆成车商每天都用得上的动作：从拍一条短视频、回一句客户异议，到给客户讲清楚一份融资租赁方案。复制提示词，填上你自己的信息，就能直接用。</p>
+    <p class="byline">主讲：李家贵 老师　｜　适用：新车 / 二手车经销商、融资租赁业务顾问、门店管理者</p>
+    <p class="backline"><a class="backlink" href="https://xjtulijiagui-max.github.io/lijiagui/list/">← 返回资料导航 · 更多 AI 实战资料</a></p>
+  </div>
+  <nav class="road" aria-label="按客户旅程跳转">
+    <ol>
+      <li><a href="#s1"><span class="pin">1</span><span class="lbl">获客引流</span><span class="hint">内容生产</span></a></li>
+      <li><a href="#s2"><span class="pin">2</span><span class="lbl">客户沟通</span><span class="hint">需求与异议</span></a></li>
+      <li><a href="#s3"><span class="pin">3</span><span class="lbl">方案测算</span><span class="hint">讲清月供</span></a></li>
+      <li><a href="#s4"><span class="pin">4</span><span class="lbl">资料准备</span><span class="hint">材料与合同</span></a></li>
+      <li><a href="#s5"><span class="pin">5</span><span class="lbl">交付售后</span><span class="hint">关怀与提醒</span></a></li>
+      <li><a href="#s6"><span class="pin">6</span><span class="lbl">续租复购</span><span class="hint">到期与转介绍</span></a></li>
+    </ol>
+  </nav>
+  <div class="wrap road-caption">沿着一位客户从“刷到你”到“再买一台”的路线排列，点击站点直接跳到对应场景。</div>
+</header>
+
+<main>
+
+<!-- 工具箱 -->
+<section id="tools">
+  <div class="wrap">
+    <div class="sec-head"><div class="sign">具</div><div><h2>先备好工具箱</h2><p>不用全装。每类挑一个顺手的，手机上装好 App，电脑上收藏网页版。</p></div></div>
+    <div class="scroll-x">
+      <table>
+        <thead><tr><th>工具</th><th>它最擅长</th><th>车商这样用</th><th>上手</th></tr></thead>
+        <tbody>
+          <tr><td>DeepSeek</td><td>深度思考、写长文案、理逻辑</td><td>短视频脚本、异议话术、活动方案、方案对比解释</td><td><span class="tag">10 分钟</span></td></tr>
+          <tr><td>豆包</td><td>语音对话、拍照识别，手机端随手用</td><td>开车路上口述客户情况让它整理；拍车辆铭牌、配置单让它提取信息</td><td><span class="tag">5 分钟</span></td></tr>
+          <tr><td>Kimi</td><td>读长文档、长 PDF</td><td>上传合作机构的产品政策、合同模板（先去掉客户信息），让它提炼要点</td><td><span class="tag">10 分钟</span></td></tr>
+          <tr><td>腾讯元宝</td><td>结合微信生态检索与写作</td><td>查同行公众号热点、写朋友圈与社群内容</td><td><span class="tag">5 分钟</span></td></tr>
+          <tr><td>即梦 / 可灵</td><td>AI 生图、生视频</td><td>活动海报底图、节日氛围图、车辆场景短片素材</td><td><span class="tag">半小时</span></td></tr>
+          <tr><td>剪映</td><td>AI 字幕、文案成片、数字人口播</td><td>把 AI 写好的脚本一键成片，自动加字幕和配乐</td><td><span class="tag">半小时</span></td></tr>
+          <tr><td>飞书多维表格</td><td>表格里直接调用 AI 批量处理</td><td>客户线索表自动打标签、批量生成跟进话术、车源描述</td><td><span class="tag">1 小时</span></td></tr>
+          <tr><td>扣子（Coze）</td><td>零代码搭建 AI 智能体</td><td>做一个“门店 AI 顾问”，装进你的产品政策，24 小时回答常见问题</td><td><span class="tag">进阶</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">AI 工具更新很快，功能与收费以各平台官方说明为准。本手册的提示词在上述大多数对话类工具里都能通用。</p>
+  </div>
+</section>
+
+<!-- 提示词公式 -->
+<section id="formula">
+  <div class="wrap">
+    <div class="sec-head"><div class="sign">式</div><div><h2>一个公式，写好所有提示词</h2><p>AI 答得不好，九成是因为问得太短。把下面五样东西说清楚，效果立刻不一样。</p></div></div>
+    <div class="formula" role="list">
+      <div role="listitem"><b>角色</b><span>让它扮演谁：资深汽车金融顾问、短视频编导</span></div>
+      <div role="listitem"><b>背景</b><span>你是谁、卖什么车、客户是什么人</span></div>
+      <div role="listitem"><b>任务</b><span>具体要它做什么，做几个</span></div>
+      <div role="listitem"><b>要求</b><span>字数、语气、不能说什么</span></div>
+      <div role="listitem"><b>格式</b><span>表格、分点、话术卡片</span></div>
+    </div>
+    <div class="prose">
+      <p><span class="no">✗ 差的问法：</span>帮我写个卖车文案。</p>
+      <p><span class="ok">✓ 好的问法：</span>你是一名有 10 年经验的汽车营销文案（角色）。我在成都开二手车行，主推 10 万以内的家用 SUV，客户多是刚成家的年轻人，我们有以租代购方案（背景）。请写 3 条朋友圈文案（任务），每条 80 字以内，口吻像朋友分享，不出现“零首付”“包过”这类承诺（要求），用编号列出并给出配图建议（格式）。</p>
+    </div>
+    <div class="tips">
+      <div><b>给它一个例子</b>把你以前效果最好的一条文案贴进去，说“照这个风格写”。</div>
+      <div><b>不满意就追问</b>“第二条更口语一点”“开头再狠一点”，多轮修改比重新提问快。</div>
+      <div><b>让它先问你</b>在结尾加一句“开始前，先问我 3 个你需要知道的问题”，信息不够时特别好用。</div>
+      <div><b>存成自己的模板</b>好用的提示词存到手机备忘录，下次只换方括号里的内容。</div>
+    </div>
+  </div>
+</section>
+
+<!-- 场景 -->
+<section id="scenes">
+  <div class="wrap">
+    <div class="sec-head"><div class="sign">用</div><div><h2>六大场景，按客户旅程来用</h2><p>每个场景都有“现在的痛点”“AI 怎么帮”和可以直接复制的提示词。<span class="fill" style="background:var(--lane);color:#1B1B1B;border-radius:3px;padding:0 3px">黄色方括号</span>里换成你自己的信息。</p></div></div>
+
+    <!-- S1 -->
+    <div class="stage" id="s1">
+      <h3>1　获客引流：内容做得出、发得勤</h3>
+      <div class="stage-top">
+        <p class="pain"><b>痛点：</b>知道要做抖音、小红书、朋友圈，但不会写、没时间、想不出选题，账号三天打鱼两天晒网。</p>
+        <div class="how"><b>AI 怎么帮：</b><ul><li>DeepSeek 写脚本和文案，一次出多个版本挑着用</li><li>剪映把脚本一键成片，加字幕、配音</li><li>提前排好 30 天内容日历，每天照着发</li></ul></div>
+      </div>
+
+      <article class="prompt" id="p01"><header><h4>短视频口播脚本<span class="tool">DeepSeek / 豆包 → 剪映成片</span></h4><button class="copy" type="button">复制提示词</button></header>
+<pre>你是一名有 10 年经验的汽车短视频编导。我是<span class="fill">【城市】</span>的一家<span class="fill">【新车/二手车】</span>经销商，主推<span class="fill">【车型或价格段】</span>，主要客户是<span class="fill">【25–35 岁首次购车、首付资金有限的年轻人】</span>，我们提供融资租赁（以租代购）和银行分期两种方案。
+
+请帮我写 3 条 30 秒左右的抖音口播脚本，要求：
+1. 开头 3 秒用一个扎心问题或反常识观点抓住人；
+2. 讲清楚一个真实痛点和解决办法，比如“首付不够怎么买车”“以租代购和贷款到底差在哪”；
+3. 结尾引导评论或私信；
+4. 不得出现“零首付”“零利息”“包过”“黑户可做”等夸大或违规承诺；
+5. 用表格输出：镜头序号、画面、台词、时长。</pre>
+        <footer>出片技巧：脚本复制进剪映“文字成片”，选真人出镜效果最好；用数字人口播时，按规定在视频中标注“AI 生成”。</footer>
+      </article>
+
+      <article class="prompt" id="p02"><header><h4>小红书种草笔记<span class="tool">DeepSeek / 元宝</span></h4><button class="copy" type="button">复制提示词</button></header>
+<pre>请以“<span class="fill">【25 岁女生的第一辆车 / 二胎宝妈换车】</span>”为主题，写一篇小红书图文笔记。
+
+背景：车型是<span class="fill">【车型 + 年款 + 价格】</span>，客户最终选择了<span class="fill">【以租代购 / 银行分期】</span>。
+要求：
+1. 给 5 个备选标题，20 字以内，可带 emoji；
+2. 正文 500–600 字，用真实车主分享的口吻，不要像广告；
+3. 写出这台车 3 个真实优点和 1 个小缺点，增加可信度；
+4. 用一段大白话说明以租代购和贷款的区别（包括车辆过户前归谁），不夸大好处；
+5. 结尾加 5 个话题标签，并给出 6 张配图的拍摄建议。</pre>
+      </article>
+
+      <article class="prompt" id="p03"><header><h4>30 天朋友圈内容日历<span class="tool">DeepSeek / 飞书多维表格</span></h4><button class="copy" type="button">复制提示词</button></header>
+<pre>我是<span class="fill">【门店名称】</span>的销售顾问，微信好友里大多是到过店或咨询过的潜在客户。请帮我规划未来 30 天的朋友圈内容，每天 1 条。
+
+内容比例：40% 用车干货（保养、用车成本、金融知识）、30% 门店日常和交车喜报、20% 客户真实反馈、10% 活动信息。
+用表格输出：日期、内容类型、文案（80 字以内）、配图建议、最佳发布时间。
+要求：语气真诚像朋友，不刷屏式硬广，金融类内容不做收益或通过率承诺。</pre>
+      </article>
+    </div>
+
+    <!-- S2 -->
+    <div class="stage" id="s2">
+      <h3>2　客户沟通：问得准、答得稳</h3>
+      <div class="stage-top">
+        <p class="pain"><b>痛点：</b>客户一句“以租代购车不是我的吧？”就把新人问住了；看完车说“回去商量”，之后不知道怎么跟进才不招人烦。</p>
+        <div class="how"><b>AI 怎么帮：</b><ul><li>提前生成需求诊断清单，5 分钟摸清客户情况</li><li>把常见异议做成话术库，新人也能接得住</li><li>按时间节点生成跟进消息，不尬不催</li></ul></div>
+      </div>
+
+      <article class="prompt" id="p04"><header><h4>5 分钟需求诊断清单<span class="tool">DeepSeek</span></h4><button class="copy" type="button">复制提示词</button></header>
+<pre>你是一名资深汽车金融顾问。请为我设计一份客户到店或线上咨询时用的“5 分钟需求诊断”提问清单。
+
+需要了解：用车场景、预算和每月能承受的月供、首付资金、大致征信情况、是否在意车辆登记在自己名下、打算开几年换车。
+要求：
+1. 问题自然口语化，不像审问，总共不超过 8 个；
+2. 每个问题后注明“我想了解什么”；
+3. 列出客户的典型回答分别更适合推荐全款、银行分期还是融资租赁，并说明理由。</pre>
+      </article>
+
+      <article class="prompt" id="p05"><header><h4>异议处理话术<span class="tool">DeepSeek</span></h4><button class="copy" type="button">复制提示词</button></header>
+        <div style="padding:10px 16px 0">
+          <span class="note">点一个常见异议，下方提示词会自动替换：</span>
+          <div class="objections" id="objBtns">
+            <button type="button" aria-pressed="true">以租代购车都不是我的，万一被收走怎么办？</button>
+            <button type="button" aria-pressed="false">月供怎么比银行贷款还高？</button>
+            <button type="button" aria-pressed="false">首付这么低，是不是有坑？</button>
+            <button type="button" aria-pressed="false">我想提前结清，要多付多少钱？</button>
+            <button type="button" aria-pressed="false">我征信有过逾期，还能做吗？</button>
+          </div>
+        </div>
+<pre>我是汽车融资租赁业务顾问，客户提出异议：“<span class="fill" id="objText">以租代购车都不是我的，万一被收走怎么办？</span>”
+
+请给我 3 种回应话术：共情型、讲道理型、算账型。要求：
+1. 诚实说明事实，例如租赁期内车辆所有权归租赁公司、付清后何时以及按什么条件过户、逾期的后果，具体以我们的合同为准，不能回避或含糊；
+2. 不贬低竞争对手，不承诺审批一定通过；
+3. 每种不超过 120 字，口语化；
+4. 每种最后加一句推动下一步的提问。</pre>
+        <footer>建议门店把这 5 类异议的回答整理成统一口径，由主管审核后全员使用，避免各说各话。</footer>
+      </article>
+
+      <article class="prompt" id="p06"><header><h4>微信跟进三连<span class="tool">豆包 / DeepSeek</span></h4><button class="copy" type="button">复制提示词</button></header>
+<pre>客户<span class="fill">【王先生】</span><span class="fill">【3 天前】</span>来店看了<span class="fill">【车型】</span>，最关心<span class="fill">【月供多少、首付能不能低一点】</span>，说回去和家人商量。
+
+请帮我写 3 条微信跟进消息，分别在第 3 天、第 7 天、第 15 天发送。
+要求：每条 50 字以内；语气像朋友不像推销；每条带一个容易回复的小问题；第 7 天那条附上一个对他有用的信息（比如一份方案对比），第 15 天那条可以给出一个真实的门店活动理由再约到店。</pre>
+      </article>
+    </div>
+
+    <!-- S3 -->
+    <div class="stage" id="s3">
+      <h3>3　方案测算：把月供和总成本讲明白</h3>
+      <div class="stage-top">
+        <p class="pain"><b>痛点：</b>客户只盯着首付和月供，看不懂尾款、总成本；顾问口头算账容易算错，也容易被事后说“没讲清楚”。</p>
+        <div class="how"><b>AI 怎么帮：</b><ul><li>用下面的计算器先把数算准</li><li>再让 AI 把数字变成客户看得懂的对比表和解释</li><li>注意：大模型做算术可能出错，金额一律以计算器或机构系统为准</li></ul></div>
+      </div>
+
+      <div class="calc" id="calc">
+        <div class="price-row"><label>车辆价格（元）<input type="number" id="price" value="150000" min="0" step="1000" inputmode="decimal"></label></div>
+        <div class="calc-grid">
+          <fieldset>
+            <legend>方案 A　银行分期</legend>
+            <label>首付比例 %<input type="number" id="aDown" value="30" min="0" max="100" step="1"></label>
+            <label>期数（月）<input type="number" id="aN" value="36" min="1" max="84" step="1"></label>
+            <label>年化利率 %<input type="number" id="aR" value="4" min="0" max="36" step="0.1"></label>
+          </fieldset>
+          <fieldset>
+            <legend>方案 B　融资租赁（含尾款）</legend>
+            <label>首付比例 %<input type="number" id="bDown" value="10" min="0" max="100" step="1"></label>
+            <label>尾款比例 %<input type="number" id="bBal" value="20" min="0" max="90" step="1"></label>
+            <label>期数（月）<input type="number" id="bN" value="36" min="1" max="84" step="1"></label>
+            <label>年化利率 %<input type="number" id="bR" value="8" min="0" max="36" step="0.1"></label>
+          </fieldset>
+        </div>
+        <div class="results" aria-live="polite">
+          <div class="res"><h4>方案 A　银行分期</h4><dl id="resA"></dl></div>
+          <div class="res"><h4>方案 B　融资租赁</h4><dl id="resB"></dl></div>
+        </div>
+        <div class="script">
+          <div class="row"><b>自动生成的讲解话术</b><button class="copy" type="button" data-target="scriptOut">复制话术</button></div>
+          <pre id="scriptOut"></pre>
+        </div>
+        <p class="note">按等额本息、实际年化利率估算，未含保险、服务费、保证金、GPS 等费用，仅供沟通演示；实际方案以合作金融机构报价和合同为准。</p>
+      </div>
+
+      <article class="prompt" id="p07"><header><h4>方案对比表 + 大白话解释<span class="tool">DeepSeek</span></h4><button class="copy" type="button">复制提示词</button></header>
+<pre>请把下面两个购车方案整理成一张给客户看的对比表，再用 100 字以内的大白话做总结。
+
+方案 A 银行分期：车价<span class="fill">【】</span>元，首付<span class="fill">【】</span>元，<span class="fill">【】</span>期，月供<span class="fill">【】</span>元，年化利率<span class="fill">【】</span>%。
+方案 B 融资租赁：首付<span class="fill">【】</span>元，月租<span class="fill">【】</span>元，<span class="fill">【】</span>期，尾款<span class="fill">【】</span>元，年化利率<span class="fill">【】</span>%。
+（以上数字已算好，请直接使用，不要重新计算。）
+
+对比维度：首付、月供、尾款、总支出、车辆登记在谁名下、什么时候过户、提前结清规则、更适合什么样的客户。
+要求：如实呈现两种方案的成本差异，不刻意偏向任何一方。</pre>
+      </article>
+    </div>
+
+    <!-- S4 -->
+    <div class="stage" id="s4">
+      <h3>4　资料准备：材料一次交齐，合同讲得明白</h3>
+      <div class="stage-top">
+        <p class="pain"><b>痛点：</b>客户材料来回补三四次；合同条款又长又专业，客户签完不懂，后面容易产生纠纷。</p>
+        <div class="how"><b>AI 怎么帮：</b><ul><li>把机构要求整理成客户一看就懂的材料清单</li><li>用 Kimi 读合同模板，生成“合同要点一页纸”</li><li>审批决策交给机构风控，AI 只做整理和解释</li></ul></div>
+      </div>
+
+      <article class="prompt" id="p08"><header><h4>客户材料清单<span class="tool">DeepSeek / 豆包</span></h4><button class="copy" type="button">复制提示词</button></header>
+<pre>我们为<span class="fill">【个人 / 个体工商户 / 企业】</span>客户办理汽车融资租赁，合作机构要求的材料如下：
+<span class="fill">【粘贴机构的材料要求】</span>
+
+请整理成一份发给客户的“准备材料清单”：
+1. 按“必须提供”和“有了更好”分类；
+2. 每项用一句话说明为什么需要、常见出错点（如流水月数不够、照片不清晰）；
+3. 语气友好，适合直接发微信，最后提醒客户通过安全渠道提交材料。</pre>
+      </article>
+
+      <article class="prompt" id="p09"><header><h4>合同要点一页纸<span class="tool">Kimi（上传已去除客户信息的合同模板）</span></h4><button class="copy" type="button">复制提示词</button></header>
+<pre>附件是我们的汽车融资租赁合同模板。请用普通消费者能听懂的话，总结以下内容：
+所有权归属、租金构成、尾款及过户条件、提前结清的费用、逾期的后果、保险要求、保证金及退还条件、合同期满时客户的选择。
+
+要求：每项不超过 2 句，必须忠实于合同原文，并标出原文条款编号；最后单独列出“客户最需要注意的 3 件事”。不确定的地方写“请以合同原文为准”，不要自行推测。</pre>
+        <footer>这份一页纸建议在签约前交给客户，并由顾问逐条讲解。它是帮助理解的工具，不替代合同本身。</footer>
+      </article>
+    </div>
+
+    <!-- S5 -->
+    <div class="stage" id="s5">
+      <h3>5　交付售后：仪式感和提醒都到位</h3>
+      <div class="stage-top">
+        <p class="pain"><b>痛点：</b>交车后就断了联系；还款提醒要么不发，要么话说重了引发投诉。</p>
+        <div class="how"><b>AI 怎么帮：</b><ul><li>生成交车致辞、首月关怀消息</li><li>写好分级还款提醒模板，客气又清楚</li><li>节假日、生日、保养节点批量生成个性化问候</li></ul></div>
+      </div>
+
+      <article class="prompt" id="p10"><header><h4>交车仪式 + 首月关怀<span class="tool">DeepSeek / 豆包</span></h4><button class="copy" type="button">复制提示词</button></header>
+<pre>客户<span class="fill">【李女士，新手司机，第一辆车是某某 SUV，买车是为了接送孩子】</span>今天交车。请帮我写：
+1. 一段 1 分钟的交车致辞，温暖、真诚、带一点小幽默，结合她买车的原因；
+2. 3 条首月关怀消息，分别在交车后第 1 天、第 7 天、第 30 天发送，内容分别是：新车使用小提示、新手上路安全建议、首保预约提醒。每条 60 字以内。</pre>
+      </article>
+
+      <article class="prompt" id="p11"><header><h4>分级还款提醒（合规版）<span class="tool">DeepSeek</span></h4><button class="copy" type="button">复制提示词</button></header>
+<pre>请帮我写一套汽车融资租赁租金的还款提醒短信模板，分三级：
+1. 到期前 3 天的温馨提醒；
+2. 到期当天的提醒；
+3. 逾期 1–3 天的提醒。
+
+要求：礼貌清晰，写明应付金额、日期和支付方式的位置（用【】占位）；第 3 级可以说明逾期可能产生违约金并影响信用记录，具体以合同约定为准；提供咨询电话。
+严禁使用威胁、恐吓、侮辱的语言，不得向客户以外的任何人透露欠款信息。</pre>
+      </article>
+    </div>
+
+    <!-- S6 -->
+    <div class="stage" id="s6">
+      <h3>6　续租复购：把老客户变成下一单</h3>
+      <div class="stage-top">
+        <p class="pain"><b>痛点：</b>租期到期才想起联系客户，客户已经去了别家；转介绍全靠运气。</p>
+        <div class="how"><b>AI 怎么帮：</b><ul><li>按到期时间提前规划沟通节奏</li><li>设计转介绍活动方案和邀请话术</li><li>用飞书多维表格自动筛出即将到期的客户</li></ul></div>
+      </div>
+
+      <article class="prompt" id="p12"><header><h4>到期客户沟通节奏<span class="tool">DeepSeek</span></h4><button class="copy" type="button">复制提示词</button></header>
+<pre>我有<span class="fill">【30】</span>位融资租赁客户的租期将在 3 个月内到期。到期时他们可以选择：付清尾款办理过户、置换新车、或按合同约定处理车辆。
+
+请帮我设计：
+1. 到期前 90 天、60 天、30 天各做什么、说什么（含话术示例）；
+2. 如何根据客户的用车情况和还款记录，判断更适合推荐哪个选项；
+3. 置换新车时可以提供的服务亮点（如旧车评估、手续代办）。
+要求如实告知每种选择的费用和流程，尊重客户决定。</pre>
+      </article>
+
+      <article class="prompt" id="p13"><header><h4>老客户转介绍活动<span class="tool">DeepSeek</span></h4><button class="copy" type="button">复制提示词</button></header>
+<pre>请为我的<span class="fill">【二手车行 / 4S 店】</span>设计一个老客户转介绍活动，每成交一单的奖励预算在<span class="fill">【800】</span>元以内。
+输出：活动名称（3 个备选）、规则（简单到一句话能说清）、奖励形式（现金之外的选择更好，如保养券、油卡）、邀请老客户参与的微信话术、朋友圈海报文案。
+注意：奖励规则要写明白、可兑现，避免产生纠纷。</pre>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 门店管理 -->
+<section id="manage">
+  <div class="wrap">
+    <div class="sec-head"><div class="sign">管</div><div><h2>门店管理：让 AI 当助理和陪练</h2><p>管理者最值得用 AI 的两件事：省掉写报告的时间，以及让新人天天有人陪练。</p></div></div>
+
+    <article class="prompt" id="p14"><header><h4>AI 扮客户，销售陪练<span class="tool">豆包语音通话 / DeepSeek</span></h4><button class="copy" type="button">复制提示词</button></header>
+<pre>现在请你扮演一位到店客户：<span class="fill">【32 岁，外卖站长，月收入 1 万左右，征信有过 1 次逾期，想买一台 15 万左右的 SUV，对“以租代购”有戒心，觉得有坑】</span>。
+
+我是销售顾问。你根据我说的话做出真实反应，可以挑剔、犹豫、比价，不要太容易被说服。每次只说一两句话。
+对话 10 轮后，请跳出角色，从“需求挖掘、方案讲解、异议处理、合规表达”四个维度给我打分（每项 10 分），并指出我说得最好和最需要改的一句话。
+现在请你先开口。</pre>
+      <footer>豆包 App 的语音通话模式可以直接“对练”，新人每天练 10 分钟，比看十遍话术本更有用。</footer>
+    </article>
+
+    <article class="prompt" id="p15"><header><h4>车源描述批量生成<span class="tool">飞书多维表格 AI 字段 / DeepSeek</span></h4><button class="copy" type="button">复制提示词</button></header>
+<pre>根据以下车辆信息，为每台车生成上架描述：
+<span class="fill">【粘贴：车型、年份、里程、排量、配置、车况、过户次数、价格】</span>
+
+每台车输出：一句话卖点标题（20 字内）、100 字详情、3 个适合人群标签、1 句可以搭配的金融方案提示（只写“可提供分期 / 融资租赁方案，详询顾问”，不写具体利率）。
+车况必须严格按我提供的信息写，没提到的不要编造。</pre>
+    </article>
+
+    <article class="prompt" id="p16"><header><h4>销售日报 / 周报<span class="tool">DeepSeek / 豆包</span></h4><button class="copy" type="button">复制提示词</button></header>
+<pre>以下是今天门店的原始数据：
+<span class="fill">【粘贴：进店数、线上线索数、试驾数、成交台数、金融渗透情况、主要战败原因等】</span>
+
+请生成一份销售日报：先用 3 句话总结今天的情况，再列出 2 个值得关注的问题和对应的明天行动建议。用简洁的分点格式，适合直接发到工作群。</pre>
+    </article>
+
+    <div class="prose" style="margin-top:22px">
+      <h3>进阶：搭一个门店专属 AI 顾问</h3>
+      <p>当你把上面的提示词用顺了，可以用扣子（Coze）这类零代码平台，把门店的车型资料、金融产品政策、统一话术口径做成知识库，搭一个专属智能体。它能 24 小时回答客户的常见问题，也能给新员工当“随身师傅”。建议先在内部试用一个月，确认回答准确，再考虑对外开放，并设置“复杂问题转人工”。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 合规 -->
+<section id="redline">
+  <div class="wrap">
+    <div class="sec-head"><div class="sign" style="background:var(--stop)">!</div><div><h2>用 AI 之前，先记住这五条红线</h2><p>AI 让内容生产快了十倍，出错和违规的速度也一样快。以下内容请务必人工把关。</p></div></div>
+    <div class="redlines">
+      <div class="rl"><h3>宣传不夸大</h3><p><span class="no">不说：</span>“零首付”“零利息”“包过”“黑户可做”“秒批”。</p><p><span class="ok">要说：</span>这是融资租赁方案，首付、月供、尾款和总成本分别是多少。</p></div>
+      <div class="rl"><h3>性质讲清楚</h3><p>主动告诉客户：租赁期内车辆所有权归租赁公司，付清全部款项并满足合同条件后才过户；逾期可能被收回车辆并承担违约责任。</p></div>
+      <div class="rl"><h3>客户信息不外传</h3><p><span class="no">不把</span>客户的身份证号、手机号、银行流水、征信报告上传到公共 AI 工具。需要 AI 处理时，先用“王先生”“某客户”替换真实信息。</p></div>
+      <div class="rl"><h3>数字和事实要核对</h3><p>AI 会算错账，也会编造车况、政策和条款。凡是金额、利率、合同条款、车辆信息，发给客户前必须人工核对。</p></div>
+      <div class="rl"><h3>AI 生成要标识</h3><p>使用 AI 生成的人像、数字人口播、合成视频对外发布时，按《人工智能生成合成内容标识办法》要求进行标注，不用 AI 冒充真实车主或真实评价。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 30 天 -->
+<section id="plan">
+  <div class="wrap">
+    <div class="sec-head"><div class="sign" style="background:var(--go)">程</div><div><h2>30 天落地计划</h2><p>不求一步到位，每周只做好一件事。</p></div></div>
+    <ol class="weeks">
+      <li><div class="wk">第 1 周</div><div class="goal">装好工具，用起来</div><ul><li>手机装好 DeepSeek、豆包、剪映</li><li>每人每天至少用 AI 写 1 条朋友圈</li><li>收藏本手册的提示词</li></ul></li>
+      <li><div class="wk">第 2 周</div><div class="goal">统一话术口径</div><ul><li>用 AI 生成 5 类异议的回答</li><li>主管审核定稿，全员共用</li><li>新人每天 AI 陪练 10 分钟</li></ul></li>
+      <li><div class="wk">第 3 周</div><div class="goal">内容稳定输出</div><ul><li>排好 30 天朋友圈日历</li><li>每周发布 3 条 AI 辅助的短视频</li><li>做出“合同要点一页纸”</li></ul></li>
+      <li><div class="wk">第 4 周</div><div class="goal">复盘与沉淀</div><ul><li>统计线索、到店、成交变化</li><li>把效果好的提示词存成门店模板</li><li>试用飞书多维表格管理客户</li></ul></li>
+    </ol>
+  </div>
+</section>
+
+</main>
+
+<footer class="end">
+  <div class="wrap">
+    <nav class="footnav" aria-label="本页导航">
+      <a href="#tools">工具箱</a>
+      <a href="#formula">提示词公式</a>
+      <a href="#s1">1 获客引流</a>
+      <a href="#s2">2 客户沟通</a>
+      <a href="#s3">3 方案测算</a>
+      <a href="#s4">4 资料准备</a>
+      <a href="#s5">5 交付售后</a>
+      <a href="#s6">6 续租复购</a>
+      <a href="#manage">门店管理</a>
+      <a href="#redline">合规红线</a>
+      <a href="#plan">30 天计划</a>
+      <a href="https://xjtulijiagui-max.github.io/lijiagui/list/">资料导航</a>
+    </nav>
+    <p><b>AI 赋能汽车经销商实战操作手册（租赁业务版）</b></p>
+    <p>本手册为培训课后配套资料，提示词与测算工具仅供学习参考。金融方案、费率与合同条款请以合作金融机构及正式合同为准；工具功能请以各平台官方说明为准。</p>
+    <p>主讲：李家贵 老师　｜　整理发布：<a href="https://xjtulijiagui-max.github.io/lijiagui/list/">AI 实战训练导航</a></p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // ---------- copy ----------
+  function copyText(text, btn){
+    var done = function(){
+      var old = btn.textContent;
+      btn.textContent = '已复制';
+      btn.classList.add('done');
+      setTimeout(function(){ btn.textContent = old; btn.classList.remove('done'); }, 1600);
+    };
+    if (navigator.clipboard && window.isSecureContext){
+      navigator.clipboard.writeText(text).then(done, function(){ fallback(text); done(); });
+    } else { fallback(text); done(); }
+  }
+  function fallback(text){
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly','');
+    ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); } catch(e) {}
+    document.body.removeChild(ta);
+  }
+  document.querySelectorAll('.copy').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var target;
+      if (btn.dataset.target) target = document.getElementById(btn.dataset.target);
+      else target = btn.closest('.prompt').querySelector('pre');
+      copyText(target.innerText.trim(), btn);
+    });
+  });
+
+  // ---------- objections ----------
+  var objText = document.getElementById('objText');
+  document.querySelectorAll('#objBtns button').forEach(function(b, i, all){
+    b.addEventListener('click', function(){
+      all.forEach(function(x){ x.setAttribute('aria-pressed','false'); });
+      b.setAttribute('aria-pressed','true');
+      objText.textContent = b.textContent;
+    });
+  });
+
+  // ---------- calculator ----------
+  var $ = function(id){ return document.getElementById(id); };
+  var fmt = function(n){ return isFinite(n) ? Math.round(n).toLocaleString('zh-CN') : '—'; };
+  function pmt(principal, annual, n, balloon){
+    balloon = balloon || 0;
+    var r = annual / 100 / 12;
+    if (n <= 0) return NaN;
+    if (r === 0) return (principal - balloon) / n;
+    var pvBalloon = balloon / Math.pow(1 + r, n);
+    return (principal - pvBalloon) * r / (1 - Math.pow(1 + r, -n));
+  }
+  function num(id){ var v = parseFloat($(id).value); return isFinite(v) ? v : 0; }
+  function row(dt, dd, big){ return '<dt>' + dt + '</dt><dd' + (big ? ' class="big"' : '') + '>' + dd + '</dd>'; }
+  function calc(){
+    var price = num('price');
+    // A
+    var aDown = price * num('aDown') / 100, aN = Math.round(num('aN'));
+    var aP = price - aDown, aM = pmt(aP, num('aR'), aN, 0);
+    var aTotal = aDown + aM * aN, aCost = aTotal - price;
+    // B
+    var bDown = price * num('bDown') / 100, bN = Math.round(num('bN'));
+    var bBal = price * num('bBal') / 100;
+    var bP = price - bDown, bM = pmt(bP, num('bR'), bN, bBal);
+    var bTotal = bDown + bM * bN + bBal, bCost = bTotal - price;
+
+    $('resA').innerHTML = row('首付', fmt(aDown) + ' 元') + row('月供', fmt(aM) + ' 元', true) +
+      row('尾款', '0 元') + row('总支出', fmt(aTotal) + ' 元') + row('资金成本', fmt(aCost) + ' 元');
+    $('resB').innerHTML = row('首付', fmt(bDown) + ' 元') + row('月租', fmt(bM) + ' 元', true) +
+      row('尾款', fmt(bBal) + ' 元') + row('总支出', fmt(bTotal) + ' 元') + row('资金成本', fmt(bCost) + ' 元');
+
+    var diffDown = aDown - bDown, diffM = aM - bM, diffCost = bCost - aCost;
+    var s = '这台车 ' + fmt(price) + ' 元，给您算两种方案：\n\n' +
+      '方案 A 银行分期：首付 ' + fmt(aDown) + ' 元，月供 ' + fmt(aM) + ' 元，' + aN + ' 期还完，车直接登记在您名下，总共多付约 ' + fmt(aCost) + ' 元。\n\n' +
+      '方案 B 融资租赁：首付只要 ' + fmt(bDown) + ' 元，月租 ' + fmt(bM) + ' 元，' + bN + ' 期结束时还有尾款 ' + fmt(bBal) + ' 元；付清全部款项后车辆再过户到您名下，期间车辆登记在租赁公司名下，总共多付约 ' + fmt(bCost) + ' 元。\n\n';
+    if (diffDown > 0) s += '简单说：方案 B 首付少 ' + fmt(diffDown) + ' 元，';
+    else s += '简单说：';
+    if (diffM > 0) s += '每月也少 ' + fmt(diffM) + ' 元，';
+    else if (diffM < 0) s += '但每月多 ' + fmt(-diffM) + ' 元，';
+    if (diffCost > 0) s += '代价是总成本多出约 ' + fmt(diffCost) + ' 元。';
+    else if (diffCost < 0) s += '总成本还少约 ' + fmt(-diffCost) + ' 元。';
+    else s += '两者总成本基本一样。';
+    s += '如果您手头资金紧、更看重前期压力小，B 更合适；如果首付够、想省总成本，A 更划算。以上为估算，最终以机构审批和合同为准。';
+    $('scriptOut').textContent = s;
+  }
+  document.querySelectorAll('#calc input').forEach(function(i){ i.addEventListener('input', calc); });
+  calc();
+})();
+</script>
+</body>
+</html>
