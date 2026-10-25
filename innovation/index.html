@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="场景创新六步实操流程：前四步梳理流程、找 AI 介入点、沉淀场景湖并完成高 ROI 评分，第五步把选定场景写成业务 IPO，第六步由工作台搭建师把 IPO 搭成可运行的工作台。">
+<title>场景创新六步实操流程｜从流程梳理到工作台搭建</title>
+<style>
+:root{
+  --navy:#12365a;--blue:#215888;--blue-deep:#173f6c;--ink:#213247;--muted:#596f85;
+  --line:#d9e4ef;--pale:#eef5fb;--card:#ffffff;--amber:#b45309;--amber-bg:#fef3c7;
+  --green:#166534;--green-bg:#dcfce7;--violet:#5b21b6;--violet-bg:#ede9fe;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;color:var(--ink);background:#f4f8fc;line-height:1.75}
+.hero{background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 60%,var(--blue-deep) 100%);color:#fff;padding:52px 20px 60px}
+.hero-inner{max-width:1000px;margin:0 auto}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:3px 14px;font-size:13px;letter-spacing:.08em;margin-bottom:14px}
+.hero h1{font-size:clamp(26px,4.5vw,40px);line-height:1.3;margin-bottom:12px}
+.hero p.lead{max-width:760px;font-size:16px;color:#dbe9f7}
+.hero .src-links{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px}
+.hero .src-links a{color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);border-radius:8px;padding:5px 14px;font-size:13px;text-decoration:none}
+.hero .src-links a:hover{background:rgba(255,255,255,.24)}
+.chain{max-width:1000px;margin:-30px auto 0;padding:0 20px}
+.chain-card{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 8px 24px rgba(18,54,90,.10);padding:20px 22px}
+.chain-card h2{font-size:16px;color:var(--navy);margin-bottom:10px}
+.chain-card ol{list-style:none;display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.chain-card li{background:var(--pale);border:1px solid var(--line);border-radius:10px;padding:10px 10px;font-size:13px;position:relative}
+.chain-card li b{display:block;color:var(--navy);font-size:14px;margin-bottom:2px}
+.chain-card li .src{display:inline-block;font-size:11px;border-radius:999px;padding:1px 8px;margin-top:6px;background:#e2e8f0;color:#475569}
+.chain-card li .src.scene{background:var(--green-bg);color:var(--green)}
+.chain-card li .src.ipo{background:var(--amber-bg);color:var(--amber)}
+.chain-card li .src.new{background:var(--violet-bg);color:var(--violet)}
+.chain-card li .deliv{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+main{max-width:1000px;margin:0 auto;padding:34px 20px 60px}
+.step{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:26px;overflow:hidden}
+.step-head{display:flex;gap:16px;align-items:flex-start;padding:20px 22px 6px}
+.step-no{flex:none;width:46px;height:46px;border-radius:12px;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700}
+.step:nth-of-type(5) .step-no{background:var(--amber)}
+.step:nth-of-type(6) .step-no{background:var(--violet)}
+.step-head h2{font-size:20px;color:var(--navy)}
+.step-head .src{display:inline-block;font-size:12px;border-radius:999px;padding:1px 10px;margin-left:8px;vertical-align:2px;background:#e2e8f0;color:#475569}
+.step-head .src.scene{background:var(--green-bg);color:var(--green)}
+.step-head .src.ipo{background:var(--amber-bg);color:var(--amber)}
+.step-head .src.new{background:var(--violet-bg);color:var(--violet)}
+.step-head p{color:var(--muted);font-size:14px;margin-top:2px}
+.step-body{padding:8px 22px 22px}
+.step-body ul.acts{list-style:none;margin:10px 0 14px}
+.step-body ul.acts li{padding-left:24px;position:relative;margin:6px 0;font-size:14.5px}
+.step-body ul.acts li::before{content:"";position:absolute;left:4px;top:11px;width:7px;height:7px;border-radius:50%;background:var(--blue)}
+.deliv-row{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 14px}
+.deliv-chip{font-size:12.5px;background:var(--pale);border:1px dashed var(--blue);color:var(--blue);border-radius:8px;padding:3px 10px}
+.tool-row{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 12px}
+.tool-chip{font-size:12.5px;background:#eef2f7;border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:3px 10px}
+.prompt-card{border:1px solid var(--line);border-radius:12px;background:#fbfdff;padding:14px 16px;margin:12px 0}
+.prompt-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.prompt-top .badge{display:inline-block;background:var(--navy);color:#fff;font-size:12px;border-radius:6px;padding:2px 10px;margin-right:8px}
+.prompt-top h3{display:inline;font-size:15px;color:var(--ink)}
+.copy-btn{flex:none;background:var(--blue);color:#fff;border:none;border-radius:8px;padding:7px 16px;font-size:13.5px;cursor:pointer;font-family:inherit}
+.copy-btn:hover{background:var(--navy)}
+.copy-btn.copied{background:var(--green)}
+.copy-btn.failed{background:#b91c1c}
+.prompt-box{width:100%;min-height:150px;resize:vertical;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);font-family:inherit;font-size:13.5px;line-height:1.7;padding:12px 14px}
+.prompt-box:focus{outline:2px solid rgba(33,88,136,.35);border-color:var(--blue)}
+.hint-list{list-style:none;margin-top:10px}
+.hint-list li{display:flex;gap:8px;font-size:13.5px;color:var(--muted);margin:5px 0}
+.hint-list .mark{flex:none;width:18px;height:18px;border-radius:50%;background:var(--pale);color:var(--blue);font-size:12px;display:flex;align-items:center;justify-content:center;font-weight:700;margin-top:3px}
+.downloads{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.dl-card{border:1px solid var(--line);border-radius:10px;background:var(--pale);padding:12px 14px}
+.dl-card a{color:var(--blue);font-weight:600;font-size:14px;text-decoration:none;word-break:break-all}
+.dl-card a:hover{text-decoration:underline}
+.dl-card p{font-size:12.5px;color:var(--muted);margin-top:2px}
+.note{background:var(--amber-bg);border:1px solid #fcd34d;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#78350f;margin:10px 0}
+.check-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.check-item{border:1px solid var(--line);border-radius:10px;padding:10px 14px;background:#fbfdff;font-size:13.5px}
+.check-item b{display:block;color:var(--navy);margin-bottom:2px;font-size:14px}
+.sub-steps{counter-reset:sub;list-style:none;margin:10px 0 14px}
+.sub-steps li{counter-increment:sub;position:relative;padding:10px 12px 10px 46px;border:1px solid var(--line);border-radius:10px;background:#fbfdff;margin:8px 0;font-size:14.5px}
+.sub-steps li::before{content:counter(sub,decimal-leading-zero);position:absolute;left:12px;top:12px;width:24px;height:24px;border-radius:7px;background:var(--pale);color:var(--blue);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.sub-steps li b{color:var(--navy)}
+.linkline{font-size:14px;margin-top:6px}
+.linkline a{color:var(--blue);font-weight:600}
+footer{border-top:1px solid var(--line);background:#fff;padding:26px 20px 40px}
+footer .inner{max-width:1000px;margin:0 auto;color:var(--muted);font-size:13px}
+footer .tags span{display:inline-block;background:#eef2f7;border:1px solid var(--line);border-radius:999px;padding:2px 10px;margin:2px 4px 2px 0;font-size:12px;color:#475569}
+@media (max-width:760px){
+  .chain-card ol{grid-template-columns:1fr 1fr}
+  .downloads{grid-template-columns:1fr}
+  .check-grid{grid-template-columns:1fr}
+  .step-no{width:38px;height:38px;font-size:17px}
+  .hero{padding:38px 16px 50px}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <span class="tag">innovation · 六步串起来</span>
+    <h1>场景创新六步实操流程<br>从流程梳理到工作台搭建</h1>
+    <p class="lead">第 1—4 步把业务流程和场景梳理清楚：生成流程图、找 AI 介入点、沉淀场景湖、完成高 ROI 评分（来自场景训练操作台）。第 5 步把评分选出的优先场景写成自己的业务 IPO（来自综合金融 IPO 填写说明）。第 6 步由“工作台搭建师”拿着这份 IPO，把业务搭成可运行的工作台。</p>
+    <div class="src-links">
+      <a href="https://xjtulijiagui-max.github.io/lijiagui/scene/" target="_blank" rel="noopener">场景训练操作台（第 1—4 步）</a>
+      <a href="https://xjtulijiagui-max.github.io/lijiagui/f-ipo/" target="_blank" rel="noopener">IPO 填写说明（第 5 步）</a>
+      <a href="https://xjtulijiagui-max.github.io/lijiagui/" target="_blank" rel="noopener">返回主站</a>
+    </div>
+  </div>
+</header>
+
+<div class="chain">
+  <div class="chain-card">
+    <h2>六步怎么串起来</h2>
+    <ol>
+      <li><b>01 流程生成</b><span class="deliv">流程图 SVG</span><span class="src scene">scene · Step1</span></li>
+      <li><b>02 AI 介入</b><span class="deliv">AI 改造流程 SVG</span><span class="src scene">scene · Step2</span></li>
+      <li><b>03 场景湖</b><span class="deliv">场景清单 xls</span><span class="src scene">scene · Step3</span></li>
+      <li><b>04 ROI 评分</b><span class="deliv">评分结果 xls</span><span class="src scene">scene · Step4</span></li>
+      <li><b>05 业务 IPO</b><span class="deliv">IPO Word 交回</span><span class="src ipo">f-ipo · 第一步</span></li>
+      <li><b>06 工作台搭建</b><span class="deliv">可运行工作台</span><span class="src new">IPO＋搭建师</span></li>
+    </ol>
+  </div>
+</div>
+
+<main>
+
+  <section class="step" id="step1">
+    <div class="step-head">
+      <div class="step-no">01</div>
+      <div>
+        <h2>流程生成<span class="src scene">scene · Step1</span></h2>
+        <p>先填写 {变量}，把业务流程补完整，输出 Mermaid 流程图并导出 SVG。</p>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="tool-row"><span class="tool-chip">工具：DeepSeek / 豆包</span><span class="tool-chip">输出：Mermaid → SVG</span></div>
+      <ul class="acts">
+        <li>把 {企业名称及行业} 换成本企业信息，梳理从需求提出到离职交接（或你自己的业务全流程）。</li>
+        <li>拿到 Mermaid 后检查各角色交接是否完整，缺什么继续追问，补完整后导出 SVG。</li>
+      </ul>
+      <div class="prompt-card">
+        <div class="prompt-top">
+          <div><span class="badge">提示词 1</span><h3>流程提示词</h3></div>
+          <button type="button" class="copy-btn" data-copy="p1">复制当前提示词</button>
+        </div>
+        <textarea class="prompt-box" id="p1">我是一名人力资源经理，负责 {企业名称及行业} 的人力资源管理。现在要梳理“从用人需求提出到员工离职交接”的完整流程，减少重复填报和跨部门等待，让 HR、用人部门、财务、IT 和行政各自的任务更清楚。请结合人力资源管理实践搜索并补充流程，输出为 Mermaid 格式。
+
+流程请覆盖：编制与用人需求确认、岗位说明书、招聘发布与候选人沟通、面试组织、录用审批、入职准备与办理、试用期跟进与转正、培训发展、绩效目标与反馈、考勤与薪酬核对、员工关系、岗位异动、离职审批与交接、档案归档和人力资源复盘。说明每一步的责任岗位、输入资料、输出成果及交接对象；补充需求变更、候选人放弃入职、资料缺失、试用期评价分歧、考勤异常和离职交接未完成等分支。
+以 {企业现行制度和适用地区} 为依据；缺少的信息列为待确认，不编造企业政策、法定期限或审批权限。涉及劳动用工规定时，请注明可核验的官方来源和适用范围。
+
+请同时满足以下格式要求：
+1. 不同阶段使用不同颜色。
+2. 各阶段横向排布，阶段内部可自上而下展开；把考勤薪酬、绩效、培训等周期性工作单独标成循环，避免画成每名员工只走一次的直线。
+3. 用不同形状区分开始/结束、审批、判断、资料、执行和风险提示。
+4. 长流程按招聘、入职与转正、在职管理、异动与离职分区，标明 HR 与其他部门的交接节点。
+5. 输出可直接在 Mermaid 工具或 draw.io 中渲染的代码，不要只给文字说明。</textarea>
+        <ul class="hint-list">
+          <li><span class="mark">+</span><span>非 HR 岗位同样可用：把岗位、流程环节和交接对象换成自己的业务。</span></li>
+          <li><span class="mark">+</span><span>SVG 建议命名：01-{企业名称}-流程生成.svg。</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="step" id="step2">
+    <div class="step-head">
+      <div class="step-no">02</div>
+      <div>
+        <h2>AI 介入<span class="src scene">scene · Step2</span></h2>
+        <p>在同一轮对话里，找出 AI 能减少重复整理、加快响应的环节，守住人工复核边界。</p>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="tool-row"><span class="tool-chip">工具：DeepSeek / 豆包（接着第 1 步对话）</span><span class="tool-chip">方法：SCAMPER / SWOT / 价值链分析</span></div>
+      <ul class="acts">
+        <li>基于第 1 步的 Mermaid，标记适合 AI 辅助的节点，区分“有脱敏材料即可试用”和“需要对接系统”。</li>
+        <li>录用、转正、绩效、薪酬等决定保留人工复核；AI 只整理证据、提示缺项、草拟材料。</li>
+      </ul>
+      <div class="prompt-card">
+        <div class="prompt-top">
+          <div><span class="badge">提示词 2</span><h3>流程 AI 化提示词</h3></div>
+          <button type="button" class="copy-btn" data-copy="p2">复制当前提示词</button>
+        </div>
+        <textarea class="prompt-box" id="p2">请基于上一步生成的 {人力资源流程 Mermaid 代码}，分析哪些节点适合 AI 辅助，帮助 HR 减少重复整理、缩短响应时间，让材料和流程更完整。
+
+重点考虑岗位说明书草拟、面试安排与提醒、面试记录整理、入职材料清单核对、员工制度问答、培训需求归纳、绩效面谈记录整理、考勤异常提示、离职交接清单和人力资源月报生成。请用 SCAMPER、SWOT、价值链分析等方法检查遗漏，区分“有脱敏材料即可试用”和“需要对接招聘系统、HR 系统、考勤或审批系统”的场景，输出新的 Mermaid 流程图。
+
+格式要求：
+1. 保留原流程主线和必要的人工沟通、复核、审批节点。
+2. AI 辅助节点使用另一种颜色，节点名写清“AI 介入”。
+3. 每个 AI 节点说明责任岗位、输入数据、处理动作、输出结果和验证指标，例如材料整理工时、员工咨询响应时长、返工率或交接完成率；没有实测数据时，不虚构提效比例。
+4. 招聘录用、转正、绩效等级、晋升调薪、薪酬发放和解除劳动关系等决定由有权限的人员复核并作出。AI 仅整理证据、提示缺项、草拟材料，不自动排名、淘汰候选人或给员工定级；不依据性别、年龄、婚育、健康等与岗位要求无关的个人属性作判断。
+5. 优先使用脱敏或模拟材料，按岗位权限处理员工信息，说明信息缺失、模型出错或系统不可用时如何转人工。
+6. Mermaid 代码要能直接复制渲染。</textarea>
+        <ul class="hint-list">
+          <li><span class="mark">+</span><span>新 Mermaid 导出 SVG，建议命名：02-{企业名称}-AI改造流程.svg。</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="step" id="step3">
+    <div class="step-head">
+      <div class="step-no">03</div>
+      <div>
+        <h2>场景湖<span class="src scene">scene · Step3</span></h2>
+        <p>把讨论材料和 AI 改造流程交给小浣熊，沉淀成场景湖 Excel 清单。</p>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="tool-row"><span class="tool-chip">工具：小浣熊</span><span class="tool-chip">输入：示例表格＋会议纪要＋第 2 步 Mermaid 代码</span><span class="tool-chip">输出：xls</span></div>
+      <ul class="acts">
+        <li>给小浣熊的是 Mermaid 代码，不是流程图截图。</li>
+        <li>清单要落到具体工作场景；未确认的标“待确认”，缺数据的写“待补充”。</li>
+      </ul>
+      <div class="prompt-card">
+        <div class="prompt-top">
+          <div><span class="badge">提示词 3</span><h3>场景湖提示词</h3></div>
+          <button type="button" class="copy-btn" data-copy="p3">复制当前提示词</button>
+        </div>
+        <textarea class="prompt-box" id="p3">请以“场景湖清单-示例.xlsx”为格式模板，根据 {本企业人力资源会议纪要/录音转写/HR 与用人部门讨论要点}，结合 {Step2 输出的人力资源 AI 改造 Mermaid 代码}，整理 {企业名称/人力资源小组} 的 AI 场景湖清单，输出为 xls。
+
+按人力资源规划、招聘与入职、培训发展、绩效管理、薪酬考勤、员工关系与离职管理梳理。场景名称要落到具体工作，例如“用人需求转岗位说明书初稿”“新员工入职材料缺项核对”“员工制度问答”“绩效面谈纪要整理”“离职交接进度提醒”。
+保留模板原有列名、顺序和格式，在对应字段写清业务痛点、触发条件、责任岗位、输入数据、AI 动作、人工复核、输出成果和衡量指标。涉及员工或候选人信息时，补充脱敏方式、访问权限和人工确认边界；模板没有的字段放在补充说明工作表中。
+合并重复场景；讨论中未确认的建议标记为“待确认”，缺少的数据写“待补充”，不要照搬示例表中的其他行业内容。</textarea>
+        <ul class="hint-list">
+          <li><span class="mark">+</span><span>先下载示例表格上传到小浣熊作格式参考，场景内容按本企业材料重填。</span></li>
+        </ul>
+      </div>
+      <div class="downloads">
+        <div class="dl-card">
+          <a href="https://xjtulijiagui-max.github.io/lijiagui/scene/assets/%E5%9C%BA%E6%99%AF%E6%B9%96%E6%B8%85%E5%8D%95-%E7%A4%BA%E4%BE%8B.xlsx" download>场景湖清单-示例.xlsx</a>
+          <p>格式模板，先下载再上传给小浣熊。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="step" id="step4">
+    <div class="step-head">
+      <div class="step-no">04</div>
+      <div>
+        <h2>高 ROI 评分<span class="src scene">scene · Step4</span></h2>
+        <p>在同一小浣熊对话里追加评分模板，给场景湖逐项打分，选出优先试点场景。</p>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="tool-row"><span class="tool-chip">工具：小浣熊（接着第 3 步对话）</span><span class="tool-chip">输出：04-{企业名称}-高ROI场景评分结果.xls</span></div>
+      <ul class="acts">
+        <li>按模板评分维度和 5 分制打分并写依据；没有依据的分值标“暂估”并列出需补采数据。</li>
+        <li>综合评价选出优先试点的 3 个场景，写明责任人、试点范围、基线、验收指标和复盘时间。</li>
+      </ul>
+      <div class="prompt-card">
+        <div class="prompt-top">
+          <div><span class="badge">提示词 4</span><h3>高 ROI 场景提示词</h3></div>
+          <button type="button" class="copy-btn" data-copy="p4">复制当前提示词</button>
+        </div>
+        <textarea class="prompt-box" id="p4">请根据 {Step3 输出的本企业人力资源 AI 场景湖清单}，使用“高ROI场景评分表-示例.xlsx”和“场景综合评价表-参考-课后.xlsx”，完成人力资源场景评分，返回 xls。
+
+严格按模板的评分维度、5 分制标准和权重逐项打分，并写出依据。结合月度业务量、HR 和用人部门的重复工时、员工咨询响应时长、材料差错与返工情况，以及系统对接、数据治理、培训、维护和人工复核成本判断。没有依据的分值标记为“暂估”，列出需要补采的数据；仅有演示效果时，不视为收益已实现。
+区分招聘旺季、集中入职、月度薪酬核对和年度绩效周期。节省工时与实际现金节约分别列示，避免重复计算；不要把综合评分当成财务 ROI，也不要把 AI 使用量直接换算成裁员人数。
+在综合评价中选出优先试点的 3 个场景，写明责任人、试点范围、实施前基线、验收指标和复盘时间。优先考虑数据准备充分、人工复核明确、可小范围验证的辅助工作；对涉及员工权益的场景单列风险与上线前提，不因预计收益高就跳过人工审批。
+保持模板结构，输出文件命名为“04-{企业名称}-高ROI场景评分结果.xls”。</textarea>
+      </div>
+      <div class="downloads">
+        <div class="dl-card">
+          <a href="https://xjtulijiagui-max.github.io/lijiagui/scene/assets/%E9%AB%98ROI%E5%9C%BA%E6%99%AF%E8%AF%84%E5%88%86%E8%A1%A8-%E7%A4%BA%E4%BE%8B.xlsx" download>高ROI场景评分表-示例.xlsx</a>
+          <p>评分标准，上传给小浣熊。</p>
+        </div>
+        <div class="dl-card">
+          <a href="https://xjtulijiagui-max.github.io/lijiagui/scene/assets/%E5%9C%BA%E6%99%AF%E7%BB%BC%E5%90%88%E8%AF%84%E4%BB%B7%E8%A1%A8-%E5%8F%82%E8%80%83-%E8%AF%BE%E5%90%8E.xlsx" download>场景综合评价表-参考-课后.xlsx</a>
+          <p>综合评价格式参考。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="step" id="step5">
+    <div class="step-head">
+      <div class="step-no">05</div>
+      <div>
+        <h2>业务 IPO<span class="src ipo">f-ipo · 第一步</span></h2>
+        <p>从评分结果里选 1 个优先试点场景，用“模板＋语音输入”把它写成自己的业务 IPO 需求定义书。IPO 指 Input（输入）、Process（处理）、Output（输出），不是上市。</p>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="tool-row"><span class="tool-chip">工具：WorkBuddy</span><span class="tool-chip">输入：IPO Word 模板＋语音口述</span><span class="tool-chip">输出：场景_IPO.docx 交回李老师</span></div>
+      <ol class="sub-steps">
+        <li><b>放入 IPO 模板：</b>到 <a href="https://xjtulijiagui-max.github.io/lijiagui/f-ipo/" target="_blank" rel="noopener">IPO 填写说明页</a> 下载 IPO Word 模板，在 WorkBuddy 新建任务并作为附件放入。此阶段只整理业务需求，不先做软件，不上传真实涉密资料。</li>
+        <li><b>复制提示词，语音说清业务：</b>把下方提示词复制到同一任务，再用获准使用的语音输入法口述业务，接在“下面是我的业务口述”之后发送。先讲一个熟悉、具体的任务。</li>
+        <li><b>AI 整体改写，核对 4 件事：</b>让 AI 改写全部章节和表格，不只改标题；内容不准就继续语音纠正，未明确的保留“待确认”。</li>
+        <li><b>核对后发回李老师：</b>交回改写后的需求文档，不是原模板、纯语音或截图。课堂将基于这份 IPO 继续搭建。</li>
+      </ol>
+      <div class="check-grid">
+        <div class="check-item"><b>这是我的业务</b>岗位、场景和各表内容已整体替换，没有照搬示例。</div>
+        <div class="check-item"><b>I / P / O 讲清楚了</b>能看出资料来源、处理规则、异常处理、输出和人工确认点。</div>
+        <div class="check-item"><b>没有把 AI 猜测当事实</b>不清楚的制度、数据、权限和验收要求已写“待确认”。</div>
+        <div class="check-item"><b>这份文件可以对外提交</b>排除了涉密内容；内网生成的文件也需检查外发边界。</div>
+      </div>
+      <div class="prompt-card">
+        <div class="prompt-top">
+          <div><span class="badge">提示词 5</span><h3>IPO 填写提示词（发给 WorkBuddy）</h3></div>
+          <button type="button" class="copy-btn" data-copy="p5">复制完整提示词</button>
+        </div>
+        <textarea class="prompt-box" id="p5">请先完整阅读我上传的《综合金融_AI业务场景IPO模板_业务到智能体样例.docx》。这是一份结构模板和填写样例，不是我的真实业务资料。
+
+接下来我会用语音输入法口述自己的业务。请根据我的口述，把这份模板整体改写成“我的业务场景 IPO 需求定义书”。IPO 指 Input（输入）、Process（处理）、Output（输出），不是上市。
+
+请这样处理：
+1. 先理解我想解决的一个具体业务问题，按模板保留：场景基本信息、I 输入定义、示例输入包、P 处理流程、核心业务规则、O 输出定义、输出样例、验收标准。
+2. 把所有章节和表格改为我的业务，不只是改标题。模板中的投研对象、材料、研究框架和示例规则都不能默认是我的事实；不是投研场景时，删除不适用内容。
+3. 输入写清资料是什么、从哪里来、格式和字段、哪些获准使用；处理写清目前的步骤、业务判断规则、异常处理和人工确认点；输出写清文件或工作台长什么样、有哪些字段、谁来确认可用。
+4. 我已经说清楚的内容直接整理。缺失内容写“待确认”，区分“本人已确认”和“AI建议”；不要虚构数据、制度、来源、审核结果或提效比例。确实影响理解的关键问题最多追问5个，其余先保留待确认项。
+5. 只围绕我提出的业务需求。此阶段不开发系统、不生成真实投研结论、不自行增加复杂功能。原型、实际可用工具与正式上线系统要区分。
+6. 只使用公开、模拟或已获准使用的内容。发现疑似涉密信息，先停止进一步处理并提醒我改用可提交的描述；不得将其继续复制到拟外发文档中。不索取账号密码、API Key或真实持仓、交易、客户信息。
+7. 最后生成一份可编辑的 Word，建议命名“综合金融_部门_姓名或代号_场景_IPO.docx”，供我核对后发回李老师进一步处理。姓名等信息未提供时留待确认，不代填。
+
+如果当前环境不能直接生成 Word 文件，请先输出完整、可复制的正文和表格，并说明需要由我保存为 Word；不要声称已经生成文件。
+
+下面是我的业务口述：</textarea>
+      </div>
+      <div class="prompt-card">
+        <div class="prompt-top">
+          <div><span class="badge">语音提纲</span><h3>不知道怎么开口时照着说</h3></div>
+          <button type="button" class="copy-btn" data-copy="p5b">复制语音提纲</button>
+        </div>
+        <textarea class="prompt-box short" id="p5b">我在【部门/岗位】工作，这次最想解决的是【一个具体业务问题】。
+
+I 输入：任务开始时，我会拿到【哪些文件、表格、录音转写或数据】；这些材料来自【来源】，通常是【格式/主要字段】。哪些能用于课前练习、哪些不能对外提供，我会明确说明。
+
+P 处理：现在我先【第一步】，再【第二步】，最后【第三步】。最耗时或容易出错的是【环节】。我的关键判断规则是【看什么、依据什么、如何判断】；遇到【异常情况】时，我会【处理方式】。必须由人确认的是【节点】。
+
+O 输出：最后我要得到【报告/表格/清单/工作台】，至少包含【模块或字段】，给【谁】使用。满足【要求】才算可用。
+
+如果需要工作台，我希望能够【管理什么资料、项目或进度】。不清楚的部分先写“待确认”，请不要替我编造。</textarea>
+      </div>
+      <div class="note">提示词 5 以综合金融投研模板为例。其他行业沿用同一结构：替换模板文件名、岗位表述和示例规则即可；IPO Word 模板在 <a href="https://xjtulijiagui-max.github.io/lijiagui/f-ipo/" target="_blank" rel="noopener">f-ipo 页</a>下载。</div>
+    </div>
+  </section>
+
+  <section class="step" id="step6">
+    <div class="step-head">
+      <div class="step-no">06</div>
+      <div>
+        <h2>工作台搭建<span class="src new">IPO＋工作台搭建师</span></h2>
+        <p>把核对好的 IPO 交给“工作台搭建师”：按 IPO 的输入、流程、规则和验收标准，把业务搭成可运行、可验证、可迭代的工作台。</p>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="tool-row"><span class="tool-chip">角色：工作台搭建师（AI 承担搭建，你负责确认）</span><span class="tool-chip">输入：核对后的 IPO＋可外发样例输入</span><span class="tool-chip">输出：可运行工作台</span></div>
+      <ol class="sub-steps">
+        <li><b>资料就位：</b>把核对后的 IPO 文档和可外发的示例输入放进同一个任务/工作区，列清已提供和待补充，只使用公开、模拟或获准使用的内容。</li>
+        <li><b>搭结构：</b>按 P 处理流程建立工作台结构：输入区、处理规则、模板、输出区、台账，每个文件写清用途和使用人。</li>
+        <li><b>跑通一轮：</b>用 IPO 的示例输入包完整走一遍 I→P→O，生成输出样例；缺数据用占位并标注，不虚构。</li>
+        <li><b>对验收：</b>逐条执行 O 输出定义里的验收标准，输出「通过 / 异常 / 待办」清单；异常写清原因和需要的补充材料。</li>
+        <li><b>迭代：</b>问题回到 IPO 修订，改完再试跑；每一轮记录证据。审批、对外发送和资金、人员决定只做整理与提示，由人执行。</li>
+      </ol>
+      <div class="prompt-card">
+        <div class="prompt-top">
+          <div><span class="badge">提示词 6</span><h3>工作台搭建提示词（本页基于第 5 步 IPO 结构整理）</h3></div>
+          <button type="button" class="copy-btn" data-copy="p6">复制当前提示词</button>
+        </div>
+        <textarea class="prompt-box" id="p6">你是工作台搭建师。请先完整阅读我上传的《{场景}_IPO 需求定义书》，按其中的 I 输入定义、P 处理流程、核心业务规则、O 输出定义和验收标准，帮我把这个业务搭成一个可运行的工作台。
+
+请按以下步骤进行：
+1. 资料就位：列出 IPO 中提到的输入资料、模板和台账，标明哪些我已提供、哪些待补充；只使用公开、模拟或已获准使用的内容，发现疑似涉密信息先停止并提醒我替换。
+2. 搭结构：按 P 处理流程建立工作台的目录与文件结构（输入区、处理规则、模板、输出区、台账），每个文件说明用途和使用人。
+3. 跑通一轮：用 IPO 的示例输入包完整走一遍 I→P→O，生成输出样例；缺少数据时用占位符并标注“待补充”，不虚构数据、制度或结果。
+4. 对验收：逐条执行 O 输出定义中的验收标准，输出「通过 / 异常 / 待办」清单；异常写清原因和需要的补充材料。
+5. 迭代建议：给出下一轮要改的清单（3 件以内）；先改 IPO 还是先改工作台，由我确认后再动。
+
+全程保留人工确认点：涉及审批、对外发送、资金和人员决定的内容，只做整理和提示，不自动执行。完成后告诉我工作台放在哪里、怎么再次运行、下一步需要我补什么。</textarea>
+        <ul class="hint-list">
+          <li><span class="mark">+</span><span>验收没通过的项不要硬说过；原型、可运行工具与正式上线系统分开说。</span></li>
+          <li><span class="mark">+</span><span>课堂现场可直接把这步交给老师演示；课后按同一提示词自己迭代。</span></li>
+        </ul>
+      </div>
+      <p class="linkline">完整 IPO 填写说明与 Word 模板下载见 <a href="https://xjtulijiagui-max.github.io/lijiagui/f-ipo/" target="_blank" rel="noopener">f-ipo 页</a>；前四步的完整操作台见 <a href="https://xjtulijiagui-max.github.io/lijiagui/scene/" target="_blank" rel="noopener">scene 页</a>。</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="inner">
+    <p>本页把 <a href="https://xjtulijiagui-max.github.io/lijiagui/scene/" target="_blank" rel="noopener">场景训练操作台</a>前四步、<a href="https://xjtulijiagui-max.github.io/lijiagui/f-ipo/" target="_blank" rel="noopener">综合金融 IPO 填写说明</a>第一步与“IPO＋工作台搭建师”串成一条六步链路；提示词 1—5 沿用来源页原文，提示词 6 为本页基于 IPO 结构整理。</p>
+    <p class="tags" style="margin-top:8px"><span>innovation</span><span>场景创新</span><span>业务 IPO</span><span>工作台搭建师</span><span>Mermaid</span><span>SCAMPER</span><span>ROI</span><span>WorkBuddy</span></p>
+    <p style="margin-top:8px">更新：2026-10-25</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var btns = document.querySelectorAll('.copy-btn');
+  function done(btn, ok){
+    var old = btn.getAttribute('data-label') || btn.textContent;
+    btn.setAttribute('data-label', old);
+    btn.textContent = ok ? '已复制 ✓' : '复制失败，请手动全选复制';
+    btn.classList.remove('copied','failed');
+    btn.classList.add(ok ? 'copied' : 'failed');
+    setTimeout(function(){
+      btn.textContent = btn.getAttribute('data-label') || old;
+      btn.classList.remove('copied','failed');
+    }, 2000);
+  }
+  btns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var ta = document.getElementById(btn.getAttribute('data-copy'));
+      if(!ta){ done(btn, false); return; }
+      var text = ta.value;
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(function(){ done(btn, true); }, function(){ fallback(); });
+      } else { fallback(); }
+      function fallback(){
+        var ok = false;
+        try{
+          ta.focus(); ta.select(); ta.setSelectionRange(0, text.length);
+          ok = document.execCommand('copy');
+        }catch(e){ ok = false; }
+        if(window.getSelection && window.getSelection().removeAllRanges){
+          try{ window.getSelection().removeAllRanges(); }catch(e){}
+        }
+        done(btn, ok);
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
