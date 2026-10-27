@@ -1,0 +1,1195 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="vivo AI 场景训练操作台：从岗位任务流程梳理到 AI 介入、场景湖清单与五项标准评分，含四个可编辑提示词、模板下载和最终提交清单。">
+  <title>vivo AI 场景训练操作台</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --surface-primary: #08090a;
+      --surface-secondary: #0f1011;
+      --surface-elevated: #191a1b;
+      --surface-inset: #111316;
+      --text-primary: #f7f8f8;
+      --text-secondary: #d0d6e0;
+      --text-muted: #8a8f98;
+      --border-subtle: rgba(255,255,255,0.06);
+      --border-standard: rgba(255,255,255,0.10);
+      --accent-primary: #7170ff;
+      --accent-hover: #8585ff;
+      --accent-green: #2dd4bf;
+      --accent-amber: #f7b955;
+      --status-error: #ff7979;
+      --radius-card: 8px;
+      --radius-control: 6px;
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+      --space-16: 64px;
+      --font-sans: Arial, "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+      --font-mono: "Cascadia Mono", "Microsoft YaHei Mono", Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        linear-gradient(180deg, rgba(113,112,255,0.08), transparent 360px),
+        var(--surface-primary);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.65;
+      letter-spacing: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      overflow-wrap: anywhere;
+    }
+
+    button,
+    textarea,
+    input {
+      font: inherit;
+      letter-spacing: 0;
+    }
+
+    button,
+    .button-link {
+      border: 1px solid var(--border-standard);
+      border-radius: var(--radius-control);
+      background: rgba(255,255,255,0.04);
+      color: var(--text-primary);
+      min-height: 40px;
+      padding: 0 var(--space-4);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      cursor: pointer;
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease, color 160ms ease;
+      white-space: nowrap;
+    }
+
+    button:hover,
+    .button-link:hover {
+      transform: translateY(-1px);
+      border-color: rgba(113,112,255,0.65);
+      background: rgba(113,112,255,0.14);
+    }
+
+    button:active,
+    .button-link:active {
+      transform: translateY(0);
+    }
+
+    button:focus-visible,
+    a:focus-visible,
+    textarea:focus-visible {
+      outline: 2px solid var(--accent-hover);
+      outline-offset: 3px;
+    }
+
+    .shell {
+      width: min(100%, 1480px);
+      margin: 0 auto;
+      padding: var(--space-6);
+      display: grid;
+      grid-template-columns: 284px minmax(0, 1fr);
+      gap: var(--space-6);
+    }
+
+    .rail {
+      position: sticky;
+      top: var(--space-6);
+      align-self: start;
+      min-height: calc(100dvh - 48px);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-card);
+      background: rgba(15,16,17,0.92);
+      padding: var(--space-4);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.22);
+    }
+
+    .rail-title {
+      padding: var(--space-2) var(--space-2) var(--space-3);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .rail-title strong {
+      display: block;
+      font-size: 15px;
+      line-height: 1.4;
+      font-weight: 650;
+    }
+
+    .rail-title span {
+      color: var(--text-muted);
+      display: block;
+      margin-top: var(--space-1);
+      font-size: 12px;
+    }
+
+    .nav-list,
+    .tool-list,
+    .check-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: var(--space-2);
+    }
+
+    .nav-item {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: var(--space-2);
+      min-height: 44px;
+      padding: var(--space-2);
+      border-radius: var(--radius-control);
+      color: var(--text-secondary);
+      border: 1px solid transparent;
+      transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+    }
+
+    .nav-item:hover {
+      background: rgba(255,255,255,0.035);
+      border-color: var(--border-subtle);
+      transform: translateX(2px);
+    }
+
+    .nav-index {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: var(--radius-control);
+      background: rgba(255,255,255,0.04);
+      color: var(--accent-primary);
+      font-size: 12px;
+      font-weight: 650;
+      font-family: var(--font-mono);
+    }
+
+    .tool-link {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-3);
+      padding: var(--space-3);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-control);
+      background: rgba(255,255,255,0.025);
+      color: var(--text-secondary);
+      font-size: 13px;
+      transition: background 160ms ease, border-color 160ms ease;
+    }
+
+    .tool-link:hover {
+      border-color: rgba(45,212,191,0.45);
+      background: rgba(45,212,191,0.08);
+    }
+
+    .tool-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-top: var(--space-4);
+    }
+
+    .tool-tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      border-radius: 999px;
+      border: 1px solid rgba(113,112,255,0.34);
+      background: rgba(113,112,255,0.08);
+      color: #d9ddff;
+      padding: 0 var(--space-3);
+      font-size: 12px;
+      font-weight: 560;
+      transition: background 160ms ease, border-color 160ms ease;
+    }
+
+    .tool-tag:hover {
+      border-color: rgba(45,212,191,0.42);
+      background: rgba(45,212,191,0.08);
+    }
+
+    .submit-link {
+      margin-top: auto;
+      background: var(--accent-primary);
+      border-color: var(--accent-primary);
+      color: white;
+      width: 100%;
+      font-weight: 650;
+    }
+
+    main {
+      min-width: 0;
+      display: grid;
+      gap: var(--space-6);
+    }
+
+    .hero,
+    .section {
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-card);
+      background: rgba(15,16,17,0.76);
+    }
+
+    .hero {
+      min-height: 420px;
+      padding: clamp(24px, 5vw, 56px);
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+      gap: var(--space-8);
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(120deg, transparent 0 46%, rgba(113,112,255,0.10) 46% 47%, transparent 47%),
+        radial-gradient(circle at 78% 20%, rgba(45,212,191,0.14), transparent 28%);
+      pointer-events: none;
+    }
+
+    .hero > * {
+      position: relative;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      min-height: 28px;
+      border-radius: 999px;
+      border: 1px solid rgba(113,112,255,0.35);
+      background: rgba(113,112,255,0.10);
+      color: #d9ddff;
+      padding: 0 var(--space-3);
+      font-size: 13px;
+      font-weight: 560;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin-bottom: var(--space-5);
+      font-size: clamp(32px, 5vw, 56px);
+      line-height: 1.08;
+      font-weight: 650;
+      letter-spacing: 0;
+    }
+
+    .title-line {
+      white-space: nowrap;
+    }
+
+    h2 {
+      margin-bottom: var(--space-3);
+      font-size: clamp(24px, 3vw, 34px);
+      line-height: 1.22;
+      font-weight: 650;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin-bottom: var(--space-2);
+      font-size: 18px;
+      line-height: 1.35;
+      font-weight: 650;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      color: var(--text-secondary);
+      font-size: 18px;
+      max-width: 720px;
+      margin-bottom: var(--space-6);
+    }
+
+    .hero-actions,
+    .card-actions,
+    .file-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      align-items: center;
+    }
+
+    .primary {
+      background: var(--accent-primary);
+      border-color: var(--accent-primary);
+      color: white;
+      font-weight: 650;
+    }
+
+    .green {
+      border-color: rgba(45,212,191,0.50);
+      color: #c7fff5;
+      background: rgba(45,212,191,0.10);
+    }
+
+    .workflow-visual {
+      border: 1px solid var(--border-standard);
+      border-radius: var(--radius-card);
+      background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.018));
+      padding: var(--space-5);
+      display: grid;
+      gap: var(--space-4);
+    }
+
+    .flow-node {
+      min-height: 58px;
+      display: grid;
+      grid-template-columns: 42px 1fr auto;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-control);
+      background: rgba(8,9,10,0.52);
+    }
+
+    .node-number {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: var(--radius-control);
+      background: rgba(113,112,255,0.12);
+      color: var(--accent-primary);
+      font-family: var(--font-mono);
+      font-weight: 650;
+    }
+
+    .node-title {
+      display: block;
+      font-weight: 650;
+      line-height: 1.35;
+    }
+
+    .node-meta {
+      display: block;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .node-tool {
+      min-width: 74px;
+      text-align: center;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      padding: var(--space-1) var(--space-3);
+      font-size: 12px;
+    }
+
+    .section {
+      padding: clamp(22px, 4vw, 40px);
+      scroll-margin-top: 24px;
+    }
+
+    .section-head {
+      max-width: 840px;
+      margin-bottom: var(--space-6);
+    }
+
+    .section-head p {
+      color: var(--text-secondary);
+      margin-bottom: 0;
+    }
+
+    .grid-two {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+      gap: var(--space-6);
+      align-items: start;
+    }
+
+    .prompt-card,
+    .note-card,
+    .shot-card,
+    .download-card,
+    .artifact-card {
+      min-width: 0;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-card);
+      background: rgba(255,255,255,0.035);
+      padding: var(--space-5);
+    }
+
+    .prompt-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      border-radius: 999px;
+      border: 1px solid rgba(113,112,255,0.32);
+      color: #d9ddff;
+      padding: 0 var(--space-3);
+      font-size: 12px;
+      font-weight: 560;
+      white-space: nowrap;
+    }
+
+    .badge.greenish {
+      border-color: rgba(45,212,191,0.36);
+      color: #c7fff5;
+    }
+
+    .badge.amber {
+      border-color: rgba(247,185,85,0.45);
+      color: #ffe1a7;
+    }
+
+    .prompt-box {
+      width: 100%;
+      max-width: 100%;
+      min-height: 220px;
+      resize: vertical;
+      border: 1px solid var(--border-standard);
+      border-radius: var(--radius-control);
+      background: var(--surface-inset);
+      color: var(--text-primary);
+      padding: var(--space-4);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .prompt-box.short {
+      min-height: 160px;
+    }
+
+    .hint-list {
+      margin: var(--space-4) 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: var(--space-2);
+    }
+
+    .hint-list li,
+    .check-list li {
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      gap: var(--space-2);
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .mark {
+      color: var(--accent-green);
+      font-weight: 700;
+    }
+
+    .shot-card {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.018));
+    }
+
+    .shot-window {
+      margin-top: var(--space-4);
+      border: 1px solid var(--border-standard);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      background: #090a0b;
+    }
+
+    .screenshot-frame {
+      margin-top: var(--space-4);
+      border: 1px solid var(--border-standard);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      background: #090a0b;
+      aspect-ratio: 16 / 10;
+      display: grid;
+      place-items: center;
+      min-height: 260px;
+    }
+
+    .screenshot-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      background: #090a0b;
+    }
+
+    .screenshot-placeholder {
+      width: calc(100% - 32px);
+      min-height: 180px;
+      border: 1px dashed rgba(247,185,85,0.42);
+      border-radius: var(--radius-card);
+      display: grid;
+      place-items: center;
+      padding: var(--space-5);
+      color: #ffe1a7;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .shot-toolbar {
+      height: 38px;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: 0 var(--space-3);
+      border-bottom: 1px solid var(--border-subtle);
+      background: rgba(255,255,255,0.035);
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.24);
+    }
+
+    .shot-body {
+      padding: var(--space-4);
+      display: grid;
+      gap: var(--space-3);
+    }
+
+    .message {
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-control);
+      padding: var(--space-3);
+      background: rgba(255,255,255,0.025);
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+
+    .message.user {
+      border-color: rgba(113,112,255,0.40);
+      background: rgba(113,112,255,0.10);
+      color: #e6e8ff;
+    }
+
+    .message.file {
+      border-color: rgba(45,212,191,0.36);
+      color: #c7fff5;
+      background: rgba(45,212,191,0.08);
+    }
+
+    .download-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-4);
+    }
+
+    .download-card {
+      min-height: 210px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .step-downloads {
+      display: grid;
+      gap: var(--space-3);
+      margin-top: var(--space-4);
+    }
+
+    .step-download {
+      border: 1px solid rgba(45,212,191,0.28);
+      border-radius: var(--radius-card);
+      background: rgba(45,212,191,0.07);
+      padding: var(--space-4);
+    }
+
+    .download-title {
+      display: inline-flex;
+      width: fit-content;
+      color: #c7fff5;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.5;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .file-name {
+      font-family: var(--font-mono);
+      color: var(--text-primary);
+      overflow-wrap: anywhere;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .file-purpose {
+      color: var(--text-secondary);
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .file-note {
+      color: var(--text-muted);
+      font-size: 13px;
+      margin: 0;
+    }
+
+    .file-actions {
+      margin-top: auto;
+    }
+
+    .copy-status {
+      min-height: 22px;
+      color: var(--accent-green);
+      font-size: 13px;
+      margin-top: var(--space-3);
+    }
+
+    .artifact-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-4);
+    }
+
+    .artifact-card h3 {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-3);
+      align-items: center;
+    }
+
+    .artifact-card p {
+      color: var(--text-secondary);
+      margin-bottom: 0;
+    }
+
+    .mini-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: var(--space-4);
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .mini-table th,
+    .mini-table td {
+      border-bottom: 1px solid var(--border-subtle);
+      padding: var(--space-3);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .mini-table th {
+      color: var(--text-primary);
+      font-weight: 650;
+      background: rgba(255,255,255,0.025);
+    }
+
+    .warning {
+      border-color: rgba(247,185,85,0.34);
+      background: rgba(247,185,85,0.08);
+      color: #ffe1a7;
+    }
+
+    .footer-note {
+      color: var(--text-muted);
+      font-size: 13px;
+      text-align: center;
+      padding-bottom: var(--space-6);
+    }
+
+    .only-mobile {
+      display: none;
+    }
+
+    @media (max-width: 1100px) {
+      .shell {
+        grid-template-columns: 1fr;
+        padding: var(--space-4);
+      }
+
+      .rail {
+        position: relative;
+        top: auto;
+        min-height: auto;
+      }
+
+      .nav-list {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .submit-link {
+        margin-top: 0;
+      }
+
+      .hero,
+      .grid-two {
+        grid-template-columns: 1fr;
+      }
+
+      .workflow-visual {
+        order: -1;
+      }
+
+      .download-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .shell {
+        padding: var(--space-3);
+      }
+
+      .nav-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .hero,
+      .section {
+        padding: var(--space-5);
+      }
+
+      .hero-actions,
+      .card-actions,
+      .file-actions {
+        align-items: stretch;
+      }
+
+      .hero-actions > *,
+      .card-actions > *,
+      .file-actions > * {
+        width: 100%;
+      }
+
+      .prompt-top {
+        display: grid;
+      }
+
+      .flow-node {
+        grid-template-columns: 38px 1fr;
+      }
+
+      .node-tool {
+        grid-column: 2;
+        width: fit-content;
+      }
+
+      .screenshot-frame {
+        min-height: 0;
+      }
+
+      .screenshot-placeholder {
+        width: calc(100% - 24px);
+        min-height: 150px;
+      }
+
+      .artifact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *,
+      *::before,
+      *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="rail" aria-label="步骤导航">
+      <div class="rail-title">
+        <strong>vivo AI 场景训练操作台</strong>
+        <span>先替换变量，再复制提示词。</span>
+      </div>
+      <nav aria-label="页面步骤">
+        <ol class="nav-list">
+          <li><a class="nav-item" href="#flow"><span class="nav-index">01</span><span>Step1 流程生成</span></a></li>
+          <li><a class="nav-item" href="#ai-flow"><span class="nav-index">02</span><span>Step2 AI 介入</span></a></li>
+          <li><a class="nav-item" href="#scene-lake"><span class="nav-index">03</span><span>Step3 场景湖</span></a></li>
+          <li><a class="nav-item" href="#roi"><span class="nav-index">04</span><span>Step4 五项标准评分</span></a></li>
+          <li><a class="nav-item" href="#submit"><span class="nav-index">05</span><span>Step5 提交清单</span></a></li>
+        </ol>
+      </nav>
+      <div class="note-card">
+        <h3>修改提醒</h3>
+        <p class="file-purpose">把 {变量} 换成你的岗位和实际材料，再复制到工具。涉及公司内部数据请先脱敏，并遵守公司信息安全规定。工具入口为示例，实际使用公司允许且可访问的 AI 工具。</p>
+      </div>
+      <a class="button-link submit-link" href="https://lijiagui.feishu.cn/share/base/form/shrcnT1NSzknu8leovmgkkebnwh" target="_blank" rel="noopener">打开飞书提交链接</a>
+    </aside>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div>
+          <span class="kicker">vivo全员AI实操课程 · 选准场景</span>
+          <h1 id="page-title">vivo AI<br><span class="title-line">场景训练操作台</span></h1>
+          <p class="lead">从自己岗位上的一项具体工作开始，先梳清流程，再找 AI 能帮上忙的环节。按顺序完成流程图、场景湖清单和五项标准评分，花括号里的内容换成你的实际材料。课堂贯穿案例用“月度项目汇报”，也可以换成你的候选工作。</p>
+          <div class="hero-actions">
+            <button class="primary" type="button" data-copy-all>复制四个提示词</button>
+            <a class="button-link" href="#scene-lake">下载模板资料</a>
+          </div>
+          <div class="copy-status" aria-live="polite" data-global-status></div>
+        </div>
+        <div class="workflow-visual" aria-label="四步流程概览">
+          <div class="flow-node">
+            <span class="node-number">01</span>
+            <span><span class="node-title">流程生成</span><span class="node-meta">替换岗位变量，补完整流程并输出 Mermaid</span></span>
+            <span class="node-tool">DeepSeek/豆包</span>
+          </div>
+          <div class="flow-node">
+            <span class="node-number">02</span>
+            <span><span class="node-title">讨论 AI 介入节点</span><span class="node-meta">用 SCAMPER 等方法找效率提升点，标出人工复核边界</span></span>
+            <span class="node-tool">DeepSeek/豆包</span>
+          </div>
+          <div class="flow-node">
+            <span class="node-number">03</span>
+            <span><span class="node-title">刷新场景湖清单</span><span class="node-meta">上传示例表格和讨论材料，输出 xls</span></span>
+            <span class="node-tool">小浣熊</span>
+          </div>
+          <div class="flow-node">
+            <span class="node-number">04</span>
+            <span><span class="node-title">完成五项标准评分</span><span class="node-meta">同一对话追加评分模板，返回 xls</span></span>
+            <span class="node-tool">小浣熊</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="flow" aria-labelledby="flow-title">
+        <div class="section-head">
+          <h2 id="flow-title">Step1：流程生成：先把一项工作梳理完整</h2>
+          <p>先填写 {你的岗位}，选一项候选工作（课堂贯穿案例：月度项目汇报），把它从开始到完成的流程梳理成 Mermaid。拿到结果后检查上下游交接和资料来源，补完整后导出 SVG。</p>
+          <div class="tool-tags" aria-label="Step1 工具入口">
+            <a class="tool-tag" href="https://chat.deepseek.com" target="_blank" rel="noopener">DeepSeek</a>
+            <a class="tool-tag" href="https://www.doubao.com" target="_blank" rel="noopener">豆包</a>
+          </div>
+        </div>
+        <div class="grid-two">
+          <article class="prompt-card">
+            <div class="prompt-top">
+              <div>
+                <span class="badge">提示词 1</span>
+                <h3>流程提示词</h3>
+              </div>
+              <button type="button" data-copy-target="prompt-flow">复制当前提示词</button>
+            </div>
+            <textarea class="prompt-box" id="prompt-flow">我是一名 vivo 员工，岗位是 {你的岗位，例如项目经理／产品运营／供应链专员}。现在要梳理“{候选工作，示例：月度项目汇报}”从开始到完成的完整流程，减少重复整理和来回等待，让各环节的输入输出更清楚。请结合通用职场实践补充流程，输出为 Mermaid 格式。
+
+流程请覆盖：目标确认与资料收集、数据整理与口径核对、分析与结论草拟、汇报材料（PPT）制作、内部评审与修改、正式汇报与答疑、结论跟进与归档。说明每一步的责任角色、输入资料、输出成果和交接对象；补充数据缺失、口径分歧、评审意见反复、时间临时压缩、汇报对象变更等分支。如果你梳理的是其他候选工作，请按同样的结构替换对应环节。
+
+以 {你所在部门的实际做法} 为依据；缺少的信息列为待确认，不编造公司内部制度和审批权限。
+
+请同时满足以下格式要求：
+1. 不同阶段使用不同颜色。
+2. 各阶段横向排布，阶段内部自上而下展开；把月度汇报这类周期性工作单独标成循环，避免画成只走一次的直线。
+3. 用不同形状区分开始/结束、审批、判断、资料、执行和风险提示。
+4. 按“准备—制作—评审—汇报—跟进”分区，标明与上级、协作部门和汇报对象的交接节点。
+5. 输出可直接在 Mermaid 工具或 draw.io 中渲染的代码，不要只给文字说明。</textarea>
+            <ul class="hint-list">
+              <li><span class="mark">+</span><span>先填写你的岗位和候选工作，也可以直接用课堂贯穿案例“月度项目汇报”。</span></li>
+              <li><span class="mark">+</span><span>如果流程不完整，继续追问：“请补充与上级和协作部门的交接信息、时间要求，以及数据缺失、口径分歧和评审意见反复时的处理分支。”</span></li>
+              <li><span class="mark">+</span><span>最终下载 SVG，建议命名为：01-vivo-{姓名或部门}-流程生成.svg。</span></li>
+            </ul>
+            <div class="copy-status" aria-live="polite"></div>
+          </article>
+          <aside class="shot-card">
+            <span class="badge amber">截图原图</span>
+            <h3>Step1 对话原图嵌入位</h3>
+            <p class="file-purpose">直接嵌入原始截图，不做 OCR 文本复刻。截图建议包含：提示词、Mermaid 代码、流程图预览或 SVG 下载动作。</p>
+            <div class="screenshot-frame" aria-label="Step1 原始截图嵌入位" data-screenshot-src="assets/step1-screenshot.png" data-screenshot-alt="Step1 流程生成对话原始截图">
+              <div class="screenshot-placeholder">请将 Step1 原始截图命名为 step1-screenshot.png，放入 vivo-scene/assets 后会自动显示在这里。</div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section" id="ai-flow" aria-labelledby="ai-flow-title">
+        <div class="section-head">
+          <h2 id="ai-flow-title">Step2：AI 介入：在同一轮对话里找改造点</h2>
+          <p>对照流程逐段检查，找出 AI 能减少重复整理、加快响应的环节；同时明确哪些判断必须由人负责，例如汇报结论、评级建议和对外数据。</p>
+          <div class="tool-tags" aria-label="Step2 工具入口">
+            <a class="tool-tag" href="https://chat.deepseek.com" target="_blank" rel="noopener">DeepSeek</a>
+            <a class="tool-tag" href="https://www.doubao.com" target="_blank" rel="noopener">豆包</a>
+          </div>
+        </div>
+        <div class="grid-two">
+          <article class="prompt-card">
+            <div class="prompt-top">
+              <div>
+                <span class="badge">提示词 2</span>
+                <h3>流程 AI 化提示词</h3>
+              </div>
+              <button type="button" data-copy-target="prompt-ai-flow">复制当前提示词</button>
+            </div>
+            <textarea class="prompt-box" id="prompt-ai-flow">请基于上一步生成的 {岗位工作流程 Mermaid 代码}，分析哪些节点适合 AI 辅助，帮助我减少重复整理、缩短准备时间，让材料和结论更完整。
+
+重点考虑：资料收集与去重、数据整理与核对、图表生成、汇报提纲和 PPT 初稿、会议纪要与待办整理、汇报问答准备、常规周报月报生成。请用 SCAMPER、5W1H 等方法检查遗漏，区分“有脱敏材料即可试用”和“需要对接内部系统”的场景，输出新的 Mermaid 流程图。
+
+格式要求：
+1. 保留原流程主线和必要的人工沟通、复核、审批节点。
+2. AI 辅助节点使用另一种颜色，节点名写清“AI 介入”。
+3. 每个 AI 节点说明责任角色、输入数据、处理动作、输出结果和验证指标，例如材料准备工时、返工次数、评审修改轮次；没有实测数据时，不虚构提效比例。
+4. 汇报结论、评级建议、对外数据和关键承诺由有权限的人复核并负责。AI 仅整理证据、提示缺项、草拟材料，不代替决策；不依据与工作要求无关的个人属性作判断。
+5. 优先使用脱敏或模拟材料，遵守公司信息安全规定；说明信息缺失、模型出错或工具不可用时如何转人工。
+6. Mermaid 代码要能直接复制渲染。</textarea>
+            <ul class="hint-list">
+              <li><span class="mark">+</span><span>填入 {岗位工作流程 Mermaid 代码}，接着第一步梳理的流程继续讨论。</span></li>
+              <li><span class="mark">+</span><span>要求 AI 节点标注“输入数据、AI 处理、输出结果、节省时间或降低风险”。</span></li>
+              <li><span class="mark">+</span><span>最终下载 SVG，建议命名为：02-vivo-{姓名或部门}-AI化改造.svg。</span></li>
+            </ul>
+            <div class="copy-status" aria-live="polite"></div>
+          </article>
+          <aside class="note-card">
+            <span class="badge amber">讨论口径</span>
+            <h3>多人讨论时重点核对这些变化</h3>
+            <table class="mini-table">
+              <thead>
+                <tr><th>讨论点</th><th>追问句式</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>增加流程</td><td>“汇报前发现数据还没收齐，谁负责催收、谁兜底、什么时候升级？”</td></tr>
+                <tr><td>修改流程</td><td>“请把材料制作拆成提纲、图表、初稿、评审和定稿，写清每步的责任角色。”</td></tr>
+                <tr><td>删除流程</td><td>“这个环节是否符合本部门的规模和实际做法？不适用的请删除并说明原因。”</td></tr>
+                <tr><td>找业务点</td><td>“哪些 AI 介入点能减少重复整理、缩短等待，或降低材料差错与返工？”</td></tr>
+              </tbody>
+            </table>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section" id="scene-lake" aria-labelledby="scene-lake-title">
+        <div class="section-head">
+          <h2 id="scene-lake-title">Step3：场景湖：用小浣熊输出 Excel 清单</h2>
+          <p>这一步输入三类材料：场景湖示例表格、你记录的岗位痛点和讨论要点、第二步输出的 AI 改造 Mermaid 代码。注意给小浣熊的是代码，不是图片。</p>
+          <div class="tool-tags" aria-label="Step3 工具入口">
+            <a class="tool-tag" href="https://xiaohuanxiong.om" target="_blank" rel="noopener">小浣熊</a>
+          </div>
+        </div>
+        <div class="grid-two">
+          <article class="prompt-card">
+            <div class="prompt-top">
+              <div>
+                <span class="badge">提示词 3</span>
+                <h3>场景湖提示词</h3>
+              </div>
+              <button type="button" data-copy-target="prompt-scene">复制当前提示词</button>
+            </div>
+            <textarea class="prompt-box short" id="prompt-scene">请以“场景湖清单-示例.xlsx”为格式模板，根据 {我的岗位痛点记录/课程跟练笔记/讨论要点}，结合 {Step2 输出的 AI 改造 Mermaid 代码}，整理 {姓名/部门} 的 AI 场景湖清单，输出为 xls。
+
+按例行报告与汇报、数据分析与材料制作、跨部门沟通与信息整理、流程执行与检查、知识沉淀与问答梳理。场景名称要落到具体工作，例如“月度汇报数据自动汇总”“周报初稿生成”“跨部门资料催收提醒”“会议纪要与待办整理”“评审意见跟踪清单”。
+保留模板原有列名、顺序和格式，在对应字段写清业务痛点、触发条件、责任岗位、输入数据、AI 动作、人工复核、输出成果和衡量指标。涉及公司内部数据时，补充脱敏方式、访问权限和人工确认边界；模板没有的字段放在补充说明工作表中。
+合并重复场景；讨论中未确认的建议标记为“待确认”，缺少的数据写“待补充”，不要照搬示例表中的其他企业内容。</textarea>
+            <ul class="hint-list">
+              <li><span class="mark">+</span><span>先下载并上传下方资料：场景湖清单-示例.xlsx。</span></li>
+              <li><span class="mark">+</span><span>补充你的岗位痛点记录、跟练笔记和 AI 改造 Mermaid 代码。</span></li>
+              <li><span class="mark">+</span><span>若清单不对，继续对话让它补充、合并、删除或重排场景。</span></li>
+            </ul>
+            <div class="step-downloads" aria-label="Step3 下载资料">
+              <div class="step-download">
+                <span class="badge greenish">下载资料</span>
+                <p class="file-purpose">点击标题下载后，放入小浣熊作为格式参考；场景内容按你的岗位材料重新填写。</p>
+                <a class="download-title" href="assets/场景湖清单-示例.xlsx" download>场景湖清单-示例.xlsx</a>
+              </div>
+            </div>
+            <div class="copy-status" aria-live="polite"></div>
+          </article>
+          <aside class="shot-card">
+            <span class="badge amber">截图原图</span>
+            <h3>Step3 对话原图嵌入位</h3>
+            <p class="file-purpose">直接嵌入小浣熊第三步原始截图，不做 OCR 文本复刻。截图建议包含：上传示例表格、输入提示词、返回 xls 文件。</p>
+            <div class="screenshot-frame" aria-label="Step3 原始截图嵌入位" data-screenshot-src="assets/step3-screenshot.png" data-screenshot-alt="Step3 小浣熊场景湖对话原始截图">
+              <div class="screenshot-placeholder">请将 Step3 原始截图命名为 step3-screenshot.png，放入 vivo-scene/assets 后会自动显示在这里。</div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section" id="roi" aria-labelledby="roi-title">
+        <div class="section-head">
+          <h2 id="roi-title">Step4：五项标准评分：同一对话继续打分</h2>
+          <p>第四步继续在第三步的小浣熊对话里完成。追加评分模板和综合评价模板，按岗位价值、效率提升、数据可得性、可实施性、风险可控性五项标准打分，选出一项优先场景。</p>
+          <div class="tool-tags" aria-label="Step4 工具入口">
+            <a class="tool-tag" href="https://xiaohuanxiong.om" target="_blank" rel="noopener">小浣熊</a>
+          </div>
+        </div>
+        <div class="grid-two">
+          <article class="prompt-card">
+            <div class="prompt-top">
+              <div>
+                <span class="badge">提示词 4</span>
+                <h3>五项标准评分提示词</h3>
+              </div>
+              <button type="button" data-copy-target="prompt-roi">复制当前提示词</button>
+            </div>
+            <textarea class="prompt-box short" id="prompt-roi">请根据 {Step3 输出的我的 AI 场景湖清单}，使用“高ROI场景评分表-示例.xlsx”和“场景综合评价表-参考-课后.xlsx”，完成场景评分，返回 xls。
+
+评分按五项标准逐项打分并写明依据：岗位价值、效率提升、数据可得性、可实施性、风险可控性。结合该工作的月度重复次数、每轮耗时、返工情况，以及数据准备、工具可用性和人工复核成本判断。没有依据的分值标记为“暂估”，列出需要补采的数据；仅有演示效果时，不视为收益已实现。
+区分月度集中期和日常工作期。节省工时与实际现金节约分别列示，避免重复计算；不要把综合评分当成财务 ROI，也不要把 AI 使用量换算成人员精简。
+在综合评价中选出优先推进的 1—3 个场景，写明选择理由、预期改进、风险边界（敏感数据、关键决策、对外承诺按公司规则处理）、实施前基线、验收指标和复盘时间。
+保持模板结构，输出文件命名为“04-vivo-{姓名或部门}-五项标准评分结果.xls”。</textarea>
+            <ul class="hint-list">
+              <li><span class="mark">+</span><span>先下载并上传下方两份资料：评分表和综合评价参考表。</span></li>
+              <li><span class="mark">+</span><span>课堂初筛可用 5／3／1 分快速打分，课后按模板补全判断依据。</span></li>
+              <li><span class="mark">+</span><span>输出文件建议命名为：04-vivo-{姓名或部门}-五项标准评分结果.xls。</span></li>
+            </ul>
+            <div class="step-downloads" aria-label="Step4 下载资料">
+              <div class="step-download">
+                <span class="badge greenish">下载资料</span>
+                <p class="file-purpose">点击标题下载后，上传到小浣熊作为评分标准。</p>
+                <a class="download-title" href="assets/高ROI场景评分表-示例.xlsx" download>高ROI场景评分表-示例.xlsx</a>
+              </div>
+              <div class="step-download">
+                <span class="badge greenish">下载资料</span>
+                <p class="file-purpose">点击标题下载后，上传到小浣熊作为综合评价格式参考。</p>
+                <a class="download-title" href="assets/场景综合评价表-参考-课后.xlsx" download>场景综合评价表-参考-课后.xlsx</a>
+              </div>
+            </div>
+            <div class="copy-status" aria-live="polite"></div>
+          </article>
+          <aside class="shot-card">
+            <span class="badge amber">截图原图</span>
+            <h3>Step4 对话原图嵌入位</h3>
+            <p class="file-purpose">直接嵌入小浣熊第四步原始截图，不做 OCR 文本复刻。截图建议包含：评分模板、参考表、场景湖清单和评分结果 xls。</p>
+            <div class="screenshot-frame" aria-label="Step4 原始截图嵌入位" data-screenshot-src="assets/step4-screenshot.png" data-screenshot-alt="Step4 小浣熊五项标准评分对话原始截图">
+              <div class="screenshot-placeholder">请将 Step4 原始截图命名为 step4-screenshot.png，放入 vivo-scene/assets 后会自动显示在这里。</div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section" id="submit" aria-labelledby="submit-title">
+        <div class="section-head">
+          <h2 id="submit-title">Step5：最终提交：四个提示词和四个附件</h2>
+          <p>提交时不要只交截图。需要把修改后的四个提示词、两张流程图 SVG、两个 Excel 成果文件一起放到飞书表单。</p>
+        </div>
+        <div class="artifact-grid">
+          <article class="artifact-card">
+            <h3>四个提示词 <span class="badge">文本</span></h3>
+            <ul class="check-list">
+              <li><span class="mark">1</span><span>Step1 修改后的流程提示词</span></li>
+              <li><span class="mark">2</span><span>Step2 修改后的流程 AI 化提示词</span></li>
+              <li><span class="mark">3</span><span>Step3 修改后的场景湖提示词</span></li>
+              <li><span class="mark">4</span><span>Step4 修改后的五项标准评分提示词</span></li>
+            </ul>
+          </article>
+          <article class="artifact-card">
+            <h3>两个流程图附件 <span class="badge">SVG</span></h3>
+            <ul class="check-list">
+              <li><span class="mark">1</span><span>01-vivo-{姓名或部门}-流程生成.svg</span></li>
+              <li><span class="mark">2</span><span>02-vivo-{姓名或部门}-AI化改造.svg</span></li>
+            </ul>
+          </article>
+          <article class="artifact-card">
+            <h3>两个 Excel 附件 <span class="badge">xls</span></h3>
+            <ul class="check-list">
+              <li><span class="mark">1</span><span>03-vivo-{姓名或部门}-场景湖清单.xls</span></li>
+              <li><span class="mark">2</span><span>04-vivo-{姓名或部门}-五项标准评分结果.xls</span></li>
+            </ul>
+          </article>
+          <article class="artifact-card warning">
+            <h3>飞书提交入口 <span class="badge amber">必交</span></h3>
+            <p>最终提交链接：<br><a href="https://lijiagui.feishu.cn/share/base/form/shrcnT1NSzknu8leovmgkkebnwh" target="_blank" rel="noopener">https://lijiagui.feishu.cn/share/base/form/shrcnT1NSzknu8leovmgkkebnwh</a></p>
+            <div class="card-actions" style="margin-top: 16px;">
+              <a class="button-link primary" href="https://lijiagui.feishu.cn/share/base/form/shrcnT1NSzknu8leovmgkkebnwh" target="_blank" rel="noopener">打开提交表单</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <p class="footer-note">截图区域用于嵌入原图，不做 OCR 复刻；如需展示正式截图，请把图片放入 vivo-scene/assets 并使用页面提示的文件名。</p>
+    </main>
+  </div>
+
+  <script>
+    const prompts = ["prompt-flow", "prompt-ai-flow", "prompt-scene", "prompt-roi"];
+
+    async function copyText(text, statusTarget) {
+      try {
+        await navigator.clipboard.writeText(text);
+        statusTarget.textContent = "已复制";
+      } catch (error) {
+        const fallback = document.createElement("textarea");
+        fallback.value = text;
+        fallback.setAttribute("readonly", "");
+        fallback.style.position = "fixed";
+        fallback.style.left = "-9999px";
+        document.body.appendChild(fallback);
+        fallback.select();
+        document.execCommand("copy");
+        document.body.removeChild(fallback);
+        statusTarget.textContent = "已复制";
+      }
+      window.setTimeout(() => {
+        statusTarget.textContent = "";
+      }, 1800);
+    }
+
+    document.querySelectorAll("[data-copy-target]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const target = document.getElementById(button.dataset.copyTarget);
+        const card = button.closest(".prompt-card");
+        const status = card.querySelector(".copy-status");
+        copyText(target.value, status);
+      });
+    });
+
+    document.querySelectorAll("[data-screenshot-src]").forEach((frame) => {
+      const placeholder = frame.querySelector(".screenshot-placeholder");
+      const image = new Image();
+      image.decoding = "async";
+      image.alt = frame.dataset.screenshotAlt || "";
+      image.width = 960;
+      image.height = 600;
+      image.onload = () => {
+        frame.replaceChildren(image);
+      };
+      image.onerror = () => {
+        placeholder.hidden = false;
+      };
+      image.src = frame.dataset.screenshotSrc;
+    });
+
+    document.querySelector("[data-copy-all]").addEventListener("click", () => {
+      const all = prompts
+        .map((id, index) => `提示词 ${index + 1}\n${document.getElementById(id).value}`)
+        .join("\n\n");
+      copyText(all, document.querySelector("[data-global-status]"));
+    });
+  </script>
+</body>
+</html>
