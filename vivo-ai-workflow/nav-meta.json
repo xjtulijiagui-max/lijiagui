@@ -1,0 +1,26 @@
+{
+  "id": "vivo-ai-workflow",
+  "title": "AI 工作流重构与高效协同｜vivo 全员 AI 实操技巧线上课教学页",
+  "shortTitle": "AI工作流四步法",
+  "category": "通用方法与沙盘",
+  "description": "2.5 小时 vivo 全员 AI 实操线上课完整教学页：选准场景、拆清任务（IPO）、协同交付（CHAT 与人机分工）、固化复用（SOP/Skill），含 150 分钟授课安排、模块讲解、跟练任务与阶段产出。",
+  "path": "vivo-ai-workflow/",
+  "tags": [
+    "vivo",
+    "AI工作流",
+    "人机协同",
+    "任务拆解",
+    "IPO",
+    "CHAT法则",
+    "SOP",
+    "Skill",
+    "课程大纲",
+    "全员培训"
+  ],
+  "type": "教学资料",
+  "client": "vivo",
+  "order": 860,
+  "status": "正常",
+  "featured": false,
+  "updated": "2026-10-27"
+}
