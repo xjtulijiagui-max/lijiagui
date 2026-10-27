@@ -3,338 +3,120 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>AI 工作流重构与高效协同｜vivo 全员 AI 实操技巧线上课教学页</title>
-<meta name="description" content="2.5 小时 vivo 全员 AI 实操线上课教学页：选准场景、拆清任务（IPO）、协同交付（CHAT 与人机分工）、固化复用（SOP/Skill），含 150 分钟授课安排、模块讲解、跟练任务与阶段产出。讲师：李家贵。" />
+<title>协同交付实操教学页｜vivo 全员 AI 实操线上课 · 模块三</title>
+<meta name="description" content="vivo 全员 AI 实操线上课模块三单页教学：核心问题、三个主题与 3 条可直接复制的跟练提示词（CHAT 完整任务交代、人机分工约定、验收清单与纠错），附 CHAT 四要素速查。讲师：李家贵。" />
 <style>
 :root{
-  --navy:#061b46;
-  --navy-2:#0a2a68;
-  --blue:#155eef;
-  --blue-deep:#0b47c2;
-  --blue-soft:#eef4ff;
-  --page:#f5f8fd;
-  --card:#ffffff;
-  --ink:#15223a;
-  --ink-2:#526178;
-  --line:#d8e4f7;
-  --teal:#0c8f7d;
-  --teal-soft:#e6f6f3;
-  --amber:#a05a00;
-  --amber-soft:#fdf3e2;
-  --violet:#5b4bc4;
-  --violet-soft:#f0edfc;
-  --green:#2e7d32;
-  --green-soft:#eaf5ea;
-  --radius:14px;
-  --shadow:0 12px 34px rgba(17,57,122,.09);
+  --navy:#061b46;--navy-2:#0a2a68;--blue:#155eef;--blue-deep:#0b47c2;--blue-soft:#eef4ff;
+  --page:#f5f8fd;--card:#fff;--ink:#15223a;--ink-2:#526178;--line:#d8e4f7;
+  --amber:#a05a00;--amber-soft:#fdf3e2;--green:#2e7d32;--green-soft:#eaf5ea;
+  --code-bg:#0d1f45;--radius:14px;--shadow:0 12px 34px rgba(17,57,122,.09);
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:72px}
-body{
-  margin:0;color:var(--ink);background:var(--page);
-  font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",system-ui,sans-serif;
-  line-height:1.75;
-}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;color:var(--ink);background:var(--page);font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",system-ui,sans-serif;line-height:1.75}
 a{color:inherit;text-decoration:none}
-img{max-width:100%}
 :is(a,button):focus-visible{outline:3px solid #9cc0ff;outline-offset:2px;border-radius:6px}
-.wrap{max-width:1080px;margin:0 auto;padding-inline:22px}
+.wrap{max-width:920px;margin:0 auto;padding-inline:22px}
 
-/* ===== header ===== */
-.site-head{
-  position:sticky;top:0;z-index:50;
-  background:rgba(6,27,70,.92);backdrop-filter:blur(8px);
-  color:#fff;box-shadow:0 4px 18px rgba(6,27,70,.25);
-}
-.head-inner{display:flex;align-items:center;gap:18px;min-height:56px;flex-wrap:wrap;padding-block:8px}
-.brand{font-weight:800;letter-spacing:.02em;font-size:.95rem;display:flex;align-items:center;gap:8px}
+.site-head{position:sticky;top:0;z-index:50;background:rgba(6,27,70,.92);backdrop-filter:blur(8px);color:#fff;box-shadow:0 4px 18px rgba(6,27,70,.25)}
+.head-inner{display:flex;align-items:center;justify-content:space-between;min-height:54px;gap:14px;padding-block:8px}
+.brand{font-weight:800;font-size:.92rem;display:flex;align-items:center;gap:8px}
 .brand .dot{width:9px;height:9px;border-radius:50%;background:#5b8dff;box-shadow:0 0 0 4px rgba(91,141,255,.22)}
-.head-nav{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto;font-size:.86rem}
-.head-nav a{padding:6px 12px;border-radius:999px;color:rgba(255,255,255,.85);transition:background .15s}
+.head-nav{font-size:.86rem;display:flex;gap:6px}
+.head-nav a{padding:6px 12px;border-radius:999px;color:rgba(255,255,255,.85);white-space:nowrap}
 .head-nav a:hover{background:rgba(255,255,255,.14);color:#fff}
 .head-nav a.home{background:rgba(255,255,255,.16);font-weight:600}
 
-/* ===== hero ===== */
-.hero{
-  background:linear-gradient(132deg,var(--navy),var(--navy-2) 55%,#0f3ea0);
-  color:#fff;position:relative;overflow:hidden;
-}
-.hero::before,.hero::after{
-  content:"";position:absolute;border:1px solid rgba(255,255,255,.12);border-radius:50%;
-}
-.hero::before{width:520px;height:520px;right:-180px;top:-260px}
-.hero::after{width:320px;height:320px;right:110px;top:70px;opacity:.5}
-.hero .wrap{position:relative;z-index:2;padding-block:58px 46px}
-.badges{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.badge{
-  display:inline-flex;align-items:center;gap:6px;padding:5px 13px;border-radius:999px;
-  font-size:.82rem;font-weight:600;letter-spacing:.04em;
-  background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.22);
-}
+.hero{background:linear-gradient(132deg,var(--navy),var(--navy-2) 55%,#0f3ea0);color:#fff;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;width:460px;height:460px;right:-160px;top:-220px;border:1px solid rgba(255,255,255,.12);border-radius:50%}
+.hero .wrap{position:relative;z-index:2;padding-block:46px 40px}
+.badges{display:flex;gap:10px;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;padding:5px 13px;border-radius:999px;font-size:.8rem;font-weight:600;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.22)}
 .badge.solid{background:#fff;color:var(--navy)}
-.hero h1{
-  font-size:clamp(1.85rem,4.4vw,2.7rem);line-height:1.22;margin:18px 0 8px;
-  font-weight:800;letter-spacing:.01em;text-wrap:balance;
-}
-.hero .sub{font-size:clamp(1rem,2.2vw,1.18rem);color:rgba(255,255,255,.86);font-weight:600;margin:0 0 6px}
-.hero .desc{max-width:780px;color:rgba(255,255,255,.78);font-size:.95rem;margin:10px 0 0}
-.meta-chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
-.chip{
-  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
-  border-radius:10px;padding:8px 14px;font-size:.85rem;
-}
-.chip b{font-weight:700;color:#fff}
-.chip span{color:rgba(255,255,255,.72);margin-right:6px}
+.hero h1{font-size:clamp(1.7rem,4vw,2.3rem);line-height:1.25;margin:16px 0 6px;font-weight:800}
+.hero .sub{font-size:.98rem;color:rgba(255,255,255,.85);font-weight:600;margin:0}
+.hero .path{margin-top:14px;font-size:.83rem;color:rgba(255,255,255,.66)}
+.hero .path b{color:#fff}
+.qa-strip{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
+.qa{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:14px 16px}
+.qa .lab{font-size:.72rem;font-weight:800;letter-spacing:.08em;color:rgba(255,255,255,.65);margin-bottom:4px}
+.qa p{margin:0;font-size:.92rem}
+.qa.m .lab{color:#ffd98a}
 
-/* ===== step flow ===== */
-.flow{margin-top:30px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.flow-item{
-  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);
-  border-radius:12px;padding:14px 16px;position:relative;
-}
-.flow-item .no{
-  position:absolute;top:-11px;left:14px;background:#fff;color:var(--navy);
-  font-size:.72rem;font-weight:800;padding:2px 10px;border-radius:999px;letter-spacing:.06em;
-}
-.flow-item h3{margin:8px 0 4px;font-size:1rem;font-weight:700}
-.flow-item p{margin:0;font-size:.82rem;color:rgba(255,255,255,.72);line-height:1.6}
-.flow-item .arrow{display:none}
-
-/* ===== sections ===== */
-section.block{padding-block:52px 8px}
-.sec-head{margin-bottom:26px}
-.sec-kicker{
-  display:inline-flex;align-items:center;gap:8px;color:var(--blue-deep);
-  font-weight:800;font-size:.8rem;letter-spacing:.14em;
-}
+section.block{padding-block:44px 6px}
+.sec-kicker{display:inline-flex;align-items:center;gap:8px;color:var(--blue-deep);font-weight:800;font-size:.78rem;letter-spacing:.14em}
 .sec-kicker::before{content:"";width:22px;height:3px;border-radius:2px;background:var(--blue)}
-.sec-head h2{font-size:clamp(1.4rem,3vw,1.8rem);margin:10px 0 6px;font-weight:800;letter-spacing:.01em}
-.sec-head p{margin:0;color:var(--ink-2);max-width:820px}
+.sec-head h2{font-size:clamp(1.3rem,2.8vw,1.6rem);margin:10px 0 6px;font-weight:800}
+.sec-head p{margin:0;color:var(--ink-2)}
 
-/* ===== positioning cards ===== */
-.pos-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:20px}
-.pos-card{
-  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-  padding:20px 18px;box-shadow:var(--shadow);
-}
-.pos-card .k{font-size:.78rem;font-weight:700;color:var(--blue-deep);letter-spacing:.08em;margin-bottom:6px}
-.pos-card .v{font-weight:700;font-size:1.02rem;line-height:1.5}
-.pos-card .s{font-size:.84rem;color:var(--ink-2);margin-top:6px}
-.focus-strip{
-  margin-top:14px;background:var(--blue-soft);border:1px solid #c9dcff;border-radius:var(--radius);
-  padding:16px 20px;display:flex;gap:12px;align-items:flex-start;
-}
-.focus-strip .tag{flex:none;background:var(--blue);color:#fff;font-size:.78rem;font-weight:700;padding:4px 12px;border-radius:999px;margin-top:2px}
-.focus-strip p{margin:0;font-size:.93rem}
-.focus-strip b{color:var(--blue-deep)}
-
-/* ===== schedule ===== */
-.timeline-card{
-  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-  box-shadow:var(--shadow);padding:26px;
-}
-.case-note{
-  display:flex;gap:12px;align-items:flex-start;background:var(--teal-soft);
-  border:1px solid #bfe6df;border-radius:12px;padding:14px 18px;margin-bottom:22px;
-}
-.case-note .t{flex:none;font-weight:800;color:var(--teal);font-size:.85rem;padding-top:1px}
-.case-note p{margin:0;font-size:.92rem}
-.bar{display:flex;height:46px;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
-.bar a{
-  display:flex;align-items:center;justify-content:center;color:#fff;
-  font-size:.8rem;font-weight:700;letter-spacing:.02em;text-align:center;line-height:1.3;
-  transition:filter .15s;
-}
-.bar a:hover{filter:brightness(1.12)}
-.seg-1{width:30%;background:var(--blue)}
-.seg-2{width:33.33%;background:var(--teal)}
-.seg-3{width:23.34%;background:#b97a00;background:#c07f00}
-.seg-4{width:13.33%;background:var(--violet)}
-.sched-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}
-.sched-item{
-  border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:#fbfdff;
-  display:flex;gap:14px;align-items:flex-start;
-}
-.sched-item .time{
-  flex:none;min-width:86px;text-align:center;background:var(--navy);color:#fff;
-  border-radius:9px;padding:7px 8px;font-size:.8rem;font-weight:700;line-height:1.35;
-}
-.sched-item h4{margin:0 0 4px;font-size:.98rem}
-.sched-item p{margin:0;font-size:.85rem;color:var(--ink-2)}
-.sched-note{margin:16px 2px 0;font-size:.84rem;color:var(--ink-2)}
-
-/* ===== modules ===== */
-.module{
-  background:var(--card);border:1px solid var(--line);border-radius:18px;
-  box-shadow:var(--shadow);overflow:hidden;margin-bottom:26px;
-}
-.mod-head{padding:24px 26px 18px;position:relative}
-.mod-head::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px}
-.mod-1 .mod-head::before{background:var(--blue)}
-.mod-2 .mod-head::before{background:var(--teal)}
-.mod-3 .mod-head::before{background:#c07f00}
-.mod-4 .mod-head::before{background:var(--violet)}
-.mod-tag{
-  display:inline-block;font-size:.75rem;font-weight:800;letter-spacing:.1em;
-  padding:3px 12px;border-radius:999px;margin-bottom:8px;
-}
-.mod-1 .mod-tag{background:var(--blue-soft);color:var(--blue-deep)}
-.mod-2 .mod-tag{background:var(--teal-soft);color:var(--teal)}
-.mod-3 .mod-tag{background:var(--amber-soft);color:var(--amber)}
-.mod-4 .mod-tag{background:var(--violet-soft);color:var(--violet)}
-.mod-head h3{margin:0 0 10px;font-size:clamp(1.15rem,2.4vw,1.4rem);font-weight:800}
-.mod-qa{display:flex;flex-direction:column;gap:8px}
-.mod-qa .q,.mod-qa .m{font-size:.9rem;display:flex;gap:10px;align-items:baseline}
-.mod-qa .lab{
-  flex:none;font-size:.72rem;font-weight:800;letter-spacing:.06em;border-radius:6px;padding:2px 9px;
-}
-.mod-qa .q .lab{background:#eef1f7;color:var(--ink-2)}
-.mod-qa .m .lab{background:#fff2cf;color:#7a5200}
-.themes{border-top:1px dashed var(--line)}
-.theme{padding:20px 26px;border-top:1px solid #eef3fb}
-.theme:first-child{border-top:none}
-.theme-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
-.theme-no{
-  flex:none;width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;
-  font-weight:800;font-size:.95rem;
-}
-.mod-1 .theme-no{background:var(--blue-soft);color:var(--blue-deep)}
-.mod-2 .theme-no{background:var(--teal-soft);color:var(--teal)}
-.mod-3 .theme-no{background:var(--amber-soft);color:var(--amber)}
-.mod-4 .theme-no{background:var(--violet-soft);color:var(--violet)}
-.theme-head h4{margin:0;font-size:1.05rem;font-weight:800}
-.theme-body{display:grid;grid-template-columns:1fr 1fr;gap:0}
-.tcol{padding:2px 0 2px 56px}
-.tcol + .tcol{border-left:1px dashed var(--line);padding-left:22px;margin-left:22px}
-.tcol h5{
-  margin:0 0 8px;font-size:.75rem;font-weight:800;letter-spacing:.1em;color:var(--ink-2);
-}
-.tcol ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:7px}
-.tcol li{
-  position:relative;padding-left:16px;font-size:.92rem;color:var(--ink);
-}
-.tcol li::before{
-  content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:2px;
-  background:#b9cdf2;
-}
+.topic{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden}
+.topic-head{display:flex;gap:14px;align-items:center;padding:18px 22px 14px}
+.topic-no{flex:none;width:44px;height:44px;border-radius:12px;background:var(--blue-soft);color:var(--blue-deep);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.95rem}
+.topic-head h3{margin:0;font-size:1.08rem;font-weight:800}
+.topic-body{display:grid;grid-template-columns:1fr 1fr;gap:0;padding:0 22px 18px}
+.tcol{padding:2px 0}
+.tcol+.tcol{border-left:1px dashed var(--line);padding-left:20px;margin-left:20px}
+.tcol h4{margin:0 0 8px;font-size:.74rem;font-weight:800;letter-spacing:.1em;color:var(--ink-2)}
+.tcol ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.tcol li{position:relative;padding-left:15px;font-size:.9rem}
+.tcol li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:6px;border-radius:2px;background:#b9cdf2}
 .tcol.case li::before{background:#f0c66a}
-.out{
-  display:inline-block;background:var(--green-soft);color:var(--green);
-  border:1px solid #cfe8cf;border-radius:8px;padding:1px 10px;font-size:.8rem;font-weight:700;
-}
-.tcol li.produce{
-  background:#f4faf4;border:1px solid #d8ecd8;border-radius:10px;padding:9px 12px 9px 28px;
-}
-.tcol li.produce::before{background:var(--green);top:1.05em}
 
-/* ===== outcomes ===== */
-.feat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-.feat{
-  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-  padding:20px 22px;box-shadow:var(--shadow);
-}
-.feat h4{margin:0 0 6px;font-size:1rem;font-weight:800;display:flex;gap:10px;align-items:center}
-.feat h4 .ic{
-  flex:none;width:30px;height:30px;border-radius:9px;background:var(--blue-soft);
-  display:flex;align-items:center;justify-content:center;font-size:.9rem;
-}
-.feat p{margin:0;font-size:.9rem;color:var(--ink-2)}
-.plan-card{
-  margin-top:16px;background:linear-gradient(132deg,var(--navy),var(--navy-2));
-  border-radius:18px;color:#fff;padding:26px 28px;box-shadow:var(--shadow);
-}
-.plan-card h3{margin:0 0 8px;font-size:1.2rem}
-.plan-card>p{margin:0 0 16px;color:rgba(255,255,255,.78);font-size:.9rem}
-.plan-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.plan-item{
-  background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.18);
-  border-radius:12px;padding:14px 16px;
-}
-.plan-item h5{margin:0 0 5px;font-size:.92rem;display:flex;align-items:center;gap:8px}
-.plan-item h5 .n{
-  flex:none;width:22px;height:22px;border-radius:50%;background:#fff;color:var(--navy);
-  font-size:.75rem;font-weight:800;display:flex;align-items:center;justify-content:center;
-}
-.plan-item p{margin:0;font-size:.8rem;color:rgba(255,255,255,.75);line-height:1.6}
+.chat-card{margin-top:18px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px}
+.chat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.chat-item{border:1px solid var(--line);border-radius:12px;padding:13px 14px;background:#fbfdff}
+.chat-item .letter{display:inline-flex;width:30px;height:30px;border-radius:9px;background:var(--navy);color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.95rem;margin-bottom:7px}
+.chat-item h4{margin:0 0 3px;font-size:.95rem;font-weight:800}
+.chat-item p{margin:0;font-size:.8rem;color:var(--ink-2);line-height:1.6}
+.chat-formula{margin-top:14px;background:var(--amber-soft);border:1px solid #f0dcb4;border-radius:10px;padding:11px 16px;font-size:.9rem}
+.chat-formula b{color:var(--amber)}
+.chat-tips{margin-top:10px;font-size:.83rem;color:var(--ink-2)}
+.chat-src{margin-top:10px;font-size:.75rem;color:#8a97ad}
 
-/* ===== prep ===== */
-.prep-list{display:flex;flex-direction:column;gap:12px}
-.prep-item{
-  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-  padding:18px 22px;box-shadow:var(--shadow);display:flex;gap:18px;align-items:flex-start;
+.prompt-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:18px;overflow:hidden}
+.prompt-head{display:flex;gap:12px;align-items:center;padding:16px 20px 12px;flex-wrap:wrap}
+.prompt-step{flex:none;font-size:.74rem;font-weight:800;background:var(--blue);color:#fff;border-radius:999px;padding:4px 12px;letter-spacing:.04em}
+.prompt-head h3{margin:0;font-size:1rem;font-weight:800}
+.prompt-desc{padding:0 20px;font-size:.87rem;color:var(--ink-2);margin:0}
+.prompt-toolbar{display:flex;gap:10px;align-items:center;padding:12px 20px 0;flex-wrap:wrap}
+.copy-btn{border:none;cursor:pointer;background:var(--navy);color:#fff;font-weight:700;font-size:.85rem;border-radius:9px;padding:8px 18px;transition:background .15s}
+.copy-btn:hover{background:#12356e}
+.select-btn{border:1px solid var(--line);background:#fff;cursor:pointer;color:var(--ink-2);font-weight:600;font-size:.82rem;border-radius:9px;padding:8px 14px}
+.select-btn:hover{border-color:#b9cdf2;color:var(--ink)}
+.copy-status{font-size:.82rem;font-weight:600}
+.copy-status.ok{color:var(--green)}
+.copy-status.err{color:#c0392b}
+.prompt-card pre{
+  margin:14px 20px 20px;background:var(--code-bg);color:#dbe7ff;border-radius:12px;
+  padding:18px 20px;font-size:.87rem;line-height:1.8;white-space:pre-wrap;word-break:break-word;
+  font-family:inherit;user-select:all;
 }
-.prep-item .who{
-  flex:none;min-width:76px;text-align:center;font-weight:800;font-size:.86rem;
-  border-radius:10px;padding:8px 10px;
-}
-.who-host{background:var(--blue-soft);color:var(--blue-deep)}
-.who-lect{background:var(--navy);color:#fff}
-.who-stu{background:var(--teal-soft);color:var(--teal)}
-.who-tool{background:var(--violet-soft);color:var(--violet)}
-.who-after{background:var(--amber-soft);color:var(--amber)}
-.prep-item p{margin:0;font-size:.92rem}
-.prep-item p b{color:var(--ink)}
 
-/* ===== footer ===== */
-footer{
-  margin-top:56px;background:var(--navy);color:rgba(255,255,255,.8);
-  padding:40px 0 34px;
-}
-.foot-grid{display:flex;gap:30px;flex-wrap:wrap;align-items:flex-start;justify-content:space-between}
-.lecturer{display:flex;gap:16px;align-items:center}
-.avatar{
-  flex:none;width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,#2a57c9,#5b8dff);
-  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.3rem;color:#fff;
-  border:2px solid rgba(255,255,255,.35);
-}
-.lecturer .name{font-size:1.1rem;font-weight:800;color:#fff}
-.lecturer .title{font-size:.85rem;color:rgba(255,255,255,.72)}
-.foot-links{display:flex;flex-direction:column;gap:8px;font-size:.88rem;text-align:right}
-.foot-links a{color:#9cc0ff}
+footer{margin-top:48px;background:var(--navy);color:rgba(255,255,255,.8);padding:30px 0 28px}
+.foot-grid{display:flex;gap:24px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.lecturer{display:flex;gap:14px;align-items:center}
+.avatar{flex:none;width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#2a57c9,#5b8dff);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.15rem;color:#fff;border:2px solid rgba(255,255,255,.35)}
+.lecturer .name{font-size:1.02rem;font-weight:800;color:#fff}
+.lecturer .title{font-size:.82rem;color:rgba(255,255,255,.72)}
+.foot-links a{color:#9cc0ff;font-size:.88rem}
 .foot-links a:hover{text-decoration:underline}
-.foot-note{
-  margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,255,255,.14);
-  font-size:.78rem;color:rgba(255,255,255,.55);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
-}
-.to-top{
-  position:fixed;right:18px;bottom:18px;z-index:60;width:42px;height:42px;border-radius:50%;
-  background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;
-  box-shadow:0 8px 20px rgba(6,27,70,.35);font-size:1.05rem;
-}
+.foot-note{margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.14);font-size:.76rem;color:rgba(255,255,255,.55)}
 
-/* ===== responsive ===== */
-@media (max-width:920px){
-  .flow{grid-template-columns:repeat(2,1fr);row-gap:18px}
-  .pos-grid{grid-template-columns:repeat(2,1fr)}
-  .plan-grid{grid-template-columns:repeat(2,1fr)}
-  .sched-grid{grid-template-columns:1fr}
-  .theme-body{grid-template-columns:1fr}
-  .tcol{padding-left:0}
-  .tcol + .tcol{border-left:none;margin-left:0;padding-left:0;border-top:1px dashed var(--line);margin-top:14px;padding-top:14px}
+@media (max-width:760px){
+  .qa-strip{grid-template-columns:1fr}
+  .topic-body{grid-template-columns:1fr}
+  .tcol+.tcol{border-left:none;margin-left:0;padding-left:0;border-top:1px dashed var(--line);margin-top:12px;padding-top:12px}
+  .chat-grid{grid-template-columns:repeat(2,1fr)}
 }
-@media (max-width:600px){
+@media (max-width:520px){
   .wrap{padding-inline:16px}
-  .head-nav{width:100%;margin-left:0;overflow-x:auto;flex-wrap:nowrap;padding-bottom:2px}
-  .head-nav a{white-space:nowrap}
-  .hero .wrap{padding-block:44px 38px}
-  .flow,.pos-grid,.feat-grid,.plan-grid{grid-template-columns:1fr}
-  .bar{height:auto;flex-direction:column}
-  .bar a{padding:8px 10px}
-  .seg-1,.seg-2,.seg-3,.seg-4{width:100%}
-  .module{border-radius:14px}
-  .mod-head,.theme{padding-inline:18px}
-  .prep-item{flex-direction:column;gap:10px}
-  .prep-item .who{align-self:flex-start}
-  .foot-links{text-align:left}
-  .theme-no{width:38px;height:38px;font-size:.85rem}
-}
-@media (max-width:420px){
-  .mod-qa .q,.mod-qa .m{flex-wrap:wrap}
-}
-@media print{
-  .site-head,.to-top{display:none}
-  body{background:#fff}
-  .module,.timeline-card,.feat,.pos-card{box-shadow:none}
+  .head-nav a:not(.home){display:none}
+  .chat-grid{grid-template-columns:1fr}
+  .topic-head{padding:16px 16px 12px}
+  .topic-body{padding:0 16px 16px}
+  .prompt-card pre{margin:12px 14px 16px;padding:14px 16px;font-size:.84rem}
+  .prompt-head,.prompt-desc,.prompt-toolbar{padding-inline:16px}
 }
 </style>
 </head>
@@ -344,446 +126,175 @@ footer{
   <div class="wrap head-inner">
     <a class="brand" href="/lijiagui/list/"><span class="dot"></span>李家贵 · AI 实战训练</a>
     <nav class="head-nav" aria-label="页面导航">
-      <a href="#positioning">课程定位</a>
-      <a href="#schedule">授课安排</a>
-      <a href="#mod1">选准场景</a>
-      <a href="#mod2">拆清任务</a>
-      <a href="#mod3">协同交付</a>
-      <a href="#mod4">固化复用</a>
-      <a href="#outcomes">学习成果</a>
+      <a href="#topics">三个主题</a>
+      <a href="#chat">CHAT 法则</a>
+      <a href="#prompts">跟练提示词</a>
       <a class="home" href="/lijiagui/list/">资源导航</a>
     </nav>
   </div>
 </header>
 
 <main>
-  <!-- ============ HERO ============ -->
-  <section class="hero" id="top">
+  <section class="hero">
     <div class="wrap">
       <div class="badges">
-        <span class="badge solid">课程大纲 · V2.0</span>
-        <span class="badge">线上课程</span>
-        <span class="badge">教学页</span>
+        <span class="badge solid">模块三 · 35 分钟</span>
+        <span class="badge">协同交付</span>
+        <span class="badge">含可复制提示词</span>
       </div>
-      <h1>AI 工作流重构与高效协同</h1>
-      <p class="sub">—— vivo 全员 AI 实操技巧线上课程</p>
-      <p class="desc">围绕一项个人工作，依次完成「选准场景、拆清任务、协同交付、固化复用」。课程承接前期 AI 趋势与应用边界学习，为后续内部实操工作坊和经验沉淀提供方法与任务初稿。</p>
-      <div class="meta-chips">
-        <span class="chip"><span>课程时长</span><b>2.5 小时 · 共 150 分钟</b></span>
-        <span class="chip"><span>课程对象</span><b>vivo 全员，兼顾不同 AI 基础</b></span>
-        <span class="chip"><span>授课形式</span><b>线上讲授、案例演示、轻量跟练</b></span>
-      </div>
-      <div class="flow" aria-label="四步学习路径">
-        <div class="flow-item"><span class="no">STEP 1</span><h3>选准场景</h3><p>从岗位目标与当前痛点出发，筛出一项值得 AI 介入的工作。</p></div>
-        <div class="flow-item"><span class="no">STEP 2</span><h3>拆清任务</h3><p>用 IPO 说明输入、处理、输出，并补齐约束与验收要求。</p></div>
-        <div class="flow-item"><span class="no">STEP 3</span><h3>协同交付</h3><p>明确人机分工，通过上下文、分步执行和结果复核改进产出。</p></div>
-        <div class="flow-item"><span class="no">STEP 4</span><h3>固化复用</h3><p>将验证有效的做法整理为 SOP 或 Skill 说明草稿。</p></div>
+      <h1>协同交付：把任务讲清楚，把结果验到位</h1>
+      <p class="sub">—— vivo 全员 AI 实操技巧线上课程 · 模块三教学页</p>
+      <p class="path">学习路径：选准场景 → 拆清任务 → <b>协同交付</b> → 固化复用　|　课堂安排：<b>方法 10 ＋ 演示 15 ＋ 纠错与答疑 10</b></p>
+      <div class="qa-strip">
+        <div class="qa"><div class="lab">核心问题</div><p>为什么 AI 回答看似完整，仍不符合实际工作要求？</p></div>
+        <div class="qa m"><div class="lab">记忆点</div><p>给足背景、分清人机、逐步验收。用模块二的 IPO 任务卡推进实际协作。</p></div>
       </div>
     </div>
   </section>
 
-  <!-- ============ 定位 ============ -->
-  <section class="block" id="positioning">
+  <section class="block" id="topics">
     <div class="wrap">
       <div class="sec-head">
-        <span class="sec-kicker">PART 01</span>
-        <h2>课程定位与学习目标</h2>
-        <p>不以工具罗列为目标，而是围绕一项真实工作走完「选—拆—协—固」四步，让每位学员带走可继续推进的任务初稿。</p>
+        <span class="sec-kicker">MODULE 3</span>
+        <h2>三个主题</h2>
       </div>
-      <div class="pos-grid">
-        <div class="pos-card"><div class="k">课程时长</div><div class="v">2.5 小时（150 分钟）</div><div class="s">导入、互动、答疑与总结均计入课时</div></div>
-        <div class="pos-card"><div class="k">课程对象</div><div class="v">vivo 全员</div><div class="s">兼顾不同 AI 基础</div></div>
-        <div class="pos-card"><div class="k">授课形式</div><div class="v">线上讲授</div><div class="s">案例演示＋轻量跟练</div></div>
-        <div class="pos-card"><div class="k">课程重点</div><div class="v">场景筛选与任务拆解优先</div><div class="s">先选对，再拆细，后协同</div></div>
+
+      <div class="topic">
+        <div class="topic-head"><span class="topic-no">3.1</span><h3>补齐关键上下文</h3></div>
+        <div class="topic-body">
+          <div class="tcol method">
+            <h4>方法与关键判断</h4>
+            <ul>
+              <li>用 CHAT 人机协同法则组织角色、目标和当前行动要求。</li>
+              <li>提供岗位说明、OKR 与当下痛点三类背景，并说明约束、输出格式和验收标准。</li>
+            </ul>
+          </div>
+          <div class="tcol case">
+            <h4>案例、互动与阶段产出</h4>
+            <ul>
+              <li>对比「帮我做一个 PPT」与完整任务交代。</li>
+              <li>补入汇报对象、业务口径、已有材料和需回答的问题，观察结果如何改善。</li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <div class="focus-strip">
-        <span class="tag">课程重点</span>
-        <p><b>选准场景：</b>从岗位目标与当前痛点出发，筛出一项值得 AI 介入的工作；<b>拆清任务：</b>用 IPO 说明输入、处理、输出，并补齐约束与验收要求。</p>
+
+      <div class="topic">
+        <div class="topic-head"><span class="topic-no">3.2</span><h3>设计人机分工</h3></div>
+        <div class="topic-body">
+          <div class="tcol method">
+            <h4>方法与关键判断</h4>
+            <ul>
+              <li>AI 承担：资料归纳、分析辅助、大纲和初稿生成。</li>
+              <li>人负责：材料授权、口径确认、关键判断、内容修订和最终定稿。</li>
+            </ul>
+          </div>
+          <div class="tcol case">
+            <h4>案例、互动与阶段产出</h4>
+            <ul>
+              <li>演示「人工上传材料—AI 生成 PPT 大纲—人确认结构—AI 生成初稿—人工定稿」。</li>
+              <li>工具不支持直接生成文件时，用文本大纲和页面文案完成演示。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic">
+        <div class="topic-head"><span class="topic-no">3.3</span><h3>分步执行与纠错</h3></div>
+        <div class="topic-body">
+          <div class="tcol method">
+            <h4>方法与关键判断</h4>
+            <ul>
+              <li>先确认大纲，再生成内容，最后按验收清单核对。</li>
+              <li>对遗漏、无依据结论和格式偏差给出具体反馈，多轮修订。</li>
+            </ul>
+          </div>
+          <div class="tcol case">
+            <h4>案例、互动与阶段产出</h4>
+            <ul>
+              <li>找出示例中的数字口径不一致、来源缺失或结论跳跃，要求 AI 修正。</li>
+              <li>产出：人机分工与复核清单；回答「谁做、谁判断、怎样算完成」。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-card" id="chat">
+        <span class="sec-kicker">速查</span>
+        <h2 style="font-size:1.2rem;margin:10px 0 0;font-weight:800">CHAT 法则：把一个任务交代清楚的四要素</h2>
+        <div class="chat-grid">
+          <div class="chat-item"><span class="letter">C</span><h4>Character 角色</h4><p>声明「我是谁、我的职责」。角色是一种压缩了的上下文，能显著提高回答质量。</p></div>
+          <div class="chat-item"><span class="letter">H</span><h4>History 背景</h4><p>交代来龙去脉：做过什么、开过什么会。最易被轻视的一步，秘诀是贴附件、贴样例。</p></div>
+          <div class="chat-item"><span class="letter">A</span><h4>Ambition 目标</h4><p>说清要达成什么，如「目标是通过评审」，让 AI 知道往哪个方向努力。</p></div>
+          <div class="chat-item"><span class="letter">T</span><h4>Task 行动</h4><p>给出具体行动和输出要求：做什么、分几步、输出什么格式。</p></div>
+        </div>
+        <div class="chat-formula"><b>任务指令 ＝ 定义角色 ＋ 背景信息 ＋ 任务目标 ＋ 输出要求</b></div>
+        <p class="chat-tips">两个常见误区：极度轻视 History（背景给太少）；忘记 AI 缺乏你公司内部的领域知识——你的业务知识必须由你来告诉它。</p>
+        <p class="chat-src">来源：李家贵《CHAT 法则》课件（2025.6）与授课讲解</p>
       </div>
     </div>
   </section>
 
-  <!-- ============ 授课安排 ============ -->
-  <section class="block" id="schedule">
+  <section class="block" id="prompts">
     <div class="wrap">
       <div class="sec-head">
-        <span class="sec-kicker">PART 02</span>
-        <h2>150 分钟授课安排</h2>
+        <span class="sec-kicker">跟练工具</span>
+        <h2>三条跟练提示词（点击复制即用）</h2>
+        <p>以「月度项目汇报」贯穿案例为例，【】内替换为你的真实信息。普通对话工具即可使用。</p>
       </div>
-      <div class="timeline-card">
-        <div class="case-note">
-          <span class="t">贯穿案例</span>
-          <p>以<b>「月度项目汇报」</b>贯穿全程：选定汇报工作 → 拆解材料到 PPT 的过程 → 完成人机协同 → 提炼可复用方法。案例采用教学示例或经授权的脱敏材料。</p>
-        </div>
-        <div class="bar" role="img" aria-label="150 分钟时间分配：选准场景 45 分钟，拆清任务 50 分钟，协同交付 35 分钟，固化复用 20 分钟">
-          <a class="seg-1" href="#mod1">选准场景 45′</a>
-          <a class="seg-2" href="#mod2">拆清任务 50′</a>
-          <a class="seg-3" href="#mod3">协同交付 35′</a>
-          <a class="seg-4" href="#mod4">固化复用 20′</a>
-        </div>
-        <div class="sched-grid">
-          <div class="sched-item"><span class="time">00—45′</span><div><h4>选准场景：哪些工作值得用 AI？</h4><p>45 分钟：导入 5 ＋ 方法 15 ＋ 演示 15 ＋ 跟练与回顾 10</p></div></div>
-          <div class="sched-item"><span class="time">45—95′</span><div><h4>拆清任务：一项工作怎样交代清楚？</h4><p>50 分钟：方法 15 ＋ 演示 20 ＋ 跟练与讲评 15</p></div></div>
-          <div class="sched-item"><span class="time">95—130′</span><div><h4>协同交付：怎样让结果符合要求？</h4><p>35 分钟：方法 10 ＋ 演示 15 ＋ 纠错与答疑 10</p></div></div>
-          <div class="sched-item"><span class="time">130—150′</span><div><h4>固化复用：怎样把一次做法留下来？</h4><p>20 分钟：原理 10 ＋ 转化演示、回顾与行动布置 10</p></div></div>
-        </div>
-        <p class="sched-note">前两模块共 95 分钟；前三模块共 130 分钟，最后 20 分钟用于 Skill 入门与转化。导入、互动、答疑和总结均已计入 150 分钟，不另加课时。</p>
-      </div>
-    </div>
-  </section>
 
-  <!-- ============ 模块一 ============ -->
-  <section class="block" id="mod1">
-    <div class="wrap">
-      <div class="sec-head">
-        <span class="sec-kicker">PART 03 · 模块一</span>
-        <h2>选准场景：先判断价值，再决定从哪项工作开始</h2>
-      </div>
-      <div class="module mod-1">
-        <div class="mod-head">
-          <span class="mod-tag">模块一 · 45 分钟</span>
-          <div class="mod-qa">
-            <div class="q"><span class="lab">核心问题</span>面对日常工作，哪些任务值得让 AI 参与？</div>
-            <div class="m"><span class="lab">记忆点</span>先选对，再拆细。先粗看工作找到候选，再对选中的任务做深入拆解。</div>
-          </div>
-        </div>
-        <div class="themes">
-          <div class="theme">
-            <div class="theme-head"><span class="theme-no">1.1</span><h4>从岗位找到候选</h4></div>
-            <div class="theme-body">
-              <div class="tcol method">
-                <h5>方法与关键判断</h5>
-                <ul>
-                  <li>用流程挖掘法串起「岗位—角色—职责—任务」。</li>
-                  <li>从周期性工作、临时任务、高频问题中识别重复劳动和信息处理环节。</li>
-                </ul>
-              </div>
-              <div class="tcol case">
-                <h5>案例、互动与阶段产出</h5>
-                <ul>
-                  <li>以月度项目汇报为例，粗看数据收集、分析、材料梳理、PPT 制作和汇报沟通。</li>
-                  <li>学员用「我的岗位＋目标＋最费时的工作」列出 2—3 项候选。</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="theme">
-            <div class="theme-head"><span class="theme-no">1.2</span><h4>用五项标准筛选</h4></div>
-            <div class="theme-body">
-              <div class="tcol method">
-                <h5>方法与关键判断</h5>
-                <ul>
-                  <li>岗位价值：是否服务当前职责和目标；效率提升：是否减少整理、返工等投入。</li>
-                  <li>数据可得性、可实施性、风险可控性：是否有材料、工具、清晰规则及复核办法。</li>
-                </ul>
-              </div>
-              <div class="tcol case">
-                <h5>案例、互动与阶段产出</h5>
-                <ul>
-                  <li>采用 5／3／1 分做课堂初筛，AI 给出理由与初稿，人校正排序。</li>
-                  <li>同时判断信息处理、内容生成、规则执行等能力是否匹配；不能只看「能不能做」。</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="theme">
-            <div class="theme-head"><span class="theme-no">1.3</span><h4>选一项小任务</h4></div>
-            <div class="theme-body">
-              <div class="tcol method">
-                <h5>方法与关键判断</h5>
-                <ul>
-                  <li>优先选择价值明确、材料可得、结果可验证的小切口。</li>
-                  <li>不以总分替代边界判断；敏感数据、关键决策和对外承诺须按公司规则处理。</li>
-                </ul>
-              </div>
-              <div class="tcol case">
-                <h5>案例、互动与阶段产出</h5>
-                <ul>
-                  <li>比较「整理汇报材料」与「代替负责人决策」：前者可辅助，后者保留人的责任。</li>
-                  <li class="produce"><span class="out">阶段产出</span>　一项优先场景及选择理由、预期改进和风险边界。</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+      <div class="prompt-card">
+        <div class="prompt-head"><span class="prompt-step">3.1</span><h3>CHAT 完整任务交代</h3></div>
+        <p class="prompt-desc">把「帮我做一个 PPT」升级为完整任务交代：C 角色＋H 三类背景＋A 目标＋T 行动，并附约束与验收。对照 3.1 课堂对比演示使用。</p>
+        <div class="prompt-toolbar"><button class="copy-btn" type="button">复制提示词</button><button class="select-btn" type="button">全选文本</button><span class="copy-status" role="status"></span></div>
+        <pre># 角色（Character）
+我是【岗位，如：某项目组项目经理】，负责【一句话岗位职责】。本月我需要完成"月度项目汇报"。
 
-  <!-- ============ 模块二 ============ -->
-  <section class="block" id="mod2">
-    <div class="wrap">
-      <div class="sec-head">
-        <span class="sec-kicker">PART 03 · 模块二</span>
-        <h2>拆清任务：用 IPO 把一项工作拆成可执行步骤</h2>
-      </div>
-      <div class="module mod-2">
-        <div class="mod-head">
-          <span class="mod-tag">模块二 · 50 分钟</span>
-          <div class="mod-qa">
-            <div class="q"><span class="lab">核心问题</span>选中的工作，怎样拆到 AI 能理解、人能验收？</div>
-            <div class="m"><span class="lab">记忆点</span>输入有依据，处理有步骤，输出有标准。</div>
-          </div>
-        </div>
-        <div class="themes">
-          <div class="theme">
-            <div class="theme-head"><span class="theme-no">2.1</span><h4>画清工作过程</h4></div>
-            <div class="theme-body">
-              <div class="tcol method">
-                <h5>方法与关键判断</h5>
-                <ul>
-                  <li>确定工作的起点、终点和交付对象。</li>
-                  <li>按「规划—执行—完善」梳理步骤，标出前后依赖及信息缺口。</li>
-                </ul>
-              </div>
-              <div class="tcol case">
-                <h5>案例、互动与阶段产出</h5>
-                <ul>
-                  <li>将月度汇报展开为「收集数据—核对口径—分析归纳—整理材料—制作 PPT—汇报沟通」。</li>
-                  <li>区分整体工作流程与其中单个任务。</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="theme">
-            <div class="theme-head"><span class="theme-no">2.2</span><h4>用 IPO 细拆任务</h4></div>
-            <div class="theme-body">
-              <div class="tcol method">
-                <h5>方法与关键判断</h5>
-                <ul>
-                  <li><b>I 输入：</b>资料、来源、格式与质量要求。</li>
-                  <li><b>P 处理：</b>规则、步骤、异常与人工检查点。</li>
-                  <li><b>O 输出：</b>交付内容、格式、验收标准。</li>
-                </ul>
-              </div>
-              <div class="tcol case">
-                <h5>案例、互动与阶段产出</h5>
-                <ul>
-                  <li>聚焦「材料转 PPT 初稿」，说明从素材、汇报目的到大纲、页面和核验的过程。</li>
-                  <li>将原大纲的「目标、约束、上下文、验收」嵌入任务说明。</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="theme">
-            <div class="theme-head"><span class="theme-no">2.3</span><h4>补齐任务说明</h4></div>
-            <div class="theme-body">
-              <div class="tcol method">
-                <h5>方法与关键判断</h5>
-                <ul>
-                  <li>用模板和提示词生成 IPO 初稿，再由本人修正。</li>
-                  <li>信息不足先澄清；不能把 AI 补写的假设当成事实。</li>
-                </ul>
-              </div>
-              <div class="tcol case">
-                <h5>案例、互动与阶段产出</h5>
-                <ul>
-                  <li>跟练：把模块一选出的任务写成一张 IPO 任务卡。</li>
-                  <li class="produce"><span class="out">阶段产出</span>　可执行的步骤、输入输出要求和至少一项明确验收标准。</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+# 背景（History）
+- 岗位说明：【粘贴岗位说明书要点】
+- 个人 OKR：【粘贴本季度 OKR】
+- 当下痛点：【一句话说明这项工作里最费时或最容易出错的环节】
+- 已有材料：【列出可提供的材料，如数据表、上月汇报、会议纪要，并随消息附上】
 
-  <!-- ============ 模块三 ============ -->
-  <section class="block" id="mod3">
-    <div class="wrap">
-      <div class="sec-head">
-        <span class="sec-kicker">PART 03 · 模块三</span>
-        <h2>协同交付：把任务讲清楚，把结果验到位</h2>
-      </div>
-      <div class="module mod-3">
-        <div class="mod-head">
-          <span class="mod-tag">模块三 · 35 分钟</span>
-          <div class="mod-qa">
-            <div class="q"><span class="lab">核心问题</span>为什么 AI 回答看似完整，仍不符合实际工作要求？</div>
-            <div class="m"><span class="lab">记忆点</span>给足背景、分清人机、逐步验收。用模块二的任务卡推进实际协作。</div>
-          </div>
-        </div>
-        <div class="themes">
-          <div class="theme">
-            <div class="theme-head"><span class="theme-no">3.1</span><h4>补齐关键上下文</h4></div>
-            <div class="theme-body">
-              <div class="tcol method">
-                <h5>方法与关键判断</h5>
-                <ul>
-                  <li>用 CHAT 人机协同法则组织角色、目标和当前行动要求。</li>
-                  <li>提供岗位说明、OKR 与当下痛点三类背景，并说明约束、输出格式和验收标准。</li>
-                </ul>
-              </div>
-              <div class="tcol case">
-                <h5>案例、互动与阶段产出</h5>
-                <ul>
-                  <li>对比「帮我做一个 PPT」与完整任务交代。</li>
-                  <li>补入汇报对象、业务口径、已有材料和需回答的问题，观察结果如何改善。</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="theme">
-            <div class="theme-head"><span class="theme-no">3.2</span><h4>设计人机分工</h4></div>
-            <div class="theme-body">
-              <div class="tcol method">
-                <h5>方法与关键判断</h5>
-                <ul>
-                  <li><b>AI 承担：</b>资料归纳、分析辅助、大纲和初稿生成。</li>
-                  <li><b>人负责：</b>材料授权、口径确认、关键判断、内容修订和最终定稿。</li>
-                </ul>
-              </div>
-              <div class="tcol case">
-                <h5>案例、互动与阶段产出</h5>
-                <ul>
-                  <li>演示「人工上传材料—AI 生成 PPT 大纲—人确认结构—AI 生成初稿—人工定稿」。</li>
-                  <li>工具不支持直接生成文件时，用文本大纲和页面文案完成演示。</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="theme">
-            <div class="theme-head"><span class="theme-no">3.3</span><h4>分步执行与纠错</h4></div>
-            <div class="theme-body">
-              <div class="tcol method">
-                <h5>方法与关键判断</h5>
-                <ul>
-                  <li>先确认大纲，再生成内容，最后按验收清单核对。</li>
-                  <li>对遗漏、无依据结论和格式偏差给出具体反馈，多轮修订。</li>
-                </ul>
-              </div>
-              <div class="tcol case">
-                <h5>案例、互动与阶段产出</h5>
-                <ul>
-                  <li>找出示例中的数字口径不一致、来源缺失或结论跳跃，要求 AI 修正。</li>
-                  <li class="produce"><span class="out">阶段产出</span>　人机分工与复核清单；回答「谁做、谁判断、怎样算完成」。</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+# 目标（Ambition）
+帮我把汇报材料整理成 PPT 初稿。目标是让【汇报对象，如：部门总监】快速看懂项目进展，并批准下一步计划。
 
-  <!-- ============ 模块四 ============ -->
-  <section class="block" id="mod4">
-    <div class="wrap">
-      <div class="sec-head">
-        <span class="sec-kicker">PART 03 · 模块四</span>
-        <h2>固化复用：把验证有效的做法整理成 SOP 与 Skill</h2>
-      </div>
-      <div class="module mod-4">
-        <div class="mod-head">
-          <span class="mod-tag">模块四 · 20 分钟</span>
-          <div class="mod-qa">
-            <div class="q"><span class="lab">核心问题</span>一次做得好，怎样让下次和同事也能复用？</div>
-            <div class="m"><span class="lab">记忆点</span>先验证，再固化。把任务规则留下来，而不只保存一段对话。</div>
-          </div>
-        </div>
-        <div class="themes">
-          <div class="theme">
-            <div class="theme-head"><span class="theme-no">4.1</span><h4>判断是否值得沉淀</h4></div>
-            <div class="theme-body">
-              <div class="tcol method">
-                <h5>方法与关键判断</h5>
-                <ul>
-                  <li>理解 Skill 用于封装可重复调用的任务要求与处理规则。</li>
-                  <li>检查任务是否高频、流程是否稳定、输入输出是否明确，做法是否经过验证。</li>
-                </ul>
-              </div>
-              <div class="tcol case">
-                <h5>案例、互动与阶段产出</h5>
-                <ul>
-                  <li>用 10 分钟讲清 SOP、提示词模板与可运行 Skill 的关系。</li>
-                  <li>对尚未验证或经常变化的步骤，先保留为草稿。</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="theme">
-            <div class="theme-head"><span class="theme-no">4.2</span><h4>从 IPO 提炼规则</h4></div>
-            <div class="theme-body">
-              <div class="tcol method">
-                <h5>方法与关键判断</h5>
-                <ul>
-                  <li>提取适用场景、任务目标、输入要求、处理步骤、输出格式和边界条件。</li>
-                  <li>加入人机分工、异常处理和验收要求。</li>
-                </ul>
-              </div>
-              <div class="tcol case">
-                <h5>案例、互动与阶段产出</h5>
-                <ul>
-                  <li>将前面「汇报 PPT 制作」的 IPO 任务卡和协同规则转成 Skill 说明草稿。</li>
-                  <li>普通对话工具可生成说明文本；运行需匹配支持 Skill 的工具与环境。</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="theme">
-            <div class="theme-head"><span class="theme-no">4.3</span><h4>衔接后续实操</h4></div>
-            <div class="theme-body">
-              <div class="tcol method">
-                <h5>方法与关键判断</h5>
-                <ul>
-                  <li>演示「任务卡—规则草稿—样例测试—修改完善—内部沉淀」的路径。</li>
-                  <li>以新材料验证结果，确认有效后再按内部流程共享。</li>
-                </ul>
-              </div>
-              <div class="tcol case">
-                <h5>案例、互动与阶段产出</h5>
-                <ul>
-                  <li>后 10 分钟完成转化演示、四步回顾与行动布置，不要求全员现场安装或运行 Skill。</li>
-                  <li class="produce"><span class="out">阶段产出</span>　学员带走规则草稿示例，后续在内部工作坊结合真实任务验证。</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+# 行动（Task）
+请先输出 PPT 大纲：不超过 10 页，每页给出标题和要点。先不要生成正文，等我确认大纲后再逐页生成页面文案。
 
-  <!-- ============ 特色与成果 ============ -->
-  <section class="block" id="outcomes">
-    <div class="wrap">
-      <div class="sec-head">
-        <span class="sec-kicker">PART 04</span>
-        <h2>课程特色与学习成果</h2>
+# 约束与验收
+1. 业务口径以我提供的材料为准，材料里没有的数据不要编造；
+2. 输出使用简体中文，关键观点后注明出自哪份材料；
+3. 完成后自查 3 条：数字口径是否一致、结论是否有依据、是否回答了我关心的问题。</pre>
       </div>
-      <div class="feat-grid">
-        <div class="feat"><h4><span class="ic">🔗</span>一条工作贯穿四步</h4><p>围绕月度项目汇报与 PPT 制作，展示从选择到复用的完整过程，减少案例切换带来的理解成本。</p></div>
-        <div class="feat"><h4><span class="ic">📶</span>方法与操作分层</h4><p>基础学员按模板完成输入与修改；进阶学员理解筛选、IPO 和协同设计背后的判断。</p></div>
-        <div class="feat"><h4><span class="ic">💬</span>轻量互动适配线上</h4><p>采用投票、聊天区回答、个人任务卡填写和讲师示范，不安排大规模分组共创。</p></div>
-        <div class="feat"><h4><span class="ic">✅</span>围绕结果检验学习</h4><p>每个模块留下一个中间成果，下一模块继续使用；课末用「选—拆—协—固」回顾方法。</p></div>
-      </div>
-      <div class="plan-card">
-        <h3>《个人 AI 工作流升级计划》初稿 · 四项组成</h3>
-        <p>课程提供方法和示范，学员结合个人任务形成计划初稿。完成程度取决于材料准备与跟练情况，真实业务验证在后续内部实操工作坊继续开展。</p>
-        <div class="plan-grid">
-          <div class="plan-item"><h5><span class="n">1</span>场景选择</h5><p>一项优先工作、选择理由、预期改进与风险边界。</p></div>
-          <div class="plan-item"><h5><span class="n">2</span>IPO 任务卡</h5><p>输入材料、处理步骤、输出格式和验收标准。</p></div>
-          <div class="plan-item"><h5><span class="n">3</span>协同安排</h5><p>AI 负责环节、人工判断与复核节点、需要补充的上下文。</p></div>
-          <div class="plan-item"><h5><span class="n">4</span>复用与行动</h5><p>参考 Skill 说明草稿，写明拟试用任务、所需材料及首次验证安排。</p></div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- ============ 课前准备 ============ -->
-  <section class="block" id="prep">
-    <div class="wrap">
-      <div class="sec-head">
-        <span class="sec-kicker">PART 05</span>
-        <h2>课前准备与实施安排</h2>
+      <div class="prompt-card">
+        <div class="prompt-head"><span class="prompt-step">3.2</span><h3>人机分工约定</h3></div>
+        <p class="prompt-desc">先和 AI 约定分工边界：AI 做归纳与初稿、标注依据；人保留口径确认、关键判断和定稿权。发出后按「确认大纲 → 生成初稿 → 人工定稿」推进。</p>
+        <div class="prompt-toolbar"><button class="copy-btn" type="button">复制提示词</button><button class="select-btn" type="button">全选文本</button><span class="copy-status" role="status"></span></div>
+        <pre>我们按以下分工协作，请严格遵守：
+
+- 你（AI）负责：归纳我上传的资料、辅助分析、生成大纲和初稿；每条输出注明依据来源。
+- 我负责：材料授权、口径确认、关键判断、内容修订和最终定稿。
+- 未经我确认，你不得自行扩大修改范围，不得替换我给定的数据和结论口径。
+
+现在执行第一步：请只输出"汇报 PPT 大纲"（页码＋标题＋每页要点＋所用材料）供我确认，不要生成正文。
+我确认或修改大纲后，再按每次 2 页的节奏生成内容，最后等我定稿。</pre>
       </div>
-      <div class="prep-list">
-        <div class="prep-item"><span class="who who-host">主办方</span><p>课前提供 <b>1—2 个经授权脱敏的岗位说明与 OKR 示例</b>，确认可用 AI 工具、文件上传能力和数据使用边界。具体岗位及正式授课时间以主办方确认为准。</p></div>
-        <div class="prep-item"><span class="who who-lect">讲　师</span><p>准备场景筛选、IPO 拆解、人机协同与 Skill 转化的<b>表单、提示词和教学样例</b>；优先沿用可复制操作的网页工具，内网部署需求由双方课前核对。</p></div>
-        <div class="prep-item"><span class="who who-stu">学　员</span><p>准备<b>一项高频或费时的工作</b>，简述岗位、目标和当前痛点；仅使用获准材料。无法同步操作时，可先填写任务卡，课后再运行。</p></div>
-        <div class="prep-item"><span class="who who-tool">工具安排</span><p>默认<b>不要求学员具备千问办公、WorkBuddy 等 Agent 工具</b>；普通对话工具即可完成前三模块的方法跟练。Skill 运行能力作为演示条件单独确认。</p></div>
-        <div class="prep-item"><span class="who who-after">课后衔接</span><p>学员将任务卡带入<b>内部实操工作坊</b>，结合真实业务试用并记录问题；通过验证后，再按公司内部规则沉淀和共享。</p></div>
+
+      <div class="prompt-card">
+        <div class="prompt-head"><span class="prompt-step">3.3</span><h3>验收清单与纠错</h3></div>
+        <p class="prompt-desc">按验收清单让 AI 自查并修正：数字口径、结论依据、问题覆盖、输出格式。也可用于人工复核后把具体问题反馈给 AI 多轮修订。</p>
+        <div class="prompt-toolbar"><button class="copy-btn" type="button">复制提示词</button><button class="select-btn" type="button">全选文本</button><span class="copy-status" role="status"></span></div>
+        <pre>请按以下验收清单逐条检查你刚才生成的内容，并输出检查结果表：
+
+1. 数字口径：所有数字是否与我提供的材料一致？不一致的逐条列出；
+2. 结论依据：每条结论是否有材料支撑？无依据的标注"缺依据"；
+3. 覆盖度：我提出的问题是否都已回答？遗漏的标注"未回答"；
+4. 格式：是否符合我要求的输出格式？
+
+对每一处问题：先给出修改后的正确表述，再用一句话说明修改理由。
+只修改有问题的部分，不要重写全部内容；改完后再次自查以上 4 条并向我汇报结果。</pre>
       </div>
     </div>
   </section>
@@ -799,19 +310,61 @@ footer{
           <div class="title">西安交大数字经济研究院首席科学家</div>
         </div>
       </div>
-      <div class="foot-links">
-        <a href="/lijiagui/list/">← 返回全部资源导航</a>
-        <a href="#top">回到页面顶部 ↑</a>
-      </div>
+      <div class="foot-links"><a href="/lijiagui/list/">← 返回全部资源导航</a></div>
     </div>
-    <div class="foot-note">
-      <span>AI 工作流重构与高效协同 · vivo 全员 AI 实操技巧线上课程 · 课程大纲 V2.0 教学页</span>
-      <span>课程案例采用教学示例或经授权的脱敏材料</span>
-    </div>
+    <div class="foot-note">AI 工作流重构与高效协同 · vivo 全员 AI 实操技巧线上课程 · 模块三教学页 ｜ 课程案例采用教学示例或经授权的脱敏材料</div>
   </div>
 </footer>
 
-<a class="to-top" href="#top" aria-label="回到顶部">↑</a>
+<script>
+(function () {
+  function selectPre(card) {
+    var pre = card.querySelector('pre');
+    var range = document.createRange();
+    range.selectNodeContents(pre);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    return sel;
+  }
+  document.querySelectorAll('.prompt-card').forEach(function (card) {
+    var btn = card.querySelector('.copy-btn');
+    var selBtn = card.querySelector('.select-btn');
+    var status = card.querySelector('.copy-status');
+    var resetTimer = null;
+    function setStatus(msg, cls) {
+      status.textContent = msg;
+      status.className = 'copy-status' + (cls ? ' ' + cls : '');
+    }
+    btn.addEventListener('click', function () {
+      var text = card.querySelector('pre').textContent;
+      function legacyCopy() {
+        selectPre(card);
+        try { return document.execCommand('copy'); } catch (e) { return false; }
+      }
+      var done = function (ok) {
+        if (ok) {
+          setStatus('已复制，可直接粘贴使用', 'ok');
+          btn.textContent = '已复制 ✓';
+          clearTimeout(resetTimer);
+          resetTimer = setTimeout(function () { btn.textContent = '复制提示词'; setStatus(''); }, 2600);
+        } else {
+          setStatus('复制失败：已为你全选文本，请按 Ctrl+C 手动复制', 'err');
+        }
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(legacyCopy()); });
+      } else {
+        done(legacyCopy());
+      }
+    });
+    selBtn.addEventListener('click', function () {
+      selectPre(card);
+      setStatus('已全选，按 Ctrl+C 复制', 'ok');
+    });
+  });
+})();
+</script>
 
 </body>
 </html>
