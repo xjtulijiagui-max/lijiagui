@@ -1,0 +1,7 @@
+﻿cust_id,cust_code,channel,advisor,region
+C001,客户甲,HWP,顾问A,北京
+C002,客户乙,银保,顾问B,上海
+C003,客户丙,线上,无,广东
+C004,客户丁,HWP,顾问A,四川
+C005,客户戊,银保,顾问B,湖北
+C006,客户己,HWP,顾问C,江苏
