@@ -1,6 +1,6 @@
 <!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>场景二 · 泰康之家居民服务跟进工作台｜泰康 WorkBuddy 进阶实战</title><style>
+<title>场景二 · 幸福有约三表关联｜泰康 WorkBuddy 进阶实战</title><style>
 :root{--ink:#16202e;--muted:#5c6b80;--line:#e4e8ef;--bg:#f6f7f9;--navy:#0e1c2e;--red:#C8102E;--reddk:#96081f;--tint:#fdf3f4}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -34,7 +34,8 @@ li{margin:7px 0}
 .str{color:var(--red);font-weight:700}
 .scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px;-webkit-overflow-scrolling:touch}
 .scroll table.dt{width:auto;min-width:100%}
-.scroll table.dt th,.scroll table.dt td{white-space:nowrap}
+.scroll table.dt th,.scroll table.dt td{white-space:nowrap;padding:10px 11px}
+.scroll table.dt{font-size:13.2px}
 .scroll table.dt td.wrap{white-space:normal}
 table{width:100%;border-collapse:collapse;font-size:14.5px}
 th,td{padding:9px 13px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
@@ -86,104 +87,74 @@ footer .fl{border-top:1px solid var(--line);padding-top:18px;display:flex;flex-w
  h2{font-size:20px}
 }
 </style></head><body>
-<div class="topbar"><div class="in"><a class="brand" href="index.html">泰康 · WorkBuddy 进阶<span>四场景</span></a><a class="nv" href="index.html">总览</a><a class="nv" href="scene-1.html">一 · 幸福有约</a><a class="nv on" href="scene-2.html">二 · 泰康之家</a><a class="nv" href="scene-3.html">三 · 健康险理赔</a><a class="nv" href="scene-4.html">四 · 续期经营</a></div></div>
-<header class="hero"><div class="in"><div class="kick">板块二　医养　·　场景二</div><h1>泰康之家：居民服务线索跟进工作台，三步搭起来</h1><p class="lead">12 条线索横跨参观、评估、复评、活动、旅居、家属沟通、退住七类诉求。先把需求讲成工作包，再让 AI 搭页面——顺序反了，搭出来的就只是一个漂亮的空表格。</p><div class="tags"><i>工作包</i><i>工作台</i><i>人机编辑</i><i>验收</i></div></div></header>
-<main><div class="pn"><a href="scene-1.html">← 上一场景</a><a href="scene-3.html">下一场景 →</a></div>
-<section><h2><span class="n">1</span>为什么这个场景在泰康成立</h2>
-<p class="sec-sub">泰康之家做的是 CCRC 持续照护，服务线索天然多类型、多负责人、多状态。服务顾问每天的动作就四步：看今天联系谁、改状态、记下次联系时间、导出台账。</p>
+<div class="topbar"><div class="in"><a class="brand" href="index.html">泰康 · WorkBuddy 进阶<span>四场景</span></a><a class="nv" href="index.html">总览</a><a class="nv" href="scene-1.html">一 · 数据解析</a><a class="nv on" href="scene-2.html">二 · 数据关联</a><a class="nv" href="scene-3.html">三 · 数据分析</a><a class="nv" href="scene-4.html">四 · 工作台</a></div></div>
+<header class="hero"><div class="in"><div class="kick">STEP 02　数据关联　·　保险 × 医养</div><h1>幸福有约：年金保单、社区确认函<br>与客户主数据的三表关联</h1><p class="lead">一张年金保单加一份《养老社区确认函》，才构成一个完整的养老解决方案。三张表分属保险与养康两套系统，键值、口径、状态都不同步——这正是 AI 最容易「看起来算对、其实连错」的地方。</p><div class="tags"><i>三表关联</i><i>一对多展开</i><i>权益核验</i><i>异常识别</i></div></div></header>
+<main><section><h2><span class="n">1</span>任务背景与目标</h2>
+<p class="sec-sub">支付端与服务端各有一套系统，靠"客户编号"和"保单号"串起来——串错的代价是权益纠纷。</p>
 <ul>
-<li>泰康之家按"独立生活、协助生活、专业护理、记忆照护"分业态，社区推行"1+N"多学科团队。落到一线，就是一张不断变化的服务跟进表。</li>
-<li>这类需求不适合直接说"帮我做个系统"——AI 会给你一个漂亮的空壳。正确顺序是：<b>先出定制工作包，确认后再搭建</b>。</li>
-<li>数据红线：只用家庭代号，不收集身份证、病历、真实联系方式；不生成医疗建议、护理等级结论、产品收益或入住资格承诺。</li>
+<li>泰康"新寿险"把虚拟保险与实体医养接在一起："幸福有约"由<b>年金保险</b>与《保险客户入住养老社区确认函》共同组成，一端解决养老资金，一端锁定养老资源。</li>
+<li>落到系统上就是三张表：客户主数据在核心系统，保单在保险业务系统，确认函在养康社区系统。三套表都"对"，合起来可能"不对"。</li>
+<li>三个高频误区：把确认函状态直接当成"已获得入住资格"；把已失效、已退保的保单仍算作有效权益；客户有多份确认函时只取一条。</li>
 </ul>
-<dl class="meta">
-<dt>本场景性质</dt><dd>需求转译 + 轻量工作台</dd>
-<dt>输入</dt><dd>12 条线索 + 标准包</dd>
-<dt>输出</dt><dd>可操作工作台 + CSV</dd>
-<dt>建议时长</dt><dd>30 分钟</dd>
-</dl>
-</section>
-
-<section><h2><span class="n">2</span>数据与材料</h2>
-<h3>居民服务线索 service_leads.csv（12 条）</h3>
-<p class="sec-sub">7 类服务、3 位负责人、4 种状态。社区名称取自泰康之家公开布局，服务数据为虚构。</p>
-<div class="scroll"><table class="dt "><thead><tr><th>线索号</th><th>家庭代号</th><th>意向社区</th><th>服务类型</th><th>负责人</th><th>状态</th><th>下次联系</th><th>来源</th></tr></thead><tbody><tr><td>L001</td><td>家庭A</td><td>燕园</td><td>社区参观预约</td><td>顾问A</td><td>已预约</td><td>2026-10-30</td><td>老客户转介</td></tr><tr><td>L002</td><td>家庭B</td><td>申园</td><td>健康评估预约</td><td>顾问B</td><td>待联系</td><td>2026-10-29</td><td>官网留资</td></tr><tr><td>L003</td><td>家庭C</td><td>粤园</td><td>护理等级复评</td><td>顾问C</td><td>已完成</td><td>2026-11-05</td><td>社区居民</td></tr><tr><td>L004</td><td>家庭D</td><td>蜀园</td><td>乐泰学院活动报名</td><td>顾问A</td><td>已完成</td><td>2026-11-02</td><td>社区居民</td></tr><tr><td>L005</td><td>家庭E</td><td>楚园</td><td>旅居体验</td><td>顾问B</td><td>待联系</td><td>2026-10-31</td><td>活动获客</td></tr><tr><td>L006</td><td>家庭F</td><td>吴园</td><td>家属沟通</td><td>顾问C</td><td>已预约</td><td>2026-11-03</td><td>社区居民</td></tr><tr><td>L007</td><td>家庭G</td><td>燕园</td><td>退住与转区咨询</td><td>顾问A</td><td>待联系</td><td>2026-10-28</td><td>居民家属</td></tr><tr><td>L008</td><td>家庭H</td><td>锦绣府</td><td>社区参观预约</td><td>顾问B</td><td>已取消</td><td>2026-11-08</td><td>官网留资</td></tr><tr><td>L009</td><td>家庭I</td><td>鹏园</td><td>健康评估预约</td><td>顾问C</td><td>待联系</td><td>2026-10-30</td><td>老客户转介</td></tr><tr><td>L010</td><td>家庭J</td><td>大清谷</td><td>乐泰学院活动报名</td><td>顾问A</td><td>已预约</td><td>2026-11-01</td><td>社区居民</td></tr><tr><td>L011</td><td>家庭K</td><td>湘园</td><td>护理等级复评</td><td>顾问B</td><td>已完成</td><td>2026-11-06</td><td>社区居民</td></tr><tr><td>L012</td><td>家庭L</td><td>申园</td><td>旅居体验</td><td>顾问C</td><td>已取消</td><td>2026-11-10</td><td>活动获客</td></tr></tbody></table></div>
-<h3>字段与状态流转</h3>
-<div class="grid2">
-<div class="card"><h4>状态流转</h4><p>待联系 → 已预约 → 已完成；待联系或已预约可转已取消；已完成不回退，回访另建线索并注明来源。</p></div>
-<div class="card"><h4>当前分布</h4><p>待联系 4、已预约 3、已完成 3、已取消 2。待跟进（待联系 + 已预约）共 <b>7</b> 条。</p></div>
-</div>
-<h3>下载</h3>
-<div class="dl"><a href="data/service_leads.csv" target="_blank" rel="noopener"><b>↓</b> service_leads.csv</a><a href="data/泰康之家_居民服务标准包.zip" target="_blank" rel="noopener"><b>↓</b> 泰康之家居民服务标准包.zip</a></div>
-</section>
-
-<section><h2><span class="n">3</span>两步走：先工作包，后工作台</h2>
-<table><thead><tr><th style="width:120px">阶段</th><th>你要拿到的东西</th><th>不通过就重来</th></tr></thead><tbody>
-<tr><td><b>第一步</b><br>定制工作包</td><td>业务目标、IPO（输入—处理—输出）、字段字典、状态流转、页面结构、权限与存储方案、验收用例。</td><td>缺口没列成"待确认"；把权限、审计、多人共享当成默认具备。</td></tr>
-<tr><td><b>第二步</b><br>搭建工作台</td><td>能导入、筛选、改动、保存、刷新保留、统计同步、导出 CSV 的单页 HTML。</td><td>刷新后数据丢失；统计和明细对不上；把公开只读链接说成多人共用数据库。</td></tr>
+<dl class="meta"><div><dt>本场景性质</dt><dd>权益核验与异常识别</dd></div><div><dt>输入</dt><dd>3 张 CSV</dd></div><div><dt>输出</dt><dd>3 张工作表</dd></div><div><dt>建议时长</dt><dd>30 分钟</dd></div></dl>
+<h3>任务与边界</h3><table><thead><tr><th style="width:110px">环节</th><th>要求</th></tr></thead><tbody>
+<tr><td><b>输入</b></td><td>customers.csv、policies.csv、confirmations.csv，保留原件不改。</td></tr>
+<tr><td><b>处理</b></td><td>① 检查主键唯一性（客户编号、保单号、确认函号）；② 以客户表为主左连接，一对多<b>全部展开</b>，不得去重成一行；③ 核对确认函登记保单与实际保单状态；④ 交叉核验客户常驻地区与锁定社区。</td></tr>
+<tr><td><b>输出</b></td><td>Excel 三张工作表：<b>权益全景</b>（一户一行或一户多函多行，注明口径）、<b>异常清单</b>（按类型分级）、<b>核验说明</b>（每条例外给出原始行与建议动作）。</td></tr>
+<tr><td><b>禁止</b></td><td>不推断"客户已获得入住权"；不补造缺失的保单号或社区；不把确认函状态等同于入住资格；不对失效保单做"视同有效"处理。</td></tr>
 </tbody></table>
-<p style="margin-top:14px"><a class="btn" href="demo-workbench.html" target="_blank" rel="noopener">先打开演示工作台看看最终形态 →</a></p>
-<div class="warn"><b>演示版的边界：</b>数据只存在当前浏览器本地存储，不上传、不跨设备同步、不保留操作审计。真正多人使用需要另配账户、权限、数据库与留痕——这一点在课堂上必须讲清，不能让客户误以为"网页打开就等于系统上线"。</div>
+<div class="warn"><b>业务提醒：</b>确认函只是一份<b>登记凭证</b>，能否入住、何时入住、哪个社区，取决于保单是否持续有效、社区当期排队与公司最新规则。课堂只做数据一致性核验，不做权益承诺。</div></section>
+<section><h2><span class="n">2</span>数据素材（可下载）</h2><h3>下载</h3><div class="dl"><a href="data/customers.csv" target="_blank" rel="noopener"><b>↓</b> customers.csv</a><a href="data/policies.csv" target="_blank" rel="noopener"><b>↓</b> policies.csv</a><a href="data/confirmations.csv" target="_blank" rel="noopener"><b>↓</b> confirmations.csv</a></div><h3>客户主数据 customers.csv（6 行）</h3>
+<p class="sec-sub">渠道分 HWP、银保、线上三类。客户代号仅用于课堂区分，不含真实姓名与联系方式。</p>
+<div class="scroll"><table class="dt "><thead><tr><th>客户编号</th><th>客户代号</th><th>渠道</th><th>服务顾问</th><th>常驻地区</th></tr></thead><tbody><tr><td>C001</td><td>客户甲</td><td>HWP</td><td>顾问A</td><td>北京</td></tr><tr><td>C002</td><td>客户乙</td><td>银保</td><td>顾问B</td><td>上海</td></tr><tr><td>C003</td><td>客户丙</td><td>线上</td><td>无</td><td>广东</td></tr><tr><td>C004</td><td>客户丁</td><td>HWP</td><td>顾问A</td><td>四川</td></tr><tr><td>C005</td><td>客户戊</td><td>银保</td><td>顾问B</td><td>湖北</td></tr><tr><td>C006</td><td>客户己</td><td>HWP</td><td>顾问C</td><td>江苏</td></tr></tbody></table></div>
+<h3>保单台账 policies.csv（9 行）</h3>
+<p class="sec-sub">年金险是"幸福有约"的支付端主体；状态含有效、失效、退保三种，受理时必须以<b>当前状态</b>为准。</p>
+<div class="scroll"><table class="dt "><thead><tr><th>保单号</th><th>客户编号</th><th>产品类型</th><th>保费（元）</th><th>状态</th><th>承保日期</th></tr></thead><tbody><tr><td>P001</td><td>C001</td><td>年金险</td><td class="num">200,000</td><td>有效</td><td>2023-05-10</td></tr><tr><td>P002</td><td>C001</td><td>终身寿险</td><td class="num">50,000</td><td>有效</td><td>2024-03-12</td></tr><tr><td>P003</td><td>C002</td><td>年金险</td><td class="num">150,000</td><td>失效</td><td>2022-08-01</td></tr><tr><td>P004</td><td>C003</td><td>年金险</td><td class="num">300,000</td><td>有效</td><td>2024-11-20</td></tr><tr><td>P005</td><td>C003</td><td>健康险</td><td class="num">12,000</td><td>有效</td><td>2025-01-15</td></tr><tr><td>P006</td><td>C004</td><td>年金险</td><td class="num">100,000</td><td>退保</td><td>2021-06-09</td></tr><tr><td>P007</td><td>C004</td><td>年金险</td><td class="num">180,000</td><td>有效</td><td>2025-04-18</td></tr><tr><td>P008</td><td>C006</td><td>年金险</td><td class="num">260,000</td><td>有效</td><td>2024-09-30</td></tr><tr><td>P009</td><td>C005</td><td>健康险</td><td class="num">8,000</td><td>有效</td><td>2025-06-01</td></tr></tbody></table></div>
+<h3>社区确认函 confirmations.csv（6 行）</h3>
+<p class="sec-sub">linked_policy 是确认函上登记的关联保单号。登记关系与保单实际状态不一致，正是本场景要抓的东西。</p>
+<div class="scroll"><table class="dt "><thead><tr><th>确认函号</th><th>客户编号</th><th>锁定社区</th><th>确认函状态</th><th>签署日期</th><th>登记关联保单</th></tr></thead><tbody><tr><td>Q001</td><td>C001</td><td>燕园</td><td>已确认</td><td>2023-06-01</td><td>P001</td></tr><tr><td>Q002</td><td>C002</td><td>申园</td><td>已确认</td><td>2022-09-15</td><td>P003</td></tr><tr><td>Q003</td><td>C004</td><td>蜀园</td><td>排队中</td><td>2021-07-20</td><td>P006</td></tr><tr><td>Q004</td><td>C005</td><td>楚园</td><td>已入住</td><td>2020-11-05</td><td>（空）</td></tr><tr><td>Q005</td><td>C006</td><td>吴园</td><td>已确认</td><td>2024-10-20</td><td>P008</td></tr><tr><td>Q006</td><td>C006</td><td>粤园</td><td>已确认</td><td>2025-03-11</td><td>P008</td></tr></tbody></table></div></section>
+<section><h2><span class="n">3</span>提示词（可直接复制）</h2>
+<p class="sec-sub">连同三份 CSV 一起放进 WorkBuddy，提示词整段粘贴。重点在三处：以谁为主表、一对多怎么展开、异常怎么表述。</p>
+<div class="btnrow"><button class="copy" data-label="复制完整提示词" onclick="copyPrompt('p1',this)">复制完整提示词</button></div><pre class="prompt" id="p1">请实际读取我上传的三份文件：customers.csv、policies.csv、confirmations.csv，保留原件，全程用代码处理，不要手工抄数。
+
+第一步，先做键值体检并写在最前面：客户编号在客户表是否唯一、保单号在保单表是否唯一、确认函号在确认函表是否唯一；三张表之间是否存在孤立键——即保单表里有、客户表里没有的客户编号，确认函表里有、客户表里没有的客户编号。把检查结果列成一张小表，发现问题先说明，不要直接开始连接。
+
+第二步，以客户表为主表做左连接，按"客户 × 确认函"一对多全部展开：
+- 不允许按列位置关联，必须按业务键 cust_id 关联；
+- 没有确认函的客户必须保留，确认函相关字段留空，不要用"无"以外的假值填充；
+- 同一客户有多份确认函，必须展开成多行，不允许只取最新一份；
+- 保单侧先按客户汇总成年金险有效保费合计、年金险有效件数、全部保单件数，再并入主表，避免一对多把客户级金额重复累计。
+
+第三步，生成 Excel 文件 幸福有约权益核验.xlsx，包含三张工作表：
+1）权益全景：客户编号、客户代号、渠道、常驻地区、确认函号、锁定社区、确认函状态、登记关联保单、关联保单当前状态、该客户有效年金险件数、有效年金险保费合计_元、核对结论。
+2）异常清单：异常编号、异常类型、客户编号、涉及确认函号或保单号、原文值、异常说明、建议核验动作、优先级。异常类型至少覆盖五种：确认函关联保单已失效、有有效年金保单但无确认函、确认函关联已退保保单、无年金保单但已有入住记录、同一客户多份确认函或社区与常驻地区不一致。
+3）核验说明：写明统计口径（客户数、保单数、确认函数、连接后行数、年金险保费合计与有效年金险保费合计）、每一步的核对方法，以及本表不能得出的结论。
+
+边界要求：
+- 确认函状态只是登记凭证状态，不等于入住资格或服务承诺，不要写"已获得入住权""保证入住"这类表述；
+- 保单状态以表内当前值为准，已失效、已退保的不得视同有效，也不得自行修正为有效；
+- 缺失的社区、保单号、日期一律留空，不要补造；
+- 对无法从数据判断的异常，写成"待核验"并给出需要向哪个系统或岗位核实，不要给结论性判断。
+
+最后请自查并回读：客户数是否为 6、保单数是否为 9、确认函数是否为 6；以客户为主做一对多展开后行数是多少；年金险保费合计与有效年金险保费合计分别是多少；五类异常各命中几条。把自查结果单独列一段，与本表数字对不上时先修正再交付。</pre>
 </section>
-
-<section><h2><span class="n">4</span>两段提示词</h2>
-<h3>提示词 A：让 AI 先出定制工作包</h3>
-<div class="btnrow"><button class="copy" data-label="复制提示词 A" onclick="copyPrompt('p2a',this)">复制提示词 A</button></div><pre class="prompt" id="p2a">你是养老社区服务工作台的需求顾问。请读取我上传的"泰康之家_居民服务标准包.zip"和 service_leads.csv，先不要写代码，先出一份《泰康之家居民服务跟进工作台 · 定制工作包》。
-
-工作包必须包含以下七节，缺一节就算未完成：
-1）业务目标：用一句话说清这个工作台替服务顾问解决了哪件具体的事，不要写成"提升管理效率"这类空话。
-2）IPO：输入是什么、处理动作有哪些、输出是什么，各列 3-5 条。
-3）字段字典：逐字段给出含义、取值范围、是否必填、缺失时怎么显示。状态字段必须列全取值。
-4）状态流转：画出允许的流转路径，明确哪些回退是禁止的，回退时怎么留痕。
-5）页面结构：顶部统计、筛选区、列表区、编辑入口、导出入口分别放什么，手机端怎么折叠。
-6）权限与存储：说明课堂演示版与正式版的差别。演示版为单浏览器本地存储，不支持跨设备共享、不支持并发编辑、没有操作审计；正式版需要账户、角色权限、服务端存储、操作留痕和备份。不要把两者混为一谈。
-7）验收用例：至少 8 条，每条都要能写成"做什么—期望看到什么"的可执行动作，覆盖导入、筛选、修改、刷新保留、统计同步、导出。
-
-约束：
-- 数据只用 family_code 家庭代号，不得收集或建议收集身份证号、病历、真实手机号、住址门牌；
-- 不得输出医疗建议、护理等级判定结论、产品收益测算或"保证入住"类承诺；
-- 信息不足的地方，统一列进"待确认清单"，并写明需要向哪个岗位确认，不要自行假设；
-- 用户是服务顾问，不是管理者，页面默认视图应面向"我今天要联系谁"。
-
-请先只交付这份工作包，等我确认后再进入搭建阶段。工作包里不要夹带代码。</pre>
-<h3>提示词 B：确认后再让 AI 搭建</h3>
-<div class="btnrow"><button class="copy" data-label="复制提示词 B" onclick="copyPrompt('p2b',this)">复制提示词 B</button></div><pre class="prompt" id="p2b">按刚才确认的《定制工作包》搭建这个工作台，输出一个可以直接双击打开的单页 HTML 文件。
-
-必须实现：
-1）导入 service_leads.csv：支持文件选择读取，也内置一份与 CSV 完全一致的 12 条演示数据，保证断网也能演示。
-2）筛选：服务类型、负责人、状态三个下拉 + 一个关键词搜索，可叠加，可一键清空；筛选后显示结果条数。
-3）统计卡：总数、待联系、已预约、已完成、已取消，随筛选条件同步变化。
-4）编辑：每条线索可以把状态改为四种状态之一，并可修改下次联系日期，保存后立即生效。
-5）持久化：保存到浏览器 localStorage，刷新页面后改动仍在；提供"恢复演示数据"按钮。
-6）导出：按当前筛选结果导出 CSV，文件名带日期，用 Excel 打开中文不乱码（带 BOM）。
-7）边界提示：页面固定显示一行说明——数据仅保存在本机浏览器，不上传、不跨设备同步、无操作审计。
-
-要求：
-- 只用 HTML + CSS + 原生 JavaScript，不引用任何外部 CDN，离线可用；
-- 中文界面，表头与字段名和 CSV 保持一致；
-- 手机端可正常查看与操作，表格可横向滚动；
-- 不得伪造功能：没有服务端就不要显示"同步成功""已保存到云端"。
-
-完成后请逐条实测并回报这 8 条验收用例的结果：导入 12 条、类型筛选"健康评估预约"2 条、负责人"顾问C"4 条、状态"待联系"4 条、L002 改状态后统计同步、刷新后保留、清空筛选合计仍为 12、导出 CSV 行数 12 且 L002 状态正确。哪条没通过就直说，不要只写"已完成"。</pre>
-</section>
-
-<section><h2><span class="n">5</span>验收用例（8 条，逐条实测）</h2>
-<details><summary>展开：导入后应按这个结果逐项核对</summary><div class="body">
+<section><h2><span class="n">4</span>参考答案与验收标准</h2>
+<details><summary>展开：全部数字与 5 类异常</summary><div class="body">
+<p><b>基础计数。</b>客户 <span class="str">6</span> 位、保单 <span class="str">9</span> 张、确认函 <span class="str">6</span> 份。其中年金险保单 6 张，涉及 <b>1,190,000 元</b>；全部保单保费合计 1,260,000 元；状态为有效的年金险保费 <b>940,000 元</b>。</p>
+<p><b>连接结果。</b>以客户表为主左连接，按"客户 × 确认函"展开共 <span class="str">7</span> 行：C006 有两份确认函，因此占两行；C003 无确认函，保留一行且确认函字段留空。做成 6 行（一户一行）也允许，但必须在表头注明"多函客户已合并"，且不得丢单份确认函信息。</p>
+<p><b>五类异常（共 6 条）：</b></p>
 <ol>
-<li>导入 service_leads.csv，表格显示 12 条，统计卡总数为 12。</li>
-<li>按服务类型筛选"健康评估预约"，结果 2 条（L002、L009）。</li>
-<li>按负责人筛选"顾问C"，结果 4 条（L003、L006、L009、L012）。</li>
-<li>按状态筛选"待联系"，结果 4 条（L002、L005、L007、L009）。</li>
-<li>把 L002 状态改为"已预约"并保存：待联系 4→3，已预约 3→4。</li>
-<li>刷新页面，L002 仍为"已预约"。</li>
-<li>清空筛选后统计卡合计仍为 12，不出现重复计数。</li>
-<li>导出 CSV，用 Excel 重开，行数 12 且 L002 状态为"已预约"。</li>
+<li><b>确认函关联保单已失效</b>——C002 / Q002 登记保单 P003 状态为"失效"，确认函状态却是"已确认"。资格依据需复核。</li>
+<li><b>有有效年金保单、无确认函</b>——C003 持有有效年金险 P004（300,000 元），但无任何确认函。属权益未落地，不是客户流失。</li>
+<li><b>确认函关联已退保保单</b>——C004 / Q003 登记 P006（已退保），而该客户另有有效年金 P007（180,000 元）未被登记。属登记关系需更正，不是"没有资格"。</li>
+<li><b>无年金保单却已记载入住</b>——C005 / Q004 状态"已入住"，但该客户仅有健康险 P009，无年金险记录。可能为早年购买、家庭转让或系统缺失，<b>只能列为待核验</b>，不能推断"资格无效"。</li>
+<li><b>同一客户两份确认函、社区跨省</b>——C006 同时持有 Q005（吴园，江苏）与 Q006（粤园，广东），均关联 P008。需确认是否重复锁定，以及常驻江苏的客户为何锁定广东社区。</li>
 </ol>
-<p><b>一句话结论：</b>能打开不等于能用。验收的标准是"改一条、刷一次、导一遍"，三件事都对上，才算交付。</p>
+<p><b>一句话结论</b>：6 位客户里只有 C001 一路对得上（P001 有效 + Q001 已确认 + 社区与常驻北京一致）。这不是数据质量差，而是三套系统各自演进后的常态——所以才需要 AI 先做交叉核对，再由人决定怎么处理。</p>
 </div></details>
-<p class="sec-sub" style="margin-top:18px">课堂安排：先让学员自己写一段"我要什么"（5 分钟），现场生成工作包并挑毛病（10 分钟），再搭建并跑前 5 条验收（12 分钟），最后讲存储与权限边界（3 分钟）。</p>
+<p class="sec-sub" style="margin-top:18px">课堂安排：先讲清三张表的业务来源（5 分钟），现场跑一遍关联（10 分钟），让学员自己找 C005 和 C006 两条异常（10 分钟），最后统一看核验说明怎么写（5 分钟）。</p>
 </section>
-</main>
+<div class="pn"><a href="scene-1.html">← 上一场景</a><a href="scene-3.html">下一场景 →</a></div></main>
 <footer><div class="fl"><div>讲师：李家贵　·　泰康保险集团 WorkBuddy 进阶实战（2 小时）</div>
 <div><a href="../list/">资源导航</a>　|　<a href="index.html">四场景总览</a></div></div>
 <div style="margin-top:12px">本页所有客户、保单、社区与服务数据均为教学模拟，不代表泰康真实业务数据、产品条款、服务承诺或经营指标。社区名称取自泰康之家公开社区布局，仅用于课堂辨识场景。</div></footer>
