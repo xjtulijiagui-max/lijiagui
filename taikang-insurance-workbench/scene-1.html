@@ -1,6 +1,6 @@
 <!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>场景一 · 幸福有约三表关联｜泰康 WorkBuddy 进阶实战</title><style>
+<title>场景一 · 健康险理赔单证解析｜泰康 WorkBuddy 进阶实战</title><style>
 :root{--ink:#16202e;--muted:#5c6b80;--line:#e4e8ef;--bg:#f6f7f9;--navy:#0e1c2e;--red:#C8102E;--reddk:#96081f;--tint:#fdf3f4}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -34,7 +34,8 @@ li{margin:7px 0}
 .str{color:var(--red);font-weight:700}
 .scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px;-webkit-overflow-scrolling:touch}
 .scroll table.dt{width:auto;min-width:100%}
-.scroll table.dt th,.scroll table.dt td{white-space:nowrap}
+.scroll table.dt th,.scroll table.dt td{white-space:nowrap;padding:10px 11px}
+.scroll table.dt{font-size:13.2px}
 .scroll table.dt td.wrap{white-space:normal}
 table{width:100%;border-collapse:collapse;font-size:14.5px}
 th,td{padding:9px 13px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
@@ -86,91 +87,53 @@ footer .fl{border-top:1px solid var(--line);padding-top:18px;display:flex;flex-w
  h2{font-size:20px}
 }
 </style></head><body>
-<div class="topbar"><div class="in"><a class="brand" href="index.html">泰康 · WorkBuddy 进阶<span>四场景</span></a><a class="nv" href="index.html">总览</a><a class="nv on" href="scene-1.html">一 · 幸福有约</a><a class="nv" href="scene-2.html">二 · 泰康之家</a><a class="nv" href="scene-3.html">三 · 健康险理赔</a><a class="nv" href="scene-4.html">四 · 续期经营</a></div></div>
-<header class="hero"><div class="in"><div class="kick">板块一　保险 × 医养　·　场景一</div><h1>幸福有约：年金保单、社区确认函与客户主数据的三表关联</h1><p class="lead">一张年金保单加一份《养老社区确认函》，才构成一个完整的养老解决方案。三张表分属保险与养康两套系统，键值、口径、状态都不同步——这正是 AI 最容易「看起来算对、其实连错」的地方。</p><div class="tags"><i>三表关联</i><i>一对多展开</i><i>权益核验</i><i>异常识别</i></div></div></header>
-<main><div class="pn"><a href="index.html">← 上一场景</a><a href="scene-2.html">下一场景 →</a></div>
-<section><h2><span class="n">1</span>为什么这个场景在泰康成立</h2>
-<p class="sec-sub">支付端与服务端各有一套系统，靠"客户编号"和"保单号"串起来——串错的代价是权益纠纷。</p>
+<div class="topbar"><div class="in"><a class="brand" href="index.html">泰康 · WorkBuddy 进阶<span>四场景</span></a><a class="nv" href="index.html">总览</a><a class="nv on" href="scene-1.html">一 · 数据解析</a><a class="nv" href="scene-2.html">二 · 数据关联</a><a class="nv" href="scene-3.html">三 · 数据分析</a><a class="nv" href="scene-4.html">四 · 工作台</a></div></div>
+<header class="hero"><div class="in"><div class="kick">STEP 01　数据解析　·　保险（理赔运营）</div><h1>健康险理赔：6 页单证跨页解析，一页不等于一案</h1><p class="lead">三组案件、每案两页，材料里混着申请、清单、补件、核对、预估五种单证。跨页关联错一次，后面 20 个字段全错。</p><div class="tags"><i>跨页解析</i><i>JSON</i><i>忠于原文</i><i>留空规则</i></div></div></header>
+<main><section><h2><span class="n">1</span>任务背景与目标</h2>
+<p class="sec-sub">健康险理赔的原始材料从来不是"一个案件一个文件"，而是申请、清单、补件、核对、预估混在一起的多页单证。</p>
 <ul>
-<li>泰康"新寿险"把虚拟保险与实体医养接在一起："幸福有约"由<b>年金保险</b>与《保险客户入住养老社区确认函》共同组成，一端解决养老资金，一端锁定养老资源。</li>
-<li>落到系统上就是三张表：客户主数据在核心系统，保单在保险业务系统，确认函在养康社区系统。三套表都"对"，合起来可能"不对"。</li>
-<li>三个高频误区：把确认函状态直接当成"已获得入住资格"；把已失效、已退保的保单仍算作有效权益；客户有多份确认函时只取一条。</li>
+<li>医养融合意味着理赔材料里既有保单信息，也有医疗费用与服务记录，跨页、跨单据勾稽是常态。</li>
+<li>AI 最容易犯的错不是读错字，而是<b>把一页当成一个案件</b>、<b>把预估金额写成申请金额</b>、<b>遇到冲突自己挑一个</b>。</li>
+<li>所以本场景的核心不是"抽得全"，而是"抽得可回查"：每条结果都要能指回 PDF 页码与原句。</li>
 </ul>
-<dl class="meta">
-<dt>本场景性质</dt><dd>权益核验与异常识别</dd>
-<dt>输入</dt><dd>3 张 CSV</dd>
-<dt>输出</dt><dd>3 张工作表</dd>
-<dt>建议时长</dt><dd>30 分钟</dd>
-</dl>
+<dl class="meta"><div><dt>本场景性质</dt><dd>跨页解析 + 结构化输出</dd></div><div><dt>输入</dt><dd>6 页 PDF，3 组案件</dd></div><div><dt>输出</dt><dd>JSON + 3 张工作表</dd></div><div><dt>建议时长</dt><dd>30 分钟</dd></div></dl>
+<h3>任务与边界</h3><table><thead><tr><th style="width:110px">环节</th><th>要求</th></tr></thead><tbody>
+<tr><td><b>输入</b></td><td>健康险理赔单证模拟包_V1.0.pdf（6 页），保留原 PDF 不拆不改。</td></tr>
+<tr><td><b>处理</b></td><td>逐页解析全部 6 页，建立"页码—材料组—申请编号—单据类型"的对应关系，再按申请编号归并为 3 个案件。</td></tr>
+<tr><td><b>输出</b></td><td>案件汇总 JSON + Excel 三张表：案件汇总（固定 8 字段）、费用明细、疑点核验。</td></tr>
+<tr><td><b>禁止</b></td><td>不推断身份、医学结论、保障责任、赔付或拒赔结果；冲突不自行择一；未提供的金额不填 0。</td></tr>
+</tbody></table></section>
+<section><h2><span class="n">2</span>数据素材（可下载）</h2><h3>下载</h3><div class="dl"><a href="data/健康险理赔单证模拟包_V1.0.pdf" target="_blank" rel="noopener"><b>↓</b> 健康险理赔单证模拟包_V1.0.pdf（6 页）</a></div><h3>材料结构与核对重点</h3><div class="scroll"><table class="dt "><thead><tr><th>材料组</th><th>页码</th><th>单证组合</th><th>核对重点</th></tr></thead><tbody><tr><td>M01 / R001</td><td>1—2 页</td><td>住院申请、费用清单、补件往来</td><td>区分申请金额、费用合计与其他支付</td></tr><tr><td>M02 / R002</td><td>3—4 页</td><td>门诊申请、保单核对、补件回执</td><td>保单号冲突；补件已收不等于已核验</td></tr><tr><td>M03 / R003</td><td>5—6 页</td><td>预登记、费用预估、待办记录</td><td>缺失留空；预估金额不能补成申请金额</td></tr></tbody></table></div>
+<div class="warn"><b>可选中文本的 PDF：</b>这份材料不是扫描件，练习重点是跨页关联与核验，不是 OCR。如果换成真实扫描件，必须先把"识别不确定项"单独列出来，不能默认识别结果正确。</div></section>
+<section><h2><span class="n">3</span>提示词（可直接复制）</h2>
+<div class="btnrow"><button class="copy" data-label="复制完整提示词" onclick="copyPrompt('p3',this)">复制完整提示词</button></div><pre class="prompt" id="p3">请读取附件"健康险理赔单证模拟包_V1.0.pdf"，实际逐页解析全部 6 页，并按申请编号整理 3 个案件。不要只读首页，也不要把每页当成一个案件。
+
+第一步：先列出页码、材料组编号、申请编号、单据类型，建立跨页关联。正文以外的页眉、页脚和教学说明不要当成业务字段。若某页无法读取，记录页码并停止对该页作推断；需要 OCR 时先说明识别不确定项。
+
+第二步：输出案件汇总 JSON 及 Excel"案件汇总"工作表，固定 8 字段：材料编号、申请编号、保单编号、收件日期、申请金额_元、补件要求、赔付金额_元、原文依据。
+材料编号使用 M01/M02/M03。原文依据必须含 PDF 页码、单据名称和短原句。跨页冲突不得自行择一：保单编号留空，两个候选值及出处写入"疑点核验"。未提供的金额留空，不填 0；金额统一为元并去除千分位。
+
+第三步：另外生成两个 Excel 工作表。
+"费用明细"：材料编号、申请编号、PDF 页码、费用项目、数量、单价_元、金额_元、金额性质、来源单据。区分实际费用记录、结算支付记录与预估；数量和单价未载明则留空。合计行与项目行分开标识，不重复累计；其他支付和个人支付不能当作新增费用。
+"疑点核验"：申请编号、字段或事项、来源页码、原文值、冲突或缺失说明、当前补件状态、建议核验动作。按最新记录区分"未提交""已收到但未核验""冲突未解决"。
+
+边界：申请金额、费用合计、个人支付、预估合计和核定赔付金额是不同概念；资料件数齐全不等于已审核或已赔付。只抽原文，不推断身份、医学结论、保障责任、赔付或拒赔结果。
+
+请实际保存 outputs/健康险理赔案件汇总.json 和 outputs/健康险理赔解析.xlsx，保留原 PDF。附核验说明：应覆盖 6 页、3 案，每案可回查原文；列明缺失、冲突与补件未完成事项。若不能读写文件，明确说明限制，不把操作建议当作已生成文件。</pre>
 </section>
-
-<section><h2><span class="n">2</span>三张表与字段</h2>
-<h3>客户主数据 customers.csv（6 行）</h3>
-<p class="sec-sub">渠道分 HWP、银保、线上三类。客户代号仅用于课堂区分，不含真实姓名与联系方式。</p>
-<div class="scroll"><table class="dt "><thead><tr><th>客户编号</th><th>客户代号</th><th>渠道</th><th>服务顾问</th><th>常驻地区</th></tr></thead><tbody><tr><td>C001</td><td>客户甲</td><td>HWP</td><td>顾问A</td><td>北京</td></tr><tr><td>C002</td><td>客户乙</td><td>银保</td><td>顾问B</td><td>上海</td></tr><tr><td>C003</td><td>客户丙</td><td>线上</td><td>无</td><td>广东</td></tr><tr><td>C004</td><td>客户丁</td><td>HWP</td><td>顾问A</td><td>四川</td></tr><tr><td>C005</td><td>客户戊</td><td>银保</td><td>顾问B</td><td>湖北</td></tr><tr><td>C006</td><td>客户己</td><td>HWP</td><td>顾问C</td><td>江苏</td></tr></tbody></table></div>
-<h3>保单台账 policies.csv（9 行）</h3>
-<p class="sec-sub">年金险是"幸福有约"的支付端主体；状态含有效、失效、退保三种，受理时必须以<b>当前状态</b>为准。</p>
-<div class="scroll"><table class="dt "><thead><tr><th>保单号</th><th>客户编号</th><th>产品类型</th><th>保费（元）</th><th>状态</th><th>承保日期</th></tr></thead><tbody><tr><td>P001</td><td>C001</td><td>年金险</td><td class="num">200,000</td><td>有效</td><td>2023-05-10</td></tr><tr><td>P002</td><td>C001</td><td>终身寿险</td><td class="num">50,000</td><td>有效</td><td>2024-03-12</td></tr><tr><td>P003</td><td>C002</td><td>年金险</td><td class="num">150,000</td><td>失效</td><td>2022-08-01</td></tr><tr><td>P004</td><td>C003</td><td>年金险</td><td class="num">300,000</td><td>有效</td><td>2024-11-20</td></tr><tr><td>P005</td><td>C003</td><td>健康险</td><td class="num">12,000</td><td>有效</td><td>2025-01-15</td></tr><tr><td>P006</td><td>C004</td><td>年金险</td><td class="num">100,000</td><td>退保</td><td>2021-06-09</td></tr><tr><td>P007</td><td>C004</td><td>年金险</td><td class="num">180,000</td><td>有效</td><td>2025-04-18</td></tr><tr><td>P008</td><td>C006</td><td>年金险</td><td class="num">260,000</td><td>有效</td><td>2024-09-30</td></tr><tr><td>P009</td><td>C005</td><td>健康险</td><td class="num">8,000</td><td>有效</td><td>2025-06-01</td></tr></tbody></table></div>
-<h3>社区确认函 confirmations.csv（6 行）</h3>
-<p class="sec-sub">linked_policy 是确认函上登记的关联保单号。登记关系与保单实际状态不一致，正是本场景要抓的东西。</p>
-<div class="scroll"><table class="dt "><thead><tr><th>确认函号</th><th>客户编号</th><th>锁定社区</th><th>确认函状态</th><th>签署日期</th><th>登记关联保单</th></tr></thead><tbody><tr><td>Q001</td><td>C001</td><td>燕园</td><td>已确认</td><td>2023-06-01</td><td>P001</td></tr><tr><td>Q002</td><td>C002</td><td>申园</td><td>已确认</td><td>2022-09-15</td><td>P003</td></tr><tr><td>Q003</td><td>C004</td><td>蜀园</td><td>排队中</td><td>2021-07-20</td><td>P006</td></tr><tr><td>Q004</td><td>C005</td><td>楚园</td><td>已入住</td><td>2020-11-05</td><td>（空）</td></tr><tr><td>Q005</td><td>C006</td><td>吴园</td><td>已确认</td><td>2024-10-20</td><td>P008</td></tr><tr><td>Q006</td><td>C006</td><td>粤园</td><td>已确认</td><td>2025-03-11</td><td>P008</td></tr></tbody></table></div>
-<h3>下载</h3>
-<div class="dl"><a href="data/customers.csv" target="_blank" rel="noopener"><b>↓</b> customers.csv</a><a href="data/policies.csv" target="_blank" rel="noopener"><b>↓</b> policies.csv</a><a href="data/confirmations.csv" target="_blank" rel="noopener"><b>↓</b> confirmations.csv</a></div>
-</section>
-
-<section><h2><span class="n">3</span>任务：从三张表到一页权益全景</h2>
-<table><thead><tr><th style="width:110px">环节</th><th>要求</th></tr></thead><tbody>
-<tr><td><b>输入</b></td><td>customers.csv、policies.csv、confirmations.csv，保留原件不改。</td></tr>
-<tr><td><b>处理</b></td><td>① 检查主键唯一性（客户编号、保单号、确认函号）；② 以客户表为主左连接，一对多<b>全部展开</b>，不得去重成一行；③ 核对确认函登记保单与实际保单状态；④ 交叉核验客户常驻地区与锁定社区。</td></tr>
-<tr><td><b>输出</b></td><td>Excel 三张工作表：<b>权益全景</b>（一户一行或一户多函多行，注明口径）、<b>异常清单</b>（按类型分级）、<b>核验说明</b>（每条例外给出原始行与建议动作）。</td></tr>
-<tr><td><b>禁止</b></td><td>不推断"客户已获得入住权"；不补造缺失的保单号或社区；不把确认函状态等同于入住资格；不对失效保单做"视同有效"处理。</td></tr>
-</tbody></table>
-<div class="warn"><b>业务提醒：</b>确认函只是一份<b>登记凭证</b>，能否入住、何时入住、哪个社区，取决于保单是否持续有效、社区当期排队与公司最新规则。课堂只做数据一致性核验，不做权益承诺。</div>
-</section>
-
-<section><h2><span class="n">4</span>提示词（可直接复制）</h2>
-<p class="sec-sub">连同三份 CSV 一起放进 WorkBuddy，提示词整段粘贴。重点在三处：以谁为主表、一对多怎么展开、异常怎么表述。</p>
-<div class="btnrow"><button class="copy" data-label="复制完整提示词" onclick="copyPrompt('p1',this)">复制完整提示词</button></div><pre class="prompt" id="p1">请实际读取我上传的三份文件：customers.csv、policies.csv、confirmations.csv，保留原件，全程用代码处理，不要手工抄数。
-
-第一步，先做键值体检并写在最前面：客户编号在客户表是否唯一、保单号在保单表是否唯一、确认函号在确认函表是否唯一；三张表之间是否存在孤立键——即保单表里有、客户表里没有的客户编号，确认函表里有、客户表里没有的客户编号。把检查结果列成一张小表，发现问题先说明，不要直接开始连接。
-
-第二步，以客户表为主表做左连接，按"客户 × 确认函"一对多全部展开：
-- 不允许按列位置关联，必须按业务键 cust_id 关联；
-- 没有确认函的客户必须保留，确认函相关字段留空，不要用"无"以外的假值填充；
-- 同一客户有多份确认函，必须展开成多行，不允许只取最新一份；
-- 保单侧先按客户汇总成年金险有效保费合计、年金险有效件数、全部保单件数，再并入主表，避免一对多把客户级金额重复累计。
-
-第三步，生成 Excel 文件 幸福有约权益核验.xlsx，包含三张工作表：
-1）权益全景：客户编号、客户代号、渠道、常驻地区、确认函号、锁定社区、确认函状态、登记关联保单、关联保单当前状态、该客户有效年金险件数、有效年金险保费合计_元、核对结论。
-2）异常清单：异常编号、异常类型、客户编号、涉及确认函号或保单号、原文值、异常说明、建议核验动作、优先级。异常类型至少覆盖五种：确认函关联保单已失效、有有效年金保单但无确认函、确认函关联已退保保单、无年金保单但已有入住记录、同一客户多份确认函或社区与常驻地区不一致。
-3）核验说明：写明统计口径（客户数、保单数、确认函数、连接后行数、年金险保费合计与有效年金险保费合计）、每一步的核对方法，以及本表不能得出的结论。
-
-边界要求：
-- 确认函状态只是登记凭证状态，不等于入住资格或服务承诺，不要写"已获得入住权""保证入住"这类表述；
-- 保单状态以表内当前值为准，已失效、已退保的不得视同有效，也不得自行修正为有效；
-- 缺失的社区、保单号、日期一律留空，不要补造；
-- 对无法从数据判断的异常，写成"待核验"并给出需要向哪个系统或岗位核实，不要给结论性判断。
-
-最后请自查并回读：客户数是否为 6、保单数是否为 9、确认函数是否为 6；以客户为主做一对多展开后行数是多少；年金险保费合计与有效年金险保费合计分别是多少；五类异常各命中几条。把自查结果单独列一段，与本表数字对不上时先修正再交付。</pre>
-</section>
-
-<section><h2><span class="n">5</span>参考答案与验收标准</h2>
-<details><summary>展开：全部数字与 5 类异常</summary><div class="body">
-<p><b>基础计数。</b>客户 <span class="str">6</span> 位、保单 <span class="str">9</span> 张、确认函 <span class="str">6</span> 份。其中年金险保单 6 张，涉及 <b>1,190,000 元</b>；全部保单保费合计 1,260,000 元；状态为有效的年金险保费 <b>940,000 元</b>。</p>
-<p><b>连接结果。</b>以客户表为主左连接，按"客户 × 确认函"展开共 <span class="str">7</span> 行：C006 有两份确认函，因此占两行；C003 无确认函，保留一行且确认函字段留空。做成 6 行（一户一行）也允许，但必须在表头注明"多函客户已合并"，且不得丢单份确认函信息。</p>
-<p><b>五类异常（共 6 条）：</b></p>
-<ol>
-<li><b>确认函关联保单已失效</b>——C002 / Q002 登记保单 P003 状态为"失效"，确认函状态却是"已确认"。资格依据需复核。</li>
-<li><b>有有效年金保单、无确认函</b>——C003 持有有效年金险 P004（300,000 元），但无任何确认函。属权益未落地，不是客户流失。</li>
-<li><b>确认函关联已退保保单</b>——C004 / Q003 登记 P006（已退保），而该客户另有有效年金 P007（180,000 元）未被登记。属登记关系需更正，不是"没有资格"。</li>
-<li><b>无年金保单却已记载入住</b>——C005 / Q004 状态"已入住"，但该客户仅有健康险 P009，无年金险记录。可能为早年购买、家庭转让或系统缺失，<b>只能列为待核验</b>，不能推断"资格无效"。</li>
-<li><b>同一客户两份确认函、社区跨省</b>——C006 同时持有 Q005（吴园，江苏）与 Q006（粤园，广东），均关联 P008。需确认是否重复锁定，以及常驻江苏的客户为何锁定广东社区。</li>
-</ol>
-<p><b>一句话结论</b>：6 位客户里只有 C001 一路对得上（P001 有效 + Q001 已确认 + 社区与常驻北京一致）。这不是数据质量差，而是三套系统各自演进后的常态——所以才需要 AI 先做交叉核对，再由人决定怎么处理。</p>
+<section><h2><span class="n">4</span>参考答案与验收标准</h2>
+<details><summary>展开：3 个案件的关键数字</summary><div class="body">
+<p>页数 <span class="str">6</span>、案件数 <span class="str">3</span>。输出 6 个独立案件即为不合格。案件汇总必须保持 8 字段。</p>
+<ul>
+<li><b>M01 / R001</b>：保单 P001，收件 2026-09-01，申请 3,000 元；费用合计 8,800 元、其他支付 5,800 元、个人支付 3,000 元。待补住院收费票据，赔付金额留空。依据第 1—2 页。</li>
+<li><b>M02 / R002</b>：收件 2026-09-02，申请 1,200 元，费用合计 1,500 元。第 3 页 P003 与第 4 页 P030 冲突：汇总保单编号<b>留空</b>，两个候选值及页码写入疑点核验；补件书面说明"已收但未核验"，保单首页未收。赔付金额留空。</li>
+<li><b>M03 / R003</b>：收件 2026-09-03，保单编号与申请金额均留空。第 6 页 960 + 240 = 1,200 元是<b>预估金额</b>，既不是申请金额也不是赔付金额。需补保单、申请金额、完整申请书与收费票据。</li>
+</ul>
+<p>三案赔付金额全部留空。费用合计行不得与明细行重复累计；补件状态以截至 2026-09-05 的最新记录为准。每条抽取结果须给出页码与原句。</p>
 </div></details>
-<p class="sec-sub" style="margin-top:18px">课堂安排：先讲清三张表的业务来源（5 分钟），现场跑一遍关联（10 分钟），让学员自己找 C005 和 C006 两条异常（10 分钟），最后统一看核验说明怎么写（5 分钟）。</p>
+<p class="sec-sub" style="margin-top:18px">课堂安排：先演示 M01 一次跑通全流程（12 分钟），再让学员自己找 M02 的冲突与 M03 的缺失（12 分钟），最后统一讲"什么时候必须留空"（6 分钟）。</p>
 </section>
-</main>
+<div class="pn"><span></span><a href="scene-2.html">下一场景 →</a></div></main>
 <footer><div class="fl"><div>讲师：李家贵　·　泰康保险集团 WorkBuddy 进阶实战（2 小时）</div>
 <div><a href="../list/">资源导航</a>　|　<a href="index.html">四场景总览</a></div></div>
 <div style="margin-top:12px">本页所有客户、保单、社区与服务数据均为教学模拟，不代表泰康真实业务数据、产品条款、服务承诺或经营指标。社区名称取自泰康之家公开社区布局，仅用于课堂辨识场景。</div></footer>
