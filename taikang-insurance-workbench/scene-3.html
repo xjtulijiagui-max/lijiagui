@@ -1,6 +1,6 @@
 <!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>场景三 · 健康险理赔单证解析｜泰康 WorkBuddy 进阶实战</title><style>
+<title>场景三 · 续期经营分析｜泰康 WorkBuddy 进阶实战</title><style>
 :root{--ink:#16202e;--muted:#5c6b80;--line:#e4e8ef;--bg:#f6f7f9;--navy:#0e1c2e;--red:#C8102E;--reddk:#96081f;--tint:#fdf3f4}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -34,7 +34,8 @@ li{margin:7px 0}
 .str{color:var(--red);font-weight:700}
 .scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px;-webkit-overflow-scrolling:touch}
 .scroll table.dt{width:auto;min-width:100%}
-.scroll table.dt th,.scroll table.dt td{white-space:nowrap}
+.scroll table.dt th,.scroll table.dt td{white-space:nowrap;padding:10px 11px}
+.scroll table.dt{font-size:13.2px}
 .scroll table.dt td.wrap{white-space:normal}
 table{width:100%;border-collapse:collapse;font-size:14.5px}
 th,td{padding:9px 13px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
@@ -86,70 +87,81 @@ footer .fl{border-top:1px solid var(--line);padding-top:18px;display:flex;flex-w
  h2{font-size:20px}
 }
 </style></head><body>
-<div class="topbar"><div class="in"><a class="brand" href="index.html">泰康 · WorkBuddy 进阶<span>四场景</span></a><a class="nv" href="index.html">总览</a><a class="nv" href="scene-1.html">一 · 幸福有约</a><a class="nv" href="scene-2.html">二 · 泰康之家</a><a class="nv on" href="scene-3.html">三 · 健康险理赔</a><a class="nv" href="scene-4.html">四 · 续期经营</a></div></div>
-<header class="hero"><div class="in"><div class="kick">板块一　保险（理赔运营）　·　场景三</div><h1>健康险理赔：6 页单证跨页解析，一页不等于一案</h1><p class="lead">三组案件、每案两页，材料里混着申请、清单、补件、核对、预估五种单证。跨页关联错一次，后面 20 个字段全错。</p><div class="tags"><i>跨页解析</i><i>JSON</i><i>忠于原文</i><i>留空规则</i></div></div></header>
-<main><div class="pn"><a href="scene-2.html">← 上一场景</a><a href="scene-4.html">下一场景 →</a></div>
-<section><h2><span class="n">1</span>为什么这个场景在泰康成立</h2>
-<p class="sec-sub">健康险理赔的原始材料从来不是"一个案件一个文件"，而是申请、清单、补件、核对、预估混在一起的多页单证。</p>
+<div class="topbar"><div class="in"><a class="brand" href="index.html">泰康 · WorkBuddy 进阶<span>四场景</span></a><a class="nv" href="index.html">总览</a><a class="nv" href="scene-1.html">一 · 数据解析</a><a class="nv" href="scene-2.html">二 · 数据关联</a><a class="nv on" href="scene-3.html">三 · 数据分析</a><a class="nv" href="scene-4.html">四 · 工作台</a></div></div>
+<header class="hero"><div class="in"><div class="kick">STEP 03　数据分析　·　保险（渠道与队伍）</div><h1>续期经营：24 张保单，先定口径再算数</h1><p class="lead">「续收率」这三个字在寿险里不止一套口径。件数与保费、宽限期内与宽限期外，同一批数据能算出相差十几个点的结论——所以这一页先讲口径，再讲图表。</p><div class="tags"><i>代码计算</i><i>口径</i><i>可视化</i><i>人工复核</i></div></div></header>
+<main><section><h2><span class="n">1</span>任务背景与目标</h2>
+<p class="sec-sub">续期是寿险最朴素的经营动作，也是最容易"算法一说、数字一变"的地方。</p>
 <ul>
-<li>医养融合意味着理赔材料里既有保单信息，也有医疗费用与服务记录，跨页、跨单据勾稽是常态。</li>
-<li>AI 最容易犯的错不是读错字，而是<b>把一页当成一个案件</b>、<b>把预估金额写成申请金额</b>、<b>遇到冲突自己挑一个</b>。</li>
-<li>所以本场景的核心不是"抽得全"，而是"抽得可回查"：每条结果都要能指回 PDF 页码与原句。</li>
+<li>泰康的队伍结构是"以 HWP 为核心的绩优队伍 + 银保、线上等多元渠道"，续期数据按渠道、按机构、按服务专员三层切，口径不统一就没法比。</li>
+<li>业务问题很具体：这一批应收里，哪些已经缴了，哪些还在宽限期，哪些已经过了宽限期还没缴足。</li>
+<li>AI 在这件事上的价值不是"算得快"，而是<b>先把口径写死，再算数，再画图</b>；口径不清，图表越漂亮越危险。</li>
 </ul>
-<dl class="meta">
-<dt>本场景性质</dt><dd>跨页解析 + 结构化输出</dd>
-<dt>输入</dt><dd>6 页 PDF，3 组案件</dd>
-<dt>输出</dt><dd>JSON + 3 张工作表</dd>
-<dt>建议时长</dt><dd>30 分钟</dd>
-</dl>
-</section>
+<dl class="meta"><div><dt>本场景性质</dt><dd>代码计算 + 可视化 + 复核</dd></div><div><dt>输入</dt><dd>24 张保单续期台账</dd></div><div><dt>输出</dt><dd>Excel 汇总 + 一页看板</dd></div><div><dt>建议时长</dt><dd>30 分钟</dd></div></dl>
+<h3>任务与边界</h3><table><thead><tr><th style="width:110px">环节</th><th>要求</th></tr></thead><tbody>
+<tr><td><b>输入</b></td><td>renewal.csv，字段含渠道、机构、应缴日期、应缴保费、实缴保费、状态、宽限期截止、服务专员。</td></tr>
+<tr><td><b>处理</b></td><td>用代码读取；先做数据体检（件数、主键唯一、缺失、日期有效性、负数、实缴大于应缴）；再按机构 × 渠道与机构合计两个层级统计。</td></tr>
+<tr><td><b>输出</b></td><td>Excel 汇总（两个层级分开，不混在一张表）+ 三张图（机构件数、应缴日期趋势、宽限期状态分布）+ 一页 HTML 看板。</td></tr>
+<tr><td><b>禁止</b></td><td>不推断客户流失原因；不评价渠道或顾问优劣；不把小样本结果外推为泰康整体经营水平。</td></tr>
+</tbody></table></section>
+<section><h2><span class="n">2</span>数据素材（可下载）</h2><h3>下载</h3><div class="dl"><a href="data/renewal.csv" target="_blank" rel="noopener"><b>↓</b> renewal.csv</a></div><h3>续期台账 renewal.csv（24 行）</h3><div class="scroll"><table class="dt "><thead><tr><th>保单号</th><th>渠道</th><th>机构</th><th>应缴日期</th><th>应缴保费（元）</th><th>实缴保费（元）</th><th>状态</th><th>宽限期截止</th><th>服务专员</th></tr></thead><tbody><tr><td>R001</td><td>HWP</td><td>北京</td><td>2026-09-12</td><td class="num">120,000</td><td class="num">120,000</td><td>已缴</td><td>2026-11-11</td><td>顾问A</td></tr><tr><td>R002</td><td>HWP</td><td>北京</td><td>2026-09-20</td><td class="num">68,000</td><td class="num">68,000</td><td>已缴</td><td>2026-11-19</td><td>顾问A</td></tr><tr><td>R003</td><td>HWP</td><td>北京</td><td>2026-09-10</td><td class="num">150,000</td><td class="num">90,000</td><td>部分缴</td><td>2026-11-09</td><td>顾问C</td></tr><tr><td>R004</td><td>银保</td><td>北京</td><td>2026-09-05</td><td class="num">45,000</td><td class="num">45,000</td><td>已缴</td><td>2026-11-04</td><td>顾问B</td></tr><tr><td>R005</td><td>银保</td><td>北京</td><td>2026-09-05</td><td class="num">32,000</td><td>0</td><td>未缴</td><td>2026-11-04</td><td>顾问B</td></tr><tr><td>R006</td><td>银保</td><td>北京</td><td>2026-08-28</td><td class="num">88,000</td><td class="num">88,000</td><td>已缴</td><td>2026-10-27</td><td>顾问B</td></tr><tr><td>R007</td><td>HWP</td><td>上海</td><td>2026-09-15</td><td class="num">200,000</td><td class="num">200,000</td><td>已缴</td><td>2026-11-14</td><td>顾问A</td></tr><tr><td>R008</td><td>HWP</td><td>上海</td><td>2026-09-22</td><td class="num">76,000</td><td class="num">76,000</td><td>已缴</td><td>2026-11-21</td><td>顾问A</td></tr><tr><td>R009</td><td>HWP</td><td>上海</td><td>2026-08-20</td><td class="num">50,000</td><td>0</td><td>未缴</td><td>2026-10-19</td><td>顾问C</td></tr><tr><td>R010</td><td>银保</td><td>上海</td><td>2026-09-28</td><td class="num">36,000</td><td class="num">36,000</td><td>已缴</td><td>2026-11-27</td><td>顾问B</td></tr><tr><td>R011</td><td>银保</td><td>上海</td><td>2026-09-25</td><td class="num">110,000</td><td class="num">60,000</td><td>部分缴</td><td>2026-11-24</td><td>顾问B</td></tr><tr><td>R012</td><td>银保</td><td>上海</td><td>2026-09-18</td><td class="num">27,000</td><td>0</td><td>未缴</td><td>2026-11-17</td><td>顾问B</td></tr><tr><td>R013</td><td>HWP</td><td>广东</td><td>2026-09-08</td><td class="num">95,000</td><td class="num">95,000</td><td>已缴</td><td>2026-11-07</td><td>顾问A</td></tr><tr><td>R014</td><td>HWP</td><td>广东</td><td>2026-09-30</td><td class="num">54,000</td><td class="num">54,000</td><td>已缴</td><td>2026-11-29</td><td>顾问C</td></tr><tr><td>R015</td><td>HWP</td><td>广东</td><td>2026-07-15</td><td class="num">41,000</td><td>0</td><td>未缴</td><td>2026-09-13</td><td>顾问C</td></tr><tr><td>R016</td><td>银保</td><td>广东</td><td>2026-09-11</td><td class="num">62,000</td><td class="num">62,000</td><td>已缴</td><td>2026-11-10</td><td>顾问B</td></tr><tr><td>R017</td><td>银保</td><td>广东</td><td>2026-09-24</td><td class="num">39,000</td><td class="num">39,000</td><td>已缴</td><td>2026-11-23</td><td>顾问B</td></tr><tr><td>R018</td><td>银保</td><td>广东</td><td>2026-08-26</td><td class="num">28,000</td><td class="num">28,000</td><td>已缴</td><td>2026-10-25</td><td>顾问B</td></tr><tr><td>R019</td><td>HWP</td><td>四川</td><td>2026-09-06</td><td class="num">72,000</td><td class="num">72,000</td><td>已缴</td><td>2026-11-05</td><td>顾问A</td></tr><tr><td>R020</td><td>HWP</td><td>四川</td><td>2026-08-30</td><td class="num">130,000</td><td class="num">80,000</td><td>部分缴</td><td>2026-10-29</td><td>顾问C</td></tr><tr><td>R021</td><td>银保</td><td>四川</td><td>2026-09-19</td><td class="num">25,000</td><td class="num">25,000</td><td>已缴</td><td>2026-11-18</td><td>顾问B</td></tr><tr><td>R022</td><td>银保</td><td>四川</td><td>2026-09-26</td><td class="num">48,000</td><td class="num">48,000</td><td>已缴</td><td>2026-11-25</td><td>顾问B</td></tr><tr><td>R023</td><td>银保</td><td>四川</td><td>2026-10-02</td><td class="num">30,000</td><td>0</td><td>未缴</td><td>2026-12-01</td><td>顾问B</td></tr><tr><td>R024</td><td>HWP</td><td>四川</td><td>2026-09-14</td><td class="num">66,000</td><td class="num">66,000</td><td>已缴</td><td>2026-11-13</td><td>顾问A</td></tr></tbody></table></div><h3>口径先写死：两套算法，差 13 个百分点</h3><p class="sec-sub">同一批数据，用件数口径和保费口径算出来差 13 个百分点。课堂上先讲这 4 行字，再动手。</p>
+<div class="scroll"><table><thead><tr><th>指标</th><th>定义</th><th>本批结果</th></tr></thead><tbody>
+<tr><td>应收件数</td><td>本批进入应缴窗口的全部保单件数</td><td>24 件</td></tr>
+<tr><td>已缴 / 部分缴 / 未缴</td><td>以状态字段为准；部分缴计为未缴足，但保留实缴金额</td><td>16 / 3 / 5 件</td></tr>
+<tr><td>件数续收率</td><td>已缴件数 ÷ 应收件数，部分缴不计入分子</td><td><b>66.7%</b></td></tr>
+<tr><td>保费续收率</td><td>实缴保费合计 ÷ 应缴保费合计，部分缴按实缴计入</td><td><b>79.9%</b></td></tr>
+<tr><td>宽限期状态</td><td>统计日 2026-10-31：宽限期内未缴 3 件，已过宽限期未缴或未缴足 3 件</td><td>须单列，不能并入"流失"</td></tr>
+</tbody></table></div>
+<div class="warn"><b>口径红线：</b>本表的"当期续收率"<b>不是</b>监管口径的 13 个月或 25 个月保单继续率，分子分母都不同，<b>不可对外引用、不可与同业对比</b>。课堂上必须让学员自己把这句话说出来。</div></section>
+<section><h2><span class="n">3</span>提示词（可直接复制）</h2><div class="btnrow"><button class="copy" data-label="复制完整提示词" onclick="copyPrompt('p4',this)">复制完整提示词</button></div><pre class="prompt" id="p4">请实际读取我上传的 renewal.csv，用代码完成续期经营分析。这是 24 张保单的当期应缴台账，全部金额单位为元，统计日为 2026-10-31。
 
-<section><h2><span class="n">2</span>材料结构</h2>
-<div class="scroll"><table class="dt "><thead><tr><th>材料组</th><th>页码</th><th>单证组合</th><th>核对重点</th></tr></thead><tbody><tr><td>M01 / R001</td><td>1—2 页</td><td>住院申请、费用清单、补件往来</td><td>区分申请金额、费用合计与其他支付</td></tr><tr><td>M02 / R002</td><td>3—4 页</td><td>门诊申请、保单核对、补件回执</td><td>保单号冲突；补件已收不等于已核验</td></tr><tr><td>M03 / R003</td><td>5—6 页</td><td>预登记、费用预估、待办记录</td><td>缺失留空；预估金额不能补成申请金额</td></tr></tbody></table></div>
-<h3>下载</h3>
-<div class="dl"><a href="data/健康险理赔单证模拟包_V1.0.pdf" target="_blank" rel="noopener"><b>↓</b> 健康险理赔单证模拟包_V1.0.pdf（6 页）</a></div>
-<div class="warn"><b>可选中文本的 PDF：</b>这份材料不是扫描件，练习重点是跨页关联与核验，不是 OCR。如果换成真实扫描件，必须先把"识别不确定项"单独列出来，不能默认识别结果正确。</div>
-</section>
+第一步：数据体检，先报再算。
+记录数、保单号是否唯一、各字段缺失情况、日期是否可解析、应缴保费是否存在 0 或负数、实缴保费是否大于应缴保费、状态取值是否只有"已缴/部分缴/未缴"。发现问题逐条列出，不要静默修正。
 
-<section><h2><span class="n">3</span>任务与边界</h2>
-<table><thead><tr><th style="width:110px">环节</th><th>要求</th></tr></thead><tbody>
-<tr><td><b>输入</b></td><td>健康险理赔单证模拟包_V1.0.pdf（6 页），保留原 PDF 不拆不改。</td></tr>
-<tr><td><b>处理</b></td><td>逐页解析全部 6 页，建立"页码—材料组—申请编号—单据类型"的对应关系，再按申请编号归并为 3 个案件。</td></tr>
-<tr><td><b>输出</b></td><td>案件汇总 JSON + Excel 三张表：案件汇总（固定 8 字段）、费用明细、疑点核验。</td></tr>
-<tr><td><b>禁止</b></td><td>不推断身份、医学结论、保障责任、赔付或拒赔结果；冲突不自行择一；未提供的金额不填 0。</td></tr>
-</tbody></table>
-</section>
+第二步：把口径写在最前面，再给数。
+- 应收件数 = 本批全部件数；
+- 已缴件数 = 状态为"已缴"的件数；
+- 部分缴单独计数，不计入已缴分子，但实缴金额计入保费口径的分子；
+- 件数续收率 = 已缴件数 ÷ 应收件数；
+- 保费续收率 = 实缴保费合计 ÷ 应缴保费合计；
+- 宽限期状态以统计日 2026-10-31 与 grace_end 比较，分为"宽限期内未缴足""已过宽限期未缴足"两组。
 
-<section><h2><span class="n">4</span>提示词（可直接复制）</h2>
-<div class="btnrow"><button class="copy" data-label="复制完整提示词" onclick="copyPrompt('p3',this)">复制完整提示词</button></div><pre class="prompt" id="p3">请读取附件"健康险理赔单证模拟包_V1.0.pdf"，实际逐页解析全部 6 页，并按申请编号整理 3 个案件。不要只读首页，也不要把每页当成一个案件。
+第三步：输出两个层级的统计，不要混在一张表里。
+1）机构层级：机构、应收件数、已缴件数、部分缴件数、未缴件数、件数续收率、应缴保费、实缴保费、保费续收率、宽限期内未缴足件数、已过宽限期未缴足件数。
+2）机构 × 渠道层级：同上字段，按机构、渠道两列分组。
+另外单列一张"待跟进清单"：只放已过宽限期仍未缴足、以及宽限期内未缴的保单，含保单号、机构、渠道、服务专员、应缴、实缴、差额、宽限期截止、剩余天数。
 
-第一步：先列出页码、材料组编号、申请编号、单据类型，建立跨页关联。正文以外的页眉、页脚和教学说明不要当成业务字段。若某页无法读取，记录页码并停止对该页作推断；需要 OCR 时先说明识别不确定项。
+第四步：产出。
+1）Excel 文件 续期经营分析.xlsx，工作表按上面三块分开；
+2）三张图：按机构的应收与已缴件数对比（分组柱状）、按应缴日期的应收件数趋势、按宽限期状态的件数分布；
+3）一页 HTML 看板，桌面与手机都能看，数字与 Excel 完全一致。
 
-第二步：输出案件汇总 JSON 及 Excel"案件汇总"工作表，固定 8 字段：材料编号、申请编号、保单编号、收件日期、申请金额_元、补件要求、赔付金额_元、原文依据。
-材料编号使用 M01/M02/M03。原文依据必须含 PDF 页码、单据名称和短原句。跨页冲突不得自行择一：保单编号留空，两个候选值及出处写入"疑点核验"。未提供的金额留空，不填 0；金额统一为元并去除千分位。
+第五步：结论按三栏写。
+"事实"只放表里能直接读出的数字；"可能原因"最多列三条并标注为推测；"待核查项"写清需要向哪个系统或岗位核实。三栏不得混写。
 
-第三步：另外生成两个 Excel 工作表。
-"费用明细"：材料编号、申请编号、PDF 页码、费用项目、数量、单价_元、金额_元、金额性质、来源单据。区分实际费用记录、结算支付记录与预估；数量和单价未载明则留空。合计行与项目行分开标识，不重复累计；其他支付和个人支付不能当作新增费用。
-"疑点核验"：申请编号、字段或事项、来源页码、原文值、冲突或缺失说明、当前补件状态、建议核验动作。按最新记录区分"未提交""已收到但未核验""冲突未解决"。
+边界：
+- 这是"当期续收率"，不是监管口径的 13 个月或 25 个月保单继续率，不要混用名称，也不要在结论里对外引用；
+- 样本只有 24 件，不得推断泰康整体经营水平，不得评价渠道或顾问优劣；
+- 不推断客户退保、断缴的原因；
+- 部分缴不得当作已缴，也不得当作未缴，必须单列。
 
-边界：申请金额、费用合计、个人支付、预估合计和核定赔付金额是不同概念；资料件数齐全不等于已审核或已赔付。只抽原文，不推断身份、医学结论、保障责任、赔付或拒赔结果。
-
-请实际保存 outputs/健康险理赔案件汇总.json 和 outputs/健康险理赔解析.xlsx，保留原 PDF。附核验说明：应覆盖 6 页、3 案，每案可回查原文；列明缺失、冲突与补件未完成事项。若不能读写文件，明确说明限制，不把操作建议当作已生成文件。</pre>
-</section>
-
-<section><h2><span class="n">5</span>参考答案与验收标准</h2>
-<details><summary>展开：3 个案件的关键数字</summary><div class="body">
-<p>页数 <span class="str">6</span>、案件数 <span class="str">3</span>。输出 6 个独立案件即为不合格。案件汇总必须保持 8 字段。</p>
-<ul>
-<li><b>M01 / R001</b>：保单 P001，收件 2026-09-01，申请 3,000 元；费用合计 8,800 元、其他支付 5,800 元、个人支付 3,000 元。待补住院收费票据，赔付金额留空。依据第 1—2 页。</li>
-<li><b>M02 / R002</b>：收件 2026-09-02，申请 1,200 元，费用合计 1,500 元。第 3 页 P003 与第 4 页 P030 冲突：汇总保单编号<b>留空</b>，两个候选值及页码写入疑点核验；补件书面说明"已收但未核验"，保单首页未收。赔付金额留空。</li>
-<li><b>M03 / R003</b>：收件 2026-09-03，保单编号与申请金额均留空。第 6 页 960 + 240 = 1,200 元是<b>预估金额</b>，既不是申请金额也不是赔付金额。需补保单、申请金额、完整申请书与收费票据。</li>
-</ul>
-<p>三案赔付金额全部留空。费用合计行不得与明细行重复累计；补件状态以截至 2026-09-05 的最新记录为准。每条抽取结果须给出页码与原句。</p>
+完成后自查并回读：应收件数、已缴件数、部分缴件数、未缴件数各是多少，两个续收率分别是多少，宽限期内与已过宽限期各几件，机构层级合计是否等于总表数字。对不上先修正再交付。</pre></section>
+<section><h2><span class="n">4</span>参考答案与验收标准</h2>
+<details><summary>展开：机构与渠道两个层级的全部数字</summary><div class="body">
+<p><b>机构层级</b>（件数续收率 / 保费续收率）：</p>
+66.7%
+<p><b>渠道层级</b>：</p>
+79.9%
+<p><b>三句必须说清的话：</b></p>
+<ol>
+<li><b>事实</b>：本批 24 件中已缴 16 件、部分缴 3 件、未缴 5 件；件数续收率 <div class="scroll"><table class="dt "><thead><tr><th>机构</th><th>应收件数</th><th>已缴件数</th><th>件数续收率</th><th>应缴保费（元）</th><th>实缴保费（元）</th><th>保费续收率</th></tr></thead><tbody><tr><td>北京</td><td>6</td><td>4</td><td>66.7%</td><td class="num">503,000</td><td class="num">411,000</td><td>81.7%</td></tr><tr><td>上海</td><td>6</td><td>3</td><td>50.0%</td><td class="num">499,000</td><td class="num">372,000</td><td>74.5%</td></tr><tr><td>广东</td><td>6</td><td>5</td><td>83.3%</td><td class="num">319,000</td><td class="num">278,000</td><td>87.1%</td></tr><tr><td>四川</td><td>6</td><td>4</td><td>66.7%</td><td class="num">371,000</td><td class="num">291,000</td><td>78.4%</td></tr></tbody></table></div>，保费续收率 <div class="scroll"><table class="dt "><thead><tr><th>渠道</th><th>应收件数</th><th>已缴件数</th><th>件数续收率</th><th>应缴保费（元）</th><th>实缴保费（元）</th><th>保费续收率</th></tr></thead><tbody><tr><td>HWP</td><td>12</td><td>8</td><td>66.7%</td><td class="num">1,122,000</td><td class="num">921,000</td><td>82.1%</td></tr><tr><td>银保</td><td>12</td><td>8</td><td>66.7%</td><td class="num">570,000</td><td class="num">431,000</td><td>75.6%</td></tr></tbody></table></div>。</li>
+<li><b>事实</b>：未缴 5 件里，3 件仍在宽限期内（R005、R012、R023），2 件已过宽限期（R015、R009）；部分缴 3 件里 R020 已过宽限期。这 3 件才是本周真正要打的电话。</li>
+<li><b>不能说</b>：不能说"银保比 HWP 差"——两类渠道件数续收率同为 8/12，保费口径 82.1% 与 75.6% 的差异主要来自件均保费结构（HWP 件均应缴约 9.35 万元，银保约 4.75 万元），样本只有 24 件，不足以支撑渠道优劣结论。</li>
+</ol>
+<p><b>一句话结论：</b>同一批数据能算出 66.7% 和 79.9% 两个"续收率"，都对，但含义不同。先写口径、再出图，是这一页要教的唯一一件事。</p>
 </div></details>
-<p class="sec-sub" style="margin-top:18px">课堂安排：先演示 M01 一次跑通全流程（12 分钟），再让学员自己找 M02 的冲突与 M03 的缺失（12 分钟），最后统一讲"什么时候必须留空"（6 分钟）。</p>
+<p class="sec-sub" style="margin-top:18px">课堂安排：先让学员口头定义"续收率"（5 分钟），现场跑代码并对比两个口径（12 分钟），再看宽限期分组（8 分钟），最后讲人工复核清单（5 分钟）。</p>
 </section>
-</main>
+<div class="pn"><a href="scene-2.html">← 上一场景</a><a href="scene-4.html">下一场景 →</a></div></main>
 <footer><div class="fl"><div>讲师：李家贵　·　泰康保险集团 WorkBuddy 进阶实战（2 小时）</div>
 <div><a href="../list/">资源导航</a>　|　<a href="index.html">四场景总览</a></div></div>
 <div style="margin-top:12px">本页所有客户、保单、社区与服务数据均为教学模拟，不代表泰康真实业务数据、产品条款、服务承诺或经营指标。社区名称取自泰康之家公开社区布局，仅用于课堂辨识场景。</div></footer>
