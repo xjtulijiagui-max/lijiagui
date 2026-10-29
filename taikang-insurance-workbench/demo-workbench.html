@@ -1,0 +1,111 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>泰康之家 · 居民服务跟进演示工作台</title>
+<style>
+:root{--ink:#16202e;--muted:#5c6b80;--line:#e4e8ef;--navy:#0e1c2e;--red:#C8102E}
+*{box-sizing:border-box}body{margin:0;background:#f6f7f9;color:var(--ink);font:15px/1.7 "Microsoft YaHei",sans-serif}
+header{background:var(--navy);color:#fff;padding:22px 24px;border-bottom:3px solid var(--red)}
+header h1{margin:0;font-size:20px}
+header p{margin:6px 0 0;font-size:13px;color:#cfd8e6}
+.wrap{max-width:1240px;margin:auto;padding:22px 20px 60px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:16px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.kpi b{display:block;font-size:25px;color:var(--red);line-height:1.2}
+.kpi span{font-size:12.5px;color:var(--muted)}
+.bar{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
+select,input{font:14px inherit;padding:9px 11px;border:1px solid #c9d3e0;border-radius:7px;background:#fff;max-width:100%}
+input[type=search]{flex:1;min-width:150px}
+button{font:14px inherit;border:1px solid #c9d3e0;background:#fff;border-radius:7px;padding:9px 14px;cursor:pointer;color:#22314a}
+button.pri{background:var(--red);border-color:var(--red);color:#fff}
+button:hover{opacity:.9}
+.tb{background:#fff;border:1px solid var(--line);border-radius:10px;overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:920px}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+th{background:#f2f5fa;font-weight:700}
+tr:last-child td{border-bottom:0}
+.tag{display:inline-block;padding:2px 9px;border-radius:20px;font-size:12.5px}
+.t1{background:#fff3e6;color:#9a5a00}.t2{background:#e8f1ff;color:#1b4f9c}
+.t3{background:#e9f7ef;color:#1c6b45}.t4{background:#f1f2f4;color:#5c6b80}
+.note{margin-top:14px;font-size:13px;color:#8a5b00;background:#fff9ec;border:1px solid #f3e0b5;border-radius:8px;padding:11px 14px}
+footer{margin-top:18px;font-size:12.5px;color:var(--muted)}
+</style></head><body>
+<header><h1>泰康之家 · 居民服务跟进演示工作台</h1>
+<p>课堂演示版｜12 条教学模拟线索｜数据仅保存在本机浏览器，不上传、不跨设备同步、无操作审计</p></header>
+<div class="wrap">
+<div class="cards">
+<div class="kpi"><b id="k0">0</b><span>当前结果</span></div>
+<div class="kpi"><b id="k1">0</b><span>待联系</span></div>
+<div class="kpi"><b id="k2">0</b><span>已预约</span></div>
+<div class="kpi"><b id="k3">0</b><span>已完成</span></div>
+<div class="kpi"><b id="k4">0</b><span>已取消</span></div>
+</div>
+<div class="bar">
+<select id="fType"><option value="">全部服务类型</option></select>
+<select id="fOwner"><option value="">全部负责人</option></select>
+<select id="fStatus"><option value="">全部状态</option></select>
+<input type="search" id="kw" placeholder="搜索家庭代号 / 社区 / 来源">
+<button onclick="clearF()">清空筛选</button>
+<button class="pri" onclick="exportCSV()">导出 CSV</button>
+<button onclick="reset()">恢复演示数据</button>
+</div>
+<div class="tb"><table><thead><tr><th>线索号</th><th>家庭代号</th><th>意向社区</th><th>服务类型</th><th>负责人</th><th>状态</th><th>下次联系</th><th>来源</th><th>操作</th></tr></thead><tbody id="tb"></tbody></table></div>
+<div class="note">演示版边界：数据存于浏览器 localStorage。换浏览器、换设备、清理缓存后数据不会跟随；多人同时编辑会互相覆盖；没有操作留痕。正式使用需另配账户、权限、服务端存储与审计。</div>
+<footer>泰康保险集团 WorkBuddy 进阶实战 · 场景二配套演示　|　讲师：李家贵　|　全部数据为教学虚构</footer>
+</div>
+<script>
+var SEED=[{"lead_id": "L001", "family_code": "家庭A", "community": "燕园", "service_type": "社区参观预约", "owner": "顾问A", "status": "已预约", "next_contact": "2026-10-30", "source": "老客户转介"}, {"lead_id": "L002", "family_code": "家庭B", "community": "申园", "service_type": "健康评估预约", "owner": "顾问B", "status": "待联系", "next_contact": "2026-10-29", "source": "官网留资"}, {"lead_id": "L003", "family_code": "家庭C", "community": "粤园", "service_type": "护理等级复评", "owner": "顾问C", "status": "已完成", "next_contact": "2026-11-05", "source": "社区居民"}, {"lead_id": "L004", "family_code": "家庭D", "community": "蜀园", "service_type": "乐泰学院活动报名", "owner": "顾问A", "status": "已完成", "next_contact": "2026-11-02", "source": "社区居民"}, {"lead_id": "L005", "family_code": "家庭E", "community": "楚园", "service_type": "旅居体验", "owner": "顾问B", "status": "待联系", "next_contact": "2026-10-31", "source": "活动获客"}, {"lead_id": "L006", "family_code": "家庭F", "community": "吴园", "service_type": "家属沟通", "owner": "顾问C", "status": "已预约", "next_contact": "2026-11-03", "source": "社区居民"}, {"lead_id": "L007", "family_code": "家庭G", "community": "燕园", "service_type": "退住与转区咨询", "owner": "顾问A", "status": "待联系", "next_contact": "2026-10-28", "source": "居民家属"}, {"lead_id": "L008", "family_code": "家庭H", "community": "锦绣府", "service_type": "社区参观预约", "owner": "顾问B", "status": "已取消", "next_contact": "2026-11-08", "source": "官网留资"}, {"lead_id": "L009", "family_code": "家庭I", "community": "鹏园", "service_type": "健康评估预约", "owner": "顾问C", "status": "待联系", "next_contact": "2026-10-30", "source": "老客户转介"}, {"lead_id": "L010", "family_code": "家庭J", "community": "大清谷", "service_type": "乐泰学院活动报名", "owner": "顾问A", "status": "已预约", "next_contact": "2026-11-01", "source": "社区居民"}, {"lead_id": "L011", "family_code": "家庭K", "community": "湘园", "service_type": "护理等级复评", "owner": "顾问B", "status": "已完成", "next_contact": "2026-11-06", "source": "社区居民"}, {"lead_id": "L012", "family_code": "家庭L", "community": "申园", "service_type": "旅居体验", "owner": "顾问C", "status": "已取消", "next_contact": "2026-11-10", "source": "活动获客"}];
+var KEY='tk_service_leads_v1';
+function load(){try{var s=localStorage.getItem(KEY);if(s){var a=JSON.parse(s);if(Array.isArray(a)&&a.length===SEED.length)return a}}catch(e){}return JSON.parse(JSON.stringify(SEED))}
+var data=load();
+function save(){try{localStorage.setItem(KEY,JSON.stringify(data))}catch(e){}}
+function tag(s){var m={'待联系':'t1','已预约':'t2','已完成':'t3','已取消':'t4'};return '<span class="tag '+(m[s]||'t4')+'">'+s+'</span>'}
+function opts(id,arr){var el=document.getElementById(id);arr.forEach(function(v){var o=document.createElement('option');o.value=v;o.textContent=v;el.appendChild(o)})}
+function uniq(k){var s=[];data.forEach(function(r){if(s.indexOf(r[k])<0)s.push(r[k])});return s}
+opts('fType',uniq('service_type'));opts('fOwner',uniq('owner'));opts('fStatus',['待联系','已预约','已完成','已取消']);
+function shown(){
+  var t=document.getElementById('fType').value,o=document.getElementById('fOwner').value,
+      s=document.getElementById('fStatus').value,k=document.getElementById('kw').value.trim();
+  return data.filter(function(r){
+    if(t&&r.service_type!==t)return false;
+    if(o&&r.owner!==o)return false;
+    if(s&&r.status!==s)return false;
+    if(k){var hay=[r.family_code,r.community,r.source,r.lead_id].join(' ');if(hay.indexOf(k)<0)return false}
+    return true});
+}
+function render(){
+  var rows=shown(),tb=document.getElementById('tb');tb.innerHTML='';
+  rows.forEach(function(r){
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td>'+r.lead_id+'</td><td>'+r.family_code+'</td><td>'+r.community+'</td><td>'+r.service_type+'</td><td>'+r.owner+'</td><td>'+tag(r.status)+'</td><td>'+r.next_contact+'</td><td>'+r.source+'</td><td><select data-id="'+r.lead_id+'" class="st">'+['待联系','已预约','已完成','已取消'].map(function(x){return '<option'+(x===r.status?' selected':'')+'>'+x+'</option>'}).join('')+'</select></td>';
+    tb.appendChild(tr);
+  });
+  if(!rows.length){tb.innerHTML='<tr><td colspan="9" style="color:#5c6b80">当前筛选下没有线索，请调整条件。</td></tr>'}
+  document.getElementById('k0').textContent=rows.length;
+  ['待联系','已预约','已完成','已取消'].forEach(function(s,i){
+    document.getElementById('k'+(i+1)).textContent=rows.filter(function(r){return r.status===s}).length;
+  });
+  [].forEach.call(document.querySelectorAll('select.st'),function(sel){
+    sel.onchange=function(){
+      var id=sel.getAttribute('data-id');
+      data.forEach(function(r){if(r.lead_id===id)r.status=sel.value});
+      save();render();
+    };
+  });
+}
+['fType','fOwner','fStatus','kw'].forEach(function(id){
+  document.getElementById(id).addEventListener('input',render);
+  document.getElementById(id).addEventListener('change',render);
+});
+function clearF(){['fType','fOwner','fStatus'].forEach(function(i){document.getElementById(i).value=''});document.getElementById('kw').value='';render()}
+function reset(){if(confirm('恢复为 12 条演示数据？本地修改将被清除。')){data=JSON.parse(JSON.stringify(SEED));save();render()}}
+function exportCSV(){
+  var rows=shown(),h=['lead_id','family_code','community','service_type','owner','status','next_contact','source'];
+  var lines=[h.join(',')];
+  rows.forEach(function(r){lines.push(h.map(function(k){var v=String(r[k]||'');return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}).join(','))});
+  var blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/csv;charset=utf-8'});
+  var d=new Date(),n=d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0');
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='泰康之家_居民服务线索_'+n+'.csv';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+}
+render();
+</script></body></html>
