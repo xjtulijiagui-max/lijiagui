@@ -1,0 +1,208 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>场景二 · 泰康之家居民服务跟进工作台｜泰康 WorkBuddy 进阶实战</title><style>
+:root{--ink:#16202e;--muted:#5c6b80;--line:#e4e8ef;--bg:#f6f7f9;--navy:#0e1c2e;--red:#C8102E;--reddk:#96081f;--tint:#fdf3f4}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.78 "Microsoft YaHei","PingFang SC",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#8f0b22;text-decoration:none;border-bottom:1px solid rgba(200,16,46,.28)}
+a:hover{border-bottom-color:var(--red)}
+.topbar{position:sticky;top:0;z-index:30;background:var(--navy);border-bottom:3px solid var(--red)}
+.topbar .in{max-width:1080px;margin:auto;padding:0 24px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-height:54px}
+.topbar .brand{color:#fff;font-weight:700;font-size:15px;border:0;letter-spacing:.5px;margin-right:10px}
+.topbar .brand span{color:#ff8a97}
+.topbar a.nv{color:#b8c4d6;border:0;padding:6px 11px;border-radius:6px;font-size:14px}
+.topbar a.nv:hover{background:#1b2f49;color:#fff}
+.topbar a.nv.on{background:var(--red);color:#fff}
+header.hero{background:var(--navy);color:#fff;padding:54px 0 46px;position:relative;overflow:hidden}
+header.hero:after{content:"";position:absolute;right:-140px;top:-120px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(200,16,46,.55),rgba(200,16,46,0) 68%)}
+header.hero .in{max-width:1080px;margin:auto;padding:0 24px;position:relative;z-index:2}
+.kick{font-size:13px;letter-spacing:1.6px;color:#ffb3bd;text-transform:uppercase;margin-bottom:14px}
+h1{font-size:clamp(25px,3.3vw,40px);line-height:1.34;margin:0 0 16px;font-weight:800;max-width:880px;text-wrap:balance}
+.hero p.lead{font-size:17px;line-height:1.85;color:#cfd8e6;max-width:820px;margin:0 0 20px}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tags i{font-style:normal;font-size:13px;color:#e8d3d7;border:1px solid #55708f;border-radius:20px;padding:4px 12px}
+main{max-width:1080px;margin:auto;padding:34px 24px 10px}
+section{background:#fff;border:1px solid var(--line);border-radius:14px;padding:30px 32px;margin-bottom:22px;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+h2{font-size:23px;margin:0 0 6px;font-weight:800;letter-spacing:.2px}
+h2 .n{display:inline-block;min-width:30px;height:30px;line-height:30px;text-align:center;background:var(--red);color:#fff;border-radius:8px;font-size:15px;margin-right:10px;vertical-align:2px;font-weight:700}
+h3{font-size:17px;margin:26px 0 8px;color:#243247}
+.sec-sub{color:var(--muted);font-size:14px;margin:0 0 18px}
+p{margin:10px 0}
+ul,ol{margin:10px 0 10px 4px;padding-left:20px}
+li{margin:7px 0}
+.str{color:var(--red);font-weight:700}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px;-webkit-overflow-scrolling:touch}
+.scroll table.dt{width:auto;min-width:100%}
+.scroll table.dt th,.scroll table.dt td{white-space:nowrap}
+.scroll table.dt td.wrap{white-space:normal}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+th,td{padding:9px 13px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:#f2f5fa;font-weight:700;color:#2b3a51;white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:#fbfcfe}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+.prompt{background:#fbf7f8;border:1px solid #f0dfe2;border-left:4px solid var(--red);border-radius:0 10px 10px 0;padding:20px 22px;margin:14px 0 0;white-space:pre-wrap;overflow-wrap:anywhere;font:15px/1.85 "Microsoft YaHei",sans-serif;color:#20293a}
+button.copy{border:0;border-radius:8px;background:var(--red);color:#fff;padding:10px 18px;font:15px/1 "Microsoft YaHei",sans-serif;cursor:pointer}
+button.copy:hover{background:var(--reddk)}
+button.copy.done{background:#1f7a4d}
+.btnrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:16px}
+.btn{display:inline-block;border:0;border-radius:8px;background:var(--navy);color:#fff;padding:11px 18px;font:15px/1 "Microsoft YaHei",sans-serif;cursor:pointer;border:1px solid var(--navy)}
+.btn.ghost{background:#fff;color:#243247;border:1px solid #c6cfdd}
+.btn:hover{opacity:.9}
+.dl{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 4px}
+.dl a{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid #ccd6e4;border-radius:9px;padding:10px 15px;font-size:14.5px;color:#22314a}
+.dl a:hover{border-color:var(--red);color:var(--red)}
+.dl a b{font-weight:700}
+dl.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin:0}
+dl.meta div{background:var(--tint);border:1px solid #f2dde0;border-radius:10px;padding:13px 15px}
+dl.meta dt{font-size:12.5px;color:#8a5560;letter-spacing:.5px;margin-bottom:3px}
+dl.meta dd{margin:0;font-size:15.5px;font-weight:700;color:#4b1018}
+details{border:1px solid var(--line);border-radius:10px;padding:0;margin:14px 0 0;background:#fcfcfd}
+details summary{cursor:pointer;padding:14px 18px;font-weight:700;color:#243247;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸";color:var(--red);margin-right:9px;display:inline-block;transition:.15s}
+details[open] summary:before{transform:rotate(90deg)}
+details .body{padding:2px 20px 20px;border-top:1px solid var(--line)}
+.warn{background:#fff9ec;border:1px solid #f3e0b5;border-left:4px solid #d99a1e;border-radius:0 10px 10px 0;padding:14px 18px;margin:16px 0;font-size:14.8px}
+.warn b{color:#8a5b00}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:16px 0}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px 22px;border-top:3px solid var(--red)}
+.card h4{margin:0 0 8px;font-size:16.5px}
+.card p{font-size:14.5px;color:#465468;margin:0 0 10px}
+.card .more{font-size:14px;border:0;color:var(--red);font-weight:700}
+.step{display:flex;gap:14px;margin:14px 0;align-items:flex-start}
+.step i{flex:0 0 26px;height:26px;line-height:26px;text-align:center;border-radius:50%;background:#eef1f6;color:#4b5b71;font-style:normal;font-size:13.5px;font-weight:700;margin-top:2px}
+footer{max-width:1080px;margin:8px auto 60px;padding:0 24px;color:var(--muted);font-size:13.5px;line-height:1.9}
+footer .fl{border-top:1px solid var(--line);padding-top:18px;display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between}
+.pn{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 26px}
+.pn a{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 18px;font-size:14.5px;color:#22314a}
+.pn a:hover{border-color:var(--red)}
+@media(max-width:640px){
+ section{padding:22px 18px}
+ main{padding:22px 14px 6px}
+ footer{padding:0 14px}
+ .topbar .in{padding:6px 14px}
+ h2{font-size:20px}
+}
+</style></head><body>
+<div class="topbar"><div class="in"><a class="brand" href="index.html">泰康 · WorkBuddy 进阶<span>四场景</span></a><a class="nv" href="index.html">总览</a><a class="nv" href="scene-1.html">一 · 幸福有约</a><a class="nv on" href="scene-2.html">二 · 泰康之家</a><a class="nv" href="scene-3.html">三 · 健康险理赔</a><a class="nv" href="scene-4.html">四 · 续期经营</a></div></div>
+<header class="hero"><div class="in"><div class="kick">板块二　医养　·　场景二</div><h1>泰康之家：居民服务线索跟进工作台，三步搭起来</h1><p class="lead">12 条线索横跨参观、评估、复评、活动、旅居、家属沟通、退住七类诉求。先把需求讲成工作包，再让 AI 搭页面——顺序反了，搭出来的就只是一个漂亮的空表格。</p><div class="tags"><i>工作包</i><i>工作台</i><i>人机编辑</i><i>验收</i></div></div></header>
+<main><div class="pn"><a href="scene-1.html">← 上一场景</a><a href="scene-3.html">下一场景 →</a></div>
+<section><h2><span class="n">1</span>为什么这个场景在泰康成立</h2>
+<p class="sec-sub">泰康之家做的是 CCRC 持续照护，服务线索天然多类型、多负责人、多状态。服务顾问每天的动作就四步：看今天联系谁、改状态、记下次联系时间、导出台账。</p>
+<ul>
+<li>泰康之家按"独立生活、协助生活、专业护理、记忆照护"分业态，社区推行"1+N"多学科团队。落到一线，就是一张不断变化的服务跟进表。</li>
+<li>这类需求不适合直接说"帮我做个系统"——AI 会给你一个漂亮的空壳。正确顺序是：<b>先出定制工作包，确认后再搭建</b>。</li>
+<li>数据红线：只用家庭代号，不收集身份证、病历、真实联系方式；不生成医疗建议、护理等级结论、产品收益或入住资格承诺。</li>
+</ul>
+<dl class="meta">
+<dt>本场景性质</dt><dd>需求转译 + 轻量工作台</dd>
+<dt>输入</dt><dd>12 条线索 + 标准包</dd>
+<dt>输出</dt><dd>可操作工作台 + CSV</dd>
+<dt>建议时长</dt><dd>30 分钟</dd>
+</dl>
+</section>
+
+<section><h2><span class="n">2</span>数据与材料</h2>
+<h3>居民服务线索 service_leads.csv（12 条）</h3>
+<p class="sec-sub">7 类服务、3 位负责人、4 种状态。社区名称取自泰康之家公开布局，服务数据为虚构。</p>
+<div class="scroll"><table class="dt "><thead><tr><th>线索号</th><th>家庭代号</th><th>意向社区</th><th>服务类型</th><th>负责人</th><th>状态</th><th>下次联系</th><th>来源</th></tr></thead><tbody><tr><td>L001</td><td>家庭A</td><td>燕园</td><td>社区参观预约</td><td>顾问A</td><td>已预约</td><td>2026-10-30</td><td>老客户转介</td></tr><tr><td>L002</td><td>家庭B</td><td>申园</td><td>健康评估预约</td><td>顾问B</td><td>待联系</td><td>2026-10-29</td><td>官网留资</td></tr><tr><td>L003</td><td>家庭C</td><td>粤园</td><td>护理等级复评</td><td>顾问C</td><td>已完成</td><td>2026-11-05</td><td>社区居民</td></tr><tr><td>L004</td><td>家庭D</td><td>蜀园</td><td>乐泰学院活动报名</td><td>顾问A</td><td>已完成</td><td>2026-11-02</td><td>社区居民</td></tr><tr><td>L005</td><td>家庭E</td><td>楚园</td><td>旅居体验</td><td>顾问B</td><td>待联系</td><td>2026-10-31</td><td>活动获客</td></tr><tr><td>L006</td><td>家庭F</td><td>吴园</td><td>家属沟通</td><td>顾问C</td><td>已预约</td><td>2026-11-03</td><td>社区居民</td></tr><tr><td>L007</td><td>家庭G</td><td>燕园</td><td>退住与转区咨询</td><td>顾问A</td><td>待联系</td><td>2026-10-28</td><td>居民家属</td></tr><tr><td>L008</td><td>家庭H</td><td>锦绣府</td><td>社区参观预约</td><td>顾问B</td><td>已取消</td><td>2026-11-08</td><td>官网留资</td></tr><tr><td>L009</td><td>家庭I</td><td>鹏园</td><td>健康评估预约</td><td>顾问C</td><td>待联系</td><td>2026-10-30</td><td>老客户转介</td></tr><tr><td>L010</td><td>家庭J</td><td>大清谷</td><td>乐泰学院活动报名</td><td>顾问A</td><td>已预约</td><td>2026-11-01</td><td>社区居民</td></tr><tr><td>L011</td><td>家庭K</td><td>湘园</td><td>护理等级复评</td><td>顾问B</td><td>已完成</td><td>2026-11-06</td><td>社区居民</td></tr><tr><td>L012</td><td>家庭L</td><td>申园</td><td>旅居体验</td><td>顾问C</td><td>已取消</td><td>2026-11-10</td><td>活动获客</td></tr></tbody></table></div>
+<h3>字段与状态流转</h3>
+<div class="grid2">
+<div class="card"><h4>状态流转</h4><p>待联系 → 已预约 → 已完成；待联系或已预约可转已取消；已完成不回退，回访另建线索并注明来源。</p></div>
+<div class="card"><h4>当前分布</h4><p>待联系 4、已预约 3、已完成 3、已取消 2。待跟进（待联系 + 已预约）共 <b>7</b> 条。</p></div>
+</div>
+<h3>下载</h3>
+<div class="dl"><a href="data/service_leads.csv" target="_blank" rel="noopener"><b>↓</b> service_leads.csv</a><a href="data/泰康之家_居民服务标准包.zip" target="_blank" rel="noopener"><b>↓</b> 泰康之家居民服务标准包.zip</a></div>
+</section>
+
+<section><h2><span class="n">3</span>两步走：先工作包，后工作台</h2>
+<table><thead><tr><th style="width:120px">阶段</th><th>你要拿到的东西</th><th>不通过就重来</th></tr></thead><tbody>
+<tr><td><b>第一步</b><br>定制工作包</td><td>业务目标、IPO（输入—处理—输出）、字段字典、状态流转、页面结构、权限与存储方案、验收用例。</td><td>缺口没列成"待确认"；把权限、审计、多人共享当成默认具备。</td></tr>
+<tr><td><b>第二步</b><br>搭建工作台</td><td>能导入、筛选、改动、保存、刷新保留、统计同步、导出 CSV 的单页 HTML。</td><td>刷新后数据丢失；统计和明细对不上；把公开只读链接说成多人共用数据库。</td></tr>
+</tbody></table>
+<p style="margin-top:14px"><a class="btn" href="demo-workbench.html" target="_blank" rel="noopener">先打开演示工作台看看最终形态 →</a></p>
+<div class="warn"><b>演示版的边界：</b>数据只存在当前浏览器本地存储，不上传、不跨设备同步、不保留操作审计。真正多人使用需要另配账户、权限、数据库与留痕——这一点在课堂上必须讲清，不能让客户误以为"网页打开就等于系统上线"。</div>
+</section>
+
+<section><h2><span class="n">4</span>两段提示词</h2>
+<h3>提示词 A：让 AI 先出定制工作包</h3>
+<div class="btnrow"><button class="copy" data-label="复制提示词 A" onclick="copyPrompt('p2a',this)">复制提示词 A</button></div><pre class="prompt" id="p2a">你是养老社区服务工作台的需求顾问。请读取我上传的"泰康之家_居民服务标准包.zip"和 service_leads.csv，先不要写代码，先出一份《泰康之家居民服务跟进工作台 · 定制工作包》。
+
+工作包必须包含以下七节，缺一节就算未完成：
+1）业务目标：用一句话说清这个工作台替服务顾问解决了哪件具体的事，不要写成"提升管理效率"这类空话。
+2）IPO：输入是什么、处理动作有哪些、输出是什么，各列 3-5 条。
+3）字段字典：逐字段给出含义、取值范围、是否必填、缺失时怎么显示。状态字段必须列全取值。
+4）状态流转：画出允许的流转路径，明确哪些回退是禁止的，回退时怎么留痕。
+5）页面结构：顶部统计、筛选区、列表区、编辑入口、导出入口分别放什么，手机端怎么折叠。
+6）权限与存储：说明课堂演示版与正式版的差别。演示版为单浏览器本地存储，不支持跨设备共享、不支持并发编辑、没有操作审计；正式版需要账户、角色权限、服务端存储、操作留痕和备份。不要把两者混为一谈。
+7）验收用例：至少 8 条，每条都要能写成"做什么—期望看到什么"的可执行动作，覆盖导入、筛选、修改、刷新保留、统计同步、导出。
+
+约束：
+- 数据只用 family_code 家庭代号，不得收集或建议收集身份证号、病历、真实手机号、住址门牌；
+- 不得输出医疗建议、护理等级判定结论、产品收益测算或"保证入住"类承诺；
+- 信息不足的地方，统一列进"待确认清单"，并写明需要向哪个岗位确认，不要自行假设；
+- 用户是服务顾问，不是管理者，页面默认视图应面向"我今天要联系谁"。
+
+请先只交付这份工作包，等我确认后再进入搭建阶段。工作包里不要夹带代码。</pre>
+<h3>提示词 B：确认后再让 AI 搭建</h3>
+<div class="btnrow"><button class="copy" data-label="复制提示词 B" onclick="copyPrompt('p2b',this)">复制提示词 B</button></div><pre class="prompt" id="p2b">按刚才确认的《定制工作包》搭建这个工作台，输出一个可以直接双击打开的单页 HTML 文件。
+
+必须实现：
+1）导入 service_leads.csv：支持文件选择读取，也内置一份与 CSV 完全一致的 12 条演示数据，保证断网也能演示。
+2）筛选：服务类型、负责人、状态三个下拉 + 一个关键词搜索，可叠加，可一键清空；筛选后显示结果条数。
+3）统计卡：总数、待联系、已预约、已完成、已取消，随筛选条件同步变化。
+4）编辑：每条线索可以把状态改为四种状态之一，并可修改下次联系日期，保存后立即生效。
+5）持久化：保存到浏览器 localStorage，刷新页面后改动仍在；提供"恢复演示数据"按钮。
+6）导出：按当前筛选结果导出 CSV，文件名带日期，用 Excel 打开中文不乱码（带 BOM）。
+7）边界提示：页面固定显示一行说明——数据仅保存在本机浏览器，不上传、不跨设备同步、无操作审计。
+
+要求：
+- 只用 HTML + CSS + 原生 JavaScript，不引用任何外部 CDN，离线可用；
+- 中文界面，表头与字段名和 CSV 保持一致；
+- 手机端可正常查看与操作，表格可横向滚动；
+- 不得伪造功能：没有服务端就不要显示"同步成功""已保存到云端"。
+
+完成后请逐条实测并回报这 8 条验收用例的结果：导入 12 条、类型筛选"健康评估预约"2 条、负责人"顾问C"4 条、状态"待联系"4 条、L002 改状态后统计同步、刷新后保留、清空筛选合计仍为 12、导出 CSV 行数 12 且 L002 状态正确。哪条没通过就直说，不要只写"已完成"。</pre>
+</section>
+
+<section><h2><span class="n">5</span>验收用例（8 条，逐条实测）</h2>
+<details><summary>展开：导入后应按这个结果逐项核对</summary><div class="body">
+<ol>
+<li>导入 service_leads.csv，表格显示 12 条，统计卡总数为 12。</li>
+<li>按服务类型筛选"健康评估预约"，结果 2 条（L002、L009）。</li>
+<li>按负责人筛选"顾问C"，结果 4 条（L003、L006、L009、L012）。</li>
+<li>按状态筛选"待联系"，结果 4 条（L002、L005、L007、L009）。</li>
+<li>把 L002 状态改为"已预约"并保存：待联系 4→3，已预约 3→4。</li>
+<li>刷新页面，L002 仍为"已预约"。</li>
+<li>清空筛选后统计卡合计仍为 12，不出现重复计数。</li>
+<li>导出 CSV，用 Excel 重开，行数 12 且 L002 状态为"已预约"。</li>
+</ol>
+<p><b>一句话结论：</b>能打开不等于能用。验收的标准是"改一条、刷一次、导一遍"，三件事都对上，才算交付。</p>
+</div></details>
+<p class="sec-sub" style="margin-top:18px">课堂安排：先让学员自己写一段"我要什么"（5 分钟），现场生成工作包并挑毛病（10 分钟），再搭建并跑前 5 条验收（12 分钟），最后讲存储与权限边界（3 分钟）。</p>
+</section>
+</main>
+<footer><div class="fl"><div>讲师：李家贵　·　泰康保险集团 WorkBuddy 进阶实战（2 小时）</div>
+<div><a href="../list/">资源导航</a>　|　<a href="index.html">四场景总览</a></div></div>
+<div style="margin-top:12px">本页所有客户、保单、社区与服务数据均为教学模拟，不代表泰康真实业务数据、产品条款、服务承诺或经营指标。社区名称取自泰康之家公开社区布局，仅用于课堂辨识场景。</div></footer>
+<script>
+function copyPrompt(id,btn){
+  var el=document.getElementById(id), t=el.textContent;
+  var done=function(){btn.textContent='已复制完整提示词';btn.classList.add('done');setTimeout(function(){btn.textContent=btn.dataset.label||'复制完整提示词';btn.classList.remove('done')},2200)};
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(t).then(done).catch(function(){fallback()});
+  }else{fallback()}
+  function fallback(){
+    var ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.top='-1000px';
+    document.body.appendChild(ta);ta.select();
+    var ok=false;try{ok=document.execCommand('copy')}catch(e){ok=false}
+    document.body.removeChild(ta);
+    if(ok){done()}else{
+      var r=document.createRange();r.selectNodeContents(el);var s=window.getSelection();s.removeAllRanges();s.addRange(r);
+      btn.textContent='复制受限，已选中文字，请按 Ctrl+C';
+    }
+  }
+}
+</script></body></html>
