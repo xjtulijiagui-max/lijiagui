@@ -1,0 +1,28 @@
+{
+  "id": "taikang-insurance-workbench",
+  "title": "泰康保险集团 WorkBuddy 进阶实战·三大板块四场景",
+  "shortTitle": "泰康四场景进阶",
+  "category": "金融保险与支付",
+  "description": "两小时进阶配套网页：幸福有约年金保单与社区确认函三表关联、泰康之家居民服务跟进工作台、健康险理赔6页单证跨页解析、HWP与银保24张保单续期经营分析；含模拟数据、可复制提示词、演示工作台与验收标准。",
+  "url": "https://xjtulijiagui-max.github.io/lijiagui/taikang-insurance-workbench/",
+  "tags": [
+    "WorkBuddy",
+    "泰康",
+    "保险",
+    "医养",
+    "养老社区",
+    "幸福有约",
+    "HWP",
+    "理赔解析",
+    "续期经营",
+    "数据分析",
+    "工作台"
+  ],
+  "type": "客户项目",
+  "client": "泰康",
+  "status": "正常",
+  "featured": false,
+  "updated": "2026-10-29",
+  "source": "https://xjtulijiagui-max.github.io/lijiagui/workbuddy-higher-insurance/",
+  "order": 226
+}
