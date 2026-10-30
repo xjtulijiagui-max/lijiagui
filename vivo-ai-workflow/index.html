@@ -120,7 +120,7 @@ footer{margin-top:48px;background:var(--navy);color:rgba(255,255,255,.8);padding
 }
 </style>
 </head>
-<body>
+<body><div style="margin:16px auto;max-width:1080px;padding:14px 18px;background:#eaf2ff;border:1px solid #a9c4ff;border-radius:12px;color:#173b80"><b>协同交付：</b>第 5 分钟开始第一次 AI 演示。PPT 只是项目跟进可能产生的一种输出，不是贯穿案例。</div>
 
 <header class="site-head">
   <div class="wrap head-inner">
@@ -172,7 +172,7 @@ footer{margin-top:48px;background:var(--navy);color:rgba(255,255,255,.8);padding
           <div class="tcol case">
             <h4>案例、互动与阶段产出</h4>
             <ul>
-              <li>对比「帮我做一个 PPT」与完整任务交代。</li>
+              <li>对比「帮我推进这个项目」与完整任务交代。</li>
               <li>补入汇报对象、业务口径、已有材料和需回答的问题，观察结果如何改善。</li>
             </ul>
           </div>
@@ -240,15 +240,15 @@ footer{margin-top:48px;background:var(--navy);color:rgba(255,255,255,.8);padding
       <div class="sec-head">
         <span class="sec-kicker">跟练工具</span>
         <h2>三条跟练提示词（点击复制即用）</h2>
-        <p>以「月度项目汇报」贯穿案例为例，【】内替换为你的真实信息。普通对话工具即可使用。</p>
+        <p>以「项目跟进」贯穿案例为例，【】内替换为你的真实信息。普通对话工具即可使用。</p>
       </div>
 
       <div class="prompt-card">
         <div class="prompt-head"><span class="prompt-step">3.1</span><h3>CHAT 完整任务交代</h3></div>
-        <p class="prompt-desc">把「帮我做一个 PPT」升级为完整任务交代：C 角色＋H 三类背景＋A 目标＋T 行动，并附约束与验收。对照 3.1 课堂对比演示使用。</p>
+        <p class="prompt-desc">把「帮我推进这个项目」升级为完整任务交代：C 角色＋H 三类背景＋A 目标＋T 行动，并附约束与验收。对照 3.1 课堂对比演示使用。</p>
         <div class="prompt-toolbar"><button class="copy-btn" type="button">复制提示词</button><button class="select-btn" type="button">全选文本</button><span class="copy-status" role="status"></span></div>
         <pre># 角色（Character）
-我是【岗位，如：某项目组项目经理】，负责【一句话岗位职责】。本月我需要完成"月度项目汇报"。
+我是【岗位，如：某项目组项目经理】，负责【一句话岗位职责】。本月我需要完成"项目跟进"。
 
 # 背景（History）
 - 岗位说明：【粘贴岗位说明书要点】
@@ -257,7 +257,7 @@ footer{margin-top:48px;background:var(--navy);color:rgba(255,255,255,.8);padding
 - 已有材料：【列出可提供的材料，如数据表、上月汇报、会议纪要，并随消息附上】
 
 # 目标（Ambition）
-帮我把汇报材料整理成 PPT 初稿。目标是让【汇报对象，如：部门总监】快速看懂项目进展，并批准下一步计划。
+帮我把汇报材料整理成 项目进展、风险与下一步清单。目标是让【汇报对象，如：部门总监】快速看懂项目进展，并批准下一步计划。
 
 # 行动（Task）
 请先输出 PPT 大纲：不超过 10 页，每页给出标题和要点。先不要生成正文，等我确认大纲后再逐页生成页面文案。
@@ -278,7 +278,7 @@ footer{margin-top:48px;background:var(--navy);color:rgba(255,255,255,.8);padding
 - 我负责：材料授权、口径确认、关键判断、内容修订和最终定稿。
 - 未经我确认，你不得自行扩大修改范围，不得替换我给定的数据和结论口径。
 
-现在执行第一步：请只输出"汇报 PPT 大纲"（页码＋标题＋每页要点＋所用材料）供我确认，不要生成正文。
+现在执行第一步：请只输出"项目跟进结果"（页码＋标题＋每页要点＋所用材料）供我确认，不要生成正文。
 我确认或修改大纲后，再按每次 2 页的节奏生成内容，最后等我定稿。</pre>
       </div>
 
