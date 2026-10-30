@@ -172,9 +172,19 @@ footer{margin-top:48px;background:var(--navy);color:rgba(255,255,255,.8);padding
 @media(max-width:760px){.handoff-grid{grid-template-columns:1fr}.arrow-between{transform:rotate(90deg)}.lesson-grid{grid-template-columns:1fr}}
 @media(max-width:520px){.frame-row{grid-template-columns:1fr}.case-step{grid-template-columns:34px minmax(0,1fr)}.case-step .who{grid-column:2;justify-self:start}.topic-head .tag{display:none}.topic-summary,.topic-output{margin-inline:16px}}
 
+
+.t-layer{margin-top:10px;background:#fff;border:1px solid #a4bfea;border-radius:10px;padding:10px}
+.t-head{font-size:.91rem;font-weight:800;color:#073c99;margin-bottom:7px}
+.t-flow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.t-node{background:#f7faff;border:1px solid #cad9f4;border-radius:8px;padding:11px 8px;text-align:center}
+.t-node b{font-size:.87rem;color:#073c99;display:block}
+.t-node span{font-size:.8rem;color:#526178}
+.t-links{font-weight:600;font-size:.79rem;color:#2d588e;margin-top:9px}
+.t-down{text-align:center;color:#174e9b;font-size:.84rem;font-weight:800;margin-top:9px}
+@media(max-width:520px){.t-flow{grid-template-columns:1fr}}
 </style>
 </head>
-<body><div class="top-ribbon"><div class="wrap"><span><b>课堂承接：</b>先取出模块2已经核对的 IPO 任务卡，本模块不重新选题、不重新建卡。</span><a href="/lijiagui/vivo-ipo/" target="_blank" rel="noopener">回看模块2 · IPO任务卡 ↗</a></div></div>
+<body><div class="top-ribbon"><div class="wrap"><span><b>课堂承接：</b>先取出模块2已经核对的 IPO 任务卡，本模块不重新选题、不重新建总 IPO 卡。</span><a href="/lijiagui/vivo-ipo/" target="_blank" rel="noopener">回看模块2 · IPO任务卡 ↗</a></div></div>
 
 <header class="site-head">
   <div class="wrap head-inner">
@@ -226,11 +236,11 @@ footer{margin-top:48px;background:var(--navy);color:rgba(255,255,255,.8);padding
           <div class="handoff-side current">
             <div class="eyebrow">MODULE 3 · CHAT 协同执行</div>
             <h3>补上下文 · 做人机接力 · 真正验收</h3>
-            <p>沿着原 IPO，补齐协同条件，把 P 拆为可接力的子任务，依据 O 的标准检查真实结果。</p>
+            <p>沿着原 IPO，补齐协同条件，把 P 在 T 中细化为可接力的子 IPO，按子任务与总任务的 O 标准分级验收。</p>
           </div>
         </div>
-        <div class="insight"><strong>课程关键判断：</strong>IPO 是任务的业务内核，CHAT 是全面深入的协同交代框架。IPO 主要为 CHAT 的 A（目标）和 T（行动）提供业务依据，但并不机械等同于 AT；输入材料与 H（背景）也有关联。</div>
-        <div class="pills"><span class="pill">不换场景</span><span class="pill">不重做 IPO</span><span class="pill">同一对话连续跟练</span><span class="pill">最终由人确认交付</span></div>
+        <div class="insight"><strong>课程关键判断：</strong>IPO 是任务的业务内核，CHAT 是全面深入的协同交代框架。模块2先定义总 IPO；模块3补 C（角色）、H（背景）、A（目标），并在 T（Task）中把总 IPO 的 P 按需进一步拆成多个子 IPO，再安排依赖、分工和交接。</div>
+        <div class="pills"><span class="pill">不换场景</span><span class="pill">不重做总 IPO</span><span class="pill">同一对话连续跟练</span><span class="pill">最终由人确认交付</span></div>
       </div>
     </div>
   </section>
@@ -260,17 +270,17 @@ footer{margin-top:48px;background:var(--navy);color:rgba(255,255,255,.8);padding
         <div class="topic-output"><b>阶段产出：</b>任务执行准备单（C/H/A 补充信息＋I 输入核对＋待确认清单）。</div>
       </div>
       <div class="topic">
-        <div class="topic-head"><span class="topic-no">3.2</span><h3>设计人机接力：从业务步骤到多任务协同</h3><span class="tag">Process · 14分钟</span></div>
-        <div class="topic-summary">一个任务看 IPO，一串任务看接力。先按 P 拆子任务，再明确谁做、谁判断、何时交接。</div>
+        <div class="topic-head"><span class="topic-no">3.2</span><h3>细化 T 中的 IPO：从一个任务到人机接力</h3><span class="tag">Process → Task · 14分钟</span></div>
+        <div class="topic-summary">T 不是重新写一遍 P，而是按需把总 IPO 的 P 细化为子 IPO，编排人机接力。</div>
         <div class="topic-body">
           <div class="tcol method"><h4>方法与关键判断</h4><ul>
-            <li>沿用 IPO 的 P：识别顺序、判断规则、异常分支和人工检查点；复杂步骤可继续拆成子 IPO。</li>
-            <li>将任务串联为“任务—负责人—前置输入—交付输出—交接条件”，辨别可并行与必须串行的步骤。</li>
+            <li>以模块2总 IPO 的 P 为边界：对复杂处理步骤进一步拆分，每个子任务重新定义自己的 I（前置输入）、P（处理规则）、O（阶段输出与交接标准）。</li>
+            <li>T · Task = 子 IPO 的具体执行要求 + 任务依赖 + 人机分工 + 交接门槛；能并行的并行，有依赖的必须按顺序执行。</li>
             <li>AI 承担授权范围内的整理、分析辅助和初稿；人保留材料授权、口径确认、关键判断与最终决定。</li>
           </ul></div>
           <div class="tcol case"><h4>案例、互动与阶段产出</h4><ul>
             <li>拆“项目跟进”为材料核对 → 进度风险分析 → 人工业务判断 → 生成汇报 → 验收交付。</li>
-            <li>展示从 AI 到人的交接：前一步有核验结果，才能进入依赖它的下一步。</li>
+            <li>展示“上一个子任务 O → 下一个子任务 I”的交接关系：只有满足验收与审批门槛才进入下一步。</li>
             <li>课堂只执行已满足前置条件的第一子任务；遇到缺失数据、未授权材料就停止并请求确认。</li>
           </ul></div>
         </div>
@@ -278,10 +288,10 @@ footer{margin-top:48px;background:var(--navy);color:rgba(255,255,255,.8);padding
       </div>
       <div class="topic">
         <div class="topic-head"><span class="topic-no">3.3</span><h3>建立验收闭环：从输出标准到可信交付</h3><span class="tag">Output · 13分钟</span></div>
-        <div class="topic-summary">AI 生成的是结果，验收通过的才是成果。定义“什么叫合格”和证明“实际合格”是两件事。</div>
+        <div class="topic-summary">两级验收：每个子 IPO 的 O 决定能否交接；总 IPO 的 O 决定最终能否交付。</div>
         <div class="topic-body">
           <div class="tcol method"><h4>方法与关键判断</h4><ul>
-            <li>沿用 IPO 的 O：交付物、对象、格式、质量标准及验收责任人，不另造一套标准。</li>
+            <li>先按每个子 IPO 的 O 检查阶段结果与交接条件，再沿用模块2总 IPO 的 O 验收最终交付物，不另造一套最终标准。</li>
             <li>用原始材料与业务规则逐项验证：数字口径、结论证据、问题覆盖、输出格式和人工决策点。</li>
             <li>对不合格项定位 I / P / O 原因并回退修复；AI 自检只是初步检查，最终由人验收。</li>
           </ul></div>
@@ -291,7 +301,7 @@ footer{margin-top:48px;background:var(--navy);color:rgba(255,255,255,.8);padding
             <li>人工标记通过、退回或待确认；只纠正相关部分，复验后进入最终交付。</li>
           </ul></div>
         </div>
-        <div class="topic-output"><b>阶段产出：</b>对照原 O 标准的验收表、纠错记录和人工确认状态。</div>
+        <div class="topic-output"><b>阶段产出：</b>子 O 交接验收 + 总 O 终验记录、纠错回退清单与人工确认状态。</div>
       </div>
     </div>
   </section>
@@ -306,23 +316,37 @@ footer{margin-top:48px;background:var(--navy);color:rgba(255,255,255,.8);padding
             <div class="frame-box"><h4>H · History 背景</h4><p>业务来龙去脉、已完成工作、规则、样例与约束；I 中的材料为其提供部分依据。重点补在 3.1。</p></div>
           </div>
           <div class="frame-core">
-            <h4>A · Ambition 目标 + T · Task 行动</h4>
-            <p>业务目标告诉 AI 为何而做；具体行动则须承载真实业务任务的输入、处理、输出。</p>
-            <div class="ipo-grid">
-              <div class="ipo-cell"><b>I</b><span>Input · 输入依据</span></div>
-              <div class="ipo-cell"><b>P</b><span>Process · 处理逻辑</span></div>
-              <div class="ipo-cell"><b>O</b><span>Output · 交付标准</span></div>
+            <h4>A · Ambition：明确总目标；T · Task：递归细化与协同编排</h4>
+            <p>A 说明为什么做、要取得什么业务成果；T 把模块2已确定的业务 IPO 转为可执行的子任务网络。</p>
+            <div class="t-layer">
+              <div class="t-head">模块2 · 总 IPO：业务任务的完整定义</div>
+              <div class="ipo-grid">
+                <div class="ipo-cell"><b>I</b><span>总输入依据</span></div>
+                <div class="ipo-cell"><b>P</b><span>总处理流程（待细化）</span></div>
+                <div class="ipo-cell"><b>O</b><span>最终交付与验收标准</span></div>
+              </div>
             </div>
+            <div class="t-down" aria-hidden="true">↓ 在 T 中按需细化 P，并组织人机协同 ↓</div>
+            <div class="t-layer">
+              <div class="t-head">模块3 · T：多项可执行的子 IPO</div>
+              <div class="t-flow">
+                <div class="t-node"><b>子任务 1 · IPO₁</b><span>I₁ → P₁ → O₁</span></div>
+                <div class="t-node"><b>子任务 2 · IPO₂</b><span>I₂ → P₂ → O₂</span></div>
+                <div class="t-node"><b>子任务 3 · IPO₃</b><span>I₃ → P₃ → O₃</span></div>
+              </div>
+              <div class="t-links">O₁ → I₂ → O₂ → I₃：只是典型串行示例；实际可按业务依赖安排并行、判断与回退。</div>
+            </div>
+            <div class="t-down">每个子 IPO 规定执行者与交接标准；各子任务通过后，仍须按总 O 完成终验。</div>
           </div>
-          <p class="frame-caveat"><b>准确理解：</b>IPO 主要提供 A / T 的业务内核，不等于 CHAT 的全部；H 也需要 I 中资料和前序信息支撑。多任务接力与验收闭环，是让 CHAT 真正落地的执行机制。</p>
+          <p class="frame-caveat"><b>准确理解：</b>T 不是“IPO = T”，而是“总 IPO 中的 P → 若干子 IPO + 执行编排”。A 明确业务目标，C/H 为执行补足角色与上下文；简单任务无需强行拆分。子 O 用来把关交接，总 O 用来判断最终成果。</p>
         </div>
         <div class="chat-grid" id="chat">
           <div class="chat-item"><span class="letter">C</span><h4>角色与权限</h4><p>声明谁交代任务、AI 扮演什么角色、谁决定能否交付。</p></div>
           <div class="chat-item"><span class="letter">H</span><h4>背景与依据</h4><p>补时间、业务口径、过往结论和真实附件；无依据的不猜测。</p></div>
           <div class="chat-item"><span class="letter">A</span><h4>目标与价值</h4><p>说清本次想解决什么业务问题，成功的判断是什么。</p></div>
-          <div class="chat-item"><span class="letter">T</span><h4>行动与交付</h4><p>沿 IPO 的 P 组织行动，沿 O 明确交付内容、标准及验收方式。</p></div>
+          <div class="chat-item"><span class="letter">T</span><h4>子 IPO 与任务编排</h4><p>把总 P 进一步细化成子 IPO，明确依赖、分工、交接及阶段验收。</p></div>
         </div>
-        <div class="chat-formula"><b>课堂记忆：</b>IPO 把工作拆清楚 → CHAT 把任务交代清楚 → 人机接力把流程做起来 → 验收闭环把成果验到位。</div>
+        <div class="chat-formula"><b>课堂记忆：</b>总 IPO 定义业务 → CHAT 补 C/H/A → T 将 P 按需细化为子 IPO 并编排接力 → 子 O 交接验收 + 总 O 最终验收。</div>
         <p class="chat-src">方法来源：李家贵 IPO 与 CHAT 课程方法论；本页为教学重构，非 vivo 既有制度。</p>
       </div>
     </div>
@@ -332,7 +356,7 @@ footer{margin-top:48px;background:var(--navy);color:rgba(255,255,255,.8);padding
     <div class="wrap">
       <div class="sec-head"><span class="sec-kicker">一案贯穿</span><h2>“项目跟进”怎样从一张 IPO 任务卡变成一串人机任务？</h2><p>总任务：I 项目台账 / 会议纪要 / 风险登记；P 核对、分析、判断、生成、验收；O 进展、风险和决策事项汇报（按任务卡标准）。</p></div>
       <div class="case-card">
-        <div class="insight"><strong>先明确：</strong>任务可以逐层拆解。总 IPO 描述整项工作；当 P 包含多步骤、多角色或关键检查点时，再展开子任务，每个子任务也能用 IPO 结构描述。</div>
+        <div class="insight"><strong>先明确：</strong>总 IPO 描述整项工作；模块3 CHAT 的 T 以总 P 为基础，按需展开成子 IPO，并增加人机分工、顺序依赖、交接标准和回退机制。这是“业务处理逻辑 → 可执行任务网络”的升级。</div>
         <div class="case-steps">
           <div class="case-step"><span class="num">01</span><span class="body"><strong>资料收集与一致性核对</strong><small>I：已授权资料 → P：比对数据与缺漏 → O：核对清单</small></span><span class="who">人提供 / AI核对</span></div>
           <div class="case-step"><span class="num">02</span><span class="body"><strong>进度与风险初步分析</strong><small>以前一步核对通过的数据为输入，输出带证据的分析线索</small></span><span class="who">AI辅助</span></div>
@@ -360,7 +384,7 @@ footer{margin-top:48px;background:var(--navy);color:rgba(255,255,255,.8);padding
       <div class="sec-head">
         <span class="sec-kicker">连续跟练 · 复制即用</span>
         <h2>同一张 IPO 任务卡，连续使用三条提示词</h2>
-        <p>在同一个 AI 对话中按 3.1 → 3.2 → 3.3 顺序使用，后一步接前一步的产出。以“项目跟进”为示例，真实课堂请换成你的岗位任务。</p>
+        <p>在同一个 AI 对话中按 3.1 → 3.2 → 3.3 顺序使用，后一步接前一步的产出。以“项目跟进”为示例，真实课堂请换成你的岗位任务。特别注意：<b>T 是总 IPO 的进一步任务化细分，而不是另起炉灶。</b></p>
       </div>
       <div class="practice-note"><b>开始前：</b>打开<a href="/lijiagui/vivo-ipo/" target="_blank" rel="noopener" style="color:#0b47c2;text-decoration:underline;font-weight:800">模块2 IPO 任务卡</a>，使用你自己已核对的版本；只上传公开、模拟或已获准脱敏的内容。缺失信息标“待确认”，不要虚构制度、数字或来源。</div>
 
@@ -399,42 +423,54 @@ A · 本次目标：
       </div>
 
       <div class="prompt-card">
-        <div class="prompt-head"><span class="prompt-step">3.2 · PROCESS</span><h3>设计人机接力：把 IPO 的 P 转成可执行的子任务</h3></div>
-        <p class="prompt-desc">在 3.1 准备单基础上展开 P：<b>任务分解、依赖与并行、人机角色、交接门槛</b>。不是单纯列“AI 做什么、人做什么”。</p>
+        <div class="prompt-head"><span class="prompt-step">3.2 · T / P</span><h3>把总 P 细分成子 IPO，再做人机任务编排</h3></div>
+        <p class="prompt-desc">在 CHAT 的 <b>T · Task</b> 中，依据总 IPO 的 P 拆出一个或多个子 IPO，每个节点都交代 I、P、O，再明确任务间的顺序、分工和阶段验收。</p>
         <div class="prompt-toolbar"><button class="copy-btn" type="button">复制提示词</button><button class="select-btn" type="button">全选文本</button><span class="copy-status" role="status"></span></div>
-        <pre>继续刚才同一个任务，沿用已经确认的《IPO任务卡》和《任务执行准备单》，不要重新选题、重写业务流程或改变未经我批准的业务口径。
+        <pre>继续刚才同一个任务。请沿用已经确认的《总IPO任务卡》和 3.1 的《任务执行准备单》，不要重选任务，也不要擅自改变原 IPO 的总输入、业务规则或最终交付标准。
 
-现在进入 P · Process 的人机接力设计：
+现在把 CHAT 的 T（Task）落实为“总 IPO 的进一步细分 + 人机任务编排”。
 
-第一步：按原 IPO 的处理流程，判断是否需要拆成多个子任务。
-- 每个子任务说明：子任务名称、I 输入、P 处理动作、O 阶段输出；
-- 标注任务间依赖关系；确有依据才能并行，不能假设所有步骤可同时做；
-- 遇到异常、资料缺失、判断冲突，明确停止或回退条件。
+【第一步：从总 P 细化出子 IPO】
+1. 先准确复述总 IPO：I（原始输入）、P（整体处理逻辑）、O（最终成果及验收标准）。
+2. 检查总 P 是否包含多个相对独立的步骤、跨角色交接、判断分支或人工审批点。
+3. 只在确有必要时拆成多个可执行子任务；简单任务保留一个 IPO 即可，不要为拆解而拆解。
+4. 为每个子任务分别填写：
+   - 子 I：需要哪些资料？来自总 I，还是前一子任务的 O？缺失时怎么办？
+   - 子 P：具体处理动作、规则、工具及异常分支是什么？
+   - 子 O：产出什么阶段结果？如何验证合格？谁确认后可以交接？
+5. 保留“总 P 的原始步骤 → 子 IPO 编号”的对应关系，不能擅自删减业务环节。
 
-第二步：制作《人机接力表》，列出：
-序号｜子任务 IPO｜前置条件｜执行者（人/AI/协同）｜交付结果｜人工检查点｜交接/验收门槛。
+【第二步：形成 T 的协同执行网络】
+请输出《子 IPO 人机接力表》：
+序号｜对应总 P 步骤｜子 I｜子 P｜子 O｜人/AI 执行者｜前置依赖｜交接标准｜人工确认点｜异常/回退方式。
 
-分工原则：
-- AI 可以协助资料整理、信息比对、分析线索提取、结构组织和初稿编写；
-- 我负责材料授权、事实与业务口径核定、关键判断和结果批准；
-- 没有证据的结论标为“待核实”，不得伪造已经检查或已经执行的动作；
-- 任何需人工确认的节点必须停下来，等我明确回复后才能推进。
+编排要求：
+- 上一子任务 O 经过必要核验后，才能成为依赖它的下一子任务 I；
+- 标明哪些必须串行、哪些可独立并行，以及判断依据；
+- AI 可以整理、比对、辅助分析和起草，但不能代替人作授权、业务口径和关键决策；
+- 每个子任务 O 都需有可检查的交付门槛；所有子任务完成仍不代表总 O 自动验收通过。
 
-第三步：请只执行“资料齐全、权限明确、前置条件已满足”的第一个子任务。
-先输出该子任务的实际结果、来源依据与未解决问题，不要跳过人工检查点自动运行全流程。
+【第三步：只执行当前可启动的子 IPO】
+先判断最先启动的子任务是否具备资料、权限及前置条件。
+具备时仅执行该子任务，给出阶段结果、证据来源、子 O 对照检查和需要我确认的交接事项。
+不具备时输出阻塞原因并停止；不要假称已执行、已批准或已验收。
 
-案例提醒：如果我的任务是项目跟进，可能需要先核对台账，再分析风险、人工确认口径、生成汇报、最终验收；若我的 IPO 不是这一流程，以我的任务卡为准。</pre>
+如以项目跟进为例，可出现“材料核对 IPO₁ → 风险分析 IPO₂ → 人工判断 IPO₃ → 汇报编制 IPO₄”；但请完全以我的总 IPO 实际内容为准。</pre>
       </div>
 
       <div class="prompt-card">
-        <div class="prompt-head"><span class="prompt-step">3.3 · OUTPUT</span><h3>按原 O 标准验收：发现问题、回退修正、复验确认</h3></div>
-        <p class="prompt-desc">“有验收标准”还不够，必须<b>执行验收并留下证据</b>。AI 自检不替代人工复核，尤其是数字、事实与业务判断。</p>
+        <div class="prompt-head"><span class="prompt-step">3.3 · O / 验收</span><h3>按原 O 标准验收：发现问题、回退修正、复验确认</h3></div>
+        <p class="prompt-desc">验收分两层：<b>子 IPO 的 O 检查阶段结果与交接条件；总 IPO 的 O 检查最终交付成果。</b>AI 自检不替代人工复核。</p>
         <div class="prompt-toolbar"><button class="copy-btn" type="button">复制提示词</button><button class="select-btn" type="button">全选文本</button><span class="copy-status" role="status"></span></div>
         <pre>继续同一项工作。请使用模块2《IPO任务卡》中原有的 O · Output 交付标准，并结合刚才《人机接力表》的阶段成果，对“实际已经生成的内容”执行验收。
 
-请先提取原 O 中的交付物、格式、质量标准、验收人；不要临时替换成另一套标准。
+请先提取原总 O 中的交付物、格式、质量标准、验收人；再读取 3.2《子 IPO 人机接力表》每一子 O 的交接标准。不要临时替换原总 O 标准。
 
-输出《交付验收表》，每项包含：
+执行两级验收：
+- 第一级，按子 IPO 的 O 逐项检查阶段成果、证据与交接门槛；若前序子 O 未通过，不得认定依赖它的后续任务可交接。
+- 第二级，按总 IPO 的 O 检查整项工作最终成果；即使每个子任务通过，也不能自动认定总成果通过。
+
+输出《两级验收表》（标明“子任务阶段验收”或“总成果终验”），每项包含：
 验收标准｜实际交付内容｜核对证据/来源｜状态（初检符合/不符合/待人工确认/无法判断）｜问题与责任人｜建议修复动作。
 
 至少按任务卡适用情况检查：
@@ -442,7 +478,8 @@ A · 本次目标：
 2. 结论是否有可核对的来源，是否存在推断冒充事实；
 3. 风险、问题、待决策事项是否遗漏；
 4. 内容结构、字段、格式是否符合原 O；
-5. 原 IPO 标记的人工检查点是否已经实际完成。
+5. 每个子 IPO 的 O 是否满足真实交接门槛，子任务依赖是否有已核验的前序输出；
+6. 原总 IPO 标记的人工检查点是否已经实际完成；最终成果是否满足原总 O。
 
 发现问题时：
 - 说明问题可能来自 I（输入错误/缺资料）、P（处理规则/步骤错误）还是 O（输出不符合标准）；
@@ -454,7 +491,7 @@ A · 本次目标：
       </div>
       <div class="lesson-card" style="margin-top:14px">
         <h3 style="margin:0 0 8px">本模块最终交付的，不是三条孤立提示词</h3>
-        <p class="mini-note">一张 IPO 卡 → 一份执行准备单 → 一张人机接力表及阶段结果 → 一份有证据的验收记录 → 人工确认。验证有效后，再进入模块4沉淀 SOP 或 Skill。</p>
+        <p class="mini-note">一张总 IPO 卡 → 一份 C/H/A 执行准备单 → T 中的子 IPO 接力表与阶段成果 → 子任务 O 与总 O 的两级验收记录 → 人工确认。验证有效后，再进入模块4沉淀 SOP 或 Skill。</p>
         <div class="insight"><strong>授课收束：</strong>模块2训练“任务定义能力”，模块3训练“协同执行与验收能力”。AI 的价值不是生成一段看似完整的话，而是被组织成一个可靠的业务交付过程。</div>
       </div>
     </div>
