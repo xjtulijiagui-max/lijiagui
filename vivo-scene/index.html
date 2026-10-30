@@ -831,7 +831,7 @@
     }
   </style>
 </head>
-<body>
+<body><div style="margin:16px auto;max-width:1080px;padding:14px 18px;background:#fff8e8;border:1px solid #f2c66d;border-radius:12px;color:#6b4b00"><b>按客户反馈调整：</b>贯穿案例统一为“项目跟进”；参与以投票、一句话输入和轻量判断为主，不要求额外上传飞书或掌握 Mermaid。</div>
   <div class="shell">
     <aside class="rail" aria-label="步骤导航">
       <div class="rail-title">
@@ -851,7 +851,7 @@
         <h3>修改提醒</h3>
         <p class="file-purpose">把 {变量} 换成你的岗位和实际材料，再复制到工具。涉及公司内部数据请先脱敏，并遵守公司信息安全规定。工具入口为示例，实际使用公司允许且可访问的 AI 工具。</p>
       </div>
-      <a class="button-link submit-link" href="https://lijiagui.feishu.cn/share/base/form/shrcnT1NSzknu8leovmgkkebnwh" target="_blank" rel="noopener">打开飞书提交链接</a>
+      <a class="button-link submit-link" href="https://lijiagui.feishu.cn/share/base/form/shrcnT1NSzknu8leovmgkkebnwh" target="_blank" rel="noopener">返回课堂记录</a>
     </aside>
 
     <main>
@@ -859,7 +859,7 @@
         <div>
           <span class="kicker">vivo全员AI实操课程 · 选准场景</span>
           <h1 id="page-title">vivo AI<br><span class="title-line">场景训练操作台</span></h1>
-          <p class="lead">从自己岗位上的一项具体工作开始，先梳清流程，再找 AI 能帮上忙的环节。按顺序完成流程图、场景湖清单和五项标准评分，花括号里的内容换成你的实际材料。课堂贯穿案例用“月度项目汇报”，也可以换成你的候选工作。</p>
+          <p class="lead">从自己岗位上的一项具体工作开始，先梳清流程，再找 AI 能帮上忙的环节。按顺序完成流程图、场景湖清单和五项标准评分，花括号里的内容换成你的实际材料。课堂贯穿案例用“项目跟进”，也可以换成你的候选工作。</p>
           <div class="hero-actions">
             <button class="primary" type="button" data-copy-all>复制四个提示词</button>
             <a class="button-link" href="#scene-lake">下载模板资料</a>
@@ -893,7 +893,7 @@
       <section class="section" id="flow" aria-labelledby="flow-title">
         <div class="section-head">
           <h2 id="flow-title">Step1：流程生成：先把一项工作梳理完整</h2>
-          <p>先填写 {你的岗位}，选一项候选工作（课堂贯穿案例：月度项目汇报），把它从开始到完成的流程梳理成 Mermaid。拿到结果后检查上下游交接和资料来源，补完整后导出 SVG。</p>
+          <p>先填写 {你的岗位}，选一项候选工作（课堂贯穿案例：项目跟进），把它从开始到完成的流程梳理成 Mermaid。拿到结果后检查上下游交接和资料来源，补完整后导出 SVG。</p>
           <div class="tool-tags" aria-label="Step1 工具入口">
             <a class="tool-tag" href="https://chat.deepseek.com" target="_blank" rel="noopener">DeepSeek</a>
             <a class="tool-tag" href="https://www.doubao.com" target="_blank" rel="noopener">豆包</a>
@@ -908,7 +908,7 @@
               </div>
               <button type="button" data-copy-target="prompt-flow">复制当前提示词</button>
             </div>
-            <textarea class="prompt-box" id="prompt-flow">我是一名 vivo 员工，岗位是 {你的岗位，例如项目经理／产品运营／供应链专员}。现在要梳理“{候选工作，示例：月度项目汇报}”从开始到完成的完整流程，减少重复整理和来回等待，让各环节的输入输出更清楚。请结合通用职场实践补充流程，输出为 Mermaid 格式。
+            <textarea class="prompt-box" id="prompt-flow">我是一名 vivo 员工，岗位是 {你的岗位，例如项目经理／产品运营／供应链专员}。现在要梳理“{候选工作，示例：项目跟进}”从开始到完成的完整流程，减少重复整理和来回等待，让各环节的输入输出更清楚。请结合通用职场实践补充流程，用简单文字列出步骤。
 
 流程请覆盖：目标确认与资料收集、数据整理与口径核对、分析与结论草拟、汇报材料（PPT）制作、内部评审与修改、正式汇报与答疑、结论跟进与归档。说明每一步的责任角色、输入资料、输出成果和交接对象；补充数据缺失、口径分歧、评审意见反复、时间临时压缩、汇报对象变更等分支。如果你梳理的是其他候选工作，请按同样的结构替换对应环节。
 
@@ -919,9 +919,9 @@
 2. 各阶段横向排布，阶段内部自上而下展开；把月度汇报这类周期性工作单独标成循环，避免画成只走一次的直线。
 3. 用不同形状区分开始/结束、审批、判断、资料、执行和风险提示。
 4. 按“准备—制作—评审—汇报—跟进”分区，标明与上级、协作部门和汇报对象的交接节点。
-5. 输出可直接在 Mermaid 工具或 draw.io 中渲染的代码，不要只给文字说明。</textarea>
+5. 输出可直接在 普通对话工具 中渲染的代码，不要只给文字说明。</textarea>
             <ul class="hint-list">
-              <li><span class="mark">+</span><span>先填写你的岗位和候选工作，也可以直接用课堂贯穿案例“月度项目汇报”。</span></li>
+              <li><span class="mark">+</span><span>先填写你的岗位和候选工作，也可以直接用课堂贯穿案例“项目跟进”。</span></li>
               <li><span class="mark">+</span><span>如果流程不完整，继续追问：“请补充与上级和协作部门的交接信息、时间要求，以及数据缺失、口径分歧和评审意见反复时的处理分支。”</span></li>
               <li><span class="mark">+</span><span>最终下载 SVG，建议命名为：01-vivo-{姓名或部门}-流程生成.svg。</span></li>
             </ul>
@@ -1122,7 +1122,7 @@
             </ul>
           </article>
           <article class="artifact-card warning">
-            <h3>飞书提交入口 <span class="badge amber">必交</span></h3>
+            <h3>课堂记录入口 <span class="badge amber">必交</span></h3>
             <p>最终提交链接：<br><a href="https://lijiagui.feishu.cn/share/base/form/shrcnT1NSzknu8leovmgkkebnwh" target="_blank" rel="noopener">https://lijiagui.feishu.cn/share/base/form/shrcnT1NSzknu8leovmgkkebnwh</a></p>
             <div class="card-actions" style="margin-top: 16px;">
               <a class="button-link primary" href="https://lijiagui.feishu.cn/share/base/form/shrcnT1NSzknu8leovmgkkebnwh" target="_blank" rel="noopener">打开提交表单</a>
