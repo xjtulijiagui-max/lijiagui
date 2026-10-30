@@ -1020,10 +1020,10 @@
 
       <section class="section" id="roi" aria-labelledby="roi-title">
         <div class="section-head">
-          <h2 id="roi-title">Step4：五项标准评分：同一对话继续打分</h2>
-          <p>第四步继续在第三步的任意桌面智能体对话里完成。追加评分模板和综合评价模板，按岗位价值、效率提升、数据可得性、可实施性、风险可控性五项标准打分，选出一项优先场景。</p>
-          <div class="tool-tags" aria-label="Step4 工具入口">
-            <a class="tool-tag" href="https://xiaohuanxiong.om" target="_blank" rel="noopener">任意桌面智能体</a>
+          <h2 id="roi-title">Step4：四条轻量判断：选出优先场景</h2>
+          <p>继续在第三步的同一轮任意桌面智能体对话里完成。对候选工作逐项判断：常做或费时、说得清、有材料、兜得住。四条都满足的工作，优先进入模块二拆解。</p>
+          <div class="tool-tags" aria-label="Step4 使用工具">
+            <span class="tool-tag">任意桌面智能体</span>
           </div>
         </div>
         <div class="grid-two">
@@ -1031,30 +1031,39 @@
             <div class="prompt-top">
               <div>
                 <span class="badge">提示词 4</span>
-                <h3>五项标准评分提示词</h3>
+                <h3>四条轻量判断提示词</h3>
               </div>
               <button type="button" data-copy-target="prompt-roi">复制当前提示词</button>
             </div>
-            <textarea class="prompt-box short" id="prompt-roi">请基于上一步场景湖练习的结果，从中选出得分最高的几项之一作为优先场景，继续在同一轮对话里完成五项标准评分。不要重新下载或上传评分表。
+            <textarea class="prompt-box short" id="prompt-roi">请基于上一步整理出的 AI 候选场景，在同一轮对话中逐项判断以下四条：
 
-评分按五项标准逐项打分并写明依据：岗位价值、效率提升、数据可得性、可实施性、风险可控性。结合该工作的月度重复次数、每轮耗时、返工情况，以及数据准备、工具可用性和人工复核成本判断。没有依据的分值标记为“暂估”，列出需要补采的数据；仅有演示效果时，不视为收益已实现。
-区分月度集中期和日常工作期。节省工时与实际现金节约分别列示，避免重复计算；不要把综合评分当成财务 ROI，也不要把 AI 使用量换算成人员精简。
-在综合评价中选出优先推进的 1—3 个场景，写明选择理由、预期改进、风险边界（敏感数据、关键决策、对外承诺按公司规则处理）、实施前基线、验收指标和复盘时间。
-保持模板结构，输出文件命名为“04-vivo-{姓名或部门}-五项标准评分结果.xls”。</textarea>
+1. 常做或费时？一周要做好几次，或者一次要花很久。
+2. 说得清？步骤和要求，能讲给一位新同事听。
+3. 有材料？纪要、表格、模板、往期样例手头就有。
+4. 兜得住？AI 出错，后果可控。
+
+请对每个候选场景分别回答“是”或“否”，并用一句话说明判断依据。优先选出四条都满足的场景；如果有多个，按重复频率和耗时排序。最后只推荐一项优先进入模块二拆解的工作，不补造未经确认的信息。</textarea>
             <ul class="hint-list">
-              <li><span class="mark">+</span><span>先下载并上传下方两份资料：评分表和综合评价参考表。</span></li>
-              <li><span class="mark">+</span><span>按岗位价值、效率提升、数据可得性、可实施性、风险可控性五项标准打分，并写明依据。</span></li>
-              <li><span class="mark">+</span><span>输出文件建议命名为：04-vivo-{姓名或部门}-五项标准评分结果.xls。</span></li>
+              <li><span class="mark">1</span><span><strong>常做或费时：</strong>一周要做好几次，或者一次要花很久。</span></li>
+              <li><span class="mark">2</span><span><strong>说得清：</strong>步骤和要求，能讲给一位新同事听。</span></li>
+              <li><span class="mark">3</span><span><strong>有材料：</strong>纪要、表格、模板、往期样例手头就有。</span></li>
+              <li><span class="mark">4</span><span><strong>兜得住：</strong>AI 出错，后果可控。</span></li>
             </ul>
+            <div class="step-downloads" aria-label="Step4 下载模板">
+              <div class="step-download">
+                <span class="badge greenish">下载模板</span>
+                <p class="file-purpose">字段和判断标准与 PPT 完全一致。下载后可直接填写，或上传到任意桌面智能体。</p>
+                <a class="download-title" href="assets/AI高价值场景轻量判断表.xlsx" download>AI高价值场景轻量判断表.xlsx</a>
+              </div>
+            </div>
             <div class="copy-status" aria-live="polite"></div>
           </article>
-          
         </div>
       </section>
 
       
 
-      <p class="footer-note">截图区域用于嵌入原图，不做 OCR 复刻；如需展示正式截图，请把图片放入 vivo-scene/assets 并使用页面提示的文件名。</p>
+      
     </main>
   </div>
 
