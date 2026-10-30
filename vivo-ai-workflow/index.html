@@ -193,7 +193,7 @@ footer{margin-top:48px;background:var(--navy);color:rgba(255,255,255,.8);padding
       <a href="#handoff">模块衔接</a>
       <a href="#topics">三个主题</a>
       <a href="#framework">IPO × CHAT</a>
-      <a href="#prompts">跟练提示词</a>
+      <a href="#prompts">3.1 提示词</a>
       <a class="home" href="/lijiagui/list/">资源导航</a>
     </nav>
   </div>
@@ -366,15 +366,6 @@ footer{margin-top:48px;background:var(--navy);color:rgba(255,255,255,.8);padding
         </div>
         <p class="case-note">演示用模拟或已授权脱敏资料。真正的工作可能只有两步，也可能有更多分支；按自己的 IPO 实际情况调整，不复制示例中的业务结论。</p>
       </div>
-      <div class="lesson-card">
-        <h3 style="margin:0;font-size:1.02rem">35 分钟如何讲？</h3>
-        <div class="lesson-grid">
-          <div class="lesson-item"><b>0—8分钟 · 3.1 补背景</b><p>拿出模块2任务卡；第5分钟 AI 首次读卡，补 C/H/A，确认 I 是否充分。</p></div>
-          <div class="lesson-item"><b>8—22分钟 · 3.2 做接力</b><p>展开 P 的子任务，确认谁做、谁判断、何时交接，并运行首个子任务。</p></div>
-          <div class="lesson-item"><b>22—35分钟 · 3.3 严验收</b><p>以 O 的标准核验实际结果，定位问题并回退修正；完成讲评答疑。</p></div>
-        </div>
-        <p class="lesson-quote">资料给得全，不代表任务讲得清；一个任务看 IPO，一串任务看接力；AI 生成的是结果，验收通过的才是成果。</p>
-      </div>
     </div>
   </section>
 
@@ -382,9 +373,9 @@ footer{margin-top:48px;background:var(--navy);color:rgba(255,255,255,.8);padding
   <section class="block" id="prompts">
     <div class="wrap">
       <div class="sec-head">
-        <span class="sec-kicker">连续跟练 · 复制即用</span>
-        <h2>同一张 IPO 任务卡，连续使用三条提示词</h2>
-        <p>在同一个 AI 对话中按 3.1 → 3.2 → 3.3 顺序使用，后一步接前一步的产出。以“项目跟进”为示例，真实课堂请换成你的岗位任务。特别注意：<b>T 是总 IPO 的进一步任务化细分，而不是另起炉灶。</b></p>
+        <span class="sec-kicker">3.1 · 实操参考</span>
+        <h2>3.1 补齐上下文：参考提示词</h2>
+        <p>仅为 3.1 提供可复制的示范：承接模块2的 IPO 任务卡，补全角色、业务背景和目标，并核查输入条件。3.2 人机接力与 3.3 两级验收保留在上方方法论讲解中，不另设提示词。</p>
       </div>
       <div class="practice-note"><b>开始前：</b>打开<a href="/lijiagui/vivo-ipo/" target="_blank" rel="noopener" style="color:#0b47c2;text-decoration:underline;font-weight:800">模块2 IPO 任务卡</a>，使用你自己已核对的版本；只上传公开、模拟或已获准脱敏的内容。缺失信息标“待确认”，不要虚构制度、数字或来源。</div>
 
@@ -422,78 +413,6 @@ A · 本次目标：
 最多提出 5 个影响执行的关键问题。若前置条件不满足，先暂停相关执行，等待我补充或确认。</pre>
       </div>
 
-      <div class="prompt-card">
-        <div class="prompt-head"><span class="prompt-step">3.2 · T / P</span><h3>把总 P 细分成子 IPO，再做人机任务编排</h3></div>
-        <p class="prompt-desc">在 CHAT 的 <b>T · Task</b> 中，依据总 IPO 的 P 拆出一个或多个子 IPO，每个节点都交代 I、P、O，再明确任务间的顺序、分工和阶段验收。</p>
-        <div class="prompt-toolbar"><button class="copy-btn" type="button">复制提示词</button><button class="select-btn" type="button">全选文本</button><span class="copy-status" role="status"></span></div>
-        <pre>继续刚才同一个任务。请沿用已经确认的《总IPO任务卡》和 3.1 的《任务执行准备单》，不要重选任务，也不要擅自改变原 IPO 的总输入、业务规则或最终交付标准。
-
-现在把 CHAT 的 T（Task）落实为“总 IPO 的进一步细分 + 人机任务编排”。
-
-【第一步：从总 P 细化出子 IPO】
-1. 先准确复述总 IPO：I（原始输入）、P（整体处理逻辑）、O（最终成果及验收标准）。
-2. 检查总 P 是否包含多个相对独立的步骤、跨角色交接、判断分支或人工审批点。
-3. 只在确有必要时拆成多个可执行子任务；简单任务保留一个 IPO 即可，不要为拆解而拆解。
-4. 为每个子任务分别填写：
-   - 子 I：需要哪些资料？来自总 I，还是前一子任务的 O？缺失时怎么办？
-   - 子 P：具体处理动作、规则、工具及异常分支是什么？
-   - 子 O：产出什么阶段结果？如何验证合格？谁确认后可以交接？
-5. 保留“总 P 的原始步骤 → 子 IPO 编号”的对应关系，不能擅自删减业务环节。
-
-【第二步：形成 T 的协同执行网络】
-请输出《子 IPO 人机接力表》：
-序号｜对应总 P 步骤｜子 I｜子 P｜子 O｜人/AI 执行者｜前置依赖｜交接标准｜人工确认点｜异常/回退方式。
-
-编排要求：
-- 上一子任务 O 经过必要核验后，才能成为依赖它的下一子任务 I；
-- 标明哪些必须串行、哪些可独立并行，以及判断依据；
-- AI 可以整理、比对、辅助分析和起草，但不能代替人作授权、业务口径和关键决策；
-- 每个子任务 O 都需有可检查的交付门槛；所有子任务完成仍不代表总 O 自动验收通过。
-
-【第三步：只执行当前可启动的子 IPO】
-先判断最先启动的子任务是否具备资料、权限及前置条件。
-具备时仅执行该子任务，给出阶段结果、证据来源、子 O 对照检查和需要我确认的交接事项。
-不具备时输出阻塞原因并停止；不要假称已执行、已批准或已验收。
-
-如以项目跟进为例，可出现“材料核对 IPO₁ → 风险分析 IPO₂ → 人工判断 IPO₃ → 汇报编制 IPO₄”；但请完全以我的总 IPO 实际内容为准。</pre>
-      </div>
-
-      <div class="prompt-card">
-        <div class="prompt-head"><span class="prompt-step">3.3 · O / 验收</span><h3>按原 O 标准验收：发现问题、回退修正、复验确认</h3></div>
-        <p class="prompt-desc">验收分两层：<b>子 IPO 的 O 检查阶段结果与交接条件；总 IPO 的 O 检查最终交付成果。</b>AI 自检不替代人工复核。</p>
-        <div class="prompt-toolbar"><button class="copy-btn" type="button">复制提示词</button><button class="select-btn" type="button">全选文本</button><span class="copy-status" role="status"></span></div>
-        <pre>继续同一项工作。请使用模块2《IPO任务卡》中原有的 O · Output 交付标准，并结合刚才《人机接力表》的阶段成果，对“实际已经生成的内容”执行验收。
-
-请先提取原总 O 中的交付物、格式、质量标准、验收人；再读取 3.2《子 IPO 人机接力表》每一子 O 的交接标准。不要临时替换原总 O 标准。
-
-执行两级验收：
-- 第一级，按子 IPO 的 O 逐项检查阶段成果、证据与交接门槛；若前序子 O 未通过，不得认定依赖它的后续任务可交接。
-- 第二级，按总 IPO 的 O 检查整项工作最终成果；即使每个子任务通过，也不能自动认定总成果通过。
-
-输出《两级验收表》（标明“子任务阶段验收”或“总成果终验”），每项包含：
-验收标准｜实际交付内容｜核对证据/来源｜状态（初检符合/不符合/待人工确认/无法判断）｜问题与责任人｜建议修复动作。
-
-至少按任务卡适用情况检查：
-1. 数字与业务口径是否与授权原始材料一致；
-2. 结论是否有可核对的来源，是否存在推断冒充事实；
-3. 风险、问题、待决策事项是否遗漏；
-4. 内容结构、字段、格式是否符合原 O；
-5. 每个子 IPO 的 O 是否满足真实交接门槛，子任务依赖是否有已核验的前序输出；
-6. 原总 IPO 标记的人工检查点是否已经实际完成；最终成果是否满足原总 O。
-
-发现问题时：
-- 说明问题可能来自 I（输入错误/缺资料）、P（处理规则/步骤错误）还是 O（输出不符合标准）；
-- 给出最小必要修改及修复依据；需要上游核对时，先请求人工补充或确认，不得直接编造“正确答案”；
-- 对修正后的相关条目再次检查，并保留“初检结果 → 修订结果 → 复验状态”。
-
-最后把结论分为：可提交人工终验 / 需要修订 / 因信息不足暂不能验收。
-不得宣称“已经人工批准”或“全部合格”；请列出等待我确认的事项，最终验收与交付决定由我作出。</pre>
-      </div>
-      <div class="lesson-card" style="margin-top:14px">
-        <h3 style="margin:0 0 8px">本模块最终交付的，不是三条孤立提示词</h3>
-        <p class="mini-note">一张总 IPO 卡 → 一份 C/H/A 执行准备单 → T 中的子 IPO 接力表与阶段成果 → 子任务 O 与总 O 的两级验收记录 → 人工确认。验证有效后，再进入模块4沉淀 SOP 或 Skill。</p>
-        <div class="insight"><strong>授课收束：</strong>模块2训练“任务定义能力”，模块3训练“协同执行与验收能力”。AI 的价值不是生成一段看似完整的话，而是被组织成一个可靠的业务交付过程。</div>
-      </div>
     </div>
   </section>
 
