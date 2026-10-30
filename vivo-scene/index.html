@@ -931,6 +931,127 @@
         </div>
       </section>
 
+      <section class="section" id="ai-flow" aria-labelledby="ai-flow-title">
+        <div class="section-head">
+          <h2 id="ai-flow-title">Step2：AI 介入：在同一轮对话里找改造点</h2>
+          <p>对照流程逐段检查，找出 AI 能减少重复整理、加快响应的环节；同时明确哪些判断必须由人负责，例如汇报结论、评级建议和对外数据。</p>
+          <div class="tool-tags" aria-label="Step2 工具入口">
+            <a class="tool-tag" href="https://chat.deepseek.com" target="_blank" rel="noopener">DeepSeek</a>
+            <a class="tool-tag" href="https://www.doubao.com" target="_blank" rel="noopener">豆包</a>
+          </div>
+        </div>
+        <div class="grid-two">
+          <article class="prompt-card">
+            <div class="prompt-top">
+              <div>
+                <span class="badge">提示词 2</span>
+                <h3>流程 AI 化提示词</h3>
+              </div>
+              <button type="button" data-copy-target="prompt-ai-flow">复制当前提示词</button>
+            </div>
+            <textarea class="prompt-box" id="prompt-ai-flow">请基于上一步生成的 {岗位工作流程 Mermaid 代码}，分析哪些节点适合 AI 辅助，帮助我减少重复整理、缩短准备时间，让材料和结论更完整。
+
+重点考虑：资料收集与去重、数据整理与核对、图表生成、汇报提纲和 项目进展、风险与下一步清单、会议纪要与待办整理、汇报问答准备、常规周报月报生成。请用 SCAMPER、5W1H 等方法检查遗漏，区分“有脱敏材料即可试用”和“需要对接内部系统”的场景，输出新的 Mermaid 流程图。
+
+格式要求：
+1. 保留原流程主线和必要的人工沟通、复核、审批节点。
+2. AI 辅助节点使用另一种颜色，节点名写清“AI 介入”。
+3. 每个 AI 节点说明责任角色、输入数据、处理动作、输出结果和验证指标，例如材料准备工时、返工次数、评审修改轮次；没有实测数据时，不虚构提效比例。
+4. 汇报结论、评级建议、对外数据和关键承诺由有权限的人复核并负责。AI 仅整理证据、提示缺项、草拟材料，不代替决策；不依据与工作要求无关的个人属性作判断。
+5. 优先使用脱敏或模拟材料，遵守公司信息安全规定；说明信息缺失、模型出错或工具不可用时如何转人工。
+6. 步骤文字要能直接复制到普通对话工具中继续修改。</textarea>
+            <ul class="hint-list">
+              <li><span class="mark">+</span><span>填入 {岗位工作流程 Mermaid 代码}，接着第一步梳理的流程继续讨论。</span></li>
+              <li><span class="mark">+</span><span>要求 AI 节点标注“输入数据、AI 处理、输出结果、节省时间或降低风险”。</span></li>
+              <li><span class="mark">+</span><span>最终下载 SVG，建议命名为：02-vivo-{姓名或部门}-AI化改造.svg。</span></li>
+            </ul>
+            <div class="copy-status" aria-live="polite"></div>
+          </article>
+          <aside class="note-card">
+            <span class="badge amber">讨论口径</span>
+            <h3>多人讨论时重点核对这些变化</h3>
+            <table class="mini-table">
+              <thead>
+                <tr><th>讨论点</th><th>追问句式</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>增加流程</td><td>“汇报前发现数据还没收齐，谁负责催收、谁兜底、什么时候升级？”</td></tr>
+                <tr><td>修改流程</td><td>“请把材料制作拆成提纲、图表、初稿、评审和定稿，写清每步的责任角色。”</td></tr>
+                <tr><td>删除流程</td><td>“这个环节是否符合本部门的规模和实际做法？不适用的请删除并说明原因。”</td></tr>
+                <tr><td>找业务点</td><td>“哪些 AI 介入点能减少重复整理、缩短等待，或降低材料差错与返工？”</td></tr>
+              </tbody>
+            </table>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section" id="scene-lake" aria-labelledby="scene-lake-title">
+        <div class="section-head">
+          <h2 id="scene-lake-title">Step3：场景湖：用任意桌面智能体输出 Excel 清单</h2>
+          <p>这一步输入三类材料：场景湖示例表格、你记录的岗位痛点和讨论要点、第二步输出的 AI 改造 Mermaid 代码。注意给任意桌面智能体的是代码，不是图片。</p>
+          <div class="tool-tags" aria-label="Step3 工具入口">
+            <a class="tool-tag" href="https://xiaohuanxiong.om" target="_blank" rel="noopener">任意桌面智能体</a>
+          </div>
+        </div>
+        <div class="grid-two">
+          <article class="prompt-card">
+            <div class="prompt-top">
+              <div>
+                <span class="badge">提示词 3</span>
+                <h3>场景湖提示词</h3>
+              </div>
+              <button type="button" data-copy-target="prompt-scene">复制当前提示词</button>
+            </div>
+            <textarea class="prompt-box short" id="prompt-scene">请以“场景湖清单-示例.xlsx”为格式模板，根据 {我的岗位痛点记录/课程跟练笔记/讨论要点}，结合 {Step2 输出的 AI 改造 Mermaid 代码}，整理 {姓名/部门} 的 AI 场景湖清单，输出为 xls。
+
+按例行报告与汇报、数据分析与材料制作、跨部门沟通与信息整理、流程执行与检查、知识沉淀与问答梳理。场景名称要落到具体工作，例如“月度汇报数据自动汇总”“周报初稿生成”“跨部门资料催收提醒”“会议纪要与待办整理”“评审意见跟踪清单”。
+保留模板原有列名、顺序和格式，在对应字段写清业务痛点、触发条件、责任岗位、输入数据、AI 动作、人工复核、输出成果和衡量指标。涉及公司内部数据时，补充脱敏方式、访问权限和人工确认边界；模板没有的字段放在补充说明工作表中。
+合并重复场景；讨论中未确认的建议标记为“待确认”，缺少的数据写“待补充”，不要照搬示例表中的其他企业内容。</textarea>
+            <ul class="hint-list">
+              <li><span class="mark">+</span><span>先下载并上传下方资料：场景湖清单-示例.xlsx。</span></li>
+              <li><span class="mark">+</span><span>补充你的岗位痛点记录、跟练笔记和 AI 改造 Mermaid 代码。</span></li>
+              <li><span class="mark">+</span><span>若清单不对，继续对话让它补充、合并、删除或重排场景。</span></li>
+            </ul>
+            <div class="copy-status" aria-live="polite"></div>
+          </article>
+          
+        </div>
+      </section>
+
+      <section class="section" id="roi" aria-labelledby="roi-title">
+        <div class="section-head">
+          <h2 id="roi-title">Step4：五项标准评分：同一对话继续打分</h2>
+          <p>第四步继续在第三步的任意桌面智能体对话里完成。追加评分模板和综合评价模板，按岗位价值、效率提升、数据可得性、可实施性、风险可控性五项标准打分，选出一项优先场景。</p>
+          <div class="tool-tags" aria-label="Step4 工具入口">
+            <a class="tool-tag" href="https://xiaohuanxiong.om" target="_blank" rel="noopener">任意桌面智能体</a>
+          </div>
+        </div>
+        <div class="grid-two">
+          <article class="prompt-card">
+            <div class="prompt-top">
+              <div>
+                <span class="badge">提示词 4</span>
+                <h3>五项标准评分提示词</h3>
+              </div>
+              <button type="button" data-copy-target="prompt-roi">复制当前提示词</button>
+            </div>
+            <textarea class="prompt-box short" id="prompt-roi">请基于上一步场景湖练习的结果，从中选出得分最高的几项之一作为优先场景，继续在同一轮对话里完成五项标准评分。不要重新下载或上传评分表。
+
+评分按五项标准逐项打分并写明依据：岗位价值、效率提升、数据可得性、可实施性、风险可控性。结合该工作的月度重复次数、每轮耗时、返工情况，以及数据准备、工具可用性和人工复核成本判断。没有依据的分值标记为“暂估”，列出需要补采的数据；仅有演示效果时，不视为收益已实现。
+区分月度集中期和日常工作期。节省工时与实际现金节约分别列示，避免重复计算；不要把综合评分当成财务 ROI，也不要把 AI 使用量换算成人员精简。
+在综合评价中选出优先推进的 1—3 个场景，写明选择理由、预期改进、风险边界（敏感数据、关键决策、对外承诺按公司规则处理）、实施前基线、验收指标和复盘时间。
+保持模板结构，输出文件命名为“04-vivo-{姓名或部门}-五项标准评分结果.xls”。</textarea>
+            <ul class="hint-list">
+              <li><span class="mark">+</span><span>先下载并上传下方两份资料：评分表和综合评价参考表。</span></li>
+              <li><span class="mark">+</span><span>按岗位价值、效率提升、数据可得性、可实施性、风险可控性五项标准打分，并写明依据。</span></li>
+              <li><span class="mark">+</span><span>输出文件建议命名为：04-vivo-{姓名或部门}-五项标准评分结果.xls。</span></li>
+            </ul>
+            <div class="copy-status" aria-live="polite"></div>
+          </article>
+          
+        </div>
+      </section>
+
       
 
       <p class="footer-note">截图区域用于嵌入原图，不做 OCR 复刻；如需展示正式截图，请把图片放入 vivo-scene/assets 并使用页面提示的文件名。</p>
