@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="vivo全员AI实操课程配套：选准场景、拆清任务、协同交付、固化复用，把一项个人工作做成可复用的IPO任务卡与Skill说明草稿。">
+  <meta name="description" content="vivo AI 实操课程模块四：承接模块二 IPO 任务拆解和模块三人机协同验收，把一次性业务任务转成可复用的 SOP 与 Skill，包含路径图、案例、可复制提示词及复测标准。">
   <meta name="theme-color" content="#061b46">
   <link rel="icon" href="data:,">
   <link rel="canonical" href="https://xjtulijiagui-max.github.io/lijiagui/vivo-ipo-skill/">
-  <meta property="og:title" content="从场景到 Skill｜vivo AI 工作流">
-  <meta property="og:description" content="围绕一项个人工作，完成选准场景、拆清任务、协同交付与固化复用。">
+  <meta property="og:title" content="从 IPO 到 Skill｜模块四 · 固化复用">
+  <meta property="og:description" content="模块二拆清一次任务，模块三交付并验收，模块四把验证有效的方法做成可复用 Skill。">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://xjtulijiagui-max.github.io/lijiagui/vivo-ipo-skill/">
-  <title>从场景到 Skill｜vivo AI 工作流</title>
+  <title>模块四｜从 IPO 到 Skill：把一次性任务变成可复用能力｜vivo AI 实操课</title>
   <style>
     :root {
       --surface-page: #f5f8fd;
@@ -773,981 +773,343 @@
         transition-duration: 0.01ms !important;
       }
     }
-  </style>
-</head>
-<body><div style="margin:16px auto;max-width:1080px;padding:14px 18px;background:#eaf2ff;border:1px solid #a9c4ff;border-radius:12px;color:#173b80"><b>本模块以讲师展示为主：</b>保存有效规则、更新材料、再次复测；不要求全员现场制作 Skill。</div>
-  <header class="masthead">
-    <div class="container masthead-inner">
-      <a class="brand" href="#top">IPO TO SKILL · vivo 全员 AI 实操</a>
-      <a class="back-link" href="../list/">返回 AI 实战训练导航</a>
-    </div>
-  </header>
+  
+  .hero h1{font-size:clamp(32px,5vw,56px);line-height:1.23;max-width:1060px}
+  .hero h1 em{font-style:normal;color:#a9c7ff}
+  .hero .hero-lead{max-width:940px}
+  .hero-mini{margin-top:25px;display:flex;flex-wrap:wrap;align-items:center;gap:11px;font-size:14px;color:#d4e2ff}
+  .hero-mini strong{color:#fff;font-weight:700}
+  .hero-mini i{font-style:normal;opacity:.65}
+  .origin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px}
+  .origin-card{background:#fff;border:1px solid var(--border-default);border-radius:12px;padding:21px;box-shadow:0 6px 22px rgba(6,27,70,.05)}
+  .origin-card.current{border:2px solid var(--accent-primary);background:#f3f7ff}
+  .origin-card .origin-top{font-size:12px;letter-spacing:.05em;color:#526a92;font-weight:800}
+  .origin-card h3{font-size:19px;line-height:1.4;margin:10px 0}
+  .origin-card p{font-size:14px;color:#596b84;margin:0}
+  .origin-card a{color:#0b47c2;font-weight:700;font-size:13px;text-decoration:underline;text-underline-offset:3px}
+  .intro{display:block}
+  .intro .intro-copy{max-width:none}
+  .intro h2{font-size:clamp(24px,3.3vw,34px)}
+  .one-sentence{background:#eaf2ff;border-left:4px solid #155eef;border-radius:6px;padding:17px 22px;margin:21px 0;font-size:18px;font-weight:700;color:#123766}
+  .one-sentence strong{color:#0d56d6}
+  .handoff{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
+  .handoff>div{background:#f8fbff;border:1px solid var(--border-default);border-radius:10px;padding:15px}
+  .handoff b{display:block;font-size:14px;margin-bottom:5px;color:#143f72}
+  .handoff span{font-size:13px;color:#62728a}
+  .lead-bullets{display:flex;gap:12px;flex-wrap:wrap;margin-top:15px}
+  .lead-bullets span{font-size:13px;padding:5px 10px;background:#eef4fe;border:1px solid #dbe6f6;border-radius:999px}
+  .step-heading .step-title p{max-width:910px}
+  .step-body .callout{margin-bottom:16px}
+  .section-intro{margin:0 0 20px;font-size:15px;color:#526178}
+  .link-panel{display:flex;align-items:center;justify-content:space-between;gap:26px;flex-wrap:wrap;padding:24px;border:1px solid #bad3fa;border-radius:12px;background:#eef5ff;margin-bottom:14px}
+  .link-panel h3{margin:0 0 6px;font-size:20px;color:#0c386c}
+  .link-panel p{margin:0;max-width:640px;color:#4d617f}
+  .link-panel .button{white-space:nowrap}
+  .micro-note{font-size:13px;color:#64748b}
+  .check-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:16px 0}
+  .check-grid .item{background:white;border:1px solid var(--border-default);border-radius:11px;padding:17px 19px}
+  .check-grid .item b{display:block;margin-bottom:6px;color:#143e73}
+  .check-grid .item p{margin:0;font-size:14px;color:#5e7088}
+  .sample{border:1px solid #d6e4f8;background:#fbfdff;border-radius:13px;padding:22px;margin:20px 0}
+  .sample h3{font-size:18px;margin:0 0 10px}
+  .sample-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .sample-grid>div{border-radius:10px;background:#eef4ff;padding:14px}
+  .sample-grid b{color:#0b47c2}
+  .sample-grid p{color:#526178;font-size:13px;line-height:1.75;margin:6px 0 0}
+  .prompt-panel{margin:15px 0 22px}
+  .prompt-meta strong{font-size:16px}
+  .timeline{display:grid;gap:12px;padding-left:0;margin:18px 0}
+  .talk{border-radius:12px;padding:15px 18px;border:1px solid #d8e4f7;background:#fff;display:grid;grid-template-columns:115px 1fr;gap:12px}
+  .talk .speaker{font-size:13px;font-weight:800;color:#0d4d9a}
+  .talk .speech{font-size:14px;color:#34475f}
+  .talk:nth-child(even){background:#eff5ff}
+  .talk.important{border-color:#8ab4ff;background:#e9f2ff}
+  .test-table{width:100%;border-collapse:collapse;font-size:14px;margin:16px 0}
+  .test-table th{background:#eaf2ff;color:#123e73;text-align:left}
+  .test-table td,.test-table th{border:1px solid #d8e4f7;padding:11px 13px;vertical-align:top}
+  .table-wrap{overflow-x:auto}
+  .stack{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:15px 0 6px}
+  .stack span{padding:7px 12px;border-radius:8px;background:#eaf2ff;color:#154477;font-size:14px;font-weight:700}
+  .stack i{font-style:normal;color:#8294ad}
+  .foot-mini{font-size:13px;color:#a9bbd6;margin:10px 0}
+  .version-chip{display:inline-block;color:#0a54ae;background:#ebf3ff;border:1px solid #c5dafc;border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700}
+  .resources{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .resource{padding:19px;border:1px solid #d6e4f8;border-radius:12px;background:#fff}
+  .resource h3{font-size:17px;margin:6px 0 8px}
+  .resource p{font-size:13px;color:#60718b;margin:0 0 11px}
+  .resource a{font-size:14px;color:#0b47c2;font-weight:700;text-decoration:underline}
+  .finish p{max-width:800px}
+  @media(max-width:800px){.origin-grid,.handoff,.sample-grid{grid-template-columns:1fr}.resources{grid-template-columns:1fr}}
+  @media(max-width:650px){.check-grid{grid-template-columns:1fr}.talk{grid-template-columns:1fr;gap:3px}.link-panel{padding:18px}.hero-mini{display:none}.test-table{min-width:590px}}
 
-  <section class="hero" id="top" aria-labelledby="page-title">
-    <div class="container hero-content">
-      <p class="hero-kicker">SCENE · IPO · SOP · SKILL</p>
-      <h1 id="page-title"><span>选准一项工作，</span><span>把有效做法留下来</span></h1>
-      <p class="hero-lead">围绕一项个人工作，依次完成选准场景、拆清任务、协同交付与固化复用。先把工作收敛成 IPO 任务定义，再把验证有效的过程沉淀成 SOP 和 Skill 说明草稿。</p>
-      <div class="hero-actions">
-        <a class="button button-primary" href="#step-1">从 Step 1 开始</a>
-        <a class="button button-secondary" href="#cases">查看参考案例</a>
+</style>
+</head>
+<body>
+<header class="masthead"><div class="container masthead-inner">
+  <a class="brand" href="#top">vivo · AI 工作流实操 / 模块四</a>
+  <a class="back-link" href="/lijiagui/vivo-ai-course/">四模块课程导航 ↗</a>
+</div></header>
+
+<section class="hero" id="top" aria-labelledby="page-title">
+  <div class="container hero-content">
+    <p class="hero-kicker">MODULE 04 · 固化复用 · IPO → SOP → SKILL</p>
+    <h1 id="page-title">模块二拆清一次任务，<br><em>模块四把方法变成可复用 Skill</em></h1>
+    <p class="hero-lead">IPO 回答“这次工作怎么做”；Skill 回答“下次遇到同类工作，能不能不从头讲、照着规则稳定做”。把模块二的任务卡和模块三的验收结果接过来，萃取 SOP、封装 Skill、用新材料复测。</p>
+    <div class="hero-mini"><strong>模块二 · 拆清任务</strong><i>→</i><strong>模块三 · 协同交付与验收</strong><i>→</i><strong>模块四 · 固化复用</strong></div>
+    <div class="hero-actions">
+      <a class="button button-primary" href="#bridge">看三模块如何衔接</a>
+      <a class="button button-secondary" href="#step-2">直接学习 IPO → SOP</a>
+      <a class="button button-secondary" href="/lijiagui/vivo-ipo/">返回模块二 IPO ↗</a>
+    </div>
+    <p class="foot-mini">课堂以讲师展示与方法理解为主；不要求全员在现场安装或发布 Skill。</p>
+  </div>
+</section>
+
+<nav class="workflow-nav" aria-label="模块四操作路径"><div class="container workflow-track">
+  <a class="workflow-link" href="/lijiagui/vivo-ipo/"><span class="workflow-number">01</span><span class="workflow-text"><strong>场景转 IPO ↗</strong><span>直接返回模块二</span></span></a>
+  <a class="workflow-link" href="#step-2" data-step-link="step-2"><span class="workflow-number">02</span><span class="workflow-text"><strong>IPO 转 SOP</strong><span>萃取已验证的做法</span></span></a>
+  <a class="workflow-link" href="#step-3" data-step-link="step-3"><span class="workflow-number">03</span><span class="workflow-text"><strong>SOP 转 Skill</strong><span>封装可调用的能力</span></span></a>
+  <a class="workflow-link" href="#step-4" data-step-link="step-4"><span class="workflow-number">04</span><span class="workflow-text"><strong>复测与刷新</strong><span>用新材料检查复用</span></span></a>
+</div></nav>
+
+<main class="container">
+  <section class="intro" id="bridge" aria-labelledby="bridge-title">
+    <p class="section-label">承前启后 · 这节课究竟解决什么问题？</p>
+    <h2 id="bridge-title">任务做成一次，不等于方法能够复用</h2>
+    <p>模块二已经让我们通过 <b>I（输入）—P（处理）—O（输出）</b> 讲清一项业务任务。模块三再用 CHAT 补背景、细化子 IPO、人机接力并按 O 验收。到这里，解决的是“本次任务如何正确交付”。<b>模块四不再重新拆场景，而是解决“以后能否稳定重复交付”。</b></p>
+    <div class="one-sentence">从“<strong>我会让 AI 做一次</strong>”，升级为“<strong>我和同事下次还能按同一标准做</strong>”。</div>
+    <div class="origin-grid">
+      <article class="origin-card">
+        <span class="origin-top">MODULE 02 · 定义一次任务</span><h3>拆清楚：IPO 任务卡</h3>
+        <p>输入是什么，处理怎么走，输出如何验收。解决<strong>任务表达不清</strong>，形成一次任务的业务定义。</p>
+        <p><a href="/lijiagui/vivo-ipo/">打开模块二 · IPO ↗</a></p>
+      </article>
+      <article class="origin-card">
+        <span class="origin-top">MODULE 03 · 执行并验收</span><h3>做出来：CHAT + 子 IPO</h3>
+        <p>补齐 C/H/A，T 把 P 细化为子 IPO；人机接力、阶段检查与最终验收，得到真实执行记录。</p>
+        <p><a href="/lijiagui/vivo-ai-workflow/">打开模块三 · 协同交付 ↗</a></p>
+      </article>
+      <article class="origin-card current">
+        <span class="origin-top">MODULE 04 · 形成长期能力</span><h3>留下来：SOP + Skill</h3>
+        <p>抽取跨批次不变的规则、触发条件与验收方式，脱离原始聊天也可以复用，适合时再共享给同事。</p>
+        <p><a href="#step-2">继续模块四 · 固化复用 ↓</a></p>
+      </article>
+    </div>
+    <div class="handoff">
+      <div><b>从模块二接收</b><span>已核对 IPO 任务卡 + GAP 缺口清单</span></div>
+      <div><b>从模块三接收</b><span>执行记录 + 实际交付物 + 人工修改与验收结论</span></div>
+      <div><b>在模块四产出</b><span>SOP + Skill 说明 / SKILL.md 草稿 + 复测记录</span></div>
+    </div>
+    <div class="callout"><strong>适合固化的前提</strong><p>重复发生、有一定稳定性、输入输出可定义、关键步骤已验证。一次性创意决策、规则频繁变化或缺少业务依据的任务，不应直接包装成“成熟 Skill”。</p></div>
+  </section>
+
+  <section class="step-section" id="step-1">
+    <div class="step-heading"><div class="step-badge">01</div><div class="step-title">
+      <h2>场景转 IPO：这一步在模块二已经完成</h2>
+      <p>本页不再重复场景分析、IPO 模板和那套长提示词。没有 IPO 任务卡，先回到模块二；已有任务卡，直接进入第二步。</p>
+    </div></div>
+    <div class="step-body">
+      <div class="link-panel"><div><h3>跳转模块二｜IPO 任务拆解</h3><p>先把一项任务的 I、P、O 讲清楚，明确数据来源、操作步骤、业务判断与 O 的验收标准；把未解决的问题保留为 GAP。</p></div>
+        <a class="button button-primary" href="https://xjtulijiagui-max.github.io/lijiagui/vivo-ipo/">打开模块二网页 ↗</a>
       </div>
+      <p class="micro-note">本模块的真正起点是“已定义并实际尝试过的一项 IPO 工作”，不是重新选场景。</p>
     </div>
   </section>
 
-  <nav class="workflow-nav" aria-label="四步工作流">
-    <div class="container workflow-track">
-      <a class="workflow-link is-active" href="#step-1" data-step-link="step-1">
-        <span class="workflow-number">01</span>
-        <span class="workflow-text"><strong>场景转 IPO</strong><span>从岗位目标与痛点出发</span></span>
-      </a>
-      <a class="workflow-link" href="#step-2" data-step-link="step-2">
-        <span class="workflow-number">02</span>
-        <span class="workflow-text"><strong>IPO 转 SOP</strong><span>把验证有效的过程留下</span></span>
-      </a>
-      <a class="workflow-link" href="#step-3" data-step-link="step-3">
-        <span class="workflow-number">03</span>
-        <span class="workflow-text"><strong>SOP 转 Skill</strong><span>生成说明草稿</span></span>
-      </a>
-      <a class="workflow-link" href="#step-4" data-step-link="step-4">
-        <span class="workflow-number">04</span>
-        <span class="workflow-text"><strong>多轮刷新</strong><span>以新材料验证后优化</span></span>
-      </a>
+  <section class="step-section" id="step-2" data-step-section>
+    <div class="step-heading"><div class="step-badge">02</div><div class="step-title">
+      <h2>IPO 转 SOP：把“这次怎么做”提炼成“每次怎么做”</h2>
+      <p>IPO 是任务结构，SOP 是可重复执行的操作规程。不是让 AI 凭空编一套标准流程，而是从模块二的任务卡和模块三<strong>实际跑通、通过验收的动作</strong>中，抽取每次不变的操作方式。</p>
+    </div></div>
+    <div class="step-body">
+      <div class="check-grid">
+        <div class="item"><b>I · 输入标准化</b><p>哪些文件/字段每次都必备？如何检查时效、权限、口径？缺资料怎么办？</p></div>
+        <div class="item"><b>P · 过程步骤化</b><p>把“分析处理”变成动作、判据、分工、检查点；复杂 P 可以展开为子 IPO。</p></div>
+        <div class="item"><b>O · 输出可验收</b><p>固定交付格式、关键字段、引用来源与核对规则，保留人工最终确认点。</p></div>
+        <div class="item"><b>异常可回退</b><p>遇到缺数据、口径冲突、结果不达标时，暂停、追问、退回哪一步？</p></div>
+      </div>
+      <div class="sample">
+        <h3>一案贯穿｜月度项目跟进汇报</h3>
+        <div class="sample-grid">
+          <div><b>Input</b><p>每月提供最新项目台账、会议纪要、风险登记与上期结论；检查完整性与日期。</p></div>
+          <div><b>Process</b><p>核对数据 → 比较变化 → 标注风险与证据 → 人工确认争议口径 → 生成汇报初稿。</p></div>
+          <div><b>Output</b><p>交付进展摘要、风险及决策事项、责任人和待办；按约定格式和证据标准核验。</p></div>
+        </div>
+        <p class="micro-note">这里的“项目跟进”是教学示例，不预设 vivo 的实际系统字段、审批制度或风险阈值。</p>
+      </div>
+      <article class="prompt-panel compact"><div class="prompt-toolbar"><div class="prompt-meta">
+        <strong>可复制提示词 A｜从验证记录萃取 SOP</strong><span>可在新对话中使用：上传任务卡和实际执行证据，不依赖原聊天记录自动可见。</span>
+      </div><button class="button copy-button" type="button" data-copy-source="prompt-sop">复制提示词</button></div>
+      <details class="prompt-details"><summary>展开完整提示词</summary><pre class="prompt-code" data-prompt-view="prompt-sop"></pre></details></article>
+      <div class="callout"><strong>本步交付</strong><p>《XX工作_SOP_V1.0》及《待补规则清单》。SOP 必须能让<strong>没有参与上次聊天的人</strong>依据文件理解操作；未确认的业务判据标 GAP，不能擅自补齐。</p></div>
     </div>
-  </nav>
+  </section>
 
-  <main class="container">
-    <section class="intro" aria-labelledby="intro-title">
-      <div class="intro-copy">
-        <p class="section-label">课程配套 · 使用说明</p>
-        <h2 id="intro-title">四次对话，把一项工作做成可复用链路</h2>
-        <p>本页配合《AI工作流重构与高效协同——vivo全员AI实操技巧线上课程》使用。先选定一项值得 AI 介入的个人工作，每完成一步把当轮结果留在同一段对话里，再复制下一步提示词继续。普通对话工具即可完成说明文本；若关键业务规则缺失，先列 GAP，不要替业务人员编答案。</p>
+  <section class="step-section" id="step-3" data-step-section>
+    <div class="step-heading"><div class="step-badge">03</div><div class="step-title">
+      <h2>SOP 转 Skill：把“操作规程”封装成“可调用的能力”</h2>
+      <p>SOP 告诉人怎么做，Skill 告诉支持该机制的 AI <strong>何时调用、拿什么材料、按什么步骤执行、如何检查结果、失败怎么处理</strong>。它不是多写一条万能提示词，更不是把整段聊天复制进去。</p>
+    </div></div>
+    <div class="step-body">
+      <div class="stack"><span>IPO · 业务内核</span><i>→</i><span>SOP · 稳定流程</span><i>→</i><span>Skill · 可调用规则</span><i>→</i><span>复测 · 可靠复用</span></div>
+      <div class="check-grid">
+        <div class="item"><b>什么时候调用</b><p>Skill 名称、用途、适用条件、触发语句与明确的不适用范围。</p></div>
+        <div class="item"><b>调用时带什么</b><p>必选/可选输入、参考资料、工具权限及缺失后的最少追问。</p></div>
+        <div class="item"><b>调用后怎么做</b><p>可重复的步骤、人机分工、分支判断、异常暂停与升级处理。</p></div>
+        <div class="item"><b>什么算做完</b><p>固定输出结构、引用依据、O 的验收要求和失败恢复机制。</p></div>
       </div>
-      <dl class="principles">
-        <dt>先收敛</dt>
-        <dd>一个岗位目标、一项核心任务、一条主流程、一个核心输出。</dd>
-        <dt>不编造</dt>
-        <dd>制度、规则、字段、阈值没有依据时，一律标记待补充。</dd>
-        <dt>先验证</dt>
-        <dd>输入拿得到，过程跑得动，输出验得收，再谈沉淀。</dd>
-      </dl>
-    </section>
-
-    <section class="step-section" id="step-1" data-step-section>
-      <div class="step-heading">
-        <div class="step-badge">01</div>
-        <div class="step-title">
-          <h2>场景转 IPO</h2>
-          <p>从岗位目标与当前痛点出发筛出值得 AI 介入的工作，转换为可继续用于智能体设计、Skill 开发和测试的 IPO 任务定义。</p>
+      <div class="sample">
+        <h3>Skill 能力包：内容不止一条 Prompt</h3>
+        <div class="sample-grid">
+          <div><b>SKILL.md</b><p>名称与 description、触发条件、完整步骤、输入/输出、检查和边界。文本可编辑。</p></div>
+          <div><b>references / assets（按需）</b><p>引用已授权的 SOP、字段说明、报告模板、样例输入输出等；避免依赖原会话。</p></div>
+          <div><b>scripts（按需）</b><p>只有需要可重复计算、校验或集成时，才放脚本；无代码任务并不强求。</p></div>
         </div>
       </div>
-      <div class="step-body">
-        <div class="callout callout-warning">
-          <strong>执行前要有两份材料</strong>
-          <p>你选定工作的任务卡或工作说明，与《AI 工作场景 IPO 任务定义》模板。没有模板时按提示词中的字段直接填写，不要声称已经按模板交付。</p>
-        </div>
-        <article class="prompt-panel">
-          <div class="prompt-toolbar">
-            <div class="prompt-meta">
-              <strong>岗位 AI 工作任务卡转 IPO 提示词（vivo 版）</strong>
-              <span>完整版本，复制后补上工作任务卡与 IPO 模板</span>
-            </div>
-            <button class="button copy-button" type="button" data-copy-source="prompt-1">复制提示词</button>
-          </div>
-          <details class="prompt-details">
-            <summary>查看完整提示词</summary>
-            <pre class="prompt-code" data-prompt-view="prompt-1"></pre>
-          </details>
-        </article>
-        <div class="tips">
-          <div class="tip">
-            <strong>交付不是一份</strong>
-            <p>同时生成 IPO 任务定义书与 IPO 缺口清单，两个文件中的 GAP 编号必须一一对应。</p>
-          </div>
-          <div class="tip">
-            <strong>高影响决策要留边界</strong>
-            <p>涉及审批、人事、财务、对外承诺等场景，AI 只给分析、证据、建议和初稿，最终决策仍由人负责。</p>
-          </div>
-          <div class="tip">
-            <strong>先做跟练 MVP</strong>
-            <p>工作过大时，先定义一次跟练内能完成测试的最小任务，其余目标进入暂不做范围。</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="step-section" id="step-2" data-step-section>
-      <div class="step-heading">
-        <div class="step-badge">02</div>
-        <div class="step-title">
-          <h2>IPO 转 SOP</h2>
-          <p>让 AI 复盘刚才任务的全过程，用 Input、Process、Output 三段写成以后还能再次执行的 SOP。</p>
-        </div>
-      </div>
-      <div class="step-body">
-        <div class="callout">
-          <strong>示例沿用课程里的汇报项目跟进</strong>
-          <p>换成你自己的工作场景时，只替换输入材料、处理动作与交付物，IPO 三段结构保持不变。</p>
-        </div>
-        <article class="prompt-panel compact">
-          <div class="prompt-toolbar">
-            <div class="prompt-meta">
-              <strong>IPO 转 SOP 提示词</strong>
-              <span>基于同一段对话里的实际执行过程生成</span>
-            </div>
-            <button class="button copy-button" type="button" data-copy-source="prompt-2">复制提示词</button>
-          </div>
-          <details class="prompt-details" open>
-            <summary>查看提示词</summary>
-            <pre class="prompt-code" data-prompt-view="prompt-2"></pre>
-          </details>
-        </article>
-      </div>
-    </section>
-
-    <section class="step-section" id="step-3" data-step-section>
-      <div class="step-heading">
-        <div class="step-badge">03</div>
-        <div class="step-title">
-          <h2>SOP 转 Skill</h2>
-          <p>当 SOP 已经能复现任务，就把它固化成 Skill 说明草稿。普通对话工具可以生成说明文本，实际运行需要匹配支持 Skill 的工具与环境。此时重点是定义以后每次如何触发、输入、处理、校验和交付。</p>
-        </div>
-      </div>
-      <div class="step-body">
-        <article class="prompt-panel compact">
-          <div class="prompt-toolbar">
-            <div class="prompt-meta">
-              <strong>SOP 转 Skill 说明草稿提示词</strong>
-              <span>先生成说明文本草稿，验证有效后再迁移到支持 Skill 的工具</span>
-            </div>
-            <button class="button copy-button" type="button" data-copy-source="prompt-3">复制提示词</button>
-          </div>
-          <details class="prompt-details" open>
-            <summary>查看提示词</summary>
-            <pre class="prompt-code" data-prompt-view="prompt-3"></pre>
-          </details>
-        </article>
-        <div class="tips">
-          <div class="tip">
-            <strong>先判断是否值得沉淀</strong>
-            <p>任务高频、流程稳定、输入输出明确且做法经过验证，再固化成 Skill；尚未验证或经常变化的步骤，先保留为草稿。</p>
-          </div>
-          <div class="tip">
-            <strong>触发条件</strong>
-            <p>写清用户在什么情况下应该调用 Skill，也要写清哪些任务不属于它。</p>
-          </div>
-          <div class="tip">
-            <strong>材料与缺口</strong>
-            <p>明确必选输入、可选输入与缺失时的追问顺序，避免 Skill 靠猜测继续执行。</p>
-          </div>
-          <div class="tip">
-            <strong>验收与失败处理</strong>
-            <p>把 IPO 中的验收标准写进 Skill，并保留格式校验、风险检查和失败后的恢复方式。</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="step-section" id="step-4" data-step-section>
-      <div class="step-heading">
-        <div class="step-badge">04</div>
-        <div class="step-title">
-          <h2>多轮迭代后刷新 Skill</h2>
-          <p>在真实测试、补充材料和多轮讨论之后，让 AI 读取前序上下文，把新增规则、修订意见与验证结果合并回 Skill。</p>
-        </div>
-      </div>
-      <div class="step-body">
-        <article class="prompt-panel compact">
-          <div class="prompt-toolbar">
-            <div class="prompt-meta">
-              <strong>验证并刷新 Skill 提示词</strong>
-              <span>用新材料验证后在原对话中执行，确保能读取完整前序信息</span>
-            </div>
-            <button class="button copy-button" type="button" data-copy-source="prompt-4">复制提示词</button>
-          </div>
-          <details class="prompt-details" open>
-            <summary>查看提示词</summary>
-            <pre class="prompt-code" data-prompt-view="prompt-4"></pre>
-          </details>
-        </article>
-        <div class="callout callout-spaced">
-          <strong>刷新不等于推倒重写</strong>
-          <p>保留已经验证有效的流程，只修改前序对话中新增或被纠正的部分。刷新后再检查触发条件、输入字段、关键规则、输出格式和验收标准是否一致；确认有效后，再按内部流程共享给同事复用。</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="cases" id="cases" aria-labelledby="cases-title">
-      <p class="section-label">参考案例</p>
-      <h2 id="cases-title">把方法放进真实对话里看</h2>
-      <div class="case-grid">
-        <a class="case-link" href="https://workbuddy.link/p/MBWxhvp4M9icvlHisEcVqV?ext2=copy_link" target="_blank" rel="noopener noreferrer">
-          <div>
-            <span class="case-source">WORKBUDDY 案例</span>
-            <h3>IPO：从任务描述到输入、处理、输出定义</h3>
-          </div>
-          <span class="case-action">打开案例 ↗</span>
-        </a>
-        <a class="case-link" href="https://workbuddy.link/p/8OpWyes5aEskDHQP1SOyj1?ext2=copy_link" target="_blank" rel="noopener noreferrer">
-          <div>
-            <span class="case-source">WORKBUDDY 案例</span>
-            <h3>Skill 优化及验证：从首版到可重复执行</h3>
-          </div>
-          <span class="case-action">打开案例 ↗</span>
-        </a>
-      </div>
-    </section>
-
-    <section class="finish" aria-labelledby="finish-title">
-      <div>
-        <h2 id="finish-title">课程的终点不是听懂，而是“下次和同事也能稳定复用”</h2>
-        <p>课程后带着 IPO 任务卡和 Skill 说明草稿，在自己的真实工作上按四步跑一遍。把失败点、人工修改和新增规则留在原对话，验证有效后再执行 Step 4 刷新，并进入内部实操课后按需复测。</p>
-      </div>
-      <a class="button button-primary" href="#step-1">回到 Step 1</a>
-    </section>
-  </main>
-
-  <footer>
-    李家贵 · vivo 全员 AI 实操 · 场景到 Skill 实战工作流
-  </footer>
-
-  <div class="toast" id="toast" role="status" aria-live="polite">提示词已复制</div>
-
-  <script type="text/plain" id="prompt-1">
-# 岗位AI工作任务卡 → IPO任务定义书 转写提示词（vivo版）
-
-## 角色
-
-你是一名“AI工作流设计顾问 + AI任务需求分析师”。
-
-我会提供：
-
-1. 岗位选定的《AI工作任务卡/工作说明》
-2. 《AI工作场景IPO任务定义》模板（如没有模板，按本提示词的字段直接填写）
-
-你的任务不是简单润色作业，也不是把原文机械地分成I、P、O。
-
-你的任务是：
-
-把岗位目标与痛点中筛出的“值得AI介入的工作”，转换成一个能够继续用于
-AI智能体 / Skill设计、开发和测试的IPO任务定义。
-
----
-
-# 最终必须交付两个文件
-
-## 交付物1
-《XX工作_AI任务IPO定义书_V0.1.docx》
-
-## 交付物2
-《XX工作_IPO缺口清单.docx》
-
-能生成文件时，必须生成两个Word文件；
-工具不支持生成文件时，在对话中按固定结构分两段完整输出。
-
----
-
-# 一、总原则
-
-## 原则1：严格遵循IPO模板
-
-《AI工作场景IPO任务定义》
-必须严格按照我提供的模板进行填写。
-
-不得自行重新设计一套IPO结构。
-
-保留模板原有的：
-
-- 标题层级
-- 表格结构
-- I / P / O结构
-- 字段名称
-- 内容顺序
-- 版式
-- 字体字号
-- 页眉页脚等格式
-
-原则上只替换模板中的样例内容。
-
-如果模板中存在：
-
-- 场景基本信息
-- I｜输入定义
-- 本次测试输入包
-- P｜处理流程
-- 核心业务规则
-- O｜输出定义
-- 核心输出表格
-- 验收标准
-
-等内容，应完整保留。
-
-## 原则2：不允许为了完整而编造
-
-原任务卡没有提供的信息，不允许自行创造。
-
-尤其不得擅自编造：
-
-- 公司制度
-- 业务政策
-- 岗位标准
-- 评分规则
-- 权重
-- 数据字段
-- 系统接口
-- 系统权限
-- 审批规则
-- 业务判断标准
-- 阈值
-- 历史案例
-- 目标值
-- 验收指标
-
-如果缺失：
-
-在IPO V0.1对应位置填写：
-
-**【待补充：XXX】**
-
-同时将这一项同步进入
-《IPO缺口清单》。
-
-## 原则3：已有信息尽量转写
-
-原任务卡中已经明确的信息，应尽可能完整转入IPO。
-
-不要因为信息还不完整，就把整份IPO留空。
-
-因此每项内容分为三类：
-
-### ①【已明确】
-原任务卡已经明确，可以直接转写。
-
-### ②【可初步转写，需确认】
-根据原任务卡可以合理结构化，但业务人员仍需最终确认。
-
-### ③【缺失】
-原任务卡没有依据，必须由用户补充。
-
----
-
-# 二、第一步：先做场景收敛
-
-在填写IPO之前，先判断选定的工作是不是“场景过大”。
-
-检查这个场景是否同时包含多个独立任务，例如：
-
-数据整理
-+ 报告生成
-+ 会议纪要
-+ 知识检索
-+ 流程审批
-+ 系统集成
-
-如果包含多个独立目标，不要直接把所有目标塞进一个IPO。
-
-按照以下原则收敛：
-
-一个核心用户
-+ 一个明确业务任务
-+ 一组主要输入
-+ 一条主流程
-+ 一个核心输出
-+ 一套可以测试的成功标准
-
-优先定义一个可以在本次跟练中完成第一次测试的MVP任务。
-
-如果进行了场景收敛，必须在IPO“场景基本信息”中体现。
-
-同时在《IPO缺口清单》中增加：
-
-## 【场景范围确认】
-
-说明：
-
-- 原始场景是什么
-- 本次建议先做什么
-- 暂时不做什么
-- 需要用户确认是否接受
-
----
-
-# 三、生成交付物1：
-# 《AI智能体场景IPO需求定义书 V0.1》
-
-严格按照上传的IPO Word模板填写。
-
----
-
-## A. 场景基本信息
-
-至少从原任务卡中提取：
-
-- 场景名称
-- 使用对象
-- 使用频率
-- 当前痛点
-- 当前流程
-- AI介入节点
-- 预期价值
-- 风险边界
-- 本次跟练交付
-
-如果原任务卡没有明确，不得自行补写。
-
-填写：
-
-**【待补充：请明确……】**
-
----
-
-## B. I｜INPUT 输入
-
-核心问题：
-
-**AI真正开始工作之前，到底必须拿到什么？**
-
-不要只写“上传资料”。
-
-逐项检查：
-
-- I-1 组织/业务目标
-- I-2 岗位、对象或职责信息
-- I-3 制度、政策、规则、标准
-- I-4 历史案例/历史数据
-- I-5 本次任务实际数据
-- I-6 用户目标
-- I-7 验收标准
-- I-8 工具与权限
-
-根据具体场景，可以修改“输入项名称”，但不要改变模板整体结构。
-
-每个输入都需要尽可能写清：
-
-- 输入项
-- 具体内容
-- 格式/字段要求
-- 是否必选
-
-特别注意：
-
-“需要业务数据”不算完整Input。
-
-应继续明确：
-
-- 需要哪张表？
-- 至少哪些字段？
-- 字段含义是什么？
-- 数据时间范围？
-- 是否脱敏？
-- 来源是什么？
-- 是否必须？
-
-如果这些没有依据，填写：
-
-**【待补充】**
-
-不要替业务人员设计。
-
----
-
-## C. 本次测试输入包
-
-根据IPO，列出第一次测试真正需要准备的文件或数据。
-
-例如：
-
-| 文件/数据 | 示例名称 | 用途 |
-|---|---|---|
-
-只允许列：
-
-1. 已经存在的材料；
-2. 用户明确准备提供的材料；
-3. 明确标记为【待准备】的材料。
-
-不能假装材料已经存在。
-
----
-
-## D. 信息不足时的处理规则
-
-必须明确：
-
-如果关键输入缺失，智能体不得直接生成正式结果。
-
-应：
-
-1. 判断缺少什么；
-2. 最多提出5个关键追问；
-3. 无法确认的内容标记为【待确认】；
-4. 当前结果标记为“讨论初稿”；
-5. 不得自行创造公司业务规则。
-
----
-
-## E. P｜PROCESS 处理
-
-这是IPO最重要的部分。
-
-禁止出现只有：
-
-- “AI分析”
-- “AI智能判断”
-- “AI自动生成”
-
-这种无法执行的描述。
-
-必须拆成：
-
-| 步骤 | 节点 | 输入 | AI动作 | 业务规则/检查点 | 人机分工 |
-|---|---|---|---|---|---|
-
-例如：
-
-- P-1 输入校验
-- P-2 场景/对象识别
-- P-3 信息提取
-- P-4 业务匹配
-- P-5 判断/计算
-- P-6 结果生成
-- P-7 风险检查
-- P-8 一致性检查
-- P-9 格式化交付
-
-具体步骤根据作业实际调整。
-
-每一步必须回答：
-
-- AI拿什么？
-- AI具体做什么？
-- 依据什么规则做？
-- 什么情况下可以继续？
-- 什么情况下必须停止？
-- 什么情况需要用户确认？
-- 谁拥有最终决策权？
-
-如果“依据什么规则判断”这一项原任务卡没有提供，
-禁止自行创造。
-
-填写：
-
-**【待补充：业务判断规则】**
-
-并同步进入《IPO缺口清单》。
-
----
-
-## F. 核心业务规则
-
-仅整理原任务卡已经明确，或者用户提供材料能够支持的业务规则。
-
-重点检查：
-
-- 可追溯
-- 可衡量
-- 可控制
-- 一致性
-- 异常规则
-- 人工审核
-- 敏感数据
-- 决策边界
-
-特别注意：
-
-涉及：
-
-- 审批与授权
-- 绩效与考核
-- 薪酬与费用
-- 对外报价与承诺
-- 人事处理
-- 合规与风险判断
-
-等高影响业务决策时，
-AI只能提供：
-
-- 分析
-- 证据
-- 建议
-- 初稿
-
-不得替代业务负责人或管理者进行最终决策。
-
----
-
-## G. O｜OUTPUT 输出
-
-不能只写：
-
-“输出分析报告”。
-
-必须明确：
-
-- O-1 核心交付物
-- O-2 结构化数据/表格
-- O-3 问题与风险清单
-- O-4 修订建议记录
-- O-5 测试记录
-
-根据实际场景填写。
-
-每个输出必须定义：
-
-- 交付物名称
-- 文件格式
-- 固定结构
-- 固定字段
-- 谁使用
-- 用在什么环节
-
-例如：
-
-如果输出Excel，至少定义：
-
-- 字段名
-- 字段含义
-- 字段顺序
-- 是否允许为空
-- 来源
-- 备注
-
----
-
-## H. 验收标准
-
-至少检查：
-
-1. 完整性
-2. 准确性
-3. 可追溯性
-4. 一致性
-5. 可执行性
-6. 风险边界
-7. 稳定性
-
-如果原任务卡已经提出业务目标，可以进一步加入：
-
-- 时间节省率
-- 人工修改率
-- 异常识别率
-- 匹配准确率
-- 推荐采纳率
-- 用户满意度
-
-但是：
-
-如果具体指标值没有来源，只能写：
-
-**【目标值待业务确认】**
-
-禁止自行写：
-
-- 90%
-- 95%
-- 99%
-
-等目标。
-
----
-
-# 四、生成交付物2：
-# 《IPO缺口清单》
-
-这个文件不是“问题总结”，而是让学员可以直接补答案的作业表。
-
-文件开头写：
-
-> 以下信息无法从工作任务卡中可靠获得。
-> 请业务人员补充。
-> 填写完成后，将本文件重新提交给AI，即可刷新生成IPO V1.0。
-
-使用以下表格：
-
-| 编号 | IPO位置 | 缺什么 | 为什么必须补 | 请用户填写 | 优先级 |
-|---|---|---|---|---|---|
-
-例如：
-
-| 编号 | IPO位置 | 缺什么 | 为什么必须补 | 请用户填写 | 优先级 |
-|---|---|---|---|---|---|
-| GAP-01 | I-3 业务规则 | 核心业务判断标准 | 没有规则AI无法完成判断 | 【请填写】 | A |
-| GAP-02 | I-5 数据 | 业务数据字段 | AI不知道从哪些字段取数 | 【请填写：字段名称、字段解释、样例】 | A |
-
-缺口按照四级分类：
-
-- **A｜不补就无法运行**
-- **B｜没有也能测试，但影响结果质量**
-- **C｜正式上线前需要补**
-- **D｜当前MVP建议暂不做**
-
-缺口不要泛泛地问：
-
-> 请补充更多资料。
-
-必须具体到业务人员可以直接回答。
-
-错误：
-
-> 请补充数据汇总规则。
-
-正确：
-
-> 请补充：
-> 1. 数据汇总覆盖哪些范围？
-> 2. 每个指标的口径是什么？
-> 3. 异常数据如何处理？
-> 4. 谁负责复核确认？
-> 5. 结果需要呈现成什么形式？
-
----
-
-# 五、缺口清单最后增加
-# 《本次最关键5个问题》
-
-无论有多少缺口，最后只选出影响当前MVP运行的最重要5个问题。
-
-按照：
-
-## 问题1
-**问题：**
-**为什么必须回答：**
-**用户填写：**
-
-## 问题2
-**问题：**
-**为什么必须回答：**
-**用户填写：**
-
-## 问题3
-**问题：**
-**为什么必须回答：**
-**用户填写：**
-
-## 问题4
-**问题：**
-**为什么必须回答：**
-**用户填写：**
-
-## 问题5
-**问题：**
-**为什么必须回答：**
-**用户填写：**
-
-让学员可以直接填写答案。
-
----
-
-# 六、Word V0.1中的缺口必须和缺口清单一一对应
-
-例如IPO中写：
-
-> 【待补充 GAP-03：课程推荐匹配规则】
-
-那么《IPO缺口清单》中必须存在：
-
-**GAP-03**
-
-禁止出现编号对不上。
-
----
-
-# 七、用户补完缺口后的第二次运行规则
-
-如果我下一次提供：
-
-1. 原始工作任务卡
-2. IPO任务定义书 V0.1
-3. 已经填写完成的《IPO缺口清单》
-
-则说明进入“IPO刷新阶段”。
-
-此时你的任务不是重新分析整个场景，而是：
-
-读取用户新补充的信息
-→ 逐项找到对应GAP
-→ 把补充内容写回IPO
-→ 更新I/P/O
-→ 重新执行一致性检查
-→ 输出最终：
-
-**《XX工作_AI任务IPO定义书_V1.0.docx》**
-
-同时再次检查是否还存在新的关键缺口。
-
-如果还有：
-
-只输出新的：
-
-**《XX工作_IPO剩余缺口清单.docx》**
-
-如果所有A类关键缺口均已解决：
-
-在IPO中标明：
-
-**【状态：已具备第一次智能体/Skill测试条件】**
-
----
-
-# 八、最终质量检查
-
-生成文件前检查：
-
-- [ ] IPO是否完全使用模板结构？
-- [ ] 是否遗漏原任务卡已有信息？
-- [ ] 是否偷偷创造业务规则？
-- [ ] I是否真的能够拿到？
-- [ ] P是否真的能够执行？
-- [ ] O是否真的能够验收？
-- [ ] 所有缺口是否有GAP编号？
-- [ ] IPO和缺口清单是否一一对应？
-- [ ] 用户是否能够直接在缺口清单中填写答案？
-- [ ] 补完缺口后是否可以直接刷新IPO？
-- [ ] 是否已经收敛到一个可测试MVP？
-
----
-
-# 输入材料
-
-## 工作任务卡
-
-<<<上传或粘贴工作任务卡>>>
-
-## IPO任务定义模板
-
-<<<上传IPO任务定义模板，或注明“无模板”>>>
-  </script>
-
-  <script type="text/plain" id="prompt-2">
-把刚才这个任务的全过程，用 Markdown 输出一份
-可复用的 SOP，严格按 IPO 三段来写：
-
-## Input 输入
-
-- 材料：汇报主题、受众与时长要求、已有材料和数据表
-- 用户目标与验收标准
-
-## Process 处理
-
-- 明确汇报对象与决策点 → 提炼核心结论与支撑证据
-- 收集并核对素材数据 → 搭建汇报框架
-- 生成各页内容与图表 → 统一格式并复核数据口径
-
-## Output 输出
-
-- 交付物：汇报项目跟进结果 + 一页文字总结
-- 常见问题与处理方式
-  </script>
-
-  <script type="text/plain" id="prompt-3">
-请把以上SOP转成一份Skill说明草稿，依次写清：
-适用场景与触发条件、任务目标、必选与可选输入、
-处理步骤、输出格式、边界条件、人机分工、
-异常处理和验收要求。
-
-先作为说明文本输出，不要求可运行；
-确认流程稳定、做法经过验证后，
-再迁移到支持Skill的工具中运行。
-  </script>
-
-  <script type="text/plain" id="prompt-4">
-请用一批新材料，按这份Skill说明草稿完整验证一遍，
-把失败点、人工修改和新增规则留在本对话，
-然后根据前序对话刷新Skill说明草稿，
-保持触发条件、输入字段、关键规则、
-输出格式和验收标准前后一致。
-  </script>
-
-  <script>
-    (() => {
-      const promptIds = ["prompt-1", "prompt-2", "prompt-3", "prompt-4"];
-      const toast = document.querySelector("#toast");
-      let toastTimer;
-
-      const readPrompt = (id) => {
-        const source = document.getElementById(id);
-        return source ? source.textContent.trim() : "";
-      };
-
-      promptIds.forEach((id) => {
-        document.querySelectorAll('[data-prompt-view="' + id + '"]').forEach((view) => {
-          view.textContent = readPrompt(id);
-        });
-      });
-
-      const showToast = (message) => {
-        window.clearTimeout(toastTimer);
-        toast.textContent = message;
-        toast.classList.add("is-visible");
-        toastTimer = window.setTimeout(() => {
-          toast.classList.remove("is-visible");
-        }, 2200);
-      };
-
-      const fallbackCopy = (text) => {
-        const field = document.createElement("textarea");
-        field.value = text;
-        field.setAttribute("readonly", "");
-        field.style.position = "fixed";
-        field.style.opacity = "0";
-        document.body.appendChild(field);
-        field.select();
-        const copied = document.execCommand("copy");
-        field.remove();
-        return copied;
-      };
-
-      document.addEventListener("click", async (event) => {
-        const button = event.target.closest("[data-copy-source]");
-        if (!button) return;
-
-        const text = readPrompt(button.dataset.copySource);
-        let copied = false;
-
-        try {
-          await navigator.clipboard.writeText(text);
-          copied = true;
-        } catch {
-          copied = fallbackCopy(text);
-        }
-
-        if (!copied) {
-          showToast("复制失败，请展开后手动复制");
-          return;
-        }
-
-        const original = button.textContent;
-        button.textContent = "已复制";
-        button.classList.add("is-copied");
-        showToast("提示词已复制");
-        window.setTimeout(() => {
-          button.textContent = original;
-          button.classList.remove("is-copied");
-        }, 1600);
-      });
-
-      const links = [...document.querySelectorAll("[data-step-link]")];
-      const sections = [...document.querySelectorAll("[data-step-section]")];
-
-      if ("IntersectionObserver" in window) {
-        const observer = new IntersectionObserver((entries) => {
-          const visible = entries
-            .filter((entry) => entry.isIntersecting)
-            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-          if (!visible) return;
-
-          links.forEach((link) => {
-            link.classList.toggle("is-active", link.dataset.stepLink === visible.target.id);
-          });
-        }, {
-          rootMargin: "-28% 0px -58% 0px",
-          threshold: [0, 0.1, 0.35]
-        });
-
-        sections.forEach((section) => observer.observe(section));
-      }
-    })();
-  </script>
+      <article class="prompt-panel compact"><div class="prompt-toolbar"><div class="prompt-meta">
+        <strong>可复制提示词 B｜SOP 封装为 Skill 草稿</strong><span>先得到可审核的 SKILL.md 及引用文件清单；实际加载与运行取决于所用平台。</span>
+      </div><button class="button copy-button" type="button" data-copy-source="prompt-skill">复制提示词</button></div>
+      <details class="prompt-details"><summary>展开完整提示词</summary><pre class="prompt-code" data-prompt-view="prompt-skill"></pre></details></article>
+      <div class="callout"><strong>一个容易混淆的边界</strong><p>在普通对话工具中生成 <b>SKILL.md 草稿</b>，不代表 Skill 已安装、可自动触发或能访问业务系统。需要在支持 Skill 的环境中按平台规则导入、授权、测试，才谈得上运行和共享。</p></div>
+    </div>
+  </section>
+
+  <section class="step-section" id="step-4" data-step-section>
+    <div class="step-heading"><div class="step-badge">04</div><div class="step-title">
+      <h2>用新材料复测：下次还能成功，才叫真正复用</h2>
+      <p>不能用“第一轮对话里看着正确”作为成功标准。拿另一批授权或模拟材料，在<strong>独立新对话／新运行</strong>中验证 Skill：不靠前一次临时补充的背景，也不暗中改动原有 O 标准。</p>
+    </div></div>
+    <div class="step-body">
+      <div class="table-wrap"><table class="test-table">
+        <thead><tr><th>测试</th><th>怎么测</th><th>通过意味着什么</th></tr></thead>
+        <tbody>
+          <tr><td><b>正常样本</b></td><td>换一批完整材料</td><td>无需重讲规则，按 SOP 跑通并满足 O</td></tr>
+          <tr><td><b>缺项样本</b></td><td>故意缺一个必选输入</td><td>能指出缺什么，不编造并提示补充</td></tr>
+          <tr><td><b>异常样本</b></td><td>数据冲突、口径不一致或权限不足</td><td>按规则暂停、转人工或回退，而非冒进</td></tr>
+          <tr><td><b>他人复用</b></td><td>交给未参与原对话的同事试用</td><td>只看 Skill 与说明也能完成正确操作</td></tr>
+        </tbody>
+      </table></div>
+      <article class="prompt-panel compact"><div class="prompt-toolbar"><div class="prompt-meta">
+        <strong>可复制提示词 C｜复测、定位原因、增量刷新</strong><span>请提供当前 Skill 版本、输入样本、运行结果与实际验收意见；不要求 AI 猜测旧对话。</span>
+      </div><button class="button copy-button" type="button" data-copy-source="prompt-test">复制提示词</button></div>
+      <details class="prompt-details"><summary>展开完整提示词</summary><pre class="prompt-code" data-prompt-view="prompt-test"></pre></details></article>
+      <p class="micro-note">建议留下版本号、样本编号、失败原因、修改点、复测结论；如涉及审批、个人信息或对外承诺，保留授权、脱敏和人工责任边界。</p>
+    </div>
+  </section>
+
+  <section class="cases" id="dialogue" aria-labelledby="dialogue-title">
+    <p class="section-label">交互演示 · 不是实时系统对话</p>
+    <h2 id="dialogue-title">一段对话怎样变成一份真正可以带走的 Skill？</h2>
+    <p class="section-intro">下面是<strong>教学模拟的四段交接</strong>，用来区分“这次对话的上下文”和“下次可复用的规则”。网页并没有连接实时 AI，也不代表聊天记录自动同步到 Skill。</p>
+    <div class="timeline">
+      <div class="talk"><div class="speaker">① 业务人员 · 提供证据</div><div class="speech">“这是模块二已确认的项目跟进 IPO 任务卡，以及模块三实际跑过的样本、修改记录和验收意见。请提炼其中每月都不变的步骤。”</div></div>
+      <div class="talk"><div class="speaker">② AI · 萃取 SOP</div><div class="speech">“可沉淀：输入校验、项目状态对比、风险证据追溯、人工核定、固定汇报格式。尚缺：风险等级由谁确认。该项列为 GAP，不自行设阈值。”</div></div>
+      <div class="talk"><div class="speaker">③ 业务人员 · 确认边界</div><div class="speech">“风险等级由项目负责人确认。请写进 Skill 的人工检查节点，并列明必须上传哪些材料和哪些情况必须停止。”</div></div>
+      <div class="talk important"><div class="speaker">④ 新对话 / 新执行 · 复测</div><div class="speech">“请按《项目跟进 Skill V1.0》处理本月新台账和新会议纪要。”只有新一轮也能按标准交付、异常能正确停下，才说明方法真正脱离原聊天而可复用。</div></div>
+    </div>
+    <div class="callout"><strong>对话是萃取素材，Skill 才是可携带的规则</strong><p>完整聊天常含本次日期、临时材料、个别决定和无效尝试；这些不应无差别写进 Skill。只保留<strong>已验证、适用范围明确、可迁移</strong>的做法，并将每次变化的内容作为运行输入。</p></div>
+  </section>
+
+  <section class="cases" id="cases" aria-labelledby="cases-title">
+    <p class="section-label">参考案例 · 两种不同用途</p>
+    <h2 id="cases-title">先看业务怎样定义，再看 Skill 怎样优化</h2>
+    <div class="resources">
+      <article class="resource"><span class="version-chip">模块二 · 任务定义参考</span><h3>WorkBuddy：从任务描述到 IPO</h3><p>观察输入、处理、输出怎样被定义。完整的 IPO 教学和提示词仍以模块二页面为准。</p><a href="https://workbuddy.link/p/MBWxhvp4M9icvlHisEcVqV?ext2=copy_link" target="_blank" rel="noopener noreferrer">查看 IPO 参考案例 ↗</a></article>
+      <article class="resource"><span class="version-chip">模块四 · Skill 迭代参考</span><h3>WorkBuddy：优化、调用与复测</h3><p>关注如何发现失败点、修改封装规则并再次验证，而不只是生成漂亮文档。</p><a href="https://workbuddy.link/p/8OpWyes5aEskDHQP1SOyj1?ext2=copy_link" target="_blank" rel="noopener noreferrer">查看 Skill 参考案例 ↗</a></article>
+    </div>
+  </section>
+
+  <section class="finish" aria-labelledby="finish-title">
+    <div><h2 id="finish-title">一次做成是成果，多次复用才是能力</h2>
+      <p>模块二留下 IPO 任务卡，模块三留下可信执行，模块四留下 SOP、Skill 和复测记录。<strong>今天讲清一个任务，明天让同类任务不必从零开始。</strong></p></div>
+    <a class="button button-primary" href="/lijiagui/vivo-ai-course/">返回四模块课程导航 ↗</a>
+  </section>
+</main>
+
+<footer>李家贵 · vivo 全员 AI 实操 · 模块四｜固化复用：从 IPO 到 Skill</footer>
+<div class="toast" id="toast" role="status" aria-live="polite">提示词已复制</div>
+
+<script type="text/plain" id="prompt-sop">你是一名业务流程萃取顾问。我要把一项已经执行并验收过的 IPO 任务整理为可复用 SOP，而不是重新发明业务制度。
+
+【我提供的证据】
+1. 模块二《IPO任务卡》（I / P / O 与原始验收标准）
+2. 模块三的真实执行记录、子 IPO 接力/人机分工（如有）
+3. 实际输出样本及业务负责人验收结论
+4. 失败点、人工修改记录、IPO GAP 清单（如有）
+
+请完成：
+A. 区分“每次不变的流程/规则”和“每次变化的数据/日期/对象”，只把前者固化。
+B. 按 I / P / O 输出《XX工作 SOP V1.0》：
+- I：必选、可选材料；格式/字段、来源/权限/时效、缺失检查；
+- P：逐步骤列出输入、动作、判断依据、AI/人分工、检查点、异常与回退；多任务时标出子 IPO 和交接；
+- O：固定交付物、格式/字段、证据要求、人工确认节点、沿用原 IPO 的验收标准。
+C. 将从证据中找不到的业务规则、阈值、权限要求列为 GAP，并说明影响，不得猜测。
+D. 为每一步标注依据来自任务卡、执行记录还是人工确认；发现冲突先列出待确认项。
+E. 另列“适合固化/暂不固化的内容”及最多5个关键待确认问题。
+
+不要把一次性的业务日期、具体项目名称、临时口头决定直接写成永久规则。输入不全时先提出问题，不要宣称 SOP 已验证。</script>
+
+<script type="text/plain" id="prompt-skill">你是一名 Skill 封装设计师。以下材料为已经由业务人员核对的 SOP、IPO 任务卡与验收依据。请把稳定流程转成一个可审阅的 Skill 能力包草稿。
+
+【请读取或让我补充】
+- IPO 任务卡与 O 验收标准
+- 《XX工作 SOP V1.0》
+- 已确认的人工决策边界、GAP 处理结论
+- 可合法使用的模板、样本与参考文件
+- 目标执行平台（未知时先按通用 Skill 草稿编写，不假设已安装）
+
+请先判断任务是否适合 Skill：是否重复、相对稳定、输入可获得、验证通过。若尚不具备条件，说明阻碍，不要假装可以运行。
+
+如果适合，请输出：
+1. 能力概览：Skill 名称、业务目标、适用场景、不适用情形、调用方式、所需权限。
+2. 一份完整的 SKILL.md 草稿：
+   - YAML frontmatter 包含 name 和 description（描述何时调用以及做什么）；
+   - 明确必选/可选输入、缺项追问与授权边界；
+   - 根据 SOP 写具体工作步骤、判断依据、人与 AI 的交接、异常退出或回退；
+   - 明确输出格式、核查清单，并逐项承接 IPO 的 O 验收标准；
+   - 严禁编造业务规则、数据和系统能力。
+3. 可选 references / assets / scripts 文件清单：只有确实需要时才列，注明用途与来源；不得假称文件已存在。
+4. 至少三类测试建议：正常、缺输入、异常/边界；列明需要人审核的项目。
+5. 未决 GAP 和部署前置条件。
+
+只输出草稿，不得声称已经在任何平台安装、调用成功或拥有业务系统权限。若平台有特定规范，请提醒后续按该平台格式适配。</script>
+
+<script type="text/plain" id="prompt-test">请扮演 Skill 验证与版本评审助手。我们要验证一份已有 Skill 能否脱离原聊天、使用新资料稳定复用。
+
+【请读取附件或等待我补充】
+1. 当前 SKILL.md/Skill 说明及版本号
+2. 原 IPO 任务卡与 O 验收标准
+3. 本次新材料及必要授权说明
+4. 本次实际运行结果（如尚未运行，请仅设计测试，不要虚构结果）
+5. 业务人员的人工复核意见与失败记录
+
+请：
+A. 按正常样本、缺项样本、异常样本、独立新对话/他人复用四类给出测试用例、预期行为与通过标准。
+B. 如有实际结果，逐项核对 O，形成“通过/失败/待确认”记录和证据。
+C. 将问题归因为：输入不足 / 步骤不清 / 规则缺失 / 人工边界 / 平台工具限制 / 输出校验失败，不推测未见证据。
+D. 只对有依据的部分提出增量修改，并给出变更前后对照；未经确认的规则标 GAP。
+E. 输出《Skill版本变更记录》和复测清单，声明是否具备发布条件，以及尚未验证的内容。
+
+不要因为一次成功就认定稳健；不允许把本次材料的特殊事实固化成通用规则；没有运行记录时必须明确“尚未实测”。</script>
+
+<script>
+(function(){
+  var toast=document.getElementById('toast'), timer;
+  function copyFallback(text){var e=document.createElement('textarea');e.value=text;e.setAttribute('readonly','');e.style.position='fixed';e.style.left='-9999px';document.body.appendChild(e);e.select();var ok=false;try{ok=document.execCommand('copy')}catch(_e){}e.remove();return ok}
+  function showToast(msg){clearTimeout(timer);toast.textContent=msg;toast.classList.add('is-visible');timer=setTimeout(function(){toast.classList.remove('is-visible')},2100)}
+  document.querySelectorAll('[data-prompt-view]').forEach(function(node){var source=document.getElementById(node.dataset.promptView);if(source)node.textContent=source.textContent.trim()});
+  document.querySelectorAll('[data-copy-source]').forEach(function(btn){btn.addEventListener('click',async function(){
+    var source=document.getElementById(btn.dataset.copySource), content=source?source.textContent.trim():'';
+    var ok=false;try{if(navigator.clipboard && navigator.clipboard.writeText){await navigator.clipboard.writeText(content);ok=true}else{ok=copyFallback(content)}}catch(_e){ok=copyFallback(content)}
+    if(!ok){showToast('复制失败，请展开文本手动复制');return}
+    showToast('提示词已复制');var old=btn.textContent;btn.textContent='已复制 ✓';btn.classList.add('is-copied');setTimeout(function(){btn.textContent=old;btn.classList.remove('is-copied')},1700);
+  })});
+  var links=[].slice.call(document.querySelectorAll('[data-step-link]'));
+  if('IntersectionObserver' in window){
+    var ob=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)links.forEach(function(a){a.classList.toggle('is-active',a.dataset.stepLink===e.target.id)})})},{rootMargin:'-22% 0px -58% 0px',threshold:0});
+    document.querySelectorAll('[data-step-section]').forEach(function(s){ob.observe(s)});
+  }
+})();
+</script>
 </body>
 </html>
