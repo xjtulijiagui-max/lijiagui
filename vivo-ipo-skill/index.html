@@ -238,7 +238,7 @@
 
     .workflow-track {
       display: grid;
-      grid-template-columns: repeat(4, minmax(176px, 1fr));
+      grid-template-columns: repeat(3, minmax(176px, 1fr));
       overflow-x: auto;
       scrollbar-width: thin;
     }
@@ -833,7 +833,7 @@
   .stack i{font-style:normal;color:#8294ad}
   .foot-mini{font-size:13px;color:#a9bbd6;margin:10px 0}
   .version-chip{display:inline-block;color:#0a54ae;background:#ebf3ff;border:1px solid #c5dafc;border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700}
-  .resources{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .resources{display:grid;grid-template-columns:1fr;gap:14px}
   .resource{padding:19px;border:1px solid #d6e4f8;border-radius:12px;background:#fff}
   .resource h3{font-size:17px;margin:6px 0 8px}
   .resource p{font-size:13px;color:#60718b;margin:0 0 11px}
@@ -854,7 +854,7 @@
   <div class="container hero-content">
     <p class="hero-kicker">MODULE 04 · 固化复用 · IPO → SOP → SKILL</p>
     <h1 id="page-title">模块二拆清一次任务，<br><em>模块四把方法变成可复用 Skill</em></h1>
-    <p class="hero-lead">IPO 回答“这次工作怎么做”；Skill 回答“下次遇到同类工作，能不能不从头讲、照着规则稳定做”。把模块二的任务卡和模块三的验收结果接过来，萃取 SOP、封装 Skill、用新材料复测。</p>
+    <p class="hero-lead">IPO 回答“这次工作怎么做”；Skill 回答“下次遇到同类工作，能不能不从头讲、照着规则稳定做”。把模块二的任务卡和模块三的验收结果接过来，萃取 SOP、封装 Skill，让以后同类任务不再从零开始。</p>
     <div class="hero-mini"><strong>模块二 · 拆清任务</strong><i>→</i><strong>模块三 · 协同交付与验收</strong><i>→</i><strong>模块四 · 固化复用</strong></div>
     <div class="hero-actions">
       <a class="button button-primary" href="#bridge">看三模块如何衔接</a>
@@ -869,7 +869,6 @@
   <a class="workflow-link" href="/lijiagui/vivo-ipo/"><span class="workflow-number">01</span><span class="workflow-text"><strong>场景转 IPO ↗</strong><span>直接返回模块二</span></span></a>
   <a class="workflow-link" href="#step-2" data-step-link="step-2"><span class="workflow-number">02</span><span class="workflow-text"><strong>IPO 转 SOP</strong><span>萃取已验证的做法</span></span></a>
   <a class="workflow-link" href="#step-3" data-step-link="step-3"><span class="workflow-number">03</span><span class="workflow-text"><strong>SOP 转 Skill</strong><span>封装可调用的能力</span></span></a>
-  <a class="workflow-link" href="#step-4" data-step-link="step-4"><span class="workflow-number">04</span><span class="workflow-text"><strong>复测与刷新</strong><span>用新材料检查复用</span></span></a>
 </div></nav>
 
 <main class="container">
@@ -898,7 +897,7 @@
     <div class="handoff">
       <div><b>从模块二接收</b><span>已核对 IPO 任务卡 + GAP 缺口清单</span></div>
       <div><b>从模块三接收</b><span>执行记录 + 实际交付物 + 人工修改与验收结论</span></div>
-      <div><b>在模块四产出</b><span>SOP + Skill 说明 / SKILL.md 草稿 + 复测记录</span></div>
+      <div><b>在模块四产出</b><span>SOP + Skill 说明 / SKILL.md 草稿</span></div>
     </div>
     <div class="callout"><strong>适合固化的前提</strong><p>重复发生、有一定稳定性、输入输出可定义、关键步骤已验证。一次性创意决策、规则频繁变化或缺少业务依据的任务，不应直接包装成“成熟 Skill”。</p></div>
   </section>
@@ -951,13 +950,7 @@
       <p>SOP 告诉人怎么做，Skill 告诉支持该机制的 AI <strong>何时调用、拿什么材料、按什么步骤执行、如何检查结果、失败怎么处理</strong>。它不是多写一条万能提示词，更不是把整段聊天复制进去。</p>
     </div></div>
     <div class="step-body">
-      <div class="stack"><span>IPO · 业务内核</span><i>→</i><span>SOP · 稳定流程</span><i>→</i><span>Skill · 可调用规则</span><i>→</i><span>复测 · 可靠复用</span></div>
-      <div class="check-grid">
-        <div class="item"><b>什么时候调用</b><p>Skill 名称、用途、适用条件、触发语句与明确的不适用范围。</p></div>
-        <div class="item"><b>调用时带什么</b><p>必选/可选输入、参考资料、工具权限及缺失后的最少追问。</p></div>
-        <div class="item"><b>调用后怎么做</b><p>可重复的步骤、人机分工、分支判断、异常暂停与升级处理。</p></div>
-        <div class="item"><b>什么算做完</b><p>固定输出结构、引用依据、O 的验收要求和失败恢复机制。</p></div>
-      </div>
+      <div class="stack"><span>IPO · 业务内核</span><i>→</i><span>SOP · 稳定流程</span><i>→</i><span>Skill · 可调用规则</span></div>
       <div class="sample">
         <h3>Skill 能力包：内容不止一条 Prompt</h3>
         <div class="sample-grid">
@@ -974,54 +967,17 @@
     </div>
   </section>
 
-  <section class="step-section" id="step-4" data-step-section>
-    <div class="step-heading"><div class="step-badge">04</div><div class="step-title">
-      <h2>用新材料复测：下次还能成功，才叫真正复用</h2>
-      <p>不能用“第一轮对话里看着正确”作为成功标准。拿另一批授权或模拟材料，在<strong>独立新对话／新运行</strong>中验证 Skill：不靠前一次临时补充的背景，也不暗中改动原有 O 标准。</p>
-    </div></div>
-    <div class="step-body">
-      <div class="table-wrap"><table class="test-table">
-        <thead><tr><th>测试</th><th>怎么测</th><th>通过意味着什么</th></tr></thead>
-        <tbody>
-          <tr><td><b>正常样本</b></td><td>换一批完整材料</td><td>无需重讲规则，按 SOP 跑通并满足 O</td></tr>
-          <tr><td><b>缺项样本</b></td><td>故意缺一个必选输入</td><td>能指出缺什么，不编造并提示补充</td></tr>
-          <tr><td><b>异常样本</b></td><td>数据冲突、口径不一致或权限不足</td><td>按规则暂停、转人工或回退，而非冒进</td></tr>
-          <tr><td><b>他人复用</b></td><td>交给未参与原对话的同事试用</td><td>只看 Skill 与说明也能完成正确操作</td></tr>
-        </tbody>
-      </table></div>
-      <article class="prompt-panel compact"><div class="prompt-toolbar"><div class="prompt-meta">
-        <strong>可复制提示词 C｜复测、定位原因、增量刷新</strong><span>请提供当前 Skill 版本、输入样本、运行结果与实际验收意见；不要求 AI 猜测旧对话。</span>
-      </div><button class="button copy-button" type="button" data-copy-source="prompt-test">复制提示词</button></div>
-      <details class="prompt-details"><summary>展开完整提示词</summary><pre class="prompt-code" data-prompt-view="prompt-test"></pre></details></article>
-      <p class="micro-note">建议留下版本号、样本编号、失败原因、修改点、复测结论；如涉及审批、个人信息或对外承诺，保留授权、脱敏和人工责任边界。</p>
-    </div>
-  </section>
-
-  <section class="cases" id="dialogue" aria-labelledby="dialogue-title">
-    <p class="section-label">交互演示 · 不是实时系统对话</p>
-    <h2 id="dialogue-title">一段对话怎样变成一份真正可以带走的 Skill？</h2>
-    <p class="section-intro">下面是<strong>教学模拟的四段交接</strong>，用来区分“这次对话的上下文”和“下次可复用的规则”。网页并没有连接实时 AI，也不代表聊天记录自动同步到 Skill。</p>
-    <div class="timeline">
-      <div class="talk"><div class="speaker">① 业务人员 · 提供证据</div><div class="speech">“这是模块二已确认的项目跟进 IPO 任务卡，以及模块三实际跑过的样本、修改记录和验收意见。请提炼其中每月都不变的步骤。”</div></div>
-      <div class="talk"><div class="speaker">② AI · 萃取 SOP</div><div class="speech">“可沉淀：输入校验、项目状态对比、风险证据追溯、人工核定、固定汇报格式。尚缺：风险等级由谁确认。该项列为 GAP，不自行设阈值。”</div></div>
-      <div class="talk"><div class="speaker">③ 业务人员 · 确认边界</div><div class="speech">“风险等级由项目负责人确认。请写进 Skill 的人工检查节点，并列明必须上传哪些材料和哪些情况必须停止。”</div></div>
-      <div class="talk important"><div class="speaker">④ 新对话 / 新执行 · 复测</div><div class="speech">“请按《项目跟进 Skill V1.0》处理本月新台账和新会议纪要。”只有新一轮也能按标准交付、异常能正确停下，才说明方法真正脱离原聊天而可复用。</div></div>
-    </div>
-    <div class="callout"><strong>对话是萃取素材，Skill 才是可携带的规则</strong><p>完整聊天常含本次日期、临时材料、个别决定和无效尝试；这些不应无差别写进 Skill。只保留<strong>已验证、适用范围明确、可迁移</strong>的做法，并将每次变化的内容作为运行输入。</p></div>
-  </section>
-
   <section class="cases" id="cases" aria-labelledby="cases-title">
-    <p class="section-label">参考案例 · 两种不同用途</p>
-    <h2 id="cases-title">先看业务怎样定义，再看 Skill 怎样优化</h2>
+    <p class="section-label">模块四 · 参考案例</p>
+    <h2 id="cases-title">参考 Skill 的优化与应用过程</h2>
     <div class="resources">
-      <article class="resource"><span class="version-chip">模块二 · 任务定义参考</span><h3>WorkBuddy：从任务描述到 IPO</h3><p>观察输入、处理、输出怎样被定义。完整的 IPO 教学和提示词仍以模块二页面为准。</p><a href="https://workbuddy.link/p/MBWxhvp4M9icvlHisEcVqV?ext2=copy_link" target="_blank" rel="noopener noreferrer">查看 IPO 参考案例 ↗</a></article>
-      <article class="resource"><span class="version-chip">模块四 · Skill 迭代参考</span><h3>WorkBuddy：优化、调用与复测</h3><p>关注如何发现失败点、修改封装规则并再次验证，而不只是生成漂亮文档。</p><a href="https://workbuddy.link/p/8OpWyes5aEskDHQP1SOyj1?ext2=copy_link" target="_blank" rel="noopener noreferrer">查看 Skill 参考案例 ↗</a></article>
+      <article class="resource"><span class="version-chip">模块四 · Skill 实例</span><h3>WorkBuddy：Skill 优化示例</h3><p>重点观察如何提炼可复用的操作规则，以及如何修改 Skill 的说明与执行方式。</p><a href="https://workbuddy.link/p/8OpWyes5aEskDHQP1SOyj1?ext2=copy_link" target="_blank" rel="noopener noreferrer">查看 Skill 参考案例 ↗</a></article>
     </div>
   </section>
 
   <section class="finish" aria-labelledby="finish-title">
     <div><h2 id="finish-title">一次做成是成果，多次复用才是能力</h2>
-      <p>模块二留下 IPO 任务卡，模块三留下可信执行，模块四留下 SOP、Skill 和复测记录。<strong>今天讲清一个任务，明天让同类任务不必从零开始。</strong></p></div>
+      <p>模块二留下 IPO 任务卡，模块三留下可信执行，模块四留下 SOP 与 Skill。<strong>今天讲清一个任务，明天让同类任务不必从零开始。</strong></p></div>
     <a class="button button-primary" href="/lijiagui/vivo-ai-course/">返回四模块课程导航 ↗</a>
   </section>
 </main>
@@ -1073,24 +1029,6 @@ E. 另列“适合固化/暂不固化的内容”及最多5个关键待确认问
 5. 未决 GAP 和部署前置条件。
 
 只输出草稿，不得声称已经在任何平台安装、调用成功或拥有业务系统权限。若平台有特定规范，请提醒后续按该平台格式适配。</script>
-
-<script type="text/plain" id="prompt-test">请扮演 Skill 验证与版本评审助手。我们要验证一份已有 Skill 能否脱离原聊天、使用新资料稳定复用。
-
-【请读取附件或等待我补充】
-1. 当前 SKILL.md/Skill 说明及版本号
-2. 原 IPO 任务卡与 O 验收标准
-3. 本次新材料及必要授权说明
-4. 本次实际运行结果（如尚未运行，请仅设计测试，不要虚构结果）
-5. 业务人员的人工复核意见与失败记录
-
-请：
-A. 按正常样本、缺项样本、异常样本、独立新对话/他人复用四类给出测试用例、预期行为与通过标准。
-B. 如有实际结果，逐项核对 O，形成“通过/失败/待确认”记录和证据。
-C. 将问题归因为：输入不足 / 步骤不清 / 规则缺失 / 人工边界 / 平台工具限制 / 输出校验失败，不推测未见证据。
-D. 只对有依据的部分提出增量修改，并给出变更前后对照；未经确认的规则标 GAP。
-E. 输出《Skill版本变更记录》和复测清单，声明是否具备发布条件，以及尚未验证的内容。
-
-不要因为一次成功就认定稳健；不允许把本次材料的特殊事实固化成通用规则；没有运行记录时必须明确“尚未实测”。</script>
 
 <script>
 (function(){
