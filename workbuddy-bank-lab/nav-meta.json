@@ -1,0 +1,33 @@
+{
+  "id": "workbuddy-bank-lab",
+  "title": "WorkBuddy 在银行业实战应用｜6 小时课程练习台",
+  "shortTitle": "WorkBuddy 银行 6 小时练习台",
+  "category": "银行与金融",
+  "description": "与《WorkBuddy 在银行业实战应用》90 页授课课件逐页对应的七个练习：纪要、会前助手、网点周报 Skill、对公走访商机卡、活动量自动化、支行季度考核分析、保险开门红综合实战。含 10 段可复制提示词、7 套可下载教学模拟数据集与学习进度记录。",
+  "path": "workbuddy-bank-lab/",
+  "url": "https://xjtulijiagui-max.github.io/lijiagui/workbuddy-bank-lab/",
+  "tags": [
+    "WorkBuddy",
+    "银行",
+    "支行",
+    "课程练习",
+    "Skill",
+    "提示词",
+    "模拟数据",
+    "考核分析",
+    "会议纪要",
+    "对公走访",
+    "自动化",
+    "综合实战"
+  ],
+  "type": "课堂练习",
+  "client": "银行",
+  "featured": true,
+  "order": 147,
+  "status": "正常",
+  "updated": "2026-10-31",
+  "courseRef": "WorkBuddy 在银行业实战应用（6 小时）",
+  "exerciseCount": 7,
+  "datasetCount": 7,
+  "promptCount": 10
+}
