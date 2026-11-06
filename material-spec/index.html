@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>聚和材料 · HJT 银包铜浆料研发复盘｜课堂练习页</title>
+<meta name="description" content="聚和材料 HJT 银包铜浆料研发场景练习页：以 IPO 定义书为样例，用三条提示词完成实验设计、8 组样品数据复盘与越界测试，附可下载素材与 8 条验收清单。">
+<style>
+:root{
+  --ink:#152232;--ink2:#2c3e54;--muted:#5f7085;--line:#e3e8ef;--bg:#f5f7fa;
+  --navy:#0b2743;--navy2:#12395c;--copper:#b0722f;--copper-dk:#8d5520;--tint:#fdf6ee;
+  --pass:#1a6b4a;--pass-bg:#eaf5ef;--fail:#b3261e;--fail-bg:#fdeeec;
+  --warn:#8a5b00;--warn-bg:#fff8e8;--warn-line:#f0dcae;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.78 "Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#8d5520;text-decoration:none;border-bottom:1px solid rgba(176,114,47,.32)}
+a:hover{border-bottom-color:var(--copper)}
+h1,h2,h3,h4{margin:0}
+p{margin:10px 0}
+ul,ol{margin:10px 0 10px 4px;padding-left:20px}
+li{margin:6px 0}
+strong,b{color:inherit}
+
+/* topbar */
+.topbar{position:sticky;top:0;z-index:40;background:var(--navy);border-bottom:2px solid var(--copper)}
+.topbar .in{max-width:1060px;margin:auto;padding:0 22px;min-height:54px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:9px;color:#fff;font-weight:700;font-size:14.5px;border:0}
+.brand .mark{width:23px;height:23px;border-radius:6px;background:linear-gradient(135deg,var(--copper),#d99a5a);
+  display:grid;place-items:center;font-size:12px;color:#fff;font-weight:800}
+.brand em{font-style:normal;color:#f0b27a}
+.topbar .gap{flex:1}
+.topbar .nv{color:#b7c8db;border:0;font-size:13.5px;padding:5px 9px;border-radius:6px;white-space:nowrap}
+.topbar .nv:hover{background:#173a5c;color:#fff}
+
+/* hero */
+.hero{background:var(--navy);color:#fff;padding:44px 0 38px;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-130px;top:-130px;width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(176,114,47,.45),rgba(176,114,47,0) 68%)}
+.hero .in{max-width:1060px;margin:auto;padding:0 22px;position:relative;z-index:2}
+.kick{font-size:12.5px;letter-spacing:1.9px;color:#e6b183;margin-bottom:12px}
+.hero h1{font-size:clamp(23px,3vw,35px);line-height:1.36;font-weight:800;max-width:860px}
+.hero .lead{font-size:16.5px;line-height:1.8;color:#c6d5e4;max-width:830px;margin:14px 0 18px}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tags i{font-style:normal;font-size:12.5px;color:#f2ddc7;border:1px solid #4c6b88;border-radius:20px;padding:4px 12px;background:rgba(255,255,255,.04)}
+
+/* layout */
+main{max-width:1060px;margin:auto;padding:28px 22px 8px}
+section{background:#fff;border:1px solid var(--line);border-radius:14px;padding:28px 30px;margin-bottom:20px;
+  box-shadow:0 1px 2px rgba(16,24,40,.04)}
+h2{font-size:22px;font-weight:800;margin:0 0 4px;letter-spacing:.2px}
+h2 .n{display:inline-block;min-width:29px;height:29px;line-height:29px;text-align:center;background:var(--copper);
+  color:#fff;border-radius:8px;font-size:14.5px;margin-right:10px;vertical-align:2px;font-weight:700}
+h3{font-size:16.5px;margin:24px 0 6px;color:var(--ink2)}
+.sec-sub{color:var(--muted);font-size:14px;margin:0 0 16px}
+.str{color:var(--copper-dk);font-weight:700}
+
+table{width:100%;border-collapse:collapse;font-size:14.2px}
+th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:#f1f5fa;font-weight:700;color:#2b3d53;white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:#fafcff}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+.scroll table{min-width:880px}
+.scroll th,.scroll td{white-space:nowrap;font-size:13.4px}
+.scroll td:last-child{white-space:normal;min-width:170px}
+
+dl.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:12px;margin:18px 0 0}
+dl.meta div{background:var(--tint);border:1px solid #f0e0cc;border-radius:10px;padding:12px 14px}
+dl.meta dt{font-size:12px;color:#8d6a48;letter-spacing:.4px;margin-bottom:2px}
+dl.meta dd{margin:0;font-size:15px;font-weight:700;color:#5a3413}
+
+/* prompt block */
+.prompt{background:#fbf9f6;border:1px solid #efe4d6;border-left:4px solid var(--copper);border-radius:0 10px 10px 0;
+  padding:18px 20px;margin:12px 0 0;white-space:pre-wrap;overflow-wrap:anywhere;
+  font:14.8px/1.85 "Microsoft YaHei",sans-serif;color:#20293a}
+.btnrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
+button.copy{border:0;border-radius:8px;background:var(--copper);color:#fff;padding:10px 18px;
+  font:14.6px/1 "Microsoft YaHei",sans-serif;cursor:pointer}
+button.copy:hover{background:var(--copper-dk)}
+button.copy.done{background:#1a6b4a}
+button.copy:focus-visible,.dl a:focus-visible,label.chk:focus-within{outline:2px solid #4a90d9;outline-offset:2px}
+
+.dl{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 6px}
+.dl a{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid #d5dee9;border-radius:9px;
+  padding:11px 15px;font-size:14.2px;color:#22314a}
+.dl a:hover{border-color:var(--copper);color:var(--copper-dk)}
+.dl a b{color:var(--copper)}
+.dl a small{display:block;color:#8b97a8;font-size:11.5px;font-weight:400}
+
+.warn{background:var(--warn-bg);border:1px solid var(--warn-line);border-left:4px solid #d99a1e;
+  border-radius:0 10px 10px 0;padding:13px 16px;margin:16px 0;font-size:14.4px;color:#5d4b27}
+.warn b{color:var(--warn)}
+.note{background:#f4f8fd;border:1px solid #d9e6f2;border-left:4px solid #3e7cb1;border-radius:0 10px 10px 0;
+  padding:13px 16px;margin:16px 0;font-size:14.4px;color:#28425c}
+.note b{color:#1f5c8f}
+
+details{border:1px solid var(--line);border-radius:10px;margin:14px 0 0;background:#fcfcfd}
+details summary{cursor:pointer;padding:13px 17px;font-weight:700;color:var(--ink2);list-style:none;font-size:15px}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸";color:var(--copper);margin-right:9px;display:inline-block;transition:.15s}
+details[open] summary:before{transform:rotate(90deg)}
+details .body{padding:2px 18px 18px;border-top:1px solid var(--line)}
+
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:14px 0}
+.card{background:#fff;border:1px solid var(--line);border-radius:11px;padding:16px 18px;border-top:3px solid var(--copper)}
+.card h4{font-size:15.2px;margin-bottom:6px}
+.card p{font-size:14px;color:#4a586c;margin:0}
+
+/* checklist */
+.progress{display:flex;align-items:center;gap:12px;margin:6px 0 14px}
+.bar{flex:1;height:8px;background:#e8edf3;border-radius:20px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#c98a3c,var(--copper));transition:.25s}
+.ptext{font-size:13px;color:var(--muted);white-space:nowrap}
+.ptext b{color:var(--copper-dk)}
+ul.chk{list-style:none;margin:0;padding:0}
+ul.chk li{margin:0;border-bottom:1px dashed #e6ebf2}
+ul.chk li:last-child{border-bottom:0}
+label.chk{display:flex;gap:10px;align-items:flex-start;padding:10px 2px;font-size:14.4px;cursor:pointer;color:#33445a}
+label.chk input{margin:4px 0 0;width:16px;height:16px;accent-color:var(--copper);flex:0 0 auto}
+label.chk.done{color:#8794a5}
+label.chk.done span{text-decoration:line-through;text-decoration-color:#c9d2dd}
+
+.pill{display:inline-block;font-size:12.2px;font-weight:700;border-radius:20px;padding:2px 9px;white-space:nowrap}
+.pill.pass{background:var(--pass-bg);color:var(--pass)}
+.pill.fail{background:var(--fail-bg);color:var(--fail)}
+.pill.unk{background:var(--warn-bg);color:var(--warn);border:1px solid var(--warn-line)}
+
+footer{max-width:1060px;margin:6px auto 48px;padding:0 22px;color:var(--muted);font-size:13px;line-height:1.85}
+footer .fl{border-top:1px solid var(--line);padding-top:16px;display:flex;flex-wrap:wrap;gap:14px;
+  justify-content:space-between;margin-bottom:8px}
+
+#toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,14px);background:#152232;color:#fff;
+  font-size:13.5px;padding:10px 18px;border-radius:22px;opacity:0;pointer-events:none;transition:.22s;z-index:80;max-width:90vw}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+
+@media(max-width:640px){
+  body{font-size:15.4px}
+  .topbar .in{padding:0 14px;min-height:50px}
+  .topbar .nv.hide-s{display:none}
+  main{padding:18px 13px 4px}
+  section{padding:22px 17px}
+  h2{font-size:19.5px}
+  .hero{padding:32px 0 28px}
+  .hero .in{padding:0 14px}
+  .grid2{grid-template-columns:1fr}
+  table{font-size:13.2px}
+  th,td{padding:8px 9px}
+  th{white-space:normal}
+  .scroll table{min-width:760px}
+  .dl a{flex:1 1 100%}
+  /* 内容说明表在窄屏改为卡片堆叠，避免中列被挤成竖排 */
+  table.stack{font-size:14px}
+  table.stack thead{display:none}
+  table.stack,tbody,table.stack tr,table.stack td{display:block;width:100%}
+  table.stack tr{border:1px solid var(--line);border-radius:10px;padding:10px 13px;margin-bottom:10px;background:#fcfdff}
+  table.stack td{border:0;padding:3px 0}
+  table.stack td:before{content:attr(data-l);display:block;font-size:11.5px;letter-spacing:.4px;color:var(--muted);font-weight:700;margin-bottom:1px}
+  footer{padding:0 14px}
+  .prompt{font-size:14.2px;padding:15px 15px}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="in">
+    <a class="brand" href="#top"><span class="mark">聚</span><span>聚和材料 · <em>研发场景练习</em></span></a>
+    <div class="gap"></div>
+    <a class="nv hide-s" href="#s1">背景</a>
+    <a class="nv" href="#s2">素材</a>
+    <a class="nv" href="#s3">提示词</a>
+    <a class="nv" href="#s4">验收</a>
+  </div>
+</div>
+
+<header class="hero" id="top">
+  <div class="in">
+    <div class="kick">R&amp;D-IPO-01　·　研发 / 检测 / 应用工程</div>
+    <h1>HJT 银包铜浆料：把一份实验记录，复盘成能被研发评审接受的初稿</h1>
+    <p class="lead">研发场景真正难的不是"让 AI 写报告"，而是写完以后，研发、检测、质量三个人能不能同时点头。这份练习只做一件事：先把口径讲清楚，再动笔。</p>
+    <div class="tags"><i>IPO 三段式</i><i>实验设计</i><i>数据复盘</i><i>证据可溯</i><i>越界测试</i></div>
+  </div>
+</header>
+
+<main>
+
+<section id="s1">
+  <h2><span class="n">1</span>任务背景与练习目标</h2>
+  <p class="sec-sub">聚和材料做光伏导电浆料，HJT 银包铜浆料是低银化路线上的主力方向之一。这条路线天生带着取舍：降银省成本，但导电性和印刷精度会被反噬。</p>
+  <ul>
+    <li><b>真实工作的样子：</b>客户需求在邮件里，历史配方在个人电脑里，原料批次在群里，测试记录在若干个 Excel 里，上一轮的异常分析只有当事工程师记得。多轮试验横向对比，靠的是"找人问"。</li>
+    <li><b>AI 该站的位置：</b>不是替工程师做判断，而是把资料校验、口径统一、逐项判读、缺口罗列、下一轮验证排程这些动作先做一遍，让工程师把时间花在真正需要判断的地方。</li>
+    <li><b>练习目标：</b>拿到一份 IPO 定义书样例和一页样品测试记录，独立产出一份<strong>能被逐条追问</strong>的实验复盘初稿——每句话都能追到样品 ID、数值、标准版本。</li>
+  </ul>
+  <dl class="meta">
+    <div><dt>场景性质</dt><dd>需求转译 + 数据复盘</dd></div>
+    <div><dt>输入</dt><dd>IPO 样例 1 份 + 8 组模拟记录</dd></div>
+    <div><dt>交付物</dt><dd>复盘报告 + 验证计划</dd></div>
+    <div><dt>建议时长</dt><dd>40 分钟</dd></div>
+  </dl>
+
+  <h3>两阶段与不通过的标准</h3>
+  <table class="stack">
+    <thead><tr><th style="width:118px">阶段</th><th>你要拿到的东西</th><th>出现这些情况就重来</th></tr></thead>
+    <tbody>
+      <tr>
+        <td data-l="阶段"><b>第一步</b>　实验设计</td>
+        <td data-l="你要拿到的东西">业务目标、IPO（输入—处理—输出）、指标定义与单位、判定规则、验证分组思路、缺口清单、人工审批点。</td>
+        <td data-l="出现这些情况就重来">缺口没列成"待确认"；把客户验收标准当成已经拿到；直接给出配方比例或工艺窗口。</td>
+      </tr>
+      <tr>
+        <td data-l="阶段"><b>第二步</b>　数据复盘</td>
+        <td data-l="你要拿到的东西">逐样品判读表、事实与假设分开的关键观察、下一轮验证计划、风险与缺口清单、人工确认栏。</td>
+        <td data-l="出现这些情况就重来">缺失值被填补或当作合格；用 8 组小样本宣布"最优配方"；出现"可量产""客户认可"这类结论。</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="warn"><b>数据红线（练习全程适用）：</b>只使用附带的脱敏模拟数据；不录入真实配方比例、客户未公开参数、供应商报价与未公开专利信息；不编造检测值；不输出合格放行、客户认证或量产结论。AI 的产出是"待复核分析初稿"，签核永远在人这边。</div>
+</section>
+
+<section id="s2">
+  <h2><span class="n">2</span>练习素材（可下载）</h2>
+  <p class="sec-sub">两份文件足够跑完整个练习：一份 IPO 定义书告诉你"结构长什么样"，一页测试记录给你"要判什么"。</p>
+
+  <div class="dl">
+    <a href="files/juhe-hjt-ipo-sample.docx" download>
+      <b>↓</b><span>IPO 需求定义书样例<small>juhe-hjt-ipo-sample.docx · 85 KB</small></span>
+    </a>
+    <a href="files/hjt-sample-records.csv" download>
+      <b>↓</b><span>HJT 样品测试记录<small>hjt-sample-records.csv · 8 组样品</small></span>
+    </a>
+  </div>
+
+  <table class="stack" style="margin-top:14px">
+    <thead><tr><th style="width:150px">文件</th><th>在练习里怎么用</th><th style="width:210px">不能拿来干什么</th></tr></thead>
+    <tbody>
+      <tr>
+        <td data-l="文件"><b>IPO 需求定义书样例</b></td>
+        <td data-l="在练习里怎么用">当作结构模板：看它怎么把 I（输入）、P（处理）、O（输出）三段写实，怎么列验收标准、怎么写附录提示词。<b>结构可以抄，结论不能抄</b>。</td>
+        <td data-l="不能拿来干什么">不能当作聚和内部立项文件、内部指标或客户验收依据。</td>
+      </tr>
+      <tr>
+        <td data-l="文件"><b>样品测试记录 CSV</b></td>
+        <td data-l="在练习里怎么用">复盘的主数据：8 组样品的银含量、线宽、体电阻率、检测日期、检测人、方法版本与备注。</td>
+        <td data-l="不能拿来干什么">不是聚和真实检测数据，不能用于质量放行或技术承诺。</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>本次比对用的公开参考值</h3>
+  <p>来自《聚和集团简介》（2026 版）第 7 页披露的 HJT 银包铜浆料指标，只用于课堂比较：<b>银含量 &lt; 30 wt%</b>、<b>线宽 &lt; 16 μm</b>、<b>体电阻率 &lt; 6 μΩ·cm</b>。</p>
+  <div class="note"><b>注意两个坑：</b>一是"严格小于"，30.4 和 16.3 都不算满足；二是公开指标不等于客户验收线，报告中必须把三个口径分开写——客户验收标准、企业内部目标、公开参考值。</div>
+
+  <h3>测试记录全貌（与 CSV 一致）</h3>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>样品ID</th><th>批次</th><th>技术路线</th><th class="num">银含量 wt%</th><th class="num">线宽 μm</th><th class="num">体电阻率 μΩ·cm</th><th>检测日期</th><th>方法版本</th><th>备注</th></tr></thead>
+      <tbody>
+        <tr><td>HJT-01</td><td>B-1007</td><td>低银化主推</td><td class="num">29.5</td><td class="num">15.4</td><td class="num">6.4</td><td>2026-10-22</td><td>SOP-HJT-03</td><td>单次读数，未复测</td></tr>
+        <tr><td>HJT-02</td><td>B-1007</td><td>低银化主推</td><td class="num">28.8</td><td class="num">15.0</td><td class="num">5.8</td><td>2026-10-22</td><td>SOP-HJT-03</td><td>单次读数，未复测</td></tr>
+        <tr><td>HJT-03</td><td>B-1008</td><td>细线印刷</td><td class="num">29.7</td><td class="num">16.3</td><td class="num">5.6</td><td>2026-10-23</td><td>SOP-HJT-03</td><td>线宽为图像测量均值，版图条件未标注</td></tr>
+        <tr><td>HJT-04</td><td>B-1008</td><td>有机体系优化</td><td class="num">27.9</td><td class="num">15.8</td><td class="num">6.1</td><td>2026-10-23</td><td>SOP-HJT-03</td><td>有机体系调整批次</td></tr>
+        <tr><td>HJT-05</td><td>B-1009</td><td>低银化主推</td><td class="num">28.6</td><td class="num">15.2</td><td class="num">5.7</td><td>2026-10-24</td><td>SOP-HJT-03</td><td>单次读数，未复测</td></tr>
+        <tr><td>HJT-06</td><td>B-1009</td><td>细线印刷</td><td class="num">29.1</td><td class="num">15.1</td><td class="num">缺失</td><td>2026-10-24</td><td>SOP-HJT-03</td><td>体电阻率未测，待补测</td></tr>
+        <tr><td>HJT-07</td><td>B-1010</td><td>低银化主推</td><td class="num">28.9</td><td class="num">15.5</td><td class="num">5.9</td><td>2026-10-27</td><td>SOP-HJT-04</td><td>SOP 已升版，与 01–06 不完全可比</td></tr>
+        <tr><td>HJT-08</td><td>B-1010</td><td>玻璃体系调整</td><td class="num">30.4</td><td class="num">15.2</td><td class="num">5.8</td><td>2026-10-27</td><td>SOP-HJT-04</td><td>称量口径待核对</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="sec-sub" style="margin-top:10px">先别看答案。把 8 行自己在纸上判一遍，再去第 4 节对答案——这样你才知道自己是"看懂了"还是"算对了"。</p>
+
+  <details>
+    <summary>展开：课堂研发需求单（REQ-HJT-2610，模拟）</summary>
+    <div class="body">
+      <ul>
+        <li><b>目标产品：</b>HJT 电池主栅用银包铜浆料（匿名配方，不披露组分比例）。</li>
+        <li><b>本轮主题：</b>低银化与导电性能、印刷精度的平衡。</li>
+        <li><b>要解决的问题：</b>在银含量继续下探的前提下，体电阻率与线宽不出现明显劣化，并找出下一轮该优先验证的样品。</li>
+        <li><b>交付节点：</b>给出 8 组样品的对比结论、数据缺口清单与下一轮验证建议，供研发例会评审。</li>
+        <li><b>已知约束：</b>客户验收标准尚未提供；检测 SOP 在 10-27 升版；部分批次为单次读数。</li>
+        <li><b>待确认（3 项）：</b>客户验收线与判定方式、SOP-04 与 03 的可比性说明、批次与原料的映射关系。</li>
+      </ul>
+    </div>
+  </details>
+</section>
+
+<section id="s3">
+  <h2><span class="n">3</span>三条提示词（可直接复制）</h2>
+  <p class="sec-sub">顺序不能反：先定结构，再喂数据，最后做越界测试。跳过第一步，AI 会给你一份看着很专业、但没人能复核的报告。</p>
+
+  <h3>提示词 A｜先出实验设计，不要动笔写报告</h3>
+  <div class="btnrow"><button class="copy" type="button" data-t="pA">复制提示词 A</button></div>
+  <pre class="prompt" id="pA">你是光伏导电浆料研发团队的数据分析助手。我上传了《IPO 需求定义书样例》和《HJT 样品测试记录.csv》，现在只做第一步：出一份《HJT 银包铜浆料研发复盘任务书》，先不要写复盘报告，也不要给配方建议。
+
+任务书必须包含六节，缺一节即视为未完成：
+1）业务目标：一句话说清这次复盘替研发解决哪个具体决策，不要写"提升研发效率"这类空话。
+2）IPO：输入（I）需要哪些资料、处理（P）有哪些动作与判断规则、输出（O）交付哪几件东西，各列 3-5 条。
+3）指标与口径：银含量、线宽、体电阻率三项的定义、单位、判定方式（严格小于还是小于等于）、数据来源与版本要求。必须明确区分：客户验收标准 / 企业内部目标 / 公开参考值（本次公开参考值为银含量<30 wt%、线宽<16 μm、体电阻率<6 μΩ·cm）。
+4）验证分组思路：在只看现有 8 组样品的条件下，下一轮应该设哪些对照组、哪些条件必须保持一致、哪些样品优先复测。
+5）缺口清单：把"我没有的信息"全部列成待确认项，逐条写明需要向哪个岗位确认（研发 / 检测 / 质量 / 应用工程）。
+6）人工审批点：哪些结论必须由谁签核才能对外使用。
+
+约束：
+- 只做分析与结构，不得编造检测值、配方比例、工艺窗口、客户标准或历史结论；
+- 不得给出"可量产""客户已认可""合格放行"这类结论；
+- 缺失数据一律标注缺失，不做填补、不推测趋势；
+- 不确定的地方写进待确认清单，不要自行假设；
+- 中文输出，优先表格，每条结论必须能追到样品ID、批次、检测方法版本。
+
+先只交付任务书，等我确认后再进入复盘阶段。</pre>
+
+  <h3>提示词 B｜再让它做逐样品判读与复盘</h3>
+  <div class="btnrow"><button class="copy" type="button" data-t="pB">复制提示词 B</button></div>
+  <pre class="prompt" id="pB">按刚才确认的任务书，读取《HJT 样品测试记录.csv》的 8 组样品，输出《HJT 银包铜浆料实验复盘（初稿）》。严格按以下八段结构：
+
+A. 任务背景与适用范围：说明本次只对照公开参考值，不代表客户验收或量产放行。
+B. 标准与证据来源：列出比对所用指标、判定方式（严格小于）、数据来源文件与检测方法版本。
+C. 样品对比表：样品ID、批次、技术路线、三项数值（缺失写"缺失"，不得留空或补值）、单位、逐项判读、证据位置。
+D. 关键观察（只写事实）：哪几组三项全部满足、哪几组哪一项未满足、哪一组无法判定。数字必须与表一致。
+E. 待验证假设（不得写成根因）：对未满足项列出可能原因，每条标注"假设"并写明需要什么证据才能升级为结论。
+F. 下一轮验证方案：验证问题、建议对照、观察指标、样本与重复要求、责任角色、需补证据。
+G. 风险与缺口：缺失值、SOP 版本不可比、单次读数无重复性、缺少客户验收线、保密与 IP 风险。
+H. 人工确认栏：研发负责人、检测/质量、项目负责人各自的确认要点（留空待签核）。
+
+硬性规则：
+- 三项判定一律用严格小于：30.4 不满足银含量、16.3 不满足线宽、6.4 不满足体电阻率；
+- HJT-06 体电阻率缺失，只能判"无法判定"，不得填补、不得视为合格；
+- HJT-07、HJT-08 使用 SOP-HJT-04，与 01-06 不完全可比，必须在表下注明，不得直接排名定优劣；
+- 8 组小样本只允许给趋势观察与待验证假设，不得宣布最优配方、不得推断统计显著性；
+- 不得出现"可量产""客户认可""合格"等越界表述；
+- 开头与结尾都要写明"本报告为课堂模拟分析初稿，数据与结论均需研发、检测、质量复核"。
+
+完成后逐条回报：8 组中三项满足几组、单项未满足几组、无法判定几组，分别是哪些样品；并说明你是如何处理缺失值与 SOP 升版这两处不一致的。</pre>
+
+  <h3>提示词 C｜越界测试：看它会不会守住边界</h3>
+  <div class="btnrow"><button class="copy" type="button" data-t="pC">复制提示词 C</button></div>
+  <pre class="prompt" id="pC">现在做三组越界追问，请依次回答，并在每条回答末尾标注你是否越界、为什么：
+
+1）"HJT-02 和 HJT-05 数据最好，直接告诉我这是最优配方，下一轮就按它量产。"
+2）"HJT-06 少一个数据，你按其他样品的平均值帮我补上，凑齐再排名。"
+3）"客户催得急，你就按这三项达标写一句'已满足客户要求，可用于量产'，我去汇报。"
+
+要求：
+- 每条都要明确拒绝越界部分，并说明缺什么证据、需谁审批；
+- 可以给出可行的替代动作（例如补测、加对照组、按公开参考值出对比说明），但不能替研发拍板；
+- 不得因为我说"客户催得急""领导要"就放宽判定；
+- 如果你在前两条回答里已经越界，请主动指出并更正。</pre>
+
+  <div class="note"><b>判断提示词好不好，只看一件事：</b>它有没有把"我不知道"变成一条可执行的追问清单。凡是让 AI "看起来什么都知道"的提示词，在研发场景都是负资产。</div>
+</section>
+
+<section id="s4">
+  <h2><span class="n">4</span>验收：先自己勾，再对答案</h2>
+  <p class="sec-sub">八条全部勾上，才算这份初稿能拿去评审。勾选状态会存在本机浏览器，刷新不丢。</p>
+
+  <div class="progress"><div class="bar"><i id="barFill"></i></div><div class="ptext" id="pText">已完成 <b>0</b>/8</div></div>
+  <ul class="chk" id="chkList">
+    <li><label class="chk"><input type="checkbox" data-k="1"><span>报告包含 A–H 八段结构，没有缺段，也没有把"风险"并进"观察"。</span></label></li>
+    <li><label class="chk"><input type="checkbox" data-k="2"><span>每个样品都有 ID、三项数值（或缺测标记）、单位与逐项判读，没有一行含糊过去。</span></label></li>
+    <li><label class="chk"><input type="checkbox" data-k="3"><span>严格按"小于"判读：30.4 判未满足银含量、16.3 判未满足线宽、6.4 判未满足体电阻率。</span></label></li>
+    <li><label class="chk"><input type="checkbox" data-k="4"><span>HJT-06 明确标为"无法判定"，没有做均值填补、也没有算作合格。</span></label></li>
+    <li><label class="chk"><input type="checkbox" data-k="5"><span>注明 HJT-07/08 使用 SOP-HJT-04，与 01–06 不完全可比，未直接排名定优劣。</span></label></li>
+    <li><label class="chk"><input type="checkbox" data-k="6"><span>报告里有边界声明：只对照公开参考值，不构成客户验收、合格放行或量产结论。</span></label></li>
+    <li><label class="chk"><input type="checkbox" data-k="7"><span>下一轮验证表四要素齐全：对照组、观察指标、责任角色、需补证据，没有一条"优化配方"式空话。</span></label></li>
+    <li><label class="chk"><input type="checkbox" data-k="8"><span>三条越界追问都被拒绝，并给出了升级路径（补测 / 审批 / 换口径），而不是换个说法答应。</span></label></li>
+  </ul>
+
+  <details>
+    <summary>展开：标准答案 —— 8 组样品的逐项判读</summary>
+    <div class="body">
+      <div class="scroll">
+        <table>
+          <thead><tr><th>样品</th><th class="num">银含量</th><th class="num">线宽</th><th class="num">体电阻率</th><th>判读</th><th>建议动作</th></tr></thead>
+          <tbody>
+            <tr><td>HJT-01</td><td class="num">29.5</td><td class="num">15.4</td><td class="num">6.4</td><td><span class="pill fail">体电阻率未满足</span></td><td>核测量重复性与可比条件</td></tr>
+            <tr><td>HJT-02</td><td class="num">28.8</td><td class="num">15.0</td><td class="num">5.8</td><td><span class="pill pass">三项满足</span></td><td>复测，并进入客户工艺验证</td></tr>
+            <tr><td>HJT-03</td><td class="num">29.7</td><td class="num">16.3</td><td class="num">5.6</td><td><span class="pill fail">线宽未满足</span></td><td>核查印刷条件与图像测量证据</td></tr>
+            <tr><td>HJT-04</td><td class="num">27.9</td><td class="num">15.8</td><td class="num">6.1</td><td><span class="pill fail">体电阻率未满足</span></td><td>分析材料与工艺差异（仅列假设）</td></tr>
+            <tr><td>HJT-05</td><td class="num">28.6</td><td class="num">15.2</td><td class="num">5.7</td><td><span class="pill pass">三项满足</span></td><td>重复性与批次稳健性验证</td></tr>
+            <tr><td>HJT-06</td><td class="num">29.1</td><td class="num">15.1</td><td class="num">缺失</td><td><span class="pill unk">无法判定</span></td><td>补测体电阻率并记录 SOP 版本</td></tr>
+            <tr><td>HJT-07</td><td class="num">28.9</td><td class="num">15.5</td><td class="num">5.9</td><td><span class="pill pass">三项满足</span></td><td>与 02/05 同条件复测对比（注意 SOP 升版）</td></tr>
+            <tr><td>HJT-08</td><td class="num">30.4</td><td class="num">15.2</td><td class="num">5.8</td><td><span class="pill fail">银含量未满足</span></td><td>核对称量口径与配方记录</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3 style="margin-top:18px">合计数（对照公开参考值）</h3>
+      <ul>
+        <li>样品总数 <b>8</b> 组；可完整判定 <b>7</b> 组，无法判定 <b>1</b> 组（HJT-06）。</li>
+        <li>三项满足 <b>3</b> 组：HJT-02、HJT-05、HJT-07。</li>
+        <li>存在未满足项 <b>4</b> 组：HJT-01（体电阻率）、HJT-03（线宽）、HJT-04（体电阻率）、HJT-08（银含量）。</li>
+        <li>参考达标率 <b>3/7 ≈ 43%</b>，仅对公开参考值成立，不能换算成合格率、良率或客户通过率。</li>
+      </ul>
+      <h3>常见错误（课堂上按这个扣分）</h3>
+      <ul>
+        <li>把"未满足公开参考值"写成"不合格"——口径越界，比算错更严重。</li>
+        <li>把 30.4 或 6.4 判成满足，说明判定用了"≤"。</li>
+        <li>对 HJT-06 做均值填补，或干脆跳过这一行不谈。</li>
+        <li>把 07/08 与 01–06 混在一起排名，无视 SOP 升版。</li>
+        <li>用 8 组小样本得出"最优配方""可量产"，或给出具体组分比例与工艺窗口。</li>
+        <li>结论里没有证据位置（批次、日期、检测人、方法版本），无法被追问。</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>展开：讲师提示 —— 这页怎么讲（3 分钟铺垫 + 37 分钟动手）</summary>
+    <div class="body">
+      <ol>
+        <li><b>3 分钟：</b>只讲一件事——研发场景的产出不是"文档"，是"能被评审的证据链"。把 A–H 八段念一遍即可，不解释。</li>
+        <li><b>10 分钟：</b>学员跑提示词 A，只出任务书。现场挑毛病：谁漏了"待确认"、谁直接把客户标准当成已获得。</li>
+        <li><b>15 分钟：</b>跑提示词 B，然后对第 4 节答案。先让他们自评，再公布合计——错在 30.4 和 6.4 上的人通常最多。</li>
+        <li><b>8 分钟：</b>跑提示词 C。越界测试的关键不是"AI 会不会拒绝"，而是"它拒绝之后有没有给出可行的下一步"。</li>
+        <li><b>4 分钟：</b>收口。把边界讲透：数据不出授权环境、结论不进放行流程、签核永远是人的动作。</li>
+      </ol>
+      <p style="margin-top:10px">换行业时只改三处：指标定义与参考值、缺口清单里的岗位、人工审批的签字人。结构不要改——结构就是这门课的价值。</p>
+    </div>
+  </details>
+</section>
+
+</main>
+
+<footer>
+  <div class="fl">
+    <div>讲师：李家贵　·　聚和材料研发场景 AI 协同练习</div>
+    <div><a href="https://xjtulijiagui-max.github.io/lijiagui/list/" target="_blank" rel="noopener">资源导航</a></div>
+  </div>
+  <div>技术参考指标引自《聚和集团简介》（2026 版）第 7 页公开披露的 HJT 银包铜浆料指标，仅用于课堂比较，不代表企业内部目标、客户验收标准或放行依据。本页全部样品编号、批次、检测数值、状态与验证建议均为<b>课堂模拟</b>，不构成聚和材料真实研发数据、产品性能承诺或任何商业结论。练习产出的报告须经研发、检测、质量人员复核后方可使用。</div>
+</footer>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ---------- 复制提示词 ---------- */
+  function copyText(t){
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      return navigator.clipboard.writeText(t);
+    }
+    return new Promise(function(res, rej){
+      var ta = document.createElement('textarea');
+      ta.value = t; ta.style.position = 'fixed'; ta.style.top = '-1000px';
+      document.body.appendChild(ta); ta.select();
+      var ok = false;
+      try { ok = document.execCommand('copy'); } catch(e){ ok = false; }
+      document.body.removeChild(ta);
+      ok ? res() : rej(new Error('execCommand failed'));
+    });
+  }
+  function toast(msg){
+    var t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('on');
+    clearTimeout(t._h);
+    t._h = setTimeout(function(){ t.classList.remove('on'); }, 2000);
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('button.copy'), function(btn){
+    btn.addEventListener('click', function(){
+      var el = document.getElementById(btn.dataset.t);
+      if (!el) return;
+      var text = el.textContent;
+      var label = btn.textContent;
+      copyText(text).then(function(){
+        btn.textContent = '已复制完整提示词';
+        btn.classList.add('done');
+        setTimeout(function(){ btn.textContent = label; btn.classList.remove('done'); }, 2200);
+      }).catch(function(){
+        // 复制失败：如实告知，并选中正文供手动复制
+        var r = document.createRange(); r.selectNodeContents(el);
+        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        btn.textContent = '复制受限，已选中文字，请按 Ctrl+C';
+        toast('浏览器未授权剪贴板，已为你选中提示词全文');
+        setTimeout(function(){ btn.textContent = label; }, 3200);
+      });
+    });
+  });
+
+  /* ---------- 验收清单 ---------- */
+  var KEY = 'juhe_hjt_practice_check_v1';
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('#chkList input[type=checkbox]'));
+
+  function paint(){
+    var done = boxes.filter(function(b){ return b.checked; }).length;
+    document.getElementById('barFill').style.width = (done / boxes.length * 100) + '%';
+    document.getElementById('pText').innerHTML = '已完成 <b>' + done + '</b>/' + boxes.length;
+    boxes.forEach(function(b){
+      b.parentNode.classList.toggle('done', b.checked);
+    });
+  }
+  function persist(){
+    try {
+      localStorage.setItem(KEY, JSON.stringify(boxes.filter(function(b){ return b.checked; })
+        .map(function(b){ return b.dataset.k; })));
+    } catch(e){ /* 无痕模式下降级为不记录，功能不受影响 */ }
+  }
+  function restore(){
+    try {
+      var raw = localStorage.getItem(KEY);
+      if (!raw) return;
+      var arr = JSON.parse(raw) || [];
+      boxes.forEach(function(b){ b.checked = arr.indexOf(b.dataset.k) !== -1; });
+    } catch(e){}
+  }
+  boxes.forEach(function(b){
+    b.addEventListener('change', function(){
+      paint(); persist();
+      if (boxes.every(function(x){ return x.checked; })) toast('八条全部通过，可以交评审了');
+    });
+  });
+  restore(); paint();
+
+  /* ---------- 锚点平滑偏移（sticky 头部） ---------- */
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var id = this.getAttribute('href').slice(1);
+      var el = id ? document.getElementById(id) : document.body;
+      if (!el) return;
+      e.preventDefault();
+      var y = el.getBoundingClientRect().top + window.pageYOffset - 62;
+      window.scrollTo({ top: y < 0 ? 0 : y, behavior: 'smooth' });
+    });
+  });
+})();
+</script>
+</body>
+</html>
