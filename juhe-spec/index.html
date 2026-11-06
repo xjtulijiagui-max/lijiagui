@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PRD + Spec 标准 → Workspace → 工作台｜聚和材料两步练习</title>
+<meta name="description" content="聚和材料场景的两步练习页：第一步把 IPO 定义书与《Spec Workspace 初始化标准 v2.0》一起交给 AI，生成候选 Workspace 输入包；第二步用工作台搭建师把规格变成可点的界面。附可下载 IPO Word、标准包 ZIP 与可复制提示词。">
+<style>
+:root{
+  --ink:#152232;--ink2:#2c3e54;--muted:#5f7085;--line:#e3e8ef;--bg:#f5f7fa;
+  --navy:#0b2743;--navy2:#12395c;--copper:#b0722f;--copper-dk:#8d5520;--tint:#fdf6ee;
+  --pass:#1a6b4a;--pass-bg:#eaf5ef;--fail:#b3261e;--fail-bg:#fdeeec;
+  --warn:#8a5b00;--warn-bg:#fff8e8;--warn-line:#f0dcae;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.78 "Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#8d5520;text-decoration:none;border-bottom:1px solid rgba(176,114,47,.32)}
+a:hover{border-bottom-color:var(--copper)}
+h1,h2,h3,h4{margin:0}
+p{margin:10px 0}
+ul,ol{margin:10px 0 10px 4px;padding-left:20px}
+li{margin:6px 0}
+strong,b{color:inherit}
+
+.topbar{position:sticky;top:0;z-index:40;background:var(--navy);border-bottom:2px solid var(--copper)}
+.topbar .in{max-width:1060px;margin:auto;padding:0 22px;min-height:54px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:9px;color:#fff;font-weight:700;font-size:14.5px;border:0}
+.brand .mark{width:23px;height:23px;border-radius:6px;background:linear-gradient(135deg,var(--copper),#d99a5a);
+  display:grid;place-items:center;font-size:12px;color:#fff;font-weight:800}
+.brand em{font-style:normal;color:#f0b27a}
+.topbar .gap{flex:1}
+.topbar .nv{color:#b7c8db;border:0;font-size:13.5px;padding:5px 9px;border-radius:6px;white-space:nowrap}
+.topbar .nv:hover{background:#173a5c;color:#fff}
+
+.hero{background:var(--navy);color:#fff;padding:44px 0 38px;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-130px;top:-130px;width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(176,114,47,.45),rgba(176,114,47,0) 68%)}
+.hero .in{max-width:1060px;margin:auto;padding:0 22px;position:relative;z-index:2}
+.kick{font-size:12.5px;letter-spacing:1.9px;color:#e6b183;margin-bottom:12px}
+.hero h1{font-size:clamp(23px,3vw,35px);line-height:1.36;font-weight:800;max-width:880px}
+.hero .lead{font-size:16.5px;line-height:1.8;color:#c6d5e4;max-width:830px;margin:14px 0 18px}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tags i{font-style:normal;font-size:12.5px;color:#f2ddc7;border:1px solid #4c6b88;border-radius:20px;padding:4px 12px;background:rgba(255,255,255,.04)}
+
+main{max-width:1060px;margin:auto;padding:28px 22px 8px}
+section{background:#fff;border:1px solid var(--line);border-radius:14px;padding:28px 30px;margin-bottom:20px;
+  box-shadow:0 1px 2px rgba(16,24,40,.04)}
+h2{font-size:22px;font-weight:800;margin:0 0 4px;letter-spacing:.2px}
+h2 .n{display:inline-block;min-width:29px;height:29px;line-height:29px;text-align:center;background:var(--copper);
+  color:#fff;border-radius:8px;font-size:14.5px;margin-right:10px;vertical-align:2px;font-weight:700}
+h3{font-size:16.5px;margin:24px 0 6px;color:var(--ink2)}
+.sec-sub{color:var(--muted);font-size:14px;margin:0 0 16px}
+.str{color:var(--copper-dk);font-weight:700}
+
+table{width:100%;border-collapse:collapse;font-size:14.2px;margin:12px 0}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:#f7f9fc;font-weight:700;color:var(--ink2)}
+tbody tr:nth-child(even) td{background:#fcfdff}
+
+code{font-family:"Cascadia Mono",Consolas,"Courier New",monospace;font-size:13px;background:#f3f6fa;
+  border:1px solid #e6ecf3;border-radius:4px;padding:1px 5px;color:#28425e}
+pre{margin:0;padding:16px 18px;background:#0d2238;color:#dbe7f3;border-radius:10px;overflow:auto;
+  font:13px/1.72 "Cascadia Mono",Consolas,"Courier New",monospace;white-space:pre-wrap;word-break:break-word}
+pre .cm{color:#8fa9c2}
+
+.dl{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
+.dl .card{border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:var(--tint);display:flex;flex-direction:column}
+.dl .card.alt{background:#f4f8fc}
+.dl h4{font-size:15.5px;margin:0 0 4px;display:flex;align-items:center;gap:8px}
+.dl h4 .ext{font-size:11px;font-weight:800;letter-spacing:.6px;color:#fff;background:var(--copper);border-radius:4px;padding:2px 6px}
+.dl .card.alt h4 .ext{background:var(--navy2)}
+.dl .meta{font-size:12.8px;color:var(--muted);margin:0 0 10px}
+.dl ul{font-size:13.4px;color:var(--ink2);margin:0 0 12px;padding-left:18px}
+.dl li{margin:3px 0}
+.dl .btn{margin-top:auto;align-self:flex-start;background:var(--navy);color:#fff;border:0;border-radius:8px;
+  padding:9px 15px;font-size:14px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:7px}
+.dl .btn:hover{background:var(--navy2)}
+.dl .btn.cop{background:var(--copper)}
+.dl .btn.cop:hover{background:var(--copper-dk)}
+
+.flow{display:grid;grid-template-columns:1fr 26px 1fr 26px 1fr;align-items:stretch;gap:0;margin:16px 0 6px}
+.flow .box{border:1px solid var(--line);border-radius:11px;padding:13px 14px;background:#fbfcfe}
+.flow .box b{display:block;font-size:13px;color:var(--copper-dk);margin-bottom:3px}
+.flow .box span{font-size:13px;color:var(--ink2);line-height:1.6;display:block}
+.flow .ar{display:grid;place-items:center;color:#c0a883;font-size:17px}
+
+.note{border-left:3px solid var(--copper);background:var(--tint);padding:11px 14px;border-radius:0 8px 8px 0;font-size:14px;margin:14px 0}
+.note b{color:var(--copper-dk)}
+.warn{border:1px solid var(--warn-line);background:var(--warn-bg);color:#6b4700;border-radius:9px;padding:11px 14px;font-size:14px;margin:14px 0}
+.pass{background:var(--pass-bg);color:var(--pass);border-radius:6px;padding:1px 8px;font-size:12.5px;font-weight:700}
+.fail{background:var(--fail-bg);color:var(--fail);border-radius:6px;padding:1px 8px;font-size:12.5px;font-weight:700}
+
+.prompt{position:relative;margin:12px 0 6px;border:1px solid #1e3a56;border-radius:11px;overflow:hidden}
+.prompt .bar{display:flex;align-items:center;gap:10px;background:#16324c;padding:8px 12px;color:#c9dbe9;font-size:12.8px}
+.prompt .bar .t{font-weight:700;color:#fff}
+.prompt .bar .sp{flex:1}
+.prompt .bar button{background:var(--copper);color:#fff;border:0;border-radius:6px;padding:5px 11px;
+  font-size:12.5px;font-weight:700;cursor:pointer;font-family:inherit}
+.prompt .bar button:hover{background:var(--copper-dk)}
+.prompt .bar .hint{color:#8fa9c2;font-size:12px}
+
+.steps{counter-reset:s;list-style:none;padding:0;margin:12px 0}
+.steps>li{counter-increment:s;position:relative;padding:0 0 0 38px;margin:0 0 18px}
+.steps>li:before{content:counter(s);position:absolute;left:0;top:1px;width:26px;height:26px;border-radius:50%;
+  background:#eef3f9;border:1px solid #cfe0ef;color:var(--navy2);font-weight:800;font-size:13px;display:grid;place-items:center}
+.steps>li b{display:block;font-size:15px;margin-bottom:2px}
+
+.check{list-style:none;padding:0;margin:10px 0}
+.check li{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;border:1px solid var(--line);
+  border-radius:9px;margin:7px 0;background:#fcfdff;font-size:14.4px;cursor:pointer}
+.check li:hover{border-color:#cfdcec}
+.check input{margin:5px 0 0;width:15px;height:15px;accent-color:var(--copper);flex:none}
+.check li.done{background:var(--pass-bg);border-color:#c6e2d3;text-decoration:line-through;color:#4d6a5c}
+.check .cnt{font-size:13px;color:var(--muted);margin-left:6px}
+
+details{border:1px solid var(--line);border-radius:10px;padding:0;margin:14px 0;background:#fcfdff}
+details>summary{cursor:pointer;padding:12px 16px;font-weight:700;font-size:14.6px;color:var(--ink2);list-style:none}
+details>summary::-webkit-details-marker{display:none}
+details>summary:before{content:"▸";color:var(--copper);margin-right:8px;display:inline-block;transition:transform .15s}
+details[open]>summary:before{transform:rotate(90deg)}
+details>div{padding:0 16px 14px}
+
+footer{max-width:1060px;margin:6px auto 40px;padding:0 22px;color:var(--muted);font-size:13px;text-align:center}
+
+.toast{position:fixed;left:50%;bottom:34px;transform:translate(-50%,20px);background:var(--navy);color:#fff;
+  padding:10px 18px;border-radius:9px;font-size:13.5px;opacity:0;pointer-events:none;transition:.22s;z-index:99;
+  box-shadow:0 8px 24px rgba(11,39,67,.28);max-width:88vw;text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+@media(max-width:820px){
+  .dl{grid-template-columns:1fr}
+  .flow{grid-template-columns:1fr;gap:8px}
+  .flow .ar{transform:rotate(90deg);height:16px}
+  section{padding:22px 17px;border-radius:12px}
+  main{padding:18px 14px 4px}
+  .topbar .nv{font-size:12.5px;padding:4px 6px}
+  table{font-size:13.2px}
+  th,td{padding:6px 7px}
+  .hero{padding:32px 0 28px}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="in">
+  <a class="brand" href="./"><span class="mark">聚</span><span>聚和材料 · <em>PRD + Spec 两步练习</em></span></a>
+  <span class="gap"></span>
+  <a class="nv" href="#prep">材料</a>
+  <a class="nv" href="#step1">第一步 Workspace</a>
+  <a class="nv" href="#step2">第二步 工作台</a>
+  <a class="nv" href="#check">验收</a>
+  <a class="nv" href="#trap">易错</a>
+  <a class="nv" href="#next">延伸</a>
+</div></div>
+
+<div class="hero"><div class="in">
+  <div class="kick">课堂练习 · 两步走 · 约 75 分钟</div>
+  <h1>先出 Workspace，再搭工作台：<br>把一份 IPO 需求定义书变成能继续开发的输入包</h1>
+  <p class="lead">第一步只做一件事：把 PRD／IPO 与《Spec Workspace 初始化标准 v2.0》一起处理，生成项目专属的候选 Workspace（规格、规则、验收、缺口）。第二步把这份规格变成可点的界面。中间不写业务代码、不装依赖、不发布站点。</p>
+  <div class="tags"><i>IPO 需求定义书</i><i>Spec 标准 v2.0</i><i>Workspace 初始化</i><i>BASELINE_DRAFT</i><i>工作台搭建师</i><i>聚和 HJT 场景</i></div>
+</div></div>
+
+<main>
+
+<section id="prep">
+  <h2><span class="n">0</span>先领两份材料</h2>
+  <p class="sec-sub">练习只需要两份东西：一份真实结构的 IPO 定义书，一份规定「规格要写到什么程度」的标准包。其余资料都不必带。</p>
+
+  <div class="dl">
+    <div class="card">
+      <h4>聚和 HJT 银包铜浆料研发 IPO <span class="ext">DOCX</span></h4>
+      <p class="meta">juhe-hjt-ipo-sample.docx · 约 84 KB · V1.0</p>
+      <ul>
+        <li>完整 I／P／O 三段：输入字段、处理步骤、输出与验收</li>
+        <li>6 组课堂模拟样品数据（非真实配方与试验结果）</li>
+        <li>含业务规则、验收标准、问题与风险清单</li>
+      </ul>
+      <a class="btn" href="files/juhe-hjt-ipo-sample.docx" download>下载 IPO 定义书</a>
+    </div>
+    <div class="card alt">
+      <h4>Spec Workspace 初始化标准 <span class="ext">V2.0 ZIP</span></h4>
+      <p class="meta">spec-workspace-standard-v2.0.zip · 约 47 KB · 25 个文件</p>
+      <ul>
+        <li><code>AGENTS.md</code> + 初始化 Skill（四阶段与判定标准）</li>
+        <li><code>references/</code> 规格契约、编号规则、校验清单、模式差异</li>
+        <li><code>templates/workspace/</code> 十份规格骨架 + <code>tools/workspace_pack.py</code></li>
+      </ul>
+      <a class="btn" href="files/spec-workspace-standard-v2.0.zip" download>下载标准包</a>
+    </div>
+  </div>
+
+  <div class="note"><b>标准包能单独用。</b>解压后先读 <code>README.md</code>，再读 <code>AGENTS.md</code>。标准包里的 Skill、规范、打包工具会被复制进输出包，所以输出的 Workspace 脱离标准包也能继续工作。打包工具只需 Python 3.9+，不装第三方库。</div>
+
+  <h3>这条链路上每一步产出什么</h3>
+  <div class="flow">
+    <div class="box"><b>输入</b><span>IPO Word ＋ 标准包 ZIP<br>（要改就改这两份）</span></div>
+    <div class="ar">→</div>
+    <div class="box"><b>第一步产出</b><span>候选 Workspace：十份规格、规则、验收、缺口清单<br>ZIP ＋ HTML 摘要</span></div>
+    <div class="ar">→</div>
+    <div class="box"><b>第二步产出</b><span>可点的工作台界面<br>字段与规则对齐规格</span></div>
+  </div>
+  <div class="warn"><b>不要跳过第一步。</b>没有规格直接让它「做个工作台」，字段、状态、权限全靠猜，返工比重做还贵。</div>
+</section>
+
+<section id="step1">
+  <h2><span class="n">1</span>第一步：PRD + Spec 标准 → 生成 Workspace</h2>
+  <p class="sec-sub">模式固定为 <code>new</code>：只做初始化，不开发业务代码，不安装业务依赖，不发布站点。</p>
+
+  <ol class="steps">
+    <li><b>把两份材料一起放进对话</b>
+      <p>上传 IPO Word（或粘贴正文），并解压标准包、把 <code>spec-workspace-standard-v2.0/</code> 文件夹放进项目目录。工具只能读对话附件时，就把 <code>AGENTS.md</code> 与 <code>.agents/skills/spec-workspace-init/SKILL.md</code> 一起贴进对话，其余文件按提示词要求按需读取。</p>
+    </li>
+    <li><b>复制下面这段提示词，原样发出去</b>
+      <p>这段提示词已经把七件容易漏的事写死：读什么、分哪三类资料、要写哪些规格、缺口怎么分级、交付什么、怎么校验、不许说什么。不要精简它。</p>
+    </li>
+    <li><b>看它交付的 HTML 摘要，不看它说了什么好听的话</b>
+      <p>合格产出必须有：十份规格无空章、需求有编号与来源、缺口分三级、ZIP 与 HTML 同名同版本、状态为 <code>BASELINE_DRAFT</code>、业务测试为 <code>NOT_RUN</code>。</p>
+    </li>
+  </ol>
+
+  <div class="prompt">
+    <div class="bar"><span class="t">第一步 · 生成 Workspace 初始化输入包</span><span class="hint" id="h1">约 900 字</span><span class="sp"></span>
+      <button data-copy="p1">复制提示词</button></div>
+    <pre id="p1">请把我提供的 PRD（或 IPO）与《Spec Workspace 初始化标准 v2.0》一起处理，生成本项目专属的 Workspace 初始化输入包。
+先读取标准包的 AGENTS.md 和 .agents/skills/spec-workspace-init/SKILL.md，再按需读取 references/ 与 templates/。此次模式为 new；第一步只做初始化，不开发业务代码，不安装业务依赖，不发布站点。
+
+1. 列出实际读到的资料、版本、范围和未能读取的内容；区分我的业务资料、标准模板与课堂示例。不要把示例内容当成我的需求，也不要重复问已有答案。
+2. 根据 PRD 生成完整的项目规格：业务目标与边界、IPO、SOP、业务规则与状态机、数据与导入映射、架构与接口候选、页面与输出、权限安全、验收用例和需求追踪。每条关键需求有来源、规则和可检查的预期。
+3. 参考初始化 Skill 的“目录初始化—只读盘点—基线候选—评审确认”。有存量代码时仅扫描我明确提供的目录，说明覆盖和遗漏；没有代码时 observed components 为空，把拟建模块放在设计候选里，不编造仓库、组件或已运行结果。
+4. 保留已确认企业规范；缺少的技术栈、品牌、接口与权限能力写成设计建议或待确认。非关键缺口不妨碍交付候选包；会改变范围、金额、权限或对外动作的缺口列为阻断，不能靠默认值绕过。
+5. 按 templates/workspace 的交付契约，写出实质内容，不只复制空目录或占位符。复制后续所需的 Skill、规范和 tools/workspace_pack.py，使输出包无需原标准包也能继续使用。初始化状态为 BASELINE_DRAFT；业务测试均为 NOT_RUN，除非本轮确实执行且留有证据。
+6. 执行结构校验后，生成 outputs 下同版本的《项目名_Workspace_v1.0.0_r001.zip》和《项目名_Workspace_v1.0.0_r001.html》（工具采用英文 project_id 文件名也可以）。只分发获准材料，不包含密钥、本机配置、构建缓存或无关原始文件。
+7. 同时告诉我：已初始化什么、仍有哪些关键问题、下一步先确认哪份基线。不得把已打包写成已批准、已开发或已上线。不要自动进入第二步。
+项目名可从 PRD 提取；只有无法可靠确定时使用中性的临时项目名并注明。此次资料不足时仍交付有缺口标记的候选包。</pre>
+  </div>
+  <p class="sec-sub">复制后粘贴到你的 AI 工具，不需要再补任何说明。如果工具读不到 ZIP，就先解压、把文件夹放进项目根目录再发。</p>
+
+  <h3>这一步应该拿到什么</h3>
+  <table>
+    <thead><tr><th style="width:200px">产物</th><th>要点</th><th style="width:132px">合格判据</th></tr></thead>
+    <tbody>
+      <tr><td><code>WORKSPACE.md</code></td><td>项目名、project_id、版本、范围、十份规格清单、下一步先确认哪份</td><td><span class="pass">必须有</span></td></tr>
+      <tr><td><code>specs/01–10</code></td><td>业务边界、IPO、SOP、规则与状态机、数据映射、架构候选、页面输出、权限、验收、追踪矩阵</td><td><span class="pass">十份齐全</span></td></tr>
+      <tr><td><code>open-questions.md</code></td><td>每条缺口带 BLOCKER／NON-BLOCKER／WATCH，写清影响哪条需求</td><td><span class="pass">分级清楚</span></td></tr>
+      <tr><td><code>.agents/</code>、<code>tools/</code></td><td>Skill 副本与打包工具，保证输出包自足</td><td><span class="pass">已复制</span></td></tr>
+      <tr><td>ZIP ＋ HTML</td><td>同名同版本；HTML 一页说清「已初始化／关键缺口／下一步」</td><td><span class="pass">成对交付</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="note"><b>用聚和这份 IPO 练，最可能出现的阻断项是「客户验收口径未提供」。</b>它会让「满足／未满足」的判定没有依据。正确处理是：判读只出三态（满足／未满足／无法判断），合格判定挂给质量工程师，并在 <code>open-questions.md</code> 里记成 BLOCKER——而不是自己编一个阈值把流程走完。</div>
+
+  <details>
+    <summary>它跑完，我该检查哪几处？（30 秒自检）</summary>
+    <div>
+      <ul>
+        <li>打开 <code>specs/04-rules.md</code>：每条规则有没有判据、阈值、例外、责任角色；状态机有没有守卫条件和非法转移处理。</li>
+        <li>打开 <code>specs/09-acceptance.md</code>：用例状态是不是全为 <code>NOT_RUN</code>；有没有「预计通过」这种词。</li>
+        <li>打开 <code>specs/10-traceability.md</code>：每条需求是不是至少连到一条验收；受阻的是不是标了问题编号。</li>
+        <li>打开 <code>specs/06-architecture.md</code>：没有代码时，observed components 是不是明确写「无」，而不是编出一个仓库。</li>
+        <li>看 HTML 摘要：是不是写了状态 <code>BASELINE_DRAFT</code>、业务测试 <code>NOT_RUN</code>。</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>标准包里到底有什么？（下载前先看清单）</summary>
+    <div>
+      <table>
+        <thead><tr><th style="width:250px">路径</th><th>作用</th></tr></thead>
+        <tbody>
+          <tr><td><code>AGENTS.md</code></td><td>进入标准包必须遵守的硬约定：读什么、怎么标来源、什么算阻断、打包排除什么</td></tr>
+          <tr><td><code>.agents/skills/spec-workspace-init/SKILL.md</code></td><td>四阶段流程：目录初始化 → 只读盘点 → 基线候选 → 评审确认，每阶段的通过与禁止</td></tr>
+          <tr><td><code>references/spec-contract.md</code></td><td>十份规格各写什么、最少要有哪些证据</td></tr>
+          <tr><td><code>references/traceability.md</code></td><td>REQ／RULE／AC／Q 编号规则与追踪矩阵写法</td></tr>
+          <tr><td><code>references/validation-checklist.md</code></td><td>14 项结构校验与「可交付／需补充／不可交付」判定</td></tr>
+          <tr><td><code>references/modes.md</code></td><td>new／iterate／review 三模式差异（本轮只用 new）</td></tr>
+          <tr><td><code>templates/workspace/</code></td><td>输出骨架：十份规格、decisions、evidence、open-questions</td></tr>
+          <tr><td><code>tools/workspace_pack.py</code></td><td>结构校验 ＋ 打 ZIP ＋ 生成 HTML 摘要，纯标准库</td></tr>
+          <tr><td><code>examples/</code></td><td>课堂示例，只示范格式，<b>不是你的需求</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+</section>
+
+<section id="step2">
+  <h2><span class="n">2</span>第二步：基于上一步输出，生成工作台</h2>
+  <p class="sec-sub">上一步的十条规格就是这一轮的输入。这一轮不再讨论需求，只把规格变成能点的界面。</p>
+
+  <ol class="steps">
+    <li><b>打开上一步的 Workspace 目录</b>
+      <p>在同一个对话里继续，或新开对话并把 Workspace 文件夹放进项目根目录。让工具先读 <code>WORKSPACE.md</code>、<code>specs/04-rules.md</code>、<code>specs/07-ui.md</code>、<code>specs/08-security.md</code>。</p>
+    </li>
+    <li><b>在输入框选中专家「工作台搭建师」</b>
+      <p>入口在对话框的专家／插件区：搜索「工作台搭建师」→ 选中 → 再发送提示词。同一轮只选一个专家，避免两套方法论互相打架。选中后左下角会显示当前专家名。</p>
+    </li>
+    <li><b>发这句话就行</b>
+      <p>需求已经在规格里，不需要再把背景讲一遍。要补的是边界：不编字段、不越权、不发布。</p>
+    </li>
+  </ol>
+
+  <div class="prompt">
+    <div class="bar"><span class="t">第二步 · 生成工作台（配合专家：工作台搭建师）</span><span class="hint">复制后直接发</span><span class="sp"></span>
+      <button data-copy="p2">复制提示词</button></div>
+    <pre id="p2">基于上一步输出的 Workspace 初始化包，生成这个项目的工作台界面。先读 WORKSPACE.md、specs/04-rules.md、specs/07-ui.md、specs/08-security.md、specs/09-acceptance.md，再动手。
+
+1. 页面按 specs/07-ui.md 的清单做（导入、判读、导出三页），不要自行增加规格里没有的页面和字段；规格缺失的字段标“待确认”，不要编造。
+2. 字段、三态判读、状态流转严格对齐 specs/04-rules.md；规则没写清的，列出来问我，不要用默认值补齐。
+3. 权限按 specs/08-security.md 的矩阵实现：默认拒绝，越权动作连入口都不出现，并在页面上提示无权限。
+4. 用包内样例数据把主流程跑通，验收用例逐条给可点路径；未执行的标 NOT_RUN，不写“预计通过”。
+5. 输出本地可预览版本即可：不发布站点、不接真实数据、不写入任何生产环境。做完告诉我：做了什么页面、哪些规则没落地、下一步该确认哪条缺口。</pre>
+  </div>
+
+  <h3>第二步的合格判据</h3>
+  <table>
+    <thead><tr><th style="width:210px">检查点</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>页面与规格一致</td><td>页面上每个字段都能在 <code>specs/05-data.md</code> 找到；每个按钮都能在 <code>specs/03-sop.md</code> 找到对应动作</td></tr>
+      <tr><td>规则可验证</td><td>缺数据时确实显示「无法判断」，而不是给个看起来合理的数字</td></tr>
+      <tr><td>权限真的拦</td><td>换个角色账号，导出／删除入口消失或报无权限</td></tr>
+      <tr><td>不越界</td><td>没有出现配方比例、客户真实名称，也没有自动发布链接</td></tr>
+      <tr><td>表述准确</td><td>「已做页面」和「已验证通过」分开说，未跑的测试仍是 <code>NOT_RUN</code></td></tr>
+    </tbody>
+  </table>
+  <div class="warn"><b>别让它顺手把规格改了。</b>工作台阶段发现规格写错，正确做法是回第一步改 <code>specs/</code> 并记一条 ADR，而不是在前端代码里悄悄加一条业务逻辑——那样下一个人就再也对不上了。</div>
+</section>
+
+<section id="check">
+  <h2><span class="n">3</span>练习验收清单</h2>
+  <p class="sec-sub">勾选记录存在你自己的浏览器里，不上传。全部勾上才算这轮练习完成<span class="cnt" id="cnt">0 / 10</span></p>
+  <ul class="check" id="chk">
+    <li><input type="checkbox"><span>下载了两份材料，并确认 IPO 里的 6 组样品数据是课堂模拟、不是真实配方</span></li>
+    <li><input type="checkbox"><span>第一步提示词是原文整段发出的，没有自己删减条款</span></li>
+    <li><input type="checkbox"><span>产出里有完整十份规格，没有空章或「待补充」独立成段</span></li>
+    <li><input type="checkbox"><span>每条关键需求都有编号、来源和可检查的预期</span></li>
+    <li><input type="checkbox"><span>缺口分了 BLOCKER／NON-BLOCKER／WATCH，并写清影响哪条需求</span></li>
+    <li><input type="checkbox"><span>交付的是 ZIP ＋ HTML 一对，同名同版本，HTML 里有「已初始化／关键缺口／下一步」</span></li>
+    <li><input type="checkbox"><span>状态是 BASELINE_DRAFT，业务测试是 NOT_RUN，没有出现「已批准／已上线」</span></li>
+    <li><input type="checkbox"><span>第二步前已选中专家「工作台搭建师」，且只选了一个专家</span></li>
+    <li><input type="checkbox"><span>工作台页面的字段与按钮能逐条对回规格，无自造字段</span></li>
+    <li><input type="checkbox"><span>能清楚说出：已初始化什么、还缺什么、下一步先确认哪份基线</span></li>
+  </ul>
+</section>
+
+<section id="trap">
+  <h2><span class="n">4</span>五个最常见的坑</h2>
+  <table>
+    <thead><tr><th style="width:230px">坑</th><th>会发生什么</th><th style="width:300px">怎么改</th></tr></thead>
+    <tbody>
+      <tr><td>把课堂示例当需求</td><td>规格里出现示例中的阈值、角色和编号，后面全部返工</td><td>引用示例时标注「来源：示例（非需求）」，只借格式不借内容</td></tr>
+      <tr><td>把「文件生成了」当「已批准」</td><td>直接进开发，做到一半发现范围没定，无法收敛</td><td>先读 HTML 的「关键缺口」，BLOCKER 不回答就不进开发</td></tr>
+      <tr><td>所有缺口都写「待确认」</td><td>没法判断哪个能继续、哪个必须停</td><td>强制分级：改范围／金额／权限／对外动作的一律 BLOCKER</td></tr>
+      <tr><td>跳步直接让它写系统</td><td>没有状态机与权限矩阵，代码里的规则只能靠猜</td><td>回到第一步，先出规格；第二步再谈界面</td></tr>
+      <tr><td>编造证据</td><td>「测试已通过」「接口已联调」查不到记录，交付即失效</td><td>没跑就写 NOT_RUN，并在 <code>evidence/</code> 里留位置</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="next">
+  <h2><span class="n">5</span>练完往哪走</h2>
+  <div class="dl">
+    <div class="card">
+      <h4>想先看方法论全貌</h4>
+      <p class="meta">同一套标准的六步走法：初始化 → 计划 → TDD → Review → 证据验收 → 刷新交付</p>
+      <a class="btn cop" href="https://xjtulijiagui-max.github.io/lijiagui/spec/">打开 Spec Workspace 指南</a>
+    </div>
+    <div class="card alt">
+      <h4>想先练单点场景</h4>
+      <p class="meta">用同一份聚和 IPO 做实验设计与 6 组数据复盘，附标准判读答案</p>
+      <a class="btn" href="https://xjtulijiagui-max.github.io/lijiagui/material-spec/">打开聚和研发复盘练习</a>
+    </div>
+  </div>
+  <div class="note"><b>下一步只做一件事：</b>回答 <code>open-questions.md</code> 里那条 BLOCKER（客户验收口径）。它确认后，<code>specs/04-rules.md</code> 的阈值才能定，验收用例才能从 <code>NOT_RUN</code> 变成可执行。</div>
+</section>
+
+</main>
+
+<footer>聚和材料 · PRD + Spec 两步练习页｜李家贵 · 课堂用材料，数据均为模拟，不构成技术承诺</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  var toast = document.getElementById('toast'), tid = null;
+  function say(msg){ toast.textContent = msg; toast.classList.add('on'); clearTimeout(tid);
+    tid = setTimeout(function(){ toast.classList.remove('on'); }, 2600); }
+
+  function fallback(pre){
+    try{
+      var r = document.createRange(); r.selectNodeContents(pre);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      say('已选中全部文本，请按 Ctrl+C（Mac 用 ⌘+C）复制');
+    }catch(e){ say('复制失败，请手动选择文本复制'); }
+  }
+
+  document.querySelectorAll('button[data-copy]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var pre = document.getElementById(btn.getAttribute('data-copy'));
+      if(!pre){ say('找不到提示词正文'); return; }
+      var text = pre.innerText;
+      if(!text || text.length < 30){ say('提示词正文为空'); return; }
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(function(){
+          say('已复制 ' + text.length + ' 字，可直接粘贴');
+        }, function(){ fallback(pre); });
+      } else { fallback(pre); }
+    });
+  });
+
+  var KEY = 'juhe-spec-check-v1', box = document.getElementById('chk'),
+      items = Array.prototype.slice.call(box.querySelectorAll('input[type=checkbox]')),
+      cnt = document.getElementById('cnt');
+  function save(){
+    var st = items.map(function(i){ return i.checked ? 1 : 0; });
+    try{ localStorage.setItem(KEY, JSON.stringify(st)); }catch(e){}
+  }
+  function render(){
+    var n = items.filter(function(i){ return i.checked; }).length;
+    cnt.textContent = n + ' / ' + items.length;
+    items.forEach(function(i){ i.parentNode.classList.toggle('done', i.checked); });
+  }
+  try{
+    var saved = JSON.parse(localStorage.getItem(KEY) || '[]');
+    items.forEach(function(i, k){ if(saved[k]) i.checked = true; });
+  }catch(e){}
+  items.forEach(function(i){
+    i.addEventListener('change', function(){ save(); render(); });
+    i.parentNode.addEventListener('click', function(ev){
+      if(ev.target !== i){ i.checked = !i.checked; save(); render(); }
+    });
+  });
+  render();
+})();
+</script>
+</body>
+</html>
