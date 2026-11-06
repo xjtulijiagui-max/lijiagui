@@ -1,0 +1,32 @@
+{
+  "id": "material-workbench",
+  "title": "聚和材料｜客户送样认证跟进工作台 · 场景课",
+  "shortTitle": "聚和送样工作台",
+  "category": "制造能源与工业",
+  "description": "聚和材料场景四配套页：12 张光伏导电浆料送样单横跨 PERC / TOPCon / HJT，先出定制工作包再让 AI 搭工作台；含可下载 CSV、字段字典与状态流转、两段可复制提示词、8 条验收用例，以及可导入导出、可改状态与跟进日期的演示工作台。",
+  "url": "https://xjtulijiagui-max.github.io/lijiagui/material-workbench/",
+  "tags": [
+    "聚和",
+    "光伏",
+    "导电浆料",
+    "银浆",
+    "送样认证",
+    "工作台",
+    "工作包",
+    "IPO",
+    "字段字典",
+    "状态流转",
+    "WorkBuddy",
+    "提示词",
+    "验收用例",
+    "课堂场景",
+    "制造"
+  ],
+  "type": "课堂场景",
+  "client": "聚和",
+  "status": "正常",
+  "featured": false,
+  "updated": "2026-11-06",
+  "source": "由泰康之家居民服务跟进工作台场景改写的同类教学页，业务对象换为光伏导电浆料客户送样认证；数据为教学虚构",
+  "order": 275
+}
