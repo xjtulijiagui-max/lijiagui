@@ -3,7 +3,7 @@
   "title": "聚和材料｜PRD + Spec 标准 → Workspace → 工作台 · 两步练习",
   "shortTitle": "聚和 Workspace 两步练习",
   "category": "制造能源与工业",
-  "description": "聚和材料 HJT 研发场景的两步练习页：第一步把 IPO 定义书与《Spec Workspace 初始化标准 v2.0》一起交给 AI，生成候选 Workspace 输入包（十份规格、规则状态机、验收、缺口分级）；第二步选中专家「工作台搭建师」，把规格变成可点的工作台。附 IPO Word、标准包 ZIP 下载与两段可复制提示词、10 条验收清单。",
+  "description": "聚和材料 HJT 研发场景的两步练习页：第一步把 IPO 定义书与《Spec Workspace 初始化标准 v2.0》一起交给 AI，生成候选 Workspace 输入包（十份规格、规则状态机、验收、缺口分级）；第二步选中专家「工作台搭建师」，把规格变成可点的工作台。附 IPO Word、标准包 ZIP 下载与两段可复制提示词。",
   "url": "https://xjtulijiagui-max.github.io/lijiagui/juhe-spec/",
   "path": "juhe-spec/",
   "tags": [
