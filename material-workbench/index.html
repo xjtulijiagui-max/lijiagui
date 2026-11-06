@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>聚和材料 · 客户送样认证跟进工作台｜WorkBuddy 场景课</title>
+<meta name="description" content="聚和材料场景课：12 张光伏导电浆料送样单，先出定制工作包再让 AI 搭工作台；含可下载 CSV、两段可复制提示词、8 条验收用例与演示工作台。">
+<style>
+:root{
+  --ink:#152232;--ink2:#2c3e54;--muted:#5f7085;--line:#e3e8ef;--bg:#f5f7fa;
+  --navy:#0b2743;--navy2:#12395c;--copper:#b0722f;--copper-dk:#8d5520;--tint:#fdf6ee;
+  --pass:#1a6b4a;--warn:#8a5b00;--warn-bg:#fff8e8;--warn-line:#f0dcae;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.78 "Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#8d5520;text-decoration:none;border-bottom:1px solid rgba(176,114,47,.32)}
+a:hover{border-bottom-color:var(--copper)}
+h1,h2,h3,h4{margin:0}
+p{margin:10px 0}
+ul,ol{margin:10px 0 10px 4px;padding-left:20px}
+li{margin:6px 0}
+
+.topbar{position:sticky;top:0;z-index:40;background:var(--navy);border-bottom:2px solid var(--copper)}
+.topbar .in{max-width:1060px;margin:auto;padding:0 22px;min-height:54px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:9px;color:#fff;font-weight:700;font-size:14.5px;border:0}
+.brand .mark{width:23px;height:23px;border-radius:6px;background:linear-gradient(135deg,var(--copper),#d99a5a);
+  display:grid;place-items:center;font-size:12px;color:#fff;font-weight:800}
+.brand em{font-style:normal;color:#f0b27a}
+.topbar .gap{flex:1}
+.topbar .nv{color:#b7c8db;border:0;font-size:13.5px;padding:5px 9px;border-radius:6px;white-space:nowrap}
+.topbar .nv:hover{background:#173a5c;color:#fff}
+.topbar .nv.on{background:var(--copper);color:#fff}
+
+.hero{background:var(--navy);color:#fff;padding:44px 0 38px;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-130px;top:-130px;width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(176,114,47,.45),rgba(176,114,47,0) 68%)}
+.hero .in{max-width:1060px;margin:auto;padding:0 22px;position:relative;z-index:2}
+.kick{font-size:12.5px;letter-spacing:1.9px;color:#e6b183;margin-bottom:12px}
+.hero h1{font-size:clamp(23px,3vw,35px);line-height:1.36;font-weight:800;max-width:880px;text-wrap:balance}
+.hero .lead{font-size:16.5px;line-height:1.8;color:#c6d5e4;max-width:840px;margin:14px 0 18px}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tags i{font-style:normal;font-size:12.5px;color:#f2ddc7;border:1px solid #4c6b88;border-radius:20px;padding:4px 12px;background:rgba(255,255,255,.04)}
+
+main{max-width:1060px;margin:auto;padding:28px 22px 8px}
+section{background:#fff;border:1px solid var(--line);border-radius:14px;padding:28px 30px;margin-bottom:20px;
+  box-shadow:0 1px 2px rgba(16,24,40,.04)}
+h2{font-size:22px;font-weight:800;display:flex;align-items:center;gap:10px;margin-bottom:6px}
+h2 .n{flex:0 0 30px;height:30px;line-height:30px;text-align:center;background:var(--copper);color:#fff;border-radius:8px;font-size:15px}
+.sub{color:var(--muted);font-size:14px;margin:0 0 16px}
+h3{font-size:17px;color:#22344a;margin:24px 0 8px}
+.str{color:var(--copper-dk);font-weight:700}
+
+dl.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:18px 0 0}
+dl.meta div{background:var(--tint);border:1px solid #f0e2cf;border-radius:10px;padding:12px 14px}
+dl.meta dt{font-size:12.5px;color:#8a6030;letter-spacing:.4px;margin-bottom:3px}
+dl.meta dd{margin:0;font-size:15.5px;font-weight:700;color:#5a3a12}
+
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:14.2px}
+th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:#f1f5fa;font-weight:700;color:#2b3a51;white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:#fbfcfe}
+.scroll table th,.scroll table td{white-space:nowrap}
+.scroll table.wrapok th,.scroll table.wrapok td{white-space:normal}
+.scroll table.wrapok td:last-child{min-width:220px}
+
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:16px 0}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 20px;border-top:3px solid var(--copper)}
+.card h4{margin:0 0 8px;font-size:16px}
+.card p{font-size:14.5px;color:#465468;margin:0}
+
+.prompt{background:#fbf8f4;border:1px solid #efe2d2;border-left:4px solid var(--copper);border-radius:0 10px 10px 0;
+  padding:18px 20px;margin:12px 0 0;white-space:pre-wrap;overflow-wrap:anywhere;font:15px/1.85 "Microsoft YaHei",sans-serif;color:#20293a}
+.btnrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:12px}
+button.copy{border:0;border-radius:8px;background:var(--copper);color:#fff;padding:10px 18px;
+  font:15px/1 "Microsoft YaHei",sans-serif;cursor:pointer}
+button.copy:hover{background:var(--copper-dk)}
+button.copy.done{background:var(--pass)}
+.btn{display:inline-block;border-radius:8px;background:var(--navy);color:#fff;padding:11px 18px;
+  font-size:15px;border:1px solid var(--navy)}
+.btn:hover{background:var(--navy2)}
+.btn.ghost{background:#fff;color:#23364d;border:1px solid #c8d2df}
+.dl{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 4px}
+.dl a{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid #cdd7e3;border-radius:9px;
+  padding:10px 15px;font-size:14.5px;color:#22314a}
+.dl a:hover{border-color:var(--copper);color:var(--copper-dk)}
+
+.warn{background:var(--warn-bg);border:1px solid var(--warn-line);border-left:4px solid #d99a1e;
+  border-radius:0 10px 10px 0;padding:14px 18px;margin:16px 0;font-size:14.6px}
+.warn b{color:var(--warn)}
+.need{background:#f4f7fb;border:1px solid #dde6f0;border-radius:10px;padding:14px 18px;margin:16px 0;font-size:14.6px}
+.need b{color:#1d4e7c}
+
+details{border:1px solid var(--line);border-radius:10px;background:#fcfcfd;margin:14px 0 0}
+details summary{cursor:pointer;padding:13px 18px;font-weight:700;color:#243247;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸";color:var(--copper);margin-right:9px;display:inline-block;transition:.15s}
+details[open] summary:before{transform:rotate(90deg)}
+details .body{padding:2px 20px 18px;border-top:1px solid var(--line)}
+
+footer{max-width:1060px;margin:6px auto 56px;padding:0 22px;color:var(--muted);font-size:13.2px;line-height:1.9}
+footer .fl{border-top:1px solid var(--line);padding-top:16px;display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between}
+.pn{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 24px}
+.pn a{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 17px;font-size:14.4px;color:#22314a}
+.pn a:hover{border-color:var(--copper)}
+
+@media(max-width:700px){
+  section{padding:20px 16px}
+  main{padding:20px 12px 6px}
+  footer{padding:0 12px}
+  .grid2{grid-template-columns:1fr}
+  h2{font-size:20px}
+}
+@media print{.topbar{display:none}}
+</style>
+</head>
+<body id="top">
+
+<div class="topbar"><div class="in">
+  <a class="brand" href="#top"><span class="mark">聚</span><span>聚和材料 · <em>送样认证工作台</em></span></a>
+  <span class="gap"></span>
+  <a class="nv" href="#s1">背景</a>
+  <a class="nv" href="#s2">素材</a>
+  <a class="nv" href="#s3">提示词</a>
+  <a class="nv" href="#s4">验收</a>
+  <a class="nv on" href="demo-workbench.html" target="_blank" rel="noopener">演示工作台</a>
+</div></div>
+
+<div class="hero"><div class="in">
+  <div class="kick">场景四　工作台　·　光伏导电浆料</div>
+  <h1>聚和材料：客户送样认证跟进工作台，先把工作包讲清，再让 AI 动手搭</h1>
+  <p class="lead">12 张送样单横跨 PERC、TOPCon、HJT 三条技术路线，状态在"待技术确认—已送样待测—已导入量产—已终止"之间流转。技术服务工程师每天的动作只有四个：看今天跟谁、推阶段、记下次跟进、导出台账。顺序反了，AI 交给你的就是一个漂亮的空表格。</p>
+  <div class="tags"><i>定制工作包</i><i>状态流转</i><i>本地存储边界</i><i>8 条验收</i></div>
+</div></div>
+
+<main>
+
+<section id="s1">
+  <h2><span class="n">1</span>任务背景与目标</h2>
+  <p class="sub">光伏导电浆料这一行，卖出去的不是订单，是"送样—测试—导入"的一段长认证。</p>
+  <ul>
+    <li>客户是电池片厂。一条产线换浆料，先要小批送样、印刷适配、效率与可靠性验证，再谈小批试产与量产导入。周期按周到月算，跟丢一张送样单，可能就是一条产线的份额。</li>
+    <li>聚和材料的产品线按技术路线铺开：PERC 的分步/单次印刷方案，TOPCon 的正面银铝浆与背面 Poly 浆，HJT 的低温副栅浆料，主栅银浆跨路线通用。一线台账天然是多路线、多客户、多阶段。</li>
+    <li>这类需求不要直接说"给我做个系统"——AI 会给你一个漂亮的空壳。正确顺序是：<span class="str">先出定制工作包，确认后再搭建</span>。工作包出得糙，后面每一步都在替它还债。</li>
+    <li>数据红线：只用客户代号，不收集真实客户名称、配方体系、银粉供应商、单价、实测效率与拉力数据；不生成效率结论、工艺判定或"保证通过客户验证"类承诺。</li>
+  </ul>
+  <dl class="meta">
+    <div><dt>本场景性质</dt><dd>需求转译 + 轻量工作台</dd></div>
+    <div><dt>输入</dt><dd>12 张送样单 CSV</dd></div>
+    <div><dt>输出</dt><dd>可操作工作台 + 导出台账</dd></div>
+    <div><dt>建议时长</dt><dd>30 分钟</dd></div>
+  </dl>
+
+  <h3>两步走，各自要拿到什么</h3>
+  <div class="scroll"><table class="wrapok">
+    <thead><tr><th style="width:110px">阶段</th><th>你要拿到的东西</th><th style="width:280px">出现这些，就退回重来</th></tr></thead>
+    <tbody>
+      <tr><td><b>第一步</b><br>定制工作包</td><td>业务目标、IPO（输入—处理—输出）、字段字典、状态流转、页面结构、权限与存储方案、验收用例七节齐全。</td><td class="sub" style="margin:0">缺口没列成"待确认"；把权限、审计、多人共享当成默认具备；把"提升效率"当成业务目标。</td></tr>
+      <tr><td><b>第二步</b><br>搭建工作台</td><td>能导入、筛选、改状态、改跟进日期、保存、刷新保留、统计同步、导出 CSV 的单页 HTML。</td><td class="sub" style="margin:0">刷新后数据丢失；统计和明细对不上；把公开只读链接说成多人共用的数据库。</td></tr>
+    </tbody>
+  </table></div>
+
+  <p style="margin-top:16px"><a class="btn" href="demo-workbench.html" target="_blank" rel="noopener">先打开演示工作台，看最终形态 →</a></p>
+
+  <div class="warn"><b>演示版的边界，课上必须讲清：</b>数据只存在当前浏览器本地存储，不上传、不跨设备同步、不并发、不保留操作审计。换台电脑、清一次缓存，台账就没了。真正多人用要另配账户、角色权限、服务端存储、操作留痕与备份——不能让客户误以为"网页能打开就等于系统上线"。</div>
+</section>
+
+<section id="s2">
+  <h2><span class="n">2</span>数据素材（可下载）</h2>
+  <div class="dl">
+    <a href="files/material_sample_tracking.csv" download><b>↓</b> material_sample_tracking.csv</a>
+    <a href="demo-workbench.html" target="_blank" rel="noopener"><b>↗</b> 演示工作台</a>
+  </div>
+  <p class="sub" style="margin-top:10px">12 张送样单、5 类样品、3 位技术服务负责人、4 种状态。客户代号为教学虚构，样品类型取自光伏导电浆料的公开产品分类。</p>
+
+  <h3>送样跟进台账 material_sample_tracking.csv（12 张）</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>送样单号</th><th>客户代号</th><th>应用工艺</th><th>样品类型</th><th>负责人</th><th>状态</th><th>下次跟进</th><th>需求来源</th></tr></thead>
+    <tbody>
+      <tr><td>S001</td><td>客户A</td><td>TOPCon</td><td>正面银铝浆</td><td>服务A</td><td>已送样待测</td><td>2026-10-30</td><td>存量客户线体改造</td></tr>
+      <tr><td>S002</td><td>客户B</td><td>PERC</td><td>PERC副栅浆料</td><td>服务B</td><td>待技术确认</td><td>2026-10-29</td><td>客户主动询价</td></tr>
+      <tr><td>S003</td><td>客户C</td><td>HJT</td><td>低温副栅浆料</td><td>服务C</td><td>已导入量产</td><td>2026-11-05</td><td>老客户复购</td></tr>
+      <tr><td>S004</td><td>客户D</td><td>TOPCon</td><td>主栅银浆</td><td>服务A</td><td>已导入量产</td><td>2026-11-02</td><td>存量客户扩线</td></tr>
+      <tr><td>S005</td><td>客户E</td><td>TOPCon</td><td>正面银铝浆</td><td>服务B</td><td>待技术确认</td><td>2026-10-31</td><td>行业展会</td></tr>
+      <tr><td>S006</td><td>客户F</td><td>TOPCon</td><td>背面Poly浆</td><td>服务C</td><td>已送样待测</td><td>2026-11-03</td><td>新客户开发</td></tr>
+      <tr><td>S007</td><td>客户G</td><td>TOPCon</td><td>主栅银浆</td><td>服务A</td><td>待技术确认</td><td>2026-10-28</td><td>客户工艺变更</td></tr>
+      <tr><td>S008</td><td>客户H</td><td>PERC</td><td>PERC副栅浆料</td><td>服务B</td><td>已终止</td><td>2026-11-08</td><td>客户主动询价</td></tr>
+      <tr><td>S009</td><td>客户I</td><td>HJT</td><td>低温副栅浆料</td><td>服务C</td><td>待技术确认</td><td>2026-10-30</td><td>行业展会</td></tr>
+      <tr><td>S010</td><td>客户J</td><td>TOPCon</td><td>正面银铝浆</td><td>服务A</td><td>已送样待测</td><td>2026-11-01</td><td>存量客户线体改造</td></tr>
+      <tr><td>S011</td><td>客户K</td><td>TOPCon</td><td>主栅银浆</td><td>服务B</td><td>已导入量产</td><td>2026-11-06</td><td>新客户开发</td></tr>
+      <tr><td>S012</td><td>客户L</td><td>TOPCon</td><td>背面Poly浆</td><td>服务C</td><td>已终止</td><td>2026-11-10</td><td>客户主动询价</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>字段字典</h3>
+  <div class="scroll"><table class="wrapok">
+    <thead><tr><th>字段</th><th>含义</th><th>取值</th><th>缺失时</th></tr></thead>
+    <tbody>
+      <tr><td>sample_id</td><td>送样单号，业务主键</td><td>S001 起的自增编号</td><td>不允许缺失</td></tr>
+      <tr><td>customer_code</td><td>客户代号，替代真实客户名</td><td>客户A—客户L</td><td>不允许缺失</td></tr>
+      <tr><td>cell_route</td><td>客户当前产线的应用工艺</td><td>PERC / TOPCon / HJT</td><td>显示"待确认"</td></tr>
+      <tr><td>sample_type</td><td>本次送样的浆料品类</td><td>正面银铝浆 / 背面Poly浆 / 主栅银浆 / 低温副栅浆料 / PERC副栅浆料</td><td>显示"待确认"</td></tr>
+      <tr><td>owner</td><td>技术服务负责人</td><td>服务A / 服务B / 服务C</td><td>显示"未分派"</td></tr>
+      <tr><td>status</td><td>认证阶段</td><td>待技术确认 / 已送样待测 / 已导入量产 / 已终止</td><td>不允许缺失</td></tr>
+      <tr><td>next_follow</td><td>下次跟进日期</td><td>YYYY-MM-DD</td><td>显示"未排期"</td></tr>
+      <tr><td>source</td><td>需求来源</td><td>老客户复购 / 存量客户扩线 / 存量客户线体改造 / 客户主动询价 / 行业展会 / 新客户开发 / 客户工艺变更</td><td>显示"未标注"</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="grid2">
+    <div class="card"><h4>状态流转</h4>
+      <p>待技术确认 → 已送样待测 → 已导入量产。前两态可转"已终止"，终止要写原因分类（客户切换路线 / 测试不达标 / 项目延期）。已导入量产不回退，复购另建送样单并注明来源单号。</p></div>
+    <div class="card"><h4>当前分布</h4>
+      <p>待技术确认 4、已送样待测 3、已导入量产 3、已终止 2。待推进（待技术确认 + 已送样待测）共 <b>7</b> 张，这就是技术服务的真实工作量。</p></div>
+  </div>
+
+  <div class="need"><b>给学员的提醒：</b>表里没有效率、拉力、银耗这些实测值，是故意的。工作台管的是"谁在什么时候推进到哪一步"，实测数据留在研发与品质系统里。把两者混在一张表上，权限和数据口径都会出事。</div>
+</section>
+
+<section id="s3">
+  <h2><span class="n">3</span>两段提示词（可直接复制）</h2>
+  <p class="sub">先 A 后 B，中间不许跳。A 交付工作包，B 才允许写代码。</p>
+
+  <h3>提示词 A：让 AI 先出定制工作包</h3>
+  <div class="btnrow"><button class="copy" data-label="复制提示词 A" data-target="pA">复制提示词 A</button></div>
+<pre class="prompt" id="pA">你是光伏导电浆料企业的技术服务需求顾问。请读取我上传的 material_sample_tracking.csv（12 张客户送样单），先不要写代码，先出一份《聚和材料 · 客户送样认证跟进工作台 · 定制工作包》。
+
+工作包必须包含以下七节，缺一节就算未完成：
+1）业务目标：用一句话说清这个工作台替技术服务工程师解决了哪件具体的事，不要写成"提升协同效率"这类空话。
+2）IPO：输入是什么、处理动作有哪些、输出是什么，各列 3-5 条。
+3）字段字典：逐字段给出含义、取值范围、是否必填、缺失时怎么显示。状态字段必须列全取值：待技术确认、已送样待测、已导入量产、已终止。
+4）状态流转：画出允许的流转路径，明确哪些回退是禁止的、终止要记什么原因，回退或终止时怎么留痕。
+5）页面结构：顶部统计、筛选区、列表区、编辑入口、导出入口分别放什么，手机端怎么折叠。
+6）权限与存储：说明课堂演示版与正式版的差别。演示版为单浏览器本地存储，不跨设备、不并发编辑、没有操作审计；正式版需要账户、角色权限、服务端存储、操作留痕与备份。不要把两者混为一谈。
+7）验收用例：至少 8 条，每条都要写成"做什么—期望看到什么"的可执行动作，覆盖导入、筛选、改状态、刷新保留、统计同步、导出。
+
+约束：
+- 只用 customer_code 客户代号，不得收集或建议收集真实客户名称、配方体系、银粉供应商、单价、实测效率与拉力数据；
+- 不得输出效率结论、工艺判定、"保证通过客户验证"或导入承诺；
+- 信息不足的地方统一列进"待确认清单"，写明需要向哪个岗位确认（研发 / 工艺 / 品质 / 销售），不要自行假设；
+- 使用者是技术服务工程师，不是管理者，页面默认视图应面向"我今天要跟谁"。
+
+请先只交付这份工作包，等我确认后再进入搭建阶段。工作包里不要夹带代码。</pre>
+
+  <h3>提示词 B：确认之后，再让 AI 搭建</h3>
+  <div class="btnrow"><button class="copy" data-label="复制提示词 B" data-target="pB">复制提示词 B</button></div>
+<pre class="prompt" id="pB">按刚才确认的《定制工作包》搭建这个工作台，输出一个可以直接双击打开的单页 HTML 文件。
+
+必须实现：
+1）导入 material_sample_tracking.csv：支持文件选择读取，同时内置一份与 CSV 完全一致的 12 张送样单，保证断网也能演示。
+2）筛选：样品类型、负责人、状态三个下拉 + 一个关键词搜索（送样单号 / 客户代号 / 需求来源），可叠加、可一键清空；筛选后显示当前结果条数。
+3）统计卡：当前结果、待技术确认、已送样待测、已导入量产、已终止，随筛选条件同步变化。
+4）编辑：每条送样单可以改状态（四选一）和下次跟进日期，改完立即生效。
+5）持久化：保存到浏览器 localStorage，刷新页面后改动仍在；提供"恢复演示数据"按钮。
+6）导出：按当前筛选结果导出 CSV，文件名带日期，带 BOM，用 Excel 打开中文不乱码。
+7）边界提示：页面固定显示一行说明——数据仅保存在本机浏览器，不上传、不跨设备同步、无操作审计。
+
+要求：
+- 只用 HTML + CSS + 原生 JavaScript，不引用任何外部 CDN，离线可用；
+- 中文界面，表头与字段名和 CSV 保持一致；
+- 手机端可正常查看与操作，表格可横向滚动；
+- 不得伪造功能：没有服务端就不要显示"同步成功""已保存到云端"。
+
+完成后请逐条实测并回报这 8 条验收用例的结果：导入 12 张、样品类型筛选"低温副栅浆料"2 张、负责人"服务C"4 张、状态"待技术确认"4 张、S002 改状态后统计同步、刷新后保留、清空筛选合计仍为 12、导出 CSV 12 行且 S002 状态正确。哪条没通过就直说，不要只写"已完成"。</pre>
+</section>
+
+<section id="s4">
+  <h2><span class="n">4</span>验收用例：先自己跑，再对答案</h2>
+  <details open><summary>展开：按这个结果逐项核对，对不上就不是交付</summary><div class="body">
+    <ol>
+      <li>导入 material_sample_tracking.csv，表格显示 12 张，统计卡"当前结果"为 12。</li>
+      <li>样品类型筛选"低温副栅浆料"，结果 2 张（S003、S009）。</li>
+      <li>负责人筛选"服务C"，结果 4 张（S003、S006、S009、S012）。</li>
+      <li>状态筛选"待技术确认"，结果 4 张（S002、S005、S007、S009）。</li>
+      <li>把 S002 状态改为"已送样待测"：待技术确认 4→3，已送样待测 3→4。</li>
+      <li>刷新页面，S002 仍为"已送样待测"。</li>
+      <li>清空筛选后统计卡合计仍为 12，不出现重复计数。</li>
+      <li>导出 CSV，用 Excel 重开，行数 12 且 S002 状态为"已送样待测"，中文不乱码。</li>
+    </ol>
+    <p><b>一句话结论：</b>能打开不等于能用。验收的标准是"改一条、刷一次、导一遍"，三件事都对上，才算交付。</p>
+    <p style="color:#5f7085;font-size:14.5px">附加追问（留给学员自己想）：如果两位工程师同时改同一张送样单，这个演示版会发生什么？正式版该怎么避免？——答不上来，说明第 6 节"权限与存储"没读进去。</p>
+  </div></details>
+  <p class="sub" style="margin-top:16px">课堂节奏：学员先写一段"我要什么"（5 分钟）→ 现场生成工作包并挑毛病（10 分钟）→ 搭建并跑前 5 条验收（12 分钟）→ 讲存储与权限边界（3 分钟）。</p>
+</section>
+
+<div class="pn">
+  <a href="../material-spec/">← 聚和材料：HJT 银包铜浆料研发复盘</a>
+  <a href="../list/">资源导航 →</a>
+</div>
+
+</main>
+
+<footer>
+  <div class="fl">
+    <div>讲师：李家贵　·　聚和材料 WorkBuddy 实战场景课（场景四 · 工作台）</div>
+    <div><a href="../list/">资源导航</a>　|　<a href="../material-spec/">研发复盘练习</a>　|　<a href="demo-workbench.html">演示工作台</a></div>
+  </div>
+  <div style="margin-top:12px">本页 12 张送样单、客户代号、负责人与跟进日期均为教学虚构，不代表聚和材料真实客户、配方、工艺参数或经营数据。样品类型取自光伏导电浆料的公开产品分类，仅用于课堂辨识场景。</div>
+</footer>
+
+<script>
+(function(){
+  function toast(msg){
+    var t=document.createElement('div');
+    t.textContent=msg;
+    t.style.cssText='position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:#0b2743;color:#fff;'+
+      'padding:10px 18px;border-radius:8px;font-size:14px;z-index:99;box-shadow:0 6px 18px rgba(0,0,0,.22)';
+    document.body.appendChild(t);
+    setTimeout(function(){ t.style.transition='opacity .3s'; t.style.opacity='0'; },1500);
+    setTimeout(function(){ t.remove(); },1850);
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('button.copy'),function(btn){
+    btn.addEventListener('click',function(){
+      var el=document.getElementById(btn.dataset.target);
+      if(!el) return;
+      var text=el.textContent, label=btn.dataset.label||'复制';
+      var done=function(){ btn.textContent='已复制全文'; btn.classList.add('done'); toast('已复制，可直接粘贴给 AI');
+        setTimeout(function(){ btn.textContent=label; btn.classList.remove('done'); },2200); };
+      var fallback=function(){
+        var r=document.createRange(); r.selectNodeContents(el);
+        var s=window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        btn.textContent='复制受限，已选中，请按 Ctrl+C';
+        toast('浏览器未授权剪贴板，已为你选中全文');
+        setTimeout(function(){ btn.textContent=label; },3200);
+      };
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done).catch(fallback);
+      }else{
+        try{ if(document.execCommand('copy')){ done(); } else { fallback(); } }catch(e){ fallback(); }
+      }
+    });
+  });
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click',function(e){
+      var id=this.getAttribute('href').slice(1);
+      var el=id?document.getElementById(id):document.body;
+      if(!el) return;
+      e.preventDefault();
+      var y=el.getBoundingClientRect().top+window.pageYOffset-62;
+      window.scrollTo({top:y<0?0:y,behavior:'smooth'});
+    });
+  });
+})();
+</script>
+</body>
+</html>
