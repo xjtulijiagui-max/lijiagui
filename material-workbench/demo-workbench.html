@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>聚和材料 · 客户送样认证跟进演示工作台</title>
+<meta name="description" content="聚和材料客户送样认证跟进演示工作台：12 张教学模拟送样单，支持筛选、改状态、改跟进日期、本地保存与导出 CSV。">
+<style>
+:root{--ink:#152232;--muted:#5f7085;--line:#e3e8ef;--navy:#0b2743;--navy2:#12395c;--copper:#b0722f;--copper-dk:#8d5520}
+*{box-sizing:border-box}
+body{margin:0;background:#f5f7fa;color:var(--ink);font:15px/1.7 "Microsoft YaHei","PingFang SC",sans-serif}
+header{background:var(--navy);color:#fff;padding:20px 24px;border-bottom:3px solid var(--copper)}
+header .in{max-width:1280px;margin:auto;display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap}
+header h1{margin:0;font-size:19px;font-weight:800}
+header p{margin:6px 0 0;font-size:12.8px;color:#c3d3e4;line-height:1.7}
+header .back{margin-left:auto;color:#e8c9a6;font-size:13.5px;text-decoration:none;border-bottom:1px solid rgba(232,201,166,.4);white-space:nowrap}
+.wrap{max-width:1280px;margin:auto;padding:20px 20px 60px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:10px;margin-bottom:14px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:10px;padding:13px 15px}
+.kpi b{display:block;font-size:24px;color:var(--copper-dk);line-height:1.2;font-variant-numeric:tabular-nums}
+.kpi span{font-size:12.5px;color:var(--muted)}
+.bar{background:#fff;border:1px solid var(--line);border-radius:10px;padding:13px;display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-bottom:13px}
+select,input{font:14px inherit;padding:8px 10px;border:1px solid #c9d3e0;border-radius:7px;background:#fff;max-width:100%;color:#22314a}
+.bar select{flex:1 1 138px;min-width:0}
+input[type=search]{flex:1 1 190px;min-width:0}
+button,.fake-file{font:14px "Microsoft YaHei",sans-serif;border:1px solid #c9d3e0;background:#fff;border-radius:7px;padding:9px 14px;cursor:pointer;color:#22314a;white-space:nowrap}
+button.pri{background:var(--copper);border-color:var(--copper);color:#fff}
+button.pri:hover{background:var(--copper-dk)}
+button:hover,.fake-file:hover{border-color:#9fb0c4}
+.tb{background:#fff;border:1px solid var(--line);border-radius:10px;overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13.8px;min-width:1000px}
+th,td{padding:9px 11px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap;vertical-align:middle}
+th{background:#eff4fa;font-weight:700;color:#2b3a51}
+tr:last-child td{border-bottom:0}
+tbody tr:hover{background:#fafcfe}
+.tag{display:inline-block;padding:2px 9px;border-radius:20px;font-size:12.2px;white-space:nowrap}
+.t1{background:#fff3e0;color:#8a5300}.t2{background:#e8f0ff;color:#1b4b96}
+.t3{background:#e7f6ee;color:#15613f}.t4{background:#f1f2f4;color:#5c6b80}
+td select,td input[type=date]{padding:6px 8px;font-size:13.2px}
+.note{margin-top:13px;font-size:12.8px;color:#8a5b00;background:#fff8e8;border:1px solid #f0dcae;border-radius:8px;padding:10px 13px;line-height:1.7}
+footer{margin-top:16px;font-size:12.4px;color:var(--muted);line-height:1.8}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#0b2743;color:#fff;padding:10px 18px;
+  border-radius:8px;font-size:13.6px;z-index:9;opacity:0;transition:opacity .25s;pointer-events:none;max-width:86vw}
+#toast.on{opacity:1}
+@media(max-width:640px){
+  header{padding:16px 14px}
+  header .in{flex-direction:column;gap:8px}
+  header .back{margin-left:0}
+  .wrap{padding:14px 10px 48px}
+  header h1{font-size:16.5px}
+  .bar{padding:10px;gap:8px}
+  .bar select{flex:1 1 44%}
+  input[type=search]{flex:1 1 100%}
+  .bar button,.fake-file{flex:1 1 auto;text-align:center}
+}
+</style>
+</head>
+<body>
+<header><div class="in">
+  <div>
+    <h1>聚和材料 · 客户送样认证跟进演示工作台</h1>
+    <p>课堂演示版｜12 张教学模拟送样单｜数据仅保存在本机浏览器，不上传、不跨设备同步、无操作审计</p>
+  </div>
+  <a class="back" href="index.html">← 返回场景说明</a>
+</div></header>
+
+<div class="wrap">
+  <div class="cards">
+    <div class="kpi"><b id="k0">0</b><span>当前结果</span></div>
+    <div class="kpi"><b id="k1">0</b><span>待技术确认</span></div>
+    <div class="kpi"><b id="k2">0</b><span>已送样待测</span></div>
+    <div class="kpi"><b id="k3">0</b><span>已导入量产</span></div>
+    <div class="kpi"><b id="k4">0</b><span>已终止</span></div>
+  </div>
+
+  <div class="bar">
+    <select id="fType"><option value="">全部样品类型</option></select>
+    <select id="fOwner"><option value="">全部负责人</option></select>
+    <select id="fStatus"><option value="">全部状态</option></select>
+    <input type="search" id="kw" placeholder="搜索送样单号 / 客户代号 / 需求来源">
+    <button onclick="clearF()">清空筛选</button>
+    <label class="fake-file" for="fileIn">导入 CSV</label>
+    <input id="fileIn" type="file" accept=".csv,text/csv" style="display:none">
+    <button class="pri" onclick="exportCSV()">导出 CSV</button>
+    <button onclick="reset()">恢复演示数据</button>
+  </div>
+
+  <div class="tb">
+    <table>
+      <thead><tr><th>送样单号</th><th>客户代号</th><th>应用工艺</th><th>样品类型</th><th>负责人</th><th>状态</th><th>下次跟进</th><th>需求来源</th><th>改状态</th></tr></thead>
+      <tbody id="tb"></tbody>
+    </table>
+  </div>
+
+  <div class="note">演示版边界：数据存于浏览器 localStorage。换浏览器、换设备、清理缓存后数据不会跟随；两人同时改同一张单会互相覆盖；没有任何操作留痕。正式使用需另配账户、角色权限、服务端存储与审计。</div>
+  <footer>聚和材料 WorkBuddy 实战场景课 · 场景四配套演示　|　讲师：李家贵　|　全部数据为教学虚构</footer>
+</div>
+<div id="toast"></div>
+
+<script>
+var COLS=['sample_id','customer_code','cell_route','sample_type','owner','status','next_follow','source'];
+var STATUS=['待技术确认','已送样待测','已导入量产','已终止'];
+var SEED=[
+ {sample_id:'S001',customer_code:'客户A',cell_route:'TOPCon',sample_type:'正面银铝浆',owner:'服务A',status:'已送样待测',next_follow:'2026-10-30',source:'存量客户线体改造'},
+ {sample_id:'S002',customer_code:'客户B',cell_route:'PERC',sample_type:'PERC副栅浆料',owner:'服务B',status:'待技术确认',next_follow:'2026-10-29',source:'客户主动询价'},
+ {sample_id:'S003',customer_code:'客户C',cell_route:'HJT',sample_type:'低温副栅浆料',owner:'服务C',status:'已导入量产',next_follow:'2026-11-05',source:'老客户复购'},
+ {sample_id:'S004',customer_code:'客户D',cell_route:'TOPCon',sample_type:'主栅银浆',owner:'服务A',status:'已导入量产',next_follow:'2026-11-02',source:'存量客户扩线'},
+ {sample_id:'S005',customer_code:'客户E',cell_route:'TOPCon',sample_type:'正面银铝浆',owner:'服务B',status:'待技术确认',next_follow:'2026-10-31',source:'行业展会'},
+ {sample_id:'S006',customer_code:'客户F',cell_route:'TOPCon',sample_type:'背面Poly浆',owner:'服务C',status:'已送样待测',next_follow:'2026-11-03',source:'新客户开发'},
+ {sample_id:'S007',customer_code:'客户G',cell_route:'TOPCon',sample_type:'主栅银浆',owner:'服务A',status:'待技术确认',next_follow:'2026-10-28',source:'客户工艺变更'},
+ {sample_id:'S008',customer_code:'客户H',cell_route:'PERC',sample_type:'PERC副栅浆料',owner:'服务B',status:'已终止',next_follow:'2026-11-08',source:'客户主动询价'},
+ {sample_id:'S009',customer_code:'客户I',cell_route:'HJT',sample_type:'低温副栅浆料',owner:'服务C',status:'待技术确认',next_follow:'2026-10-30',source:'行业展会'},
+ {sample_id:'S010',customer_code:'客户J',cell_route:'TOPCon',sample_type:'正面银铝浆',owner:'服务A',status:'已送样待测',next_follow:'2026-11-01',source:'存量客户线体改造'},
+ {sample_id:'S011',customer_code:'客户K',cell_route:'TOPCon',sample_type:'主栅银浆',owner:'服务B',status:'已导入量产',next_follow:'2026-11-06',source:'新客户开发'},
+ {sample_id:'S012',customer_code:'客户L',cell_route:'TOPCon',sample_type:'背面Poly浆',owner:'服务C',status:'已终止',next_follow:'2026-11-10',source:'客户主动询价'}
+];
+var KEY='juhe_sample_tracking_v1';
+var data=load();
+
+function load(){
+  try{
+    var raw=localStorage.getItem(KEY);
+    if(raw){
+      var a=JSON.parse(raw);
+      if(Array.isArray(a)&&a.length){ return a.map(function(r){var o={};COLS.forEach(function(k){o[k]=r[k]||''});return o}); }
+    }
+  }catch(e){}
+  return JSON.parse(JSON.stringify(SEED));
+}
+function save(){ try{ localStorage.setItem(KEY,JSON.stringify(data)) }catch(e){ toast('浏览器禁止本地存储，改动不会保留'); } }
+function toast(m){ var t=document.getElementById('toast'); t.textContent=m; t.classList.add('on'); clearTimeout(t._h); t._h=setTimeout(function(){t.classList.remove('on')},1900); }
+function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function tagOf(s){ var m={'待技术确认':'t1','已送样待测':'t2','已导入量产':'t3','已终止':'t4'}; return '<span class="tag '+(m[s]||'t4')+'">'+esc(s||'—')+'</span>'; }
+function opts(id,arr){
+  var el=document.getElementById(id);
+  el.querySelectorAll('option:not(:first-child)').forEach(function(o){o.remove()});
+  arr.forEach(function(v){ var o=document.createElement('option'); o.value=v; o.textContent=v; el.appendChild(o) });
+}
+function uniq(k){ var s=[]; data.forEach(function(r){ if(r[k]&&s.indexOf(r[k])<0) s.push(r[k]) }); return s; }
+
+function fillFilters(){
+  opts('fType',uniq('sample_type'));
+  opts('fOwner',uniq('owner'));
+  opts('fStatus',STATUS);
+}
+function shown(){
+  var t=document.getElementById('fType').value,o=document.getElementById('fOwner').value,
+      s=document.getElementById('fStatus').value,k=document.getElementById('kw').value.trim();
+  return data.filter(function(r){
+    if(t&&r.sample_type!==t) return false;
+    if(o&&r.owner!==o) return false;
+    if(s&&r.status!==s) return false;
+    if(k){ var hay=[r.sample_id,r.customer_code,r.source,r.sample_type].join(' '); if(hay.indexOf(k)<0) return false }
+    return true;
+  });
+}
+function render(){
+  var rows=shown(),tb=document.getElementById('tb');
+  tb.innerHTML=rows.map(function(r){
+    return '<tr>'
+      +'<td>'+esc(r.sample_id)+'</td>'
+      +'<td>'+esc(r.customer_code)+'</td>'
+      +'<td>'+esc(r.cell_route)+'</td>'
+      +'<td>'+esc(r.sample_type)+'</td>'
+      +'<td>'+esc(r.owner)+'</td>'
+      +'<td data-cell="status">'+tagOf(r.status)+'</td>'
+      +'<td><input type="date" data-id="'+esc(r.sample_id)+'" data-k="next_follow" value="'+esc(r.next_follow)+'"></td>'
+      +'<td>'+esc(r.source)+'</td>'
+      +'<td><select data-id="'+esc(r.sample_id)+'" data-k="status">'
+        +STATUS.map(function(x){return '<option'+(x===r.status?' selected':'')+'>'+x+'</option>'}).join('')
+      +'</select></td>'
+      +'</tr>';
+  }).join('');
+  if(!rows.length){ tb.innerHTML='<tr><td colspan="9" style="color:#5f7085;white-space:normal">当前筛选下没有送样单，请调整条件，或点"清空筛选"。</td></tr>' }
+
+  document.getElementById('k0').textContent=rows.length;
+  STATUS.forEach(function(s,i){
+    document.getElementById('k'+(i+1)).textContent=rows.filter(function(r){return r.status===s}).length;
+  });
+
+  tb.querySelectorAll('[data-k]').forEach(function(el){
+    el.addEventListener('change',function(){
+      var id=el.getAttribute('data-id'),k=el.getAttribute('data-k'),v=el.value;
+      data.forEach(function(r){ if(r.sample_id===id) r[k]=v });
+      save();
+      if(k==='next_follow'){ render(); toast('已保存：'+id+' 下次跟进 '+v); }
+      else { render(); toast('已保存：'+id+' → '+v); }
+    });
+  });
+}
+['fType','fOwner','fStatus','kw'].forEach(function(id){
+  var el=document.getElementById(id);
+  el.addEventListener('input',render);
+  el.addEventListener('change',render);
+});
+function clearF(){
+  ['fType','fOwner','fStatus'].forEach(function(i){document.getElementById(i).value=''});
+  document.getElementById('kw').value='';
+  render();
+}
+function reset(){
+  if(!confirm('恢复为 12 张演示送样单？本地修改将被清除。')) return;
+  data=JSON.parse(JSON.stringify(SEED)); save(); render(); toast('已恢复 12 张演示数据');
+}
+/* ---- 导入 CSV ---- */
+function parseCSV(text){
+  text=text.replace(/^\ufeff/,'');
+  var rows=[],row=[],cur='',q=false,i=0;
+  while(i<text.length){
+    var c=text[i];
+    if(q){
+      if(c==='"'){ if(text[i+1]==='"'){cur+='"';i+=2;continue} q=false;i++;continue }
+      cur+=c;i++;continue;
+    }
+    if(c==='"'){ q=true;i++;continue }
+    if(c===','){ row.push(cur);cur='';i++;continue }
+    if(c==='\r'){ i++;continue }
+    if(c==='\n'){ row.push(cur);rows.push(row);row=[];cur='';i++;continue }
+    cur+=c;i++;
+  }
+  if(cur.length||row.length){ row.push(cur); rows.push(row) }
+  return rows.filter(function(r){ return r.some(function(x){return String(x).trim()!==''}) });
+}
+document.getElementById('fileIn').addEventListener('change',function(e){
+  var f=e.target.files&&e.target.files[0]; if(!f) return;
+  var fr=new FileReader();
+  fr.onload=function(){
+    try{
+      var rows=parseCSV(String(fr.result||''));
+      if(rows.length<2) throw new Error('文件里没有数据行');
+      var head=rows[0].map(function(h){return String(h).trim()});
+      var need=['sample_id','status'];
+      need.forEach(function(k){ if(head.indexOf(k)<0) throw new Error('缺少必需列：'+k) });
+      var list=rows.slice(1).map(function(r){
+        var o={}; COLS.forEach(function(k){ var idx=head.indexOf(k); o[k]=idx>=0?String(r[idx]||'').trim():'' }); return o;
+      }).filter(function(o){ return o.sample_id });
+      if(!list.length) throw new Error('没有解析到送样单号');
+      data=list; save(); fillFilters(); render();
+      toast('已导入 '+list.length+' 张送样单');
+    }catch(err){ toast('导入失败：'+err.message) }
+    e.target.value='';
+  };
+  fr.readAsText(f,'utf-8');
+});
+/* ---- 导出 CSV ---- */
+function exportCSV(){
+  var rows=shown();
+  var lines=[COLS.join(',')];
+  rows.forEach(function(r){
+    lines.push(COLS.map(function(k){
+      var v=String(r[k]==null?'':r[k]);
+      return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;
+    }).join(','));
+  });
+  var blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/csv;charset=utf-8'});
+  var d=new Date();
+  var n=d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0');
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='聚和材料_送样跟进_'+n+'.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(a.href) },1500);
+  toast('已导出 '+rows.length+' 行（仅当前筛选结果）');
+}
+fillFilters(); render();
+</script>
+</body>
+</html>
