@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="人力资源 AI 场景训练操作台，包含可编辑提示词、原图截图位、模板下载和最终提交清单。">
+  <meta name="description" content="人力资源 AI 场景训练操作台，包含四个可编辑提示词与场景、评分模板下载。">
   <title>人力资源 AI 场景训练操作台</title>
   <style>
     :root {
@@ -230,15 +230,6 @@
       background: rgba(45,212,191,0.08);
     }
 
-    .submit-link {
-      margin-top: auto;
-      background: var(--accent-primary);
-      border-color: var(--accent-primary);
-      color: white;
-      width: 100%;
-      font-weight: 650;
-    }
-
     main {
       min-width: 0;
       display: grid;
@@ -433,9 +424,14 @@
       align-items: start;
     }
 
+    .grid-two > :only-child {
+      grid-column: 1 / -1;
+      max-width: 940px;
+      margin-inline: auto;
+    }
+
     .prompt-card,
     .note-card,
-    .shot-card,
     .download-card,
     .artifact-card {
       min-width: 0;
@@ -515,96 +511,6 @@
     .mark {
       color: var(--accent-green);
       font-weight: 700;
-    }
-
-    .shot-card {
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.018));
-    }
-
-    .shot-window {
-      margin-top: var(--space-4);
-      border: 1px solid var(--border-standard);
-      border-radius: var(--radius-card);
-      overflow: hidden;
-      background: #090a0b;
-    }
-
-    .screenshot-frame {
-      margin-top: var(--space-4);
-      border: 1px solid var(--border-standard);
-      border-radius: var(--radius-card);
-      overflow: hidden;
-      background: #090a0b;
-      aspect-ratio: 16 / 10;
-      display: grid;
-      place-items: center;
-      min-height: 260px;
-    }
-
-    .screenshot-frame img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
-      background: #090a0b;
-    }
-
-    .screenshot-placeholder {
-      width: calc(100% - 32px);
-      min-height: 180px;
-      border: 1px dashed rgba(247,185,85,0.42);
-      border-radius: var(--radius-card);
-      display: grid;
-      place-items: center;
-      padding: var(--space-5);
-      color: #ffe1a7;
-      text-align: center;
-      font-size: 14px;
-    }
-
-    .shot-toolbar {
-      height: 38px;
-      display: flex;
-      align-items: center;
-      gap: var(--space-2);
-      padding: 0 var(--space-3);
-      border-bottom: 1px solid var(--border-subtle);
-      background: rgba(255,255,255,0.035);
-    }
-
-    .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.24);
-    }
-
-    .shot-body {
-      padding: var(--space-4);
-      display: grid;
-      gap: var(--space-3);
-    }
-
-    .message {
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-control);
-      padding: var(--space-3);
-      background: rgba(255,255,255,0.025);
-      color: var(--text-secondary);
-      font-size: 13px;
-    }
-
-    .message.user {
-      border-color: rgba(113,112,255,0.40);
-      background: rgba(113,112,255,0.10);
-      color: #e6e8ff;
-    }
-
-    .message.file {
-      border-color: rgba(45,212,191,0.36);
-      color: #c7fff5;
-      background: rgba(45,212,191,0.08);
     }
 
     .download-grid {
@@ -748,10 +654,6 @@
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
 
-      .submit-link {
-        margin-top: 0;
-      }
-
       .hero,
       .grid-two {
         grid-template-columns: 1fr;
@@ -805,15 +707,6 @@
         width: fit-content;
       }
 
-      .screenshot-frame {
-        min-height: 0;
-      }
-
-      .screenshot-placeholder {
-        width: calc(100% - 24px);
-        min-height: 150px;
-      }
-
       .artifact-grid {
         grid-template-columns: 1fr;
       }
@@ -844,14 +737,12 @@
           <li><a class="nav-item" href="#ai-flow"><span class="nav-index">02</span><span>Step2 AI 介入</span></a></li>
           <li><a class="nav-item" href="#scene-lake"><span class="nav-index">03</span><span>Step3 场景湖</span></a></li>
           <li><a class="nav-item" href="#roi"><span class="nav-index">04</span><span>Step4 ROI 评分</span></a></li>
-          <li><a class="nav-item" href="#submit"><span class="nav-index">05</span><span>Step5 提交清单</span></a></li>
         </ol>
       </nav>
       <div class="note-card">
         <h3>修改提醒</h3>
         <p class="file-purpose">把 {变量} 换成本企业的信息和材料，再复制到工具。涉及员工或候选人的资料请先脱敏。</p>
       </div>
-      <a class="button-link submit-link" href="https://lijiagui.feishu.cn/share/base/form/shrcnT1NSzknu8leovmgkkebnwh" target="_blank" rel="noopener">打开飞书提交链接</a>
     </aside>
 
     <main>
@@ -859,7 +750,7 @@
         <div>
           <span class="kicker">人力资源实操练习</span>
           <h1 id="page-title">人力资源 AI<br><span class="title-line">训练操作台</span></h1>
-          <p class="lead">从招聘入职到在职管理、离职交接，把人力资源流程梳理清楚，再找 AI 能帮上忙的环节。按顺序完成流程图、场景湖清单和 ROI 评分，花括号里的内容换成本企业的实际资料。</p>
+          <p class="lead">从招聘入职到在职管理、离职交接，把人力资源流程梳理清楚，再找 AI 能帮上忙的环节。按顺序完成流程图、场景湖清单和 ROI 评分，花括号里的内容换成本企业的实际资料。四个步骤不限工具，用你手边能打开网页、能上传附件的 AI 工具即可。</p>
           <div class="hero-actions">
             <button class="primary" type="button" data-copy-all>复制四个提示词</button>
             <a class="button-link" href="#scene-lake">下载模板资料</a>
@@ -880,12 +771,12 @@
           <div class="flow-node">
             <span class="node-number">03</span>
             <span><span class="node-title">刷新场景湖清单</span><span class="node-meta">上传示例表格和讨论材料，输出 xls</span></span>
-            <span class="node-tool">小浣熊</span>
+            <span class="node-tool">任选 AI 工具</span>
           </div>
           <div class="flow-node">
             <span class="node-number">04</span>
             <span><span class="node-title">完成高 ROI 评分</span><span class="node-meta">同一对话追加评分模板，返回 xls</span></span>
-            <span class="node-tool">小浣熊</span>
+            <span class="node-tool">任选 AI 工具</span>
           </div>
         </div>
       </section>
@@ -926,14 +817,6 @@
             </ul>
             <div class="copy-status" aria-live="polite"></div>
           </article>
-          <aside class="shot-card">
-            <span class="badge amber">截图原图</span>
-            <h3>Step1 对话原图嵌入位</h3>
-            <p class="file-purpose">直接嵌入原始截图，不做 OCR 文本复刻。截图建议包含：提示词、Mermaid 代码、流程图预览或 SVG 下载动作。</p>
-            <div class="screenshot-frame" aria-label="Step1 原始截图嵌入位" data-screenshot-src="assets/step1-screenshot.png" data-screenshot-alt="Step1 流程生成对话原始截图">
-              <div class="screenshot-placeholder">请将 Step1 原始截图命名为 step1-screenshot.png，放入 scene/assets 后会自动显示在这里。</div>
-            </div>
-          </aside>
         </div>
       </section>
 
@@ -993,10 +876,10 @@
 
       <section class="section" id="scene-lake" aria-labelledby="scene-lake-title">
         <div class="section-head">
-          <h2 id="scene-lake-title">Step3：场景湖：用小浣熊输出 Excel 清单</h2>
-          <p>这一步输入三类材料：场景湖示例表格、前面讨论的会议纪要或录音内容、第二步输出的 AI 改造 Mermaid 代码。注意给小浣熊的是代码，不是图片。</p>
-          <div class="tool-tags" aria-label="Step3 工具入口">
-            <a class="tool-tag" href="https://xiaohuanxiong.om" target="_blank" rel="noopener">小浣熊</a>
+          <h2 id="scene-lake-title">Step3：场景湖：输出 Excel 场景清单</h2>
+          <p>这一步输入三类材料：场景湖示例表格、前面讨论的会议纪要或录音内容、第二步输出的 AI 改造 Mermaid 代码。注意给 AI 的是代码，不是图片。工具不限，任何能上传附件并导出 Excel 的 AI 工具都可以。</p>
+          <div class="tool-tags" aria-label="Step3 工具说明">
+            <span class="tool-tag">自选 AI 工具 · 支持上传附件与导出表格</span>
           </div>
         </div>
         <div class="grid-two">
@@ -1021,29 +904,21 @@
             <div class="step-downloads" aria-label="Step3 下载资料">
               <div class="step-download">
                 <span class="badge greenish">下载资料</span>
-                <p class="file-purpose">点击标题下载后，放入小浣熊作为格式参考；场景内容按本企业材料重新填写。</p>
+                <p class="file-purpose">点击标题下载后，上传给 AI 工具作为格式参考；场景内容按本企业材料重新填写。</p>
                 <a class="download-title" href="assets/场景湖清单-示例.xlsx" download>场景湖清单-示例.xlsx</a>
               </div>
             </div>
             <div class="copy-status" aria-live="polite"></div>
           </article>
-          <aside class="shot-card">
-            <span class="badge amber">截图原图</span>
-            <h3>Step3 对话原图嵌入位</h3>
-            <p class="file-purpose">直接嵌入小浣熊第三步原始截图，不做 OCR 文本复刻。截图建议包含：上传示例表格、输入提示词、返回 xls 文件。</p>
-            <div class="screenshot-frame" aria-label="Step3 原始截图嵌入位" data-screenshot-src="assets/step3-screenshot.png" data-screenshot-alt="Step3 小浣熊场景湖对话原始截图">
-              <div class="screenshot-placeholder">请将 Step3 原始截图命名为 step3-screenshot.png，放入 scene/assets 后会自动显示在这里。</div>
-            </div>
-          </aside>
         </div>
       </section>
 
       <section class="section" id="roi" aria-labelledby="roi-title">
         <div class="section-head">
           <h2 id="roi-title">Step4：高 ROI 场景：同一对话继续打分</h2>
-          <p>第四步继续在第三步的小浣熊对话里完成。追加评分标准模板和输出格式模板，再输入提示词，让它返回评分后的 Excel。</p>
-          <div class="tool-tags" aria-label="Step4 工具入口">
-            <a class="tool-tag" href="https://xiaohuanxiong.om" target="_blank" rel="noopener">小浣熊</a>
+          <p>第四步继续在第三步的同一段对话里完成，不要新开对话。追加评分标准模板和输出格式模板，再输入提示词，让它返回评分后的 Excel。</p>
+          <div class="tool-tags" aria-label="Step4 工具说明">
+            <span class="tool-tag">自选 AI 工具 · 与第三步同一对话</span>
           </div>
         </div>
         <div class="grid-two">
@@ -1069,68 +944,21 @@
             <div class="step-downloads" aria-label="Step4 下载资料">
               <div class="step-download">
                 <span class="badge greenish">下载资料</span>
-                <p class="file-purpose">点击标题下载后，上传到小浣熊作为评分标准。</p>
+                <p class="file-purpose">点击标题下载后，上传给 AI 工具作为评分标准。</p>
                 <a class="download-title" href="assets/高ROI场景评分表-示例.xlsx" download>高ROI场景评分表-示例.xlsx</a>
               </div>
               <div class="step-download">
                 <span class="badge greenish">下载资料</span>
-                <p class="file-purpose">点击标题下载后，上传到小浣熊作为综合评价格式参考。</p>
+                <p class="file-purpose">点击标题下载后，上传给 AI 工具作为综合评价格式参考。</p>
                 <a class="download-title" href="assets/场景综合评价表-参考-课后.xlsx" download>场景综合评价表-参考-课后.xlsx</a>
               </div>
             </div>
             <div class="copy-status" aria-live="polite"></div>
           </article>
-          <aside class="shot-card">
-            <span class="badge amber">截图原图</span>
-            <h3>Step4 对话原图嵌入位</h3>
-            <p class="file-purpose">直接嵌入小浣熊第四步原始截图，不做 OCR 文本复刻。截图建议包含：评分模板、参考表、场景湖清单和评分结果 xls。</p>
-            <div class="screenshot-frame" aria-label="Step4 原始截图嵌入位" data-screenshot-src="assets/step4-screenshot.png" data-screenshot-alt="Step4 小浣熊高 ROI 评分对话原始截图">
-              <div class="screenshot-placeholder">请将 Step4 原始截图命名为 step4-screenshot.png，放入 scene/assets 后会自动显示在这里。</div>
-            </div>
-          </aside>
         </div>
       </section>
 
-      <section class="section" id="submit" aria-labelledby="submit-title">
-        <div class="section-head">
-          <h2 id="submit-title">Step5：最终提交：四个提示词和四个附件</h2>
-          <p>提交时不要只交截图。需要把修改后的四个提示词、两张流程图 SVG、两个 Excel 成果文件一起放到飞书表单。</p>
-        </div>
-        <div class="artifact-grid">
-          <article class="artifact-card">
-            <h3>四个提示词 <span class="badge">文本</span></h3>
-            <ul class="check-list">
-              <li><span class="mark">1</span><span>Step1 修改后的流程提示词</span></li>
-              <li><span class="mark">2</span><span>Step2 修改后的流程 AI 化提示词</span></li>
-              <li><span class="mark">3</span><span>Step3 修改后的场景湖提示词</span></li>
-              <li><span class="mark">4</span><span>Step4 修改后的高 ROI 场景提示词</span></li>
-            </ul>
-          </article>
-          <article class="artifact-card">
-            <h3>两个流程图附件 <span class="badge">SVG</span></h3>
-            <ul class="check-list">
-              <li><span class="mark">1</span><span>01-{企业名称}-流程生成.svg</span></li>
-              <li><span class="mark">2</span><span>02-{企业名称}-AI化改造.svg</span></li>
-            </ul>
-          </article>
-          <article class="artifact-card">
-            <h3>两个 Excel 附件 <span class="badge">xls</span></h3>
-            <ul class="check-list">
-              <li><span class="mark">1</span><span>03-{企业名称}-场景湖清单.xls</span></li>
-              <li><span class="mark">2</span><span>04-{企业名称}-高ROI场景评分结果.xls</span></li>
-            </ul>
-          </article>
-          <article class="artifact-card warning">
-            <h3>飞书提交入口 <span class="badge amber">必交</span></h3>
-            <p>最终提交链接：<br><a href="https://lijiagui.feishu.cn/share/base/form/shrcnT1NSzknu8leovmgkkebnwh" target="_blank" rel="noopener">https://lijiagui.feishu.cn/share/base/form/shrcnT1NSzknu8leovmgkkebnwh</a></p>
-            <div class="card-actions" style="margin-top: 16px;">
-              <a class="button-link primary" href="https://lijiagui.feishu.cn/share/base/form/shrcnT1NSzknu8leovmgkkebnwh" target="_blank" rel="noopener">打开提交表单</a>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <p class="footer-note">截图区域用于嵌入原图，不做 OCR 复刻；如需展示正式截图，请把图片放入 scene/assets 并使用页面提示的文件名。</p>
+      <p class="footer-note">本页只提供四个提示词和三个模板文件。完成后按现场老师通知的方式提交成果，不要提交到其他项目的表单。</p>
     </main>
   </div>
 
@@ -1165,22 +993,6 @@
         const status = card.querySelector(".copy-status");
         copyText(target.value, status);
       });
-    });
-
-    document.querySelectorAll("[data-screenshot-src]").forEach((frame) => {
-      const placeholder = frame.querySelector(".screenshot-placeholder");
-      const image = new Image();
-      image.decoding = "async";
-      image.alt = frame.dataset.screenshotAlt || "";
-      image.width = 960;
-      image.height = 600;
-      image.onload = () => {
-        frame.replaceChildren(image);
-      };
-      image.onerror = () => {
-        placeholder.hidden = false;
-      };
-      image.src = frame.dataset.screenshotSrc;
     });
 
     document.querySelector("[data-copy-all]").addEventListener("click", () => {
