@@ -1,1053 +1,137 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="vivo AI 实操课程模块四：承接模块二 IPO 任务拆解和模块三人机协同验收，把一次性业务任务转成可复用的 SOP 与 Skill，包含路径图、案例、可复制提示词及复测标准。">
-  <meta name="theme-color" content="#061b46">
-  <link rel="icon" href="data:,">
-  <link rel="canonical" href="https://xjtulijiagui-max.github.io/lijiagui/vivo-ipo-skill/">
-  <meta property="og:title" content="从 IPO 到 Skill｜模块四 · 固化复用">
-  <meta property="og:description" content="模块二拆清一次任务，模块三交付并验收，模块四把验证有效的方法做成可复用 Skill。">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://xjtulijiagui-max.github.io/lijiagui/vivo-ipo-skill/">
-  <title>模块四｜从 IPO 到 Skill：把一次性任务变成可复用能力｜vivo AI 实操课</title>
-  <style>
-    :root {
-      --surface-page: #f5f8fd;
-      --surface-primary: #ffffff;
-      --surface-secondary: #eef5ff;
-      --surface-muted: #f4f4f4;
-      --surface-dark: #061b46;
-      --surface-dark-hover: #0a2d68;
-      --text-primary: #15223a;
-      --text-secondary: #5f6f89;
-      --text-on-dark: #ffffff;
-      --text-on-dark-muted: #cddcff;
-      --text-on-dark-soft: #d4e2ff;
-      --text-on-dark-accent: #a9c7ff;
-      --text-info: #173762;
-      --text-warning: #5e3900;
-      --border-default: #d8e4f7;
-      --border-strong: #b8c9e4;
-      --border-on-dark: #6d89bd;
-      --border-on-dark-subtle: rgba(255, 255, 255, 0.16);
-      --accent-primary: #0f62fe;
-      --accent-hover: #0043ce;
-      --accent-soft: #d9e8ff;
-      --status-success: #16854b;
-      --status-warning: #a15c00;
-      --surface-warning: #fff6e5;
-      --surface-nav-translucent: rgba(255, 255, 255, 0.96);
-      --code-bg: #07152e;
-      --code-text: #e7efff;
-      --shadow-toast: 0 8px 24px rgba(6, 27, 70, 0.24);
-      --space-1: 4px;
-      --space-2: 8px;
-      --space-3: 12px;
-      --space-4: 16px;
-      --space-6: 24px;
-      --space-8: 32px;
-      --space-12: 48px;
-      --space-16: 64px;
-      --space-20: 80px;
-      --content-max: 1184px;
-      --reading-max: 840px;
-      --font-sans: "Microsoft YaHei", "PingFang SC", "Noto Sans SC", Arial, sans-serif;
-      --font-mono: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      scroll-padding-top: 124px;
-    }
-
-    body {
-      margin: 0;
-      color: var(--text-primary);
-      background: var(--surface-page);
-      font-family: var(--font-sans);
-      line-height: 1.75;
-    }
-
-    body,
-    button {
-      font-size: 16px;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    button {
-      font-family: inherit;
-    }
-
-    a:focus-visible,
-    button:focus-visible,
-    summary:focus-visible {
-      outline: 3px solid var(--accent-primary);
-      outline-offset: 3px;
-    }
-
-    .container {
-      width: min(calc(100% - 48px), var(--content-max));
-      margin: 0 auto;
-    }
-
-    .masthead {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      min-height: 48px;
-      color: var(--text-on-dark);
-      background: var(--surface-dark);
-      border-bottom: 1px solid var(--border-on-dark-subtle);
-    }
-
-    .masthead-inner {
-      display: flex;
-      min-height: 48px;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--space-4);
-    }
-
-    .brand,
-    .back-link {
-      display: inline-flex;
-      min-height: 44px;
-      align-items: center;
-    }
-
-    .brand {
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: 0.16px;
-    }
-
-    .back-link {
-      color: var(--text-on-dark-muted);
-      font-size: 14px;
-      transition: color 160ms ease, background 160ms ease;
-    }
-
-    .back-link:hover {
-      color: var(--text-on-dark);
-      background: var(--surface-dark-hover);
-    }
-
-    .hero {
-      color: var(--text-on-dark);
-      background: var(--surface-dark);
-      padding: var(--space-16) 0 var(--space-20);
-    }
-
-    .hero-content {
-      max-width: 960px;
-    }
-
-    .hero-kicker {
-      margin: 0 0 var(--space-4);
-      color: var(--text-on-dark-accent);
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .hero h1 {
-      max-width: 920px;
-      margin: 0;
-      font-size: clamp(36px, 6vw, 64px);
-      font-weight: 600;
-      letter-spacing: 0;
-      line-height: 1.08;
-    }
-
-    .hero h1 span {
-      display: block;
-    }
-
-    .hero-lead {
-      max-width: 760px;
-      margin: var(--space-6) 0 0;
-      color: var(--text-on-dark-soft);
-      font-size: 18px;
-      line-height: 1.75;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-3);
-      margin-top: var(--space-8);
-    }
-
-    .button {
-      display: inline-flex;
-      min-height: 48px;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid transparent;
-      border-radius: 4px;
-      padding: 11px 20px;
-      font-weight: 600;
-      line-height: 1.4;
-      cursor: pointer;
-      transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
-    }
-
-    .button:hover {
-      transform: translateY(-1px);
-    }
-
-    .button-primary {
-      color: var(--text-on-dark);
-      background: var(--accent-primary);
-    }
-
-    .button-primary:hover {
-      background: var(--accent-hover);
-    }
-
-    .button-secondary {
-      color: var(--text-on-dark);
-      background: transparent;
-      border-color: var(--border-on-dark);
-    }
-
-    .button-secondary:hover {
-      background: var(--surface-dark-hover);
-      border-color: var(--text-on-dark-accent);
-    }
-
-    .workflow-nav {
-      position: sticky;
-      top: 48px;
-      z-index: 40;
-      background: var(--surface-nav-translucent);
-      border-bottom: 1px solid var(--border-default);
-      backdrop-filter: blur(12px);
-    }
-
-    .workflow-track {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(176px, 1fr));
-      overflow-x: auto;
-      scrollbar-width: thin;
-    }
-
-    .workflow-link {
-      display: grid;
-      min-height: 72px;
-      grid-template-columns: auto 1fr;
-      align-items: center;
-      gap: var(--space-3);
-      padding: var(--space-3) var(--space-4);
-      border-right: 1px solid var(--border-default);
-      color: var(--text-secondary);
-      transition: background 180ms ease, color 180ms ease;
-    }
-
-    .workflow-link:first-child {
-      border-left: 1px solid var(--border-default);
-    }
-
-    .workflow-link:hover,
-    .workflow-link.is-active {
-      color: var(--text-primary);
-      background: var(--surface-secondary);
-    }
-
-    .workflow-link.is-active {
-      box-shadow: inset 0 -3px 0 var(--accent-primary);
-    }
-
-    .workflow-number {
-      color: var(--accent-primary);
-      font-family: var(--font-mono);
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    .workflow-text strong,
-    .workflow-text span {
-      display: block;
-    }
-
-    .workflow-text strong {
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    .workflow-text span {
-      margin-top: 2px;
-      font-size: 12px;
-    }
-
-    main {
-      padding: var(--space-16) 0 var(--space-20);
-    }
-
-    .intro {
-      display: grid;
-      grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.8fr);
-      gap: var(--space-8);
-      margin-bottom: var(--space-16);
-    }
-
-    .intro-copy {
-      max-width: var(--reading-max);
-    }
-
-    .section-label {
-      margin: 0 0 var(--space-3);
-      color: var(--accent-primary);
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-    }
-
-    .intro h2,
-    .cases h2 {
-      margin: 0;
-      font-size: 32px;
-      font-weight: 600;
-      line-height: 1.25;
-    }
-
-    .intro p {
-      margin: var(--space-4) 0 0;
-      color: var(--text-secondary);
-      font-size: 18px;
-    }
-
-    .principles {
-      margin: 0;
-      padding: var(--space-6);
-      background: var(--surface-secondary);
-      border-left: 4px solid var(--accent-primary);
-    }
-
-    .principles dt {
-      font-weight: 600;
-    }
-
-    .principles dd {
-      margin: var(--space-1) 0 var(--space-4);
-      color: var(--text-secondary);
-      font-size: 14px;
-    }
-
-    .principles dd:last-child {
-      margin-bottom: 0;
-    }
-
-    .step-section {
-      position: relative;
-      margin-top: var(--space-12);
-      padding: var(--space-8) 0 var(--space-12);
-      border-top: 1px solid var(--border-default);
-      scroll-margin-top: 124px;
-    }
-
-    .step-heading {
-      display: grid;
-      grid-template-columns: 64px minmax(0, 1fr);
-      gap: var(--space-6);
-      align-items: start;
-      max-width: 960px;
-    }
-
-    .step-badge {
-      display: grid;
-      width: 64px;
-      height: 64px;
-      place-items: center;
-      color: var(--text-on-dark);
-      background: var(--accent-primary);
-      font-family: var(--font-mono);
-      font-size: 18px;
-      font-weight: 600;
-    }
-
-    .step-title h2 {
-      margin: 0;
-      font-size: 32px;
-      font-weight: 600;
-      line-height: 1.25;
-    }
-
-    .step-title p {
-      max-width: 760px;
-      margin: var(--space-3) 0 0;
-      color: var(--text-secondary);
-      font-size: 16px;
-    }
-
-    .step-body {
-      margin-top: var(--space-8);
-      margin-left: 88px;
-      max-width: 960px;
-    }
-
-    .callout {
-      margin-bottom: var(--space-6);
-      padding: var(--space-4) var(--space-6);
-      color: var(--text-info);
-      background: var(--surface-secondary);
-      border-left: 4px solid var(--accent-primary);
-    }
-
-    .callout strong {
-      display: block;
-      margin-bottom: var(--space-1);
-    }
-
-    .callout p {
-      margin: 0;
-      font-size: 14px;
-    }
-
-    .callout-warning {
-      color: var(--text-warning);
-      background: var(--surface-warning);
-      border-left-color: var(--status-warning);
-    }
-
-    .callout-spaced {
-      margin-top: var(--space-6);
-    }
-
-    .prompt-panel {
-      overflow: hidden;
-      background: var(--surface-primary);
-      border: 1px solid var(--border-strong);
-    }
-
-    .prompt-toolbar {
-      display: flex;
-      min-height: 64px;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--space-4);
-      padding: var(--space-2) var(--space-4) var(--space-2) var(--space-6);
-      background: var(--surface-muted);
-      border-bottom: 1px solid var(--border-strong);
-    }
-
-    .prompt-meta strong,
-    .prompt-meta span {
-      display: block;
-    }
-
-    .prompt-meta strong {
-      font-size: 16px;
-      font-weight: 600;
-    }
-
-    .prompt-meta span {
-      color: var(--text-secondary);
-      font-size: 12px;
-    }
-
-    .copy-button {
-      min-width: 112px;
-      color: var(--text-on-dark);
-      background: var(--accent-primary);
-    }
-
-    .copy-button:hover {
-      background: var(--accent-hover);
-    }
-
-    .copy-button.is-copied {
-      background: var(--status-success);
-    }
-
-    .prompt-details {
-      background: var(--surface-primary);
-    }
-
-    .prompt-details summary {
-      display: flex;
-      min-height: 52px;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--space-4);
-      padding: var(--space-3) var(--space-6);
-      color: var(--accent-hover);
-      background: var(--surface-primary);
-      font-weight: 600;
-      cursor: pointer;
-      list-style: none;
-    }
-
-    .prompt-details summary::-webkit-details-marker {
-      display: none;
-    }
-
-    .prompt-details summary::after {
-      content: "展开";
-      color: var(--text-secondary);
-      font-size: 12px;
-      font-weight: 400;
-    }
-
-    .prompt-details[open] summary::after {
-      content: "收起";
-    }
-
-    .prompt-code {
-      overflow: auto;
-      max-height: 640px;
-      margin: 0;
-      padding: var(--space-6);
-      color: var(--code-text);
-      background: var(--code-bg);
-      font-family: var(--font-mono);
-      font-size: 14px;
-      line-height: 1.75;
-      tab-size: 2;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-
-    .compact .prompt-code {
-      max-height: none;
-    }
-
-    .tips {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1px;
-      margin-top: var(--space-6);
-      background: var(--border-default);
-      border: 1px solid var(--border-default);
-    }
-
-    .tip {
-      min-height: 148px;
-      padding: var(--space-6);
-      background: var(--surface-primary);
-    }
-
-    .tip strong {
-      display: block;
-      margin-bottom: var(--space-2);
-      font-size: 16px;
-    }
-
-    .tip p {
-      margin: 0;
-      color: var(--text-secondary);
-      font-size: 14px;
-    }
-
-    .cases {
-      margin-top: var(--space-16);
-      padding-top: var(--space-12);
-      border-top: 1px solid var(--border-default);
-    }
-
-    .case-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--space-4);
-      margin-top: var(--space-8);
-    }
-
-    .case-link {
-      display: flex;
-      min-height: 160px;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: var(--space-6);
-      background: var(--surface-primary);
-      border: 1px solid var(--border-default);
-      transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
-    }
-
-    .case-link:hover {
-      background: var(--surface-secondary);
-      border-color: var(--accent-primary);
-      transform: translateY(-2px);
-    }
-
-    .case-source {
-      color: var(--accent-primary);
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-    }
-
-    .case-link h3 {
-      margin: var(--space-3) 0;
-      font-size: 20px;
-      font-weight: 600;
-      line-height: 1.4;
-    }
-
-    .case-action {
-      color: var(--accent-hover);
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    .finish {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: var(--space-8);
-      align-items: center;
-      margin-top: var(--space-16);
-      padding: var(--space-8);
-      color: var(--text-on-dark);
-      background: var(--surface-dark);
-    }
-
-    .finish h2 {
-      margin: 0;
-      font-size: 24px;
-      font-weight: 600;
-    }
-
-    .finish p {
-      max-width: 720px;
-      margin: var(--space-2) 0 0;
-      color: var(--text-on-dark-muted);
-      font-size: 14px;
-    }
-
-    footer {
-      padding: var(--space-8) 0 var(--space-12);
-      color: var(--text-secondary);
-      font-size: 12px;
-      text-align: center;
-    }
-
-    .toast {
-      position: fixed;
-      right: var(--space-6);
-      bottom: var(--space-6);
-      z-index: 100;
-      max-width: min(360px, calc(100vw - 32px));
-      padding: var(--space-3) var(--space-4);
-      color: var(--text-on-dark);
-      background: var(--surface-dark);
-      box-shadow: var(--shadow-toast);
-      opacity: 0;
-      transform: translateY(12px);
-      pointer-events: none;
-      transition: opacity 180ms ease, transform 180ms ease;
-    }
-
-    .toast.is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @media (max-width: 900px) {
-      .intro {
-        grid-template-columns: 1fr;
-      }
-
-      .tips {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 700px) {
-      .container {
-        width: min(calc(100% - 32px), var(--content-max));
-      }
-
-      .hero {
-        padding: var(--space-12) 0 var(--space-16);
-      }
-
-      .hero h1 {
-        font-size: clamp(36px, 10.7vw, 42px);
-      }
-
-      .hero-lead {
-        font-size: 16px;
-      }
-
-      .workflow-link {
-        min-width: 208px;
-      }
-
-      main {
-        padding-top: var(--space-12);
-      }
-
-      .step-heading {
-        grid-template-columns: 48px minmax(0, 1fr);
-        gap: var(--space-4);
-      }
-
-      .step-badge {
-        width: 48px;
-        height: 48px;
-        font-size: 16px;
-      }
-
-      .step-title h2 {
-        font-size: 26px;
-      }
-
-      .step-body {
-        margin-left: 0;
-      }
-
-      .prompt-toolbar {
-        align-items: stretch;
-        flex-direction: column;
-        padding: var(--space-4);
-      }
-
-      .copy-button {
-        width: 100%;
-      }
-
-      .prompt-details summary,
-      .prompt-code {
-        padding-right: var(--space-4);
-        padding-left: var(--space-4);
-      }
-
-      .case-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .finish {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .masthead-inner {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 0;
-        padding: var(--space-1) 0;
-      }
-
-      .brand,
-      .back-link {
-        min-height: 40px;
-      }
-
-      .workflow-nav {
-        top: 88px;
-      }
-
-      html {
-        scroll-padding-top: 164px;
-      }
-
-      .hero-actions .button {
-        width: 100%;
-      }
-
-      .intro h2 {
-        font-size: 28px;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
-
-      *,
-      *::before,
-      *::after {
-        scroll-behavior: auto !important;
-        transition-duration: 0.01ms !important;
-      }
-    }
-  
-  .hero h1{font-size:clamp(32px,5vw,56px);line-height:1.23;max-width:1060px}
-  .hero h1 em{font-style:normal;color:#a9c7ff}
-  .hero .hero-lead{max-width:940px}
-  .hero-mini{margin-top:25px;display:flex;flex-wrap:wrap;align-items:center;gap:11px;font-size:14px;color:#d4e2ff}
-  .hero-mini strong{color:#fff;font-weight:700}
-  .hero-mini i{font-style:normal;opacity:.65}
-  .origin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px}
-  .origin-card{background:#fff;border:1px solid var(--border-default);border-radius:12px;padding:21px;box-shadow:0 6px 22px rgba(6,27,70,.05)}
-  .origin-card.current{border:2px solid var(--accent-primary);background:#f3f7ff}
-  .origin-card .origin-top{font-size:12px;letter-spacing:.05em;color:#526a92;font-weight:800}
-  .origin-card h3{font-size:19px;line-height:1.4;margin:10px 0}
-  .origin-card p{font-size:14px;color:#596b84;margin:0}
-  .origin-card a{color:#0b47c2;font-weight:700;font-size:13px;text-decoration:underline;text-underline-offset:3px}
-  .intro{display:block}
-  .intro .intro-copy{max-width:none}
-  .intro h2{font-size:clamp(24px,3.3vw,34px)}
-  .one-sentence{background:#eaf2ff;border-left:4px solid #155eef;border-radius:6px;padding:17px 22px;margin:21px 0;font-size:18px;font-weight:700;color:#123766}
-  .one-sentence strong{color:#0d56d6}
-  .handoff{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
-  .handoff>div{background:#f8fbff;border:1px solid var(--border-default);border-radius:10px;padding:15px}
-  .handoff b{display:block;font-size:14px;margin-bottom:5px;color:#143f72}
-  .handoff span{font-size:13px;color:#62728a}
-  .lead-bullets{display:flex;gap:12px;flex-wrap:wrap;margin-top:15px}
-  .lead-bullets span{font-size:13px;padding:5px 10px;background:#eef4fe;border:1px solid #dbe6f6;border-radius:999px}
-  .step-heading .step-title p{max-width:910px}
-  .step-body .callout{margin-bottom:16px}
-  .section-intro{margin:0 0 20px;font-size:15px;color:#526178}
-  .link-panel{display:flex;align-items:center;justify-content:space-between;gap:26px;flex-wrap:wrap;padding:24px;border:1px solid #bad3fa;border-radius:12px;background:#eef5ff;margin-bottom:14px}
-  .link-panel h3{margin:0 0 6px;font-size:20px;color:#0c386c}
-  .link-panel p{margin:0;max-width:640px;color:#4d617f}
-  .link-panel .button{white-space:nowrap}
-  .micro-note{font-size:13px;color:#64748b}
-  .check-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:16px 0}
-  .check-grid .item{background:white;border:1px solid var(--border-default);border-radius:11px;padding:17px 19px}
-  .check-grid .item b{display:block;margin-bottom:6px;color:#143e73}
-  .check-grid .item p{margin:0;font-size:14px;color:#5e7088}
-  .sample{border:1px solid #d6e4f8;background:#fbfdff;border-radius:13px;padding:22px;margin:20px 0}
-  .sample h3{font-size:18px;margin:0 0 10px}
-  .sample-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-  .sample-grid>div{border-radius:10px;background:#eef4ff;padding:14px}
-  .sample-grid b{color:#0b47c2}
-  .sample-grid p{color:#526178;font-size:13px;line-height:1.75;margin:6px 0 0}
-  .prompt-panel{margin:15px 0 22px}
-  .prompt-meta strong{font-size:16px}
-  .timeline{display:grid;gap:12px;padding-left:0;margin:18px 0}
-  .talk{border-radius:12px;padding:15px 18px;border:1px solid #d8e4f7;background:#fff;display:grid;grid-template-columns:115px 1fr;gap:12px}
-  .talk .speaker{font-size:13px;font-weight:800;color:#0d4d9a}
-  .talk .speech{font-size:14px;color:#34475f}
-  .talk:nth-child(even){background:#eff5ff}
-  .talk.important{border-color:#8ab4ff;background:#e9f2ff}
-  .test-table{width:100%;border-collapse:collapse;font-size:14px;margin:16px 0}
-  .test-table th{background:#eaf2ff;color:#123e73;text-align:left}
-  .test-table td,.test-table th{border:1px solid #d8e4f7;padding:11px 13px;vertical-align:top}
-  .table-wrap{overflow-x:auto}
-  .stack{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:15px 0 6px}
-  .stack span{padding:7px 12px;border-radius:8px;background:#eaf2ff;color:#154477;font-size:14px;font-weight:700}
-  .stack i{font-style:normal;color:#8294ad}
-  .foot-mini{font-size:13px;color:#a9bbd6;margin:10px 0}
-  .version-chip{display:inline-block;color:#0a54ae;background:#ebf3ff;border:1px solid #c5dafc;border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700}
-  .resources{display:grid;grid-template-columns:1fr;gap:14px}
-  .resource{padding:19px;border:1px solid #d6e4f8;border-radius:12px;background:#fff}
-  .resource h3{font-size:17px;margin:6px 0 8px}
-  .resource p{font-size:13px;color:#60718b;margin:0 0 11px}
-  .resource a{font-size:14px;color:#0b47c2;font-weight:700;text-decoration:underline}
-  .finish p{max-width:800px}
-  @media(max-width:800px){.origin-grid,.handoff,.sample-grid{grid-template-columns:1fr}.resources{grid-template-columns:1fr}}
-  @media(max-width:650px){.check-grid{grid-template-columns:1fr}.talk{grid-template-columns:1fr;gap:3px}.link-panel{padding:18px}.hero-mini{display:none}.test-table{min-width:590px}}
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="vivo 全员AI课程模块四：一眼看懂 IPO、SOP、Skill 的区别，直接复制两条简短提示词。">
+<meta name="theme-color" content="#061b46">
+<link rel="icon" href="data:,">
+<link rel="canonical" href="https://xjtulijiagui-max.github.io/lijiagui/vivo-ipo-skill/">
+<title>模块四｜IPO、SOP、Skill，一页讲清楚｜vivo AI 实操课</title>
+<style>
+:root{--navy:#061b46;--blue:#0564cd;--light:#f5f8fc;--ink:#172844;--muted:#64748b;--line:#dbe5f0;--soft:#ecf4ff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--light);color:var(--ink);font:16px/1.7 "Microsoft YaHei","PingFang SC",Arial,sans-serif}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer}
+a:focus-visible,button:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+.wrap{max-width:1060px;margin:auto;padding:0 24px}
+.top{background:var(--navy);color:white}
+.top .wrap{min-height:54px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.brand{font-size:14px;font-weight:700;letter-spacing:.03em}
+.top a{font-size:14px;color:#d2e4ff}
+.top a:hover{text-decoration:underline}
+.hero{background:var(--navy);color:#fff;padding:55px 0 62px}
+.eyebrow{margin:0 0 12px;font-size:12px;letter-spacing:.14em;color:#b6d3ff;font-weight:700}
+h1{font-size:clamp(32px,5vw,54px);line-height:1.2;margin:0;font-weight:750}
+.hero p:last-child{font-size:18px;color:#d7e5ff;margin:16px 0 0}
+main{padding-top:38px;padding-bottom:54px}
+section{margin-bottom:34px}
+h2{font-size:24px;line-height:1.35;margin:0 0 18px}
+h3{font-size:20px;margin:0 0 8px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;min-width:0}
+.card .mini{color:var(--blue);font-weight:800;font-size:12px;letter-spacing:.08em}
+.card h3{margin:8px 0 8px}
+.card p{margin:0;color:var(--muted);font-size:15px}
+.card .bottom{margin-top:14px;font-size:13px;font-weight:700;color:var(--ink)}
+.flow{font-size:14px;color:var(--muted);margin:14px 0 0}
+.flow strong{color:var(--ink)}
+.example{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px}
+.example h2{margin-bottom:14px}
+.examples{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.examples div{border-radius:10px;background:#f3f7fc;padding:16px 17px}
+.examples b{display:block;color:#174e97;margin-bottom:6px}
+.examples p{margin:0;font-size:14px}
+.example .key{margin:15px 0 0;font-size:14px;color:var(--muted)}
+.prompt-heading{display:flex;justify-content:space-between;align-items:end;gap:14px;flex-wrap:wrap}
+.prompt-heading p{margin:0 0 17px;color:var(--muted);font-size:14px}
+.prompt-stack{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.prompt{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:11px}
+.prompt-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.prompt h3{font-size:18px;margin:0}
+.prompt .need{font-size:13px;color:var(--muted);margin:0}
+pre{white-space:pre-wrap;word-break:break-word;font:14px/1.8 "Microsoft YaHei","PingFang SC",sans-serif;background:#f4f8ff;border:1px solid #dbe8fb;border-radius:9px;padding:15px;flex:1;margin:0}
+.copy{background:var(--blue);border:0;color:#fff;border-radius:8px;padding:9px 14px;min-width:78px;font-size:14px;font-weight:650}
+.copy:hover{background:#034caa}
+.note{border-left:4px solid var(--blue);padding:14px 17px;background:var(--soft);border-radius:0 10px 10px 0;font-size:14px}
+.note p{margin:0}
+.links{display:flex;flex-wrap:wrap;gap:10px;margin-top:19px}
+.links a{display:inline-flex;align-items:center;border:1px solid #c2d3ed;border-radius:8px;padding:9px 14px;background:#fff;font-size:14px;color:#1857a5;font-weight:600}
+.links a:hover{background:var(--soft)}
+footer{padding:22px 0 35px;text-align:center;color:#7d8ba1;font-size:12px}
+.toast{position:fixed;bottom:22px;right:22px;background:var(--navy);color:#fff;border-radius:9px;padding:10px 16px;box-shadow:0 6px 24px #0002;display:none;font-size:14px}
+.toast.show{display:block}
+@media(max-width:740px){.wrap{padding:0 16px}.hero{padding:40px 0 45px}.hero p:last-child{font-size:16px}.grid3,.examples,.prompt-stack{grid-template-columns:1fr}main{padding-top:26px}section{margin-bottom:27px}.card,.example,.prompt{padding:18px}.prompt-top{align-items:flex-start}h2{font-size:21px}.top .wrap{min-height:52px}}
 </style>
 </head>
 <body>
-<header class="masthead"><div class="container masthead-inner">
-  <a class="brand" href="#top">vivo · AI 工作流实操 / 模块四</a>
-  <a class="back-link" href="/lijiagui/vivo-ai-course/">四模块课程导航 ↗</a>
-</div></header>
-
-<section class="hero" id="top" aria-labelledby="page-title">
-  <div class="container hero-content">
-    <p class="hero-kicker">MODULE 04 · 固化复用 · IPO → SOP → SKILL</p>
-    <h1 id="page-title">模块二拆清一次任务，<br><em>模块四把方法变成可复用 Skill</em></h1>
-    <p class="hero-lead">IPO 回答“这次工作怎么做”；Skill 回答“下次遇到同类工作，能不能不从头讲、照着规则稳定做”。把模块二的任务卡和模块三的验收结果接过来，萃取 SOP、封装 Skill，让以后同类任务不再从零开始。</p>
-    <div class="hero-mini"><strong>模块二 · 拆清任务</strong><i>→</i><strong>模块三 · 协同交付与验收</strong><i>→</i><strong>模块四 · 固化复用</strong></div>
-    <div class="hero-actions">
-      <a class="button button-primary" href="#bridge">看三模块如何衔接</a>
-      <a class="button button-secondary" href="#step-2">直接学习 IPO → SOP</a>
-      <a class="button button-secondary" href="/lijiagui/vivo-ipo/">返回模块二 IPO ↗</a>
-    </div>
-    <p class="foot-mini">课堂以讲师展示与方法理解为主；不要求全员在现场安装或发布 Skill。</p>
-  </div>
+<header class="top"><div class="wrap"><span class="brand">vivo · AI 实操课｜模块四：固化复用</span><a href="/lijiagui/vivo-ai-course/">返回课程首页 ↗</a></div></header>
+<div class="hero"><div class="wrap">
+<p class="eyebrow">一页讲清楚 · IPO → SOP → SKILL</p>
+<h1>把一次做对，变成以后好用</h1>
+<p>IPO 讲清任务；SOP 让团队有标准；Skill 让 AI 能调用。</p>
+</div></div>
+<main class="wrap">
+<section id="difference" aria-labelledby="difference-title">
+<h2 id="difference-title">三者有什么区别？</h2>
+<div class="grid3">
+<article class="card"><span class="mini">01 · IPO</span><h3>给 AI 的任务卡</h3><p>说清给什么材料、按什么步骤做、交什么结果。</p><div class="bottom">解决：任务说不清</div></article>
+<article class="card"><span class="mini">02 · SOP</span><h3>给团队看的标准</h3><p>把跑通的做法写下来，方便同事共享、评审和交接。</p><div class="bottom">解决：好经验留不住</div></article>
+<article class="card"><span class="mini">03 · SKILL</span><h3>给 AI 用的技能</h3><p>把确认过的标准和模板封装起来，让 AI 下次直接调用。</p><div class="bottom">解决：每次都从头来</div></article>
+</div>
+<p class="flow"><strong>顺序：</strong>IPO 定义任务 → 运行、纠错 → SOP 供人评审 → Skill 供 AI 执行。<span>简单任务停在 IPO 也可以。</span></p>
 </section>
+<section class="example" aria-labelledby="example-title">
+<h2 id="example-title">一个例子就明白：每周项目跟进</h2>
+<div class="examples">
+<div><b>IPO · 交代任务</b><p>读取本周纪要和计划表，生成项目跟进表。</p></div>
+<div><b>SOP · 统一规则</b><p>日期冲突要标出；“应该”不是事实；发消息前由人确认。</p></div>
+<div><b>Skill · 下次调用</b><p>上传新材料 → 调用「项目跟进助手」→ 得到初稿。</p></div>
+</div>
+<p class="key">团队检查 SOP 是否合理；AI 按 Skill 处理新材料；最终结果由人把关。</p>
+</section>
+<section id="do" aria-labelledby="do-title">
+<div class="prompt-heading"><h2 id="do-title">想试试？只复制两句话</h2><p>准备好上一步的材料，复制即可</p></div>
+<div class="prompt-stack">
+<article class="prompt">
+<div class="prompt-top"><h3>第 1 步｜IPO → SOP</h3><button class="copy" type="button" data-copy="sop">复制</button></div>
+<p class="need">先上传：IPO 任务卡 + 实际纠错记录</p>
+<pre id="sop">请根据这份 IPO 任务卡和实际修改记录，整理一份给团队看的 SOP.md。
 
-<nav class="workflow-nav" aria-label="模块四操作路径"><div class="container workflow-track">
-  <a class="workflow-link" href="/lijiagui/vivo-ipo/"><span class="workflow-number">01</span><span class="workflow-text"><strong>场景转 IPO ↗</strong><span>直接返回模块二</span></span></a>
-  <a class="workflow-link" href="#step-2" data-step-link="step-2"><span class="workflow-number">02</span><span class="workflow-text"><strong>IPO 转 SOP</strong><span>萃取已验证的做法</span></span></a>
-  <a class="workflow-link" href="#step-3" data-step-link="step-3"><span class="workflow-number">03</span><span class="workflow-text"><strong>SOP 转 Skill</strong><span>封装可调用的能力</span></span></a>
-</div></nav>
+只写：适用场景、操作步骤、异常处理、人工确认、验收标准。
 
-<main class="container">
-  <section class="intro" id="bridge" aria-labelledby="bridge-title">
-    <p class="section-label">承前启后 · 这节课究竟解决什么问题？</p>
-    <h2 id="bridge-title">任务做成一次，不等于方法能够复用</h2>
-    <p>模块二已经让我们通过 <b>I（输入）—P（处理）—O（输出）</b> 讲清一项业务任务。模块三再用 CHAT 补背景、细化子 IPO、人机接力并按 O 验收。到这里，解决的是“本次任务如何正确交付”。<b>模块四不再重新拆场景，而是解决“以后能否稳定重复交付”。</b></p>
-    <div class="one-sentence">从“<strong>我会让 AI 做一次</strong>”，升级为“<strong>我和同事下次还能按同一标准做</strong>”。</div>
-    <div class="origin-grid">
-      <article class="origin-card">
-        <span class="origin-top">MODULE 02 · 定义一次任务</span><h3>拆清楚：IPO 任务卡</h3>
-        <p>输入是什么，处理怎么走，输出如何验收。解决<strong>任务表达不清</strong>，形成一次任务的业务定义。</p>
-        <p><a href="/lijiagui/vivo-ipo/">打开模块二 · IPO ↗</a></p>
-      </article>
-      <article class="origin-card">
-        <span class="origin-top">MODULE 03 · 执行并验收</span><h3>做出来：CHAT + 子 IPO</h3>
-        <p>补齐 C/H/A，T 把 P 细化为子 IPO；人机接力、阶段检查与最终验收，得到真实执行记录。</p>
-        <p><a href="/lijiagui/vivo-ai-workflow/">打开模块三 · 协同交付 ↗</a></p>
-      </article>
-      <article class="origin-card current">
-        <span class="origin-top">MODULE 04 · 形成长期能力</span><h3>留下来：SOP + Skill</h3>
-        <p>抽取跨批次不变的规则、触发条件与验收方式，脱离原始聊天也可以复用，适合时再共享给同事。</p>
-        <p><a href="#step-2">继续模块四 · 固化复用 ↓</a></p>
-      </article>
-    </div>
-    <div class="handoff">
-      <div><b>从模块二接收</b><span>已核对 IPO 任务卡 + GAP 缺口清单</span></div>
-      <div><b>从模块三接收</b><span>执行记录 + 实际交付物 + 人工修改与验收结论</span></div>
-      <div><b>在模块四产出</b><span>SOP + Skill 说明 / SKILL.md 草稿</span></div>
-    </div>
-    <div class="callout"><strong>适合固化的前提</strong><p>重复发生、有一定稳定性、输入输出可定义、关键步骤已验证。一次性创意决策、规则频繁变化或缺少业务依据的任务，不应直接包装成“成熟 Skill”。</p></div>
-  </section>
+规则不明确的标“待确认”，不要编造；语言尽量简洁。</pre>
+</article>
+<article class="prompt">
+<div class="prompt-top"><h3>第 2 步｜SOP → Skill</h3><button class="copy" type="button" data-copy="skill">复制</button></div>
+<p class="need">先上传：业务人员确认过的 SOP</p>
+<pre id="skill">请把这份已确认的 SOP 整理成供 AI 使用的 SKILL.md 草稿。
 
-  <section class="step-section" id="step-1">
-    <div class="step-heading"><div class="step-badge">01</div><div class="step-title">
-      <h2>场景转 IPO：这一步在模块二已经完成</h2>
-      <p>本页不再重复场景分析、IPO 模板和那套长提示词。没有 IPO 任务卡，先回到模块二；已有任务卡，直接进入第二步。</p>
-    </div></div>
-    <div class="step-body">
-      <div class="link-panel"><div><h3>跳转模块二｜IPO 任务拆解</h3><p>先把一项任务的 I、P、O 讲清楚，明确数据来源、操作步骤、业务判断与 O 的验收标准；把未解决的问题保留为 GAP。</p></div>
-        <a class="button button-primary" href="https://xjtulijiagui-max.github.io/lijiagui/vivo-ipo/">打开模块二网页 ↗</a>
-      </div>
-      <p class="micro-note">本模块的真正起点是“已定义并实际尝试过的一项 IPO 工作”，不是重新选场景。</p>
-    </div>
-  </section>
+写清：什么时候调用、需要什么材料、执行步骤、输出格式和人工检查点。
 
-  <section class="step-section" id="step-2" data-step-section>
-    <div class="step-heading"><div class="step-badge">02</div><div class="step-title">
-      <h2>IPO 转 SOP：把“这次怎么做”提炼成“每次怎么做”</h2>
-      <p>IPO 是任务结构，SOP 是可重复执行的操作规程。不是让 AI 凭空编一套标准流程，而是从模块二的任务卡和模块三<strong>实际跑通、通过验收的动作</strong>中，抽取每次不变的操作方式。</p>
-    </div></div>
-    <div class="step-body">
-      <div class="check-grid">
-        <div class="item"><b>I · 输入标准化</b><p>哪些文件/字段每次都必备？如何检查时效、权限、口径？缺资料怎么办？</p></div>
-        <div class="item"><b>P · 过程步骤化</b><p>把“分析处理”变成动作、判据、分工、检查点；复杂 P 可以展开为子 IPO。</p></div>
-        <div class="item"><b>O · 输出可验收</b><p>固定交付格式、关键字段、引用来源与核对规则，保留人工最终确认点。</p></div>
-        <div class="item"><b>异常可回退</b><p>遇到缺数据、口径冲突、结果不达标时，暂停、追问、退回哪一步？</p></div>
-      </div>
-      <div class="sample">
-        <h3>一案贯穿｜月度项目跟进汇报</h3>
-        <div class="sample-grid">
-          <div><b>Input</b><p>每月提供最新项目台账、会议纪要、风险登记与上期结论；检查完整性与日期。</p></div>
-          <div><b>Process</b><p>核对数据 → 比较变化 → 标注风险与证据 → 人工确认争议口径 → 生成汇报初稿。</p></div>
-          <div><b>Output</b><p>交付进展摘要、风险及决策事项、责任人和待办；按约定格式和证据标准核验。</p></div>
-        </div>
-        <p class="micro-note">这里的“项目跟进”是教学示例，不预设 vivo 的实际系统字段、审批制度或风险阈值。</p>
-      </div>
-      <article class="prompt-panel compact"><div class="prompt-toolbar"><div class="prompt-meta">
-        <strong>可复制提示词 A｜从验证记录萃取 SOP</strong><span>可在新对话中使用：上传任务卡和实际执行证据，不依赖原聊天记录自动可见。</span>
-      </div><button class="button copy-button" type="button" data-copy-source="prompt-sop">复制提示词</button></div>
-      <details class="prompt-details"><summary>展开完整提示词</summary><pre class="prompt-code" data-prompt-view="prompt-sop"></pre></details></article>
-      <div class="callout"><strong>本步交付</strong><p>《XX工作_SOP_V1.0》及《待补规则清单》。SOP 必须能让<strong>没有参与上次聊天的人</strong>依据文件理解操作；未确认的业务判据标 GAP，不能擅自补齐。</p></div>
-    </div>
-  </section>
-
-  <section class="step-section" id="step-3" data-step-section>
-    <div class="step-heading"><div class="step-badge">03</div><div class="step-title">
-      <h2>SOP 转 Skill：把“操作规程”封装成“可调用的能力”</h2>
-      <p>SOP 告诉人怎么做，Skill 告诉支持该机制的 AI <strong>何时调用、拿什么材料、按什么步骤执行、如何检查结果、失败怎么处理</strong>。它不是多写一条万能提示词，更不是把整段聊天复制进去。</p>
-    </div></div>
-    <div class="step-body">
-      <div class="stack"><span>IPO · 业务内核</span><i>→</i><span>SOP · 稳定流程</span><i>→</i><span>Skill · 可调用规则</span></div>
-      <div class="sample">
-        <h3>Skill 能力包：内容不止一条 Prompt</h3>
-        <div class="sample-grid">
-          <div><b>SKILL.md</b><p>名称与 description、触发条件、完整步骤、输入/输出、检查和边界。文本可编辑。</p></div>
-          <div><b>references / assets（按需）</b><p>引用已授权的 SOP、字段说明、报告模板、样例输入输出等；避免依赖原会话。</p></div>
-          <div><b>scripts（按需）</b><p>只有需要可重复计算、校验或集成时，才放脚本；无代码任务并不强求。</p></div>
-        </div>
-      </div>
-      <article class="prompt-panel compact"><div class="prompt-toolbar"><div class="prompt-meta">
-        <strong>可复制提示词 B｜SOP 封装为 Skill 草稿</strong><span>先得到可审核的 SKILL.md 及引用文件清单；实际加载与运行取决于所用平台。</span>
-      </div><button class="button copy-button" type="button" data-copy-source="prompt-skill">复制提示词</button></div>
-      <details class="prompt-details"><summary>展开完整提示词</summary><pre class="prompt-code" data-prompt-view="prompt-skill"></pre></details></article>
-      <div class="callout"><strong>一个容易混淆的边界</strong><p>在普通对话工具中生成 <b>SKILL.md 草稿</b>，不代表 Skill 已安装、可自动触发或能访问业务系统。需要在支持 Skill 的环境中按平台规则导入、授权、测试，才谈得上运行和共享。</p></div>
-    </div>
-  </section>
-
-  <section class="cases" id="cases" aria-labelledby="cases-title">
-    <p class="section-label">模块四 · 参考案例</p>
-    <h2 id="cases-title">参考 Skill 的优化与应用过程</h2>
-    <div class="resources">
-      <article class="resource"><span class="version-chip">模块四 · Skill 实例</span><h3>WorkBuddy：Skill 优化示例</h3><p>重点观察如何提炼可复用的操作规则，以及如何修改 Skill 的说明与执行方式。</p><a href="https://workbuddy.link/p/8OpWyes5aEskDHQP1SOyj1?ext2=copy_link" target="_blank" rel="noopener noreferrer">查看 Skill 参考案例 ↗</a></article>
-    </div>
-  </section>
-
-  <section class="finish" aria-labelledby="finish-title">
-    <div><h2 id="finish-title">一次做成是成果，多次复用才是能力</h2>
-      <p>模块二留下 IPO 任务卡，模块三留下可信执行，模块四留下 SOP 与 Skill。<strong>今天讲清一个任务，明天让同类任务不必从零开始。</strong></p></div>
-    <a class="button button-primary" href="/lijiagui/vivo-ai-course/">返回四模块课程导航 ↗</a>
-  </section>
+不要编造规则，也不要声称已经安装或运行。</pre>
+</article>
+</div>
+</section>
+<section>
+<div class="note"><p><strong>记住：</strong>SOP 先由人看、由人评审；Skill 再交 AI 使用。生成 SKILL.md 只是草稿，需在支持 Skill 的工具中安装和测试。不是每件工作都要做成 Skill。</p></div>
+<nav class="links" aria-label="相关课程"><a href="/lijiagui/vivo-ipo/">回看模块二 · IPO ↗</a><a href="/lijiagui/vivo-ai-workflow/">回看模块三 · 人机协作 ↗</a><a href="https://workbuddy.link/p/8OpWyes5aEskDHQP1SOyj1?ext2=copy_link" target="_blank" rel="noopener noreferrer">Skill 实例 ↗</a></nav>
+</section>
 </main>
-
-<footer>李家贵 · vivo 全员 AI 实操 · 模块四｜固化复用：从 IPO 到 Skill</footer>
-<div class="toast" id="toast" role="status" aria-live="polite">提示词已复制</div>
-
-<script type="text/plain" id="prompt-sop">你是一名业务流程萃取顾问。我要把一项已经执行并验收过的 IPO 任务整理为可复用 SOP，而不是重新发明业务制度。
-
-【我提供的证据】
-1. 模块二《IPO任务卡》（I / P / O 与原始验收标准）
-2. 模块三的真实执行记录、子 IPO 接力/人机分工（如有）
-3. 实际输出样本及业务负责人验收结论
-4. 失败点、人工修改记录、IPO GAP 清单（如有）
-
-请完成：
-A. 区分“每次不变的流程/规则”和“每次变化的数据/日期/对象”，只把前者固化。
-B. 按 I / P / O 输出《XX工作 SOP V1.0》：
-- I：必选、可选材料；格式/字段、来源/权限/时效、缺失检查；
-- P：逐步骤列出输入、动作、判断依据、AI/人分工、检查点、异常与回退；多任务时标出子 IPO 和交接；
-- O：固定交付物、格式/字段、证据要求、人工确认节点、沿用原 IPO 的验收标准。
-C. 将从证据中找不到的业务规则、阈值、权限要求列为 GAP，并说明影响，不得猜测。
-D. 为每一步标注依据来自任务卡、执行记录还是人工确认；发现冲突先列出待确认项。
-E. 另列“适合固化/暂不固化的内容”及最多5个关键待确认问题。
-
-不要把一次性的业务日期、具体项目名称、临时口头决定直接写成永久规则。输入不全时先提出问题，不要宣称 SOP 已验证。</script>
-
-<script type="text/plain" id="prompt-skill">你是一名 Skill 封装设计师。以下材料为已经由业务人员核对的 SOP、IPO 任务卡与验收依据。请把稳定流程转成一个可审阅的 Skill 能力包草稿。
-
-【请读取或让我补充】
-- IPO 任务卡与 O 验收标准
-- 《XX工作 SOP V1.0》
-- 已确认的人工决策边界、GAP 处理结论
-- 可合法使用的模板、样本与参考文件
-- 目标执行平台（未知时先按通用 Skill 草稿编写，不假设已安装）
-
-请先判断任务是否适合 Skill：是否重复、相对稳定、输入可获得、验证通过。若尚不具备条件，说明阻碍，不要假装可以运行。
-
-如果适合，请输出：
-1. 能力概览：Skill 名称、业务目标、适用场景、不适用情形、调用方式、所需权限。
-2. 一份完整的 SKILL.md 草稿：
-   - YAML frontmatter 包含 name 和 description（描述何时调用以及做什么）；
-   - 明确必选/可选输入、缺项追问与授权边界；
-   - 根据 SOP 写具体工作步骤、判断依据、人与 AI 的交接、异常退出或回退；
-   - 明确输出格式、核查清单，并逐项承接 IPO 的 O 验收标准；
-   - 严禁编造业务规则、数据和系统能力。
-3. 可选 references / assets / scripts 文件清单：只有确实需要时才列，注明用途与来源；不得假称文件已存在。
-4. 至少三类测试建议：正常、缺输入、异常/边界；列明需要人审核的项目。
-5. 未决 GAP 和部署前置条件。
-
-只输出草稿，不得声称已经在任何平台安装、调用成功或拥有业务系统权限。若平台有特定规范，请提醒后续按该平台格式适配。</script>
-
+<footer>李家贵 · vivo 全员 AI 实操 · 模块四｜固化复用</footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
 <script>
 (function(){
-  var toast=document.getElementById('toast'), timer;
-  function copyFallback(text){var e=document.createElement('textarea');e.value=text;e.setAttribute('readonly','');e.style.position='fixed';e.style.left='-9999px';document.body.appendChild(e);e.select();var ok=false;try{ok=document.execCommand('copy')}catch(_e){}e.remove();return ok}
-  function showToast(msg){clearTimeout(timer);toast.textContent=msg;toast.classList.add('is-visible');timer=setTimeout(function(){toast.classList.remove('is-visible')},2100)}
-  document.querySelectorAll('[data-prompt-view]').forEach(function(node){var source=document.getElementById(node.dataset.promptView);if(source)node.textContent=source.textContent.trim()});
-  document.querySelectorAll('[data-copy-source]').forEach(function(btn){btn.addEventListener('click',async function(){
-    var source=document.getElementById(btn.dataset.copySource), content=source?source.textContent.trim():'';
-    var ok=false;try{if(navigator.clipboard && navigator.clipboard.writeText){await navigator.clipboard.writeText(content);ok=true}else{ok=copyFallback(content)}}catch(_e){ok=copyFallback(content)}
-    if(!ok){showToast('复制失败，请展开文本手动复制');return}
-    showToast('提示词已复制');var old=btn.textContent;btn.textContent='已复制 ✓';btn.classList.add('is-copied');setTimeout(function(){btn.textContent=old;btn.classList.remove('is-copied')},1700);
-  })});
-  var links=[].slice.call(document.querySelectorAll('[data-step-link]'));
-  if('IntersectionObserver' in window){
-    var ob=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)links.forEach(function(a){a.classList.toggle('is-active',a.dataset.stepLink===e.target.id)})})},{rootMargin:'-22% 0px -58% 0px',threshold:0});
-    document.querySelectorAll('[data-step-section]').forEach(function(s){ob.observe(s)});
-  }
+ const toast=document.getElementById('toast');let timer;
+ function message(s){toast.textContent=s;toast.classList.add('show');clearTimeout(timer);timer=setTimeout(()=>toast.classList.remove('show'),1700)}
+ function fallback(t){const a=document.createElement('textarea');a.value=t;a.style.position='fixed';a.style.left='-9999px';document.body.appendChild(a);a.select();let ok=false;try{ok=document.execCommand('copy')}catch(e){}a.remove();return ok}
+ document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',async()=>{
+  const source=document.getElementById(b.getAttribute('data-copy')),txt=source.textContent.trim();let ok=false;
+  try{if(navigator.clipboard&&navigator.clipboard.writeText){await navigator.clipboard.writeText(txt);ok=true}else ok=fallback(txt)}catch(e){ok=fallback(txt)}
+  message(ok?'已复制，粘贴到 AI 即可':'复制失败，请手动选择文本');if(ok){const old=b.textContent;b.textContent='已复制 ✓';setTimeout(()=>b.textContent=old,1500)}
+ }));
 })();
 </script>
-</body>
-</html>
+</body></html>
