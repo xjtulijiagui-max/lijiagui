@@ -988,7 +988,7 @@
       <section class="section" id="scene-lake" aria-labelledby="scene-lake-title">
         <div class="section-head">
           <h2 id="scene-lake-title">Step3：场景湖：用任意桌面智能体输出 Excel 清单</h2>
-          <p>这一步输入三类材料：场景湖示例表格、你记录的岗位痛点和讨论要点、第二步输出的 AI 改造 Mermaid 代码。注意给任意桌面智能体的是代码，不是图片。</p>
+          <p>这一步先下载下方vivo场景湖清单模板，再上传模板、岗位痛点与讨论要点、Step2 的 AI 改造 Mermaid 代码，让桌面智能体生成自己的Excel场景清单；使用代码而不是流程截图。</p>
           <div class="tool-tags" aria-label="Step3 工具入口">
             <a class="tool-tag" href="https://xiaohuanxiong.om" target="_blank" rel="noopener">任意桌面智能体</a>
           </div>
@@ -1002,16 +1002,24 @@
               </div>
               <button type="button" data-copy-target="prompt-scene">复制当前提示词</button>
             </div>
-            <textarea class="prompt-box short" id="prompt-scene">请以“场景湖清单-示例.xlsx”为格式模板，根据 {我的岗位痛点记录/课程跟练笔记/讨论要点}，结合 {Step2 输出的 AI 改造 Mermaid 代码}，整理 {姓名/部门} 的 AI 场景湖清单，输出为 xls。
+            <textarea class="prompt-box short" id="prompt-scene">请先下载并上传本页面 Step3 的《vivo场景湖清单-教学模板.xlsx》。结合 {Step2 的 AI 改造流程 Mermaid 代码}、{我的岗位痛点记录/课堂讨论材料}，为 {姓名/部门} 整理 AI 场景湖，并输出可下载的 Excel 清单。
 
-按例行报告与汇报、数据分析与材料制作、跨部门沟通与信息整理、流程执行与检查、知识沉淀与问答梳理。场景名称要落到具体工作，例如“月度汇报数据自动汇总”“周报初稿生成”“跨部门资料催收提醒”“会议纪要与待办整理”“评审意见跟踪清单”。
-保留模板原有列名、顺序和格式，在对应字段写清业务痛点、触发条件、责任岗位、输入数据、AI 动作、人工复核、输出成果和衡量指标。涉及公司内部数据时，补充脱敏方式、访问权限和人工确认边界；模板没有的字段放在补充说明工作表中。
-合并重复场景；讨论中未确认的建议标记为“待确认”，缺少的数据写“待补充”，不要照搬示例表中的其他企业内容。</textarea>
+请保留模板主表12列的名称、顺序和格式：场景编号、一级流程、二级流程、业务场景、当前痛点、AI介入方式、输入数据、输出结果、使用角色、推荐工具、价值假设、备注。
+先围绕“新品项目进展跟进”找候选点，也可以根据岗位拓展到产品运营、门店经营、供应链协同或质量问题闭环等；每个名称必须是可以动手做的具体工作。
+每个场景对应 Step2 的流程节点，写清当前痛点、AI如何介入、需要什么输入、输出什么材料、由谁复核，以及可衡量的改善方向。模板没有的触发条件、风险边界和指标可写在“备注”或单独补充页。
+合并重复项；未确认的信息标“待确认”，数据缺口标“待补充”。不要把教学示例当成 vivo 真实业务数据；只使用脱敏或模拟材料，不编造实际提效比例。</textarea>
             <ul class="hint-list">
-              <li><span class="mark">+</span><span>先下载并上传下方资料：场景湖清单-示例.xlsx。</span></li>
+              <li><span class="mark">+</span><span>先下载下方vivo场景湖清单模板，并将Excel上传至任意桌面智能体。</span></li>
               <li><span class="mark">+</span><span>补充你的岗位痛点记录、跟练笔记和 AI 改造 Mermaid 代码。</span></li>
               <li><span class="mark">+</span><span>若清单不对，继续对话让它补充、合并、删除或重排场景。</span></li>
             </ul>
+            <div class="step-downloads" aria-label="Step3 场景湖清单模板">
+              <div class="step-download">
+                <span class="badge greenish">Step 3 · Excel 模板</span>
+                <p class="file-purpose">先下载、再上传给桌面智能体。保留原有12列，包含6个vivo业务相关的模拟课堂示例及空白填写行，可按岗位替换。</p>
+                <a class="download-title" href="assets/vivo-scene-lake-template.xlsx" download="vivo场景湖清单-教学模板.xlsx">下载场景湖清单模板（Excel）</a>
+              </div>
+            </div>
             <div class="copy-status" aria-live="polite"></div>
           </article>
           
@@ -1021,7 +1029,7 @@
       <section class="section" id="roi" aria-labelledby="roi-title">
         <div class="section-head">
           <h2 id="roi-title">Step4：四条轻量判断：选出优先场景</h2>
-          <p>继续在第三步的同一轮任意桌面智能体对话里完成。对候选工作逐项判断：常做或费时、说得清、有材料、兜得住。四条都满足的工作，优先进入模块二拆解。</p>
+          <p>继续在第三步的同一轮桌面智能体对话中完成。下载下方《高价值场景最终得分表》，将场景湖的候选工作填入表格，逐项回答四问。Excel自动得分并生成优先级；四项都满足的工作优先进入模块二拆解。</p>
           <div class="tool-tags" aria-label="Step4 使用工具">
             <span class="tool-tag">任意桌面智能体</span>
           </div>
@@ -1035,25 +1043,28 @@
               </div>
               <button type="button" data-copy-target="prompt-roi">复制当前提示词</button>
             </div>
-            <textarea class="prompt-box short" id="prompt-roi">请基于上一步整理出的 AI 候选场景，在同一轮对话中逐项判断以下四条：
+            <textarea class="prompt-box short" id="prompt-roi">请继续在 Step3 的同一轮对话中操作，并上传本页面 Step4 的《vivo高价值场景最终得分表.xlsx》。将刚才整理的场景湖候选工作逐行写入得分表，输出填写完成的 Excel 文件。
 
-1. 常做或费时？一周要做好几次，或者一次要花很久。
-2. 说得清？步骤和要求，能讲给一位新同事听。
-3. 有材料？纪要、表格、模板、往期样例手头就有。
-4. 兜得住？AI 出错，后果可控。
+只需对每项工作回答以下四问，每项只填“是”或“否”，并给一句有依据的说明：
+1. 常做或费时？经常重复做，或者单次耗时较长。
+2. 说得清？能向新同事讲清步骤、输入和交付要求。
+3. 有材料？已有可授权使用的纪要、表格、模板或历史样例。
+4. 兜得住？AI出错有人工复核，后果可控。
 
-请对每个候选场景分别回答“是”或“否”，并用一句话说明判断依据。优先选出四条都满足的场景；如果有多个，按重复频率和耗时排序。最后只推荐一项优先进入模块二拆解的工作，不补造未经确认的信息。</textarea>
+请保留模板的原有字段、格式、下拉选项与自动计算公式；按场景填写编号、名称、部门岗位、D-G列四问、K列下一步、L列判断依据。不要把H-J列的自动得分和筛选结论改为手写值，也不要将教学演示行算作学员提交场景。
+选择四项全“是”（4/4）的 P1 场景优先进入模块二进行 IPO 拆解；若存在多个 P1，优先选择更高频或更费时、且有材料可验证的一项。兜得住为“否”的必须暂缓。最后只推荐一项优先工作；无法判断的内容写“待补充”，不得编造内部流程和收益数据。</textarea>
             <ul class="hint-list">
               <li><span class="mark">1</span><span><strong>常做或费时：</strong>一周要做好几次，或者一次要花很久。</span></li>
               <li><span class="mark">2</span><span><strong>说得清：</strong>步骤和要求，能讲给一位新同事听。</span></li>
               <li><span class="mark">3</span><span><strong>有材料：</strong>纪要、表格、模板、往期样例手头就有。</span></li>
               <li><span class="mark">4</span><span><strong>兜得住：</strong>AI 出错，后果可控。</span></li>
+              <li><span class="mark">+</span><span>下载下方最终得分表，填写浅黄色区域；蓝色的总分与优先级由Excel公式自动计算。</span></li>
             </ul>
-            <div class="step-downloads" aria-label="Step4 下载模板">
+            <div class="step-downloads" aria-label="Step4 最终得分表模板">
               <div class="step-download">
-                <span class="badge greenish">下载模板</span>
-                <p class="file-purpose">字段和判断标准与 PPT 完全一致。下载后可直接填写，或上传到任意桌面智能体。</p>
-                <a class="download-title" href="assets/AI高价值场景轻量判断表.xlsx" download>AI高价值场景轻量判断表.xlsx</a>
+                <span class="badge greenish">Step 4 · Excel 得分表</span>
+                <p class="file-purpose">将Step3的候选场景填入浅黄色区域，四问选择“是/否”；表格会自动计算0—4分、P1/P2/P3优先级和下一步建议。带vivo模拟示例与评分口径。</p>
+                <a class="download-title" href="assets/vivo-high-value-scorecard.xlsx" download="vivo高价值场景最终得分表.xlsx">下载高价值场景最终得分表（Excel）</a>
               </div>
             </div>
             <div class="copy-status" aria-live="polite"></div>
