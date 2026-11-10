@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="nEeB7khc2Mmub42IWyrzPx" style="box-sizing: border-box; scroll-behavior: smooth; text-size-adjust: 100%;"><head data-page-node-id="l3SaLKKfuEJV47skGe35kA" style="box-sizing: border-box;">
+<meta charset="utf-8" data-page-node-id="mzuwAYjy8TGMKIcHJffEcE" style="box-sizing: border-box;">
+<meta name="viewport" content="width=device-width,initial-scale=1" data-page-node-id="3eNZ4itBH94AJQyj31A0BB" style="box-sizing: border-box;">
+<title data-page-node-id="FpU0sOXnMyBUeRNfbcdv8R" style="box-sizing: border-box;">PRD + Spec 标准 → Workspace → 后勤工作台｜海亮智汇模块五</title>
+<meta name="description" content="海亮智汇后勤校园报修工单跟进场景的两步练习页：第一步把 IPO 定义书与《Spec Workspace 初始化标准 v2.0》一起交给 AI，生成候选 Workspace 输入包；第二步用工作台搭建师把规格变成可点的界面。附可下载 IPO Word、标准包 ZIP 与可复制提示词。" data-page-node-id="5wc7bZFCI7YaAfCcTL88vN" style="box-sizing: border-box;">
+<style data-page-node-id="96vA7UazSSfCEdT4QdIcHa" style="box-sizing: border-box;">
+:root{
+  --ink:#152232;--ink2:#2c3e54;--muted:#5f7085;--line:#e3e8ef;--bg:#f5f7fa;
+  --navy:#0b2743;--navy2:#12395c;--copper:#b0722f;--copper-dk:#8d5520;--tint:#fdf6ee;
+  --pass:#1a6b4a;--pass-bg:#eaf5ef;--fail:#b3261e;--fail-bg:#fdeeec;
+  --warn:#8a5b00;--warn-bg:#fff8e8;--warn-line:#f0dcae;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.78 "Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#8d5520;text-decoration:none;border-bottom:1px solid rgba(176,114,47,.32)}
+a:hover{border-bottom-color:var(--copper)}
+h1,h2,h3,h4{margin:0}
+p{margin:10px 0}
+ul,ol{margin:10px 0 10px 4px;padding-left:20px}
+li{margin:6px 0}
+strong,b{color:inherit}
+
+.topbar{position:sticky;top:0;z-index:40;background:var(--navy);border-bottom:2px solid var(--copper)}
+.topbar .in{max-width:1060px;margin:auto;padding:0 22px;min-height:54px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:9px;color:#fff;font-weight:700;font-size:14.5px;border:0}
+.brand .mark{width:23px;height:23px;border-radius:6px;background:linear-gradient(135deg,var(--copper),#d99a5a);
+  display:grid;place-items:center;font-size:12px;color:#fff;font-weight:800}
+.brand em{font-style:normal;color:#f0b27a}
+.topbar .gap{flex:1}
+.topbar .nv{color:#b7c8db;border:0;font-size:13.5px;padding:5px 9px;border-radius:6px;white-space:nowrap}
+.topbar .nv:hover{background:#173a5c;color:#fff}
+
+.hero{background:var(--navy);color:#fff;padding:44px 0 38px;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-130px;top:-130px;width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(176,114,47,.45),rgba(176,114,47,0) 68%)}
+.hero .in{max-width:1060px;margin:auto;padding:0 22px;position:relative;z-index:2}
+.kick{font-size:12.5px;letter-spacing:1.9px;color:#e6b183;margin-bottom:12px}
+.hero h1{font-size:clamp(23px,3vw,35px);line-height:1.36;font-weight:800;max-width:880px}
+.hero .lead{font-size:16.5px;line-height:1.8;color:#c6d5e4;max-width:830px;margin:14px 0 18px}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tags i{font-style:normal;font-size:12.5px;color:#f2ddc7;border:1px solid #4c6b88;border-radius:20px;padding:4px 12px;background:rgba(255,255,255,.04)}
+
+main{max-width:1060px;margin:auto;padding:28px 22px 8px}
+section{background:#fff;border:1px solid var(--line);border-radius:14px;padding:28px 30px;margin-bottom:20px;
+  box-shadow:0 1px 2px rgba(16,24,40,.04)}
+h2{font-size:22px;font-weight:800;margin:0 0 4px;letter-spacing:.2px}
+h2 .n{display:inline-block;min-width:29px;height:29px;line-height:29px;text-align:center;background:var(--copper);
+  color:#fff;border-radius:8px;font-size:14.5px;margin-right:10px;vertical-align:2px;font-weight:700}
+h3{font-size:16.5px;margin:24px 0 6px;color:var(--ink2)}
+.sec-sub{color:var(--muted);font-size:14px;margin:0 0 16px}
+.str{color:var(--copper-dk);font-weight:700}
+
+table{width:100%;border-collapse:collapse;font-size:14.2px;margin:12px 0}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:#f7f9fc;font-weight:700;color:var(--ink2)}
+tbody tr:nth-child(even) td{background:#fcfdff}
+
+code{font-family:"Cascadia Mono",Consolas,"Courier New",monospace;font-size:13px;background:#f3f6fa;
+  border:1px solid #e6ecf3;border-radius:4px;padding:1px 5px;color:#28425e}
+pre{margin:0;padding:16px 18px;background:#0d2238;color:#dbe7f3;border-radius:10px;overflow:auto;
+  font:13px/1.72 "Cascadia Mono",Consolas,"Courier New",monospace;white-space:pre-wrap;word-break:break-word}
+pre .cm{color:#8fa9c2}
+
+.dl{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
+.dl .card{border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:var(--tint);display:flex;flex-direction:column}
+.dl .card.alt{background:#f4f8fc}
+.dl h4{font-size:15.5px;margin:0 0 4px;display:flex;align-items:center;gap:8px}
+.dl h4 .ext{font-size:11px;font-weight:800;letter-spacing:.6px;color:#fff;background:var(--copper);border-radius:4px;padding:2px 6px}
+.dl .card.alt h4 .ext{background:var(--navy2)}
+.dl .meta{font-size:12.8px;color:var(--muted);margin:0 0 10px}
+.dl ul{font-size:13.4px;color:var(--ink2);margin:0 0 12px;padding-left:18px}
+.dl li{margin:3px 0}
+.dl .btn{margin-top:auto;align-self:flex-start;background:var(--navy);color:#fff;border:0;border-radius:8px;
+  padding:9px 15px;font-size:14px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:7px}
+.dl .btn:hover{background:var(--navy2)}
+.dl .btn.cop{background:var(--copper)}
+.dl .btn.cop:hover{background:var(--copper-dk)}
+
+.flow{display:grid;grid-template-columns:1fr 26px 1fr 26px 1fr;align-items:stretch;gap:0;margin:16px 0 6px}
+.flow .box{border:1px solid var(--line);border-radius:11px;padding:13px 14px;background:#fbfcfe}
+.flow .box b{display:block;font-size:13px;color:var(--copper-dk);margin-bottom:3px}
+.flow .box span{font-size:13px;color:var(--ink2);line-height:1.6;display:block}
+.flow .ar{display:grid;place-items:center;color:#c0a883;font-size:17px}
+
+.note{border-left:3px solid var(--copper);background:var(--tint);padding:11px 14px;border-radius:0 8px 8px 0;font-size:14px;margin:14px 0}
+.note b{color:var(--copper-dk)}
+.warn{border:1px solid var(--warn-line);background:var(--warn-bg);color:#6b4700;border-radius:9px;padding:11px 14px;font-size:14px;margin:14px 0}
+.pass{background:var(--pass-bg);color:var(--pass);border-radius:6px;padding:1px 8px;font-size:12.5px;font-weight:700}
+.fail{background:var(--fail-bg);color:var(--fail);border-radius:6px;padding:1px 8px;font-size:12.5px;font-weight:700}
+
+.prompt{position:relative;margin:12px 0 6px;border:1px solid #1e3a56;border-radius:11px;overflow:hidden}
+.prompt .bar{display:flex;align-items:center;gap:10px;background:#16324c;padding:8px 12px;color:#c9dbe9;font-size:12.8px}
+.prompt .bar .t{font-weight:700;color:#fff}
+.prompt .bar .sp{flex:1}
+.prompt .bar button{background:var(--copper);color:#fff;border:0;border-radius:6px;padding:5px 11px;
+  font-size:12.5px;font-weight:700;cursor:pointer;font-family:inherit}
+.prompt .bar button:hover{background:var(--copper-dk)}
+.prompt .bar .hint{color:#8fa9c2;font-size:12px}
+
+.steps{counter-reset:s;list-style:none;padding:0;margin:12px 0}
+.steps>li{counter-increment:s;position:relative;padding:0 0 0 38px;margin:0 0 18px}
+.steps>li:before{content:counter(s);position:absolute;left:0;top:1px;width:26px;height:26px;border-radius:50%;
+  background:#eef3f9;border:1px solid #cfe0ef;color:var(--navy2);font-weight:800;font-size:13px;display:grid;place-items:center}
+.steps>li b{display:block;font-size:15px;margin-bottom:2px}
+
+.check{list-style:none;padding:0;margin:10px 0}
+.check li{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;border:1px solid var(--line);
+  border-radius:9px;margin:7px 0;background:#fcfdff;font-size:14.4px;cursor:pointer}
+.check li:hover{border-color:#cfdcec}
+.check input{margin:5px 0 0;width:15px;height:15px;accent-color:var(--copper);flex:none}
+.check li.done{background:var(--pass-bg);border-color:#c6e2d3;text-decoration:line-through;color:#4d6a5c}
+.check .cnt{font-size:13px;color:var(--muted);margin-left:6px}
+
+details{border:1px solid var(--line);border-radius:10px;padding:0;margin:14px 0;background:#fcfdff}
+details>summary{cursor:pointer;padding:12px 16px;font-weight:700;font-size:14.6px;color:var(--ink2);list-style:none}
+details>summary::-webkit-details-marker{display:none}
+details>summary:before{content:"▸";color:var(--copper);margin-right:8px;display:inline-block;transition:transform .15s}
+details[open]>summary:before{transform:rotate(90deg)}
+details>div{padding:0 16px 14px}
+
+footer{max-width:1060px;margin:6px auto 40px;padding:0 22px;color:var(--muted);font-size:13px;text-align:center}
+
+.toast{position:fixed;left:50%;bottom:34px;transform:translate(-50%,20px);background:var(--navy);color:#fff;
+  padding:10px 18px;border-radius:9px;font-size:13.5px;opacity:0;pointer-events:none;transition:.22s;z-index:99;
+  box-shadow:0 8px 24px rgba(11,39,67,.28);max-width:88vw;text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+@media(max-width:820px){
+  .dl{grid-template-columns:1fr}
+  .flow{grid-template-columns:1fr;gap:8px}
+  .flow .ar{transform:rotate(90deg);height:16px}
+  section{padding:22px 17px;border-radius:12px}
+  main{padding:18px 14px 4px}
+  .topbar .nv{font-size:12.5px;padding:4px 6px}
+  table{font-size:13.2px}
+  th,td{padding:6px 7px}
+  .hero{padding:32px 0 28px}
+}
+</style>
+<style id="__dm_no_drag_style__">* { -webkit-user-drag: none !important; }</style><style id="__dm_bindable_badge_style__">[data-sp-bindable="database"]{outline:1px dashed #0088ff;outline-offset:2px;border-radius:4px;}[data-sp-bindable="database"] *{pointer-events:none !important;transition:none !important;animation:none !important;}[data-sp-bindable="database"]{transition:none !important;animation:none !important;}</style></head>
+<body data-page-node-id="aaOHzmtLwfaJpWfvvm72Jo" style="position: relative; box-sizing: border-box; margin: 0px; background: rgb(245, 247, 250); color: rgb(21, 34, 50); font: 16px / 1.78 &quot;Microsoft YaHei&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, sans-serif; -webkit-font-smoothing: antialiased;">
+
+
+
+<div class="hero" data-page-node-id="AjvSf7ALToqX8QoQ0l35EH" style="box-sizing: border-box; background: rgb(11, 39, 67); color: rgb(255, 255, 255); padding: 32px 0px 28px; position: relative; overflow: hidden;"><div class="in" data-page-node-id="MLaABtdQYkVnKkwjLak90Z" style="box-sizing: border-box; max-width: 1060px; margin: auto; padding: 0px 22px; position: relative; z-index: 2;">
+  <div class="kick" data-page-node-id="d4NdfLD0s0Pw9orFyv0cYx" style="box-sizing: border-box; font-size: 12.5px; letter-spacing: 1.9px; color: rgb(230, 177, 131); margin-bottom: 12px;">模块五 · Spec 驱动工作台 · 两步练习</div>
+  <h1 data-page-node-id="V6GWC70U9OfYuN1BGbK7qK" style="box-sizing: border-box; margin: 0px; font-size: clamp(23px, 3vw, 35px); line-height: 1.36; font-weight: 800; max-width: 880px;">模块五｜先出 Workspace，再搭工作台：<br data-page-node-id="E2YpfM6BVpa8Dgu8JpoHy4" style="box-sizing: border-box;">把校园报修工单 IPO 变成可开发、可验收的工作台输入包</h1>
+  <p class="lead" data-page-node-id="DC0nYbNCbBhvzC3HGC0bd8" style="box-sizing: border-box; margin: 14px 0px 18px; font-size: 16.5px; line-height: 1.8; color: rgb(198, 213, 228); max-width: 830px;">第一步将校园报修工单 IPO 与《Spec Workspace 初始化标准 v2.0》一起处理，生成待评审的 Workspace 规格包。第二步按规格制作可点击的报修工单跟进工作台原型，模拟工单导入、异常核对、简报导出，不连接真实业务系统。​​​</p>
+  <div class="tags" data-page-node-id="11EZXYlx8EVLsk9rzF9p8f" style="box-sizing: border-box; display: flex; flex-wrap: wrap; gap: 8px;"><i data-page-node-id="FBtPeId3rS3J1MHFv8aLGE" style="box-sizing: border-box; font-style: normal; font-size: 12.5px; color: rgb(242, 221, 199); border: 1px solid rgb(76, 107, 136); border-radius: 20px; padding: 4px 12px; background: rgba(255, 255, 255, 0.04);">IPO 需求定义书</i><i data-page-node-id="LisuAPwMqPbRJ2jxvaUxhp" style="box-sizing: border-box; font-style: normal; font-size: 12.5px; color: rgb(242, 221, 199); border: 1px solid rgb(76, 107, 136); border-radius: 20px; padding: 4px 12px; background: rgba(255, 255, 255, 0.04);">Spec 标准 v2.0</i><i data-page-node-id="kJA1GyD7INA4FX1y0vRypc" style="box-sizing: border-box; font-style: normal; font-size: 12.5px; color: rgb(242, 221, 199); border: 1px solid rgb(76, 107, 136); border-radius: 20px; padding: 4px 12px; background: rgba(255, 255, 255, 0.04);">Workspace 初始化</i><i data-page-node-id="sewNf135KpUNFnzO3DmLsK" style="box-sizing: border-box; font-style: normal; font-size: 12.5px; color: rgb(242, 221, 199); border: 1px solid rgb(76, 107, 136); border-radius: 20px; padding: 4px 12px; background: rgba(255, 255, 255, 0.04);">BASELINE_DRAFT</i><i data-page-node-id="esM8qFFQYuP8GnACYP3sFZ" style="box-sizing: border-box; font-style: normal; font-size: 12.5px; color: rgb(242, 221, 199); border: 1px solid rgb(76, 107, 136); border-radius: 20px; padding: 4px 12px; background: rgba(255, 255, 255, 0.04);">工作台搭建师</i><i data-page-node-id="md3wyBh5hgHbJwbhL6o02A" style="box-sizing: border-box; font-style: normal; font-size: 12.5px; color: rgb(242, 221, 199); border: 1px solid rgb(76, 107, 136); border-radius: 20px; padding: 4px 12px; background: rgba(255, 255, 255, 0.04);">校园报修工单场景</i></div>
+</div></div>
+
+<main data-page-node-id="htp1cqiAw98hOvOtLQLS2R" style="box-sizing: border-box; max-width: 1060px; margin: auto; padding: 18px 14px 4px;">
+
+<section id="prep" data-page-node-id="gXFVsgt1cIj428kuWNQW4l" style="box-sizing: border-box; background: rgb(255, 255, 255); border: 1px solid rgb(227, 232, 239); border-radius: 12px; padding: 22px 17px; margin-bottom: 20px; box-shadow: rgba(16, 24, 40, 0.04) 0px 1px 2px;">
+  <h2 data-page-node-id="OBoRtdVVdgqrkPtHO25XFz" style="box-sizing: border-box; margin: 0px 0px 4px; font-size: 22px; font-weight: 800; letter-spacing: 0.2px;"><span class="n" data-page-node-id="DN8bsJ0ivEhwsbiw9zvU3j" style="box-sizing: border-box; display: inline-block; min-width: 29px; height: 29px; line-height: 29px; text-align: center; background: rgb(176, 114, 47); color: rgb(255, 255, 255); border-radius: 8px; font-size: 14.5px; margin-right: 10px; vertical-align: 2px; font-weight: 700;">0</span>先领两份材料</h2>
+  <p class="sec-sub" data-page-node-id="4e0g7fytsZauTyJldIZSJa" style="box-sizing: border-box; margin: 0px 0px 16px; color: rgb(95, 112, 133); font-size: 14px;">练习只需要两份东西：一份真实结构的 IPO 定义书，一份规定「规格要写到什么程度」的标准包。其余资料都不必带。</p>
+
+  <div class="dl" data-page-node-id="uoLJhhf9JqESV0eIUe9OId" style="box-sizing: border-box; display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 6px;">
+    <div class="card" data-page-node-id="OX6Nug6ztJSeBs70E3Vtnc" style="box-sizing: border-box; border: 1px solid rgb(227, 232, 239); border-radius: 12px; padding: 16px 18px; background: rgb(253, 246, 238); display: flex; flex-direction: column;">
+      <h4 data-page-node-id="Da5FQ17Hj4uuUjSj8K40IF" style="box-sizing: border-box; margin: 0px 0px 4px; font-size: 15.5px; display: flex; align-items: center; gap: 8px;">海亮智汇后勤校园报修工单跟进 IPO <span class="ext" data-page-node-id="L1rtnFd8ih9MvTC9GGfEdS" style="box-sizing: border-box; font-size: 11px; font-weight: 800; letter-spacing: 0.6px; color: rgb(255, 255, 255); background: rgb(176, 114, 47); border-radius: 4px; padding: 2px 6px;">DOCX</span></h4>
+      <p class="meta" data-page-node-id="oG6sO05fixplnxX5IxAiUH" style="box-sizing: border-box; margin: 0px 0px 10px; font-size: 12.8px; color: rgb(95, 112, 133);">hailiang-campus-repair-ipo-sample.docx · 教学模拟版 V1.0</p>
+      <ul data-page-node-id="o0Z8rijoTdipJANmzPMSAx" style="box-sizing: border-box; margin: 0px 0px 12px; padding-left: 18px; font-size: 13.4px; color: rgb(44, 62, 84);">
+        <li data-page-node-id="3YYDNCl8l7IYjIJG9cfAPL" style="box-sizing: border-box; margin: 3px 0px;">完整 I／P／O 三段：输入字段、处理步骤、输出与验收</li>
+        <li data-page-node-id="i7zySMMiYA7DTHBz22h4AP" style="box-sizing: border-box; margin: 3px 0px;">6 条课堂模拟报修工单（不含真实师生、维修人员或校区信息）</li>
+        <li data-page-node-id="FWnbNQvrUMFrAJOTuR0LOE" style="box-sizing: border-box; margin: 3px 0px;">含工单状态核对、风险升级、人工验收规则和测试用例</li>
+      </ul>
+      <a class="btn" href="files/hailiang-campus-repair-ipo-sample.docx" download="" data-page-node-id="F4rKdQSMNg1NUZuz6JwA3E" style="box-sizing: border-box; color: rgb(255, 255, 255); text-decoration: none; border: 0px; margin-top: auto; align-self: flex-start; background: rgb(11, 39, 67); border-radius: 8px; padding: 9px 15px; font-size: 14px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 7px;">下载 IPO 定义书</a>
+    </div>
+    <div class="card alt" data-page-node-id="ZEgnOFyovZ7DQrWNGSeA11" style="box-sizing: border-box; border: 1px solid rgb(227, 232, 239); border-radius: 12px; padding: 16px 18px; background: rgb(244, 248, 252); display: flex; flex-direction: column;">
+      <h4 data-page-node-id="s5FzonyclEDkHmVSQpyDgi" style="box-sizing: border-box; margin: 0px 0px 4px; font-size: 15.5px; display: flex; align-items: center; gap: 8px;">Spec Workspace 初始化标准 <span class="ext" data-page-node-id="eaX0xNGu2IX3VJdiFUAtDJ" style="box-sizing: border-box; font-size: 11px; font-weight: 800; letter-spacing: 0.6px; color: rgb(255, 255, 255); background: rgb(18, 57, 92); border-radius: 4px; padding: 2px 6px;">V2.0 ZIP</span></h4>
+      <p class="meta" data-page-node-id="jFOJAoj2z5DgUpJ5fBoZi7" style="box-sizing: border-box; margin: 0px 0px 10px; font-size: 12.8px; color: rgb(95, 112, 133);">spec-workspace-standard-v2.0.zip · 约 47 KB · 25 个文件</p>
+      <ul data-page-node-id="oCx8ggyPZaPXHrEonBcXBU" style="box-sizing: border-box; margin: 0px 0px 12px; padding-left: 18px; font-size: 13.4px; color: rgb(44, 62, 84);">
+        <li data-page-node-id="mTn1GBCTXX8CuUgiXkm7nn" style="box-sizing: border-box; margin: 3px 0px;"><code data-page-node-id="PTDPsZPxLDztj202mmj2cn" style="box-sizing: border-box; font-family: &quot;Cascadia Mono&quot;, Consolas, &quot;Courier New&quot;, monospace; font-size: 13px; background: rgb(243, 246, 250); border: 1px solid rgb(230, 236, 243); border-radius: 4px; padding: 1px 5px; color: rgb(40, 66, 94);">AGENTS.md</code> + 初始化 Skill（四阶段与判定标准）</li>
+        <li data-page-node-id="8NtkTuRpyocHfyvLyHp4dX" style="box-sizing: border-box; margin: 3px 0px;"><code data-page-node-id="0GexGDckSQ3vWqpvL8BhGY" style="box-sizing: border-box; font-family: &quot;Cascadia Mono&quot;, Consolas, &quot;Courier New&quot;, monospace; font-size: 13px; background: rgb(243, 246, 250); border: 1px solid rgb(230, 236, 243); border-radius: 4px; padding: 1px 5px; color: rgb(40, 66, 94);">references/</code> 规格契约、编号规则、校验清单、模式差异</li>
+        <li data-page-node-id="Oo8ZSVoGdHtJmqNo0BxE9B" style="box-sizing: border-box; margin: 3px 0px;"><code data-page-node-id="Jb2HZ4P6LHG9aNT24QzfVM" style="box-sizing: border-box; font-family: &quot;Cascadia Mono&quot;, Consolas, &quot;Courier New&quot;, monospace; font-size: 13px; background: rgb(243, 246, 250); border: 1px solid rgb(230, 236, 243); border-radius: 4px; padding: 1px 5px; color: rgb(40, 66, 94);">templates/workspace/</code> 十份规格骨架 + <code data-page-node-id="hEHtA59YiEWUMc6B9ZSHF2" style="box-sizing: border-box; font-family: &quot;Cascadia Mono&quot;, Consolas, &quot;Courier New&quot;, monospace; font-size: 13px; background: rgb(243, 246, 250); border: 1px solid rgb(230, 236, 243); border-radius: 4px; padding: 1px 5px; color: rgb(40, 66, 94);">tools/workspace_pack.py</code></li>
+      </ul>
+      <a class="btn" href="files/spec-workspace-standard-v2.0.zip" download="" data-page-node-id="6QKA9HzVrKNzpokJ8C6CeG" style="box-sizing: border-box; color: rgb(255, 255, 255); text-decoration: none; border: 0px; margin-top: auto; align-self: flex-start; background: rgb(11, 39, 67); border-radius: 8px; padding: 9px 15px; font-size: 14px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 7px;">下载标准包</a>
+    </div>
+  </div>
+
+  <div class="note" data-page-node-id="TpuNBnD6IYQEWHDVTYcFhw" style="box-sizing: border-box; border-left: 3px solid rgb(176, 114, 47); background: rgb(253, 246, 238); padding: 11px 14px; border-radius: 0px 8px 8px 0px; font-size: 14px; margin: 14px 0px;"><b data-page-node-id="x0JTiuOwJiMoLBPyba4DtL" style="box-sizing: border-box; color: rgb(141, 85, 32);">标准包能单独用。</b>标准包里的 Skill、规范、打包工具会被复制进输出包，所以输出的 Workspace 脱离标准包也能继续工作。打包工具可能需 Python 3.9+，不装第三方库。</div>
+
+  <h3 data-page-node-id="Vv7oECHYlduvOQ3GUjhhdd" style="box-sizing: border-box; margin: 24px 0px 6px; font-size: 16.5px; color: rgb(44, 62, 84);">从 IPO 到后勤工作台：每一步产出什么</h3>
+  <div class="flow" data-page-node-id="82U8ouzr2MPRHTVmStvoZk" style="box-sizing: border-box; display: grid; grid-template-columns: 1fr; align-items: stretch; gap: 8px; margin: 16px 0px 6px;">
+    <div class="box" data-page-node-id="aFJlaO5wcjctXB38tvCgEU" style="box-sizing: border-box; border: 1px solid rgb(227, 232, 239); border-radius: 11px; padding: 13px 14px; background: rgb(251, 252, 254);"><b data-page-node-id="ZBRjYOMGGydALtBxQGSuPq" style="box-sizing: border-box; color: rgb(141, 85, 32); display: block; font-size: 13px; margin-bottom: 3px;">输入</b><span data-page-node-id="Ec7WnIhXKUQsL8EhzFZyLt" style="box-sizing: border-box; font-size: 13px; color: rgb(44, 62, 84); line-height: 1.6; display: block;">IPO Word ＋ 标准包 ZIP<br data-page-node-id="LOXsB4WVlqNiC7cXinqixZ" style="box-sizing: border-box;">（要改就改这两份）</span></div>
+    <div class="ar" data-page-node-id="MftdZ2DchjjwoFrrq7XAnN" style="box-sizing: border-box; display: grid; place-items: center; color: rgb(192, 168, 131); font-size: 17px; transform: rotate(90deg); height: 16px;">→</div>
+    <div class="box" data-page-node-id="NIVnET0Ecsq5g5yjzyKPyF" style="box-sizing: border-box; border: 1px solid rgb(227, 232, 239); border-radius: 11px; padding: 13px 14px; background: rgb(251, 252, 254);"><b data-page-node-id="ab0nBlYSej7PWJREslZa5q" style="box-sizing: border-box; color: rgb(141, 85, 32); display: block; font-size: 13px; margin-bottom: 3px;">第一步产出</b><span data-page-node-id="t5tkmjEDiJz1iLnPV88tU8" style="box-sizing: border-box; font-size: 13px; color: rgb(44, 62, 84); line-height: 1.6; display: block;">候选 Workspace：十份规格、规则、验收、缺口清单<br data-page-node-id="IknFK95mAE6HR0anAQKN2K" style="box-sizing: border-box;">ZIP ＋ HTML 摘要</span></div>
+    <div class="ar" data-page-node-id="HjGUqA6CM02qPctzDRgEW2" style="box-sizing: border-box; display: grid; place-items: center; color: rgb(192, 168, 131); font-size: 17px; transform: rotate(90deg); height: 16px;">→</div>
+    <div class="box" data-page-node-id="t0NKAbuUXKGEypdqAiNlko" style="box-sizing: border-box; border: 1px solid rgb(227, 232, 239); border-radius: 11px; padding: 13px 14px; background: rgb(251, 252, 254);"><b data-page-node-id="yRwzlAScrF4gkTjNJhWZ5c" style="box-sizing: border-box; color: rgb(141, 85, 32); display: block; font-size: 13px; margin-bottom: 3px;">第二步产出</b><span data-page-node-id="ecyFL7osgL98ZwIpxLVFW6" style="box-sizing: border-box; font-size: 13px; color: rgb(44, 62, 84); line-height: 1.6; display: block;">可点的工作台界面<br data-page-node-id="BCLJi7NG0A2TKMNDN17yXh" style="box-sizing: border-box;"><br data-page-node-id="e7qjY9jVptlrtqnBqi8IM0" style="box-sizing:border-box;-webkit-user-drag:none !important"></span></div>
+  </div>
+  <div class="warn" data-page-node-id="96Y8mPbo2jXrV71MYQNNPh" style="box-sizing: border-box; border: 1px solid rgb(240, 220, 174); background: rgb(255, 248, 232); color: rgb(107, 71, 0); border-radius: 9px; padding: 11px 14px; font-size: 14px; margin: 14px 0px;"><b data-page-node-id="mBs9XPNIN5dlQQMETVToGd" style="box-sizing: border-box; color: inherit;">不要跳过第一步。</b>没有规格直接让它「做个工作台」，没有这个过程AI很多信息全靠猜，返工比重做还贵。</div>
+</section>
+
+<section id="step1" data-page-node-id="gP3cNnMLyFT0OWNRCBweE5" style="box-sizing: border-box; background: rgb(255, 255, 255); border: 1px solid rgb(227, 232, 239); border-radius: 12px; padding: 22px 17px; margin-bottom: 20px; box-shadow: rgba(16, 24, 40, 0.04) 0px 1px 2px;">
+  <h2 data-page-node-id="O9BhmPD6uL1wwhVQM62nHg" style="box-sizing: border-box; margin: 0px 0px 4px; font-size: 22px; font-weight: 800; letter-spacing: 0.2px;"><span class="n" data-page-node-id="Uc4IC1rmnBbnbfCPP4eyQ5" style="box-sizing: border-box; display: inline-block; min-width: 29px; height: 29px; line-height: 29px; text-align: center; background: rgb(176, 114, 47); color: rgb(255, 255, 255); border-radius: 8px; font-size: 14.5px; margin-right: 10px; vertical-align: 2px; font-weight: 700;">1</span>第一步：报修 IPO + Spec 标准 → 生成 Workspace</h2>
+  <p class="sec-sub" data-page-node-id="fmyIXK3oufHLRXtCASMVSX" style="box-sizing: border-box; margin: 0px 0px 16px; color: rgb(95, 112, 133); font-size: 14px;">只做网页模版，不开发业务代码。</p>
+
+  <ol class="steps" data-page-node-id="q9LHswEYGLHD6jybyDaKh9" style="box-sizing: border-box; margin: 12px 0px; padding: 0px; counter-reset: s 0; list-style: none;">
+    <li data-page-node-id="XtMnwM3WFEJAsldASq0uSS" style="box-sizing: border-box; margin: 0px 0px 18px; counter-increment: s 1; position: relative; padding: 0px 0px 0px 38px;"><b data-page-node-id="SfpU8L9DLKttVdxjXWZcOk" style="box-sizing: border-box; color: inherit; display: block; font-size: 15px; margin-bottom: 2px;">把两份材料一起放进对话</b>
+      <p data-page-node-id="ORdsVWZGFauuSkahBOxmz8" style="box-sizing: border-box; margin: 10px 0px;">上传 IPO Word（或粘贴正文），以及压缩包。</p>
+    </li>
+    <li data-page-node-id="Z9UlANAENWsK7NnILlcDjj" style="box-sizing: border-box; margin: 0px 0px 18px; counter-increment: s 1; position: relative; padding: 0px 0px 0px 38px;"><b data-page-node-id="eAfynILKXwqZfNpokt5pxq" style="box-sizing: border-box; color: inherit; display: block; font-size: 15px; margin-bottom: 2px;">复制下面这段提示词，原样发出去</b>
+      <p data-page-node-id="xM90AhQA5exXFutN7L82XW" style="box-sizing: border-box; margin: 10px 0px;">这段提示词指导 AI 根据海亮后勤 IPO 和通用标准包生成可评审的 Workspace 规格​</p>
+    </li>
+    <li data-page-node-id="cITx1mrGrzvsrClxuar9XR" style="box-sizing: border-box; margin: 0px 0px 18px; counter-increment: s 1; position: relative; padding: 0px 0px 0px 38px;">
+      
+    
+
+    </li>
+  </ol>
+
+  <div class="prompt" data-page-node-id="D9KxEHdBmHGjh08ZRNgRMC" style="box-sizing: border-box; position: relative; margin: 12px 0px 6px; border: 1px solid rgb(30, 58, 86); border-radius: 11px; overflow: hidden;">
+    <div class="bar" data-page-node-id="bsvJfGsZUtnEQqk5CGURiB" style="box-sizing: border-box; display: flex; align-items: center; gap: 10px; background: rgb(22, 50, 76); padding: 8px 12px; color: rgb(201, 219, 233); font-size: 12.8px;"><span class="t" data-page-node-id="t1HUsXqIOmkBG77fUNFHkM" style="box-sizing: border-box; font-weight: 700; color: rgb(255, 255, 255);">第一步 · 生成 Workspace 初始化输入包</span><span class="hint" id="h1" data-page-node-id="jmnoqhxkyG4udxYHE6XzuB" style="box-sizing: border-box; color: rgb(143, 169, 194); font-size: 12px;">直接复制</span><span class="sp" data-page-node-id="FOUKDgW3C7mii91lO0l0Yj" style="box-sizing: border-box; flex: 1 1 0%;"></span>
+      <button data-copy="p1" data-page-node-id="OdKFqNlw9JD5BDmPVLWnP3" style="box-sizing: border-box; background: rgb(176, 114, 47); color: rgb(255, 255, 255); border: 0px; border-radius: 6px; padding: 5px 11px; font-size: 12.5px; font-weight: 700; cursor: pointer; font-family: inherit;">复制提示词</button></div>
+    <pre id="p1" data-page-node-id="Ex1q9tHPMw2MxwfjfFe3RA" style="box-sizing: border-box; margin: 0px; padding: 16px 18px; background: rgb(13, 34, 56); color: rgb(219, 231, 243); border-radius: 10px; overflow: auto; font: 13px / 1.72 &quot;Cascadia Mono&quot;, Consolas, &quot;Courier New&quot;, monospace; white-space: pre-wrap; word-break: break-word;">请把我提供的 PRD（或 IPO）与《Spec Workspace 初始化标准 v2.0》一起处理，生成本项目专属的 Workspace 初始化输入包。
+先读取标准包的 AGENTS.md 和 .agents/skills/spec-workspace-init/SKILL.md，再按需读取 references/ 与 templates/。此次模式为 new；第一步只做初始化，不开发业务代码，不安装业务依赖，不发布站点。
+
+1. 列出实际读到的资料、版本、范围和未能读取的内容；区分我的业务资料、标准模板与课堂示例。不要把示例内容当成我的需求，也不要重复问已有答案。
+2. 根据 PRD 生成完整的项目规格：业务目标与边界、IPO、SOP、业务规则与状态机、数据与导入映射、架构与接口候选、页面与输出、权限安全、验收用例和需求追踪。每条关键需求有来源、规则和可检查的预期。
+3. 参考初始化 Skill 的“目录初始化—只读盘点—基线候选—评审确认”。有存量代码时仅扫描我明确提供的目录，说明覆盖和遗漏；没有代码时 observed components 为空，把拟建模块放在设计候选里，不编造仓库、组件或已运行结果。
+4. 保留已确认企业规范；缺少的技术栈、品牌、接口与权限能力写成设计建议或待确认。非关键缺口不妨碍交付候选包；会改变范围、金额、权限或对外动作的缺口列为阻断，不能靠默认值绕过。
+5. 按 templates/workspace 的交付契约，写出实质内容，不只复制空目录或占位符。复制后续所需的 Skill、规范和 tools/workspace_pack.py，使输出包无需原标准包也能继续使用。初始化状态为 BASELINE_DRAFT；业务测试均为 NOT_RUN，除非本轮确实执行且留有证据。
+6. 以“海亮智汇后勤校园报修工单跟进”为项目名称；执行结构校验后，生成 outputs 下同版本的《项目名_Workspace_v1.0.0_r001.zip》和《项目名_Workspace_v1.0.0_r001.html》（工具采用英文 project_id 文件名也可以）。只分发获准材料，不包含密钥、本机配置、构建缓存或无关原始文件。
+7. 同时告诉我：已初始化什么、仍有哪些关键问题、下一步先确认哪份基线。不得把已打包写成已批准、已开发或已上线。不要自动进入第二步。
+项目名可从 PRD 提取；只有无法可靠确定时使用中性的临时项目名并注明。此次资料不足时仍交付有缺口标记的候选包。</pre>
+  </div>
+</section>
+
+<section id="step2" data-page-node-id="5zi3x5KyH5ldFJmZxjPcmJ" style="box-sizing: border-box; background: rgb(255, 255, 255); border: 1px solid rgb(227, 232, 239); border-radius: 12px; padding: 22px 17px; margin-bottom: 20px; box-shadow: rgba(16, 24, 40, 0.04) 0px 1px 2px;">
+  <h2 data-page-node-id="c6GWCIKQBAGhMGx3oWhfDE" style="box-sizing: border-box; margin: 0px 0px 4px; font-size: 22px; font-weight: 800; letter-spacing: 0.2px;"><span class="n" data-page-node-id="XJ5ucun6m8nWWxbNwduHxN" style="box-sizing: border-box; display: inline-block; min-width: 29px; height: 29px; line-height: 29px; text-align: center; background: rgb(176, 114, 47); color: rgb(255, 255, 255); border-radius: 8px; font-size: 14.5px; margin-right: 10px; vertical-align: 2px; font-weight: 700;">2</span>第二步：按 Workspace 规格生成报修跟进工作台</h2>
+  <p class="sec-sub" data-page-node-id="K8UE0SFJvj3EKCFaHAlMnF" style="box-sizing: border-box; margin: 0px 0px 16px; color: rgb(95, 112, 133); font-size: 14px;">上一步生成的规格文件就是这一轮的输入。这一轮不再讨论需求，只把规格变成能点的界面。</p>
+
+  
+
+  <ol class="steps" data-page-node-id="CaXMzVBy0KnYyR9sRUSEZl" style="box-sizing: border-box; margin: 12px 0px; padding: 0px; counter-reset: s 0; list-style: none;">
+    <li data-page-node-id="9YexZqBVmGegnyccbizEcS" style="box-sizing: border-box; margin: 0px 0px 18px; counter-increment: s 1; position: relative; padding: 0px 0px 0px 38px;"><b data-page-node-id="o2wYozVUGUOqiW0CrJFrtE" style="box-sizing: border-box; color: inherit; display: block; font-size: 15px; margin-bottom: 2px;">打开上一步生成的海亮后勤 Workspace 目录​​​</b>
+      <p data-page-node-id="EdUBt3V9jgEIBC6xDCsrin" style="box-sizing: border-box; margin: 10px 0px;">在同一个对话里继续</p>
+    </li>
+    <li data-page-node-id="CMYTsUyVCRpfBK8heuDohA" style="box-sizing: border-box; margin: 0px 0px 18px; counter-increment: s 1; position: relative; padding: 0px 0px 0px 38px;"><b data-page-node-id="Q7IxpkxpjPHCfMV0BnKRUt" style="box-sizing: border-box; color: inherit; display: block; font-size: 15px; margin-bottom: 2px;">在输入框选中专家「工作台搭建师」</b>
+      
+    
+      
+    
+
+    </li>
+    <li data-page-node-id="8ZKkdKH2stdCr7nJFoLPXI" style="box-sizing: border-box; margin: 0px 0px 18px; counter-increment: s 1; position: relative; padding: 0px 0px 0px 38px;"><b data-page-node-id="E6uD0gxOk4IXlsZFTGfept" style="box-sizing: border-box; color: inherit; display: block; font-size: 15px; margin-bottom: 2px;">发这句话就行</b>
+      <p data-page-node-id="75H8ahq5LGmHCaOEb4KYgT" style="box-sizing: border-box; margin: 10px 0px;">需求已经在规格里，不需要再把背景讲一遍。​​​</p>
+    </li>
+  </ol><div class="prompt" data-page-node-id="JxlCTOmqIusuIcz3BrYc5Z" style="box-sizing: border-box; position: relative; margin: 12px 0px 6px; border: 1px solid rgb(30, 58, 86); border-radius: 11px; overflow: hidden;">
+    <div class="bar" data-page-node-id="gkKtvIdXNiZ6xj8eFNRc6v" style="box-sizing: border-box; display: flex; align-items: center; gap: 10px; background: rgb(22, 50, 76); padding: 8px 12px; color: rgb(201, 219, 233); font-size: 12.8px;"><span class="t" data-page-node-id="ZVG9XJzXWQOw44trFh8aKB" style="box-sizing: border-box; font-weight: 700; color: rgb(255, 255, 255);">第二步 · 生成工作台（配合专家：工作台搭建师）</span><span class="hint" data-page-node-id="TNXQWepbEoP8fDuafZD2HR" style="box-sizing: border-box; color: rgb(143, 169, 194); font-size: 12px;">复制后直接发</span><span class="sp" data-page-node-id="fUCFUmTpGudOai17StrLD1" style="box-sizing: border-box; flex: 1 1 0%;"></span>
+      <button data-copy="p2" data-page-node-id="GLBGYLlCQLbLL04Bxeg3u9" style="box-sizing: border-box; background: rgb(176, 114, 47); color: rgb(255, 255, 255); border: 0px; border-radius: 6px; padding: 5px 11px; font-size: 12.5px; font-weight: 700; cursor: pointer; font-family: inherit;">复制提示词</button></div>
+    <pre id="p2" data-page-node-id="Xhdi8P6XVgODsjgrAWgzGS" style="box-sizing: border-box; margin: 0px; padding: 16px 18px; background: rgb(13, 34, 56); color: rgb(219, 231, 243); border-radius: 10px; overflow: auto; font: 13px / 1.72 &quot;Cascadia Mono&quot;, Consolas, &quot;Courier New&quot;, monospace; white-space: pre-wrap; word-break: break-word;">基于上一步输出的 Workspace 初始化包，生成这个项目的工作台界面。先读 WORKSPACE.md、specs/04-rules.md、specs/07-ui.md、specs/08-security.md、specs/09-acceptance.md，再动手。
+
+1. 页面按 specs/07-ui.md 的清单做（工单导入、异常核对、跟进结果导出三页）；不增加规格之外的页面或字段，未确认的内容标“待确认”，不要编造。
+2. 工单字段、状态冲突、超时风险与人工复核节点严格对齐 specs/04-rules.md；不要把“维修已完成”自动当作“已验收”，规则缺失时列出待确认事项，不使用默认值补齐。
+3. 权限按 specs/08-security.md 的矩阵实现：默认拒绝，越权动作连入口都不出现，并在页面上提示无权限。
+4. 用包内样例数据把主流程跑通，验收用例逐条给可点路径；未执行的标 NOT_RUN，不写“预计通过”。
+5. 只输出基于六条模拟工单的本地可预览版：不发布站点、不接真实系统、不写入任何生产环境。做完告诉我：做了什么页面、哪些规则没落地、下一步该确认哪条缺口。</pre>
+  </div>
+</section>
+
+
+
+
+
+
+
+</main>
+
+<footer data-page-node-id="8iR4OHY8KCMuapvJEbYQg5" style="box-sizing: border-box; max-width: 1060px; margin: 6px auto 40px; padding: 0px 22px; color: rgb(95, 112, 133); font-size: 13px; text-align: center;">海亮智汇后勤 · 模块五 Spec 驱动工作台｜李家贵 · 教学模拟案例，非企业真实工单或上线承诺<div style="margin-top:12px"><a href="/lijiagui/hailiang-ai-course/" style="font-weight:700;color:#155eef;text-decoration:none">← 返回海亮智汇 AI 课程总页</a></div></footer>
+<div class="toast" id="toast" role="status" aria-live="polite" data-page-node-id="3DPW4s1LHPCBrnL1jMIkVc" style="box-sizing: border-box; position: fixed; left: 50%; bottom: 34px; transform: translate(-50%, 20px); background: rgb(11, 39, 67); color: rgb(255, 255, 255); padding: 10px 18px; border-radius: 9px; font-size: 13.5px; opacity: 0; pointer-events: none; transition: 0.22s; z-index: 99; box-shadow: rgba(11, 39, 67, 0.28) 0px 8px 24px; max-width: 88vw; text-align: center;"></div>
+
+<script data-page-node-id="Z64GXoxwpfko32AtGUAZlo" style="box-sizing: border-box;">
+(function(){
+  var toast = document.getElementById('toast'), tid = null;
+  function say(msg){ toast.textContent = msg; toast.classList.add('on'); clearTimeout(tid);
+    tid = setTimeout(function(){ toast.classList.remove('on'); }, 2600); }
+
+  function fallback(pre){
+    try{
+      var r = document.createRange(); r.selectNodeContents(pre);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      say('已选中全部文本，请按 Ctrl+C（Mac 用 ⌘+C）复制');
+    }catch(e){ say('复制失败，请手动选择文本复制'); }
+  }
+
+  document.querySelectorAll('button[data-copy]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var pre = document.getElementById(btn.getAttribute('data-copy'));
+      if(!pre){ say('找不到提示词正文'); return; }
+      var text = pre.innerText;
+      if(!text || text.length < 30){ say('提示词正文为空'); return; }
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(function(){
+          say('已复制 ' + text.length + ' 字，可直接粘贴');
+        }, function(){ fallback(pre); });
+      } else { fallback(pre); }
+    });
+  });
+
+  var KEY = 'juhe-spec-check-v1', box = document.getElementById('chk'),
+      items = Array.prototype.slice.call(box.querySelectorAll('input[type=checkbox]')),
+      cnt = document.getElementById('cnt');
+  function save(){
+    var st = items.map(function(i){ return i.checked ? 1 : 0; });
+    try{ localStorage.setItem(KEY, JSON.stringify(st)); }catch(e){}
+  }
+  function render(){
+    var n = items.filter(function(i){ return i.checked; }).length;
+    cnt.textContent = n + ' / ' + items.length;
+    items.forEach(function(i){ i.parentNode.classList.toggle('done', i.checked); });
+  }
+  try{
+    var saved = JSON.parse(localStorage.getItem(KEY) || '[]');
+    items.forEach(function(i, k){ if(saved[k]) i.checked = true; });
+  }catch(e){}
+  items.forEach(function(i){
+    i.addEventListener('change', function(){ save(); render(); });
+    i.parentNode.addEventListener('click', function(ev){
+      if(ev.target !== i){ i.checked = !i.checked; save(); render(); }
+    });
+  });
+  render();
+})();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body></html>
