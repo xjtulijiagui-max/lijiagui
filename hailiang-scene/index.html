@@ -1,0 +1,1138 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="海亮智汇后勤 AI 场景训练操作台：从岗位任务流程梳理到 AI 介入、场景湖清单与四条轻量判断，含四个可编辑提示词与课堂练习。">
+  <title>海亮智汇后勤 AI 场景训练操作台</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --surface-primary: #08090a;
+      --surface-secondary: #0f1011;
+      --surface-elevated: #191a1b;
+      --surface-inset: #111316;
+      --text-primary: #f7f8f8;
+      --text-secondary: #d0d6e0;
+      --text-muted: #8a8f98;
+      --border-subtle: rgba(255,255,255,0.06);
+      --border-standard: rgba(255,255,255,0.10);
+      --accent-primary: #7170ff;
+      --accent-hover: #8585ff;
+      --accent-green: #2dd4bf;
+      --accent-amber: #f7b955;
+      --status-error: #ff7979;
+      --radius-card: 8px;
+      --radius-control: 6px;
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+      --space-16: 64px;
+      --font-sans: Arial, "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+      --font-mono: "Cascadia Mono", "Microsoft YaHei Mono", Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        linear-gradient(180deg, rgba(113,112,255,0.08), transparent 360px),
+        var(--surface-primary);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.65;
+      letter-spacing: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      overflow-wrap: anywhere;
+    }
+
+    button,
+    textarea,
+    input {
+      font: inherit;
+      letter-spacing: 0;
+    }
+
+    button,
+    .button-link {
+      border: 1px solid var(--border-standard);
+      border-radius: var(--radius-control);
+      background: rgba(255,255,255,0.04);
+      color: var(--text-primary);
+      min-height: 40px;
+      padding: 0 var(--space-4);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      cursor: pointer;
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease, color 160ms ease;
+      white-space: nowrap;
+    }
+
+    button:hover,
+    .button-link:hover {
+      transform: translateY(-1px);
+      border-color: rgba(113,112,255,0.65);
+      background: rgba(113,112,255,0.14);
+    }
+
+    button:active,
+    .button-link:active {
+      transform: translateY(0);
+    }
+
+    button:focus-visible,
+    a:focus-visible,
+    textarea:focus-visible {
+      outline: 2px solid var(--accent-hover);
+      outline-offset: 3px;
+    }
+
+    .shell {
+      width: min(100%, 1480px);
+      margin: 0 auto;
+      padding: var(--space-6);
+      display: grid;
+      grid-template-columns: 284px minmax(0, 1fr);
+      gap: var(--space-6);
+    }
+
+    .rail {
+      position: sticky;
+      top: var(--space-6);
+      align-self: start;
+      min-height: calc(100dvh - 48px);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-card);
+      background: rgba(15,16,17,0.92);
+      padding: var(--space-4);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.22);
+    }
+
+    .rail-title {
+      padding: var(--space-2) var(--space-2) var(--space-3);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .rail-title strong {
+      display: block;
+      font-size: 15px;
+      line-height: 1.4;
+      font-weight: 650;
+    }
+
+    .rail-title span {
+      color: var(--text-muted);
+      display: block;
+      margin-top: var(--space-1);
+      font-size: 12px;
+    }
+
+    .nav-list,
+    .tool-list,
+    .check-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: var(--space-2);
+    }
+
+    .nav-item {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: var(--space-2);
+      min-height: 44px;
+      padding: var(--space-2);
+      border-radius: var(--radius-control);
+      color: var(--text-secondary);
+      border: 1px solid transparent;
+      transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+    }
+
+    .nav-item:hover {
+      background: rgba(255,255,255,0.035);
+      border-color: var(--border-subtle);
+      transform: translateX(2px);
+    }
+
+    .nav-index {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: var(--radius-control);
+      background: rgba(255,255,255,0.04);
+      color: var(--accent-primary);
+      font-size: 12px;
+      font-weight: 650;
+      font-family: var(--font-mono);
+    }
+
+    .tool-link {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-3);
+      padding: var(--space-3);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-control);
+      background: rgba(255,255,255,0.025);
+      color: var(--text-secondary);
+      font-size: 13px;
+      transition: background 160ms ease, border-color 160ms ease;
+    }
+
+    .tool-link:hover {
+      border-color: rgba(45,212,191,0.45);
+      background: rgba(45,212,191,0.08);
+    }
+
+    .tool-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-top: var(--space-4);
+    }
+
+    .tool-tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      border-radius: 999px;
+      border: 1px solid rgba(113,112,255,0.34);
+      background: rgba(113,112,255,0.08);
+      color: #d9ddff;
+      padding: 0 var(--space-3);
+      font-size: 12px;
+      font-weight: 560;
+      transition: background 160ms ease, border-color 160ms ease;
+    }
+
+    .tool-tag:hover {
+      border-color: rgba(45,212,191,0.42);
+      background: rgba(45,212,191,0.08);
+    }
+
+    .submit-link {
+      margin-top: auto;
+      background: var(--accent-primary);
+      border-color: var(--accent-primary);
+      color: white;
+      width: 100%;
+      font-weight: 650;
+    }
+
+    main {
+      min-width: 0;
+      display: grid;
+      gap: var(--space-6);
+    }
+
+    .hero,
+    .section {
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-card);
+      background: rgba(15,16,17,0.76);
+    }
+
+    .hero {
+      min-height: 420px;
+      padding: clamp(24px, 5vw, 56px);
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+      gap: var(--space-8);
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(120deg, transparent 0 46%, rgba(113,112,255,0.10) 46% 47%, transparent 47%),
+        radial-gradient(circle at 78% 20%, rgba(45,212,191,0.14), transparent 28%);
+      pointer-events: none;
+    }
+
+    .hero > * {
+      position: relative;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      min-height: 28px;
+      border-radius: 999px;
+      border: 1px solid rgba(113,112,255,0.35);
+      background: rgba(113,112,255,0.10);
+      color: #d9ddff;
+      padding: 0 var(--space-3);
+      font-size: 13px;
+      font-weight: 560;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin-bottom: var(--space-5);
+      font-size: clamp(32px, 5vw, 56px);
+      line-height: 1.08;
+      font-weight: 650;
+      letter-spacing: 0;
+    }
+
+    .title-line {
+      white-space: nowrap;
+    }
+
+    h2 {
+      margin-bottom: var(--space-3);
+      font-size: clamp(24px, 3vw, 34px);
+      line-height: 1.22;
+      font-weight: 650;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin-bottom: var(--space-2);
+      font-size: 18px;
+      line-height: 1.35;
+      font-weight: 650;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      color: var(--text-secondary);
+      font-size: 18px;
+      max-width: 720px;
+      margin-bottom: var(--space-6);
+    }
+
+    .hero-actions,
+    .card-actions,
+    .file-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      align-items: center;
+    }
+
+    .primary {
+      background: var(--accent-primary);
+      border-color: var(--accent-primary);
+      color: white;
+      font-weight: 650;
+    }
+
+    .green {
+      border-color: rgba(45,212,191,0.50);
+      color: #c7fff5;
+      background: rgba(45,212,191,0.10);
+    }
+
+    .workflow-visual {
+      border: 1px solid var(--border-standard);
+      border-radius: var(--radius-card);
+      background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.018));
+      padding: var(--space-5);
+      display: grid;
+      gap: var(--space-4);
+    }
+
+    .flow-node {
+      min-height: 58px;
+      display: grid;
+      grid-template-columns: 42px 1fr auto;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-control);
+      background: rgba(8,9,10,0.52);
+    }
+
+    .node-number {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: var(--radius-control);
+      background: rgba(113,112,255,0.12);
+      color: var(--accent-primary);
+      font-family: var(--font-mono);
+      font-weight: 650;
+    }
+
+    .node-title {
+      display: block;
+      font-weight: 650;
+      line-height: 1.35;
+    }
+
+    .node-meta {
+      display: block;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .node-tool {
+      min-width: 74px;
+      text-align: center;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      padding: var(--space-1) var(--space-3);
+      font-size: 12px;
+    }
+
+    .section {
+      padding: clamp(22px, 4vw, 40px);
+      scroll-margin-top: 24px;
+    }
+
+    .section-head {
+      max-width: 840px;
+      margin-bottom: var(--space-6);
+    }
+
+    .section-head p {
+      color: var(--text-secondary);
+      margin-bottom: 0;
+    }
+
+    .grid-two {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+      gap: var(--space-6);
+      align-items: start;
+    }
+
+    .prompt-card,
+    .note-card,
+    .shot-card,
+    .download-card,
+    .artifact-card {
+      min-width: 0;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-card);
+      background: rgba(255,255,255,0.035);
+      padding: var(--space-5);
+    }
+
+    .prompt-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      border-radius: 999px;
+      border: 1px solid rgba(113,112,255,0.32);
+      color: #d9ddff;
+      padding: 0 var(--space-3);
+      font-size: 12px;
+      font-weight: 560;
+      white-space: nowrap;
+    }
+
+    .badge.greenish {
+      border-color: rgba(45,212,191,0.36);
+      color: #c7fff5;
+    }
+
+    .badge.amber {
+      border-color: rgba(247,185,85,0.45);
+      color: #ffe1a7;
+    }
+
+    .prompt-box {
+      width: 100%;
+      max-width: 100%;
+      min-height: 220px;
+      resize: vertical;
+      border: 1px solid var(--border-standard);
+      border-radius: var(--radius-control);
+      background: var(--surface-inset);
+      color: var(--text-primary);
+      padding: var(--space-4);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .prompt-box.short {
+      min-height: 160px;
+    }
+
+    .hint-list {
+      margin: var(--space-4) 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: var(--space-2);
+    }
+
+    .hint-list li,
+    .check-list li {
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      gap: var(--space-2);
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .mark {
+      color: var(--accent-green);
+      font-weight: 700;
+    }
+
+    .shot-card {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.018));
+    }
+
+    .shot-window {
+      margin-top: var(--space-4);
+      border: 1px solid var(--border-standard);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      background: #090a0b;
+    }
+
+    .screenshot-frame {
+      margin-top: var(--space-4);
+      border: 1px solid var(--border-standard);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      background: #090a0b;
+      aspect-ratio: 16 / 10;
+      display: grid;
+      place-items: center;
+      min-height: 260px;
+    }
+
+    .screenshot-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      background: #090a0b;
+    }
+
+    .screenshot-placeholder {
+      width: calc(100% - 32px);
+      min-height: 180px;
+      border: 1px dashed rgba(247,185,85,0.42);
+      border-radius: var(--radius-card);
+      display: grid;
+      place-items: center;
+      padding: var(--space-5);
+      color: #ffe1a7;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .shot-toolbar {
+      height: 38px;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: 0 var(--space-3);
+      border-bottom: 1px solid var(--border-subtle);
+      background: rgba(255,255,255,0.035);
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.24);
+    }
+
+    .shot-body {
+      padding: var(--space-4);
+      display: grid;
+      gap: var(--space-3);
+    }
+
+    .message {
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-control);
+      padding: var(--space-3);
+      background: rgba(255,255,255,0.025);
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+
+    .message.user {
+      border-color: rgba(113,112,255,0.40);
+      background: rgba(113,112,255,0.10);
+      color: #e6e8ff;
+    }
+
+    .message.file {
+      border-color: rgba(45,212,191,0.36);
+      color: #c7fff5;
+      background: rgba(45,212,191,0.08);
+    }
+
+    .download-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-4);
+    }
+
+    .download-card {
+      min-height: 210px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .step-downloads {
+      display: grid;
+      gap: var(--space-3);
+      margin-top: var(--space-4);
+    }
+
+    .step-download {
+      border: 1px solid rgba(45,212,191,0.28);
+      border-radius: var(--radius-card);
+      background: rgba(45,212,191,0.07);
+      padding: var(--space-4);
+    }
+
+    .download-title {
+      display: inline-flex;
+      width: fit-content;
+      color: #c7fff5;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.5;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .file-name {
+      font-family: var(--font-mono);
+      color: var(--text-primary);
+      overflow-wrap: anywhere;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .file-purpose {
+      color: var(--text-secondary);
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .file-note {
+      color: var(--text-muted);
+      font-size: 13px;
+      margin: 0;
+    }
+
+    .file-actions {
+      margin-top: auto;
+    }
+
+    .copy-status {
+      min-height: 22px;
+      color: var(--accent-green);
+      font-size: 13px;
+      margin-top: var(--space-3);
+    }
+
+    .artifact-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-4);
+    }
+
+    .artifact-card h3 {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-3);
+      align-items: center;
+    }
+
+    .artifact-card p {
+      color: var(--text-secondary);
+      margin-bottom: 0;
+    }
+
+    .mini-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: var(--space-4);
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .mini-table th,
+    .mini-table td {
+      border-bottom: 1px solid var(--border-subtle);
+      padding: var(--space-3);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .mini-table th {
+      color: var(--text-primary);
+      font-weight: 650;
+      background: rgba(255,255,255,0.025);
+    }
+
+    .warning {
+      border-color: rgba(247,185,85,0.34);
+      background: rgba(247,185,85,0.08);
+      color: #ffe1a7;
+    }
+
+    .footer-note {
+      color: var(--text-muted);
+      font-size: 13px;
+      text-align: center;
+      padding-bottom: var(--space-6);
+    }
+
+    .only-mobile {
+      display: none;
+    }
+
+    @media (max-width: 1100px) {
+      .shell {
+        grid-template-columns: 1fr;
+        padding: var(--space-4);
+      }
+
+      .rail {
+        position: relative;
+        top: auto;
+        min-height: auto;
+      }
+
+      .nav-list {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .submit-link {
+        margin-top: 0;
+      }
+
+      .hero,
+      .grid-two {
+        grid-template-columns: 1fr;
+      }
+
+      .workflow-visual {
+        order: -1;
+      }
+
+      .download-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .shell {
+        padding: var(--space-3);
+      }
+
+      .nav-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .hero,
+      .section {
+        padding: var(--space-5);
+      }
+
+      .hero-actions,
+      .card-actions,
+      .file-actions {
+        align-items: stretch;
+      }
+
+      .hero-actions > *,
+      .card-actions > *,
+      .file-actions > * {
+        width: 100%;
+      }
+
+      .prompt-top {
+        display: grid;
+      }
+
+      .flow-node {
+        grid-template-columns: 38px 1fr;
+      }
+
+      .node-tool {
+        grid-column: 2;
+        width: fit-content;
+      }
+
+      .screenshot-frame {
+        min-height: 0;
+      }
+
+      .screenshot-placeholder {
+        width: calc(100% - 24px);
+        min-height: 150px;
+      }
+
+      .artifact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *,
+      *::before,
+      *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
+</head>
+<body><div style="margin:16px auto;max-width:1080px;padding:14px 18px;background:#fff8e8;border:1px solid #f2c66d;border-radius:12px;color:#6b4b00"><b>按客户反馈调整：</b>贯穿案例统一为“校园报修工单跟进”；参与以投票、一句话输入和轻量判断为主，不要求额外上传飞书或掌握 Mermaid。</div>
+  <div class="shell">
+    <aside class="rail" aria-label="步骤导航">
+      <div class="rail-title">
+        <strong>海亮智汇后勤 AI 场景训练操作台</strong>
+        <span>先替换变量，再复制提示词。</span>
+      </div>
+      <nav aria-label="页面步骤">
+        <ol class="nav-list">
+          <li><a class="nav-item" href="#flow"><span class="nav-index">01</span><span>Step1 流程生成</span></a></li>
+          <li><a class="nav-item" href="#ai-flow"><span class="nav-index">02</span><span>Step2 AI 介入</span></a></li>
+          <li><a class="nav-item" href="#scene-lake"><span class="nav-index">03</span><span>Step3 场景湖</span></a></li>
+          <li><a class="nav-item" href="#roi"><span class="nav-index">04</span><span>Step4 四条轻量判断</span></a></li>
+          
+        </ol>
+      </nav>
+      <div class="note-card">
+        <h3>修改提醒</h3>
+        <p class="file-purpose">把 {变量} 换成你的岗位和实际材料，再复制到工具。涉及公司内部数据请先脱敏，并遵守公司信息安全规定。工具入口为示例，实际使用公司允许且可访问的 AI 工具。</p>
+      </div>
+      <a class="button-link submit-link" href="https://xjtulijiagui-max.github.io/lijiagui/hailiang-ai-course/" target="_blank" rel="noopener">返回课堂记录</a>
+    </aside>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div>
+          <span class="kicker">海亮智汇后勤全员AI实操课程 · 选准场景</span>
+          <h1 id="page-title">海亮智汇后勤 AI<br><span class="title-line">场景训练操作台</span></h1>
+          <p class="lead">从自己岗位上的一项具体工作开始，先梳清流程，再找 AI 能帮上忙的环节。按顺序完成流程梳理、场景湖清单和四条轻量判断，花括号里的内容换成你的实际材料。课堂贯穿案例用“校园报修工单跟进”，也可以换成你的候选工作。</p>
+          <div class="hero-actions">
+            <button class="primary" type="button" data-copy-all>复制四个提示词</button>
+            <a class="button-link" href="#scene-lake">下载模板资料</a>
+          </div>
+          <div class="copy-status" aria-live="polite" data-global-status></div>
+        </div>
+        <div class="workflow-visual" aria-label="四步流程概览">
+          <div class="flow-node">
+            <span class="node-number">01</span>
+            <span><span class="node-title">流程生成</span><span class="node-meta">替换岗位变量，补完整流程并列出步骤</span></span>
+            <span class="node-tool">DeepSeek/豆包</span>
+          </div>
+          <div class="flow-node">
+            <span class="node-number">02</span>
+            <span><span class="node-title">讨论 AI 介入节点</span><span class="node-meta">用 SCAMPER 等方法找效率提升点，标出人工复核边界</span></span>
+            <span class="node-tool">DeepSeek/豆包</span>
+          </div>
+          <div class="flow-node">
+            <span class="node-number">03</span>
+            <span><span class="node-title">刷新场景湖清单</span><span class="node-meta">上传示例表格和讨论材料，输出 xls</span></span>
+            <span class="node-tool">任意桌面智能体</span>
+          </div>
+          <div class="flow-node">
+            <span class="node-number">04</span>
+            <span><span class="node-title">完成四条轻量判断</span><span class="node-meta">同一对话完成四条判断，选出优先场景</span></span>
+            <span class="node-tool">任意桌面智能体</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="flow" aria-labelledby="flow-title">
+        <div class="section-head">
+          <h2 id="flow-title">Step1：流程生成：先把一项工作梳理完整</h2>
+          <p>先填写 {你的岗位}，选一项候选工作（课堂贯穿案例：校园报修工单跟进），把它从开始到完成用简单文字列出来，再检查上下游交接、资料来源和下一步。</p>
+          <div class="tool-tags" aria-label="Step1 工具入口">
+            <a class="tool-tag" href="https://chat.deepseek.com" target="_blank" rel="noopener">DeepSeek</a>
+            <a class="tool-tag" href="https://www.doubao.com" target="_blank" rel="noopener">豆包</a>
+          </div>
+        </div>
+        <div class="grid-two">
+          <article class="prompt-card">
+            <div class="prompt-top">
+              <div>
+                <span class="badge">提示词 1</span>
+                <h3>流程提示词</h3>
+              </div>
+              <button type="button" data-copy-target="prompt-flow">复制当前提示词</button>
+            </div>
+            <textarea class="prompt-box" id="prompt-flow">我是一名海亮智汇后勤员工，岗位是 {你的岗位，例如校园物业／食配运营／智慧餐饮}。现在要梳理“{候选工作，示例：校园报修工单跟进}”从开始到完成的完整流程，减少重复整理和来回等待，让各环节的输入输出更清楚。请结合通用职场实践补充流程，用简单文字列出步骤。
+
+流程请覆盖：报修受理与信息核验、工单分类与派工、现场处理与状态更新、超时及安全风险升级、验收与回访、周度跟进及归档。说明每一步的责任角色、输入资料、输出成果和交接对象；补充工单字段缺失、状态冲突、紧急安全故障、责任人未反馈、验收争议等分支。如果你梳理的是其他候选工作，请按同样的结构替换对应环节。
+
+以 {你所在部门的实际做法} 为依据；缺少的信息列为待确认，不编造公司内部制度和审批权限。
+
+请同时满足以下格式要求：
+1. 不同阶段使用不同颜色。
+2. 各阶段横向排布，阶段内部自上而下展开；把后勤服务月报这类周期性工作单独标成循环，避免画成只走一次的直线。
+3. 用不同形状区分开始/结束、审批、判断、资料、执行和风险提示。
+4. 按“准备—制作—评审—汇报—跟进”分区，标明与上级、协作部门和汇报对象的交接节点。
+5. 输出可直接在 普通对话工具 中渲染的代码，不要只给文字说明。</textarea>
+            <ul class="hint-list">
+              <li><span class="mark">+</span><span>先填写你的岗位和候选工作，也可以直接用课堂贯穿案例“校园报修工单跟进”。</span></li>
+              <li><span class="mark">+</span><span>如果流程不完整，继续追问：“请补充与上级和协作部门的交接信息、时间要求，以及数据缺失、口径分歧和评审意见反复时的处理分支。”</span></li>
+              <li><span class="mark">+</span><span>最终下载 SVG，建议命名为：01-hailiang-{姓名或部门}-流程生成.svg。</span></li>
+            </ul>
+            <div class="copy-status" aria-live="polite"></div>
+          </article>
+          
+        </div>
+      </section>
+
+      <section class="section" id="ai-flow" aria-labelledby="ai-flow-title">
+        <div class="section-head">
+          <h2 id="ai-flow-title">Step2：AI 介入：在同一轮对话里找改造点</h2>
+          <p>对照流程逐段检查，找出 AI 能减少重复整理、加快响应的环节；同时明确哪些判断必须由人负责，例如处理结论、处理建议和对外数据。</p>
+          <div class="tool-tags" aria-label="Step2 工具入口">
+            <a class="tool-tag" href="https://chat.deepseek.com" target="_blank" rel="noopener">DeepSeek</a>
+            <a class="tool-tag" href="https://www.doubao.com" target="_blank" rel="noopener">豆包</a>
+          </div>
+        </div>
+        <div class="grid-two">
+          <article class="prompt-card">
+            <div class="prompt-top">
+              <div>
+                <span class="badge">提示词 2</span>
+                <h3>流程 AI 化提示词</h3>
+              </div>
+              <button type="button" data-copy-target="prompt-ai-flow">复制当前提示词</button>
+            </div>
+            <textarea class="prompt-box" id="prompt-ai-flow">请基于上一步生成的 {岗位工作流程 Mermaid 代码}，分析哪些节点适合 AI 辅助，帮助我减少重复整理、缩短准备时间，让材料和结论更完整。
+
+重点考虑：工单信息归并、维修记录与状态核对、超时风险提示、待办与责任人汇总、验收记录和回访信息整理、后勤运营周报与月报初稿。请用 SCAMPER、5W1H 等方法检查遗漏，区分“有脱敏材料即可试用”和“需要对接内部系统”的场景，输出新的 Mermaid 流程图。
+
+格式要求：
+1. 保留原流程主线和必要的人工沟通、复核、审批节点。
+2. AI 辅助节点使用另一种颜色，节点名写清“AI 介入”。
+3. 每个 AI 节点说明责任角色、输入数据、处理动作、输出结果和验证指标，例如材料准备工时、返工次数、评审修改轮次；没有实测数据时，不虚构提效比例。
+4. 安全风险判断、工单结案、验收、对外数据和关键承诺由有权限的人复核并负责。AI 仅整理证据、提示缺项、草拟材料，不代替决策；不依据与工作要求无关的个人属性作判断。
+5. 优先使用脱敏或模拟材料，遵守公司信息安全规定；说明信息缺失、模型出错或工具不可用时如何转人工。
+6. 步骤文字要能直接复制到普通对话工具中继续修改。</textarea>
+            <ul class="hint-list">
+              <li><span class="mark">+</span><span>填入 {岗位工作流程 Mermaid 代码}，接着第一步梳理的流程继续讨论。</span></li>
+              <li><span class="mark">+</span><span>要求 AI 节点标注“输入数据、AI 处理、输出结果、节省时间或降低风险”。</span></li>
+              <li><span class="mark">+</span><span>最终下载 SVG，建议命名为：02-hailiang-{姓名或部门}-AI化改造.svg。</span></li>
+            </ul>
+            <div class="copy-status" aria-live="polite"></div>
+          </article>
+          <aside class="note-card">
+            <span class="badge amber">讨论口径</span>
+            <h3>多人讨论时重点核对这些变化</h3>
+            <table class="mini-table">
+              <thead>
+                <tr><th>讨论点</th><th>追问句式</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>增加流程</td><td>“工单超时但维修记录未更新，谁负责确认、谁兜底、什么时候升级？”</td></tr>
+                <tr><td>修改流程</td><td>“请把材料制作拆成提纲、图表、初稿、评审和定稿，写清每步的责任角色。”</td></tr>
+                <tr><td>删除流程</td><td>“这个环节是否符合本部门的规模和实际做法？不适用的请删除并说明原因。”</td></tr>
+                <tr><td>找业务点</td><td>“哪些 AI 介入点能减少工单重复整理、缩短协同等待，或降低状态错误与漏单？”</td></tr>
+              </tbody>
+            </table>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section" id="scene-lake" aria-labelledby="scene-lake-title">
+        <div class="section-head">
+          <h2 id="scene-lake-title">Step3：场景湖：用任意桌面智能体输出 Excel 清单</h2>
+          <p>这一步先下载下方海亮智汇后勤场景湖清单模板，再上传模板、岗位痛点与讨论要点、Step2 的 AI 改造 Mermaid 代码，让桌面智能体生成自己的Excel场景清单；使用代码而不是流程截图。</p>
+          <div class="tool-tags" aria-label="Step3 工具入口">
+            <a class="tool-tag" href="https://chat.deepseek.com" target="_blank" rel="noopener">任意桌面智能体</a>
+          </div>
+        </div>
+        <div class="grid-two">
+          <article class="prompt-card">
+            <div class="prompt-top">
+              <div>
+                <span class="badge">提示词 3</span>
+                <h3>场景湖提示词</h3>
+              </div>
+              <button type="button" data-copy-target="prompt-scene">复制当前提示词</button>
+            </div>
+            <textarea class="prompt-box short" id="prompt-scene">请先下载并上传本页面 Step3 的《海亮智汇后勤场景湖清单-教学模板.xlsx》。结合 {Step2 的 AI 改造流程 Mermaid 代码}、{我的岗位痛点记录/课堂讨论材料}，为 {姓名/部门} 整理 AI 场景湖，并输出可下载的 Excel 清单。
+
+请保留模板主表12列的名称、顺序和格式：场景编号、一级流程、二级流程、业务场景、当前痛点、AI介入方式、输入数据、输出结果、使用角色、推荐工具、价值假设、备注。
+先围绕“校园报修工单跟进”找候选点，也可以根据岗位拓展到食配验收差异、食堂损耗分析、零售补货、校园巡检或后勤培训SOP等；每个名称必须是可以动手做的具体工作。
+每个场景对应 Step2 的流程节点，写清当前痛点、AI如何介入、需要什么输入、输出什么材料、由谁复核，以及可衡量的改善方向。模板没有的触发条件、风险边界和指标可写在“备注”或单独补充页。
+合并重复项；未确认的信息标“待确认”，数据缺口标“待补充”。不要把教学示例当成 海亮智汇后勤 真实业务数据；只使用脱敏或模拟材料，不编造实际提效比例。</textarea>
+            <ul class="hint-list">
+              <li><span class="mark">+</span><span>先下载下方海亮智汇后勤场景湖清单模板，并将Excel上传至任意桌面智能体。</span></li>
+              <li><span class="mark">+</span><span>补充你的岗位痛点记录、跟练笔记和 AI 改造 Mermaid 代码。</span></li>
+              <li><span class="mark">+</span><span>若清单不对，继续对话让它补充、合并、删除或重排场景。</span></li>
+            </ul>
+            <div class="step-downloads" aria-label="Step3 场景湖清单模板">
+              <div class="step-download">
+                <span class="badge greenish">Step 3 · Excel 模板</span>
+                <p class="file-purpose">先下载、再上传给桌面智能体。保留原有12列，包含6个海亮智汇后勤业务相关的模拟课堂示例及空白填写行，可按岗位替换。</p>
+                <a class="download-title" href="assets/hailiang-scene-lake-template.xlsx" download="海亮智汇后勤_场景湖清单-教学模板.xlsx">下载场景湖清单模板（Excel）</a>
+              </div>
+            </div>
+            <div class="copy-status" aria-live="polite"></div>
+          </article>
+          
+        </div>
+      </section>
+
+      <section class="section" id="roi" aria-labelledby="roi-title">
+        <div class="section-head">
+          <h2 id="roi-title">Step4：四条轻量判断：选出优先场景</h2>
+          <p>继续在第三步的同一轮桌面智能体对话中完成。下载下方《高价值场景最终得分表》，将场景湖的候选工作填入表格，逐项回答四问。Excel自动得分并生成优先级；四项都满足的工作优先进入模块二拆解。</p>
+          <div class="tool-tags" aria-label="Step4 使用工具">
+            <span class="tool-tag">任意桌面智能体</span>
+          </div>
+        </div>
+        <div class="grid-two">
+          <article class="prompt-card">
+            <div class="prompt-top">
+              <div>
+                <span class="badge">提示词 4</span>
+                <h3>四条轻量判断提示词</h3>
+              </div>
+              <button type="button" data-copy-target="prompt-roi">复制当前提示词</button>
+            </div>
+            <textarea class="prompt-box short" id="prompt-roi">请继续在 Step3 的同一轮对话中操作，并上传本页面 Step4 的《海亮智汇后勤高价值场景最终得分表.xlsx》。将刚才整理的场景湖候选工作逐行写入得分表，输出填写完成的 Excel 文件。
+
+只需对每项工作回答以下四问，每项只填“是”或“否”，并给一句有依据的说明：
+1. 常做或费时？经常重复做，或者单次耗时较长。
+2. 说得清？能向新同事讲清步骤、输入和交付要求。
+3. 有材料？已有可授权使用的纪要、表格、模板或历史样例。
+4. 兜得住？AI出错有人工复核，后果可控。
+
+请保留模板的原有字段、格式、下拉选项与自动计算公式；按场景填写编号、名称、部门岗位、D-G列四问、K列下一步、L列判断依据。不要把H-J列的自动得分和筛选结论改为手写值，也不要将教学演示行算作学员提交场景。
+选择四项全“是”（4/4）的 P1 场景优先进入模块二进行 IPO 拆解；若存在多个 P1，优先选择更高频或更费时、且有材料可验证的一项。兜得住为“否”的必须暂缓。最后只推荐一项优先工作；无法判断的内容写“待补充”，不得编造内部流程和收益数据。</textarea>
+            <ul class="hint-list">
+              <li><span class="mark">1</span><span><strong>常做或费时：</strong>一周要做好几次，或者一次要花很久。</span></li>
+              <li><span class="mark">2</span><span><strong>说得清：</strong>步骤和要求，能讲给一位新同事听。</span></li>
+              <li><span class="mark">3</span><span><strong>有材料：</strong>纪要、表格、模板、往期样例手头就有。</span></li>
+              <li><span class="mark">4</span><span><strong>兜得住：</strong>AI 出错，后果可控。</span></li>
+              <li><span class="mark">+</span><span>下载下方最终得分表，填写浅黄色区域；蓝色的总分与优先级由Excel公式自动计算。</span></li>
+            </ul>
+            <div class="step-downloads" aria-label="Step4 最终得分表模板">
+              <div class="step-download">
+                <span class="badge greenish">Step 4 · Excel 得分表</span>
+                <p class="file-purpose">将Step3的候选场景填入浅黄色区域，四问选择“是/否”；表格会自动计算0—4分、P1/P2/P3优先级和下一步建议。带海亮智汇后勤模拟示例与评分口径。</p>
+                <a class="download-title" href="assets/hailiang-high-value-scorecard.xlsx" download="海亮智汇后勤_高价值场景最终得分表.xlsx">下载高价值场景最终得分表（Excel）</a>
+              </div>
+            </div>
+            <div class="copy-status" aria-live="polite"></div>
+          </article>
+        </div>
+      </section>
+
+      
+
+      
+    </main>
+  </div>
+
+  <script>
+    const prompts = ["prompt-flow", "prompt-ai-flow", "prompt-scene", "prompt-roi"];
+
+    async function copyText(text, statusTarget) {
+      try {
+        await navigator.clipboard.writeText(text);
+        statusTarget.textContent = "已复制";
+      } catch (error) {
+        const fallback = document.createElement("textarea");
+        fallback.value = text;
+        fallback.setAttribute("readonly", "");
+        fallback.style.position = "fixed";
+        fallback.style.left = "-9999px";
+        document.body.appendChild(fallback);
+        fallback.select();
+        document.execCommand("copy");
+        document.body.removeChild(fallback);
+        statusTarget.textContent = "已复制";
+      }
+      window.setTimeout(() => {
+        statusTarget.textContent = "";
+      }, 1800);
+    }
+
+    document.querySelectorAll("[data-copy-target]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const target = document.getElementById(button.dataset.copyTarget);
+        const card = button.closest(".prompt-card");
+        const status = card.querySelector(".copy-status");
+        copyText(target.value, status);
+      });
+    });
+
+    document.querySelectorAll("[data-screenshot-src]").forEach((frame) => {
+      const placeholder = frame.querySelector(".screenshot-placeholder");
+      const image = new Image();
+      image.decoding = "async";
+      image.alt = frame.dataset.screenshotAlt || "";
+      image.width = 960;
+      image.height = 600;
+      image.onload = () => {
+        frame.replaceChildren(image);
+      };
+      image.onerror = () => {
+        placeholder.hidden = false;
+      };
+      image.src = frame.dataset.screenshotSrc;
+    });
+
+    document.querySelector("[data-copy-all]").addEventListener("click", () => {
+      const all = prompts
+        .map((id, index) => `提示词 ${index + 1}\n${document.getElementById(id).value}`)
+        .join("\n\n");
+      copyText(all, document.querySelector("[data-global-status]"));
+    });
+  </script>
+</body>
+</html>

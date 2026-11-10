@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="海亮智汇后勤 全员AI课程模块四：一眼看懂 IPO、SOP、Skill 的区别，直接复制两条简短提示词。">
+<meta name="theme-color" content="#061b46">
+<link rel="icon" href="data:,">
+<link rel="canonical" href="https://xjtulijiagui-max.github.io/lijiagui/hailiang-ipo-skill/">
+<title>模块四｜IPO、SOP、Skill，一页讲清楚｜海亮智汇后勤 AI 实操课</title>
+<style>
+:root{--navy:#061b46;--blue:#0564cd;--light:#f5f8fc;--ink:#172844;--muted:#64748b;--line:#dbe5f0;--soft:#ecf4ff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--light);color:var(--ink);font:16px/1.7 "Microsoft YaHei","PingFang SC",Arial,sans-serif}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer}
+a:focus-visible,button:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+.wrap{max-width:1060px;margin:auto;padding:0 24px}
+.top{background:var(--navy);color:white}
+.top .wrap{min-height:54px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.brand{font-size:14px;font-weight:700;letter-spacing:.03em}
+.top a{font-size:14px;color:#d2e4ff}
+.top a:hover{text-decoration:underline}
+.hero{background:var(--navy);color:#fff;padding:55px 0 62px}
+.eyebrow{margin:0 0 12px;font-size:12px;letter-spacing:.14em;color:#b6d3ff;font-weight:700}
+h1{font-size:clamp(32px,5vw,54px);line-height:1.2;margin:0;font-weight:750}
+.hero p:last-child{font-size:18px;color:#d7e5ff;margin:16px 0 0}
+main{padding-top:38px;padding-bottom:54px}
+section{margin-bottom:34px}
+h2{font-size:24px;line-height:1.35;margin:0 0 18px}
+h3{font-size:20px;margin:0 0 8px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;min-width:0}
+.card .mini{color:var(--blue);font-weight:800;font-size:12px;letter-spacing:.08em}
+.card h3{margin:8px 0 8px}
+.card p{margin:0;color:var(--muted);font-size:15px}
+.card .bottom{margin-top:14px;font-size:13px;font-weight:700;color:var(--ink)}
+.flow{font-size:14px;color:var(--muted);margin:14px 0 0}
+.flow strong{color:var(--ink)}
+.example{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px}
+.example h2{margin-bottom:14px}
+.examples{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.examples div{border-radius:10px;background:#f3f7fc;padding:16px 17px}
+.examples b{display:block;color:#174e97;margin-bottom:6px}
+.examples p{margin:0;font-size:14px}
+.example .key{margin:15px 0 0;font-size:14px;color:var(--muted)}
+.prompt-heading{display:flex;justify-content:space-between;align-items:end;gap:14px;flex-wrap:wrap}
+.prompt-heading p{margin:0 0 17px;color:var(--muted);font-size:14px}
+.prompt-stack{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.prompt{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:11px}
+.prompt-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.prompt h3{font-size:18px;margin:0}
+.prompt .need{font-size:13px;color:var(--muted);margin:0}
+pre{white-space:pre-wrap;word-break:break-word;font:14px/1.8 "Microsoft YaHei","PingFang SC",sans-serif;background:#f4f8ff;border:1px solid #dbe8fb;border-radius:9px;padding:15px;flex:1;margin:0}
+.copy{background:var(--blue);border:0;color:#fff;border-radius:8px;padding:9px 14px;min-width:78px;font-size:14px;font-weight:650}
+.copy:hover{background:#034caa}
+.note{border-left:4px solid var(--blue);padding:14px 17px;background:var(--soft);border-radius:0 10px 10px 0;font-size:14px}
+.note p{margin:0}
+.links{display:flex;flex-wrap:wrap;gap:10px;margin-top:19px}
+.links a{display:inline-flex;align-items:center;border:1px solid #c2d3ed;border-radius:8px;padding:9px 14px;background:#fff;font-size:14px;color:#1857a5;font-weight:600}
+.links a:hover{background:var(--soft)}
+footer{padding:22px 0 35px;text-align:center;color:#7d8ba1;font-size:12px}
+.toast{position:fixed;bottom:22px;right:22px;background:var(--navy);color:#fff;border-radius:9px;padding:10px 16px;box-shadow:0 6px 24px #0002;display:none;font-size:14px}
+.toast.show{display:block}
+@media(max-width:740px){.wrap{padding:0 16px}.hero{padding:40px 0 45px}.hero p:last-child{font-size:16px}.grid3,.examples,.prompt-stack{grid-template-columns:1fr}main{padding-top:26px}section{margin-bottom:27px}.card,.example,.prompt{padding:18px}.prompt-top{align-items:flex-start}h2{font-size:21px}.top .wrap{min-height:52px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap"><span class="brand">海亮智汇后勤 · AI 实操课｜模块四：固化复用</span><a href="/lijiagui/hailiang-ai-course/">返回课程首页 ↗</a></div></header>
+<div class="hero"><div class="wrap">
+<p class="eyebrow">一页讲清楚 · IPO → SOP → SKILL</p>
+<h1>把一次做对，变成以后好用</h1>
+<p>IPO 讲清任务；SOP 让团队有标准；Skill 让 AI 能调用。</p>
+</div></div>
+<main class="wrap">
+<section id="difference" aria-labelledby="difference-title">
+<h2 id="difference-title">三者有什么区别？</h2>
+<div class="grid3">
+<article class="card"><span class="mini">01 · IPO</span><h3>给 AI 的任务卡</h3><p>说清给什么材料、按什么步骤做、交什么结果。</p><div class="bottom">解决：任务说不清</div></article>
+<article class="card"><span class="mini">02 · SOP</span><h3>给团队看的标准</h3><p>把跑通的做法写下来，方便同事共享、评审和交接。</p><div class="bottom">解决：好经验留不住</div></article>
+<article class="card"><span class="mini">03 · SKILL</span><h3>给 AI 用的技能</h3><p>把确认过的标准和模板封装起来，让 AI 下次直接调用。</p><div class="bottom">解决：每次都从头来</div></article>
+</div>
+<p class="flow"><strong>顺序：</strong>IPO 定义任务 → 运行、纠错 → SOP 供人评审 → Skill 供 AI 执行。<span>简单任务停在 IPO 也可以。</span></p>
+</section>
+<section class="example" aria-labelledby="example-title">
+<h2 id="example-title">一个例子就明白：每周校园报修工单跟进</h2>
+<div class="examples">
+<div><b>IPO · 交代任务</b><p>读取本周脱敏工单台账和维修记录，生成报修跟进表。</p></div>
+<div><b>SOP · 统一规则</b><p>工单状态冲突要标出；“已修复”必须有证据；结案前由人确认。</p></div>
+<div><b>Skill · 下次调用</b><p>上传新材料 → 调用「报修工单跟进助手」→ 得到初稿。</p></div>
+</div>
+<p class="key">团队检查 SOP 是否合理；AI 按 Skill 处理新材料；最终结果由人把关。</p>
+</section>
+<section id="do" aria-labelledby="do-title">
+<div class="prompt-heading"><h2 id="do-title">想试试？只复制两句话</h2><p>准备好上一步的材料，复制即可</p></div>
+<div class="prompt-stack">
+<article class="prompt">
+<div class="prompt-top"><h3>第 1 步｜IPO → SOP</h3><button class="copy" type="button" data-copy="sop">复制</button></div>
+<p class="need">先上传：IPO 任务卡 + 实际纠错记录</p>
+<pre id="sop">请根据这份 IPO 任务卡和实际修改记录，整理一份给团队看的 SOP.md。
+
+只写：适用场景、操作步骤、异常处理、人工确认、验收标准。
+
+规则不明确的标“待确认”，不要编造；语言尽量简洁。</pre>
+</article>
+<article class="prompt">
+<div class="prompt-top"><h3>第 2 步｜SOP → Skill</h3><button class="copy" type="button" data-copy="skill">复制</button></div>
+<p class="need">先上传：业务人员确认过的 SOP</p>
+<pre id="skill">请把这份已确认的 SOP 整理成供 AI 使用的 SKILL.md 草稿。
+
+写清：什么时候调用、需要什么材料、执行步骤、输出格式和人工检查点。
+
+不要编造规则，也不要声称已经安装或运行。</pre>
+</article>
+</div>
+</section>
+<section>
+<div class="note"><p><strong>记住：</strong>SOP 先由人看、由人评审；Skill 再交 AI 使用。生成 SKILL.md 只是草稿，需在支持 Skill 的工具中安装和测试。不是每件工作都要做成 Skill。</p></div>
+<nav class="links" aria-label="相关课程"><a href="/lijiagui/hailiang-ipo/">回看模块二 · IPO ↗</a><a href="/lijiagui/hailiang-ai-workflow/">回看模块三 · 人机协作 ↗</a><a href="https://workbuddy.link/p/8OpWyes5aEskDHQP1SOyj1?ext2=copy_link" target="_blank" rel="noopener noreferrer">Skill 实例 ↗</a></nav>
+</section>
+</main>
+<footer>李家贵 · 海亮智汇后勤 全员 AI 实操 · 模块四｜固化复用</footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script>
+(function(){
+ const toast=document.getElementById('toast');let timer;
+ function message(s){toast.textContent=s;toast.classList.add('show');clearTimeout(timer);timer=setTimeout(()=>toast.classList.remove('show'),1700)}
+ function fallback(t){const a=document.createElement('textarea');a.value=t;a.style.position='fixed';a.style.left='-9999px';document.body.appendChild(a);a.select();let ok=false;try{ok=document.execCommand('copy')}catch(e){}a.remove();return ok}
+ document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',async()=>{
+  const source=document.getElementById(b.getAttribute('data-copy')),txt=source.textContent.trim();let ok=false;
+  try{if(navigator.clipboard&&navigator.clipboard.writeText){await navigator.clipboard.writeText(txt);ok=true}else ok=fallback(txt)}catch(e){ok=fallback(txt)}
+  message(ok?'已复制，粘贴到 AI 即可':'复制失败，请手动选择文本');if(ok){const old=b.textContent;b.textContent='已复制 ✓';setTimeout(()=>b.textContent=old,1500)}
+ }));
+})();
+</script>
+</body></html>
