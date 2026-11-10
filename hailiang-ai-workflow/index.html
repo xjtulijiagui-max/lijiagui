@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>IPO 到 CHAT 三步实操｜海亮智汇后勤 AI 模块三</title>
-<meta name="description" content="海亮智汇后勤 AI 模块三：三个简短通用提示词，3.1 补 C/H/A、3.2 生成人机接力表、3.3 输出验收检查表。练习在前，知识附录在后。" />
+<title>培养 AI 专家 → 组建专家团 → 协同与验收｜海亮智汇后勤 模块三</title>
+<meta name="description" content="海亮智汇后勤 AI 实操课模块三：沿用模块二 IPO，3.1 培养 AI 专家（人设、能力模型、工作流程、责任边界），3.2 组建 AI 专家团，3.3 协同执行与人工验收。三个可复制提示词，先练习后讲解。" />
 <style>
 :root{
   --navy:#061b46;--navy-2:#0a2a68;--blue:#155eef;--blue-deep:#0b47c2;--blue-soft:#eef4ff;
@@ -219,6 +219,19 @@ footer{margin-top:48px;background:var(--navy);color:rgba(255,255,255,.8);padding
 .appendix-toggle .sec-head{margin-top:20px}
 @media(max-width:760px){.quick-steps{grid-template-columns:1fr}.quick-steps a{padding:10px 13px}}
 @media(max-width:520px){.appendix-toggle>summary{font-size:.88rem;padding:14px}.appendix-toggle>summary em{display:none}.sample-panel .prompt-card{margin:9px}}
+
+/* 专家团教学版：继承既有深蓝风格，保持练习置顶 */
+.expert-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:16px 0}
+.expert-card{min-width:0;background:#f3f7ff;border:1px solid #cbdcf7;border-radius:12px;padding:13px;text-align:center}
+.expert-card b{display:block;color:var(--navy-2);font-size:.9rem;line-height:1.4}
+.expert-card p{font-size:.8rem;line-height:1.55;color:var(--ink-2);margin:6px 0 0}
+.expert-flow{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;margin:18px 0}
+.expert-flow .leadrow{text-align:center;background:#e9f2ff;border-radius:9px;padding:9px;color:var(--navy-2);font-weight:800;font-size:.92rem}
+.expert-flow .down{text-align:center;color:var(--blue);font-weight:900;padding:5px 0}
+.lesson-focus{font-weight:800;color:#123f8a;background:#edf4ff;border-left:4px solid var(--blue);padding:12px 15px;border-radius:0 9px 9px 0;margin:15px 0}
+.kpi{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:14px 0;color:#43618a;font-size:.83rem}
+.kpi span{border:1px solid #cddff9;border-radius:99px;padding:5px 11px;background:#f3f7ff}
+@media(max-width:700px){.expert-grid{grid-template-columns:1fr}.expert-card{text-align:left}.expert-flow{padding:12px}}
 </style>
 </head>
 <body><div class="top-ribbon"><div class="wrap"><span><b>课堂承接：</b>先取出模块2已经核对的 IPO 任务卡，本模块不重新选题、不重新建总 IPO 卡。</span><a href="/lijiagui/hailiang-ipo/" target="_blank" rel="noopener">回看模块2 · IPO任务卡 ↗</a></div></div>
@@ -237,128 +250,163 @@ footer{margin-top:48px;background:var(--navy);color:rgba(255,255,255,.8);padding
   <section class="hero">
     <div class="wrap">
       <div class="badges"><span class="badge solid">模块三 · 协同交付</span><span class="badge">三步可复制</span></div>
-      <h1>从 IPO 到 CHAT：让 AI 真正参与工作</h1>
+      <h1>从培养 AI 专家，到组建 AI 专家团</h1>
       <p class="sub">海亮智汇后勤 全员 AI 实操技巧 · 模块三</p>
-      <p class="path">模块2已经把任务拆成 IPO；模块3不用重写，只做三件事：<b>补 C/H/A → 做人机分工 → 对照标准验收</b>。</p>
+      <p class="path">模块二已用 IPO 拆清任务；本模块沿用原任务，不重新建 IPO：<b>培养专家 → 组建专家团 → 专家协同与人工验收</b>。模块四再把验证有效的方法沉淀为 SOP / Skill。</p>
     </div>
   </section>
 
   <section class="block" id="prompts">
     <div class="wrap">
       <div class="sec-head">
-        <span class="sec-kicker">直接练习</span>
-        <h2>带着原来的 IPO，照着三步做</h2>
-        <p>三个提示词依次复制到同一个 AI 对话。把【】中的内容换成自己的工作即可。</p>
+        <span class="sec-kicker">直接练习 · 沿用模块二 IPO</span>
+        <h2>一个专家到一个专家团，三步完成</h2>
+        <p>直接把下面三个简短提示词依次复制到同一段 AI 对话。只带原 IPO，不需要重新拆任务，也不要求搭建多 Agent 系统。</p>
       </div>
       <div class="quick-steps">
-        <a href="#step31"><b>3.1 补 C/H/A</b><small>让 AI 知道背景和角色</small></a>
-        <a href="#step32"><b>3.2 出检查表</b><small>分清 AI 做、人检查</small></a>
-        <a href="#step33"><b>3.3 做验收</b><small>对照原标准检查</small></a>
+        <a href="#step31"><b>3.1 培养 AI 专家</b><small>人设 · 能力 · 流程 · 边界</small></a>
+        <a href="#step32"><b>3.2 组建专家团</b><small>分工 · 交接 · 人工检查</small></a>
+        <a href="#step33"><b>3.3 协同与验收</b><small>执行 · 复核 · 人工裁决</small></a>
       </div>
-      <p class="practice-note"><b>开始前：</b>准备模块2已经确认的 IPO。没有任务卡？可展开下面的模拟材料先练习。</p>
+      <p class="lesson-focus">模块二解决“工作怎么做”，模块三解决“让哪些专家、按照什么分工完成工作”，模块四解决“怎样沉淀有效的方法”。</p>
+      <p class="practice-note"><b>练习准备：</b>直接使用模块二已经确认的 IPO 任务卡；没有材料也可以展开下面的校园报修工单模拟案例。</p>
 
       <details class="sample-panel" id="sample">
-        <summary>没有 IPO？展开一个简短模拟案例 <span>选用 · 不影响通用提示词</span></summary>
-        <p class="sample-explain">复制到 AI 对话后，再回到 3.1。以下数据仅为教学示例。</p>
+        <summary>没有 IPO？展开校园报修工单的模拟案例 <span>可一键复制，非真实业务数据</span></summary>
+        <p class="sample-explain">此案例只用于课堂练习。先复制到 AI 对话，再继续 3.1；如果已有自己的 IPO，则不需要复制此案例。</p>
         <div class="prompt-card">
-  <div class="prompt-head"><span class="prompt-step">案例 · 复制使用</span><h3>校园报修工单跟进 IPO（模拟）</h3></div>
-  <p class="prompt-desc">用于演练，不代表真实项目。</p>
-  <div class="prompt-toolbar"><button class="copy-btn" type="button">复制提示词</button><button class="select-btn" type="button">全选文本</button><span class="copy-status" role="status"></span></div>
-  <pre>【任务】整理一份校园报修工单跟进简报。
+          <div class="prompt-head"><span class="prompt-step">贯穿案例 · 复制使用</span><h3>校园报修工单跟进 IPO（模拟）</h3></div>
+          <p class="prompt-desc">跟进工单进展并形成简报，不自动派工、验收或结案。</p>
+          <div class="prompt-toolbar"><button class="copy-btn" type="button">复制模拟案例</button><button class="select-btn" type="button">全选文本</button><span class="copy-status" role="status"></span></div>
+          <pre>【任务】整理校园报修工单跟进简报。
 【已确认 IPO】
-I：脱敏报修工单台账、处理记录、风险清单。
-P：核对工单状态 → 汇总进展与风险 → 人工确认 → 起草简报 → 验收。
-O：一页报修跟进简报，包含工单进展、超时风险、待办及下一步；保留来源。
-【背景材料】
-工单台账：A单标记为已完成；B单风险“低”。
-维修记录：A单现场处理尚未结束，验收状态待确认。
-风险清单：B单风险“高”，原因待核对。
-【约束】仅教学模拟；冲突数据标待确认，不自动结案、派工或对外承诺。</pre>
-</div>
+I：脱敏工单台账、维修记录、风险清单。
+P：核对工单 → 识别异常 → 跟踪处理 → 复核证据 → 生成简报 → 人工确认。
+O：一页跟进简报，包含工单进展、异常风险、待办与下一步；关键结论保留来源。
+【模拟材料】
+工单台账：A 单标“已完成”，B 单风险为“低”。
+维修记录：A 单现场处理尚未结束，未有验收凭证。
+风险清单：B 单风险为“高”，具体原因待核查。
+【边界】所有材料仅供教学；状态冲突必须标“待确认”；AI 不自动结案、派工、判断安全事故或对外承诺。</pre>
+        </div>
       </details>
 
-      <div class="step-banner" id="step31"><span>01</span><div><b>3.1 补齐 C / H / A</b><p>补角色、补背景、补目标；T 就是已确认的 IPO。</p></div></div>
+      <div class="step-banner" id="step31"><span>01</span><div><b>3.1 培养一个 AI 专家</b><p>把普通助手变成面向特定工作的专家：人设 + 能力模型 + 工作流程 + 责任边界。</p></div></div>
+      <div class="kpi"><span>取用：原 IPO</span><span>生成：专家配置卡</span><span>人工检查：能力是否真实可用</span></div>
       <div class="prompt-card">
-  <div class="prompt-head"><span class="prompt-step">3.1 · 复制使用</span><h3>先让 AI 理解任务</h3></div>
-  <p class="prompt-desc">复制后只改三个位置：C 谁负责、H 有什么背景、A 想得到什么。</p>
-  <div class="prompt-toolbar"><button class="copy-btn" type="button">复制提示词</button><button class="select-btn" type="button">全选文本</button><span class="copy-status" role="status"></span></div>
-  <pre>沿用上文已确认的总 IPO，不要重写。
+        <div class="prompt-head"><span class="prompt-step">3.1 · 复制使用</span><h3>给 AI 专家写一张配置卡</h3></div>
+        <p class="prompt-desc">先确定专家“是谁、会什么、怎么做、哪些不能做”，不是简单说一句“你是资深专家”。</p>
+        <div class="prompt-toolbar"><button class="copy-btn" type="button">复制提示词</button><button class="select-btn" type="button">全选文本</button><span class="copy-status" role="status"></span></div>
+        <pre>沿用模块二已确认的 IPO，不要重写。
 
-请补齐 CHAT：
-C：我是【岗位】，负责【业务判断/审批】；你是 AI 助手，负责【交给AI的工作】。
-H：任务背景【】；现有资料及业务限制【】；缺失资料【】。
-A：本次目标【】；交付对象和用途【】。
-T：就是上文已确认的 IPO。
+请为这项工作设计一名 AI 专家，输出《专家配置卡》：
+1. 人设：专家名称、定位、职责。
+2. 能力模型：需要的知识、技能和工具。
+3. 工作流程：按步骤说明怎么完成任务。
+4. 责任边界：哪些由 AI 做，哪些必须人工确认。
 
-本轮只输出《任务执行准备单》：
-已知条件｜缺失资料｜人工确认事项｜可开始的第一步。
+缺少的能力、资料或权限标“待确认”，不要假设已经具备。</pre>
+      </div>
+      <p class="check-point"><b>学员检查：</b>专家的能力和工作步骤能否对应原 IPO？有没有把“需要某项工具”误写成“已经接入”？安全、审批和结案是否有人负责？<b>产出：</b>《AI 专家配置卡》。</p>
+      <details class="sample-panel">
+        <summary>查看 3.1 示例结果 <span>不必照搬，按实际岗位修改</span></summary>
+        <div class="sample-explain">
+          <div class="case-steps">
+            <div class="case-step"><span class="num">人设</span><span class="body"><strong>校园物业工单运营专家</strong><small>负责整理工单、识别异常、生成跟进简报初稿</small></span></div>
+            <div class="case-step"><span class="num">能力</span><span class="body"><strong>状态核对、异常分类、证据对照、报告生成</strong><small>使用的知识库、工单系统权限须另行确认</small></span></div>
+            <div class="case-step"><span class="num">流程</span><span class="body"><strong>读台账 → 核记录 → 找异常 → 起草清单 → 人审</strong></span></div>
+            <div class="case-step"><span class="num">边界</span><span class="body"><strong>不擅自派工、结案、验收或判断安全事故</strong><small>涉及责任认定和业务承诺交给负责人</small></span></div>
+          </div>
+        </div>
+      </details>
 
-没有依据的标“待确认”，不要生成最终成果。</pre>
-</div>
-      <p class="check-point"><b>学员检查：</b>AI 有没有说清楚已知信息、缺失信息和能先做哪一步？<b>产出：</b>任务执行准备单。</p>
-
-      <div class="step-banner" id="step32"><span>02</span><div><b>3.2 输出人机接力表</b><p>让 AI 把原 IPO 的处理步骤整理成表，便于人检查。</p></div></div>
+      <div class="step-banner" id="step32"><span>02</span><div><b>3.2 组建 AI 专家团</b><p>按照原 IPO 的处理步骤设计专业分工、接力规则和人工检查点。</p></div></div>
+      <div class="expert-flow">
+        <div class="leadrow">人类后勤业务负责人：确定目标、授权、处理分歧并最终审核</div>
+        <div class="down">↓</div>
+        <div class="expert-grid">
+          <div class="expert-card"><b>工单分诊专家</b><p>核对台账、分类工单、发现缺项</p></div>
+          <div class="expert-card"><b>维修协调专家</b><p>整理维修进展、识别待协调事项</p></div>
+          <div class="expert-card"><b>质量复核专家</b><p>对照记录、审查证据、提示冲突</p></div>
+        </div>
+        <div class="down">↓</div>
+        <div class="leadrow">统一交付：工单进展、异常风险、责任待办与下一步</div>
+      </div>
       <div class="prompt-card">
-  <div class="prompt-head"><span class="prompt-step">3.2 · 复制使用</span><h3>一张表看清谁做什么</h3></div>
-  <p class="prompt-desc">重点看“AI做什么、人工检查什么、能不能继续”。</p>
-  <div class="prompt-toolbar"><button class="copy-btn" type="button">复制提示词</button><button class="select-btn" type="button">全选文本</button><span class="copy-status" role="status"></span></div>
-  <pre>沿用已确认的 IPO 和 3.1《任务执行准备单》，不要重写 IPO。
+        <div class="prompt-head"><span class="prompt-step">3.2 · 复制使用</span><h3>一张表设计专家团协同</h3></div>
+        <p class="prompt-desc">专家数量以工作需要为准，不强行凑三人；明确每个人交给下一位专家什么内容。</p>
+        <div class="prompt-toolbar"><button class="copy-btn" type="button">复制提示词</button><button class="select-btn" type="button">全选文本</button><span class="copy-status" role="status"></span></div>
+        <pre>沿用已确认的 IPO 和 3.1《专家配置卡》。
 
-请按原 IPO 的 P，输出一张《人机接力表》：
-步骤｜需要的输入｜AI做什么｜人检查/确认什么｜阶段输出｜能否进入下一步。
+如果这项工作需要多个专家，请设计一个 AI 专家团。
 
-缺资料、口径冲突或需要审批的地方标“待确认”。
-本轮只输出表格，不执行后续任务。</pre>
-</div>
-      <p class="check-point"><b>学员检查：</b>每一步有没有明确分工？需要人确认的地方有没有标出来？<b>产出：</b>人机接力表。</p>
+输出《专家团协同接力表》：
+工作步骤｜负责专家｜需要的输入｜专家要做什么｜交给谁｜人工检查点
 
-      <div class="step-banner" id="step33"><span>03</span><div><b>3.3 输出验收检查表</b><p>沿用原 IPO 的 O，检查已有成果，不自己发明验收标准。</p></div></div>
+专家数量以够用为准，职责不要重叠。
+本轮只设计分工，不执行任务。</pre>
+      </div>
+      <p class="check-point"><b>学员检查：</b>是否覆盖原 IPO 的 P？专家之间有无遗漏、重复或无人负责的步骤？人在哪里复核和批准？<b>产出：</b>《专家团协同接力表》。</p>
+
+      <div class="step-banner" id="step33"><span>03</span><div><b>3.3 专家团协同执行与成果验收</b><p>按专家团分工处理已有材料，由质检专家复核，再依照原 IPO 的 O 进行验收。</p></div></div>
       <div class="prompt-card">
-  <div class="prompt-head"><span class="prompt-step">3.3 · 复制使用</span><h3>一张表检查做得对不对</h3></div>
-  <p class="prompt-desc">重点看“原标准、证据、问题、由谁确认”。</p>
-  <div class="prompt-toolbar"><button class="copy-btn" type="button">复制提示词</button><button class="select-btn" type="button">全选文本</button><span class="copy-status" role="status"></span></div>
-  <pre>沿用原 IPO 的 O 和 3.2《人机接力表》，核对目前实际已有的成果。
+        <div class="prompt-head"><span class="prompt-step">3.3 · 复制使用</span><h3>模拟专家团接力，输出验收表</h3></div>
+        <p class="prompt-desc">重点看“各专家是否有依据、有没有冲突、原 IPO 的交付标准是否达成”。</p>
+        <div class="prompt-toolbar"><button class="copy-btn" type="button">复制提示词</button><button class="select-btn" type="button">全选文本</button><span class="copy-status" role="status"></span></div>
+        <pre>沿用原 IPO 和 3.2《专家团协同接力表》。
 
-请输出一张《验收检查表》：
-检查项｜原验收标准｜证据/来源｜检查结果｜问题与修改建议｜谁来确认。
+请基于已提供的材料，模拟专家团依次完成任务：
+1. 每位专家输出自己的工作结果。
+2. 质检专家检查错误、遗漏与冲突。
+3. 对照原 IPO 的 O，输出《专家团验收检查表》。
 
-结果只能是：符合 / 不符合 / 待确认 / 未开始。
-没做的不能写成完成；AI只做初检，最终由人确认。</pre>
-</div>
-      <p class="check-point"><b>学员检查：</b>没有证据的结论是否标“待确认”？未完成的有没有误写成完成？<b>产出：</b>验收检查表。</p>
+表格列：
+验收项目｜检查结果｜依据｜待确认事项
 
-      <div class="end-state"><b>完成标志：</b>拿到三张单表：<b>任务执行准备单 → 人机接力表 → 验收检查表</b>。最后由人决定是否通过。</div>
+未实际完成的不能写成完成；有分歧交由人判断，最终结果由人确认。</pre>
+      </div>
+      <div class="sample-panel">
+        <div style="padding:16px 18px 4px;font-weight:800;color:var(--navy-2)">课堂检验：同一工单，两份资料结论不同怎么办？</div>
+        <p class="sample-explain">A 单台账写“已完成”，维修记录却没有验收证据。正确做法：分诊专家发现冲突 → 维修协调专家列出待核实事项 → 质量复核专家标为“待确认” → 业务负责人决定是否结案。<b>AI 不能把待确认写成已完成。</b></p>
+      </div>
+      <p class="check-point"><b>学员检查：</b>验收表是否列清检查结果和来源？未完成、缺资料、状态冲突是否如实标注？最终审批是否留给人？<b>产出：</b>《专家团验收检查表》及纠错记录。</p>
+
+      <div class="end-state"><b>完成标志：</b>拿到三份可复用的成果：<b>AI 专家配置卡 → 专家团协同接力表 → 专家团验收检查表</b>。<br><b>注意：</b>普通 Chatbot 中的“专家团”是对多个专家视角与工作流程的模拟，不等于已部署独立运行的多 Agent 系统。真实部署需工具接入、权限、日志、测试和审批。<br><b>下一步：</b>进入 <a href="/lijiagui/hailiang-ipo-skill/">模块四 · SOP / Skill 固化复用 ↗</a>，把经人工验证的专家流程和纠错经验沉淀成标准，而不是直接把 3.1 的初始流程当作正式 SOP。</div>
     </div>
   </section>
 
   <section class="block" id="appendix">
     <div class="wrap">
-      <div class="sec-head"><span class="sec-kicker">知识附录 · 按需查看</span><h2>只记住一个关系</h2><p><b>IPO 说清楚工作怎么做；CHAT 补齐 AI 需要的协同信息。</b> T 直接承接原 IPO。</p></div>
+      <div class="sec-head">
+        <span class="sec-kicker">知识附录 · 按需查看</span>
+        <h2>为什么要从角色升级为专家？</h2>
+        <p><b>Character 只交代身份；AI 专家需要人设、能力模型、工作流程和责任边界。</b> 专家团再把这些专业能力组织起来完成原 IPO。</p>
+      </div>
     </div>
   </section>
   <section class="block appendix-block" id="handoff">
-    <details class="appendix-toggle"><summary>附录 A · IPO 和 CHAT 的关系 <em>点击展开</em></summary>
+    <details class="appendix-toggle"><summary>附录 A · 保留 CHAT，升级 C 的定义 <em>点击展开</em></summary>
       <div class="wrap">
         <div class="chat-grid" id="chat" style="margin-top:18px">
-          <div class="chat-item"><span class="letter">C</span><h4>谁来做</h4><p>我负责什么，AI负责什么。</p></div>
-          <div class="chat-item"><span class="letter">H</span><h4>有什么背景</h4><p>资料、规则、权限及限制。</p></div>
-          <div class="chat-item"><span class="letter">A</span><h4>做到什么</h4><p>目标、用途、交付对象。</p></div>
-          <div class="chat-item"><span class="letter">T</span><h4>具体做什么</h4><p>就是模块2已确认的 IPO。</p></div>
+          <div class="chat-item"><span class="letter">C</span><h4>Consultant · 专家</h4><p>人设、能力模型、工作流程与责任边界。</p></div>
+          <div class="chat-item"><span class="letter">H</span><h4>History · 背景</h4><p>业务材料、规则、知识和权限限制。</p></div>
+          <div class="chat-item"><span class="letter">A</span><h4>Aim · 目标</h4><p>业务成果、使用目的与验收要求。</p></div>
+          <div class="chat-item"><span class="letter">T</span><h4>Task · 任务</h4><p>直接沿用模块二已确认的 IPO，不重新定义。</p></div>
         </div>
-        <p class="case-note"><b>需要时才细拆：</b>如果原 IPO 的某个 P 步骤很复杂，可以进一步拆成子 IPO；简单任务不用强拆。</p>
+        <p class="case-note"><b>记忆点：</b>IPO 让工作说得清；CHAT 让专家知道如何参与；专家团让不同专业能力协同。写上能力不代表系统已授权或工具已连接。</p>
       </div>
     </details>
   </section>
   <section class="block appendix-block" id="topics">
-    <details class="appendix-toggle"><summary>附录 B · 三步分别看什么 <em>点击展开</em></summary>
+    <details class="appendix-toggle"><summary>附录 B · 三步成果如何连成闭环 <em>点击展开</em></summary>
       <div class="wrap">
         <div class="case-card">
           <div class="case-steps">
-            <div class="case-step"><span class="num">01</span><span class="body"><strong>补背景</strong><small>我是谁？AI是谁？有什么资料？要什么结果？</small></span><span class="who">准备单</span></div>
-            <div class="case-step"><span class="num">02</span><span class="body"><strong>看分工</strong><small>每一步 AI做什么？人检查什么？</small></span><span class="who">接力表</span></div>
-            <div class="case-step"><span class="num">03</span><span class="body"><strong>查结果</strong><small>达到原 IPO 的 O 了吗？证据在哪里？</small></span><span class="who">验收表</span></div>
+            <div class="case-step"><span class="num">01</span><span class="body"><strong>3.1 培养专家</strong><small>专家的人设、能力、流程与边界是否明确？</small></span><span class="who">专家配置卡</span></div>
+            <div class="case-step"><span class="num">02</span><span class="body"><strong>3.2 组建专家团</strong><small>不同专家怎样按 IPO 的 P 分工与交接？</small></span><span class="who">协同接力表</span></div>
+            <div class="case-step"><span class="num">03</span><span class="body"><strong>3.3 协作与验收</strong><small>是否符合原 IPO 的 O？证据和人工确认在哪里？</small></span><span class="who">专家团验收表</span></div>
           </div>
-          <p class="case-note">统一规则：有疑问就标“待确认”；AI不代替人的业务判断、审批或最终签核。</p>
+          <p class="case-note"><b>与模块四衔接：</b>3.1 的流程只是初始设计；3.3 的执行结果、验收意见和纠错记录经过人确认后，才能逐步整理成 SOP，并进一步制作、测试 Skill。<br><b>治理原则：</b>AI 专家不是真正的人类员工；涉及安全、责任、业务审批和外部承诺时必须遵守单位授权与人工审核要求。</p>
         </div>
       </div>
     </details>
