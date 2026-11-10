@@ -240,7 +240,7 @@ footer{margin-top:48px;background:var(--navy);color:rgba(255,255,255,.8);padding
   <div class="wrap head-inner">
     <a class="brand" href="/lijiagui/list/"><span class="dot"></span>李家贵 · AI 实战训练</a>
     <nav class="head-nav" aria-label="页面导航">
-      <a href="#prompts" class="home">立即练习</a><a href="#step31">3.1</a><a href="#step32">3.2</a><a href="#step33">3.3</a><a href="#appendix">知识附录</a>
+      <a href="#prompts" class="home">立即练习</a><a href="#step31">3.1</a><a href="#step32">3.2</a><a href="#step33">3.3</a>
       <a class="home" href="/lijiagui/list/">资源导航</a>
     </nav>
   </div>
@@ -370,64 +370,9 @@ O：一页跟进简报，包含工单进展、异常风险、待办与下一步�
         <p class="sample-explain">A 单台账写“已完成”，维修记录却没有验收证据。正确做法：分诊专家发现冲突 → 维修协调专家列出待核实事项 → 质量复核专家标为“待确认” → 业务负责人决定是否结案。<b>AI 不能把待确认写成已完成。</b></p>
       </div>
       <p class="check-point"><b>学员检查：</b>验收表是否列清检查结果和来源？未完成、缺资料、状态冲突是否如实标注？最终审批是否留给人？<b>产出：</b>《专家团验收检查表》及纠错记录。</p>
-
-      <div class="end-state"><b>完成标志：</b>拿到三份可复用的成果：<b>AI 专家配置卡 → 专家团协同接力表 → 专家团验收检查表</b>。<br><b>注意：</b>普通 Chatbot 中的“专家团”是对多个专家视角与工作流程的模拟，不等于已部署独立运行的多 Agent 系统。真实部署需工具接入、权限、日志、测试和审批。<br><b>下一步：</b>进入 <a href="/lijiagui/hailiang-ipo-skill/">模块四 · SOP / Skill 固化复用 ↗</a>，把经人工验证的专家流程和纠错经验沉淀成标准，而不是直接把 3.1 的初始流程当作正式 SOP。</div>
     </div>
-  </section>
-
-  <section class="block" id="appendix">
-    <div class="wrap">
-      <div class="sec-head">
-        <span class="sec-kicker">知识附录 · 按需查看</span>
-        <h2>为什么要从角色升级为专家？</h2>
-        <p><b>Character 只交代身份；AI 专家需要人设、能力模型、工作流程和责任边界。</b> 专家团再把这些专业能力组织起来完成原 IPO。</p>
-      </div>
-    </div>
-  </section>
-  <section class="block appendix-block" id="handoff">
-    <details class="appendix-toggle"><summary>附录 A · 保留 CHAT，升级 C 的定义 <em>点击展开</em></summary>
-      <div class="wrap">
-        <div class="chat-grid" id="chat" style="margin-top:18px">
-          <div class="chat-item"><span class="letter">C</span><h4>Consultant · 专家</h4><p>人设、能力模型、工作流程与责任边界。</p></div>
-          <div class="chat-item"><span class="letter">H</span><h4>History · 背景</h4><p>业务材料、规则、知识和权限限制。</p></div>
-          <div class="chat-item"><span class="letter">A</span><h4>Aim · 目标</h4><p>业务成果、使用目的与验收要求。</p></div>
-          <div class="chat-item"><span class="letter">T</span><h4>Task · 任务</h4><p>直接沿用模块二已确认的 IPO，不重新定义。</p></div>
-        </div>
-        <p class="case-note"><b>记忆点：</b>IPO 让工作说得清；CHAT 让专家知道如何参与；专家团让不同专业能力协同。写上能力不代表系统已授权或工具已连接。</p>
-      </div>
-    </details>
-  </section>
-  <section class="block appendix-block" id="topics">
-    <details class="appendix-toggle"><summary>附录 B · 三步成果如何连成闭环 <em>点击展开</em></summary>
-      <div class="wrap">
-        <div class="case-card">
-          <div class="case-steps">
-            <div class="case-step"><span class="num">01</span><span class="body"><strong>3.1 培养专家</strong><small>专家的人设、能力、流程与边界是否明确？</small></span><span class="who">专家配置卡</span></div>
-            <div class="case-step"><span class="num">02</span><span class="body"><strong>3.2 组建专家团</strong><small>不同专家怎样按 IPO 的 P 分工与交接？</small></span><span class="who">协同接力表</span></div>
-            <div class="case-step"><span class="num">03</span><span class="body"><strong>3.3 协作与验收</strong><small>是否符合原 IPO 的 O？证据和人工确认在哪里？</small></span><span class="who">专家团验收表</span></div>
-          </div>
-          <p class="case-note"><b>与模块四衔接：</b>3.1 的流程只是初始设计；3.3 的执行结果、验收意见和纠错记录经过人确认后，才能逐步整理成 SOP，并进一步制作、测试 Skill。<br><b>治理原则：</b>AI 专家不是真正的人类员工；涉及安全、责任、业务审批和外部承诺时必须遵守单位授权与人工审核要求。</p>
-        </div>
-      </div>
-    </details>
   </section>
 </main>
-
-<footer>
-  <div class="wrap">
-    <div class="foot-grid">
-      <div class="lecturer">
-        <span class="avatar" aria-hidden="true">李</span>
-        <div>
-          <div class="name">讲师：李家贵</div>
-          <div class="title">西安交大数字经济研究院首席科学家</div>
-        </div>
-      </div>
-      <div class="foot-links"><a href="/lijiagui/list/">← 返回全部资源导航</a></div>
-    </div>
-    <div class="foot-note">AI 工作流重构与高效协同 · 海亮智汇后勤 全员 AI 实操技巧线上课程 · 模块三教学页 ｜ 课程案例采用教学示例或经授权的脱敏材料</div>
-  </div>
-</footer>
 
 <script>
 (function () {
