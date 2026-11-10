@@ -916,13 +916,13 @@
 
 请同时满足以下格式要求：
 1. 不同阶段使用不同颜色。
-2. 各阶段横向排布，阶段内部自上而下展开；把后勤服务月报这类周期性工作单独标成循环，避免画成只走一次的直线。
+2. 各阶段横向排布，阶段内部自上而下展开；把例行工单复盘这类重复性工作单独标成循环，避免画成只走一次的直线。
 3. 用不同形状区分开始/结束、审批、判断、资料、执行和风险提示。
 4. 按“准备—制作—评审—汇报—跟进”分区，标明与上级、协作部门和汇报对象的交接节点。
 5. 输出可直接在 普通对话工具 中渲染的代码，不要只给文字说明。</textarea>
             <ul class="hint-list">
               <li><span class="mark">+</span><span>先填写你的岗位和候选工作，也可以直接用课堂贯穿案例“校园报修工单跟进”。</span></li>
-              <li><span class="mark">+</span><span>如果流程不完整，继续追问：“请补充与上级和协作部门的交接信息、时间要求，以及数据缺失、口径分歧和评审意见反复时的处理分支。”</span></li>
+              <li><span class="mark">+</span><span>如果流程不完整，继续追问：“请补充与上级和协作部门的交接信息、交接标准，以及数据缺失、口径分歧和评审意见反复时的处理分支。”</span></li>
               <li><span class="mark">+</span><span>最终下载 SVG，建议命名为：01-hailiang-{姓名或部门}-流程生成.svg。</span></li>
             </ul>
             <div class="copy-status" aria-live="polite"></div>
@@ -949,7 +949,7 @@
               </div>
               <button type="button" data-copy-target="prompt-ai-flow">复制当前提示词</button>
             </div>
-            <textarea class="prompt-box" id="prompt-ai-flow">请基于上一步生成的 {岗位工作流程 Mermaid 代码}，分析哪些节点适合 AI 辅助，帮助我减少重复整理、缩短准备时间，让材料和结论更完整。
+            <textarea class="prompt-box" id="prompt-ai-flow">请基于上一步生成的 {岗位工作流程 Mermaid 代码}，分析哪些节点适合 AI 辅助，帮助我减少重复整理、简化准备工作，让材料和结论更完整。
 
 重点考虑：工单信息归并、维修记录与状态核对、超时风险提示、待办与责任人汇总、验收记录和回访信息整理、后勤运营周报与月报初稿。请用 SCAMPER、5W1H 等方法检查遗漏，区分“有脱敏材料即可试用”和“需要对接内部系统”的场景，输出新的 Mermaid 流程图。
 
@@ -962,7 +962,7 @@
 6. 步骤文字要能直接复制到普通对话工具中继续修改。</textarea>
             <ul class="hint-list">
               <li><span class="mark">+</span><span>填入 {岗位工作流程 Mermaid 代码}，接着第一步梳理的流程继续讨论。</span></li>
-              <li><span class="mark">+</span><span>要求 AI 节点标注“输入数据、AI 处理、输出结果、节省时间或降低风险”。</span></li>
+              <li><span class="mark">+</span><span>要求 AI 节点标注“输入数据、AI 处理、输出结果、减少人工整理或降低风险”。</span></li>
               <li><span class="mark">+</span><span>最终下载 SVG，建议命名为：02-hailiang-{姓名或部门}-AI化改造.svg。</span></li>
             </ul>
             <div class="copy-status" aria-live="polite"></div>
