@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="海亮智汇后勤干部行动学习：AI驱动的组织转型与变革。从Agent认知、后勤场景筛选到人机协同治理和五步落地路线图。">
+<title>海亮智汇后勤｜AI驱动的组织转型与变革</title>
+<style>
+:root{--navy:#08234b;--navy2:#0b3470;--blue:#155eef;--light:#eef5ff;--ink:#172943;--muted:#5f718a;--line:#dce5f0;--bg:#f4f7fb;--gold:#e9be76;--white:#fff}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:80px}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.75 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",Arial,sans-serif}
+a{color:var(--blue)}a:hover{text-decoration:underline}.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+.topbar{background:#061a39;color:#dce9ff;position:sticky;top:0;z-index:30;border-bottom:1px solid #ffffff1a}
+.topbar .wrap{min-height:61px;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.logo{color:white;text-decoration:none;font-weight:800;letter-spacing:.04em;font-size:15px}.logo b{color:var(--gold)}
+.nav{display:flex;gap:18px;flex-wrap:wrap}.nav a{color:#dce9ff;text-decoration:none;font-size:13px}.nav a:hover{color:white}
+.hero{background:radial-gradient(circle at 82% 20%,#286fe890 0,transparent 32%),linear-gradient(125deg,#071a3a 2%,#0c366f 68%,#164f93);color:white;padding:70px 0 85px}
+.hero-inner{max-width:1000px}.eyebrow{font-size:12px;letter-spacing:.14em;font-weight:700;color:#a9d0ff}
+.hero h1{font-size:clamp(31px,5vw,53px);line-height:1.25;letter-spacing:-.02em;margin:16px 0 22px}
+.hero h1 em{font-style:normal;color:#ffda96}.hero p{max-width:850px;color:#deecff;font-size:18px;line-height:1.85;margin:0}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:0;border-radius:10px;padding:11px 18px;font-size:14px;font-weight:700;cursor:pointer;text-decoration:none;transition:.2s;background:var(--blue);color:white}
+.btn:hover{filter:brightness(1.07);transform:translateY(-1px);text-decoration:none}.btn.light{background:white;color:#123d80}.btn.outline{background:transparent;color:white;border:1px solid #ffffff77}.btn.secondary{background:#e9f1ff;color:#17479c}.btn.small{font-size:13px;padding:9px 12px}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:38px}.metric{border:1px solid #ffffff35;background:#ffffff12;border-radius:13px;padding:16px 18px;backdrop-filter:blur(8px)}
+.metric strong{font-size:25px;color:white;display:block;line-height:1.4}.metric span{font-size:12px;color:#d1e4ff}
+.notice{background:white;border-radius:16px;box-shadow:0 12px 34px #102d5812;padding:22px 26px;margin-top:-33px;position:relative;display:grid;grid-template-columns:1fr auto;gap:22px;align-items:center;border:1px solid var(--line)}
+.notice h2{font-size:16px;margin:0 0 7px}.notice p{color:var(--muted);margin:0}.notice .tag{background:#edf4ff;color:#12459b;font-size:12px;border-radius:99px;padding:6px 10px;white-space:nowrap;font-weight:800}
+section{margin-top:58px}.section-head{margin-bottom:25px}.kicker{font-size:12px;letter-spacing:.1em;font-weight:800;color:#2c61ac;margin:0 0 7px}.section-head h2{font-size:clamp(23px,3vw,31px);margin:0 0 9px;line-height:1.38}.section-head p{color:var(--muted);margin:0;max-width:880px}
+.panel,.module,.card{background:white;border:1px solid var(--line);border-radius:17px;box-shadow:0 5px 20px #1e417308}
+.overview{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.step-card{padding:22px;display:flex;flex-direction:column}.step-number{font-size:13px;color:var(--blue);font-weight:900}.step-card h3{font-size:20px;margin:8px 0 6px}.step-card p{color:var(--muted);font-size:13px;margin:0 0 14px}.step-card a{margin-top:auto;font-weight:700;font-size:13px;text-decoration:none}
+.context{display:grid;grid-template-columns:1.05fr .95fr;gap:18px}.context .card{padding:25px}.context h3{margin:0 0 12px;font-size:19px}.context p{margin:9px 0;color:var(--muted)}.context strong{color:var(--ink)}
+.business-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}.business{background:#f2f6fc;padding:12px 14px;border-radius:9px;font-size:13px;font-weight:700;color:#274469}
+.module{margin-top:22px;overflow:hidden}.module-head{background:linear-gradient(90deg,#092b5b,#124c93);padding:26px 30px;color:white}
+.module-head .index{font-size:12px;color:#b6d5ff;font-weight:800;letter-spacing:.1em}.module-head h3{font-size:26px;line-height:1.4;margin:6px 0}.module-head p{color:#d7e8ff;margin:0;font-size:14px}
+.module-body{padding:28px 30px}.two-col{display:grid;grid-template-columns:1fr 1fr;gap:22px}.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+.subhead{font-size:18px;margin:0 0 12px}.model-box{padding:19px;background:#f3f7fd;border:1px solid #e2ebf7;border-radius:12px}.model-box strong{display:block;margin-bottom:5px;color:#173c70}.model-box p{color:var(--muted);margin:0;font-size:13px}
+.flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:7px;margin:15px 0}.flow span{border-radius:8px;background:#eaf1fb;padding:9px 11px;font-size:13px;font-weight:700}.flow i{align-self:center;color:#6284b7;font-style:normal}
+.practice{border-top:1px solid var(--line);padding-top:25px;margin-top:28px}.practice-title{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:13px}.practice-title h4{font-size:20px;margin:0}.output-badge{font-size:12px;font-weight:800;color:#18539c;background:#edf5ff;border-radius:50px;padding:4px 12px}
+.field{margin-bottom:15px}.field label{display:block;font-size:13px;font-weight:700;color:#365273;margin-bottom:6px}.field input,.field textarea,.field select,.score-table input,.score-table select{font:inherit;color:var(--ink);width:100%;border:1px solid #cedaeb;border-radius:9px;background:#fff;padding:9px 12px;outline:none}.field textarea{min-height:86px;resize:vertical}.field input:focus,.field textarea:focus,.field select:focus,.score-table input:focus,.score-table select:focus{border-color:var(--blue);box-shadow:0 0 0 3px #155eef16}
+.hint{color:#718097;font-size:12px;margin:8px 0}.scenario-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.scenario{border:1px solid var(--line);background:#fff;padding:16px;border-radius:11px}.scenario small{display:inline-block;color:#24599e;background:#eef5ff;border-radius:5px;padding:2px 7px;font-size:11px;font-weight:800}.scenario strong{display:block;margin-top:8px}.scenario p{font-size:12px;color:var(--muted);line-height:1.7;margin:5px 0 0}
+.table-scroll{overflow-x:auto}.score-table{border-collapse:collapse;width:100%;min-width:720px;font-size:13px}.score-table th{background:#eff5ff;color:#254e80;text-align:left;padding:10px 8px;white-space:nowrap}.score-table td{border-bottom:1px solid var(--line);padding:9px 7px}.score-table td:nth-child(1){min-width:240px}.score-table input{font-size:13px}.score-table select{min-width:118px;font-size:12px;padding:9px 7px}.score{font-weight:900;color:#155eef;font-size:16px;text-align:center}
+.result{background:#f0f6ff;border:1px solid #d8e8ff;border-radius:10px;padding:12px 16px;margin-top:14px;color:#214d86;font-size:13px}.result strong{color:#0e3973}
+.role{padding:17px;border-radius:12px;border:1px solid var(--line)}.role h5{font-size:16px;margin:0 0 7px}.role ul{margin:0;padding-left:19px;color:var(--muted);font-size:13px}.role.human{background:#f1f7ff}.role.agent{background:#f4f8f4}.role.governance{background:#fff9ee}
+.kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}.kpi span{padding:13px 9px;text-align:center;border-radius:8px;background:#eef4fd;color:#244d85;font-size:13px;font-weight:800}
+.five{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}.five .item{border:1px solid #dae6f7;background:#f3f7fe;border-radius:11px;padding:15px}.five strong{color:#1c579d;font-size:21px;display:block}.five b{display:block;font-size:13px;margin:5px 0}.five p{font-size:12px;color:#687b95;margin:0;line-height:1.6}
+.template{background:#081f44;color:#dceaff;border-radius:12px;padding:18px 20px;margin-top:18px;position:relative}.template summary{font-size:14px;color:white;cursor:pointer;font-weight:800}.template pre{white-space:pre-wrap;word-break:break-word;font:13px/1.8 Consolas,"Microsoft YaHei",monospace;max-height:330px;overflow:auto;margin:15px 0 12px}.template .btn{background:#dbe9ff;color:#153e7f}
+.end-panel{background:linear-gradient(120deg,#0b2b59,#0b4897);color:white;border-radius:17px;padding:28px 30px}.end-panel h2{margin:0 0 10px;font-size:24px}.end-panel p{color:#e2eeff;margin:0 0 16px}.end-panel .btn{background:white;color:#153e7f}
+.source-list{padding-left:20px;color:var(--muted);font-size:13px}.source-list a{word-break:break-all}.footnote{font-size:12px;color:#718197;margin-top:15px}
+footer{border-top:1px solid #dce5f0;margin-top:60px;padding:25px 0 40px;color:#74829b;font-size:12px}
+.toast{position:fixed;bottom:24px;right:24px;background:#143d77;color:#fff;border-radius:11px;padding:10px 18px;z-index:50;box-shadow:0 9px 30px #041d4060;display:none}
+@media(max-width:900px){.overview{grid-template-columns:repeat(2,1fr)}.business-grid,.scenario-grid{grid-template-columns:repeat(2,1fr)}.five{grid-template-columns:repeat(3,1fr)}.context,.two-col{grid-template-columns:1fr}.nav{gap:10px}}
+@media(max-width:620px){.wrap{padding:0 16px}.hero{padding:45px 0 70px}.hero p{font-size:15px}.metrics,.overview,.business-grid,.scenario-grid,.three-col,.kpi{grid-template-columns:repeat(2,1fr)}.notice{grid-template-columns:1fr;padding:17px}.topbar .wrap{padding:10px 15px;display:block}.nav{margin-top:4px}.nav a{font-size:11px}.module-head,.module-body{padding:21px 18px}.module-head h3{font-size:22px}.five{grid-template-columns:1fr 1fr}.metric{padding:12px}.metric strong{font-size:21px}}
+@media print{.topbar,.hero-actions,.btn,.toast{display:none!important}.hero{padding:18px 0;background:#123d74!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.module{break-inside:avoid}.notice{margin-top:15px}.wrap{max-width:none}.module-body{padding:18px}}
+</style>
+</head>
+<body>
+<nav class="topbar" aria-label="课程导航"><div class="wrap"><a href="#top" class="logo">海亮智汇<b>后勤</b> · AI ORGANIZATION</a><div class="nav"><a href="#overview">课程总览</a><a href="#module1">Agent 认知</a><a href="#module2">场景筛选</a><a href="#module3">组织治理</a><a href="#module4">落地路线</a><a href="#deliver">导出成果</a></div></div></nav>
+<header class="hero" id="top"><div class="wrap hero-inner">
+<div class="eyebrow">海亮智汇后勤 · 第一期 · 管理干部行动学习</div>
+<h1>AI 驱动的<br><em>组织转型与变革</em></h1>
+<p>从“把 AI 当工具”，走向“让 Agent 成为组织的协同成员”。围绕校园后勤的真实业务，完成场景识别、数字员工设计、人机协同治理与试点落地规划。</p>
+<div class="hero-actions"><a class="btn light" href="#overview">进入四模块课程 ↓</a><a class="btn outline" href="#module2">直接开始场景筛选</a></div>
+<div class="metrics"><div class="metric"><strong>4</strong><span>个递进模块</span></div><div class="metric"><strong>3</strong><span>个高价值 Agent 候选场景</span></div><div class="metric"><strong>1</strong><span>张人机混合团队草图</span></div><div class="metric"><strong>1</strong><span>份五步落地计划</span></div></div>
+</div></header>
+<main class="wrap">
+<div class="notice"><div><h2>课前准备：带来一个真实的后勤流程</h2><p>例如食材配送对账、食堂营运分析、校园报修、区域运营复盘或后勤培训。准备脱敏流程、字段和业务规则即可；本课程重点是组织变革，不是基础工具教学。</p></div><span class="tag">请勿输入师生个人信息或内部敏感数据</span></div>
+<section id="overview"><div class="section-head"><div class="kicker">LEARNING PATH</div><h2>四步走：从“工具提效”到“组织 AI 力”</h2><p>按照你提供的培养方案重新组织课程。每个模块都包含理论抓手、后勤业务例子和可现场完成的行动学习。</p></div>
+<div class="overview">
+<div class="card step-card"><span class="step-number">01 / 认知破壁</span><h3>从工具到同事</h3><p>Agent 四要素、ReAct、自主执行、多 Agent 协作；理解数字员工能够承担什么，以及必须由谁负责。</p><a href="#module1">查看模块一 · 认知练习 →</a></div>
+<div class="card step-card"><span class="step-number">02 / 场景洞察</span><h3>找到高价值场景</h3><p>用“高频次 × 规则明确性 × 错误代价可控”筛选本部门 3 个候选 Agent 场景并排序。</p><a href="#module2">查看模块二 · 评分练习 →</a></div>
+<div class="card step-card"><span class="step-number">03 / 组织治理</span><h3>管理硅基员工</h3><p>设计人-Agent 分工、权限边界、KPI、虚拟职级与数字员工监督机制。</p><a href="#module3">查看模块三 · 团队草图 →</a></div>
+<div class="card step-card"><span class="step-number">04 / 规模落地</span><h3>五步推动变革</h3><p>流程挖掘、就绪度、安全治理、明星试点、复制推广，形成部门行动计划。</p><a href="#module4">查看模块四 · 路线图 →</a></div>
+</div></section>
+<section id="context"><div class="section-head"><div class="kicker">BUSINESS CONTEXT</div><h2>为什么课程要围绕海亮智汇后勤来设计？</h2></div>
+<div class="context"><div class="card"><h3>业务底座：真实、多场景、跨区域</h3><p>公司官网披露，<strong>截至 2026 年 9 月服务覆盖全国 22 省、47 市、57 县，惠及超过 60 万名师生</strong>。后勤服务兼具规模化运营、跨区域协同和校园安全责任，Agent 的价值不仅是出一份报告，更是推动流程标准化与管理升级。</p><div class="business-grid"><div class="business">后勤科技</div><div class="business">数智食配</div><div class="business">智慧餐饮</div><div class="business">数智零售</div><div class="business">校园物业</div><div class="business">后勤培训</div></div></div>
+<div class="card"><h3>转型起点：不是从零普及工具</h3><p>海亮智汇后勤于 <strong>2026 年 9 月 14 日召开后勤 AI 立项路演会</strong>，由业务条线与区域负责人参与。此次课程因此把重心放在“从已识别项目走向可管理、可度量、可复制的 Agent 体系”。</p><p><strong>主线案例：</strong>以“校园食材配送异常与对账协同”作为课堂模拟流程，串起数据读取、异常归类、人审裁决、留痕复盘。该 Agent 是教学设计示例，<strong>不代表公司已上线该系统</strong>。</p></div></div>
+</section>
+<section id="module1" class="module"><div class="module-head"><div class="index">MODULE 01 · 认知破壁与协同逻辑</div><h3>从“工具”到“同事”的 Agent 革命</h3><p>看清 Agent 的组成、行动链路，以及“人—Agent—Agent”的新协作方式。</p></div>
+<div class="module-body">
+<div class="three-col"><div class="model-box"><strong>四大核心要素</strong><p>LLM 大脑、规划能力、记忆系统、工具调用。Agent 不止生成文字，还能在授权范围内执行任务。</p></div><div class="model-box"><strong>ReAct 闭环</strong><p>观察 → 推理 → 行动 → 反馈 → 再判断，强调基于真实系统反馈推进工作。</p></div><div class="model-box"><strong>多 Agent 协作</strong><p>管理者 Agent 拆任务、执行 Agent 处理、质检 Agent 复核；高风险节点仍需人工裁决。</p></div></div>
+<h4 class="subhead" style="margin-top:25px">课堂模拟：一张校园食材配送异常单如何流转？</h4>
+<div class="flow"><span>数据/工单进入</span><i>→</i><span>执行 Agent 归类与初筛</span><i>→</i><span>质检 Agent 检查证据</span><i>→</i><span>业务负责人复核裁决</span><i>→</i><span>记录结果与改进规则</span></div>
+<p class="hint">注意：食品安全、供应商处罚、财务付款、涉及个人隐私等高风险事项必须按授权流程人工复核，不得由 AI 自主作最终决定。</p>
+<div class="practice"><div class="practice-title"><h4>行动学习 ①：识别可由 Agent 承接的工作节点</h4><span class="output-badge">产出：1 张岗位任务分工草稿</span></div>
+<div class="two-col"><div class="field"><label for="work">本部门选择的真实工作</label><input id="work" value="校园食材配送异常与对账协同" placeholder="填写本部门一项真实工作"></div><div class="field"><label for="flow">原工作流程（用箭头简述）</label><input id="flow" value="订单汇总 → 验收比对 → 异常核查 → 人工裁决 → 对账复盘"></div></div>
+<div class="field"><label for="agentwork">建议交给 Agent 的动作（不包括最终安全/财务裁决）</label><textarea id="agentwork">自动汇总脱敏订单与验收差异；依据已确认的规则标注异常类型；生成待复核清单和处理建议；跟踪人工处理状态。</textarea></div>
+<details class="template"><summary>示例提示词：让 AI 帮你拆分“人 vs Agent”的工作（点击展开）</summary><pre id="p1">你是校园后勤业务流程分析助手。请根据我提供的一项后勤工作：
+1. 按“输入→处理→输出”拆成关键步骤；
+2. 逐步标出“人工负责 / Agent辅助 / Agent可执行”；
+3. 为每个 Agent 动作写清所需数据、权限和人工复核点；
+4. 不得假设系统已经打通或拥有接口。
+请用一张表输出，并单列安全与责任边界。</pre><button class="btn small" type="button" onclick="copyPrompt('p1')">复制提示词</button></details></div>
+</div></section>
+<section id="module2" class="module"><div class="module-head"><div class="index">MODULE 02 · 场景洞察与优先级</div><h3>筛出最值得先做的 3 个 Agent 场景</h3><p>不是“看起来智能”就值得做，而要高频、规则清晰、错误代价可控。</p></div>
+<div class="module-body">
+<div class="section-head"><h2 style="font-size:20px">海亮智汇后勤六类业务：可讨论的 Agent 候选方向</h2><p>以下是基于官网业务流程推导的课堂候选场景，不代表已部署或已获得内部数据/API权限。</p></div>
+<div class="scenario-grid">
+<div class="scenario"><small>数智食配</small><strong>青禾链订单 / 验收 / 对账差异初筛</strong><p>汇总对账差异、分类原因、生成待人工核验清单；不自动改账或决定付款。</p></div>
+<div class="scenario"><small>智慧餐饮</small><strong>菜单、损耗和营养信息整理</strong><p>对照标准菜谱生成经营分析初稿；食品安全与营养结论交由专业人员审核。</p></div>
+<div class="scenario"><small>校园物业</small><strong>报修工单分流与超时提醒</strong><p>按地点、故障类别、时效标准给出派单建议；紧急安全故障人工优先处置。</p></div>
+<div class="scenario"><small>数智零售</small><strong>门店补货与滞销分析初稿</strong><p>汇总库存、销量与节假日变化，为采购管理者提供可复核建议。</p></div>
+<div class="scenario"><small>后勤科技</small><strong>校园巡检异常摘要 Agent</strong><p>按制度提取巡检记录里的待处理问题，汇总风险线索，保留原始证据。</p></div>
+<div class="scenario"><small>后勤培训</small><strong>服务 SOP 学习与知识问答</strong><p>围绕审定培训制度生成问答与测验，复杂、变更中的制度交由专家确认。</p></div>
+</div>
+<div class="practice"><div class="practice-title"><h4>行动学习 ②：为本部门 3 个候选场景评分</h4><span class="output-badge">产出：优先级排序 + 风险说明</span></div>
+<p class="hint">评分是课堂启发式工具：每项 1～3 分，乘积仅用于相对比较。第三项“错误代价可控”分数越高，表示出错后的业务损失越低、越容易发现与复核；涉及食安、安全、资金的场景即使得分高也必须单独审查。</p>
+<div class="table-scroll"><table class="score-table" aria-label="Agent候选场景评分表"><thead><tr><th>候选场景（可修改）</th><th>高频次</th><th>规则明确</th><th>错误代价可控</th><th>得分</th></tr></thead><tbody>
+<tr class="score-row"><td><input class="scene" aria-label="候选场景一" value="数智食配：验收与对账差异初筛"></td><td><select class="freq" aria-label="高频次评分一"><option value="1">1 低</option><option value="2" selected>2 中</option><option value="3">3 高</option></select></td><td><select class="rule" aria-label="规则明确评分一"><option value="1">1 低</option><option value="2" selected>2 中</option><option value="3">3 高</option></select></td><td><select class="safe" aria-label="错误代价可控评分一"><option value="1">1 低</option><option value="2" selected>2 中</option><option value="3">3 高</option></select></td><td class="score">8</td></tr>
+<tr class="score-row"><td><input class="scene" aria-label="候选场景二" value="校园物业：报修工单分类与超时提醒"></td><td><select class="freq" aria-label="高频次评分二"><option value="1">1 低</option><option value="2" selected>2 中</option><option value="3">3 高</option></select></td><td><select class="rule" aria-label="规则明确评分二"><option value="1">1 低</option><option value="2" selected>2 中</option><option value="3">3 高</option></select></td><td><select class="safe" aria-label="错误代价可控评分二"><option value="1">1 低</option><option value="2" selected>2 中</option><option value="3">3 高</option></select></td><td class="score">8</td></tr>
+<tr class="score-row"><td><input class="scene" aria-label="候选场景三" value="智慧餐饮：经营数据汇总与损耗分析初稿"></td><td><select class="freq" aria-label="高频次评分三"><option value="1">1 低</option><option value="2" selected>2 中</option><option value="3">3 高</option></select></td><td><select class="rule" aria-label="规则明确评分三"><option value="1">1 低</option><option value="2" selected>2 中</option><option value="3">3 高</option></select></td><td><select class="safe" aria-label="错误代价可控评分三"><option value="1">1 低</option><option value="2" selected>2 中</option><option value="3">3 高</option></select></td><td class="score">8</td></tr>
+</tbody></table></div>
+<div class="result" id="ranking" aria-live="polite">请调整上方评分，系统将自动计算并给出相对排序。三项默认均为中档示例值，<strong>不代表真实业务评价</strong>。</div>
+<div class="field" style="margin-top:14px"><label for="sceneRisk">跨组质询：最需要人工把关的风险是什么？</label><textarea id="sceneRisk" placeholder="例如：数据是否能访问、谁有权纠正验收数据、异常误判怎么办……"></textarea></div>
+<details class="template"><summary>示例提示词：辅助筛选高价值 Agent 场景</summary><pre id="p2">你是海亮智汇后勤的业务场景评审助手。我会提供本部门候选任务及流程说明。
+请用“高频次 × 规则明确性 × 错误代价可控”三项作1-3分的初评，并逐项说明证据及假设；
+列明缺少的数据、系统接口、人工复核点和安全风险；
+推荐3个可先行验证的候选场景，给出排序理由。
+不要虚构内部系统权限、业务规模或节省金额；不满足条件的场景标记“待调研”。</pre><button class="btn small" type="button" onclick="copyPrompt('p2')">复制提示词</button></details>
+</div></div></section>
+<section id="module3" class="module"><div class="module-head"><div class="index">MODULE 03 · 组织架构与管理模式</div><h3>管理“硅基员工”：碳基 + 硅基协同</h3><p>把数字员工纳入职责、监督、评价与审计，不是简单多开几个聊天窗口。</p></div>
+<div class="module-body">
+<div class="three-col"><div class="role human"><h5>人类管理者</h5><ul><li>定目标、批准授权</li><li>判异常、作最终裁决</li><li>承担业务结果与安全责任</li></ul></div><div class="role agent"><h5>数字员工 Agent</h5><ul><li>取数、查验、归类</li><li>执行已授权动作、出初稿</li><li>记录依据、上报异常</li></ul></div><div class="role governance"><h5>AI 运营 / 治理支持</h5><ul><li>身份、权限、审计日志</li><li>质量监测、成本管控</li><li>熔断、版本回退与淘汰</li></ul></div></div>
+<div class="kpi"><span>任务完成率</span><span>结果准确率</span><span>单任务成本</span><span>响应时效</span></div>
+<p class="hint">可按“初级执行型 → 高级决策辅助型”讨论 Agent 虚拟职级；是否实施数字员工工号、编制或晋降级制度，应由公司内部制度审定，课程不预设已落地。</p>
+<div class="practice"><div class="practice-title"><h4>行动学习 ③：绘制“人 - Agent 混合团队”草图</h4><span class="output-badge">产出：职责、KPI、人审关口</span></div>
+<div class="two-col"><div class="field"><label for="lead">业务负责人 / 人类监督岗位</label><input id="lead" placeholder="例如：区域配送负责人"></div><div class="field"><label for="agentName">拟设数字员工 / Agent 名称</label><input id="agentName" value="食配对账差异初筛 Agent"></div></div>
+<div class="two-col"><div class="field"><label for="agentDuty">Agent 的具体职责与权限边界</label><textarea id="agentDuty">只读获取经过授权的订单、验收、对账字段；生成差异摘要和人工待办。不允许直接修改台账、审批付款或处置食安异常。</textarea></div><div class="field"><label for="humanGate">必须人工复核 / 升级的节点</label><textarea id="humanGate">食安相关异常、金额超阈值、证据不足或来源冲突时升级人工；所有付款与数据更正由授权人员审批。</textarea></div></div>
+<div class="field"><label for="kpiNote">拟采用的 Agent KPI（先写指标及口径，不填未经验证的目标值）</label><input id="kpiNote" value="差异识别准确率；任务完成率；单单处理时间；人工复核退回率"></div>
+<details class="template"><summary>示例提示词：设计数字员工岗位说明与监督机制</summary><pre id="p3">你是数字员工组织治理顾问。请针对我提供的后勤Agent候选场景，输出：
+1. 一张“业务负责人—数字员工—质检/治理支持”的岗位协同图（用文本树表示）；
+2. Agent职责、允许调用的数据与工具、禁止动作；
+3. 关键人工审批与异常升级的SOP；
+4. KPI口径：完成率、准确率、单任务成本、响应时效；
+5. 上线、观察、暂停、回退与淘汰条件。
+区分“建议制度”与“已确认制度”，不得臆造本公司的真实编制或权限规则。</pre><button class="btn small" type="button" onclick="copyPrompt('p3')">复制提示词</button></details>
+</div></div></section>
+<section id="module4" class="module"><div class="module-head"><div class="index">MODULE 04 · 落地路线图与变革管理</div><h3>把 Agent “装进”组织的五步法</h3><p>不追求一次建成，而是先选可验证试点，再扩展可治理的规模化应用。</p></div>
+<div class="module-body">
+<div class="five"><div class="item"><strong>01</strong><b>流程挖掘</b><p>梳理流程、节点、岗位、系统与当前痛点。</p></div><div class="item"><strong>02</strong><b>就绪度评估</b><p>核对数据基础、API 开放性、团队接受度。</p></div><div class="item"><strong>03</strong><b>治理与安全</b><p>最小权限、日志审计、人工复核、业务熔断。</p></div><div class="item"><strong>04</strong><b>明星试点</b><p>优先低风险、业务感知强、能前后对比的场景。</p></div><div class="item"><strong>05</strong><b>规模复制</b><p>形成标准 SOP、运营机制与多 Agent 协作。</p></div></div>
+<p class="hint">人的转型同样重要：把部分重复操作岗位升级为规则维护者、AI 训练师、审核员和异常裁决官；以业务价值和风险成本评价试点，不盲目追求 Agent 数量。</p>
+<div class="practice"><div class="practice-title"><h4>行动学习 ④：写出部门第一份 Agent 试点计划</h4><span class="output-badge">产出：一份可评审行动方案</span></div>
+<div class="two-col"><div class="field"><label for="pilotName">试点场景</label><input id="pilotName" value="食配对账差异初筛（课堂示例）"></div><div class="field"><label for="pilotOwner">试点牵头人 / 部门</label><input id="pilotOwner" placeholder="填业务负责人，暂不写个人敏感信息"></div></div>
+<div class="two-col"><div class="field"><label for="readiness">数据、流程与团队就绪度待核查项</label><textarea id="readiness">核查订单/验收/对账字段是否完整；接口或导出是否合规；现有差异处理SOP是否统一；一线是否愿意试用。</textarea></div><div class="field"><label for="pilotControls">治理安全和人工兜底机制</label><textarea id="pilotControls">只读最小授权、全流程留痕、异常升级工单、人工审批、误判样例复盘与一键暂停。</textarea></div></div>
+<div class="two-col"><div class="field"><label for="baseline">当前基线（先列测量方法）</label><input id="baseline" placeholder="如：每100笔对账耗时、差异复核时长、误判率"></div><div class="field"><label for="acceptance">试点验收和复制门槛</label><input id="acceptance" placeholder="如：准确率达标、人工复核可控、投入产出为正"></div></div>
+<details class="template"><summary>示例提示词：生成五步试点路线图与验收清单</summary><pre id="p4">你是海亮智汇后勤AI组织转型项目顾问。请结合我提供的候选Agent、现有流程、系统条件与安全要求，按五步法输出行动计划：
+流程挖掘→就绪度评估→治理与安全→明星试点→规模化复制。
+每步列出任务、业务负责人、协同部门、交付物、风险与验收条件；
+对尚未提供的内部数据标记“待核实”，不要捏造ROI或实施时间。
+最后提供一张便于管理层评审的行动清单。</pre><button class="btn small" type="button" onclick="copyPrompt('p4')">复制提示词</button></details>
+</div></div></section>
+<section id="deliver"><div class="end-panel"><h2>把课堂讨论变成可带走的部门行动方案</h2><p>填写上面的练习后，一键导出 Markdown。文件将包含岗位拆解、3 个候选场景排名、数字员工岗位设计和五步试点计划，便于后续部门共创与评审。</p><button class="btn" type="button" onclick="downloadResults()">导出我的课堂成果 .md ↓</button><p style="font-size:12px;margin:12px 0 0">所有填写内容仅在当前浏览器页面中处理，不会由本页面上传服务器；刷新页面后未导出的修改将丢失。请只使用脱敏业务资料。</p></div></section>
+<section id="sources"><div class="section-head"><div class="kicker">SOURCES & BOUNDARIES</div><h2>资料来源及应用边界</h2><p>培养框架依据本次提供的《海亮智汇后勤定制化培养方案》；业务现状参考以下公开资料。</p></div>
+<ol class="source-list"><li><a href="https://hailiangzhhq.com/" target="_blank" rel="noopener">海亮智汇后勤集团官网</a>：公司定位、服务覆盖、六大核心业务及 AI 路演新闻。</li><li><a href="https://hailiangzhhq.com/solution2.html" target="_blank" rel="noopener">数智食配 · 青禾链</a>：下单、采购、分拣、配送、验收、对账业务流程。</li><li><a href="https://hailiangzhhq.com/solution3.html" target="_blank" rel="noopener">智慧餐饮</a>：标准菜谱、线上下单、智能厨房、营养分析业务。</li><li><a href="https://hailiangzhhq.com/solution1.html" target="_blank" rel="noopener">后勤科技</a>：一站式综合管理平台及“1+N”业务系统。</li></ol>
+<div class="footnote">免责声明：本页用于培训与行动学习。Agent 场景、组织职级、权限机制及收益指标均为教学建议或待验证假设，不代表公司已部署或正式批准。尤其涉及校园食安、学生隐私、支付与安全事故等事项，必须遵循组织制度并由授权人员作最终判断。</div></section>
+</main>
+<footer><div class="wrap">海亮智汇后勤 · AI驱动的组织转型与变革 · 第一期课程行动学习 ｜ 课程设计与教学：李家贵</div></footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(function(){
+  function val(id){return document.getElementById(id).value.trim()||"（待填写）"}
+  function rows(){return Array.from(document.querySelectorAll(".score-row")).map(function(r){
+    var f=Number(r.querySelector(".freq").value),g=Number(r.querySelector(".rule").value),s=Number(r.querySelector(".safe").value);
+    var result={name:r.querySelector(".scene").value.trim()||"未命名场景",freq:f,rule:g,safe:s,score:f*g*s};
+    r.querySelector(".score").textContent=result.score;return result;
+  })}
+  function calc(){var a=rows().sort(function(x,y){return y.score-x.score});document.getElementById("ranking").innerHTML="<strong>课堂排序（仅供讨论）</strong>：" + a.map(function(x,i){return (i+1)+". "+escapeHtml(x.name)+"（"+x.score+"分）"}).join("　／　")+"<br><span style='color:#6e7f95'>请继续核对真实数据、风险、跨部门依赖和投入产出；同分时需人工讨论取舍。</span>"}
+  function escapeHtml(t){return t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+  document.querySelectorAll(".score-row input,.score-row select").forEach(function(e){e.addEventListener("input",calc);e.addEventListener("change",calc)});
+  calc();
+  var toastTimer;window.flash=function(msg){var el=document.getElementById("toast");el.textContent=msg;el.style.display="block";clearTimeout(toastTimer);toastTimer=setTimeout(function(){el.style.display="none"},2400)};
+  window.copyPrompt=function(id){var text=document.getElementById(id).textContent;if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(text).then(function(){flash("提示词已复制")}).catch(function(){fallback(text)})}else{fallback(text)}};
+  function fallback(t){var x=document.createElement("textarea");x.value=t;document.body.appendChild(x);x.select();var ok=document.execCommand("copy");x.remove();flash(ok?"提示词已复制":"复制未成功，请手动选中文本")}
+  window.downloadResults=function(){
+    var a=rows().sort(function(x,y){return y.score-x.score});
+    var lines=[
+      "# 海亮智汇后勤｜AI组织转型行动学习成果",
+      "",
+      "> 课堂练习草稿，业务数据、权限、制度、评分和试点方案均需内部评审确认。",
+      "",
+      "## 模块一：人-Agent任务分工",
+      "- 本部门工作："+val("work"),
+      "- 当前流程："+val("flow"),
+      "- Agent拟承接动作："+val("agentwork"),
+      "",
+      "## 模块二：3个高价值Agent候选场景",
+      "|排名|候选场景|高频次|规则明确|错误代价可控|乘积得分|",
+      "|---|---|---:|---:|---:|---:|"
+    ];
+    a.forEach(function(x,i){lines.push("|"+(i+1)+"|"+x.name.replace(/\|/g,"/")+"|"+x.freq+"|"+x.rule+"|"+x.safe+"|"+x.score+"|")});
+    lines.push("","- 关键风险/待质询："+val("sceneRisk"),"","## 模块三：人-Agent混合团队草图",
+      "- 业务负责人："+val("lead"),"- 数字员工："+val("agentName"),"- 职责与权限边界："+val("agentDuty"),"- 人工复核节点："+val("humanGate"),"- Agent KPI："+val("kpiNote"),
+      "","## 模块四：五步试点计划","1. 流程挖掘：试点场景为「"+val("pilotName")+"」","2. 就绪度评估："+val("readiness"),"3. 治理与安全："+val("pilotControls"),"4. 明星试点：牵头人「"+val("pilotOwner")+"」；当前基线「"+val("baseline")+"」；验收条件「"+val("acceptance")+"」","5. 规模复制：先复盘SOP、KPI、风险及投入产出，再报批复制。","","## 需要内部确认","- 系统与数据访问权限","- 业务责任人及监督岗位","- 安全与隐私规则","- 历史基线和价值估算","- 上线、暂停、回退的批准机制");
+    var blob=new Blob([lines.join("\n")],{type:"text/markdown;charset=utf-8"}),url=URL.createObjectURL(blob),link=document.createElement("a");
+    link.href=url;link.download="海亮智汇后勤_AI组织转型_行动学习成果.md";document.body.appendChild(link);link.click();link.remove();setTimeout(function(){URL.revokeObjectURL(url)},1000);flash("课堂成果已生成");
+  }
+})();
+</script>
+</body></html>
