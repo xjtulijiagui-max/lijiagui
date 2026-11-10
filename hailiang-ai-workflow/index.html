@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>IPO 到 CHAT 三步实操｜海亮智汇后勤 AI 模块三</title>
+<meta name="description" content="海亮智汇后勤 AI 模块三：三个简短通用提示词，3.1 补 C/H/A、3.2 生成人机接力表、3.3 输出验收检查表。练习在前，知识附录在后。" />
+<style>
+:root{
+  --navy:#061b46;--navy-2:#0a2a68;--blue:#155eef;--blue-deep:#0b47c2;--blue-soft:#eef4ff;
+  --page:#f5f8fd;--card:#fff;--ink:#15223a;--ink-2:#526178;--line:#d8e4f7;
+  --amber:#a05a00;--amber-soft:#fdf3e2;--green:#2e7d32;--green-soft:#eaf5ea;
+  --code-bg:#0d1f45;--radius:14px;--shadow:0 12px 34px rgba(17,57,122,.09);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;color:var(--ink);background:var(--page);font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",system-ui,sans-serif;line-height:1.75}
+a{color:inherit;text-decoration:none}
+:is(a,button):focus-visible{outline:3px solid #9cc0ff;outline-offset:2px;border-radius:6px}
+.wrap{max-width:920px;margin:0 auto;padding-inline:22px}
+
+.site-head{position:sticky;top:0;z-index:50;background:rgba(6,27,70,.92);backdrop-filter:blur(8px);color:#fff;box-shadow:0 4px 18px rgba(6,27,70,.25)}
+.head-inner{display:flex;align-items:center;justify-content:space-between;min-height:54px;gap:14px;padding-block:8px}
+.brand{font-weight:800;font-size:.92rem;display:flex;align-items:center;gap:8px}
+.brand .dot{width:9px;height:9px;border-radius:50%;background:#5b8dff;box-shadow:0 0 0 4px rgba(91,141,255,.22)}
+.head-nav{font-size:.86rem;display:flex;gap:6px}
+.head-nav a{padding:6px 12px;border-radius:999px;color:rgba(255,255,255,.85);white-space:nowrap}
+.head-nav a:hover{background:rgba(255,255,255,.14);color:#fff}
+.head-nav a.home{background:rgba(255,255,255,.16);font-weight:600}
+
+.hero{background:linear-gradient(132deg,var(--navy),var(--navy-2) 55%,#0f3ea0);color:#fff;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;width:460px;height:460px;right:-160px;top:-220px;border:1px solid rgba(255,255,255,.12);border-radius:50%}
+.hero .wrap{position:relative;z-index:2;padding-block:46px 40px}
+.badges{display:flex;gap:10px;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;padding:5px 13px;border-radius:999px;font-size:.8rem;font-weight:600;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.22)}
+.badge.solid{background:#fff;color:var(--navy)}
+.hero h1{font-size:clamp(1.7rem,4vw,2.3rem);line-height:1.25;margin:16px 0 6px;font-weight:800}
+.hero .sub{font-size:.98rem;color:rgba(255,255,255,.85);font-weight:600;margin:0}
+.hero .path{margin-top:14px;font-size:.83rem;color:rgba(255,255,255,.66)}
+.hero .path b{color:#fff}
+.qa-strip{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
+.qa{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:14px 16px}
+.qa .lab{font-size:.72rem;font-weight:800;letter-spacing:.08em;color:rgba(255,255,255,.65);margin-bottom:4px}
+.qa p{margin:0;font-size:.92rem}
+.qa.m .lab{color:#ffd98a}
+
+section.block{padding-block:44px 6px}
+.sec-kicker{display:inline-flex;align-items:center;gap:8px;color:var(--blue-deep);font-weight:800;font-size:.78rem;letter-spacing:.14em}
+.sec-kicker::before{content:"";width:22px;height:3px;border-radius:2px;background:var(--blue)}
+.sec-head h2{font-size:clamp(1.3rem,2.8vw,1.6rem);margin:10px 0 6px;font-weight:800}
+.sec-head p{margin:0;color:var(--ink-2)}
+
+.topic{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden}
+.topic-head{display:flex;gap:14px;align-items:center;padding:18px 22px 14px}
+.topic-no{flex:none;width:44px;height:44px;border-radius:12px;background:var(--blue-soft);color:var(--blue-deep);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.95rem}
+.topic-head h3{margin:0;font-size:1.08rem;font-weight:800}
+.topic-body{display:grid;grid-template-columns:1fr 1fr;gap:0;padding:0 22px 18px}
+.tcol{padding:2px 0}
+.tcol+.tcol{border-left:1px dashed var(--line);padding-left:20px;margin-left:20px}
+.tcol h4{margin:0 0 8px;font-size:.74rem;font-weight:800;letter-spacing:.1em;color:var(--ink-2)}
+.tcol ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.tcol li{position:relative;padding-left:15px;font-size:.9rem}
+.tcol li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:6px;border-radius:2px;background:#b9cdf2}
+.tcol.case li::before{background:#f0c66a}
+
+.chat-card{margin-top:18px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px}
+.chat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.chat-item{border:1px solid var(--line);border-radius:12px;padding:13px 14px;background:#fbfdff}
+.chat-item .letter{display:inline-flex;width:30px;height:30px;border-radius:9px;background:var(--navy);color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.95rem;margin-bottom:7px}
+.chat-item h4{margin:0 0 3px;font-size:.95rem;font-weight:800}
+.chat-item p{margin:0;font-size:.8rem;color:var(--ink-2);line-height:1.6}
+.chat-formula{margin-top:14px;background:var(--amber-soft);border:1px solid #f0dcb4;border-radius:10px;padding:11px 16px;font-size:.9rem}
+.chat-formula b{color:var(--amber)}
+.chat-tips{margin-top:10px;font-size:.83rem;color:var(--ink-2)}
+.chat-src{margin-top:10px;font-size:.75rem;color:#8a97ad}
+
+.prompt-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:18px;overflow:hidden}
+.prompt-head{display:flex;gap:12px;align-items:center;padding:16px 20px 12px;flex-wrap:wrap}
+.prompt-step{flex:none;font-size:.74rem;font-weight:800;background:var(--blue);color:#fff;border-radius:999px;padding:4px 12px;letter-spacing:.04em}
+.prompt-head h3{margin:0;font-size:1rem;font-weight:800}
+.prompt-desc{padding:0 20px;font-size:.87rem;color:var(--ink-2);margin:0}
+.prompt-toolbar{display:flex;gap:10px;align-items:center;padding:12px 20px 0;flex-wrap:wrap}
+.copy-btn{border:none;cursor:pointer;background:var(--navy);color:#fff;font-weight:700;font-size:.85rem;border-radius:9px;padding:8px 18px;transition:background .15s}
+.copy-btn:hover{background:#12356e}
+.select-btn{border:1px solid var(--line);background:#fff;cursor:pointer;color:var(--ink-2);font-weight:600;font-size:.82rem;border-radius:9px;padding:8px 14px}
+.select-btn:hover{border-color:#b9cdf2;color:var(--ink)}
+.copy-status{font-size:.82rem;font-weight:600}
+.copy-status.ok{color:var(--green)}
+.copy-status.err{color:#c0392b}
+.prompt-card pre{
+  margin:14px 20px 20px;background:var(--code-bg);color:#dbe7ff;border-radius:12px;
+  padding:18px 20px;font-size:.87rem;line-height:1.8;white-space:pre-wrap;word-break:break-word;
+  font-family:inherit;user-select:all;
+}
+
+footer{margin-top:48px;background:var(--navy);color:rgba(255,255,255,.8);padding:30px 0 28px}
+.foot-grid{display:flex;gap:24px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.lecturer{display:flex;gap:14px;align-items:center}
+.avatar{flex:none;width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#2a57c9,#5b8dff);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.15rem;color:#fff;border:2px solid rgba(255,255,255,.35)}
+.lecturer .name{font-size:1.02rem;font-weight:800;color:#fff}
+.lecturer .title{font-size:.82rem;color:rgba(255,255,255,.72)}
+.foot-links a{color:#9cc0ff;font-size:.88rem}
+.foot-links a:hover{text-decoration:underline}
+.foot-note{margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.14);font-size:.76rem;color:rgba(255,255,255,.55)}
+
+@media (max-width:760px){
+  .qa-strip{grid-template-columns:1fr}
+  .topic-body{grid-template-columns:1fr}
+  .tcol+.tcol{border-left:none;margin-left:0;padding-left:0;border-top:1px dashed var(--line);margin-top:12px;padding-top:12px}
+  .chat-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:520px){
+  .wrap{padding-inline:16px}
+  .head-nav a:not(.home){display:none}
+  .chat-grid{grid-template-columns:1fr}
+  .topic-head{padding:16px 16px 12px}
+  .topic-body{padding:0 16px 16px}
+  .prompt-card pre{margin:12px 14px 16px;padding:14px 16px;font-size:.84rem}
+  .prompt-head,.prompt-desc,.prompt-toolbar{padding-inline:16px}
+}
+
+/* 模块三 v2：沿用原有科技深蓝视觉体系 */
+.top-ribbon{background:#eaf2ff;border-bottom:1px solid #cadbf8;color:#17417e;font-size:.84rem}
+.top-ribbon .wrap{padding-block:9px;display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.top-ribbon a{color:#0b47c2;font-weight:800;text-decoration:underline;text-underline-offset:3px}
+.handoff-card,.framework-card,.case-card,.lesson-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;margin-top:18px}
+.handoff-grid{display:grid;grid-template-columns:1fr 48px 1fr;gap:12px;align-items:center;margin:16px 0}
+.handoff-side{border-radius:12px;padding:18px;background:#f2f6ff;border:1px solid #d9e5fb;min-height:150px}
+.handoff-side.current{background:#eaf2ff;border-color:#b7cef7}
+.handoff-side .eyebrow{font-size:.77rem;font-weight:800;color:var(--blue-deep)}
+.handoff-side h3{font-size:1.1rem;margin:5px 0 8px}
+.handoff-side p{font-size:.88rem;margin:0;color:var(--ink-2)}
+.arrow-between{text-align:center;font-size:1.8rem;font-weight:800;color:var(--blue-deep)}
+.insight{border-left:4px solid var(--blue);background:#f0f5ff;padding:12px 16px;border-radius:0 10px 10px 0;font-size:.92rem}
+.insight strong{color:#093b90}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.pill{display:inline-block;background:#eef4ff;border:1px solid #d0dffc;color:#173d82;border-radius:999px;font-weight:700;font-size:.78rem;padding:4px 11px}
+.topic-head .tag{font-size:.78rem;margin-left:auto;color:var(--blue-deep);font-weight:800;background:#edf4ff;border-radius:8px;padding:3px 9px}
+.topic-summary{margin:0 22px 14px;padding:9px 13px;border-radius:9px;background:#f4f8ff;color:#21457b;font-weight:700;font-size:.9rem}
+.topic-output{margin:0 22px 18px;padding:11px 14px;background:#eaf5ea;border:1px solid #cde8d0;border-radius:9px;font-size:.88rem}
+.topic-output b{color:#287039}
+.framework-intro{margin:0 0 12px;color:var(--ink-2);font-size:.9rem}
+.frame-outer{border:2px solid #b4cdf6;border-radius:14px;padding:14px;background:#f8fbff}
+.frame-row{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.frame-box{border-radius:11px;border:1px solid #d7e4f9;padding:13px;background:#fff}
+.frame-box h4{font-size:.9rem;margin:0 0 4px;color:#103974}
+.frame-box p{font-size:.8rem;color:var(--ink-2);margin:0}
+.frame-core{border-radius:12px;background:#e9f1ff;border:2px solid #5b8dff;padding:15px;margin-top:12px}
+.frame-core h4{margin:0 0 4px;font-size:1rem;color:#083b91}
+.frame-core p{margin:0 0 10px;font-size:.84rem;color:#4a5e82}
+.ipo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.ipo-cell{background:white;border:1px solid #bed4f5;border-radius:9px;padding:11px;text-align:center}
+.ipo-cell b{display:block;color:#073c99;font-size:1.2rem}
+.ipo-cell span{font-size:.79rem;color:var(--ink-2)}
+.frame-caveat{color:#54647c;font-size:.83rem;margin:12px 0 0}
+.case-steps{display:grid;gap:9px;margin-top:14px}
+.case-step{display:grid;grid-template-columns:36px minmax(0,1fr) auto;align-items:center;gap:12px;border:1px solid #dbe5f4;background:#fbfdff;border-radius:10px;padding:11px 13px}
+.case-step .num{background:#e5eeff;color:#164da9;border-radius:9px;width:34px;height:34px;display:grid;place-items:center;font-weight:800;font-size:.84rem}
+.case-step .body strong{display:block;font-size:.92rem}
+.case-step .body small{color:var(--ink-2);font-size:.8rem}
+.case-step .who{color:#144a99;background:#edf4ff;padding:3px 9px;border-radius:999px;font-size:.76rem;font-weight:700;white-space:nowrap}
+.case-note{color:var(--ink-2);font-size:.83rem;margin:12px 0 0}
+.lesson-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:13px}
+.lesson-item{background:#f5f8ff;border:1px solid #dce7f8;border-radius:11px;padding:14px}
+.lesson-item b{color:#0a3a8c;font-size:.93rem}
+.lesson-item p{font-size:.82rem;color:var(--ink-2);margin:6px 0 0}
+.lesson-quote{font-weight:800;color:var(--blue-deep);font-size:1.05rem;margin:15px 0 0}
+.practice-note{margin:14px 0 18px;background:#eaf2ff;border-left:4px solid #155eef;padding:12px 15px;border-radius:0 9px 9px 0;font-size:.9rem}
+.prompt-card pre{max-height:680px;overflow:auto}
+.prompt-desc b{color:#0b47c2}
+.mini-note{font-size:.83rem;color:var(--ink-2);margin:0 0 8px}
+@media(max-width:760px){.handoff-grid{grid-template-columns:1fr}.arrow-between{transform:rotate(90deg)}.lesson-grid{grid-template-columns:1fr}}
+@media(max-width:520px){.frame-row{grid-template-columns:1fr}.case-step{grid-template-columns:34px minmax(0,1fr)}.case-step .who{grid-column:2;justify-self:start}.topic-head .tag{display:none}.topic-summary,.topic-output{margin-inline:16px}}
+
+
+.t-layer{margin-top:10px;background:#fff;border:1px solid #a4bfea;border-radius:10px;padding:10px}
+.t-head{font-size:.91rem;font-weight:800;color:#073c99;margin-bottom:7px}
+.t-flow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.t-node{background:#f7faff;border:1px solid #cad9f4;border-radius:8px;padding:11px 8px;text-align:center}
+.t-node b{font-size:.87rem;color:#073c99;display:block}
+.t-node span{font-size:.8rem;color:#526178}
+.t-links{font-weight:600;font-size:.79rem;color:#2d588e;margin-top:9px}
+.t-down{text-align:center;color:#174e9b;font-size:.84rem;font-weight:800;margin-top:9px}
+@media(max-width:520px){.t-flow{grid-template-columns:1fr}}
+
+/* 客户反馈版：先练习，后附录；继承既有深蓝视觉 */
+.hero .wrap{padding-block:29px 28px}
+.qa-strip{margin-top:14px}
+#prompts{padding-top:27px}
+.quick-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
+.quick-steps a{background:#fff;border:1px solid #c9d9f5;border-radius:13px;padding:15px;display:flex;flex-direction:column;gap:3px;box-shadow:0 7px 19px rgba(17,57,122,.06)}
+.quick-steps a:hover{border-color:var(--blue);background:#f7faff}
+.quick-steps b{color:var(--blue-deep);font-size:1rem}
+.quick-steps small{color:var(--ink-2);font-size:.79rem}
+.sample-panel{border:1px solid #b9cef1;border-radius:13px;background:white;margin:19px 0;overflow:hidden}
+.sample-panel>summary{cursor:pointer;font-size:.97rem;font-weight:800;color:#123d87;background:#edf4ff;padding:15px 18px}
+.sample-panel>summary span{font-size:.77rem;font-weight:500;color:#6581a9;margin-left:10px}
+.sample-explain{color:var(--ink-2);font-size:.86rem;padding:0 18px}
+.sample-panel .prompt-card{margin:10px 17px}
+.sample-panel .check-point{margin:10px 17px 18px}
+.step-banner{scroll-margin-top:78px;display:flex;gap:14px;align-items:flex-start;border:1px solid #c8d9fa;background:#f0f5ff;border-radius:12px;padding:16px 18px;margin:23px 0 13px}
+.step-banner>span{flex:none;display:grid;place-items:center;background:var(--navy);color:white;width:44px;height:44px;border-radius:12px;font-weight:900}
+.step-banner b{color:#103c87;font-size:1.04rem}
+.step-banner p{font-size:.89rem;margin:3px 0 0;color:var(--ink-2)}
+.check-point{background:#eff6ff;border-left:4px solid #155eef;color:#294d80;border-radius:0 9px 9px 0;padding:12px 15px;font-size:.87rem;margin:8px 0 16px}
+.check-point b{color:#0b408e}
+.end-state{border:1px solid #b8cffa;border-radius:12px;background:#e8f1ff;padding:17px 19px;margin-top:19px;font-size:.91rem}
+.end-state a{color:var(--blue-deep);font-weight:800;text-decoration:underline;margin-left:6px}
+#appendix{padding-top:50px}
+.appendix-block{padding-top:12px!important}
+.appendix-toggle{border:1px solid var(--line);background:white;box-shadow:0 6px 18px rgba(17,57,122,.05);border-radius:13px;overflow:hidden}
+.appendix-toggle>summary{cursor:pointer;list-style:none;padding:18px 22px;font-size:.98rem;font-weight:800;color:#133f86;display:flex;gap:10px;justify-content:space-between}
+.appendix-toggle>summary::-webkit-details-marker{display:none}
+.appendix-toggle>summary:before{content:"＋";color:#155eef}
+.appendix-toggle[open]>summary:before{content:"－"}
+.appendix-toggle>summary em{font-style:normal;font-weight:400;color:#7c8da9;font-size:.78rem}
+.appendix-toggle[open]>summary{background:#f1f6ff;border-bottom:1px solid var(--line)}
+.appendix-toggle>.wrap{padding-bottom:22px}
+.appendix-toggle .sec-head{margin-top:20px}
+@media(max-width:760px){.quick-steps{grid-template-columns:1fr}.quick-steps a{padding:10px 13px}}
+@media(max-width:520px){.appendix-toggle>summary{font-size:.88rem;padding:14px}.appendix-toggle>summary em{display:none}.sample-panel .prompt-card{margin:9px}}
+</style>
+</head>
+<body><div class="top-ribbon"><div class="wrap"><span><b>课堂承接：</b>先取出模块2已经核对的 IPO 任务卡，本模块不重新选题、不重新建总 IPO 卡。</span><a href="/lijiagui/hailiang-ipo/" target="_blank" rel="noopener">回看模块2 · IPO任务卡 ↗</a></div></div>
+
+<header class="site-head">
+  <div class="wrap head-inner">
+    <a class="brand" href="/lijiagui/list/"><span class="dot"></span>李家贵 · AI 实战训练</a>
+    <nav class="head-nav" aria-label="页面导航">
+      <a href="#prompts" class="home">立即练习</a><a href="#step31">3.1</a><a href="#step32">3.2</a><a href="#step33">3.3</a><a href="#appendix">知识附录</a>
+      <a class="home" href="/lijiagui/list/">资源导航</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div class="badges"><span class="badge solid">模块三 · 35分钟</span><span class="badge">三步可复制</span></div>
+      <h1>从 IPO 到 CHAT：让 AI 真正参与工作</h1>
+      <p class="sub">海亮智汇后勤 全员 AI 实操技巧 · 模块三</p>
+      <p class="path">模块2已经把任务拆成 IPO；模块3不用重写，只做三件事：<b>补 C/H/A → 做人机分工 → 对照标准验收</b>。</p>
+    </div>
+  </section>
+
+  <section class="block" id="prompts">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-kicker">直接练习</span>
+        <h2>带着原来的 IPO，照着三步做</h2>
+        <p>三个提示词依次复制到同一个 AI 对话。把【】中的内容换成自己的工作即可。</p>
+      </div>
+      <div class="quick-steps">
+        <a href="#step31"><b>3.1 补 C/H/A</b><small>让 AI 知道背景和角色</small></a>
+        <a href="#step32"><b>3.2 出检查表</b><small>分清 AI 做、人检查</small></a>
+        <a href="#step33"><b>3.3 做验收</b><small>对照原标准检查</small></a>
+      </div>
+      <p class="practice-note"><b>开始前：</b>准备模块2已经确认的 IPO。没有任务卡？可展开下面的模拟材料先练习。</p>
+
+      <details class="sample-panel" id="sample">
+        <summary>没有 IPO？展开一个简短模拟案例 <span>选用 · 不影响通用提示词</span></summary>
+        <p class="sample-explain">复制到 AI 对话后，再回到 3.1。以下数据仅为教学示例。</p>
+        <div class="prompt-card">
+  <div class="prompt-head"><span class="prompt-step">案例 · 复制使用</span><h3>校园报修工单跟进 IPO（模拟）</h3></div>
+  <p class="prompt-desc">用于演练，不代表真实项目。</p>
+  <div class="prompt-toolbar"><button class="copy-btn" type="button">复制提示词</button><button class="select-btn" type="button">全选文本</button><span class="copy-status" role="status"></span></div>
+  <pre>【任务】整理一份校园报修工单跟进简报。
+【已确认 IPO】
+I：脱敏报修工单台账、处理记录、风险清单。
+P：核对工单状态 → 汇总进展与风险 → 人工确认 → 起草简报 → 验收。
+O：一页报修跟进简报，包含工单进展、超时风险、待办及下一步；保留来源。
+【背景材料】
+工单台账：A单记为11月6日已完成；B单风险“低”。
+维修记录：A单现场处理尚未结束，验收状态待确认。
+风险清单：B单风险“高”，原因待核对。
+【约束】仅教学模拟；冲突数据标待确认，不自动结案、派工或对外承诺。</pre>
+</div>
+      </details>
+
+      <div class="step-banner" id="step31"><span>01</span><div><b>3.1 补齐 C / H / A · 8分钟</b><p>补角色、补背景、补目标；T 就是已确认的 IPO。</p></div></div>
+      <div class="prompt-card">
+  <div class="prompt-head"><span class="prompt-step">3.1 · 复制使用</span><h3>先让 AI 理解任务</h3></div>
+  <p class="prompt-desc">复制后只改三个位置：C 谁负责、H 有什么背景、A 想得到什么。</p>
+  <div class="prompt-toolbar"><button class="copy-btn" type="button">复制提示词</button><button class="select-btn" type="button">全选文本</button><span class="copy-status" role="status"></span></div>
+  <pre>沿用上文已确认的总 IPO，不要重写。
+
+请补齐 CHAT：
+C：我是【岗位】，负责【业务判断/审批】；你是 AI 助手，负责【交给AI的工作】。
+H：任务背景【】；现有资料及时间【】；缺失资料或限制【】。
+A：本次目标【】；交付对象和用途【】。
+T：就是上文已确认的 IPO。
+
+本轮只输出《任务执行准备单》：
+已知条件｜缺失资料｜人工确认事项｜可开始的第一步。
+
+没有依据的标“待确认”，不要生成最终成果。</pre>
+</div>
+      <p class="check-point"><b>学员检查：</b>AI 有没有说清楚已知信息、缺失信息和能先做哪一步？<b>产出：</b>任务执行准备单。</p>
+
+      <div class="step-banner" id="step32"><span>02</span><div><b>3.2 输出人机接力表 · 14分钟</b><p>让 AI 把原 IPO 的处理步骤整理成表，便于人检查。</p></div></div>
+      <div class="prompt-card">
+  <div class="prompt-head"><span class="prompt-step">3.2 · 复制使用</span><h3>一张表看清谁做什么</h3></div>
+  <p class="prompt-desc">重点看“AI做什么、人工检查什么、能不能继续”。</p>
+  <div class="prompt-toolbar"><button class="copy-btn" type="button">复制提示词</button><button class="select-btn" type="button">全选文本</button><span class="copy-status" role="status"></span></div>
+  <pre>沿用已确认的 IPO 和 3.1《任务执行准备单》，不要重写 IPO。
+
+请按原 IPO 的 P，输出一张《人机接力表》：
+步骤｜需要的输入｜AI做什么｜人检查/确认什么｜阶段输出｜能否进入下一步。
+
+缺资料、口径冲突或需要审批的地方标“待确认”。
+本轮只输出表格，不执行后续任务。</pre>
+</div>
+      <p class="check-point"><b>学员检查：</b>每一步有没有明确分工？需要人确认的地方有没有标出来？<b>产出：</b>人机接力表。</p>
+
+      <div class="step-banner" id="step33"><span>03</span><div><b>3.3 输出验收检查表 · 13分钟</b><p>沿用原 IPO 的 O，检查已有成果，不自己发明验收标准。</p></div></div>
+      <div class="prompt-card">
+  <div class="prompt-head"><span class="prompt-step">3.3 · 复制使用</span><h3>一张表检查做得对不对</h3></div>
+  <p class="prompt-desc">重点看“原标准、证据、问题、由谁确认”。</p>
+  <div class="prompt-toolbar"><button class="copy-btn" type="button">复制提示词</button><button class="select-btn" type="button">全选文本</button><span class="copy-status" role="status"></span></div>
+  <pre>沿用原 IPO 的 O 和 3.2《人机接力表》，核对目前实际已有的成果。
+
+请输出一张《验收检查表》：
+检查项｜原验收标准｜证据/来源｜检查结果｜问题与修改建议｜谁来确认。
+
+结果只能是：符合 / 不符合 / 待确认 / 未开始。
+没做的不能写成完成；AI只做初检，最终由人确认。</pre>
+</div>
+      <p class="check-point"><b>学员检查：</b>没有证据的结论是否标“待确认”？未完成的有没有误写成完成？<b>产出：</b>验收检查表。</p>
+
+      <div class="end-state"><b>完成标志：</b>拿到三张单表：<b>任务执行准备单 → 人机接力表 → 验收检查表</b>。最后由人决定是否通过。</div>
+    </div>
+  </section>
+
+  <section class="block" id="appendix">
+    <div class="wrap">
+      <div class="sec-head"><span class="sec-kicker">知识附录 · 按需查看</span><h2>只记住一个关系</h2><p><b>IPO 说清楚工作怎么做；CHAT 补齐 AI 需要的协同信息。</b> T 直接承接原 IPO。</p></div>
+    </div>
+  </section>
+  <section class="block appendix-block" id="handoff">
+    <details class="appendix-toggle"><summary>附录 A · IPO 和 CHAT 的关系 <em>点击展开</em></summary>
+      <div class="wrap">
+        <div class="chat-grid" id="chat" style="margin-top:18px">
+          <div class="chat-item"><span class="letter">C</span><h4>谁来做</h4><p>我负责什么，AI负责什么。</p></div>
+          <div class="chat-item"><span class="letter">H</span><h4>有什么背景</h4><p>资料、时间、规则、限制。</p></div>
+          <div class="chat-item"><span class="letter">A</span><h4>做到什么</h4><p>目标、用途、交付对象。</p></div>
+          <div class="chat-item"><span class="letter">T</span><h4>具体做什么</h4><p>就是模块2已确认的 IPO。</p></div>
+        </div>
+        <p class="case-note"><b>需要时才细拆：</b>如果原 IPO 的某个 P 步骤很复杂，可以进一步拆成子 IPO；简单任务不用强拆。</p>
+      </div>
+    </details>
+  </section>
+  <section class="block appendix-block" id="topics">
+    <details class="appendix-toggle"><summary>附录 B · 三步分别看什么 <em>点击展开</em></summary>
+      <div class="wrap">
+        <div class="case-card">
+          <div class="case-steps">
+            <div class="case-step"><span class="num">01</span><span class="body"><strong>补背景</strong><small>我是谁？AI是谁？有什么资料？要什么结果？</small></span><span class="who">准备单</span></div>
+            <div class="case-step"><span class="num">02</span><span class="body"><strong>看分工</strong><small>每一步 AI做什么？人检查什么？</small></span><span class="who">接力表</span></div>
+            <div class="case-step"><span class="num">03</span><span class="body"><strong>查结果</strong><small>达到原 IPO 的 O 了吗？证据在哪里？</small></span><span class="who">验收表</span></div>
+          </div>
+          <p class="case-note">统一规则：有疑问就标“待确认”；AI不代替人的业务判断、审批或最终签核。</p>
+        </div>
+      </div>
+    </details>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="lecturer">
+        <span class="avatar" aria-hidden="true">李</span>
+        <div>
+          <div class="name">讲师：李家贵</div>
+          <div class="title">西安交大数字经济研究院首席科学家</div>
+        </div>
+      </div>
+      <div class="foot-links"><a href="/lijiagui/list/">← 返回全部资源导航</a></div>
+    </div>
+    <div class="foot-note">AI 工作流重构与高效协同 · 海亮智汇后勤 全员 AI 实操技巧线上课程 · 模块三教学页 ｜ 课程案例采用教学示例或经授权的脱敏材料</div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  function selectPre(card) {
+    var pre = card.querySelector('pre');
+    var range = document.createRange();
+    range.selectNodeContents(pre);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    return sel;
+  }
+  document.querySelectorAll('.prompt-card').forEach(function (card) {
+    var btn = card.querySelector('.copy-btn');
+    var selBtn = card.querySelector('.select-btn');
+    var status = card.querySelector('.copy-status');
+    var resetTimer = null;
+    function setStatus(msg, cls) {
+      status.textContent = msg;
+      status.className = 'copy-status' + (cls ? ' ' + cls : '');
+    }
+    btn.addEventListener('click', function () {
+      var text = card.querySelector('pre').textContent;
+      function legacyCopy() {
+        selectPre(card);
+        try { return document.execCommand('copy'); } catch (e) { return false; }
+      }
+      var done = function (ok) {
+        if (ok) {
+          setStatus('已复制，可直接粘贴使用', 'ok');
+          btn.textContent = '已复制 ✓';
+          clearTimeout(resetTimer);
+          resetTimer = setTimeout(function () { btn.textContent = btn.getAttribute('data-label') || '复制提示词'; setStatus(''); }, 2600);
+        } else {
+          setStatus('复制失败：已为你全选文本，请按 Ctrl+C 手动复制', 'err');
+        }
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(legacyCopy()); });
+      } else {
+        done(legacyCopy());
+      }
+    });
+    selBtn.addEventListener('click', function () {
+      selectPre(card);
+      setStatus('已全选，按 Ctrl+C 复制', 'ok');
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
