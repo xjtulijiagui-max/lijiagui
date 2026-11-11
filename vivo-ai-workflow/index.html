@@ -1,11 +1,10 @@
-<!doctype html>
-<html lang="zh-CN">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>IPO 到 CHAT 三步实操｜vivo AI 模块三</title>
-<meta name="description" content="vivo AI 模块三：三个简短通用提示词，3.1 补 C/H/A、3.2 生成人机接力表、3.3 输出验收检查表。练习在前，知识附录在后。" />
-<style>
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="zbTzGPQ9yALAFVA3SsEKRB"><head data-page-node-id="i15GSM7BccUNYz1BQyXNCX">
+<meta charset="utf-8" data-page-node-id="uQSq2ADlI6rusX54hObVAY">
+<meta name="viewport" content="width=device-width,initial-scale=1" data-page-node-id="MRZ30cU2SzHth9Y4qQVaCA">
+<title data-page-node-id="HE17qDEyiMUbUWTxi1eEu2">IPO 到 CHAT 三步实操｜vivo AI 模块三</title>
+<meta name="description" content="vivo AI 模块三：三个简短通用提示词，3.1 补 C/H/A、3.2 生成人机接力表、3.3 输出验收检查表。练习在前，知识附录在后。" data-page-node-id="gVGkocMI2MG197NOdDrObK">
+<style data-page-node-id="R6aUzAtV0lkMg3mUaqwNzW">
 :root{
   --navy:#061b46;--navy-2:#0a2a68;--blue:#155eef;--blue-deep:#0b47c2;--blue-soft:#eef4ff;
   --page:#f5f8fd;--card:#fff;--ink:#15223a;--ink-2:#526178;--line:#d8e4f7;
@@ -220,51 +219,51 @@ footer{margin-top:48px;background:var(--navy);color:rgba(255,255,255,.8);padding
 @media(max-width:760px){.quick-steps{grid-template-columns:1fr}.quick-steps a{padding:10px 13px}}
 @media(max-width:520px){.appendix-toggle>summary{font-size:.88rem;padding:14px}.appendix-toggle>summary em{display:none}.sample-panel .prompt-card{margin:9px}}
 </style>
-</head>
-<body><div class="top-ribbon"><div class="wrap"><span><b>课堂承接：</b>先取出模块2已经核对的 IPO 任务卡，本模块不重新选题、不重新建总 IPO 卡。</span><a href="/lijiagui/vivo-ipo/" target="_blank" rel="noopener">回看模块2 · IPO任务卡 ↗</a></div></div>
+<style id="__dm_no_drag_style__" data-page-node-id="vxsk7hoFM0Ee1xjlo222xK">* { -webkit-user-drag: none !important; }</style><style id="__dm_bindable_badge_style__" data-page-node-id="ZVmIPE8epSSdO3qzXSE3q1">[data-sp-bindable="database"]{outline:1px dashed #0088ff;outline-offset:2px;border-radius:4px;}[data-sp-bindable="database"] *{pointer-events:none !important;transition:none !important;animation:none !important;}[data-sp-bindable="database"]{transition:none !important;animation:none !important;}</style></head>
+<body data-page-node-id="XGJc5RJFfYBWSflNVfehzQ" style=""><div class="top-ribbon" data-page-node-id="El7Oc7XsDD9NKW1Iw27c2x"><div class="wrap" data-page-node-id="FG5HTsE1Cf70AH2OePwPzG"><span data-page-node-id="ZorZCIuzMDCCy0E1ZrgcfI"><b data-page-node-id="fxc1fgZcBjnAJZROc16lMQ">课堂承接：</b>先取出模块2已经核对的 IPO 任务卡，本模块不重新选题、不重新建总 IPO 卡。</span><a href="/lijiagui/vivo-ipo/" target="_blank" rel="noopener" data-page-node-id="CyWJnuGPrr5aEUtJP5EHyO">回看模块2 · IPO任务卡 ↗</a></div></div>
 
-<header class="site-head">
-  <div class="wrap head-inner">
-    <a class="brand" href="/lijiagui/list/"><span class="dot"></span>李家贵 · AI 实战训练</a>
-    <nav class="head-nav" aria-label="页面导航">
-      <a href="#prompts" class="home">立即练习</a><a href="#step31">3.1</a><a href="#step32">3.2</a><a href="#step33">3.3</a><a href="#appendix">知识附录</a>
-      <a class="home" href="/lijiagui/list/">资源导航</a>
+<header class="site-head" data-page-node-id="rlV40FRajR8NMwVfqkrQq2">
+  <div class="wrap head-inner" data-page-node-id="i5PG3ix4Dch3iyBP32QIdT">
+    <a class="brand" href="https://xjtulijiagui-max.github.io/lijiagui/list/" data-page-node-id="07bc7SxT1NS0rCYAf5HtSa"><span class="dot" data-page-node-id="H4h4IbPBxXp9wd3smoqHwh"></span>李家贵 · AI 实战训练</a>
+    <nav class="head-nav" aria-label="页面导航" data-page-node-id="f0eD53ISJg7Eph1wvtiVxq">
+      <a href="#prompts" class="home" data-page-node-id="ty5owS0nLEKvCRBTRoOWgk">立即练习</a><a href="#step31" data-page-node-id="cErk0GH3JHH3IQFDvSv251">3.1</a><a href="#step32" data-page-node-id="mES5FzKY6zOMCTHH9lA0x3">3.2</a><a href="#step33" data-page-node-id="QJYc21LxSo6lRFzEVRferV">3.3</a><a href="#appendix" data-page-node-id="RjBi5ypKeRd6CAD7cgizfb">知识附录</a>
+      <a class="home" href="https://xjtulijiagui-max.github.io/lijiagui/list/" data-page-node-id="rJVVJkncNZWH7CKuHrS0WI">资源导航</a>
     </nav>
   </div>
 </header>
 
-<main>
-  <section class="hero">
-    <div class="wrap">
-      <div class="badges"><span class="badge solid">模块三 · 35分钟</span><span class="badge">三步可复制</span></div>
-      <h1>从 IPO 到 CHAT：让 AI 真正参与工作</h1>
-      <p class="sub">vivo 全员 AI 实操技巧 · 模块三</p>
-      <p class="path">模块2已经把任务拆成 IPO；模块3不用重写，只做三件事：<b>补 C/H/A → 做人机分工 → 对照标准验收</b>。</p>
+<main data-page-node-id="s0rxwumt3Wmu1sq4f8dFw9">
+  <section class="hero" data-page-node-id="FFSEGJntzWNfJE6SqXXBKI">
+    <div class="wrap" data-page-node-id="viZgWNUZoMpU5zPZ6ZzYxz">
+      <div class="badges" data-page-node-id="TvT5rujp7ZYJMZB2NhEobO"><span class="badge solid" data-page-node-id="1ioq5779TuuF0SnUlIraFo">模块三 · 35分钟</span><span class="badge" data-page-node-id="i5SeGL0MtwOfIVnn6ARVhG">三步可复制</span></div>
+      <h1 data-page-node-id="gH78icQG4PAHWmS4x713AR" style="">从 IPO 到 CHAT：让 AI 真正参与工作​</h1>
+      <p class="sub" data-page-node-id="djzIh3yEOboetgspUb7LOz">vivo 全员 AI 实操技巧 · 模块三</p>
+      <p class="path" data-page-node-id="8efzZO1Z4Hq97wPK7PyvJ7">模块2已经把任务拆成 IPO；模块3不用重写，只做三件事：<b data-page-node-id="mBcCGAHdhc0mpU2z5iUwWy">补 C/H/A → 做人机分工 → 对照标准验收</b>。</p>
     </div>
   </section>
 
-  <section class="block" id="prompts">
-    <div class="wrap">
-      <div class="sec-head">
-        <span class="sec-kicker">直接练习</span>
-        <h2>带着原来的 IPO，照着三步做</h2>
-        <p>三个提示词依次复制到同一个 AI 对话。把【】中的内容换成自己的工作即可。</p>
+  <section class="block" id="prompts" data-page-node-id="MdHXoGDErnEx9Zz9d30YNz">
+    <div class="wrap" data-page-node-id="5EB6HTCLHzGjVKY5QwjAKb">
+      <div class="sec-head" data-page-node-id="N013Uxwlt1sgfk24cggjZ3">
+        <span class="sec-kicker" data-page-node-id="ODqF8sYde3anQvThE3dJGE">直接练习</span>
+        <h2 data-page-node-id="TjHJKtn6bYyCH564Mna9t3">带着原来的 IPO，照着三步做</h2>
+        <p data-page-node-id="qusDQz9HVYLheekYe0ORcp">三个提示词依次复制到同一个 AI 对话。把【】中的内容换成自己的工作即可。</p>
       </div>
-      <div class="quick-steps">
-        <a href="#step31"><b>3.1 补 C/H/A</b><small>让 AI 知道背景和角色</small></a>
-        <a href="#step32"><b>3.2 出检查表</b><small>分清 AI 做、人检查</small></a>
-        <a href="#step33"><b>3.3 做验收</b><small>对照原标准检查</small></a>
+      <div class="quick-steps" data-page-node-id="t3pUpFeC1KryEr7O9njDTp">
+        <a href="#step31" data-page-node-id="SytODBnBNhE2jGFSnhQyfK"><b data-page-node-id="2KH2DPasvrHWmh3cd3KwnG">3.1 补 C/H/A</b><small data-page-node-id="iTS8V2lj8xi9ZH3ExxLnzP">让 AI 知道背景和角色</small></a>
+        <a href="#step32" data-page-node-id="3pNEEQNBGStQ9ka38bics0"><b data-page-node-id="xHPFGYYiObEWFt9I96wBwt">3.2 出检查表</b><small data-page-node-id="VPgbb3DeEoiWdayrzSOqb5">分清 AI 做、人检查</small></a>
+        <a href="#step33" data-page-node-id="kzxIo1h2Acsn1e2YbM9jNg"><b data-page-node-id="dbgPAiCDUUSo8Nqf4HqFjE">3.3 做验收</b><small data-page-node-id="TyLeDaIZA2agflaDJTXkYN">对照原标准检查</small></a>
       </div>
-      <p class="practice-note"><b>开始前：</b>准备模块2已经确认的 IPO。没有任务卡？可展开下面的模拟材料先练习。</p>
+      <p class="practice-note" data-page-node-id="LXNc5nyqzOcrAGFpE9tUrl"><b data-page-node-id="Tft9tnGMVK1XvMXGAjwDdL">开始前：</b>准备模块2已经确认的 IPO。没有任务卡？可展开下面的模拟材料先练习。</p>
 
-      <details class="sample-panel" id="sample">
-        <summary>没有 IPO？展开一个简短模拟案例 <span>选用 · 不影响通用提示词</span></summary>
-        <p class="sample-explain">复制到 AI 对话后，再回到 3.1。以下数据仅为教学示例。</p>
-        <div class="prompt-card">
-  <div class="prompt-head"><span class="prompt-step">案例 · 复制使用</span><h3>项目跟进 IPO（模拟）</h3></div>
-  <p class="prompt-desc">用于演练，不代表真实项目。</p>
-  <div class="prompt-toolbar"><button class="copy-btn" type="button">复制提示词</button><button class="select-btn" type="button">全选文本</button><span class="copy-status" role="status"></span></div>
-  <pre>【任务】整理一份内部项目进展简报。
+      <details class="sample-panel" id="sample" data-page-node-id="vDGFLteIo2iCm67Ag36bhB">
+        <summary data-page-node-id="C4xo0xi6CZLKwiFsAl6s72">没有 IPO？展开一个简短模拟案例 <span data-page-node-id="FfpoOpdUZFZngEdJekVA1J">选用 · 不影响通用提示词</span></summary>
+        <p class="sample-explain" data-page-node-id="HDgBedTD0eOndCOrmsjhHj">复制到 AI 对话后，再回到 3.1。以下数据仅为教学示例。</p>
+        <div class="prompt-card" data-page-node-id="lSfGZQPPF7XnCuxsEatk4K">
+  <div class="prompt-head" data-page-node-id="EBdca60PvUROmNPNOPOFct"><span class="prompt-step" data-page-node-id="4ZIHvM4mD5QpFVFIOSMcUT">案例 · 复制使用</span><h3 data-page-node-id="xh7uktqp9FCHYFrmVaVuSj">项目跟进 IPO（模拟）</h3></div>
+  <p class="prompt-desc" data-page-node-id="GMxIJx12OED4eq3WabZtVL">用于演练，不代表真实项目。</p>
+  <div class="prompt-toolbar" data-page-node-id="WFz6tw55fDHZLeBGVHxD8s"><button class="copy-btn" type="button" data-page-node-id="p3DG1HcUZXg1RnTPqCQ6Ex">复制提示词</button><button class="select-btn" type="button" data-page-node-id="0xJd75327dI9bkUj14PAzx">全选文本</button><span class="copy-status" role="status" data-page-node-id="VzVAujjIqOP5Ynhwx4FdZX"></span></div>
+  <pre data-page-node-id="8LsX6YypZB1v7WADgKkRZv">【任务】整理一份内部项目进展简报。
 【已确认 IPO】
 I：项目台账、会议纪要、风险清单。
 P：核对资料 → 汇总进展与风险 → 人工确认 → 起草简报 → 验收。
@@ -277,12 +276,12 @@ O：一页简报，包含进展、风险、下一步；结论要有来源。
 </div>
       </details>
 
-      <div class="step-banner" id="step31"><span>01</span><div><b>3.1 补齐 C / H / A · 8分钟</b><p>补角色、补背景、补目标；T 就是已确认的 IPO。</p></div></div>
-      <div class="prompt-card">
-  <div class="prompt-head"><span class="prompt-step">3.1 · 复制使用</span><h3>先让 AI 理解任务</h3></div>
-  <p class="prompt-desc">复制后只改三个位置：C 谁负责、H 有什么背景、A 想得到什么。</p>
-  <div class="prompt-toolbar"><button class="copy-btn" type="button">复制提示词</button><button class="select-btn" type="button">全选文本</button><span class="copy-status" role="status"></span></div>
-  <pre>沿用上文已确认的总 IPO，不要重写。
+      <div class="step-banner" id="step31" data-page-node-id="qzrQvEzYlwa372oL7AfDj5"><span data-page-node-id="5I5Bu5nFhIERhwjczoQiEJ">01</span><div data-page-node-id="1UHUreREK2tv4Crq5GM6j0"><b data-page-node-id="QSSY2V8Yf7JyerEO6SCmsC">3.1 补齐 C / H / A · 8分钟</b><p data-page-node-id="LmN1KuJ80IE726wKRubACL">补角色、补背景、补目标；T 就是已确认的 IPO。</p></div></div>
+      <div class="prompt-card" data-page-node-id="3WE9KuFAXNboiBlO5fAAHW">
+  <div class="prompt-head" data-page-node-id="WjDbEapfAiiVIXg2EshUGV"><span class="prompt-step" data-page-node-id="NV6u26FGzFyFtdUa3XnDVQ">3.1 · 复制使用</span><h3 data-page-node-id="Aqm5mkLEu25Nl88gx8437y">先让 AI 理解任务</h3></div>
+  <p class="prompt-desc" data-page-node-id="S4S73kJVSW8qTbApymy9f3">复制后只改三个位置：C 谁负责、H 有什么背景、A 想得到什么。</p>
+  <div class="prompt-toolbar" data-page-node-id="jOSygb5PwjX6ueACHuGBea"><button class="copy-btn" type="button" data-page-node-id="jEWlvDZQUXEphoSyY0vWJu">复制提示词</button><button class="select-btn" type="button" data-page-node-id="d5V59RHkyfAi8wV262Qufq">全选文本</button><span class="copy-status" role="status" data-page-node-id="G6Ox7lBD0mlEOVA1iLhFwO"></span></div>
+  <pre data-page-node-id="gT7iwed0NN4vjAZyFDlKnM">沿用上文已确认的总 IPO，不要重写。
 
 请补齐 CHAT：
 C：我是【岗位】，负责【业务判断/审批】；你是 AI 助手，负责【交给AI的工作】。
@@ -295,14 +294,14 @@ T：就是上文已确认的 IPO。
 
 没有依据的标“待确认”，不要生成最终成果。</pre>
 </div>
-      <p class="check-point"><b>学员检查：</b>AI 有没有说清楚已知信息、缺失信息和能先做哪一步？<b>产出：</b>任务执行准备单。</p>
+      <p class="check-point" data-page-node-id="d5F5SJIZKWmSJlBrBhCckH"><b data-page-node-id="iD4n5Ut2g8cIJe0hx6sH1C">学员检查：</b>AI 有没有说清楚已知信息、缺失信息和能先做哪一步？<b data-page-node-id="TYWkxqvgzVlxLIFWnbw9xO">产出：</b>任务执行准备单。</p>
 
-      <div class="step-banner" id="step32"><span>02</span><div><b>3.2 输出人机接力表 · 14分钟</b><p>让 AI 把原 IPO 的处理步骤整理成表，便于人检查。</p></div></div>
-      <div class="prompt-card">
-  <div class="prompt-head"><span class="prompt-step">3.2 · 复制使用</span><h3>一张表看清谁做什么</h3></div>
-  <p class="prompt-desc">重点看“AI做什么、人工检查什么、能不能继续”。</p>
-  <div class="prompt-toolbar"><button class="copy-btn" type="button">复制提示词</button><button class="select-btn" type="button">全选文本</button><span class="copy-status" role="status"></span></div>
-  <pre>沿用已确认的 IPO 和 3.1《任务执行准备单》，不要重写 IPO。
+      <div class="step-banner" id="step32" data-page-node-id="2ndd7tmFxz09l6VeqpGHAn"><span data-page-node-id="3mciL3agjG0tFII6He8jbX">02</span><div data-page-node-id="GyjFIMOW8eoZDcBf6EzdWS"><b data-page-node-id="ipuLh2qEzaaAGkrAPgaw5M">3.2 输出人机接力表 · 14分钟</b><p data-page-node-id="G2ceRmBqHIo1dAQPRMGvKX">让 AI 把原 IPO 的处理步骤整理成表，便于人检查。</p></div></div>
+      <div class="prompt-card" data-page-node-id="B7l48R1XwVwqy86ChtPdgI">
+  <div class="prompt-head" data-page-node-id="yo5y9BEUKuZfRo3v3Yp7Ne"><span class="prompt-step" data-page-node-id="pwGFx21WXmaD39PF3DAoLc">3.2 · 复制使用</span><h3 data-page-node-id="6p5pznDOwrnTUBJIAHVjGP">一张表看清谁做什么</h3></div>
+  <p class="prompt-desc" data-page-node-id="nfYdlwLBVdExhH8GFtQcWI">重点看“AI做什么、人工检查什么、能不能继续”。</p>
+  <div class="prompt-toolbar" data-page-node-id="TYOVPwUqMkq3czjiOQe5Y3"><button class="copy-btn" type="button" data-page-node-id="oVGBY0TAbuwBQhPLizUSVN">复制提示词</button><button class="select-btn" type="button" data-page-node-id="XbgIDp2ApDLuh2zSaU2xcc">全选文本</button><span class="copy-status" role="status" data-page-node-id="QfDagUDdEwG6MMkELX0cTS"></span></div>
+  <pre data-page-node-id="O1bcUO5ONwEg1lipQ0v3Xv">沿用已确认的 IPO 和 3.1《任务执行准备单》，不要重写 IPO。
 
 请按原 IPO 的 P，输出一张《人机接力表》：
 步骤｜需要的输入｜AI做什么｜人检查/确认什么｜阶段输出｜能否进入下一步。
@@ -310,14 +309,14 @@ T：就是上文已确认的 IPO。
 缺资料、口径冲突或需要审批的地方标“待确认”。
 本轮只输出表格，不执行后续任务。</pre>
 </div>
-      <p class="check-point"><b>学员检查：</b>每一步有没有明确分工？需要人确认的地方有没有标出来？<b>产出：</b>人机接力表。</p>
+      <p class="check-point" data-page-node-id="QIZqZCWKpTqtsV0FnDPqYz"><b data-page-node-id="Y7iRIxHCGfDDdvAXKWCqOj">学员检查：</b>每一步有没有明确分工？需要人确认的地方有没有标出来？<b data-page-node-id="dt5potjJ8sYA82o0y95zV2">产出：</b>人机接力表。</p>
 
-      <div class="step-banner" id="step33"><span>03</span><div><b>3.3 输出验收检查表 · 13分钟</b><p>沿用原 IPO 的 O，检查已有成果，不自己发明验收标准。</p></div></div>
-      <div class="prompt-card">
-  <div class="prompt-head"><span class="prompt-step">3.3 · 复制使用</span><h3>一张表检查做得对不对</h3></div>
-  <p class="prompt-desc">重点看“原标准、证据、问题、由谁确认”。</p>
-  <div class="prompt-toolbar"><button class="copy-btn" type="button">复制提示词</button><button class="select-btn" type="button">全选文本</button><span class="copy-status" role="status"></span></div>
-  <pre>沿用原 IPO 的 O 和 3.2《人机接力表》，核对目前实际已有的成果。
+      <div class="step-banner" id="step33" data-page-node-id="gI9f6BceyjJa2H83ykSwtd"><span data-page-node-id="EaZA8s9qIq4kgW6fyvX7xj">03</span><div data-page-node-id="h4Jl3zBUWnFJUiLSPgNG8D"><b data-page-node-id="YZEvOxsbt2xzjAzA7LL7OE">3.3 输出验收检查表 · 13分钟</b><p data-page-node-id="0DGFYXXgsCiiedMMNkBPK1">沿用原 IPO 的 O，检查已有成果，不自己发明验收标准。</p></div></div>
+      <div class="prompt-card" data-page-node-id="H5BUN8r0KDRU17IY1oH1tX">
+  <div class="prompt-head" data-page-node-id="lF6Y5W1s9fQeXnry8Axkp0"><span class="prompt-step" data-page-node-id="tIYczgwzfgidF2rfbpl3v4">3.3 · 复制使用</span><h3 data-page-node-id="AQBHpt6PIPoKEXgL7Lt5tw">一张表检查做得对不对</h3></div>
+  <p class="prompt-desc" data-page-node-id="y2wZrbJrOGnCesRoAyMCun">重点看“原标准、证据、问题、由谁确认”。</p>
+  <div class="prompt-toolbar" data-page-node-id="GISSyM7XvbVZb3tz9mFxSP"><button class="copy-btn" type="button" data-page-node-id="BfRluZBQikzoY14YOMRcxL">复制提示词</button><button class="select-btn" type="button" data-page-node-id="ICNVgoMqvo0WQ2QfkUey56">全选文本</button><span class="copy-status" role="status" data-page-node-id="hWB8uXbOLFagkHaynlgtZy"></span></div>
+  <pre data-page-node-id="j3RwNiyqcIE4KX3awBfB6X">沿用原 IPO 的 O 和 3.2《人机接力表》，核对目前实际已有的成果。
 
 请输出一张《验收检查表》：
 检查项｜原验收标准｜证据/来源｜检查结果｜问题与修改建议｜谁来确认。
@@ -325,63 +324,63 @@ T：就是上文已确认的 IPO。
 结果只能是：符合 / 不符合 / 待确认 / 未开始。
 没做的不能写成完成；AI只做初检，最终由人确认。</pre>
 </div>
-      <p class="check-point"><b>学员检查：</b>没有证据的结论是否标“待确认”？未完成的有没有误写成完成？<b>产出：</b>验收检查表。</p>
+      <p class="check-point" data-page-node-id="f1CnRrrG5awDqa5EuFynNV"><b data-page-node-id="ZZhi8wCWX9dS0yIim08gWB">学员检查：</b>没有证据的结论是否标“待确认”？未完成的有没有误写成完成？<b data-page-node-id="CJH3GRY8actqsOMzxUTCl4">产出：</b>验收检查表。</p>
 
-      <div class="end-state"><b>完成标志：</b>拿到三张单表：<b>任务执行准备单 → 人机接力表 → 验收检查表</b>。最后由人决定是否通过。</div>
+      <div class="end-state" data-page-node-id="XdjlLvGZKwWvvttAVlSevT"><b data-page-node-id="D1B8w30BHky9pgKQn8MT94">完成标志：</b>拿到三张单表：<b data-page-node-id="qvnueJGoqDR0GfwPEFq4E9">任务执行准备单 → 人机接力表 → 验收检查表</b>。最后由人决定是否通过。</div>
     </div>
   </section>
 
-  <section class="block" id="appendix">
-    <div class="wrap">
-      <div class="sec-head"><span class="sec-kicker">知识附录 · 按需查看</span><h2>只记住一个关系</h2><p><b>IPO 说清楚工作怎么做；CHAT 补齐 AI 需要的协同信息。</b> T 直接承接原 IPO。</p></div>
+  <section class="block" id="appendix" data-page-node-id="JdqDZICPlHtlabXUPDkPpv">
+    <div class="wrap" data-page-node-id="MjjLwvUB09MVbpgthIWwh9">
+      <div class="sec-head" data-page-node-id="8JNNYmskGeOSriJEtYiwpm"><span class="sec-kicker" data-page-node-id="RgDkbG1PKaqOlh3gg9Raf1">知识附录 · 按需查看</span><h2 data-page-node-id="0VkgKgOWptUzTCWMXN2kA0">只记住一个关系</h2><p data-page-node-id="ZoREFJvSMOp6tv7oE1y2ze"><b data-page-node-id="I63EORFiDxcL18wSMdrenv">IPO 说清楚工作怎么做；CHAT 补齐 AI 需要的协同信息。</b> T 直接承接原 IPO。</p></div>
     </div>
   </section>
-  <section class="block appendix-block" id="handoff">
-    <details class="appendix-toggle"><summary>附录 A · IPO 和 CHAT 的关系 <em>点击展开</em></summary>
-      <div class="wrap">
-        <div class="chat-grid" id="chat" style="margin-top:18px">
-          <div class="chat-item"><span class="letter">C</span><h4>谁来做</h4><p>我负责什么，AI负责什么。</p></div>
-          <div class="chat-item"><span class="letter">H</span><h4>有什么背景</h4><p>资料、时间、规则、限制。</p></div>
-          <div class="chat-item"><span class="letter">A</span><h4>做到什么</h4><p>目标、用途、交付对象。</p></div>
-          <div class="chat-item"><span class="letter">T</span><h4>具体做什么</h4><p>就是模块2已确认的 IPO。</p></div>
+  <section class="block appendix-block" id="handoff" data-page-node-id="ZO40kq5LthVzBmULpC1BIb">
+    <details class="appendix-toggle" data-page-node-id="yrTsXzYAtnz3BL5Xwqjh1N"><summary data-page-node-id="JXdGd1PyygG4AYVQVhgL1C">附录 A · IPO 和 CHAT 的关系 <em data-page-node-id="7fXjsgycA3AkkY6YXjDt5e">点击展开</em></summary>
+      <div class="wrap" data-page-node-id="IUR8LJ8lWiRmzFfCHHlOsm">
+        <div class="chat-grid" id="chat" style="margin-top:18px" data-page-node-id="kBo5RhdY5m82BvqPDb7BkF">
+          <div class="chat-item" data-page-node-id="QHhG3oMTsxN0rdimwRDefh"><span class="letter" data-page-node-id="CzHMRvy6S0Jf5XLKK1QvjV">C</span><h4 data-page-node-id="etTeKPx5M7R2fdC1phgxbl">谁来做</h4><p data-page-node-id="DkSbCEEyLrILn5gpF9o3Tf">我负责什么，AI负责什么。</p></div>
+          <div class="chat-item" data-page-node-id="nn7CgemcLyI4R7QhhtzLm1"><span class="letter" data-page-node-id="yNFESjore8EQyBBV36J9BF">H</span><h4 data-page-node-id="nNOxDQhQuWMHTcijcj06hm">有什么背景</h4><p data-page-node-id="mdCK5uq9jiczNdtDwKyqSd">资料、时间、规则、限制。</p></div>
+          <div class="chat-item" data-page-node-id="pdFsknE18fDrF3LkLNeDhV"><span class="letter" data-page-node-id="OHHHlFOX1ENpZd9f0Glm0W">A</span><h4 data-page-node-id="1FfMWvpgRCekT6ncFOZUH3">做到什么</h4><p data-page-node-id="SC8v9mPDJCGRHGG8ysSPfJ">目标、用途、交付对象。</p></div>
+          <div class="chat-item" data-page-node-id="Sy6BmtHn8lrnKARxfSYOiE"><span class="letter" data-page-node-id="0i91mPZG7NTPkjoC7sHT5T">T</span><h4 data-page-node-id="QPDerJpWo1cNsh1PvEGLDp">具体做什么</h4><p data-page-node-id="IOgsQoPr8t5i3t6EatIFhi">就是模块2已确认的 IPO。</p></div>
         </div>
-        <p class="case-note"><b>需要时才细拆：</b>如果原 IPO 的某个 P 步骤很复杂，可以进一步拆成子 IPO；简单任务不用强拆。</p>
+        <p class="case-note" data-page-node-id="5gEJpABooCHHdJ6upvFXbf"><b data-page-node-id="UGqxBWmbFEAqd1ubHFyiun">需要时才细拆：</b>如果原 IPO 的某个 P 步骤很复杂，可以进一步拆成子 IPO；简单任务不用强拆。</p>
       </div>
     </details>
   </section>
-  <section class="block appendix-block" id="topics">
-    <details class="appendix-toggle"><summary>附录 B · 三步分别看什么 <em>点击展开</em></summary>
-      <div class="wrap">
-        <div class="case-card">
-          <div class="case-steps">
-            <div class="case-step"><span class="num">01</span><span class="body"><strong>补背景</strong><small>我是谁？AI是谁？有什么资料？要什么结果？</small></span><span class="who">准备单</span></div>
-            <div class="case-step"><span class="num">02</span><span class="body"><strong>看分工</strong><small>每一步 AI做什么？人检查什么？</small></span><span class="who">接力表</span></div>
-            <div class="case-step"><span class="num">03</span><span class="body"><strong>查结果</strong><small>达到原 IPO 的 O 了吗？证据在哪里？</small></span><span class="who">验收表</span></div>
+  <section class="block appendix-block" id="topics" data-page-node-id="2Eg73fD6a1E7uNuD8MLczw">
+    <details class="appendix-toggle" data-page-node-id="g5RmUKcBVedNcrMSgUNq5d"><summary data-page-node-id="buNwWMT4KaxYARy1bDtXo9">附录 B · 三步分别看什么 <em data-page-node-id="11lyOA8zw0qZsE6VSPuC9d">点击展开</em></summary>
+      <div class="wrap" data-page-node-id="UTCGG89h2Xm5RnCPADeJin">
+        <div class="case-card" data-page-node-id="G6nGGoSzFDwiLafgnjMebj">
+          <div class="case-steps" data-page-node-id="v0M1uFE0j8brFSvd2jpiUd">
+            <div class="case-step" data-page-node-id="KUGB1uBDScnpYlIf9qVpbu"><span class="num" data-page-node-id="bCS7rj1DQwsqUpRrPNyIzh">01</span><span class="body" data-page-node-id="s74bLf7jy4x7eAmgjDxmYb"><strong data-page-node-id="M5aHExTDBS8gcgZUYXHPhx">补背景</strong><small data-page-node-id="SBUhJaYZaHX7zs9E1AJkoV">我是谁？AI是谁？有什么资料？要什么结果？</small></span><span class="who" data-page-node-id="D04hGYp4CSuNGPBHHQOEDU">准备单</span></div>
+            <div class="case-step" data-page-node-id="xmuibVuAPKRAryAORSDvoP"><span class="num" data-page-node-id="XzywueC1EwnI7dMuk5bgmf">02</span><span class="body" data-page-node-id="PZJH7mJAGIcvW1vJuMd1Fq"><strong data-page-node-id="XBMJt0TeYit6172kEAGt9p">看分工</strong><small data-page-node-id="KUGXRvpIqgQrj7UG92LpAH">每一步 AI做什么？人检查什么？</small></span><span class="who" data-page-node-id="bm0YPHLH443GFzOWLDSn7E">接力表</span></div>
+            <div class="case-step" data-page-node-id="4bmVTzSL61aqW0BHrZu0jJ"><span class="num" data-page-node-id="4agjdN8oCLoDHmsEr6u1G8">03</span><span class="body" data-page-node-id="5lf0oH1GCU7R5KPDbH9XkC"><strong data-page-node-id="mY50yNrWu1oPIxLJvRVmJe">查结果</strong><small data-page-node-id="tzKMZCnsSAw9k6nXvmS2Bq">达到原 IPO 的 O 了吗？证据在哪里？</small></span><span class="who" data-page-node-id="Qtz2rSGliRteOn57NNc9GE">验收表</span></div>
           </div>
-          <p class="case-note">统一规则：有疑问就标“待确认”；AI不代替人的业务判断、审批或最终签核。</p>
+          <p class="case-note" data-page-node-id="Gl4MqrzHtdx2pfelZ16iy1">统一规则：有疑问就标“待确认”；AI不代替人的业务判断、审批或最终签核。</p>
         </div>
       </div>
     </details>
   </section>
 </main>
 
-<footer>
-  <div class="wrap">
-    <div class="foot-grid">
-      <div class="lecturer">
-        <span class="avatar" aria-hidden="true">李</span>
-        <div>
-          <div class="name">讲师：李家贵</div>
-          <div class="title">西安交大数字经济研究院首席科学家</div>
+<footer data-page-node-id="55Kg0IJN6IoxdwonutxaLQ">
+  <div class="wrap" data-page-node-id="Tud3DopsXhwTsBKXAqdU8j">
+    <div class="foot-grid" data-page-node-id="M8eh8OnjLheo2XKkdh5vEN">
+      <div class="lecturer" data-page-node-id="JcjZV2I01cUPxB774JSXWK">
+        <span class="avatar" aria-hidden="true" data-page-node-id="60xrBQrCJ89mrQnBGoU9Yt">李</span>
+        <div data-page-node-id="UKsRA04sO1MeUfHPlUJR6r">
+          <div class="name" data-page-node-id="6Fqojf4YG66IxrBaOxTaKY">讲师：李家贵</div>
+          <div class="title" data-page-node-id="HJiMfTOrQFM9AqIQt1HG75">西安交大数字经济研究院首席科学家</div>
         </div>
       </div>
-      <div class="foot-links"><a href="/lijiagui/list/">← 返回全部资源导航</a></div>
+      <div class="foot-links" data-page-node-id="wbQkG84nLUk1m30O4zLuQI"><a href="https://xjtulijiagui-max.github.io/lijiagui/list/" data-page-node-id="06275RZQres8YKZIBS3iG8">← 返回全部资源导航</a></div>
     </div>
-    <div class="foot-note">AI 工作流重构与高效协同 · vivo 全员 AI 实操技巧线上课程 · 模块三教学页 ｜ 课程案例采用教学示例或经授权的脱敏材料</div>
+    
   </div>
 </footer>
 
-<script>
+<script data-page-node-id="ONNgH6dUnmxMzOgchAFwHN">
 (function () {
   function selectPre(card) {
     var pre = card.querySelector('pre');
@@ -431,5 +430,7 @@ T：就是上文已确认的 IPO。
 })();
 </script>
 
-</body>
-</html>
+
+
+
+</body></html>
