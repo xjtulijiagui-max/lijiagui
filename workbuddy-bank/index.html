@@ -1,0 +1,1649 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WorkBuddy × 银行业 6 小时实战陪练台｜按步骤走完一次可交付的任务</title>
+<meta name="description" content="与《WorkBuddy 在银行业实战应用》6 小时授课课件配套的步骤式陪练台：23 个动作、6 次动手实操、17 段可复制提示词、16 份可下载教学模拟材料，学员按顺序一步步走完即可。"">
+<style>
+  :root{
+    --navy:#0B3A7E; --navy-2:#0d2f63; --blue:#1D4ED8; --blue-soft:#EFF5FF;
+    --gold:#C08A2E; --gold-soft:#FDF6E7;
+    --ink:#1B2430; --gray:#5B6779; --line:#E1E7F0; --bg:#F6F8FC; --white:#fff;
+    --ok:#0F7A55; --ok-soft:#EAF7F1; --warn:#B45309; --warn-soft:#FFF6E8;
+    --radius:12px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Microsoft YaHei","PingFang SC",-apple-system,"Segoe UI",sans-serif;
+    color:var(--ink); background:var(--bg); line-height:1.75; font-size:15px;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  pre,code{font-family:"Cascadia Mono",Consolas,"Courier New",monospace}
+
+  /* ============ 布局 ============ */
+  .layout{display:flex;align-items:flex-start;max-width:1360px;margin:0 auto}
+  .sidebar{
+    flex:0 0 268px;width:268px;position:sticky;top:0;height:100vh;overflow-y:auto;
+    background:linear-gradient(180deg,var(--navy) 0%,#0a2a5c 100%);color:#dbe6f8;
+    padding:22px 0 40px;z-index:40;
+  }
+  .sidebar::-webkit-scrollbar{width:6px}
+  .sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.22);border-radius:3px}
+  .brand{padding:0 20px 16px;border-bottom:1px solid rgba(255,255,255,.12);margin-bottom:14px}
+  .brand .kicker{font-size:11px;letter-spacing:2px;color:#8fb3ea;text-transform:uppercase}
+  .brand h2{font-size:16px;color:#fff;margin-top:6px;line-height:1.4;font-weight:700}
+  .brand .meta{font-size:12px;color:#9db8e2;margin-top:6px}
+  .toc-group{padding:6px 12px 0}
+  .toc-title{font-size:11px;letter-spacing:1.5px;color:#7f9ecf;padding:12px 8px 6px}
+  .toc a{
+    display:flex;gap:8px;align-items:flex-start;padding:7px 10px;border-radius:8px;
+    font-size:13.5px;color:#c9d8ef;line-height:1.5;border-left:2px solid transparent;
+  }
+  .toc a:hover{background:rgba(255,255,255,.08);color:#fff;text-decoration:none}
+  .toc a.active{background:rgba(255,255,255,.14);color:#fff;border-left-color:var(--gold);font-weight:600}
+  .toc a .n{font-size:11px;color:#8fb3ea;font-weight:700;min-width:16px;padding-top:1px}
+  .toc a.done .n{color:#6bd6a8}
+  .side-foot{padding:18px 20px 0;margin-top:14px;border-top:1px solid rgba(255,255,255,.12);font-size:12px;color:#8ea9d3;line-height:1.8}
+  .side-foot a{color:#cfe0ff}
+
+  .main{flex:1;min-width:0;padding:0 0 60px}
+  .content{max-width:900px;margin:0 auto;padding:0 24px}
+
+  /* ============ Hero ============ */
+  .hero{background:linear-gradient(135deg,#0B3A7E 0%,#123f83 55%,#0d2f63 100%);color:#fff;padding:40px 0 34px}
+  .hero .tag{display:inline-block;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.2);
+    color:#d6e6ff;font-size:12.5px;padding:4px 12px;border-radius:20px;margin-bottom:14px;letter-spacing:.5px}
+  .hero h1{font-size:31px;line-height:1.35;font-weight:800;letter-spacing:.5px}
+  .hero h1 em{font-style:normal;color:#F5C96B}
+  .hero .lead{margin-top:12px;font-size:15px;color:#cddef7;max-width:760px}
+  .kpis{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+  .kpi{flex:1 1 120px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);
+    border-radius:10px;padding:10px 14px}
+  .kpi b{display:block;font-size:21px;color:#fff;line-height:1.3}
+  .kpi span{font-size:12px;color:#a9c6ec}
+  .notice{margin-top:20px;background:rgba(255,255,255,.1);border-left:4px solid #F5C96B;
+    padding:11px 15px;border-radius:6px;font-size:13px;color:#eaf2ff}
+
+  /* ============ 变量条 / 工具栏 ============ */
+  .varbar{background:var(--gold-soft);border:1px solid #F0DDB4;border-radius:var(--radius);
+    padding:14px 18px;margin:22px 0 0;display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end}
+  .varbar .vh{flex:1 1 100%;font-size:13px;color:#8a5a12;font-weight:700}
+  .varbar .vh small{font-weight:400;color:#a97a2e;margin-left:8px}
+  .field{flex:1 1 150px}
+  .field label{display:block;font-size:12px;color:#8a5a12;margin-bottom:3px}
+  .field input{width:100%;padding:7px 10px;border:1px solid #E5CD9C;border-radius:7px;
+    font-size:13.5px;font-family:inherit;color:var(--ink);background:#fff}
+  .field input:focus{outline:2px solid #E9C77E;outline-offset:1px}
+
+  .toolbar{position:sticky;top:0;z-index:30;background:rgba(246,248,252,.96);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line);margin-top:22px;padding:10px 0}
+  .toolbar .inner{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  .search-box{position:relative;flex:2 1 300px;min-width:200px}
+  .search-box input{width:100%;padding:9px 34px 9px 12px;border:1px solid var(--line);
+    border-radius:9px;font-size:13.5px;font-family:inherit;background:#fff;color:var(--ink)}
+  .search-box input:focus{outline:2px solid #C7DBFA;border-color:#9dbfee}
+  .search-box .clr{position:absolute;right:6px;top:50%;transform:translateY(-50%);
+    border:0;background:#EEF2F8;color:var(--gray);width:22px;height:22px;border-radius:6px;
+    cursor:pointer;font-size:14px;line-height:1;display:none}
+  .btn{display:inline-flex;align-items:center;gap:6px;padding:9px 12px;border-radius:9px;
+    font-size:13.5px;font-weight:600;cursor:pointer;border:1px solid var(--line);background:#fff;
+    color:var(--navy);font-family:inherit;white-space:nowrap}
+  .btn:hover{border-color:#B9CEEB;background:#F7FAFF;text-decoration:none}
+  .btn.primary{background:var(--navy);border-color:var(--navy);color:#fff}
+  .btn.primary:hover{background:#0a3169}
+  .btn.gold{background:#fff;border-color:#E0C489;color:#8a5a12}
+  .btn.gold:hover{background:#FFFBF0}
+  .progress-wrap{display:flex;align-items:center;gap:10px;flex:1 1 150px;min-width:140px}
+  .bar{flex:1;height:8px;background:#E3EAF5;border-radius:5px;overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#1D4ED8,#0F7A55);
+    border-radius:5px;transition:width .25s}
+  .progress-wrap span{font-size:12.5px;color:var(--gray);white-space:nowrap;font-variant-numeric:tabular-nums}
+  .hits{font-size:12.5px;color:var(--gray);flex:1 1 100%;display:none}
+  .hits.on{display:block}
+
+  /* ============ 模块与步骤 ============ */
+  .module{margin:38px 0 0;scroll-margin-top:76px}
+  .mod-head{display:flex;gap:14px;align-items:flex-start;padding-bottom:12px;
+    border-bottom:2px solid #DCE6F5;margin-bottom:6px}
+  .mod-no{flex:none;width:52px;height:52px;border-radius:13px;background:var(--navy);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;
+    letter-spacing:.5px;box-shadow:0 4px 12px rgba(11,58,126,.18)}
+  .mod-head h2{font-size:20px;color:var(--navy);line-height:1.4}
+  .mod-head .sub{font-size:13px;color:var(--gray);margin-top:3px}
+  .mod-head .pages{font-size:11.5px;color:#8a5a12;background:var(--gold-soft);
+    border:1px solid #F0DDB4;padding:2px 8px;border-radius:20px;display:inline-block;margin-top:7px}
+
+  .step{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);
+    padding:20px 22px 22px;margin:16px 0;scroll-margin-top:74px;
+    box-shadow:0 2px 10px rgba(11,58,126,.04)}
+  .step.done{border-color:#BFE3D2;background:#FCFEFD}
+  .step-hd{display:flex;gap:12px;align-items:flex-start}
+  .step-hd .sid{flex:none;font-size:11.5px;font-weight:800;color:#fff;background:var(--blue);
+    border-radius:6px;padding:2px 7px;margin-top:3px;letter-spacing:.6px}
+  .step.done .step-hd .sid{background:var(--ok)}
+  .step-hd h3{font-size:16.5px;color:var(--ink);line-height:1.5;flex:1}
+  .step-hd h3 .badge{font-size:11px;font-weight:700;color:#8a5a12;background:var(--gold-soft);
+    border:1px solid #EFDCB4;border-radius:5px;padding:1px 6px;margin-left:8px;vertical-align:2px}
+  .chk{flex:none;display:flex;align-items:center;gap:6px;font-size:12px;color:var(--gray);
+    cursor:pointer;user-select:none;padding-top:2px}
+  .chk input{width:17px;height:17px;accent-color:#0F7A55;cursor:pointer}
+  .step-body{margin-top:14px}
+  .lbl{font-size:12px;font-weight:700;color:var(--blue);letter-spacing:.4px;margin:14px 0 6px;
+    display:flex;align-items:center;gap:7px}
+  .lbl::before{content:"";width:3px;height:13px;background:var(--blue);border-radius:2px}
+  .lbl.gold{color:#8a5a12}
+  .lbl.gold::before{background:var(--gold)}
+  .lbl.green{color:var(--ok)}
+  .lbl.green::before{background:var(--ok)}
+  ol.doit,ul.checks{margin:0 0 0 4px;padding-left:20px}
+  ol.doit li,ul.checks li{margin:5px 0;font-size:14px}
+  ul.checks{list-style:none;padding-left:0}
+  ul.checks li{position:relative;padding-left:22px;color:#2b3a4d}
+  ul.checks li::before{content:"✓";position:absolute;left:2px;top:0;color:var(--ok);
+    font-weight:800;font-size:13px}
+  .hint{background:var(--blue-soft);border:1px solid #D7E6FB;border-radius:9px;
+    padding:10px 13px;font-size:13px;color:#27436e;margin-top:10px}
+  .hint.warn{background:var(--warn-soft);border-color:#F3DFC0;color:#7c4a0c}
+  .hint b{color:inherit}
+
+  /* 提示词 */
+  .prompt{border:1px solid #DDE7F6;border-radius:10px;overflow:hidden;margin-top:10px;background:#FBFDFF}
+  .prompt-top{display:flex;align-items:center;gap:8px;padding:8px 12px;background:#EFF5FF;
+    border-bottom:1px solid #DDE7F6}
+  .prompt-top .pt{font-size:12.5px;font-weight:700;color:var(--navy);flex:1}
+  .prompt-top .pid{font-size:11px;color:#6b7f9c;background:#fff;border:1px solid #DDE7F6;
+    border-radius:4px;padding:1px 5px}
+  .mini{font-size:12px;padding:4px 9px;border-radius:6px;border:1px solid #C9DBF3;background:#fff;
+    color:var(--navy);cursor:pointer;font-family:inherit;font-weight:600;white-space:nowrap}
+  .mini:hover{background:#E8F1FF}
+  .prompt pre{padding:13px 15px;font-size:13px;line-height:1.85;color:#1d2b3d;white-space:pre-wrap;
+    word-break:break-word;max-height:360px;overflow:auto}
+  .prompt pre .var{color:#B45309;background:#FDF3E3;border-radius:3px;padding:0 2px}
+
+  /* 材料 */
+  .mats{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .mat{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;padding:6px 10px;
+    border:1px dashed #C7D6EC;border-radius:8px;background:#fff;color:#26507f}
+  .mat:hover{border-style:solid;border-color:#9dbfee;background:#F7FAFF;text-decoration:none}
+  .mat i{font-style:normal;font-size:13px}
+
+  /* 模块结尾小结 */
+  .mod-end{background:#F2F6FD;border:1px solid #DEE8F6;border-left:4px solid var(--navy);
+    border-radius:8px;padding:12px 16px;font-size:13.5px;color:#27436e;margin:6px 0 4px}
+  .mod-end b{color:var(--navy)}
+
+  /* 附录 */
+  .appendix{background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px;margin:20px 0}
+  .appendix h3{font-size:16px;color:var(--navy);margin-bottom:6px}
+  .appendix p.sm{font-size:13px;color:var(--gray);margin-bottom:10px}
+  table.tb{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+  table.tb th,table.tb td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+  table.tb th{background:#F2F6FD;color:var(--navy);font-weight:700;font-size:12.5px}
+  table.tb tr:nth-child(even) td{background:#FCFDFF}
+
+  /* 评分卡 */
+  .score-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:9px 0;
+    border-bottom:1px dashed var(--line);font-size:13.5px}
+  .score-row .nm{flex:1 1 220px}
+  .score-row .nm small{display:block;color:var(--gray);font-size:12px}
+  .score-row .w{flex:none;font-size:12px;color:#8a5a12;background:var(--gold-soft);
+    border-radius:5px;padding:1px 7px}
+  .score-row input[type=number]{width:70px;padding:5px 8px;border:1px solid var(--line);
+    border-radius:6px;font-family:inherit;font-size:13px;text-align:center}
+  .score-total{margin-top:14px;padding:14px 18px;border-radius:10px;background:var(--navy);
+    color:#fff;display:flex;flex-wrap:wrap;align-items:center;gap:14px}
+  .score-total b{font-size:26px;color:#F5C96B;font-variant-numeric:tabular-nums}
+  .score-total .verdict{font-size:13.5px;color:#d6e6ff;flex:1 1 200px}
+
+  /* toast */
+  #toast{position:fixed;left:50%;bottom:32px;transform:translateX(-50%) translateY(20px);
+    background:#12253f;color:#fff;font-size:13.5px;padding:10px 18px;border-radius:9px;
+    opacity:0;pointer-events:none;transition:.25s;z-index:200;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* 抽屉 */
+  .menu-btn{display:none;position:fixed;left:14px;bottom:18px;z-index:60;width:48px;height:48px;
+    border-radius:50%;border:0;background:var(--navy);color:#fff;font-size:20px;cursor:pointer;
+    box-shadow:0 6px 18px rgba(11,58,126,.35)}
+  .mask{display:none;position:fixed;inset:0;background:rgba(8,20,38,.5);z-index:45}
+  .mask.on{display:block}
+  .close-x{display:none}
+
+  @media (max-width:960px){
+    .sidebar{position:fixed;left:0;top:0;height:100%;transform:translateX(-104%);
+      transition:transform .25s;width:280px;flex-basis:280px;box-shadow:8px 0 30px rgba(0,0,0,.2)}
+    .sidebar.open{transform:translateX(0)}
+    .menu-btn{display:flex;align-items:center;justify-content:center}
+    .close-x{display:block;position:absolute;right:12px;top:12px;background:rgba(255,255,255,.14);
+      border:0;color:#fff;width:30px;height:30px;border-radius:8px;font-size:16px;cursor:pointer}
+    .content{padding:0 16px}
+    .hero{padding:32px 0 26px}
+    .hero h1{font-size:24px}
+    .kpi{flex:1 1 45%}
+    .step{padding:16px 16px 18px}
+    .toolbar{position:sticky}
+    .progress-wrap{flex:1 1 120px}
+    .main{padding-bottom:100px}
+  }
+  @media print{
+    .sidebar,.toolbar,.menu-btn,.mask,.varbar{display:none!important}
+    body{background:#fff}
+    .step{break-inside:avoid;box-shadow:none}
+    .main{padding:0}
+  }
+</style>
+</head>
+<body>
+
+<button class="menu-btn" id="menuBtn" aria-label="打开目录" aria-expanded="false">☰</button>
+<div class="mask" id="mask"></div>
+
+<div class="layout">
+  <!-- ================= 侧栏目录 ================= -->
+  <aside class="sidebar" id="sidebar" aria-label="课程练习目录">
+    <button class="close-x" id="closeX" aria-label="关闭目录">✕</button>
+    <div class="brand">
+      <div class="kicker">WorkBuddy × Banking</div>
+      <h2>6 小时实战陪练台</h2>
+      <div class="meta">配套课件 91 页 · 23 个动作</div>
+    </div>
+    <nav class="toc" id="toc">
+      <div class="toc-group">
+        <div class="toc-title">开课之前</div>
+        <a href="#s00"><span class="n">00</span><span>课前 5 分钟准备</span></a>
+      </div>
+      <div class="toc-group">
+        <div class="toc-title">M1 认知破冰</div>
+        <a href="#s01"><span class="n">01</span><span>画一张任务边界卡</span></a>
+        <a href="#s02"><span class="n">02</span><span>六动作走通一次任务</span></a>
+        <a href="#s03"><span class="n">03</span><span>五步核验与六项验收</span></a>
+        <a href="#s04"><span class="n">04</span><span>实操一：走访材料变纪要</span></a>
+      </div>
+      <div class="toc-group">
+        <div class="toc-title">M2 养成喂养</div>
+        <a href="#s05"><span class="n">05</span><span>建五目录工作空间</span></a>
+        <a href="#s06"><span class="n">06</span><span>写一张角色卡</span></a>
+        <a href="#s07"><span class="n">07</span><span>盘资料资产地图</span></a>
+        <a href="#s08"><span class="n">08</span><span>Grill Me 追问五轮</span></a>
+        <a href="#s09"><span class="n">09</span><span>实操二：会前简报助手</span></a>
+      </div>
+      <div class="toc-group">
+        <div class="toc-title">M3 技能体系</div>
+        <a href="#s10"><span class="n">10</span><span>六问诊断值不值得做</span></a>
+        <a href="#s11"><span class="n">11</span><span>IPO 拆解 + SOP 六步</span></a>
+        <a href="#s12"><span class="n">12</span><span>写 Skill 草案的八段</span></a>
+        <a href="#s13"><span class="n">13</span><span>实操三：支行周报 Skill</span></a>
+      </div>
+      <div class="toc-group">
+        <div class="toc-title">M4 连接协同</div>
+        <a href="#s14"><span class="n">14</span><span>三类外援与 Plan 五件事</span></a>
+        <a href="#s15"><span class="n">15</span><span>实操四：走访纪要与商机卡</span></a>
+        <a href="#s16"><span class="n">16</span><span>一页领导摘要</span></a>
+      </div>
+      <div class="toc-group">
+        <div class="toc-title">M5 自动化与数据</div>
+        <a href="#s17"><span class="n">17</span><span>四道门与五步上线</span></a>
+        <a href="#s18"><span class="n">18</span><span>实操五：开门红晨报</span></a>
+        <a href="#s19"><span class="n">19</span><span>数据三层核验</span></a>
+      </div>
+      <div class="toc-group">
+        <div class="toc-title">M6 业务闭环</div>
+        <a href="#s20"><span class="n">20</span><span>九步经营链与多Agent会诊</span></a>
+        <a href="#s21"><span class="n">21</span><span>综合实战：开门红作战方案</span></a>
+        <a href="#s22"><span class="n">22</span><span>验收评分与回岗三件事</span></a>
+      </div>
+      <div class="toc-group">
+        <div class="toc-title">附录</div>
+        <a href="#apx-a"><span class="n">A</span><span>17 段提示词总库</span></a>
+        <a href="#apx-b"><span class="n">B</span><span>16 份模拟材料</span></a>
+        <a href="#apx-c"><span class="n">C</span><span>导出我的学习记录</span></a>
+      </div>
+    </nav>
+    <div class="side-foot">
+      同类页面：<br>
+      <a href="https://xjtulijiagui-max.github.io/lijiagui/workbuddy-bank-lab/" target="_blank" rel="noopener">练习台版（7 个练习）</a><br>
+      <a href="https://xjtulijiagui-max.github.io/lijiagui/bank-workbuddy/" target="_blank" rel="noopener">零售银行场景卡</a><br>
+      <a href="https://xjtulijiagui-max.github.io/lijiagui/bankpractice/" target="_blank" rel="noopener">江城银行训练台</a>
+    </div>
+  </aside>
+
+  <!-- ================= 正文 ================= -->
+  <div class="main">
+    <header class="hero">
+      <div class="content">
+        <span class="tag">企业AI实战系列 · 银行业 · 6小时</span>
+        <h1>按步骤走完一次<em>可交付</em>的任务</h1>
+        <p class="lead">这是《WorkBuddy 人机协同赋能银行业实战应用》的课堂陪练台。左边目录就是你的进度：从 00 走到 22，每一步都告诉你要做什么、复制哪句提示词、拿哪份材料、做到什么算通过。走完，你手上会留下一份纪要、一份会前简报、一个 Skill 草案、三张商机卡、一张自动化配置卡和一套开门红作战方案。</p>
+        <div class="kpis">
+          <div class="kpi"><b>6</b><span>小时 · 6 个模块</span></div>
+          <div class="kpi"><b>23</b><span>个动作，按序推进</span></div>
+          <div class="kpi"><b>17</b><span>段可复制提示词</span></div>
+          <div class="kpi"><b>16</b><span>份可下载模拟材料</span></div>
+        </div>
+        <div class="notice">全部客户、企业、金额与业绩均为教学模拟，不对应任何真实主体。课堂不连接任何行内系统，所有输出必须经人工复核后才可离开课堂；真实业务回到授权环境与责任链。</div>
+      </div>
+    </header>
+
+    <div class="content">
+      <!-- 变量条 -->
+      <section class="varbar" aria-label="提示词变量">
+        <div class="vh">先填四个变量，复制提示词时会自动替换 <small>只有填了的变量才会被替换，不用每次改【】</small></div>
+        <div class="field"><label for="v-org">机构（支行/部门）</label><input id="v-org" data-var="org" placeholder="如：城东支行"></div>
+        <div class="field"><label for="v-role">我的岗位</label><input id="v-role" data-var="role" placeholder="如：网点负责人"></div>
+        <div class="field"><label for="v-name">姓名</label><input id="v-name" data-var="name" placeholder="如：张××"></div>
+        <div class="field"><label for="v-date">数据截止日期</label><input id="v-date" data-var="date" placeholder="如：2026-10-31"></div>
+      </section>
+
+      <!-- 工具栏 -->
+      <div class="toolbar">
+        <div class="inner">
+          <div class="search-box">
+            <input id="q" type="search" placeholder="搜索：步骤 / 提示词 / 材料" aria-label="搜索本页内容">
+            <button class="clr" id="clr" aria-label="清空搜索">✕</button>
+          </div>
+          <div class="progress-wrap">
+            <div class="bar"><i id="barFill"></i></div>
+            <span id="progText">0 / 23</span>
+          </div>
+          <button class="btn gold" id="btnAllPrompt">⬇ 全部提示词</button>
+          <button class="btn primary" id="btnRecord">⤓ 导出学习记录</button>
+        </div>
+        <div class="hits" id="hits"></div>
+      </div>
+
+      <!-- ============ 00 ============ -->
+      <section class="module" id="m0">
+        <div class="mod-head">
+          <div class="mod-no">00</div>
+          <div>
+            <h2>课前 5 分钟：把台子搭好</h2>
+            <div class="sub">不准备好这三样，后面每一步都会卡住</div>
+          </div>
+        </div>
+
+        <article class="step" id="s00">
+          <div class="step-hd">
+            <span class="sid">S00</span>
+            <h3>开课前的四个动作</h3>
+            <label class="chk"><input type="checkbox" class="done-chk" data-id="s00"><span>完成</span></label>
+          </div>
+          <div class="step-body">
+            <div class="lbl">做什么</div>
+            <ol class="doit">
+              <li>在上面的变量条填好机构、岗位、姓名、数据截止日期 —— 后面 17 段提示词会自动替换。</li>
+              <li>下载教学资料包，解压到一个<strong>独立演练目录</strong>（不要放在桌面或含真实客户资料的文件夹里）。</li>
+              <li>打开 WorkBuddy，新建一个任务，把工作目录指到刚才那个演练目录。</li>
+              <li>在本页勾上"完成"，进度会自己记下来（换电脑就没了，属于正常）。</li>
+            </ol>
+            <div class="lbl gold">拿材料</div>
+            <div class="mats">
+              <a class="mat" href="downloads/workbuddy-bank_资料包.zip" download><i>⬇</i>workbuddy-bank_资料包.zip（16 份全量）</a>
+            </div>
+            <div class="hint warn"><b>红线先说清：</b>课堂材料全部是教学模拟。任何真实客户身份、交易、授信、经营明细，都不进这个演练目录，也不进任何外部工具。</div>
+          </div>
+        </article>
+      </section>
+
+      <!-- ============ M1 ============ -->
+      <section class="module" id="m1">
+        <div class="mod-head">
+          <div class="mod-no">M1</div>
+          <div>
+            <h2>认知破冰：从"会问"到"能交付"</h2>
+            <div class="sub">先定边界，再谈效率；先走通一次，再谈复用</div>
+            <span class="pages">对应课件 P06—P17 ｜ 约 30 分钟</span>
+          </div>
+        </div>
+
+        <article class="step" id="s01">
+          <div class="step-hd">
+            <span class="sid">S01</span>
+            <h3>画一张"任务边界卡"，把红线写在开工之前</h3>
+            <label class="chk"><input type="checkbox" class="done-chk" data-id="s01"><span>完成</span></label>
+          </div>
+          <div class="step-body">
+            <div class="lbl">做什么</div>
+            <ol class="doit">
+              <li>把你要做的那个任务写出来（一句话），然后判定它的数据等级：绿（公开）、黄（内部方法）、红（客户身份/交易/授信）。</li>
+              <li>写清 AI 做哪一段、人做哪一段、系统管哪一段。</li>
+              <li>写下这个任务"绝对不能做"的三件事。</li>
+              <li>如果落在红区，直接停 —— 换一个模拟任务来练，不要试。</li>
+            </ol>
+            <div class="lbl">可复制提示词</div>
+            <div class="prompt">
+              <div class="prompt-top"><span class="pid">P01</span><span class="pt">任务边界卡生成</span>
+                <button class="mini" data-copy="p01">复制</button><button class="mini" data-dl="p01" data-name="P01_任务边界卡">下载</button></div>
+              <pre id="p01">你是银行{{org}}的合规与效率双重视角的顾问。我要做的任务是：【用一句话描述任务】。
+
+请输出一张不超过一页的"任务边界卡"，包含四块：
+1）数据等级：绿（公开政策/通用模板）/ 黄（内部方法，间接可识别）/ 红（客户身份、交易、授信资料），并说明判断理由；
+2）三方分工：AI 负责（读、整理、计算、初稿）、人负责（目标、事实、口径、签字）、系统负责（权限、留痕、归档）；
+3）三条禁止动作：针对这个任务，写出绝对不能做的三件事；
+4）开工条件：需要哪些授权、哪些材料、谁复核，任一条不成立就先不要开始。
+
+要求：不确定的地方标"待确认"，不要替我判断合规结论。最后用一句话总结"这件事在什么条件下可以开始"。</pre>
+            </div>
+            <div class="lbl green">做到什么算通过</div>
+            <ul class="checks">
+              <li>能一句话说出这个任务的数据等级和理由</li>
+              <li>三方分工里，"人负责"的每一项都写到了具体角色，而不是"领导把关"</li>
+              <li>三条禁止动作是针对这个任务的，不是通用套话</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="step" id="s02">
+          <div class="step-hd">
+            <span class="sid">S02</span>
+            <h3>六个动作，把一次任务从需求走到交付</h3>
+            <label class="chk"><input type="checkbox" class="done-chk" data-id="s02"><span>完成</span></label>
+          </div>
+          <div class="step-body">
+            <div class="lbl">做什么</div>
+            <ol class="doit">
+              <li><strong>认三栏</strong>：左找任务、中提要求、右看成果。先确认当前工作空间和材料范围对不对。</li>
+              <li><strong>建任务</strong>：一句话说清对象、目的、交付物、给谁用。</li>
+              <li><strong>选配置</strong>：这个任务要不要 Plan？要不要挂专家或 Skill？能不能出网？</li>
+              <li><strong>看计划</strong>：先审计划再执行，路径不清就别让它直接干。</li>
+              <li><strong>改结果</strong>：在原任务里连续追问，不要每次重开。</li>
+              <li><strong>做验收</strong>：打开右侧实际文件，按六项逐条查。</li>
+            </ol>
+            <div class="hint">这一步不要写提示词，重点是把动作顺序变成肌肉记忆。做到"闭着眼睛知道下一步点哪里"，就算过。</div>
+          </div>
+        </article>
+
+        <article class="step" id="s03">
+          <div class="step-hd">
+            <span class="sid">S03</span>
+            <h3>把"看着对"变成"查得到"：五步核验 + 六项验收</h3>
+            <label class="chk"><input type="checkbox" class="done-chk" data-id="s03"><span>完成</span></label>
+          </div>
+          <div class="step-body">
+            <div class="lbl">做什么</div>
+            <ol class="doit">
+              <li>拿你刚生成的任意一份材料，做一遍五步核验：限定来源 → 定位证据 → 分清性质 → 交叉验证 → 人工抽检。</li>
+              <li>再按六项验收打分：能打开、内容对、格式对、范围对、可追溯、可交付。</li>
+              <li>把没过的那一项，写成一条具体的修改指令（不要写"再完善一下"）。</li>
+            </ol>
+            <table class="tb">
+              <tr><th>核验动作</th><th>你要回答的问题</th><th>证据写在哪</th></tr>
+              <tr><td>限定来源</td><td>这次只查哪几份材料？</td><td>材料文件名 + 版本</td></tr>
+              <tr><td>定位证据</td><td>这个数字来自哪一段、哪一行？</td><td>段落号 / 行 ID</td></tr>
+              <tr><td>分清性质</td><td>这是事实、判断，还是待核实？</td><td>标注在正文里</td></tr>
+              <tr><td>交叉验证</td><td>另外一份材料是不是也这么说？</td><td>两份来源并列</td></tr>
+              <tr><td>人工抽检</td><td>我亲手抽查了哪三项？</td><td>抽检记录</td></tr>
+            </table>
+            <div class="lbl gold">拿材料</div>
+            <div class="mats"><a class="mat" href="downloads/16_验收单.md" download><i>⬇</i>16_验收单.md（六项 + 四条红线）</a></div>
+          </div>
+        </article>
+
+        <article class="step" id="s04">
+          <div class="step-hd">
+            <span class="sid">S04</span>
+            <h3>实操一：三家企业走访材料，变成一页可交付纪要<span class="badge">15 分钟 · 个人</span></h3>
+            <label class="chk"><input type="checkbox" class="done-chk" data-id="s04"><span>完成</span></label>
+          </div>
+          <div class="step-body">
+            <p style="font-size:14px;color:#2b3a4d">背景：某支行零售客户经理走访了 3 家企业，带回了脱敏走访记录、上次沟通纪要和统一模板。你要在下班前交一页纪要 + 5 条行动清单 + 待确认清单。</p>
+            <div class="lbl gold">拿材料</div>
+            <div class="mats">
+              <a class="mat" href="downloads/01_走访记录_教学模拟.md" download><i>⬇</i>01 走访记录</a>
+              <a class="mat" href="downloads/02_上次沟通纪要与待办.md" download><i>⬇</i>02 上次纪要与待办</a>
+              <a class="mat" href="downloads/03_会议纪要模板.md" download><i>⬇</i>03 纪要模板</a>
+            </div>
+            <div class="lbl">可复制提示词</div>
+            <div class="prompt">
+              <div class="prompt-top"><span class="pid">P02</span><span class="pt">走访材料 → 一页纪要</span>
+                <button class="mini" data-copy="p02">复制</button><button class="mini" data-dl="p02" data-name="P02_走访材料转纪要">下载</button></div>
+              <pre id="p02">你是{{org}}的{{role}}的助理。请把本次走访材料整理成一页会议纪要。
+
+【资料范围】只使用这三份文件：
+1）01_走访记录_教学模拟.md
+2）02_上次沟通纪要与待办.md
+3）03_会议纪要模板.md
+
+【第一步：先不写纪要】先列出材料清单，并指出完成一份合格纪要还缺哪些信息，说明每个缺口会影响哪一段结论。
+
+【第二步：按模板生成】严格用模板的六段结构：基本信息 / 事实（有来源）/ 判断与推断 / 待确认事项 / 行动清单 / 风险与边界。
+- 事实必须标注来源（文件名 + 段落），不得把客户口述直接写成已核实事实；
+- 推断单独成栏，标注置信度（高/中/低）和依据；
+- 行动清单每条必须有责任人和完成时间；
+- 无法确认的责任人、时间、金额，一律写"待确认"，不得编造；
+- 逾期未完成的待办要单独标出。
+
+【第三步：自检】列出你这份纪要中最不确定的 3 处，并说明需要谁来确认。
+
+【边界】不替代授信判断；不形成对客承诺；不改动原始文件。</pre>
+            </div>
+            <div class="lbl green">做到什么算通过</div>
+            <ul class="checks">
+              <li>每条事实都能追到具体文件与段落</li>
+              <li>5 条行动每条都有责任人和时间，没有一条是"尽快""抓紧"</li>
+              <li>逾期待办（审计报告）被单独标出，而不是被合并进正文</li>
+              <li>至少 3 处写了"待确认"，且说明了影响</li>
+            </ul>
+            <div class="hint">做完先别急着交。用 S03 的五步核验过一遍，再回答：如果行长只问一句"这三家哪家最值得先跟"，你的纪要支持得住吗？</div>
+          </div>
+        </article>
+      </section>
+
+      <!-- ============ M2 ============ -->
+      <section class="module" id="m2">
+        <div class="mod-head">
+          <div class="mod-no">M2</div>
+          <div>
+            <h2>养成喂养：让 WorkBuddy 读懂你的业务</h2>
+            <div class="sub">身份定边界、资料定事实、规则定动作、验收定能不能用</div>
+            <span class="pages">对应课件 P18—P29 ｜ 约 60 分钟</span>
+          </div>
+        </div>
+
+        <article class="step" id="s05">
+          <div class="step-hd">
+            <span class="sid">S05</span>
+            <h3>建一个五目录工作空间，让材料各就各位</h3>
+            <label class="chk"><input type="checkbox" class="done-chk" data-id="s05"><span>完成</span></label>
+          </div>
+          <div class="step-body">
+            <div class="lbl">做什么</div>
+            <ol class="doit">
+              <li>按 00_规则 / 01_输入 / 02_过程 / 03_输出 / 99_归档 建五个文件夹。</li>
+              <li>把资料包里的模板放进 00，模拟材料放进 01，本次生成的中间结果放 02，成品放 03。</li>
+              <li>用统一命名：<code>YYYYMMDD_机构_任务_版本</code>，例如 <code>20261031_城东支行_保险开门红_V2</code>。</li>
+              <li>在 00 里放一页"本任务说明"：目标、对象、验收标准、禁止动作。</li>
+            </ol>
+            <div class="lbl">可复制提示词</div>
+            <div class="prompt">
+              <div class="prompt-top"><span class="pid">P03</span><span class="pt">五目录工作空间初始化</span>
+                <button class="mini" data-copy="p03">复制</button><button class="mini" data-dl="p03" data-name="P03_五目录工作空间">下载</button></div>
+              <pre id="p03">我要为{{org}}的一个具体任务建一个可复用的工作空间，任务名称是：【任务名】。
+
+请帮我：
+1）按 00_规则 / 01_输入 / 02_过程 / 03_输出 / 99_归档 五个目录，列出每个目录应该放什么、不该放什么；
+2）给出命名规则和一个具体示例文件名（格式：YYYYMMDD_机构_任务_版本）；
+3）生成 00_规则 目录里的"本任务说明"草稿，包含：目标、服务对象、材料范围与版本、验收标准、禁止动作、责任人；
+4）指出这个任务中有哪些材料属于客户敏感信息，必须留在授权环境、不能进入这个目录。
+
+要求：不要创建任何实际文件，只输出目录结构与说明草稿；不确定的字段标"待确认"。</pre>
+            </div>
+            <div class="lbl green">做到什么算通过</div>
+            <ul class="checks">
+              <li>五个目录建好，且 01 里只有本次模拟材料</li>
+              <li>00 里有一页说明，别人接手能看懂</li>
+              <li>文件名符合命名规则，能一眼看出机构、任务、版本</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="step" id="s06">
+          <div class="step-hd">
+            <span class="sid">S06</span>
+            <h3>写一张角色卡：四件事决定它能不能用</h3>
+            <label class="chk"><input type="checkbox" class="done-chk" data-id="s06"><span>完成</span></label>
+          </div>
+          <div class="step-body">
+            <div class="lbl">做什么</div>
+            <ol class="doit">
+              <li><strong>给身份</strong>：岗位、服务对象、语气、禁区。</li>
+              <li><strong>喂资料</strong>：制度、条款、模板、脱敏样例，每份标来源、版本、生效日、适用范围、责任人。</li>
+              <li><strong>立规则</strong>：先后顺序、必填字段、冲突时以谁为准、缺资料就停、哪些动作必须人工确认。</li>
+              <li><strong>做验收</strong>：正常、缺失、冲突各跑一次，看它会不会编、会不会漏、能不能停。</li>
+            </ol>
+            <div class="lbl">可复制提示词</div>
+            <div class="prompt">
+              <div class="prompt-top"><span class="pid">P04</span><span class="pt">岗位角色卡（含禁区与停止条件）</span>
+                <button class="mini" data-copy="p04">复制</button><button class="mini" data-dl="p04" data-name="P04_岗位角色卡">下载</button></div>
+              <pre id="p04">请为{{org}}的{{role}}配置一个"{{org}}经营助手"角色卡。
+
+按四块写，每块都要具体到能验收：
+1）身份：岗位定位、服务对象、语言风格（专业、克制、不说绝对话）、三条禁区（例如不承诺收益、不替代审批、不越权取数）；
+2）资料：列出这个角色必须读的材料类型，并为每类标注"来源、版本、生效日期、适用范围、责任人"五个字段；
+3）规则：先做什么后做什么、哪些字段必填、口径冲突时以谁为准、缺资料时必须停下来问什么、哪些动作必须人工确认；
+4）验收：设计三个测试样本（正常 / 缺失 / 冲突），分别写清"应该输出什么"和"什么情况下必须停止"。
+
+最后给出一段可以直接粘进系统设置的角色描述（不超过 300 字）。
+
+边界：不虚构制度条款；不确定的标"待确认"。</pre>
+            </div>
+          </div>
+        </article>
+
+        <article class="step" id="s07">
+          <div class="step-hd">
+            <span class="sid">S07</span>
+            <h3>盘一张资料资产地图：哪类任务用哪份材料</h3>
+            <label class="chk"><input type="checkbox" class="done-chk" data-id="s07"><span>完成</span></label>
+          </div>
+          <div class="step-body">
+            <div class="lbl">做什么</div>
+            <p style="font-size:14px;color:#2b3a4d">把你的材料按四类盘一遍，重点不是列清单，而是标出"缺什么、谁来补、什么时候失效"。</p>
+            <table class="tb">
+              <tr><th>资料类型</th><th>典型文件</th><th>可用方式</th><th>必须先补齐</th></tr>
+              <tr><td>制度与办法</td><td>监管文件、内部制度、操作规程</td><td>条款检索、摘要、对照检查</td><td>版本、生效日、适用范围、责任人</td></tr>
+              <tr><td>产品与条款</td><td>产品说明书、费率表、风险提示</td><td>提取字段、产品对比、话术边界</td><td>条款原文、更新时间、审批口径</td></tr>
+              <tr><td>客户与经营</td><td>台账、活动记录、客户画像</td><td>仅在授权内网分析</td><td>敏感等级、授权范围、脱敏规则</td></tr>
+              <tr><td>模板与案例</td><td>周报、纪要、方案、优秀案例</td><td>复用结构、迁移方法</td><td>去标识、客户授权、可公开范围</td></tr>
+            </table>
+            <div class="hint">知识库分四层：制度库定依据、产品库定边界、案例库判能否迁移、模板库定交付形状。调用顺序是：<b>模板定形 → 制度定依据 → 产品定边界 → 案例判断能否迁移</b>。</div>
+          </div>
+        </article>
+
+        <article class="step" id="s08">
+          <div class="step-hd">
+            <span class="sid">S08</span>
+            <h3>用好 Grill Me：把一句空话问成可执行任务<span class="badge">5 轮追问</span></h3>
+            <label class="chk"><input type="checkbox" class="done-chk" data-id="s08"><span>完成</span></label>
+          </div>
+          <div class="step-body">
+            <div class="lbl">做什么</div>
+            <ol class="doit">
+              <li>拿一句真实但空的话，例如"帮我策划一场财富沙龙"。</li>
+              <li>让 AI 一次只问一个维度：目标 → 输入 → 约束 → 流程 → 验收。</li>
+              <li>每轮你只回答你确实知道的，不知道的写"待确认"，不让 AI 替你编。</li>
+              <li>五轮之后，让它输出一页任务说明书。</li>
+            </ol>
+            <div class="lbl">可复制提示词</div>
+            <div class="prompt">
+              <div class="prompt-top"><span class="pid">P05</span><span class="pt">Grill Me 五轮追问</span>
+                <button class="mini" data-copy="p05">复制</button><button class="mini" data-dl="p05" data-name="P05_GrillMe五轮追问">下载</button></div>
+              <pre id="p05">我现在的需求是：【一句空话，例如：帮我策划一场财富沙龙】。
+
+请用"每轮只问一个维度"的方式帮我把需求问清楚，不要一次抛一堆问题，也不要先给方案。
+
+第 1 轮问目标：要达成什么业务结果？目标客群是谁？
+第 2 轮问输入：有哪些可用材料？名单、产品、预算、场地、讲师、过往活动数据分别有没有？
+第 3 轮问约束：合规口径、不得承诺的事项、客户隐私、行内审批要求分别是什么？
+第 4 轮问流程：邀约—签到—内容—互动—会后跟进，每一段谁负责？
+第 5 轮问验收：到场率、有效沟通数、会后备忘录、多少天内跟进，各自标准是多少？
+
+规则：
+- 每轮只问一个问题，等我回答后再进入下一轮；
+- 我不知道的，我会回答"待确认"，此时你把它记入缺口清单，不要自行假设；
+- 五轮结束后，输出一页任务说明书：目标、输入清单、约束、流程与责任人、验收标准、缺口清单。
+
+最后提醒我：哪些事项属于必须人工确认的节点。</pre>
+            </div>
+            <div class="lbl green">做到什么算通过</div>
+            <ul class="checks">
+              <li>五轮下来，"待确认"少于 3 项，或者每项都有明确的确认人</li>
+              <li>任务说明书里的验收标准是数字，不是"效果好"</li>
+              <li>流程每一段都有责任人，没有"大家一起"</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="step" id="s09">
+          <div class="step-hd">
+            <span class="sid">S09</span>
+            <h3>实操二：喂养一个"财富客户会前助手"<span class="badge">20 分钟 · 2—3 人</span></h3>
+            <label class="chk"><input type="checkbox" class="done-chk" data-id="s09"><span>完成</span></label>
+          </div>
+          <div class="step-body">
+            <p style="font-size:14px;color:#2b3a4d">背景：明天下午拜访一位 45 岁企业主，家庭资金与经营资金混用，关注子女教育与养老。你手上有产品条款、脱敏客户画像和上次沟通纪要。要交：客户需求假设、5 个首轮问题、产品匹配边界、待核验清单。</p>
+            <div class="lbl gold">拿材料</div>
+            <div class="mats">
+              <a class="mat" href="downloads/07_客户画像_教学模拟.md" download><i>⬇</i>07 客户画像</a>
+              <a class="mat" href="downloads/08_产品条款摘要_教学模拟.md" download><i>⬇</i>08 产品条款摘要</a>
+            </div>
+            <div class="lbl">可复制提示词</div>
+            <div class="prompt">
+              <div class="prompt-top"><span class="pid">P06</span><span class="pt">会前简报（含三类标注）</span>
+                <button class="mini" data-copy="p06">复制</button><button class="mini" data-dl="p06" data-name="P06_财富客户会前简报">下载</button></div>
+              <pre id="p06">你是{{org}}的财富顾问助理。明天下午要拜访一位客户。请只基于以下两份材料生成会前简报：
+- 07_客户画像_教学模拟.md
+- 08_产品条款摘要_教学模拟.md
+
+【硬约束】
+1）不虚构任何客户信息；材料里没有的，写"待核验"；
+2）不替代适当性判断，不做"建议买哪个"的结论；
+3）产品表述必须能回到条款原文，并注明是哪一条；
+4）不得出现"保本""稳赚""绝对安全"等表述。
+
+【输出结构】
+一、客户需求假设（3—5 条，每条标注"事实 / 推断 / 待核验"三态之一）
+二、三项核心关切与优先级（说明依据）
+三、产品匹配边界：哪类产品可以谈、哪类暂时不能谈、为什么（引用条款）
+四、首轮 5 个问题（开放式，用于验证需求真伪，不要问"您要不要"这类封闭问题）
+五、必须提示的风险与禁止表述清单
+六、待核验清单（谁来核、何时核）
+
+【自检】最后用一句话说明：这份简报里最不能直接对客说的一句话是哪句，为什么。</pre>
+            </div>
+            <div class="lbl green">做到什么算通过</div>
+            <ul class="checks">
+              <li>每条需求都带"事实/推断/待核验"标签，没有一条是裸结论</li>
+              <li>5 个问题都是开放式，且能验证需求真假</li>
+              <li>产品部分引用了具体条款，没有出现禁止表述</li>
+              <li>明确写了"不做适当性判断，由持牌人员完成"</li>
+            </ul>
+          </div>
+        </article>
+      </section>
+
+      <!-- ============ M3 ============ -->
+      <section class="module" id="m3">
+        <div class="mod-head">
+          <div class="mod-no">M3</div>
+          <div>
+            <h2>技能体系：把经验变成可复用的 Skill</h2>
+            <div class="sub">先判断值不值得做，再拆 IPO 与 SOP，最后才封装</div>
+            <span class="pages">对应课件 P30—P46 ｜ 约 90 分钟</span>
+          </div>
+        </div>
+
+        <article class="step" id="s10">
+          <div class="step-hd">
+            <span class="sid">S10</span>
+            <h3>六问诊断：这件事值不值得先做一个小样</h3>
+            <label class="chk"><input type="checkbox" class="done-chk" data-id="s10"><span>完成</span></label>
+          </div>
+          <div class="step-body">
+            <div class="lbl">做什么</div>
+            <p style="font-size:14px;color:#2b3a4d">不用打分，凭业务常识回答"是 / 不是 / 不确定"。五个以上"是"，就值得先跑一个小样。</p>
+            <table class="tb">
+              <tr><th>#</th><th>问题</th><th>为什么问</th></tr>
+              <tr><td>1</td><td>经常重复吗？每周、每天都在做？</td><td>频率决定复用价值</td></tr>
+              <tr><td>2</td><td>资料找得到吗？文件、数据、记录齐吗？</td><td>没材料就没有稳定输入</td></tr>
+              <tr><td>3</td><td>结果说得清吗？知道最后要交什么？</td><td>说不清交付物就没法验收</td></tr>
+              <tr><td>4</td><td>好坏能判断吗？人一眼能看出能不能用？</td><td>无法判断好坏就不能交给 AI</td></tr>
+              <tr><td>5</td><td>出错能发现吗？重要结果有人复核？</td><td>没有复核就没有安全网</td></tr>
+              <tr><td>6</td><td>有人会反馈吗？用完会告诉 AI 哪里要改？</td><td>没有反馈就无法迭代</td></tr>
+            </table>
+            <div class="hint">把你的那个任务填进去。如果"资料找得到"和"好坏能判断"这两个答"不是"，先别做 Skill，先去补资料和验收标准。</div>
+          </div>
+        </article>
+
+        <article class="step" id="s11">
+          <div class="step-hd">
+            <span class="sid">S11</span>
+            <h3>IPO 拆解 + SOP 六步：把业务内核拆出来</h3>
+            <label class="chk"><input type="checkbox" class="done-chk" data-id="s11"><span>完成</span></label>
+          </div>
+          <div class="step-body">
+            <div class="lbl">做什么</div>
+            <ol class="doit">
+              <li>写 Input：文件、数据、目标、背景、模板、规则、知识、权限。</li>
+              <li>写 Process：查、提、整、写、改、比、判、推，标出确认点。</li>
+              <li>写 Output：交付物、字段、格式、事实来源、质量与验收。</li>
+              <li>套不进 IPO 的，说明这还是几个任务没拆开。</li>
+            </ol>
+            <div class="lbl">可复制提示词</div>
+            <div class="prompt">
+              <div class="prompt-top"><span class="pid">P07</span><span class="pt">IPO → SOP 拆解</span>
+                <button class="mini" data-copy="p07">复制</button><button class="mini" data-dl="p07" data-name="P07_IPO转SOP">下载</button></div>
+              <pre id="p07">请把【我的任务，例如：{{org}}五网点周报汇总】拆成 IPO 与 SOP。
+
+【一、IPO】
+- Input：文件清单（含版本要求）、必填字段、目标与背景、模板与规则、权限范围；
+- Process：按"查、提、整、写、改、比、判、推"八类动作标注实际发生了什么，并在每一步标出"人工确认点"；
+- Output：交付物清单、字段与格式、每个关键数字的来源要求、验收方法。
+如果这个任务套不进 IPO，请说明它实际上是几个任务，并给出拆分建议。
+
+【二、SOP】
+按六步展开：澄清需求 → 获取资料 → 提取处理 → 生成初稿 → 人工审核 → 格式交付。
+每一步写清：输入、动作、输出、负责人、判断标准、异常怎么办。
+
+【三、异常与停止】
+列出至少 5 种异常（缺报、重复、口径冲突、版本过期、权限不足），说明每种情况应该输出什么、什么时候必须停下来交给人。
+
+要求：不虚构指标口径；不确定的写"待确认"。</pre>
+            </div>
+          </div>
+        </article>
+
+        <article class="step" id="s12">
+          <div class="step-hd">
+            <span class="sid">S12</span>
+            <h3>Skill 草案的八段：少一段就只是个长提示词</h3>
+            <label class="chk"><input type="checkbox" class="done-chk" data-id="s12"><span>完成</span></label>
+          </div>
+          <div class="step-body">
+            <div class="lbl">做什么</div>
+            <ol class="doit">
+              <li>打开 15 号模板，按八段填：基本信息、输入、流程、规则与判断、输出与验收、停止条件、禁止动作、测试记录。</li>
+              <li>银行场景必须多写两段：<strong>禁止动作</strong>与<strong>人工复核点</strong>。</li>
+              <li>测试记录只写三列：样本 → 预期 → 实际。四类样本都要跑：正常、缺失、冲突、权限不足。</li>
+            </ol>
+            <div class="lbl gold">拿材料</div>
+            <div class="mats"><a class="mat" href="downloads/15_Skill草案模板.md" download><i>⬇</i>15_Skill草案模板.md</a></div>
+            <div class="lbl">可复制提示词</div>
+            <div class="prompt">
+              <div class="prompt-top"><span class="pid">P08</span><span class="pt">把已验证任务沉淀成 Skill 草案</span>
+                <button class="mini" data-copy="p08">复制</button><button class="mini" data-dl="p08" data-name="P08_Skill草案">下载</button></div>
+              <pre id="p08">请依据这次已经人工验收的任务【任务名】，整理一份可复用的 Skill 内容草案。
+
+必须包含八段：
+1）基本信息：名称、适用场景、不适用场景、负责人、版本、更新日期；
+2）输入：必需文件与版本、必填字段、权限范围、缺失处理；
+3）流程：逐步写清动作、输入、输出、确认点；
+4）规则与判断：口径规则、冲突时以谁为准、异常处理；
+5）输出与验收：交付物结构、质量标准、验收方法；
+6）停止条件：无法读取 / 无法判断 / 超出授权 / 影响对客，逐条写清；
+7）禁止动作：本场景绝对不能做的操作（银行场景必须包含不补零、不编造、不自动外发、不越权读取）；
+8）测试记录：正常、缺失、冲突、权限不足四类样本，分别写"预期输出"与"必须停止的条件"。
+
+要求：
+- 复用方法，不固化任何客户数据；
+- 不扩大访问权限；
+- 不确定的地方标"待确认"，不要替我编规则。</pre>
+            </div>
+            <div class="lbl green">做到什么算通过</div>
+            <ul class="checks">
+              <li>八段齐全，缺的那段写明"待补充"而不是跳过</li>
+              <li>冲突处理写明了"以谁为准"，不是"综合判断"</li>
+              <li>四类测试样本都有预期行为，尤其是"什么时候必须停"</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="step" id="s13">
+          <div class="step-hd">
+            <span class="sid">S13</span>
+            <h3>实操三：把"支行周报"做成一个 Skill<span class="badge">25 分钟 · 3 人</span></h3>
+            <label class="chk"><input type="checkbox" class="done-chk" data-id="s13"><span>完成</span></label>
+          </div>
+          <div class="step-body">
+            <p style="font-size:14px;color:#2b3a4d">背景：5 个网点提交周报，格式不一、口径不同，还有网点缺报。支行长每周一上午要看一页汇总，并知道谁需要跟进。</p>
+            <div class="lbl gold">拿材料</div>
+            <div class="mats">
+              <a class="mat" href="downloads/04_网点周报_5份_教学模拟.csv" download><i>⬇</i>04 五份周报</a>
+              <a class="mat" href="downloads/05_应报名单.csv" download><i>⬇</i>05 应报名单</a>
+              <a class="mat" href="downloads/06_指标口径说明.md" download><i>⬇</i>06 口径说明</a>
+            </div>
+            <div class="lbl">可复制提示词</div>
+            <div class="prompt">
+              <div class="prompt-top"><span class="pid">P09</span><span class="pt">支行周报汇总（缺报不补零）</span>
+                <button class="mini" data-copy="p09">复制</button><button class="mini" data-dl="p09" data-name="P09_支行周报汇总">下载</button></div>
+              <pre id="p09">你是{{org}}的{{role}}的周报助理。请汇总本周 5 个网点周报。
+
+【资料】只看这三份：
+- 04_网点周报_5份_教学模拟.csv
+- 05_应报名单.csv
+- 06_指标口径说明.md
+
+【处理顺序】
+1）核范围：应报名单 5 个网点，实际收到几份？先列差异。
+2）查缺报：缺报网点单独列出，**绝对不许补零、不许用上月数据顶替**。
+3）去重与校验：检查同一网点是否重复提交、字段是否齐全、有无异常值。
+4）口径校验：按口径说明逐项核对，例如保险中收是否含预收、存款是日均还是期末。口径不一致的网点数据单列，不并入合计。
+5）汇总：给出一页汇总表（网点 × 四项指标），合计行只包含口径一致的网点，并注明"合计口径"。
+6）成稿：给出三段——本周概况（3 句事实）、需跟进网点与原因、下周动作建议（每条有责任人）。
+
+【输出要求】
+- 每个关键数字后面标注数据来源（文件 + 网点行）；
+- 表格后附"口径版本 + 数据来源 + 生成时间"；
+- 缺报与口径异常单独成表，写明责任人与补齐时限；
+- 无法判断的地方写"待确认"，不要猜。
+
+【边界】不改动原始文件；不对外发送；本表仅供内部复核。</pre>
+            </div>
+            <div class="lbl green">做到什么算通过</div>
+            <ul class="checks">
+              <li>滨江支行作为缺报单列，合计里没有它的份额，也没有补零</li>
+              <li>开发区支行"保险中收含预收"被识别并单列</li>
+              <li>合计数字能手算复核一遍，与模型输出一致</li>
+              <li>每个跟进网点都有责任人和时限</li>
+            </ul>
+            <div class="hint warn"><b>这是全场最容易翻车的一步。</b>AI 天生倾向"把表填满"。你必须明确要求"缺报单列、不补零"，并在验收时专门检查合计行。</div>
+          </div>
+        </article>
+      </section>
+
+      <!-- ============ M4 ============ -->
+      <section class="module" id="m4">
+        <div class="mod-head">
+          <div class="mod-no">M4</div>
+          <div>
+            <h2>连接与协同：把材料变成专业成果</h2>
+            <div class="sub">Skill 管方法、连接器管数据、专家管口径，缺哪块补哪块</div>
+            <span class="pages">对应课件 P47—P62 ｜ 约 60 分钟</span>
+          </div>
+        </div>
+
+        <article class="step" id="s14">
+          <div class="step-hd">
+            <span class="sid">S14</span>
+            <h3>三类外援怎么选，Plan 模式怎么用</h3>
+            <label class="chk"><input type="checkbox" class="done-chk" data-id="s14"><span>完成</span></label>
+          </div>
+          <div class="step-body">
+            <div class="lbl">做什么</div>
+            <ol class="doit">
+              <li>判断你缺的是哪一块：缺固定方法 → Skill；缺外部数据 → 连接器；缺专业判断 → 专家。</li>
+              <li>结果清楚就直接做；路径不清先 Plan。</li>
+              <li>用 Plan 时先摆五件事到桌面：目标、步骤、依赖、改动、验收。</li>
+              <li>任何连接先问四句：谁授权、连什么字段、写回哪里、出了问题谁负责。</li>
+            </ol>
+            <div class="lbl">可复制提示词</div>
+            <div class="prompt">
+              <div class="prompt-top"><span class="pid">P10</span><span class="pt">Plan 模式：先出计划，不要动手</span>
+                <button class="mini" data-copy="p10">复制</button><button class="mini" data-dl="p10" data-name="P10_Plan先审计划">下载</button></div>
+              <pre id="p10">请为【任务名】先出一份执行计划，**先不要执行，也不要创建文件**。
+
+按五块写：
+1）目标：交付什么、给谁用、什么时候要；
+2）步骤：先后顺序，每步的输入与产出；
+3）依赖：缺哪些文件、权限、数据或决定，谁能提供；
+4）改动：将创建、修改、移动哪些内容，明确不碰哪些原始文件；
+5）验收：每一步怎么判断通过，最终交付用什么标准验收。
+
+补充要求：
+- 标出所有需要我确认的节点（尤其是对客、外发、超授权动作）；
+- 标出你认为信息不足、需要我补充的地方，写"待确认"；
+- 如果这个任务路径其实不清楚，直接告诉我应该先澄清什么，而不是给一个看起来很完整的计划。
+
+计划确认后我再让你执行。</pre>
+            </div>
+          </div>
+        </article>
+
+        <article class="step" id="s15">
+          <div class="step-hd">
+            <span class="sid">S15</span>
+            <h3>实操四：一份走访纪要 + 三张对公商机卡<span class="badge">25 分钟 · 2—3 人</span></h3>
+            <label class="chk"><input type="checkbox" class="done-chk" data-id="s15"><span>完成</span></label>
+          </div>
+          <div class="step-body">
+            <p style="font-size:14px;color:#2b3a4d">背景：你陪客户经理走访了一家装备制造企业，手上有脱敏访谈摘要、企业公开信息摘要和商机卡模板。分管行长要你在下班前交一页纪要 + 三张商机卡 + 一页领导摘要。</p>
+            <div class="lbl gold">拿材料</div>
+            <div class="mats">
+              <a class="mat" href="downloads/09_对公访谈摘要_教学模拟.md" download><i>⬇</i>09 访谈摘要</a>
+              <a class="mat" href="downloads/10_商机卡模板.md" download><i>⬇</i>10 商机卡模板</a>
+              <a class="mat" href="downloads/14_一页领导摘要模板.md" download><i>⬇</i>14 领导摘要模板</a>
+            </div>
+            <div class="lbl">可复制提示词</div>
+            <div class="prompt">
+              <div class="prompt-top"><span class="pid">P11</span><span class="pt">对公走访：纪要 + 3 张商机卡</span>
+                <button class="mini" data-copy="p11">复制</button><button class="mini" data-dl="p11" data-name="P11_对公走访商机卡">下载</button></div>
+              <pre id="p11">请基于 09_对公访谈摘要_教学模拟.md 和 10_商机卡模板.md，为{{org}}生成一份对公客户走访成果。
+
+【第一步】三栏拆解，先不写纪要：
+- 事实（有原文出处，引用客户原话或公开信息）
+- 推断（我的判断 + 依据 + 置信度）
+- 待核验（谁能核、怎么核）
+
+【第二步】一页走访纪要：基本信息、关键事实、需求初判、风险边界、下一步。
+
+【第三步】3 张商机卡，按模板八字段填：
+商机编号 / 触发证据 / 需求类型（订单·回款·投资·供应链·跨境）/ 可能产品 / 首轮问题（3—5 个）/ 风险边界 / 下一步（谁·何时·做什么）/ 置信度。
+要求：每张卡的"触发证据"必须引用原话，不许写"客户有资金需求"这种笼统结论。
+
+【第四步】一页领导摘要：一句话结论 + 3 个关键发现 + 2 个主要风险 + 3 项建议 + 1 个需要领导决策的事项。
+
+【硬约束】
+- 不得把"订单增长"直接推断为"缺资金"；
+- 不得虚构授信需求、金额、时点、客户关系；
+- 不得替代授信尽调与合规审查；
+- 所有金额与客户信息均为教学模拟，输出中要保留这句声明。
+
+【自检】最后列出你这份成果里最薄弱的两个环节，以及需要补什么材料。</pre>
+            </div>
+            <div class="lbl green">做到什么算通过</div>
+            <ul class="checks">
+              <li>3 张卡的触发证据都引用了访谈原话</li>
+              <li>没有把"订单多两成"写成"缺资金"</li>
+              <li>目标企业名称旁边有"教学模拟"声明</li>
+              <li>领导摘要里有一个真正需要拍板的决策事项，而不是请示汇报</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="step" id="s16">
+          <div class="step-hd">
+            <span class="sid">S16</span>
+            <h3>一页领导摘要：把复杂材料压成决策语言</h3>
+            <label class="chk"><input type="checkbox" class="done-chk" data-id="s16"><span>完成</span></label>
+          </div>
+          <div class="step-body">
+            <div class="lbl">做什么</div>
+            <p style="font-size:14px;color:#2b3a4d">结构固定：一句话结论 + 3 个关键发现 + 2 个主要风险 + 3 项建议 + 1 个需要领导决策的事项。</p>
+            <div class="lbl">可复制提示词</div>
+            <div class="prompt">
+              <div class="prompt-top"><span class="pid">P12</span><span class="pt">一页领导摘要（决策语言）</span>
+                <button class="mini" data-copy="p12">复制</button><button class="mini" data-dl="p12" data-name="P12_一页领导摘要">下载</button></div>
+              <pre id="p12">请把【我手上的材料/上一轮输出】压缩成一页领导摘要，读者是{{org}}的分管行长。
+
+结构固定：
+1）一句话结论：先给判断，不绕弯；数字必须来自材料，可追溯；
+2）三个关键发现：每条用"事实 + 对比 + 来源"写，不许只写"提升明显"；
+3）两个主要风险：写触发条件、影响、预案；
+4）三项建议：每条写清谁做、做什么、何时看结果；
+5）一个需要领导决策的事项：写清选项与后果，不要把请示写成汇报。
+
+要求：
+- 全文不超过 600 字；
+- 删除所有形容词堆砌和"进一步""持续加强"这类空话；
+- 无法确认的信息标"待确认"，不得为了完整性编造；
+- 最后附一行"本页数据来源"。</pre>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- ============ M5 ============ -->
+      <section class="module" id="m5">
+        <div class="mod-head">
+          <div class="mod-no">M5</div>
+          <div>
+            <h2>自动化与数据：从手工跑通到持续运行</h2>
+            <div class="sub">先手工跑三次，再交给系统；判断和承诺永远留给人</div>
+            <span class="pages">对应课件 P63—P70 ｜ 约 30 分钟</span>
+          </div>
+        </div>
+
+        <article class="step" id="s17">
+          <div class="step-hd">
+            <span class="sid">S17</span>
+            <h3>四道门筛任务，五步上线，四件套齐全</h3>
+            <label class="chk"><input type="checkbox" class="done-chk" data-id="s17"><span>完成</span></label>
+          </div>
+          <div class="step-body">
+            <div class="lbl">做什么</div>
+            <ol class="doit">
+              <li>用四道门筛：规则稳定、输入固定、结果可验收、人工可接管。缺一道就先别自动化。</li>
+              <li>按五步上线：手工跑通 3 次 → 副本目录试调度 → 展示清单 → 人工确认 → 周期执行。</li>
+              <li>四件套必须同时具备：读写范围、停机开关、运行日志、责任人。</li>
+              <li>自动化顺序：先做汇总、提醒、清单、初稿；判断、审批、对客承诺永远留给人。</li>
+            </ol>
+            <div class="hint warn">没有真实数据连接时，只交付"可配置规则 + 数据模板"，不要声称"已经运行"。课堂不接任何真实系统。</div>
+          </div>
+        </article>
+
+        <article class="step" id="s18">
+          <div class="step-hd">
+            <span class="sid">S18</span>
+            <h3>实操五：设计一条"开门红晨报"自动化<span class="badge">20 分钟 · 2 人</span></h3>
+            <label class="chk"><input type="checkbox" class="done-chk" data-id="s18"><span>完成</span></label>
+          </div>
+          <div class="step-body">
+            <p style="font-size:14px;color:#2b3a4d">背景：支行希望在开门红期间每天早上 8 点前看到昨日活动量、有效沟通、成交与缺口。数据来自手工台账，格式不统一。</p>
+            <div class="lbl gold">拿材料</div>
+            <div class="mats">
+              <a class="mat" href="downloads/11_活动量台账_教学模拟.csv" download><i>⬇</i>11 活动量台账</a>
+              <a class="mat" href="downloads/12_晨报模板.md" download><i>⬇</i>12 晨报模板</a>
+            </div>
+            <div class="lbl">可复制提示词</div>
+            <div class="prompt">
+              <div class="prompt-top"><span class="pid">P13</span><span class="pt">晨报自动化配置卡</span>
+                <button class="mini" data-copy="p13">复制</button><button class="mini" data-dl="p13" data-name="P13_晨报自动化配置卡">下载</button></div>
+              <pre id="p13">请为{{org}}设计一条"开门红每日晨报"自动化的配置卡，先用 11_活动量台账_教学模拟.csv 和 12_晨报模板.md 试跑一次。
+
+【配置卡内容】
+1）触发：运行时间、频率、数据截止时点（例如每日 07:00 跑，取前一日数据）；
+2）输入表：文件名、必填字段、字段含义、缺失判定规则；
+3）计算口径：有效触达、约见率、面谈转化、保险中收达成率分别怎么算，写清分子分母；
+4）输出结构：晨报四问——昨天完成了什么 / 今天重点是谁 / 缺口在哪里 / 需要谁支持；
+5）人工确认点：谁在几点确认，确认后发到哪里；
+6）停机条件（至少 3 条）：数据未到齐且无法标注、名单权限不明、输出将直接对客发送；
+7）责任人与运行日志：谁负责、日志记什么、出问题找谁。
+
+【试跑要求】
+- 用台账数据实际算一遍，列出每个指标的计算过程；
+- 明确区分"算出来的数"和"台账里没有、需要人补的数"；
+- 缺数据就单列"缺口"，不许补零、不许估。
+
+【边界】不连接真实系统、不自动对客发送、不生成任何客户名单明细。</pre>
+            </div>
+            <div class="lbl green">做到什么算通过</div>
+            <ul class="checks">
+              <li>计算口径写了分子分母，能被人复算</li>
+              <li>缺数据单列，没有补零</li>
+              <li>停机条件至少 3 条，且都是可判断的条件</li>
+              <li>明确"负责人确认后才发布"</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="step" id="s19">
+          <div class="step-hd">
+            <span class="sid">S19</span>
+            <h3>数据分析：AI 的四个弱项与三层核验</h3>
+            <label class="chk"><input type="checkbox" class="done-chk" data-id="s19"><span>完成</span></label>
+          </div>
+          <div class="step-body">
+            <div class="lbl">做什么</div>
+            <ol class="doit">
+              <li>拿 13 号模拟数据，让 AI 算一遍达成率与转化率，然后你手算抽查两个数。</li>
+              <li>做三层核验：总量核对、抽样复算、业务常识检查。</li>
+              <li>让 AI 把"相关"和"因果"分开说，凡是它说"因为…所以…"，追问证据。</li>
+            </ol>
+            <div class="lbl">可复制提示词</div>
+            <div class="prompt">
+              <div class="prompt-top"><span class="pid">P14</span><span class="pt">带核验的数据分析</span>
+                <button class="mini" data-copy="p14">复制</button><button class="mini" data-dl="p14" data-name="P14_带核验的数据分析">下载</button></div>
+              <pre id="p14">请分析 13_保险开门红_模拟数据.csv，输出一份"指标 → 异常 → 动作"的分析，而不是一份漂亮的报表。
+
+【要求】
+1）先说明口径：每个指标怎么算、分子分母是什么、时间范围是什么；
+2）给出计算过程，关键数字标注来源行（网点 + 周次）；
+3）识别异常：低于时间进度、转化率骤降、退保上升等，每条异常写"判断依据"；
+4）每条异常落到一个责任人、一个今日动作、一个复核时点；
+5）区分三种表述：数据事实 / 我的推断 / 需要核实，不许混写；
+6）不许把相关性写成因果。凡是出现"因为…所以…"，必须给出证据或改成"可能与…有关，待验证"。
+
+【自检】最后列出：哪两个数字你最不确定？建议我手工复算哪一项？
+
+【边界】这是教学模拟数据，不得用于任何真实经营判断；不生成客户名单。</pre>
+            </div>
+            <div class="hint">AI 最容易错在四件事：算错（总数、占比、增速、排名）、口径混（不同期间不同范围混算）、样本漏（空值、重复、异常值）、解释过度（相关当因果）。你现在要做的，就是亲手抓出至少一个。</div>
+          </div>
+        </article>
+      </section>
+
+      <!-- ============ M6 ============ -->
+      <section class="module" id="m6">
+        <div class="mod-head">
+          <div class="mod-no">M6</div>
+          <div>
+            <h2>业务闭环：让方案明天就能执行</h2>
+            <div class="sub">不是写一份漂亮方案，而是让网点明天早上知道先打哪个电话</div>
+            <span class="pages">对应课件 P71—P91 ｜ 约 90 分钟</span>
+          </div>
+        </div>
+
+        <article class="step" id="s20">
+          <div class="step-hd">
+            <span class="sid">S20</span>
+            <h3>九步经营链自检 + 多角色会诊</h3>
+            <label class="chk"><input type="checkbox" class="done-chk" data-id="s20"><span>完成</span></label>
+          </div>
+          <div class="step-body">
+            <div class="lbl">做什么</div>
+            <ol class="doit">
+              <li>用九步链自检你的方案：定目标 → 拆指标 → 选客群 → 建名单 → 做洞察 → 配产品 → 抓触达 → 管成交 → 做复盘。</li>
+              <li>每一步都回答四问：输入是什么、谁负责、什么算通过、异常怎么办。答不上来的那一步，就是方案的漏洞。</li>
+              <li>再做一次三角色会诊：业务角色看需求与可行性、数据角色看指标与来源、风险角色看权限与口径。最后人来决策。</li>
+            </ol>
+            <div class="lbl">可复制提示词</div>
+            <div class="prompt">
+              <div class="prompt-top"><span class="pid">P15</span><span class="pt">三角色会诊（先提反对意见）</span>
+                <button class="mini" data-copy="p15">复制</button><button class="mini" data-dl="p15" data-name="P15_三角色会诊">下载</button></div>
+              <pre id="p15">请对我这份【方案/报告】做一次三角色会诊。共享同一份材料，不要各说各话。
+
+角色一 业务角色：这条方案在网点能不能落地？需求判断是否成立？哪些动作缺少前置条件？
+角色二 数据角色：指标口径是否一致？关键数字来源是什么？有没有可比性问题？哪些结论缺数据支撑？
+角色三 风险角色：权限、适当性、宣传口径、留痕是否合规？哪些动作必须停下来交给人？
+
+输出要求：
+1）每个角色先给"反对意见"，至少 3 条，不许先夸；
+2）三条意见如有冲突，并列呈现，不要替我调和；
+3）最后给一张汇总表：问题 / 提出角色 / 证据 / 影响 / 需谁来定；
+4）明确列出"必须人工决策"的事项；
+5）不要给出"建议进一步优化"这类空话。
+
+边界：不替代合规审查与授信审批；不虚构数据与制度依据。</pre>
+            </div>
+          </div>
+        </article>
+
+        <article class="step" id="s21">
+          <div class="step-hd">
+            <span class="sid">S21</span>
+            <h3>综合实战：2027 保险开门红营销攻坚方案<span class="badge">40 分钟 · 3—4 人</span></h3>
+            <label class="chk"><input type="checkbox" class="done-chk" data-id="s21"><span>完成</span></label>
+          </div>
+          <div class="step-body">
+            <p style="font-size:14px;color:#2b3a4d">角色：邮储银行某支行保险业务负责人。任务：在人员减少、目标提高的条件下，用 WorkBuddy 从诊断做到作战方案。交付：Word 方案 + 每日督导表 + 案例核验/缺件清单 + Skill + 迭代记录。</p>
+            <div class="lbl gold">拿材料</div>
+            <div class="mats"><a class="mat" href="downloads/13_保险开门红_模拟数据.csv" download><i>⬇</i>13 开门红模拟数据</a></div>
+            <div class="lbl">可复制提示词</div>
+            <div class="prompt">
+              <div class="prompt-top"><span class="pid">P16</span><span class="pt">开门红作战方案（Plan 版）</span>
+                <button class="mini" data-copy="p16">复制</button><button class="mini" data-dl="p16" data-name="P16_开门红作战方案">下载</button></div>
+              <pre id="p16">你是{{org}}保险业务负责人的方案参谋。请为 2027 年保险开门红生成一份"能明天开始执行"的营销作战方案，**先出计划，不要直接写正文**。
+
+【先输出计划】材料清单与缺口 → 章节结构 → 每章要回答的问题 → 需要我确认的口径。
+
+【方案结构】
+1）背景与问题：用事实描述，不用空泛评价；点明人员、目标、外部环境三个约束；
+2）目标与指标：中收、件数、活动量、转化率，写清口径与时间进度；
+3）增长链：获客（五条渠道）→ 转化（五类高客 + 产品矩阵）→ 服务（T+1、30天、节点、年度、转介绍），三环用同一套客户 ID 与口径；
+4）每日过程管控：08:00 晨会、08:30 筛名单、上午外拓、14:00 客户经营、16:30 夕会、17:30 数据复盘，每段写输入→输出→责任人→留痕；
+5）看板：日看动作、周看转化、月看结构，每个异常写触发条件、今日动作、复核时点；
+6）风险与红线：不编造、不承诺、不外传、不替代，四个必须人工确认的节点；
+7）实施路径：里程碑、责任人、依赖条件；
+8）复盘机制：节省时间、质量提升、错误减少、采纳率。
+
+【硬约束】
+- 不编造产品利益、客户资料、成功业绩、金额与时点；
+- 不承诺保本保收益，非保证利益必须提示；
+- 案例必须区分真实与教学模拟，无授权案例只能给模板与方法；
+- 每条举措必须落到"谁、哪天、做什么、输入什么、输出什么、怎么检查"，落不到人和时间的标"待确认"。
+
+【边界】本方案为教学模拟，不对应任何机构真实目标。</pre>
+            </div>
+            <div class="lbl">可复制提示词</div>
+            <div class="prompt">
+              <div class="prompt-top"><span class="pid">P17</span><span class="pt">三轮迭代：从漂亮到可执行</span>
+                <button class="mini" data-copy="p17">复制</button><button class="mini" data-dl="p17" data-name="P17_三轮迭代修改">下载</button></div>
+              <pre id="p17">请把这份方案做三轮迭代，每轮按指定标准改，不要凭"感觉不够好"。
+
+【V1 初版 → 结构完整】检查：背景、问题、目标、举措、风险五段是否齐全；每条判断是否有依据；问题是否说透。
+
+【V2 细化 → 动作到日、责任到人、指标到周】
+请把每条举措改成：谁、哪天、做什么、输入什么、输出什么、如何检查。
+无法落到人和时间的，标为"待确认"，不要用空话补齐。
+
+【V3 可执行 → 四视角压力测试】
+分别用行长、网点负责人、客户经理、合规四个视角各提 3 个"这条落不了地"的理由，逐条给应对。
+最后列出：哪些问题是方案本身的问题，哪些是需要支行层面决策的问题。
+
+【收口】输出一页"明天早会可以直接念"的执行要点，不超过 300 字。</pre>
+            </div>
+            <div class="lbl green">做到什么算通过</div>
+            <ul class="checks">
+              <li>每条举措都有责任人和日期，能直接排进网点日程</li>
+              <li>三个约束（人员、目标、环境）在方案里有对应的破局动作</li>
+              <li>获客、转化、服务三环用的是同一套客户口径</li>
+              <li>四个红线节点在方案里显式写出</li>
+              <li>能一句话回答"明天早上客户经理先做哪三件事"</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="step" id="s22">
+          <div class="step-hd">
+            <span class="sid">S22</span>
+            <h3>验收评分 + 三张账 + 回岗三件事</h3>
+            <label class="chk"><input type="checkbox" class="done-chk" data-id="s22"><span>完成</span></label>
+          </div>
+          <div class="step-body">
+            <div class="lbl">做什么</div>
+            <ol class="doit">
+              <li>用下面的评分卡给你手上的方案打分（权重就是你课件里的验收标准）。</li>
+              <li>交三张账：场景账（哪些任务值得做）、能力账（哪些已封装）、验收账（哪些被证明有效）。</li>
+              <li>写下回岗后三周的动作：第 1 周选任务跑通、第 2 周写 Skill 草案、第 3—4 周跑三类测试。</li>
+            </ol>
+          </div>
+        </article>
+      </section>
+
+      <!-- ================= 附录 ================= -->
+      <section class="module" id="apx">
+        <div class="mod-head">
+          <div class="mod-no">A</div>
+          <div>
+            <h2>附录：提示词、材料与学习记录</h2>
+            <div class="sub">课堂上没抄完的，这里都有</div>
+          </div>
+        </div>
+
+        <div class="appendix" id="apx-a">
+          <h3>附录 A ｜ 17 段提示词总库</h3>
+          <p class="sm">正文里每段提示词都在这里，可一次性全部下载为 Markdown。复制时会自动替换你填的机构、岗位、姓名、日期。</p>
+          <div class="mats">
+            <button class="btn gold" id="btnAllPrompt2">⬇ 下载全部提示词（Markdown）</button>
+            <a class="btn" href="#s00">回到开头</a>
+          </div>
+          <table class="tb" id="promptIndex">
+            <tr><th>编号</th><th>名称</th><th>用在哪一步</th></tr>
+            <tr><td>P01</td><td>任务边界卡生成</td><td>S01 认知破冰</td></tr>
+            <tr><td>P02</td><td>走访材料 → 一页纪要</td><td>S04 实操一</td></tr>
+            <tr><td>P03</td><td>五目录工作空间初始化</td><td>S05 养成喂养</td></tr>
+            <tr><td>P04</td><td>岗位角色卡（含禁区与停止条件）</td><td>S06 养成喂养</td></tr>
+            <tr><td>P05</td><td>Grill Me 五轮追问</td><td>S08 养成喂养</td></tr>
+            <tr><td>P06</td><td>会前简报（含三类标注）</td><td>S09 实操二</td></tr>
+            <tr><td>P07</td><td>IPO → SOP 拆解</td><td>S11 技能体系</td></tr>
+            <tr><td>P08</td><td>把已验证任务沉淀成 Skill 草案</td><td>S12 技能体系</td></tr>
+            <tr><td>P09</td><td>支行周报汇总（缺报不补零）</td><td>S13 实操三</td></tr>
+            <tr><td>P10</td><td>Plan 模式：先出计划，不要动手</td><td>S14 连接协同</td></tr>
+            <tr><td>P11</td><td>对公走访：纪要 + 3 张商机卡</td><td>S15 实操四</td></tr>
+            <tr><td>P12</td><td>一页领导摘要（决策语言）</td><td>S16 连接协同</td></tr>
+            <tr><td>P13</td><td>晨报自动化配置卡</td><td>S18 实操五</td></tr>
+            <tr><td>P14</td><td>带核验的数据分析</td><td>S19 自动化与数据</td></tr>
+            <tr><td>P15</td><td>三角色会诊（先提反对意见）</td><td>S20 业务闭环</td></tr>
+            <tr><td>P16</td><td>开门红作战方案（Plan 版）</td><td>S21 综合实战</td></tr>
+            <tr><td>P17</td><td>三轮迭代：从漂亮到可执行</td><td>S21 综合实战</td></tr>
+          </table>
+        </div>
+
+        <div class="appendix" id="apx-b">
+          <h3>附录 B ｜ 16 份教学模拟材料</h3>
+          <p class="sm">全部为虚构内容，仅用于课堂演练。也可以一次下载完整资料包。</p>
+          <div class="mats" style="margin-bottom:12px">
+            <a class="mat" href="downloads/workbuddy-bank_资料包.zip" download><i>⬇</i>完整资料包 .zip（16 份）</a>
+          </div>
+          <table class="tb">
+            <tr><th>文件</th><th>内容</th><th>用在哪</th></tr>
+            <tr><td><a href="downloads/01_走访记录_教学模拟.md" download>01 走访记录</a></td><td>三家企业脱敏走访要点与遗留待办</td><td>S04</td></tr>
+            <tr><td><a href="downloads/02_上次沟通纪要与待办.md" download>02 上次纪要与待办</a></td><td>结论、未决问题、逾期任务</td><td>S04</td></tr>
+            <tr><td><a href="downloads/03_会议纪要模板.md" download>03 纪要模板</a></td><td>六段式统一模板 V1.2</td><td>S04</td></tr>
+            <tr><td><a href="downloads/04_网点周报_5份_教学模拟.csv" download>04 五份网点周报</a></td><td>含 1 家缺报、1 家口径异常</td><td>S13</td></tr>
+            <tr><td><a href="downloads/05_应报名单.csv" download>05 应报名单</a></td><td>5 个网点与负责人</td><td>S13</td></tr>
+            <tr><td><a href="downloads/06_指标口径说明.md" download>06 口径说明</a></td><td>四项指标口径 + 缺报处理规则</td><td>S13</td></tr>
+            <tr><td><a href="downloads/07_客户画像_教学模拟.md" download>07 客户画像</a></td><td>45 岁企业主，家企资金混用</td><td>S09</td></tr>
+            <tr><td><a href="downloads/08_产品条款摘要_教学模拟.md" download>08 产品条款</a></td><td>四款演示产品与禁止表述</td><td>S09</td></tr>
+            <tr><td><a href="downloads/09_对公访谈摘要_教学模拟.md" download>09 访谈摘要</a></td><td>装备制造企业五条原话</td><td>S15</td></tr>
+            <tr><td><a href="downloads/10_商机卡模板.md" download>10 商机卡模板</a></td><td>八字段商机卡</td><td>S15</td></tr>
+            <tr><td><a href="downloads/11_活动量台账_教学模拟.csv" download>11 活动量台账</a></td><td>两网点五日过程数据</td><td>S18</td></tr>
+            <tr><td><a href="downloads/12_晨报模板.md" download>12 晨报模板</a></td><td>晨报四问 + 停机条件</td><td>S18</td></tr>
+            <tr><td><a href="downloads/13_保险开门红_模拟数据.csv" download>13 开门红数据</a></td><td>三周两网点中收与漏斗</td><td>S19 / S21</td></tr>
+            <tr><td><a href="downloads/14_一页领导摘要模板.md" download>14 领导摘要模板</a></td><td>五段式决策语言</td><td>S15 / S16</td></tr>
+            <tr><td><a href="downloads/15_Skill草案模板.md" download>15 Skill 模板</a></td><td>八段式 + 四类测试记录</td><td>S12</td></tr>
+            <tr><td><a href="downloads/16_验收单.md" download>16 验收单</a></td><td>六项验收 + 四条红线</td><td>S03 / S22</td></tr>
+          </table>
+        </div>
+
+        <div class="appendix" id="apx-c">
+          <h3>附录 C ｜ 验收评分卡与学习记录</h3>
+          <p class="sm">给自己手上的方案打分，权重按课件验收标准。分数只用于自查，不构成任何业务评价。</p>
+          <div id="scoreCard">
+            <div class="score-row"><div class="nm">业务洞察与破局策略<small>是否突破传统高压营销，有无证据</small></div><span class="w">20%</span><input type="number" min="0" max="100" value="70" data-w="20" class="sc"></div>
+            <div class="score-row"><div class="nm">获客、转化、服务闭环<small>链路完整、指标可衡量、责任清楚</small></div><span class="w">20%</span><input type="number" min="0" max="100" value="70" data-w="20" class="sc"></div>
+            <div class="score-row"><div class="nm">每日经营动作与过程管控<small>到人、到时段、到输入输出、到检查</small></div><span class="w">25%</span><input type="number" min="0" max="100" value="70" data-w="25" class="sc"></div>
+            <div class="score-row"><div class="nm">产品准确性与合规性<small>条款依据、风险提示、适当性边界</small></div><span class="w">15%</span><input type="number" min="0" max="100" value="70" data-w="15" class="sc"></div>
+            <div class="score-row"><div class="nm">真实案例与经验复制<small>区分真实/模拟，不编造业绩</small></div><span class="w">10%</span><input type="number" min="0" max="100" value="70" data-w="10" class="sc"></div>
+            <div class="score-row" style="border-bottom:0"><div class="nm">AI 工具协同及成果质量<small>Skill 使用合理，Word/Excel 可编辑</small></div><span class="w">10%</span><input type="number" min="0" max="100" value="70" data-w="10" class="sc"></div>
+            <div class="score-total"><b id="scoreVal">70.0</b><span class="verdict" id="scoreVerdict">加权得分。≥85 可进入交付；70—84 需按问题清单修改；&lt;70 建议退回重做。</span></div>
+          </div>
+          <div class="mats" style="margin-top:14px">
+            <button class="btn primary" id="btnRecord2">⤓ 导出我的学习记录（Markdown）</button>
+            <button class="btn" onclick="window.print()">🖨 打印本页</button>
+          </div>
+          <div class="hint">学习记录会带上：你填的四个变量、每个步骤的完成状态、评分卡得分与时间。可以直接作为课后作业提交凭证。</div>
+        </div>
+      </section>
+
+      <footer style="margin:40px 0 0;padding-top:18px;border-top:1px solid var(--line);font-size:12.5px;color:var(--gray);text-align:center;line-height:2">
+        李家贵 ｜ WorkBuddy × 银行业实战应用 · 6 小时课堂陪练台<br>
+        配套课件《智效合一：WorkBuddy 人机协同赋能银行业实战应用》（91 页）<br>
+        全部案例、数据与客户均为教学模拟；真实业务须在授权环境与责任链内完成
+      </footer>
+    </div>
+  </div>
+</div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY_DONE = 'wb-bank-done-v1';
+  var KEY_VARS = 'wb-bank-vars-v1';
+
+  /* ---------- 变量 ---------- */
+  var varInputs = Array.prototype.slice.call(document.querySelectorAll('.field input'));
+  var vars = {};
+  try { vars = JSON.parse(localStorage.getItem(KEY_VARS) || '{}'); } catch(e){ vars = {}; }
+
+  function fillVars(){
+    varInputs.forEach(function(inp){
+      var k = inp.getAttribute('data-var');
+      if (vars[k]) inp.value = vars[k];
+    });
+  }
+  function saveVars(){
+    vars = {};
+    varInputs.forEach(function(inp){
+      var k = inp.getAttribute('data-var');
+      vars[k] = inp.value.trim();
+    });
+    try { localStorage.setItem(KEY_VARS, JSON.stringify(vars)); } catch(e){}
+  }
+  function applyVars(text){
+    return text.replace(/\{\{(\w+)\}\}/g, function(m, k){
+      return (vars[k] && vars[k].length) ? vars[k] : m;
+    });
+  }
+  fillVars();
+  varInputs.forEach(function(inp){
+    inp.addEventListener('input', saveVars);
+  });
+
+  /* ---------- toast ---------- */
+  var toastEl = document.getElementById('toast');
+  var toastTimer = null;
+  function toast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 1800);
+  }
+
+  /* ---------- 复制 ---------- */
+  function copyText(text, okMsg){
+    function fallback(){
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly','');
+      ta.style.position = 'fixed';
+      ta.style.top = '-1000px';
+      document.body.appendChild(ta);
+      ta.select();
+      var ok = false;
+      try { ok = document.execCommand('copy'); } catch(e){ ok = false; }
+      document.body.removeChild(ta);
+      if (ok) { toast(okMsg); } else { toast('自动复制失败，请手动选择提示词正文'); }
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){ toast(okMsg); }).catch(fallback);
+    } else { fallback(); }
+  }
+
+  document.addEventListener('click', function(ev){
+    var btn = ev.target.closest('[data-copy]');
+    if (btn){
+      var id = btn.getAttribute('data-copy');
+      var pre = document.getElementById(id);
+      if (!pre) return;
+      copyText(applyVars(pre.textContent.trim()), '提示词已复制（变量已替换）');
+      return;
+    }
+    var dl = ev.target.closest('[data-dl]');
+    if (dl){
+      var pid = dl.getAttribute('data-dl');
+      var name = dl.getAttribute('data-name') || pid;
+      var el = document.getElementById(pid);
+      if (!el) return;
+      download(name + '.txt', applyVars(el.textContent.trim()));
+      toast('已开始下载：' + name + '.txt');
+    }
+  });
+
+  function download(filename, text){
+    var blob = new Blob([text], {type:'text/plain;charset=utf-8'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(url); }, 1200);
+  }
+
+  /* ---------- 全部提示词 ---------- */
+  function allPrompts(){
+    var parts = ['# WorkBuddy × 银行业 6 小时实战陪练台 · 提示词总库\n',
+      '> 已按你填写的变量替换。全部内容为教学模拟，不得用于真实客户数据处理。\n',
+      '> 学员：' + (vars.name || '（未填）') + '　机构：' + (vars.org || '（未填）') +
+      '　岗位：' + (vars.role || '（未填）') + '　数据截止：' + (vars.date || '（未填）') + '\n'];
+    var pres = document.querySelectorAll('.prompt pre');
+    for (var i=0; i<pres.length; i++){
+      var pre = pres[i];
+      var top = pre.parentNode.querySelector('.pt');
+      var pid = pre.parentNode.querySelector('.pid');
+      parts.push('\n---\n\n## ' + (pid ? pid.textContent : '') + '　' + (top ? top.textContent : '') + '\n');
+      parts.push('```\n' + applyVars(pre.textContent.trim()) + '\n```\n');
+    }
+    return parts.join('\n');
+  }
+  function dlAll(){ download('WorkBuddy银行6小时_提示词总库.md', allPrompts()); toast('提示词总库已开始下载'); }
+  document.getElementById('btnAllPrompt').addEventListener('click', dlAll);
+  document.getElementById('btnAllPrompt2').addEventListener('click', dlAll);
+
+  /* ---------- 进度 ---------- */
+  var chks = Array.prototype.slice.call(document.querySelectorAll('.done-chk'));
+  var TOTAL = chks.length;
+  var done = {};
+  try { done = JSON.parse(localStorage.getItem(KEY_DONE) || '{}'); } catch(e){ done = {}; }
+
+  function paintProgress(){
+    var n = 0;
+    chks.forEach(function(c){
+      var step = c.closest('.step');
+      if (c.checked){ n++; if (step) step.classList.add('done'); }
+      else { if (step) step.classList.remove('done'); }
+      var link = document.querySelector('.toc a[href="#' + c.getAttribute('data-id') + '"]');
+      if (link){ link.classList.toggle('done', c.checked); }
+    });
+    document.getElementById('progText').textContent = n + ' / ' + TOTAL;
+    document.getElementById('barFill').style.width = (TOTAL ? (n/TOTAL*100) : 0) + '%';
+  }
+  chks.forEach(function(c){
+    var id = c.getAttribute('data-id');
+    c.checked = !!done[id];
+    c.addEventListener('change', function(){
+      done[id] = c.checked;
+      try { localStorage.setItem(KEY_DONE, JSON.stringify(done)); } catch(e){}
+      paintProgress();
+    });
+  });
+  paintProgress();
+
+  /* ---------- 搜索 ---------- */
+  var q = document.getElementById('q');
+  var clr = document.getElementById('clr');
+  var hits = document.getElementById('hits');
+  var steps = Array.prototype.slice.call(document.querySelectorAll('.step'));
+  var modules = Array.prototype.slice.call(document.querySelectorAll('.module'));
+
+  function search(){
+    var kw = q.value.trim().toLowerCase();
+    clr.style.display = kw ? 'block' : 'none';
+    if (!kw){
+      steps.forEach(function(s){ s.style.display = ''; });
+      modules.forEach(function(m){ m.style.display = ''; });
+      hits.classList.remove('on');
+      return;
+    }
+    var n = 0;
+    steps.forEach(function(s){
+      var txt = s.textContent.toLowerCase();
+      var show = txt.indexOf(kw) > -1;
+      s.style.display = show ? '' : 'none';
+      if (show) n++;
+    });
+    modules.forEach(function(m){
+      var any = m.querySelectorAll('.step');
+      var visible = Array.prototype.slice.call(any).some(function(s){ return s.style.display !== 'none'; });
+      m.style.display = visible ? '' : 'none';
+    });
+    hits.classList.add('on');
+    hits.textContent = n ? ('命中 ' + n + ' 个步骤') : '没有匹配的步骤。试试：缺报、商机卡、Plan、验收、晨报';
+  }
+  q.addEventListener('input', search);
+  q.addEventListener('keydown', function(e){ if (e.key === 'Escape'){ q.value=''; search(); } });
+  clr.addEventListener('click', function(){ q.value=''; search(); q.focus(); });
+
+  /* ---------- 侧栏高亮 ---------- */
+  var tocLinks = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+  var targets = tocLinks.map(function(a){ return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+
+  function onScroll(){
+    var y = window.scrollY + 120;
+    var cur = null;
+    targets.forEach(function(t){ if (t.offsetTop <= y) cur = t; });
+    tocLinks.forEach(function(a){
+      a.classList.toggle('active', !!cur && a.getAttribute('href') === '#' + cur.id);
+    });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  /* ---------- 抽屉 ---------- */
+  var sidebar = document.getElementById('sidebar');
+  var mask = document.getElementById('mask');
+  var menuBtn = document.getElementById('menuBtn');
+  function openDrawer(){
+    sidebar.classList.add('open'); mask.classList.add('on');
+    menuBtn.setAttribute('aria-expanded','true');
+    var first = sidebar.querySelector('a'); if (first) first.focus();
+  }
+  function closeDrawer(){
+    sidebar.classList.remove('open'); mask.classList.remove('on');
+    menuBtn.setAttribute('aria-expanded','false'); menuBtn.focus();
+  }
+  menuBtn.addEventListener('click', openDrawer);
+  mask.addEventListener('click', closeDrawer);
+  document.getElementById('closeX').addEventListener('click', closeDrawer);
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) closeDrawer();
+  });
+  tocLinks.forEach(function(a){
+    a.addEventListener('click', function(){
+      if (window.innerWidth <= 960) closeDrawer();
+    });
+  });
+
+  /* ---------- 评分卡 ---------- */
+  var scs = Array.prototype.slice.call(document.querySelectorAll('.sc'));
+  function calcScore(){
+    var sum = 0, wsum = 0;
+    scs.forEach(function(inp){
+      var v = Number(inp.value);
+      if (isNaN(v)) v = 0;
+      v = Math.max(0, Math.min(100, v));
+      var w = Number(inp.getAttribute('data-w'));
+      sum += v * w; wsum += w;
+    });
+    var total = wsum ? sum / wsum : 0;
+    document.getElementById('scoreVal').textContent = total.toFixed(1);
+    var v = document.getElementById('scoreVerdict');
+    if (total >= 85) v.textContent = '≥85：可进入交付。仍需完成六项验收与红线检查，且由责任人签字。';
+    else if (total >= 70) v.textContent = '70—84：需按问题清单逐条修改，改完重算，不要直接交。';
+    else v.textContent = '<70：建议退回重做。先补证据与责任人，再谈格式。';
+  }
+  scs.forEach(function(i){ i.addEventListener('input', calcScore); });
+  calcScore();
+
+  /* ---------- 学习记录 ---------- */
+  function record(){
+    var lines = [];
+    lines.push('# WorkBuddy × 银行业 6 小时实战陪练台 · 学习记录\n');
+    lines.push('| 项目 | 内容 |');
+    lines.push('|---|---|');
+    lines.push('| 学员 | ' + (vars.name || '待填') + ' |');
+    lines.push('| 机构 | ' + (vars.org || '待填') + ' |');
+    lines.push('| 岗位 | ' + (vars.role || '待填') + ' |');
+    lines.push('| 数据截止 | ' + (vars.date || '待填') + ' |');
+    lines.push('| 导出时间 | ' + new Date().toLocaleString('zh-CN') + ' |');
+    lines.push('| 完成进度 | ' + document.getElementById('progText').textContent + ' |');
+    lines.push('| 自评分 | ' + document.getElementById('scoreVal').textContent + ' / 100（加权） |');
+    lines.push('\n## 步骤完成情况\n');
+    chks.forEach(function(c){
+      var id = c.getAttribute('data-id');
+      var step = c.closest('.step');
+      var title = step ? step.querySelector('h3').textContent.replace(/\s+/g,' ').trim() : id;
+      lines.push('- [' + (c.checked ? 'x' : ' ') + '] ' + id + '　' + title);
+    });
+    var pending = chks.filter(function(c){ return !c.checked; });
+    lines.push('\n## 未完成项（' + pending.length + '）\n');
+    if (!pending.length) lines.push('无。全部步骤已完成，请做一次全文复读，确认没有为了打勾而打勾。');
+    else pending.forEach(function(c){
+      var step = c.closest('.step');
+      var title = step ? step.querySelector('h3').textContent.replace(/\s+/g,' ').trim() : '';
+      lines.push('- ' + c.getAttribute('data-id') + '　' + title);
+    });
+    lines.push('\n## 我带走的三样东西\n');
+    lines.push('- 跑通的任务：');
+    lines.push('- Skill 草案：');
+    lines.push('- 验收记录：');
+    lines.push('\n## 红线确认\n');
+    lines.push('- [ ] 未使用任何真实客户身份、交易、授信资料');
+    lines.push('- [ ] 未出现保本保收益等禁止表述');
+    lines.push('- [ ] 未编造业绩、金额与时点');
+    lines.push('- [ ] 所有对外输出均经人工复核');
+    lines.push('\n> 本记录由配套陪练台自动生成，内容为课堂学习痕迹，不构成业务结论。');
+    download('WorkBuddy银行6小时_学习记录_' + (vars.name || '学员') + '.md', lines.join('\n'));
+    toast('学习记录已开始下载');
+  }
+  document.getElementById('btnRecord').addEventListener('click', record);
+  document.getElementById('btnRecord2').addEventListener('click', record);
+})();
+</script>
+</body>
+</html>
