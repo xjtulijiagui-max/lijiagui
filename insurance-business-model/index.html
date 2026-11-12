@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>安心智保商业模式｜保险场景训练</title>
+<meta name="description" content="把"保障"卖成一项可履约的服务：商业模式画布九宫格、单位经济与北极星指标、三层风险清单；本质是用核保决策换客群、用服务履约换续期。">
+<meta name="author" content="李家贵">
+<meta name="keywords" content="保险,商业模式,商业模式画布,单位经济,北极星指标,健康管理,非标核保,续期经营,安心智保">
+<meta property="og:title" content="安心智保商业模式">
+<meta property="og:description" content="把"保障"卖成一项可履约的服务：商业模式画布九宫格、单位经济与北极星指标、三层风险清单；本质是用核保决策换客群、用服务履约换续期。">
+<meta property="og:type" content="article">
+<link rel="icon" href="https://xjtulijiagui-max.github.io/lijiagui/favicon.svg">
+<style>
+
+:root{
+  --ink:#12233A; --verb:#22303F; --paper:#F7F4EE; --gold:#A8792C;
+  --slate:#5C6B7A; --line:#D9D2C4; --card:#FFFDF8;
+  --serif:"Songti SC","Source Han Serif SC","Noto Serif SC","SimSun",serif;
+  --sans:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",system-ui,sans-serif;
+  --num:"DIN Alternate","Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.75;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1100px;margin:0 auto;padding:0 18px}
+header{padding:56px 0 30px;border-bottom:1px solid var(--line)}
+.kicker{font-size:13px;letter-spacing:.14em;color:var(--gold);margin-bottom:14px}
+h1{font-family:var(--serif);font-weight:700;font-size:clamp(28px,6.4vw,50px);line-height:1.2;margin:0 0 16px}
+.lede{max-width:45em;font-size:15px;color:var(--slate);margin:0}
+.pill{display:inline-block;margin-top:20px;font-size:12.5px;border:1px solid var(--line);padding:5px 12px;color:var(--slate)}
+section{padding:46px 0;border-bottom:1px solid var(--line)}
+h2{font-family:var(--serif);font-size:clamp(19px,3.6vw,25px);margin:0 0 6px}
+h2 .no{font-family:var(--sans);font-size:12px;letter-spacing:.1em;color:var(--gold);margin-right:10px}
+.sub{color:var(--slate);font-size:14px;margin:0 0 28px;max-width:46em}
+/* 画布 */
+.canvas{display:grid;grid-template-columns:1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
+@media(min-width:880px){
+  .canvas{grid-template-columns:repeat(5,1fr);grid-template-areas:
+    "kp ka ka vp cr cs"
+    "kp kr ka vp ch cs"
+    "co co co co co co";}
+  .b1{grid-area:kp}.b2{grid-area:ka}.b3{grid-area:kr}.b4{grid-area:vp}.b5{grid-area:cr}.b6{grid-area:ch}.b7{grid-area:cs}.b8{grid-area:co}
+}
+.b{background:var(--card);padding:16px 16px 12px}
+.b h3{font-size:12px;letter-spacing:.08em;color:var(--gold);margin:0 0 8px;font-weight:600}
+.b ul{margin:0;padding:0;list-style:none}
+.b li{font-size:13.5px;margin-bottom:7px;color:var(--verb);padding-left:11px;position:relative}
+.b li::before{content:"";position:absolute;left:0;top:10px;width:5px;height:1px;background:var(--line)}
+.b.vp{background:#FFF8E9}
+.b.vp li{font-weight:500}
+/* 收入与成本 */
+.two{display:grid;grid-template-columns:1fr;gap:18px}
+@media(min-width:800px){.two{grid-template-columns:1fr 1fr}}
+.panel{border:1px solid var(--line);background:var(--card);padding:20px}
+.panel h3{font-family:var(--serif);font-size:17px;margin:0 0 12px}
+.row{display:flex;justify-content:space-between;gap:14px;font-size:13.5px;padding:9px 0;border-bottom:1px dashed var(--line);color:var(--verb)}
+.row:last-child{border-bottom:0}
+.row span:last-child{color:var(--slate);text-align:right;flex:0 0 44%}
+/* 指标 */
+.mets{display:grid;grid-template-columns:1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
+@media(min-width:760px){.mets{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1000px){.mets{grid-template-columns:repeat(4,1fr)}}
+.m{background:var(--card);padding:18px 16px}
+.m .k{font-size:11.5px;color:var(--slate);letter-spacing:.03em}
+.m .vv{font-family:var(--num);font-size:22px;margin:6px 0 2px;letter-spacing:.01em}
+.m .d{font-size:12.5px;color:var(--verb)}
+/* 风险 */
+.risks{display:grid;grid-template-columns:1fr;gap:14px}
+@media(min-width:760px){.risks{grid-template-columns:1fr 1fr}}
+.rk{border-left:3px solid var(--gold);background:var(--card);padding:16px 18px}
+.rk h4{font-family:var(--serif);font-size:15.5px;margin:0 0 6px}
+.rk p{font-size:13.5px;margin:0;color:var(--verb)}
+.rk .fix{font-size:13px;color:var(--slate);margin-top:8px}
+.rk .fix b{color:var(--ink);font-weight:600}
+.note{background:var(--ink);color:#EDE6D8;padding:26px 24px;margin-top:28px}
+.note h3{font-family:var(--serif);font-size:18px;color:#fff;margin:0 0 10px}
+.note p{margin:0 0 9px;font-size:14px;color:#D9CFBC}
+footer{padding:30px 0 46px;font-size:12.5px;color:var(--slate)}
+
+
+/* ===== 站点导航（统一层，不改变正文排版） ===== */
+.sitebar{position:sticky;top:0;z-index:60;background:var(--ink,#12233A);color:#F3EDE1;border-bottom:1px solid rgba(255,255,255,.14);max-width:100%}
+.sitebar-in{max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:9px 18px;min-width:0}
+.sitebar a{color:inherit;text-decoration:none}
+.sitebar .brand{font-family:var(--sans,sans-serif);font-size:13px;font-weight:700;white-space:nowrap;letter-spacing:.02em}
+.sitebar .brand b{color:#D9B871;font-weight:700}
+.sitebar nav{display:flex;gap:5px;margin-left:auto;white-space:nowrap;min-width:0;overflow-x:auto;scrollbar-width:none;padding-bottom:1px}
+.sitebar nav::-webkit-scrollbar{height:0}
+.sitebar nav a{padding:6px 11px;border-radius:999px;font-size:12.5px;color:#C8D4E3;border:1px solid transparent;transition:.15s;flex:0 0 auto}
+.sitebar nav a:hover{background:rgba(255,255,255,.12);color:#fff}
+.sitebar nav a[aria-current="page"]{background:#F3EDE1;color:#12233A;font-weight:700}
+@media(max-width:760px){
+  .sitebar-in{padding:8px 14px;gap:6px 10px}
+  .sitebar .brand{font-size:12.5px}
+  .sitebar nav{margin-left:0;width:100%;justify-content:flex-start}
+  .sitebar nav a{padding:4px 9px;font-size:11.5px}
+}
+.sitefoot{max-width:1100px;margin:0 auto;padding:6px 18px 58px;font-family:var(--sans,sans-serif)}
+.sitefoot h2{font-family:var(--serif,serif);font-size:19px;color:var(--ink,#12233A);margin:34px 0 4px}
+.sitefoot .sf-sub{font-size:13px;color:var(--slate,#5C6B7A);margin:0 0 18px}
+.rel-grid{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:720px){.rel-grid{grid-template-columns:1fr 1fr}}
+.rel-card{display:block;text-decoration:none;background:var(--card,#FFFDF8);border:1px solid var(--line,#D9D2C4);padding:15px 17px;transition:.15s}
+.rel-card:hover{border-color:var(--gold,#A8792C);transform:translateY(-1px)}
+.rel-card .rl{font-size:11px;letter-spacing:.12em;color:var(--gold,#A8792C);margin-bottom:6px}
+.rel-card .rt{font-family:var(--serif,serif);font-size:15.5px;color:var(--ink,#12233A);line-height:1.45}
+.rel-card .rd{font-size:12.5px;color:var(--slate,#5C6B7A);margin-top:6px;line-height:1.6}
+.rel-card .go{font-size:12px;color:var(--ink,#12233A);margin-top:10px;font-weight:600}
+.migrate{background:var(--card,#FFFDF8);border:1px solid var(--line,#D9D2C4);border-left:3px solid var(--gold,#A8792C);padding:16px 18px;margin-top:22px}
+.migrate h3{font-family:var(--serif,serif);font-size:14.5px;margin:0 0 8px;color:var(--ink,#12233A)}
+.migrate p{font-size:12.8px;color:var(--slate,#5C6B7A);margin:0 0 8px;line-height:1.7}
+.migrate .row{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:baseline;font-size:12.3px;margin-bottom:7px}
+.migrate .k{flex:0 0 auto;color:var(--slate,#5C6B7A)}
+.migrate .dead{color:#9c948a;text-decoration:line-through;word-break:break-all}
+.migrate a.live{color:#2C5C87;font-weight:600;word-break:break-all;border-bottom:1px solid rgba(44,92,135,.35);text-decoration:none}
+.migrate a.live:hover{border-bottom-color:#2C5C87}
+.migrate .note{font-size:11.8px;color:#8d8578;margin:8px 0 0}
+.sf-copy{font-size:12px;color:#8d8578;margin-top:26px;border-top:1px solid var(--line,#D9D2C4);padding-top:16px}
+.sf-copy a{color:var(--slate,#5C6B7A)}
+
+</style>
+</head>
+<body>
+<div class="sitebar">
+  <div class="sitebar-in">
+    <a class="brand" href="https://xjtulijiagui-max.github.io/lijiagui/">李家贵 · <b>保险场景训练</b></a>
+    <nav>
+      <a href="https://xjtulijiagui-max.github.io/lijiagui/insurance-swot/">SWOT 分析</a>
+      <a href="https://xjtulijiagui-max.github.io/lijiagui/insurance-critical-illness/">重疾险演进</a>
+      <a href="https://xjtulijiagui-max.github.io/lijiagui/insurance-business-model/" aria-current="page">商业模式画布</a>
+      <a href="https://xjtulijiagui-max.github.io/lijiagui/insurance-scamper/">SCAMPER 七问</a>
+      <a href="https://xjtulijiagui-max.github.io/lijiagui/list/">训练导航</a>
+    </nav>
+  </div>
+</div>
+<div class="wrap">
+<header>
+  <div class="kicker">商业模式解构 / 智能健康保障</div>
+  <h1>安心智保：<br>把"保障"卖成一项可履约的服务</h1>
+  <p class="lede">这不是一款产品，而是一套经营结构：用非标人群的核保能力换取获客空间，用健康服务履约换取续期价值，用续期现金流覆盖服务成本。</p>
+  <div class="pill">商业模式画布 · 单位经济 · 北极星指标 · 三层风险</div>
+</header>
+
+<section>
+  <h2><span class="no">01</span>商业模式画布</h2>
+  <p class="sub">九个格子只填"能兑现成动作"的内容；填不出来的格子，就是模式里的空洞。</p>
+  <div class="canvas">
+    <div class="b b1"><h3>关键伙伴</h3><ul>
+      <li>三甲医院与专科体检机构</li><li>连锁药房与药品福利服务商</li><li>再保公司（非标承保与分保）</li><li>银保、经代与企业福利渠道</li><li>云与合规科技服务商</li></ul></div>
+    <div class="b b2"><h3>关键活动</h3><ul>
+      <li>非标核保决策（问卷＋数据＋人工复核）</li><li>服务履约调度（预约、随访、用药提醒）</li><li>续期经营与加保运营</li><li>模型迭代与合规留痕</li></ul></div>
+    <div class="b b3"><h3>关键资源</h3><ul>
+      <li>核保规则库与风险分层模型</li><li>健康服务网络与履约质控</li><li>精算定价与经验数据</li><li>自有客户数据闭环</li></ul></div>
+    <div class="b b4 vp"><h3>价值主张</h3><ul>
+      <li>有既往症也能买到、且当场知道能不能保</li><li>不用先垫钱再报销：确诊即给付，服务直接安排</li><li>每年看得见的健康反馈，而不只是一张保单</li></ul></div>
+    <div class="b b5"><h3>客户关系</h3><ul>
+      <li>以服务触点维系，不以节日问候维系</li><li>健康档案共建，数据换取权益</li><li>续期前置干预，而非到期催缴</li></ul></div>
+    <div class="b b6"><h3>渠道</h3><ul>
+      <li>合作方场景嵌入式销售</li><li>企业员工福利团办</li><li>老客户转介绍与加保</li><li>线上内容与私域运营（辅助）</li></ul></div>
+    <div class="b b7"><h3>客户细分</h3><ul>
+      <li>30–45 岁家庭经济支柱，含轻症/慢病既往史</li><li>高风险职业人群（非标职业）</li><li>有家族病史、愿做早筛的中产家庭</li><li>企业团体（员工健康福利采购方）</li></ul></div>
+    <div class="b b8"><h3>成本结构</h3><ul>
+      <li>首年获取成本（渠道佣金＋运营）</li><li>服务履约成本（体检、随访、就医协助）</li><li>核保与系统运维成本</li><li>赔付成本与准备金</li></ul></div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="no">02</span>收入与成本怎么配平</h2>
+  <p class="sub">模式能否成立，取决于首年亏损能不能被续期现金流和服务带来的加保覆盖。</p>
+  <div class="two">
+    <div class="panel"><h3>收入结构（按重要性排序）</h3>
+      <div class="row"><span>长期保障保费（主险）</span><span>基本盘，决定规模</span></div>
+      <div class="row"><span>续期保费</span><span>决定利润，第二年见真章</span></div>
+      <div class="row"><span>加保与责任升级</span><span>服务体验的直接变现</span></div>
+      <div class="row"><span>健康服务付费包</span><span>补充收入，可单卖</span></div>
+      <div class="row"><span>团险与企业福利</span><span>摊薄获客成本</span></div>
+    </div>
+    <div class="panel"><h3>成本结构（按可控性排序）</h3>
+      <div class="row"><span>首年获取成本</span><span>最刚性，靠场景嵌入下降</span></div>
+      <div class="row"><span>赔付与准备金</span><span>由核保精度决定</span></div>
+      <div class="row"><span>服务履约成本</span><span>可按参与率弹性控制</span></div>
+      <div class="row"><span>系统与合规</span><span>半固定，规模摊薄</span></div>
+      <div class="row"><span>人力与培训</span><span>可复用，边际低</span></div>
+    </div>
+  </div>
+  <div class="note">
+    <h3>配平逻辑</h3>
+    <p>安全边界是：首年获取成本 ≤ 首年保费 × 可承受比例，且第二年起服务成本 ≤ 续期保费带来的费差空间。</p>
+    <p>破界信号只有两个——13 个月继续率跌破预设线，或服务履约成本随参保人数线性上升而不随规模下降。任一出现，就停止扩客群，回头修核保与服务调度。</p>
+  </div>
+</section>
+
+<section>
+  <h2><span class="no">03</span>四个必须盯住的指标</h2>
+  <p class="sub">不用做几十个指标的面板；这四个就能判断模式是在变好还是在变坏。</p>
+  <div class="mets">
+    <div class="m"><div class="k">续期健康度</div><div class="vv">13 / 25 个月</div><div class="d">继续率是第一位的先行指标，比新单规模更能说明模式是否成立。</div></div>
+    <div class="m"><div class="k">服务真实使用</div><div class="vv">参与率</div><div class="d">健康干预的实际参与与完成比例，而非权益领取人数。</div></div>
+    <div class="m"><div class="k">核保决策质量</div><div class="vv">非标承保率</div><div class="d">能在多大比例上给出可承保结论，同时把赔付率守在区间内。</div></div>
+    <div class="m"><div class="k">单位获客成本</div><div class="vv">CAC / 首年保费</div><div class="d">判断场景嵌入是否真的比自建流量便宜。</div></div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="no">04</span>三层风险与对应动作</h2>
+  <p class="sub">风险不是清单，是必须提前配好动作的位置。</p>
+  <div class="risks">
+    <div class="rk"><h4>承保风险：非标人群的反向选择</h4><p>放开核保口径后，最先被吸引进来的是理赔预期最高的人。</p><p class="fix"><b>动作：</b>分层承保＋等待期＋服务前置，用健康干预把赔付曲线压回来；承保口径每次调整都做回溯。</p></div>
+    <div class="rk"><h4>合规风险：数据与模型的可审计性</h4><p>健康数据、可穿戴数据与模型决策都可能成为执法与诉讼的焦点。</p><p class="fix"><b>动作：</b>授权链路留痕、模型决策可解释、人工复核可追溯；服务商数据处理协议逐条落到合同。</p></div>
+    <div class="rk"><h4>经营风险：服务成本失控</h4><p>服务承诺写得越漂亮，履约成本越容易随规模上升而失控。</p><p class="fix"><b>动作：</b>服务包分层定价、年度预算封顶、按使用率动态调度，宁可缩权益也不砍体验。</p></div>
+  </div>
+  <div class="note">
+    <h3>一句话结论</h3>
+    <p>安心智保的商业模式本质是"用核保决策换客群，用服务履约换续期"。规模不是目标，续期与核保精度才是；一旦用规模指标考核团队，这套模式就会退回传统的费用驱动老路。</p>
+  </div>
+</section>
+
+<footer>
+  <p>本文为商业模式结构设计，不含具体费率、佣金比例与经营数据；落地需以公司精算假设、偿付能力与渠道合同为准。</p>
+</footer>
+</div>
+<div class="sitefoot">
+  <h2>同组其余三篇</h2>
+  <p class="sf-sub">四篇共用一套口径：只做定性框架与教学示例，不含具体经营数据。</p>
+  <div class="rel-grid">
+      <a class="rel-card" href="https://xjtulijiagui-max.github.io/lijiagui/insurance-swot/">
+        <div class="rl">SWOT 分析</div>
+        <div class="rt">安信智保 SWOT 分析与策略取舍</div>
+        <div class="rd">中小寿险公司如何把"智能核保＋健康管理"当成差异化支点：四象限事实、SO/ST/WO/WT 交叉策略、三条取舍与…</div>
+        <div class="go">进入页面 →</div>
+      </a>
+      <a class="rel-card" href="https://xjtulijiagui-max.github.io/lijiagui/insurance-critical-illness/">
+        <div class="rl">重疾险演进</div>
+        <div class="rt">寿险公司重疾险创新历程</div>
+        <div class="rd">重疾险三十年四次角色重定义：附加责任 → 独立产品 → 组合方案 → 服务型保障；按制度与定义、产品形态、渠道销…</div>
+        <div class="go">进入页面 →</div>
+      </a>
+      <a class="rel-card" href="https://xjtulijiagui-max.github.io/lijiagui/insurance-scamper/">
+        <div class="rl">SCAMPER 七问</div>
+        <div class="rt">案例：保险行业如何用 SCAMPER 思维做新产品设计</div>
+        <div class="rd">把 SCAMPER 七问落成一款重疾险的七个改法：替代、合并、改造、调整、其他用途、去除、反向；附七问自检交互、…</div>
+        <div class="go">进入页面 →</div>
+      </a>
+  </div>
+
+  <div class="migrate">
+    <h3>来源与链接迁移</h3>
+    <div class="row"><span class="k">原 Coze 链接（已失效）</span><span class="dead">https://space.coze.cn/web?uri=7500465720921915407%2F安心智保商业模式-e237518656.jsx&theme=undefined</span></div>
+    <div class="row"><span class="k">现用豆包入口</span><a class="live" href="https://ccnfyfru3j3b.doubao.link/app/app_17hx6u6s0bq" target="_blank" rel="noopener">https://ccnfyfru3j3b.doubao.link/app/app_17hx6u6s0bq</a></div>
+    <p class="note">原 Coze 页面在未登录状态不渲染（短链已 404），本页按主题完整重建为静态版，正文与豆包版一致，可直接在课堂投影、投屏讲解或离线使用。</p>
+  </div>
+
+  <p class="sf-copy">李家贵 · AI 实战训练 · <a href="https://xjtulijiagui-max.github.io/lijiagui/list/">返回训练导航</a></p>
+</div>
+</body>
+</html>

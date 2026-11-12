@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>案例：保险行业如何用 SCAMPER 思维做新产品设计｜保险场景训练</title>
+<meta name="description" content="把 SCAMPER 七问落成一款重疾险的七个改法：替代、合并、改造、调整、其他用途、去除、反向；附七问自检交互、收敛规则与四个常见误区。">
+<meta name="author" content="李家贵">
+<meta name="keywords" content="保险,SCAMPER,创新工具,产品设计,重疾险,课堂练习,培训案例,自检清单">
+<meta property="og:title" content="案例：保险行业如何用 SCAMPER 思维做新产品设计">
+<meta property="og:description" content="把 SCAMPER 七问落成一款重疾险的七个改法：替代、合并、改造、调整、其他用途、去除、反向；附七问自检交互、收敛规则与四个常见误区。">
+<meta property="og:type" content="article">
+<link rel="icon" href="https://xjtulijiagui-max.github.io/lijiagui/favicon.svg">
+<style>
+
+:root{
+  --ink:#12233A; --verb:#22303F; --paper:#F7F4EE; --gold:#A8792C;
+  --slate:#5C6B7A; --line:#D9D2C4; --card:#FFFDF8;
+  --serif:"Songti SC","Source Han Serif SC","Noto Serif SC","SimSun",serif;
+  --sans:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",system-ui,sans-serif;
+  --num:"DIN Alternate","Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.75;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding:0 18px}
+header{padding:56px 0 30px;border-bottom:1px solid var(--line)}
+.kicker{font-size:13px;letter-spacing:.14em;color:var(--gold);margin-bottom:14px}
+h1{font-family:var(--serif);font-weight:700;font-size:clamp(27px,5.6vw,46px);line-height:1.24;margin:0 0 16px}
+.lede{max-width:44em;color:var(--slate);font-size:15px;margin:0}
+.strip{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;font-family:var(--num);font-size:12px;letter-spacing:.08em;color:var(--slate)}
+.strip span{border:1px solid var(--line);padding:3px 9px}
+section{padding:46px 0;border-bottom:1px solid var(--line)}
+h2{font-family:var(--serif);font-size:clamp(19px,3.6vw,25px);margin:0 0 6px}
+h2 .no{font-family:var(--sans);font-size:12px;letter-spacing:.1em;color:var(--gold);margin-right:10px}
+.sub{color:var(--slate);font-size:14px;margin:0 0 28px;max-width:46em}
+/* 七问卡 */
+.seven{display:grid;grid-template-columns:1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
+@media(min-width:720px){.seven{grid-template-columns:1fr 1fr}}
+@media(min-width:1020px){.seven{grid-template-columns:repeat(3,1fr)}}
+.ltr{background:var(--card);padding:18px 18px 14px;position:relative}
+.ltr .head{display:flex;align-items:baseline;gap:10px;margin-bottom:6px}
+.ltr .n{font-family:var(--num);font-size:11.5px;color:var(--gold);letter-spacing:.1em}
+.ltr h3{font-family:var(--serif);font-size:17px;margin:0}
+.ltr .en{font-size:11.5px;color:var(--slate);letter-spacing:.04em;margin:0 0 10px}
+.ltr .q{font-size:13px;color:var(--gold);margin:0 0 10px}
+.ltr ul{margin:0;padding:0;list-style:none}
+.ltr li{font-size:13.5px;color:var(--verb);padding-left:12px;position:relative;margin-bottom:8px}
+.ltr li::before{content:"";position:absolute;left:0;top:10px;width:5px;height:1px;background:var(--line)}
+/* 案例路线 */
+.case{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:820px){.case{grid-template-columns:1.15fr 1fr}}
+.step{border:1px solid var(--line);background:var(--card);padding:20px}
+.step .tag{font-family:var(--num);font-size:11.5px;color:var(--gold);letter-spacing:.08em}
+.step h3{font-family:var(--serif);font-size:16.5px;margin:6px 0 10px}
+.step p{font-size:13.5px;color:var(--verb);margin:0 0 10px}
+.idea{border-left:2px solid var(--gold);padding:2px 0 2px 12px;margin-bottom:11px}
+.idea b{font-weight:600;font-size:13.5px}
+.idea span{display:block;font-size:12.5px;color:var(--slate);margin-top:2px}
+/* 评分表 */
+.sc{width:100%;border-collapse:collapse;font-size:13.5px;table-layout:fixed}
+.sc col.a{width:34%}.sc col.b{width:16.5%}
+.sc th{font-size:12.5px;color:var(--slate);font-weight:600;text-align:left;padding:9px 10px;border-bottom:1px solid var(--line)}
+.sc td{padding:11px 10px;border-bottom:1px solid var(--line);color:var(--verb);vertical-align:top}
+.sc td:first-child{color:var(--ink);font-weight:600}
+.sc .t{font-family:var(--num);text-align:center;color:var(--gold)}
+/* 自检 */
+.check{background:var(--card);border:1px solid var(--line);padding:22px;margin-top:26px}
+.check h3{font-family:var(--serif);font-size:17px;margin:0 0 6px}
+.check p.hint{font-size:13px;color:var(--slate);margin:0 0 16px}
+.ck{display:flex;align-items:flex-start;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line)}
+.ck:last-of-type{border-bottom:0}
+.ck label{display:flex;gap:12px;align-items:flex-start;font-size:13.5px;color:var(--verb);cursor:pointer;min-height:32px;width:100%}
+.ck input{appearance:none;width:19px;height:19px;border:1px solid var(--line);background:#fff;flex:0 0 19px;margin:5px 0 0;position:relative;cursor:pointer}
+.ck input:checked{background:var(--ink);border-color:var(--ink)}
+.ck input:checked::after{content:"";position:absolute;left:5px;top:1px;width:5px;height:11px;border-right:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(38deg)}
+.ck input:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.ck b{color:var(--ink);font-weight:600;margin-right:6px}
+.gauge{margin-top:16px;font-size:13.5px;color:var(--slate)}
+.gauge strong{font-family:var(--num);color:var(--ink);font-size:17px;margin:0 4px}
+.bar{height:4px;background:var(--line);margin-top:9px;position:relative}
+.bar i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--gold);transition:width .25s ease}
+/* 误区 */
+.mis{display:grid;grid-template-columns:1fr;gap:14px}
+@media(min-width:820px){.mis{grid-template-columns:1fr 1fr}}
+.mi{border-top:2px solid var(--line);padding-top:12px}
+.mi h4{font-family:var(--serif);font-size:15.5px;margin:0 0 5px}
+.mi p{font-size:13.5px;margin:0;color:var(--verb)}
+.mi .fix{color:var(--slate);margin-top:6px;font-size:13px}
+.mi .fix b{color:var(--ink)}
+.note{background:var(--ink);color:#EDE6D8;padding:26px 24px;margin-top:28px}
+.note h3{font-family:var(--serif);font-size:18px;color:#fff;margin:0 0 10px}
+.note p{margin:0 0 9px;font-size:14px;color:#D9CFBC}
+footer{padding:30px 0 46px;font-size:12.5px;color:var(--slate)}
+
+
+/* ===== 站点导航（统一层，不改变正文排版） ===== */
+.sitebar{position:sticky;top:0;z-index:60;background:var(--ink,#12233A);color:#F3EDE1;border-bottom:1px solid rgba(255,255,255,.14);max-width:100%}
+.sitebar-in{max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:9px 18px;min-width:0}
+.sitebar a{color:inherit;text-decoration:none}
+.sitebar .brand{font-family:var(--sans,sans-serif);font-size:13px;font-weight:700;white-space:nowrap;letter-spacing:.02em}
+.sitebar .brand b{color:#D9B871;font-weight:700}
+.sitebar nav{display:flex;gap:5px;margin-left:auto;white-space:nowrap;min-width:0;overflow-x:auto;scrollbar-width:none;padding-bottom:1px}
+.sitebar nav::-webkit-scrollbar{height:0}
+.sitebar nav a{padding:6px 11px;border-radius:999px;font-size:12.5px;color:#C8D4E3;border:1px solid transparent;transition:.15s;flex:0 0 auto}
+.sitebar nav a:hover{background:rgba(255,255,255,.12);color:#fff}
+.sitebar nav a[aria-current="page"]{background:#F3EDE1;color:#12233A;font-weight:700}
+@media(max-width:760px){
+  .sitebar-in{padding:8px 14px;gap:6px 10px}
+  .sitebar .brand{font-size:12.5px}
+  .sitebar nav{margin-left:0;width:100%;justify-content:flex-start}
+  .sitebar nav a{padding:4px 9px;font-size:11.5px}
+}
+.sitefoot{max-width:1100px;margin:0 auto;padding:6px 18px 58px;font-family:var(--sans,sans-serif)}
+.sitefoot h2{font-family:var(--serif,serif);font-size:19px;color:var(--ink,#12233A);margin:34px 0 4px}
+.sitefoot .sf-sub{font-size:13px;color:var(--slate,#5C6B7A);margin:0 0 18px}
+.rel-grid{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:720px){.rel-grid{grid-template-columns:1fr 1fr}}
+.rel-card{display:block;text-decoration:none;background:var(--card,#FFFDF8);border:1px solid var(--line,#D9D2C4);padding:15px 17px;transition:.15s}
+.rel-card:hover{border-color:var(--gold,#A8792C);transform:translateY(-1px)}
+.rel-card .rl{font-size:11px;letter-spacing:.12em;color:var(--gold,#A8792C);margin-bottom:6px}
+.rel-card .rt{font-family:var(--serif,serif);font-size:15.5px;color:var(--ink,#12233A);line-height:1.45}
+.rel-card .rd{font-size:12.5px;color:var(--slate,#5C6B7A);margin-top:6px;line-height:1.6}
+.rel-card .go{font-size:12px;color:var(--ink,#12233A);margin-top:10px;font-weight:600}
+.migrate{background:var(--card,#FFFDF8);border:1px solid var(--line,#D9D2C4);border-left:3px solid var(--gold,#A8792C);padding:16px 18px;margin-top:22px}
+.migrate h3{font-family:var(--serif,serif);font-size:14.5px;margin:0 0 8px;color:var(--ink,#12233A)}
+.migrate p{font-size:12.8px;color:var(--slate,#5C6B7A);margin:0 0 8px;line-height:1.7}
+.migrate .row{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:baseline;font-size:12.3px;margin-bottom:7px}
+.migrate .k{flex:0 0 auto;color:var(--slate,#5C6B7A)}
+.migrate .dead{color:#9c948a;text-decoration:line-through;word-break:break-all}
+.migrate a.live{color:#2C5C87;font-weight:600;word-break:break-all;border-bottom:1px solid rgba(44,92,135,.35);text-decoration:none}
+.migrate a.live:hover{border-bottom-color:#2C5C87}
+.migrate .note{font-size:11.8px;color:#8d8578;margin:8px 0 0}
+.sf-copy{font-size:12px;color:#8d8578;margin-top:26px;border-top:1px solid var(--line,#D9D2C4);padding-top:16px}
+.sf-copy a{color:var(--slate,#5C6B7A)}
+
+</style>
+</head>
+<body>
+<div class="sitebar">
+  <div class="sitebar-in">
+    <a class="brand" href="https://xjtulijiagui-max.github.io/lijiagui/">李家贵 · <b>保险场景训练</b></a>
+    <nav>
+      <a href="https://xjtulijiagui-max.github.io/lijiagui/insurance-swot/">SWOT 分析</a>
+      <a href="https://xjtulijiagui-max.github.io/lijiagui/insurance-critical-illness/">重疾险演进</a>
+      <a href="https://xjtulijiagui-max.github.io/lijiagui/insurance-business-model/">商业模式画布</a>
+      <a href="https://xjtulijiagui-max.github.io/lijiagui/insurance-scamper/" aria-current="page">SCAMPER 七问</a>
+      <a href="https://xjtulijiagui-max.github.io/lijiagui/list/">训练导航</a>
+    </nav>
+  </div>
+</div>
+<div class="wrap">
+<header>
+  <div class="kicker">案例教学 / 创新工具 · 练习页</div>
+  <h1>保险行业如何用 SCAMPER 思维<br>做新产品设计</h1>
+  <p class="lede">SCAMPER 不是七个漂亮的英文首字母，而是七个"被迫换一个角度看同一张保单"的提问。这一页把它落成一个可练的动作：同一款重疾险，被七个问题各改一次，看哪一版值得做。</p>
+  <div class="strip"><span>SUBSTITUTE 替代</span><span>COMBINE 合并</span><span>ADAPT 改造</span><span>MODIFY 调整</span><span>PUT IN OTHER USES 其他用途</span><span>ELIMINATE 去除</span><span>REVERSE 反向</span></div>
+</header>
+
+<section>
+  <h2><span class="no">01</span>七个提问，落到保险语境</h2>
+  <p class="sub">每个字母问一个具体问题；问题必须指向保单上的一个可变要素（责任、人群、给付方式、渠道、时点），否则讨论会滑向空话。</p>
+  <div class="seven">
+    <div class="ltr"><div class="head"><span class="n">01</span><h3>替代</h3></div><p class="en">SUBSTITUTE</p>
+      <p class="q">能不能把某个要素换成别的？</p>
+      <ul><li>把"一次性给付"换成"分期给付＋康复期津贴"</li><li>把人工核保换成智能核保加人工复核</li><li>把纸质条款换成视频化说明与情景演示</li></ul></div>
+    <div class="ltr"><div class="head"><span class="n">02</span><h3>合并</h3></div><p class="en">COMBINE</p>
+      <p class="q">能不能把两个东西并成一个？</p>
+      <ul><li>保障责任与早筛服务打包成一个产品</li><li>重疾给付与医疗报销合并为一张"大病卡"</li><li>把员工福利与个人保单在同一个账户下合并管理</li></ul></div>
+    <div class="ltr"><div class="head"><span class="n">03</span><h3>改造</h3></div><p class="en">ADAPT</p>
+      <p class="q">别的行业的做法能不能借过来？</p>
+      <ul><li>借车险的"无理赔折扣"，做健康行为折扣</li><li>借会员制的"权益包"，做保障权益分级</li><li>借电商的"先用后付"逻辑，做保费分期与体验期</li></ul></div>
+    <div class="ltr"><div class="head"><span class="n">04</span><h3>调整</h3></div><p class="en">MODIFY</p>
+      <p class="q">改一个参数会怎样？</p>
+      <ul><li>把保额从固定值改成随年龄与家庭结构浮动的额度</li><li>把等待期从 90 天调整为分层（健康人群更短）</li><li>把缴费期从年缴改成按月，降低首年决策门槛</li></ul></div>
+    <div class="ltr"><div class="head"><span class="n">05</span><h3>其他用途</h3></div><p class="en">PUT IN OTHER USES</p>
+      <p class="q">这份能力还能用在别处吗？</p>
+      <ul><li>核保能力外溢，给合作方做健康风险筛查服务</li><li>理赔数据反哺企业员工的健康福利设计</li><li>保单账户变成家庭健康档案的入口</li></ul></div>
+    <div class="ltr"><div class="head"><span class="n">06</span><h3>去除</h3></div><p class="en">ELIMINATE</p>
+      <p class="q">去掉什么反而更好？</p>
+      <ul><li>去掉返还与储蓄叙事，只留纯保障，价格立刻清晰</li><li>去掉冗长的除外责任长尾，改为可视化风险清单</li><li>去掉中间层渠道加价，直连场景方</li></ul></div>
+    <div class="ltr"><div class="head"><span class="n">07</span><h3>反向</h3></div><p class="en">REVERSE</p>
+      <p class="q">把顺序或角色倒过来呢？</p>
+      <ul><li>从"先买保险后生病"倒成"先做健康管理再定价"</li><li>从公司定条款倒成客户按需组装责任</li><li>从理赔时审核倒成投保时就锁定可赔范围</li></ul></div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="no">02</span>一次完整演练</h2>
+  <p class="sub">对象：一款面向 35 岁上下家庭主力、含轻症责任的终身重疾险。目标：在不涨价的前提下，做出一个"客户能一句话说清"的差异点。</p>
+  <div class="case">
+    <div class="step"><div class="tag">STEP 1 · 提问</div><h3>先跑满七问，不评判</h3>
+      <p>规则：每问至少三个点子，写下来就过，不在这一步讨论可行性。评审一提前介入，点子就会自我审查。</p>
+      <p>产出约 21 个原始点子。低于 15 个，说明讨论还停在"改条款"层面，没有真正换角度。</p>
+      <div class="idea"><b>典型产出</b><span>分期给付、健康折扣、按需组装责任、早筛打包、先体验后投保、去掉返还、核保能力外溢。</span></div>
+    </div>
+    <div class="step"><div class="tag">STEP 2 · 收敛</div><h3>用三条硬约束筛</h3>
+      <p>硬约束一：不改变公司现有核保与理赔系统的主流程。硬约束二：服务成本可被续期现金流覆盖。硬约束三：条款能在一次对话里讲清。</p>
+      <div class="idea"><b>入围</b><span>"早筛＋保障"打包：责任不变，服务可计量，说明成本低。</span></div>
+      <div class="idea"><b>入围</b><span>健康行为折扣：把续期费率与可穿戴数据挂钩。</span></div>
+      <div class="idea"><b>出局</b><span>按需组装责任：条款组合爆炸，报备与系统改造都超预算。</span></div>
+    </div>
+  </div>
+  <table class="sc" style="margin-top:22px">
+    <colgroup><col class="a"><col class="b"><col class="b"><col class="b"><col class="b"></colgroup>
+    <thead><tr><th>入围点子</th><th>客户价值</th><th>可行性</th><th>成本</th><th>合规风险</th></tr></thead>
+    <tbody>
+      <tr><td>早筛＋保障打包</td><td class="t">高</td><td class="t">高</td><td class="t">中</td><td class="t">低</td></tr>
+      <tr><td>健康行为折扣</td><td class="t">中</td><td class="t">中</td><td class="t">低</td><td class="t">较高</td></tr>
+      <tr><td>分期给付</td><td class="t">高</td><td class="t">中</td><td class="t">中</td><td class="t">低</td></tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <h3>这一轮的真实结论</h3>
+    <p>SCAMPER 给出的不是"更好的产品"，而是"更少但更清楚的选择"。七个问题跑完，通常只有一个点子值得进入立项，其余的作用是证明它被认真否定过。</p>
+    <p>注意：凡是靠"去除返还、合并报销"这类结构性改动的点子，必须同步做费率重算；不重算就报价，是最常见的坑。</p>
+  </div>
+</section>
+
+<section>
+  <h2><span class="no">03</span>练习：30 分钟跑一轮</h2>
+  <p class="sub">给你的对象换成"惠民保／百万医疗"或"企业员工健康福利"，四人一组，按下面的节奏走。勾选即计数，只在本页本地生效，不上传。</p>
+  <div class="check">
+    <h3>七问自检清单</h3>
+    <p class="hint">每勾一条，代表这一问已经产出了至少一个可写下来的点子。</p>
+    <div class="ck"><label><input type="checkbox" data-k="S"><span><b>替代</b>换掉了哪一项责任、哪一层核保、哪一种说明方式？</span></label></div>
+    <div class="ck"><label><input type="checkbox" data-k="C"><span><b>合并</b>把哪两件原本分开卖的东西并成了一件？</span></label></div>
+    <div class="ck"><label><input type="checkbox" data-k="A"><span><b>改造</b>从哪个行业借了一个成熟做法，并做了本地化？</span></label></div>
+    <div class="ck"><label><input type="checkbox" data-k="M"><span><b>调整</b>改了哪个参数（保额、期限、等待期、缴费频率）？</span></label></div>
+    <div class="ck"><label><input type="checkbox" data-k="P"><span><b>其他用途</b>哪项能力可以对外复用或对内向别的产品复用？</span></label></div>
+    <div class="ck"><label><input type="checkbox" data-k="E"><span><b>去除</b>删掉了哪个拖累清晰度的要素？</span></label></div>
+    <div class="ck"><label><input type="checkbox" data-k="R"><span><b>反向</b>把哪个顺序或角色关系倒过来想了一遍？</span></label></div>
+    <div class="gauge">已完成 <strong id="cnt">0</strong> / 7<strong></strong></div>
+    <div class="bar"><i id="barw"></i></div>
+  </div>
+  <div class="mis" style="margin-top:26px">
+    <div class="mi"><h4>误区一：把七问做成七个形容词</h4><p>"更智能、更贴心、更灵活"不是点子，是口号。</p><p class="fix"><b>改法：</b>每条点子必须能写成一句可执行的话，含对象和动作。</p></div>
+    <div class="mi"><h4>误区二：一上来就评可行</h4><p>评审提前介入，团队会自动只提"已经能做"的事，创新退化为例行优化。</p><p class="fix"><b>改法：</b>先跑满七问，再单设收敛环节。</p></div>
+    <div class="mi"><h4>误区三：只改责任，不改经营</h4><p>条款改了但费率、服务、考核不动，新产品三个月就回到老产品的样子。</p><p class="fix"><b>改法：</b>每个入围点子配套一次费率重算与一次服务成本测算。</p></div>
+    <div class="mi"><h4>误区四：把"去除"理解成砍保障</h4><p>去掉的应是不够清晰的要素，不是客户的真实需求。</p><p class="fix"><b>改法：</b>删之前先回答：删掉之后客户仍能一句话说清买到什么吗？</p></div>
+  </div>
+</section>
+
+<footer>
+  <p>本文为教学案例页：SCAMPER 七问的方法框架来自通用创新工具，保险语境下的示例为课堂讨论用，不代表任何具体公司的真实产品；涉及责任、费率与报备的实现须由精算与合规共同完成。</p>
+</footer>
+</div>
+<div class="sitefoot">
+  <h2>同组其余三篇</h2>
+  <p class="sf-sub">四篇共用一套口径：只做定性框架与教学示例，不含具体经营数据。</p>
+  <div class="rel-grid">
+      <a class="rel-card" href="https://xjtulijiagui-max.github.io/lijiagui/insurance-swot/">
+        <div class="rl">SWOT 分析</div>
+        <div class="rt">安信智保 SWOT 分析与策略取舍</div>
+        <div class="rd">中小寿险公司如何把"智能核保＋健康管理"当成差异化支点：四象限事实、SO/ST/WO/WT 交叉策略、三条取舍与…</div>
+        <div class="go">进入页面 →</div>
+      </a>
+      <a class="rel-card" href="https://xjtulijiagui-max.github.io/lijiagui/insurance-critical-illness/">
+        <div class="rl">重疾险演进</div>
+        <div class="rt">寿险公司重疾险创新历程</div>
+        <div class="rd">重疾险三十年四次角色重定义：附加责任 → 独立产品 → 组合方案 → 服务型保障；按制度与定义、产品形态、渠道销…</div>
+        <div class="go">进入页面 →</div>
+      </a>
+      <a class="rel-card" href="https://xjtulijiagui-max.github.io/lijiagui/insurance-business-model/">
+        <div class="rl">商业模式画布</div>
+        <div class="rt">安心智保商业模式</div>
+        <div class="rd">把"保障"卖成一项可履约的服务：商业模式画布九宫格、单位经济与北极星指标、三层风险清单；本质是用核保决策换客群、…</div>
+        <div class="go">进入页面 →</div>
+      </a>
+  </div>
+
+  <div class="migrate">
+    <h3>来源与链接迁移</h3>
+    <div class="row"><span class="k">原 Coze 链接（已失效）</span><span class="dead">https://space.coze.cn/s/FHYKNbd8vAA/</span></div>
+    <div class="row"><span class="k">现用豆包入口</span><a class="live" href="https://ccnfyfru3j3b.doubao.link/app/app_17hx9jfasw3" target="_blank" rel="noopener">https://ccnfyfru3j3b.doubao.link/app/app_17hx9jfasw3</a></div>
+    <p class="note">原 Coze 页面在未登录状态不渲染（短链已 404），本页按主题完整重建为静态版，正文与豆包版一致，可直接在课堂投影、投屏讲解或离线使用。</p>
+  </div>
+
+  <p class="sf-copy">李家贵 · AI 实战训练 · <a href="https://xjtulijiagui-max.github.io/lijiagui/list/">返回训练导航</a></p>
+</div>
+<script>
+(function(){
+  var boxes = document.querySelectorAll('.ck input');
+  var cnt = document.getElementById('cnt');
+  var bar = document.getElementById('barw');
+  function upd(){
+    var n = 0;
+    boxes.forEach(function(b){ if(b.checked) n++; });
+    cnt.textContent = n;
+    bar.style.width = (n/7*100) + '%';
+  }
+  boxes.forEach(function(b){ b.addEventListener('change', upd); });
+  upd();
+})();
+</script>
+</body>
+</html>
