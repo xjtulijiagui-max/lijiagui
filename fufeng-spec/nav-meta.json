@@ -1,25 +1,28 @@
 {
   "id": "fufeng-spec",
-  "title": "IPO → 工作台｜两步生成（极简练习页）",
-  "shortTitle": "IPO 两步生成工作台",
+  "title": "阜丰集团｜IPO + Spec 标准 → Workspace → 工作台（两步练习）",
+  "shortTitle": "阜丰 IPO 两步练习",
   "category": "制造能源与工业",
-  "description": "极简练习页：把你的 IPO 贴进空框，配上定制包与通用 Spec 包，第一条提示词让 AI 先出「定制网站模板包」，第二条一句话「基于以上内容生成工作台」。两个可复制输入、两条提示词，无其他内容。附阜丰吨氨能耗 IPO 样例与 8 天台账。",
+  "description": "阜丰合成氨吨氨能耗场景的两步练习页：第一步把 IPO 定义书与《Spec Workspace 初始化标准 v2.0》一起交给 AI，生成候选 Workspace 输入包（网站模版）；第二步用工作台搭建师把规格变成可点的界面。附可下载 IPO Word、8 天能耗台账 CSV、标准包 ZIP 与两段可复制提示词。",
   "url": "https://xjtulijiagui-max.github.io/lijiagui/fufeng-spec/",
   "tags": [
+    "阜丰",
+    "合成氨",
+    "吨氨能耗",
     "IPO",
-    "OpenSpec",
+    "Spec 标准",
+    "Workspace 初始化",
     "工作台",
-    "提示词",
-    "两步生成",
-    "极简",
+    "两步练习",
     "课堂练习",
-    "WorkBuddy"
+    "WorkBuddy",
+    "制造"
   ],
   "type": "课堂练习",
-  "client": "通用",
+  "client": "阜丰",
   "status": "正常",
   "featured": false,
   "updated": "2026-11-13",
-  "source": "由 material-spec / material-workbench 教学页精简而来；示例材料取阜丰合成氨吨氨能耗场景",
+  "source": "结构对齐 juhe-spec 两步练习页；示例材料取阜丰合成氨吨氨能耗场景",
   "order": 275
 }
