@@ -1,19 +1,21 @@
 {
   "id": "fufeng-spec",
-  "title": "阜丰集团｜IPO + Spec 标准 → Workspace → 工作台（两步练习）",
-  "shortTitle": "阜丰 IPO 两步练习",
+  "title": "阜丰集团｜补强 IPO → Workspace → 工作台（三步练习）",
+  "shortTitle": "阜丰 IPO 三步练习",
   "category": "制造能源与工业",
-  "description": "阜丰合成氨吨氨能耗场景的两步练习页：第一步把 IPO 定义书与《Spec Workspace 初始化标准 v2.0》一起交给 AI，生成候选 Workspace 输入包（网站模版）；第二步用工作台搭建师把规格变成可点的界面。附可下载 IPO Word、8 天能耗台账 CSV、标准包 ZIP 与两段可复制提示词。",
+  "description": "阜丰合成氨吨氨能耗场景的三步练习页：第 0 步用 IPO 反向访谈助手把原始 IPO 问扎实（最多 15 轮，自动出补强稿）；第 1 步把补强后的 IPO 与《Spec Workspace 初始化标准 v2.0》一起交给 AI，生成候选 Workspace（网站模版）；第 2 步用工作台搭建师把规格变成可点界面，再多轮对话打磨到能用。附 IPO Word、访谈指令 MD、8 天台账 CSV、标准包 ZIP 与三段可复制提示词。",
   "url": "https://xjtulijiagui-max.github.io/lijiagui/fufeng-spec/",
   "tags": [
     "阜丰",
     "合成氨",
     "吨氨能耗",
     "IPO",
+    "反向访谈助手",
+    "补强 IPO",
     "Spec 标准",
     "Workspace 初始化",
     "工作台",
-    "两步练习",
+    "三步练习",
     "课堂练习",
     "WorkBuddy",
     "制造"
@@ -23,6 +25,6 @@
   "status": "正常",
   "featured": false,
   "updated": "2026-11-13",
-  "source": "结构对齐 juhe-spec 两步练习页；示例材料取阜丰合成氨吨氨能耗场景",
+  "source": "结构对齐 juhe-spec 两步练习页，新增第 0 步（IPO 反向访谈助手 V2.0）；示例材料取阜丰合成氨吨氨能耗场景",
   "order": 275
 }
