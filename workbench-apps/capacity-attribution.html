@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>产能归因台 · 一线业务人员产能分析与下滑归因</title>
+<link rel="icon" href="data:," />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div id="gh-snapshot-banner" style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#FFF7E6;border-bottom:1px solid #E8C87A;color:#8A5A00;padding:8px 16px;font:13px/1.5 'PingFang SC','Microsoft YaHei',sans-serif;text-align:center;">
+📜 这是原内网工作台的<strong>静态快照</strong>（仅供存档预览）。完整交互版本需在 WorkBuddy 内网环境打开原链接。
+<button onclick="this.parentNode.remove();document.body.style.paddingTop='0'" style="margin-left:10px;background:#8A5A00;color:#fff;border:0;border-radius:4px;padding:2px 10px;cursor:pointer;font-size:12px;">知道了</button>
+</div>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">产</span>
+    <div>
+      <h1>产能归因台</h1>
+      <p>一线业务人员产能分析与下滑归因 · 月度 T+3</p>
+    </div>
+  </div>
+  <div class="top-actions">
+    <span class="badge demo">演示数据</span>
+    <label class="month">统计月
+      <select id="statMonth">
+        <option value="2026-09">2026-09</option>
+        <option value="2026-08">2026-08</option>
+      </select>
+    </label>
+    <button id="btnCompute" class="btn primary">重新计算</button>
+    <div id="userChip" class="user-chip hidden">
+      <div class="who"><b id="userName">—</b><span id="userRole">—</span></div>
+      <button id="btnLogout" class="btn small ghost" title="退出登录">退出</button>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs" id="tabs">
+  <button class="tab active" data-view="overview">概览</button>
+  <button class="tab" data-view="decline">下滑名单</button>
+  <button class="tab" data-view="card">个人诊断卡</button>
+  <button class="tab" data-view="import" data-role="admin">导入与校验</button>
+  <button class="tab" data-view="pending">待核实<span id="pendingDot" class="dot hidden"></span></button>
+  <button class="tab" data-view="params" data-role="admin">参数设置</button>
+  <button class="tab" data-view="users" data-role="admin">用户与权限</button>
+</nav>
+
+<main>
+  <section id="view-overview" class="view active"></section>
+  <section id="view-decline" class="view"></section>
+  <section id="view-card" class="view"></section>
+  <section id="view-import" class="view"></section>
+  <section id="view-pending" class="view"></section>
+  <section id="view-params" class="view"></section>
+  <section id="view-users" class="view"></section>
+</main>
+
+<div id="toast" class="toast hidden"></div>
+<div id="modal" class="modal hidden"><div class="modal-box" id="modalBox"></div></div>
+
+<!-- 登录门禁（当前为开放访问模式，默认隐藏；设置 OPEN_ACCESS=0 后自动启用） -->
+<div id="gate" class="gate hidden">
+  <div class="gate-box">
+    <div class="gate-brand"><span class="logo">产</span><div><h2>产能归因台</h2><p>请先验证身份后使用</p></div></div>
+
+    <div id="gateNotice" class="gate-notice hidden"></div>
+
+    <div id="gateForm">
+      <div class="gate-tabs">
+        <button class="gate-tab active" data-method="phone">手机验证码</button>
+        <button class="gate-tab" data-method="email">邮箱验证码</button>
+      </div>
+      <div class="field">
+        <label id="idLabel">手机号</label>
+        <input id="idInput" inputmode="numeric" placeholder="请输入 11 位手机号" autocomplete="tel" />
+        <div id="idError" class="field-error hidden">请输入正确的 11 位手机号</div>
+      </div>
+      <div class="field">
+        <label>验证码</label>
+        <div class="code-row">
+          <input id="codeInput" inputmode="numeric" maxlength="6" placeholder="6 位验证码" />
+          <button id="btnSendCode" class="btn" type="button">获取验证码</button>
+        </div>
+      </div>
+      <button id="btnLogin" class="btn primary block">登录 / 注册</button>
+      <p class="gate-hint">首次登录将自动注册。未获授权的账号需管理员开通后才能查看数据。</p>
+    </div>
+  </div>
+</div>
+
+<script src="vendor/workbuddy-cloud.global.js"></script>
+<script src="app.js"></script>
+<script>
+// 快照模式：拦截失效的相对资源请求，避免报错
+(function(){
+  try { document.body.style.paddingTop = '44px'; } catch(e) {}
+  var origFetch = window.fetch;
+  window.fetch = function(u){
+    if (typeof u === 'string' && (u.startsWith('/') || (!u.startsWith('http') && !u.startsWith('data:') && !u.startsWith('#')))) {
+      return Promise.resolve(new Response(JSON.stringify({items:[],error:'snapshot-mode'}), {status:200, headers:{'Content-Type':'application/json'}}));
+    }
+    return origFetch.apply(this, arguments);
+  };
+  // 阻止相对资源加载报错
+  document.addEventListener('error', function(e){
+    var t = e.target;
+    if (t && (t.tagName === 'SCRIPT' || t.tagName === 'LINK')) e.preventDefault();
+  }, true);
+})();
+</script>
+</body>
+</html>

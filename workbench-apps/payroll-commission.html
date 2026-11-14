@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>薪酬佣金录入发薪工作台</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div id="gh-snapshot-banner" style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#FFF7E6;border-bottom:1px solid #E8C87A;color:#8A5A00;padding:8px 16px;font:13px/1.5 'PingFang SC','Microsoft YaHei',sans-serif;text-align:center;">
+📜 这是原内网工作台的<strong>静态快照</strong>（仅供存档预览）。完整交互版本需在 WorkBuddy 内网环境打开原链接。
+<button onclick="this.parentNode.remove();document.body.style.paddingTop='0'" style="margin-left:10px;background:#8A5A00;color:#fff;border:0;border-radius:4px;padding:2px 10px;cursor:pointer;font-size:12px;">知道了</button>
+</div>
+
+
+<!-- ============ 登录 ============ -->
+<div id="login" class="gate">
+  <div class="gate-card">
+    <div class="gate-logo">薪</div>
+    <h1>薪酬佣金录入发薪工作台</h1>
+    <p class="gate-sub">使用微信扫码或一键授权登录。数据保存在 WorkBuddy 云数据库，登录后按角色分配权限。</p>
+
+    <button class="btn btn-wechat gate-btn" id="btnWechat">
+      <svg class="wx-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8.7 3C4.9 3 1.8 5.6 1.8 8.8c0 1.8 1 3.4 2.7 4.5l-.7 2.4 2.7-1.4c.7.2 1.4.3 2.2.3h.4c-.2-.6-.3-1.2-.3-1.8 0-3.1 3-5.7 6.8-5.7.3 0 .6 0 .9.1C15.9 4.7 12.6 3 8.7 3zm-2.3 3.2c-.5 0-.9-.4-.9-.9s.4-.9.9-.9.9.4.9.9-.4.9-.9.9zm5 0c-.5 0-.9-.4-.9-.9s.4-.9.9-.9.9.4.9.9-.4.9-.9.9zM22.2 12.8c0-2.6-2.6-4.7-5.8-4.7s-5.8 2.1-5.8 4.7 2.6 4.7 5.8 4.7c.6 0 1.2-.1 1.8-.3l2.2 1.2-.6-2c1.5-.9 2.4-2.2 2.4-3.6zm-7.7-.8c-.4 0-.7-.3-.7-.7s.3-.7.7-.7.7.3.7.7-.3.7-.7.7zm4 0c-.4 0-.7-.3-.7-.7s.3-.7.7-.7.7.3.7.7-.3.7-.7.7z"/></svg>
+      微信登录
+    </button>
+    <div class="gate-err" id="loginErr"></div>
+
+    <div class="gate-foot" id="loginHint">
+      首次登录的账号自动成为管理员（薪酬岗），可在「成员管理」里分配其他人是薪酬岗还是主管。
+    </div>
+  </div>
+</div>
+
+<!-- ============ 待分配权限 ============ -->
+<div id="pending" class="gate" style="display:none">
+  <div class="gate-card">
+    <div class="gate-logo" style="background:var(--warn)">⏳</div>
+    <h1>账号已登记，等待授权</h1>
+    <p class="gate-sub" id="pendingText">你已成功登录，但管理员还没有分配权限。请联系薪酬岗管理员在「成员管理」中设置你的角色。</p>
+    <button class="btn gate-btn" id="btnPendingOut">退出登录</button>
+  </div>
+</div>
+
+<!-- ============ 主应用 ============ -->
+<div id="app" class="app-hidden">
+  <header class="topbar">
+    <h1><span class="logo">薪</span>薪酬佣金录入发薪工作台</h1>
+    <div class="meta">
+      <span class="pill pill-ghost pill-dot" id="cloudState">云数据库：已连接</span>
+      <span class="pill" id="roleBadge">—</span>
+      <span class="user-chip" id="userName">—</span>
+      <button class="btn btn-sm btn-ghost-light" id="btnLogout">退出</button>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab active" data-page="overview"><span class="step-no">1</span>概览</button>
+    <button class="tab" data-page="import"><span class="step-no">2</span>导入与解析</button>
+    <button class="tab" data-page="items"><span class="step-no">3</span>项目明细</button>
+    <button class="tab" data-page="check"><span class="step-no">4</span>校验</button>
+    <button class="tab" data-page="summary"><span class="step-no">5</span>汇总与修改</button>
+    <button class="tab" data-page="history"><span class="step-no">6</span>批次历史</button>
+    <button class="tab" data-page="members" id="tabMembers" style="display:none"><span class="step-no">7</span>成员管理</button>
+  </nav>
+
+  <main>
+
+    <!-- ============ 1 概览 ============ -->
+    <section class="page active" id="page-overview">
+      <div class="notice notice-info">
+        <span>☁️</span>
+        <div>
+          <b>已接入 WorkBuddy 云数据库</b>（PostgreSQL + 行级权限 + 账号身份）。批次、项目明细、汇总、校验与操作留痕都真实入库，
+          换设备用同一微信登录即可看到同一份数据。
+        </div>
+      </div>
+
+      <div class="grid grid-4" style="margin-bottom:18px">
+        <div class="kpi">
+          <div class="label">当前批次</div>
+          <div class="value" id="kpiBatch">—</div>
+          <div class="foot" id="kpiBatchFoot">尚未导入</div>
+        </div>
+        <div class="kpi">
+          <div class="label">汇总行数</div>
+          <div class="value" id="kpiRows">0<small>行</small></div>
+          <div class="foot">一费用项一行 · 跨岗拆行</div>
+        </div>
+        <div class="kpi">
+          <div class="label">金额合计</div>
+          <div class="value" id="kpiTotal">¥0.00</div>
+          <div class="foot">服务端计算 · 先舍入后合计</div>
+        </div>
+        <div class="kpi">
+          <div class="label">校验状态</div>
+          <div class="value" id="kpiCheck">—</div>
+          <div class="foot" id="kpiCheckFoot">人数/金额/主键/空值/异常/项目合计</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h2>业务闭环 <span class="sub">多 sheet 多项目 → 按员工汇总 → 校验 → 保存 → 修改 → 导出</span></h2>
+          <div class="flow" id="flowBar">
+            <span class="n" data-f="1">① 上传明细</span><span class="arrow">→</span>
+            <span class="n" data-f="2">② 识别项目</span><span class="arrow">→</span>
+            <span class="n" data-f="3">③ 服务端汇总</span><span class="arrow">→</span>
+            <span class="n" data-f="4">④ 校验比对</span><span class="arrow">→</span>
+            <span class="n" data-f="5">⑤ 定稿导出</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="grid grid-3">
+            <div>
+              <div class="mini-label">前端（页面与交互）</div>
+              <div class="mini-text">上传 Excel、识别每个岗位的多个 sheet 与项目列、展示结果；不计算任何金额，不直连数据库表。</div>
+            </div>
+            <div>
+              <div class="mini-label">后端（服务端逻辑）</div>
+              <div class="mini-text">数据库函数 pc_api：账号角色鉴权、项目汇总、浮动薪计算、6 类校验、定稿锁定、修改留痕。前端绕不过。</div>
+            </div>
+            <div>
+              <div class="mini-label">数据库（持久化）</div>
+              <div class="mini-text">云数据库 7 张表，行级权限开启、表级授权全部回收，只能经服务端函数读写。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>最近批次</h2><button class="btn btn-sm" onclick="App.go('history')">查看全部</button></div>
+        <div class="card-body tight" id="recentBox">
+          <div class="empty"><span class="e-icon">📄</span>还没有批次，请到「导入与解析」上传佣金明细</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 2 导入与解析 ============ -->
+    <section class="page" id="page-import">
+      <div class="card">
+        <div class="card-head">
+          <h2>① 上传佣金明细</h2>
+          <div class="toolbar">
+            <div class="field">
+              <label>所属月份</label>
+              <input type="text" id="monthInput" placeholder="如 2026年10月">
+            </div>
+            <button class="btn btn-sm" id="btnDemo">载入示例文件</button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="dropzone" id="dropzone">
+            <div class="dz-icon">⬆</div>
+            <h3>点击选择，或把 Excel 拖到这里</h3>
+            <p>支持 .xlsx / .xls / .csv。每个岗位可以有多个 sheet，每个 sheet 可含多个佣金项目列，系统自动识别并汇总。</p>
+          </div>
+          <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" class="hide">
+          <div class="footnote">
+            员工编码按文本处理，防止前导零丢失；金额允许千分位逗号。<b>解析只做结构识别，金额汇总与校验在服务端执行。</b>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" id="parseCard" style="display:none">
+        <div class="card-head">
+          <h2>② 解析结果 <span class="sub" id="fileNameTxt"></span></h2>
+          <div class="toolbar"><span class="badge badge-mute" id="parseBadge">待提交</span></div>
+        </div>
+        <div class="card-body tight">
+          <div class="table-wrap">
+            <table class="tbl" id="sheetTable">
+              <thead><tr><th>Sheet</th><th>对应岗位</th><th>类型</th><th>识别到的佣金项目</th><th class="num">数据行</th><th>状态</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-body" style="border-top:1px solid var(--line)">
+          <div id="parseNotes"></div>
+        </div>
+      </div>
+
+      <div class="card" id="rowErrCard" style="display:none">
+        <div class="card-head"><h2>行级提醒 <span class="sub">提交后服务端仍会再校验一次</span></h2></div>
+        <div class="card-body tight">
+          <div class="table-wrap">
+            <table class="tbl" id="rowErrTable">
+              <thead><tr><th>Sheet</th><th>岗位</th><th class="num">行号</th><th>字段</th><th>问题</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" id="confirmCard" style="display:none">
+        <div class="card-head"><h2>③ 提交并写入云数据库</h2></div>
+        <div class="card-body">
+          <div class="toolbar">
+            <button class="btn btn-primary" id="btnConfirm">提交并保存批次</button>
+            <span class="footnote" style="margin:0" id="confirmHint">提交后由服务端汇总项目、计算浮动薪、生成汇总并校验。</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 3 项目明细 ============ -->
+    <section class="page" id="page-items">
+      <div id="itemEmpty" class="card"><div class="empty"><span class="e-icon">🧾</span>还没有项目明细，请先导入佣金明细</div></div>
+
+      <div id="itemMain" style="display:none">
+        <div class="card">
+          <div class="card-head">
+            <h2>佣金项目构成 <span class="sub">每个 sheet 的每个项目单独列示，可回溯到源头</span></h2>
+            <div class="toolbar">
+              <div class="field">
+                <label>岗位筛选</label>
+                <select id="itemPosFilter"><option value="">全部岗位</option></select>
+              </div>
+            </div>
+          </div>
+          <div class="card-body tight">
+            <div class="table-wrap">
+              <table class="tbl" id="itemSumTable">
+                <thead><tr><th>岗位</th><th>佣金项目</th><th class="num">人数</th><th class="num">项目合计</th><th>说明</th></tr></thead>
+                <tbody></tbody>
+                <tfoot></tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h2>员工级项目明细 <span class="sub">同一员工跨 sheet 的项目在此合并展示</span></h2>
+            <div class="toolbar">
+              <div class="field">
+                <label>搜索员工</label>
+                <input type="text" id="itemKw" placeholder="员工ID 或 姓名">
+              </div>
+            </div>
+          </div>
+          <div class="card-body tight">
+            <div class="table-wrap" style="max-height:62vh;overflow-y:auto">
+              <table class="tbl" id="itemTable">
+                <thead><tr><th>员工ID</th><th>姓名</th><th>岗位</th><th>来源 Sheet</th><th>佣金项目</th><th class="num">金额</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 4 校验 ============ -->
+    <section class="page" id="page-check">
+      <div id="checkEmpty" class="card"><div class="empty"><span class="e-icon">🔍</span>还没有批次，请先导入佣金明细</div></div>
+
+      <div id="checkMain" style="display:none">
+        <div id="checkBanner"></div>
+
+        <div class="card">
+          <div class="card-head">
+            <h2>分岗位校验 <span class="sub">人数 / 项目合计 / 金额 / 主键唯一 / 空值 / 异常值 · 全部由服务端判定</span></h2>
+            <button class="btn btn-sm" id="btnGotoSummary">进入汇总 →</button>
+          </div>
+          <div class="card-body">
+            <div class="grid grid-2" id="checkGrid"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h2>分岗位金额比对表</h2></div>
+          <div class="card-body tight">
+            <div class="table-wrap">
+              <table class="tbl" id="posTable">
+                <thead>
+                  <tr><th>岗位</th><th class="num">人数</th><th class="num">明细合计</th><th class="num">汇总合计</th><th class="num">差额</th><th>结论</th></tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot></tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 5 汇总与修改 ============ -->
+    <section class="page" id="page-summary">
+      <div id="sumEmpty" class="card"><div class="empty"><span class="e-icon">📊</span>还没有汇总数据，请先导入佣金明细</div></div>
+
+      <div id="sumMain" style="display:none">
+        <div id="sumBanner"></div>
+
+        <div class="card">
+          <div class="card-head">
+            <h2>汇总明细表 <span class="sub">固定 4 列 · 可人工修改并留痕</span></h2>
+            <div class="toolbar">
+              <div class="field">
+                <label>岗位筛选</label>
+                <select id="filterPos"><option value="">全部岗位</option></select>
+              </div>
+              <div class="field">
+                <label>搜索员工</label>
+                <input type="text" id="filterKw" placeholder="员工ID 或 姓名">
+              </div>
+            </div>
+          </div>
+          <div class="card-body tight">
+            <div class="table-wrap" style="max-height:68vh;overflow-y:auto">
+              <table class="tbl" id="sumTable">
+                <thead><tr><th style="width:104px">员工ID</th><th style="width:96px">姓名</th><th class="num" style="width:122px">金额</th><th>备注</th><th style="width:96px">操作</th></tr></thead>
+                <tbody></tbody>
+                <tfoot></tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h2>导出与定稿</h2></div>
+          <div class="card-body">
+            <div class="toolbar">
+              <button class="btn btn-primary" id="btnExportXlsx">导出汇总表 (xlsx)</button>
+              <button class="btn" id="btnExportCsv">导出 CSV</button>
+              <button class="btn" id="btnExportReport">导出校验报告</button>
+              <div class="spacer"></div>
+              <button class="btn btn-ok" id="btnFinalize">定稿并加锁</button>
+              <button class="btn btn-danger btn-sm" id="btnUnlock" style="display:none">解除定稿</button>
+            </div>
+            <div class="footnote" id="finalHint">
+              定稿后由服务端锁定：金额不可改、批次不可删。解除定稿仅主管可操作。
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h2>操作留痕 <span class="sub">服务端记录，不可编辑</span></h2></div>
+          <div class="card-body tight">
+            <div class="table-wrap">
+              <table class="tbl" id="auditTable">
+                <thead><tr><th>时间</th><th>操作</th><th>对象</th><th>原值 → 新值</th><th>原因</th><th>操作人</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 6 批次历史 ============ -->
+    <section class="page" id="page-history">
+      <div class="card">
+        <div class="card-head">
+          <h2>批次历史 <span class="sub">云数据库中的全部批次</span></h2>
+          <button class="btn btn-sm" id="btnRefreshHistory">刷新</button>
+        </div>
+        <div class="card-body tight">
+          <div class="table-wrap">
+            <table class="tbl" id="historyTable">
+              <thead>
+                <tr><th>批次号</th><th>月份</th><th>文件</th><th>导入人</th><th class="num">行数</th><th class="num">合计</th><th>校验</th><th>状态</th><th>创建时间</th><th>操作</th></tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 7 成员管理 ============ -->
+    <section class="page" id="page-members">
+      <div class="card">
+        <div class="card-head">
+          <h2>成员与权限 <span class="sub">薪酬岗可导入/改金额/定稿；主管可查看与审核，不能改金额</span></h2>
+          <button class="btn btn-sm" id="btnRefreshMembers">刷新</button>
+        </div>
+        <div class="card-body tight">
+          <div class="table-wrap">
+            <table class="tbl" id="memberTable">
+              <thead><tr><th>成员</th><th>身份标识</th><th>角色</th><th>可做什么</th><th>加入时间</th><th>操作</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div class="footnote">
+            角色说明：<b>薪酬岗</b> 可导入、修改金额、定稿、删除草稿批次；<b>主管</b> 可查看全部数据、解除定稿、导出，但不能改金额；
+            <b>待分配</b> 登录后看不到任何数据。管理员可调整任何人的角色。
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ============ 修改弹窗 ============ -->
+<div class="modal" id="editModal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3>修改金额</h3>
+      <button class="modal-x" id="editClose">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="edit-target" id="editTarget"></div>
+      <div class="field">
+        <label>金额</label>
+        <input type="number" id="editAmount" step="0.01">
+      </div>
+      <div class="field">
+        <label>备注</label>
+        <input type="text" id="editRemark">
+      </div>
+      <div class="field">
+        <label>修改原因（必填，写入留痕）</label>
+        <input type="text" id="editReason" placeholder="如：客户补差 / 系数更正，请注明依据">
+      </div>
+      <div class="modal-err" id="editErr"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" id="editCancel">取消</button>
+      <button class="btn btn-primary" id="editSave">保存修改</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<!-- SheetJS 按需加载（首次用到 Excel 时才下载，避免登录页被 881KB 依赖拖慢） -->
+<script src="vendor/workbuddy-cloud.global.js"></script>
+<script src="js/config.js"></script>
+<script src="js/cloud.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/excel.js"></script>
+<script src="js/app.js"></script>
+<script>
+// 快照模式：拦截失效的相对资源请求，避免报错
+(function(){
+  try { document.body.style.paddingTop = '44px'; } catch(e) {}
+  var origFetch = window.fetch;
+  window.fetch = function(u){
+    if (typeof u === 'string' && (u.startsWith('/') || (!u.startsWith('http') && !u.startsWith('data:') && !u.startsWith('#')))) {
+      return Promise.resolve(new Response(JSON.stringify({items:[],error:'snapshot-mode'}), {status:200, headers:{'Content-Type':'application/json'}}));
+    }
+    return origFetch.apply(this, arguments);
+  };
+  // 阻止相对资源加载报错
+  document.addEventListener('error', function(e){
+    var t = e.target;
+    if (t && (t.tagName === 'SCRIPT' || t.tagName === 'LINK')) e.preventDefault();
+  }, true);
+})();
+</script>
+</body>
+</html>

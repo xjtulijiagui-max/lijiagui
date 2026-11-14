@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>培训规划设计工作台 · 网页版</title>
+<meta name="description" content="基于 DOME 模型的培训规划设计工作台，单文件网页版，数据保存在本机浏览器。">
+<style>
+  :root{
+    --paper:#FAF8F4;
+    --paper-2:#F4F1EA;
+    --paper-3:#ECE8DF;
+    --card:#FFFFFF;
+    --ink:#171C24;
+    --ink-2:#3D4655;
+    --muted:#6E7788;
+    --line:#DFD9CC;
+    --line-2:#EDE9DF;
+    --accent:#0E6655;
+    --accent-deep:#0A4C3F;
+    --accent-soft:#E6F0EC;
+    --gold:#A9782F;
+    --gold-soft:#F7EFE1;
+    --red:#A83232;
+    --red-soft:#FBEBEB;
+    --amber:#A96A12;
+    --amber-soft:#FBF0DD;
+    --radius:12px;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    --serif:"Songti SC","Source Han Serif SC","Noto Serif SC","STSong",Georgia,serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    background:var(--paper);color:var(--ink);
+    font-family:var(--sans);font-size:14.5px;line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
+  a{color:var(--accent)}
+
+  /* ── 布局 ── */
+  .app{display:grid;grid-template-columns:244px 1fr;min-height:100vh}
+
+  .side{
+    background:var(--paper-2);border-right:1px solid var(--line);
+    display:flex;flex-direction:column;position:sticky;top:0;height:100vh;
+  }
+  .side-head{padding:20px 18px 16px;border-bottom:1px solid var(--line-2);display:flex;align-items:center;gap:10px}
+  .mark{
+    width:32px;height:32px;border-radius:8px;background:var(--accent);color:#fff;
+    display:grid;place-items:center;font-family:var(--serif);font-weight:700;font-size:16px;
+    letter-spacing:-1px;flex-shrink:0;
+  }
+  .side-head .t{line-height:1.25}
+  .side-head .t b{display:block;font-size:14px;font-weight:600}
+  .side-head .t span{font-size:10.5px;color:var(--muted);letter-spacing:1.1px}
+
+  .proj-box{padding:14px 14px 12px;border-bottom:1px solid var(--line-2)}
+  .proj-box label{font-size:11px;color:var(--muted);letter-spacing:.6px}
+  .proj-box select{
+    width:100%;margin-top:6px;padding:8px 9px;border:1px solid var(--line);
+    border-radius:8px;background:#fff;font-size:13px;
+  }
+  .proj-acts{display:flex;gap:6px;margin-top:7px}
+  .proj-acts button{flex:1}
+
+  nav.nav{padding:10px 10px;flex:1;overflow-y:auto}
+  .nav-item{
+    display:flex;align-items:center;gap:9px;width:100%;
+    padding:9px 11px;border:none;background:none;border-radius:8px;
+    cursor:pointer;text-align:left;font-size:13.5px;color:var(--ink-2);
+    transition:.15s;margin-bottom:1px;
+  }
+  .nav-item:hover{background:#fff;color:var(--ink)}
+  .nav-item.on{background:var(--accent);color:#fff;font-weight:600;box-shadow:0 2px 8px rgba(14,102,85,.2)}
+  .nav-item .ic{width:18px;text-align:center;opacity:.85;font-size:13px}
+  .nav-item .cnt{
+    margin-left:auto;font-size:10.5px;padding:1px 6px;border-radius:20px;
+    background:var(--paper-3);color:var(--muted);font-weight:600;
+  }
+  .nav-item.on .cnt{background:rgba(255,255,255,.22);color:#fff}
+
+  .side-foot{padding:12px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:6px}
+
+  /* ── 按钮 ── */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:6px;
+    padding:8px 14px;border-radius:8px;border:1px solid var(--line);
+    background:#fff;cursor:pointer;font-size:13px;font-weight:500;
+    transition:.18s;white-space:nowrap;
+  }
+  .btn:hover{border-color:var(--accent);color:var(--accent)}
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+  .btn.primary:hover{background:var(--accent-deep);color:#fff}
+  .btn.ghost{background:transparent}
+  .btn.danger{color:var(--red);border-color:#E4C9C9}
+  .btn.danger:hover{background:var(--red-soft);border-color:var(--red);color:var(--red)}
+  .btn.sm{padding:5px 10px;font-size:12px;border-radius:6px}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  .file-btn{position:relative;overflow:hidden;display:inline-flex}
+  .file-btn input{position:absolute;inset:0;opacity:0;cursor:pointer}
+
+  /* ── 主区 ── */
+  .main{display:flex;flex-direction:column;min-width:0}
+  .topbar{
+    height:60px;border-bottom:1px solid var(--line);background:rgba(250,248,244,.92);
+    backdrop-filter:blur(10px);display:flex;align-items:center;gap:14px;
+    padding:0 24px;position:sticky;top:0;z-index:20;
+  }
+  .menu{display:none;background:none;border:1px solid var(--line);border-radius:7px;padding:5px 9px;cursor:pointer}
+  .tb-title{font-family:var(--serif);font-size:16px;font-weight:600;letter-spacing:.2px}
+  .tb-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+  .save-state{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px}
+  .save-state::before{content:"";width:6px;height:6px;border-radius:50%;background:#5BA88F}
+  .save-state.dirty::before{background:var(--amber)}
+  .badge{
+    font-size:12px;padding:3px 10px;border-radius:20px;
+    background:var(--gold-soft);color:var(--gold);font-weight:600;border:1px solid #E8D9BF;
+  }
+  .badge.zero{background:var(--accent-soft);color:var(--accent);border-color:#C9E0D8}
+
+  .content{padding:28px 24px 80px;max-width:1080px;width:100%;margin:0 auto}
+
+  /* ── 通用块 ── */
+  .page-head{margin-bottom:22px}
+  .page-head h1{font-family:var(--serif);font-size:23px;font-weight:600;letter-spacing:.2px}
+  .page-head p{font-size:13px;color:var(--muted);margin-top:5px;max-width:60em}
+
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    margin-bottom:16px;overflow:hidden;
+  }
+  .card-h{
+    padding:13px 18px;border-bottom:1px solid var(--line-2);
+    display:flex;align-items:center;gap:10px;background:#FDFCFA;
+  }
+  .card-h h3{font-size:14px;font-weight:600;letter-spacing:.2px}
+  .card-h .hint{font-size:12px;color:var(--muted)}
+  .card-h .r{margin-left:auto;display:flex;gap:7px;align-items:center}
+  .card-b{padding:18px}
+  .card-b.tight{padding:0}
+
+  /* ── 表单 ── */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .field{display:flex;flex-direction:column;gap:5px}
+  .field.full{grid-column:1/-1}
+  .field label{font-size:12px;color:var(--ink-2);font-weight:600;display:flex;align-items:center;gap:6px}
+  .field label .req{color:var(--red);font-weight:700}
+  .field label .tag{
+    font-weight:500;font-size:10.5px;color:var(--gold);background:var(--gold-soft);
+    padding:1px 6px;border-radius:4px;letter-spacing:.2px;
+  }
+  .field input[type=text],.field input[type=number],.field select,.field textarea{
+    width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;
+    background:#fff;font-size:13.5px;transition:.15s;
+  }
+  .field textarea{resize:vertical;min-height:62px;line-height:1.65}
+  .field input:focus,.field select:focus,.field textarea:focus{
+    outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(14,102,85,.09);
+  }
+  .field .tip{font-size:11.5px;color:var(--muted)}
+
+  .check{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--ink-2);cursor:pointer;padding:4px 0;white-space:nowrap}
+  .check input{width:15px;height:15px;accent-color:var(--accent);cursor:pointer}
+
+  /* ── 表格 ── */
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{
+    text-align:left;padding:9px 14px;background:#FDFCFA;color:var(--ink-2);
+    font-weight:600;font-size:12px;letter-spacing:.3px;border-bottom:1px solid var(--line);
+    white-space:nowrap;
+  }
+  td{padding:10px 14px;border-bottom:1px solid var(--line-2);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  td input,td select,td textarea{
+    width:100%;padding:5px 7px;border:1px solid transparent;border-radius:6px;
+    background:transparent;font-size:13px;transition:.15s;
+  }
+  td input:hover,td select:hover,td textarea:hover{border-color:var(--line-2);background:#FDFCFA}
+  td input:focus,td select:focus,td textarea:focus{
+    outline:none;border-color:var(--accent);background:#fff;box-shadow:0 0 0 3px rgba(14,102,85,.07);
+  }
+  td textarea{resize:vertical;min-height:34px;line-height:1.6}
+  td input[type=number]{min-width:56px;text-align:center;font-variant-numeric:tabular-nums}
+  .card-b.tight{overflow-x:auto}
+  .card-b.tight table{min-width:780px}
+  .card-b.tight table.wide{min-width:1100px}
+  .td-acts{white-space:nowrap;width:1%}
+  .icon-btn{
+    border:none;background:none;cursor:pointer;color:var(--muted);
+    padding:4px 6px;border-radius:5px;font-size:12px;transition:.15s;
+  }
+  .icon-btn:hover{background:var(--paper-2);color:var(--red)}
+
+  .empty{
+    padding:38px 20px;text-align:center;color:var(--muted);font-size:13px;
+    border:1px dashed var(--line);border-radius:10px;margin:16px;
+  }
+  .empty b{display:block;color:var(--ink-2);font-size:13.5px;margin-bottom:4px}
+
+  /* 课程包卡片 */
+  .pkg{border:1px solid var(--line);border-radius:11px;margin-bottom:12px;overflow:hidden;background:#fff}
+  .pkg:last-child{margin-bottom:0}
+  .pkg-h{
+    display:flex;align-items:center;gap:8px;padding:9px 12px;
+    background:var(--paper-2);border-bottom:1px solid var(--line-2);
+  }
+  .pkg-h select{
+    border:1px solid transparent;background:transparent;border-radius:6px;
+    padding:4px 6px;font-size:12.5px;font-weight:600;color:var(--accent-deep);cursor:pointer;
+  }
+  .pkg-h select:hover{background:#fff;border-color:var(--line)}
+  .pkg-h select:focus{outline:none;border-color:var(--accent);background:#fff}
+  .pkg-v{max-width:190px}
+  .pkg-g{color:var(--ink-2)!important;font-weight:500!important;max-width:150px}
+  .pkg-h .icon-btn{margin-left:auto}
+  .pkg-b{padding:14px}
+  .pkg-b .field label{font-size:11.5px}
+  .vchip{
+    font-size:11px;padding:2px 8px;border-radius:20px;background:var(--paper-3);
+    color:var(--muted);font-weight:600;letter-spacing:.3px;
+  }
+  .vchip.on{background:var(--accent-soft);color:var(--accent)}
+  .vchip b{font-weight:700}
+
+  /* ── 总览 ── */
+  .ov-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+  .stat{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px}
+  .stat .n{font-family:var(--serif);font-size:26px;font-weight:700;line-height:1;letter-spacing:-.5px}
+  .stat .n small{font-size:12px;color:var(--muted);font-weight:500;margin-left:2px}
+  .stat .l{font-size:12px;color:var(--muted);margin-top:7px}
+  .stat.warn .n{color:var(--amber)}
+  .stat.ok .n{color:var(--accent)}
+
+  .steps{display:flex;flex-direction:column;gap:0}
+  .step{
+    display:flex;align-items:center;gap:12px;padding:12px 18px;
+    border-bottom:1px solid var(--line-2);cursor:pointer;transition:.15s;
+  }
+  .step:last-child{border-bottom:none}
+  .step:hover{background:#FDFCFA}
+  .step .k{
+    width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+    font-family:var(--serif);font-size:12px;font-weight:700;flex-shrink:0;
+    background:var(--paper-3);color:var(--muted);
+  }
+  .step.done .k{background:var(--accent);color:#fff}
+  .step .t{font-size:13.5px;font-weight:500}
+  .step .d{font-size:11.5px;color:var(--muted);margin-top:1px}
+  .step .s{margin-left:auto;font-size:11.5px;padding:2px 9px;border-radius:20px;font-weight:600}
+  .s.done{background:var(--accent-soft);color:var(--accent)}
+  .s.wip{background:var(--amber-soft);color:var(--amber)}
+  .s.todo{background:var(--paper-3);color:var(--muted)}
+
+  /* ── DOME tabs ── */
+  .tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:18px}
+  .tab{
+    padding:9px 16px;border:none;background:none;cursor:pointer;font-size:13.5px;
+    color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;transition:.15s;
+  }
+  .tab:hover{color:var(--ink)}
+  .tab.on{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
+  .tab .c{font-size:11px;margin-left:4px;opacity:.7}
+
+  /* ── 文档页 ── */
+  .doc-layout{display:grid;grid-template-columns:210px 1fr;gap:16px;align-items:start}
+  .doc-list{background:#fff;border:1px solid var(--line);border-radius:10px;padding:7px;position:sticky;top:76px}
+  .doc-item{
+    display:flex;gap:8px;align-items:center;width:100%;text-align:left;
+    padding:8px 10px;border:none;background:none;border-radius:7px;cursor:pointer;
+    font-size:13px;color:var(--ink-2);transition:.15s;
+  }
+  .doc-item:hover{background:var(--paper-2)}
+  .doc-item.on{background:var(--accent-soft);color:var(--accent-deep);font-weight:600}
+  .doc-item .c{font-family:var(--serif);font-size:11px;color:var(--gold);font-weight:700;flex-shrink:0}
+  .doc-preview{background:#fff;border:1px solid var(--line);border-radius:10px;padding:26px 30px;overflow-x:auto}
+  .doc-preview h2{font-family:var(--serif);font-size:19px;margin-bottom:4px;font-weight:600}
+  .doc-preview h3{font-size:13.5px;margin:20px 0 8px;color:var(--accent-deep);font-weight:600;letter-spacing:.3px}
+  .doc-preview p{font-size:13px;color:var(--ink-2);margin-bottom:8px;line-height:1.8}
+  .doc-preview table{font-size:12.5px;margin-bottom:6px;border:1px solid var(--line)}
+  .doc-preview th{background:var(--paper-2)}
+  .doc-preview td{border-bottom:1px solid var(--line-2)}
+  .doc-meta{font-size:12px;color:var(--muted);border-bottom:1px solid var(--line-2);padding-bottom:12px;margin-bottom:6px;line-height:1.9}
+  .doc-foot{margin-top:22px;padding-top:12px;border-top:1px dashed var(--line);font-size:11.5px;color:var(--muted);line-height:1.9}
+
+  .banner{
+    padding:11px 14px;border-radius:9px;font-size:12.5px;line-height:1.75;
+    margin-bottom:16px;display:flex;gap:9px;align-items:flex-start;
+  }
+  .banner.warn{background:var(--amber-soft);border:1px solid #EBD7B4;color:#7A4E0C}
+  .banner.err{background:var(--red-soft);border:1px solid #EBC9C9;color:#7C2626}
+  .banner.ok{background:var(--accent-soft);border:1px solid #C9E0D8;color:var(--accent-deep)}
+  .banner b{font-weight:700}
+
+  .rule-note{
+    font-size:11.5px;color:var(--muted);background:var(--paper-2);
+    padding:8px 12px;border-radius:8px;line-height:1.7;
+  }
+
+  /* ── 审核 ── */
+  .status-line{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .pill{font-size:12px;padding:3px 11px;border-radius:20px;font-weight:600}
+  .pill.draft{background:var(--paper-3);color:var(--muted)}
+  .pill.wait{background:var(--amber-soft);color:var(--amber)}
+  .pill.ok{background:var(--accent-soft);color:var(--accent)}
+  .pill.pub{background:var(--accent);color:#fff}
+
+  /* ── 弹层 ── */
+  .modal-mask{
+    position:fixed;inset:0;background:rgba(23,28,36,.38);z-index:100;
+    display:none;align-items:center;justify-content:center;padding:20px;
+  }
+  .modal-mask.on{display:flex}
+  .modal{
+    background:#fff;border-radius:14px;max-width:520px;width:100%;
+    padding:24px;box-shadow:0 20px 50px rgba(0,0,0,.2);
+  }
+  .modal h3{font-size:16px;margin-bottom:10px;font-family:var(--serif)}
+  .modal p{font-size:13px;color:var(--ink-2);line-height:1.8;margin-bottom:12px}
+  .modal .hits{background:var(--red-soft);border-radius:8px;padding:10px 12px;font-size:12.5px;color:#7C2626;margin-bottom:14px;line-height:1.8}
+  .modal .acts{display:flex;gap:9px;justify-content:flex-end;margin-top:18px}
+
+  .toast{
+    position:fixed;left:50%;bottom:34px;transform:translate(-50%,16px);
+    background:var(--ink);color:#fff;padding:10px 20px;border-radius:9px;
+    font-size:13px;opacity:0;pointer-events:none;transition:.28s;z-index:200;
+    box-shadow:0 8px 24px rgba(0,0,0,.18);max-width:80vw;
+  }
+  .toast.on{opacity:1;transform:translate(-50%,0)}
+  .toast.err{background:#8E2B2B}
+
+  .mask{display:none;position:fixed;inset:0;background:rgba(23,28,36,.35);z-index:40}
+
+  @media (max-width:900px){
+    .app{grid-template-columns:1fr}
+    .side{
+      position:fixed;left:0;top:0;bottom:0;width:250px;z-index:50;
+      transform:translateX(-100%);transition:transform .25s;box-shadow:0 0 30px rgba(0,0,0,.14);
+    }
+    .side.open{transform:none}
+    .mask.on{display:block}
+    .menu{display:block}
+    .content{padding:20px 16px 70px}
+    .ov-grid{grid-template-columns:1fr 1fr}
+    .grid2,.grid3{grid-template-columns:1fr}
+    .doc-layout{grid-template-columns:1fr}
+    .doc-list{position:static;display:flex;overflow-x:auto;gap:4px}
+    .doc-item{white-space:nowrap}
+    .topbar{padding:0 16px;height:56px}
+    table{font-size:12.5px}
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <aside class="side" id="side">
+    <div class="side-head">
+      <div class="mark">D</div>
+      <div class="t"><b>培训规划设计工作台</b><span>DOME MODEL</span></div>
+    </div>
+
+    <div class="proj-box">
+      <label>当前项目</label>
+      <select id="projSel"></select>
+      <div class="proj-acts">
+        <button class="btn sm" id="btnNewProj">新建</button>
+        <button class="btn sm danger" id="btnDelProj">删除</button>
+      </div>
+    </div>
+
+    <nav class="nav" id="nav"></nav>
+
+    <div class="side-foot">
+      <a href="/" id="toV1" class="btn sm" style="display:none;text-decoration:none">← 返回服务端版</a>
+      <button class="btn sm" id="btnSeed">载入示例项目</button>
+      <button class="btn sm" id="btnExport">导出备份 (JSON)</button>
+      <label class="btn sm file-btn">导入备份<input type="file" id="fileImp" accept=".json,application/json"></label>
+      <button class="btn sm danger" id="btnReset">清空本机数据</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <button class="menu" id="menuBtn">☰</button>
+      <div class="tb-title" id="tbTitle">项目总览</div>
+      <div class="tb-right">
+        <span class="save-state" id="saveState">已保存到本机</span>
+        <span class="badge zero" id="gapBadge">待确认 0</span>
+      </div>
+    </header>
+    <div class="content" id="content"></div>
+  </main>
+</div>
+
+<div class="mask" id="mask"></div>
+<div class="toast" id="toast"></div>
+<div class="modal-mask" id="modalMask"><div class="modal" id="modal"></div></div>
+<iframe id="printFrame" style="position:fixed;width:0;height:0;border:0;opacity:0"></iframe>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ══════════════ 常量 ══════════════ */
+  var KEY = 'tpw.web.v1';
+  var SENSITIVE = ['监狱', '涉密', '机密', '绝密', '保密协议', '身份证号', '银行卡号', '密码'];
+  var GROUP_TYPES = ['市场销售人员', '前线人员', '核心管理人员'];
+  var ISSUE_TYPES = ['费用拖延史', '奖惩缺失'];
+  var METHODS = ['讲授', '角色扮演', '案例', '教练', '工作坊', '研讨'];
+  var KIRK = ['反应', '学习', '行为', '结果'];
+  var VERSIONS = ['V1 销售礼仪与沟通', 'V2 前线综合能力', 'V3 核心管理培训'];
+  var REVIEW_STATES = ['草稿', '待审核', '已审核'];
+
+  var NAV = [
+    { id: 'overview', name: '项目总览', ic: '◉' },
+    { id: 'project', name: '委托与背景', ic: '✎' },
+    { id: 'groups', name: '培训对象', ic: '❑' },
+    { id: 'dome', name: 'DOME 工作区', ic: '◆' },
+    { id: 'docs', name: '文档生成', ic: '▤' },
+    { id: 'review', name: '审核与发布', ic: '✓' },
+    { id: 'open', name: '待确认项', ic: '⚑' }
+  ];
+
+  var DOCS = [
+    { code: 'O-1', name: '培训规划设计书（总览）' },
+    { code: 'O-2', name: '诊断与需求分析报告' },
+    { code: 'O-3', name: '目标设定与学习地图' },
+    { code: 'O-4', name: '实施方案与多版本课程包' },
+    { code: 'O-5', name: '评估方案' },
+    { code: 'O-6', name: '试讲与修订记录' }
+  ];
+
+  /* ══════════════ 工具 ══════════════ */
+  function uid(p) { return p + '_' + Math.random().toString(36).slice(2, 9); }
+  function esc(s) {
+    if (s === undefined || s === null) return '';
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
+  function nl(s) { return esc(s).replace(/\n/g, '<br>'); }
+  function nowISO() { return new Date().toISOString(); }
+  function fmtDate(iso) {
+    if (!iso) return '—';
+    var d = new Date(iso);
+    if (isNaN(d)) return '—';
+    var z = function (n) { return n < 10 ? '0' + n : n; };
+    return d.getFullYear() + '-' + z(d.getMonth() + 1) + '-' + z(d.getDate()) + ' ' + z(d.getHours()) + ':' + z(d.getMinutes());
+  }
+  function $(s, r) { return (r || document).querySelector(s); }
+  function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
+
+  var toastTimer;
+  function toast(msg, isErr) {
+    var t = $('#toast');
+    t.textContent = msg;
+    t.className = 'toast on' + (isErr ? ' err' : '');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { t.className = 'toast'; }, 2400);
+  }
+
+  function modal(html) {
+    $('#modal').innerHTML = html;
+    $('#modalMask').classList.add('on');
+  }
+  function closeModal() { $('#modalMask').classList.remove('on'); }
+
+  /* ══════════════ 数据层 ══════════════ */
+  function blankProject(name, client) {
+    return {
+      id: uid('proj'),
+      name: name || '未命名项目',
+      client: client || '',
+      createdAt: nowISO(),
+      updatedAt: nowISO(),
+      bg: { reorganize_bg: '', product_customer: '', mgmt_team: '', core_demand: '', source: '朋友口述' },
+      resources: { window: '', budget: '', venue: '', trainer: '', constraint: '' },
+      permissions: { allowed_tools: '', intranet_only: true, can_submit_desensitized: true },
+      groups: [],
+      diagnoses: [],
+      objectives: [],
+      packages: [],
+      evaluations: [],
+      review: { reviewer: '', status: '草稿', note: '', published: false, publishedAt: '', ackSensitive: false },
+      openItems: []
+    };
+  }
+
+  function normalize(p) {
+    var base = blankProject();
+    for (var k in base) if (!(k in p)) p[k] = base[k];
+    ['bg', 'resources', 'permissions', 'review'].forEach(function (k) {
+      for (var kk in base[k]) if (!(kk in p[k])) p[k][kk] = base[k][kk];
+    });
+    ['groups', 'diagnoses', 'objectives', 'packages', 'evaluations', 'openItems'].forEach(function (k) {
+      if (!Array.isArray(p[k])) p[k] = [];
+    });
+    return p;
+  }
+
+  function load() {
+    try {
+      var raw = localStorage.getItem(KEY);
+      if (raw) {
+        var d = JSON.parse(raw);
+        if (d && Array.isArray(d.projects) && d.projects.length) {
+          d.projects = d.projects.map(normalize);
+          if (!d.currentId || !d.projects.some(function (x) { return x.id === d.currentId; })) {
+            d.currentId = d.projects[0].id;
+          }
+          return d;
+        }
+      }
+    } catch (e) { console.warn('读取本机数据失败', e); }
+    var p0 = seedProject();
+    return { projects: [p0], currentId: p0.id };
+  }
+
+  var store = load();
+  var page = 'overview';
+  var domeTab = 'D';
+  var activeDoc = 'O-1';
+
+  function P() {
+    return store.projects.filter(function (x) { return x.id === store.currentId; })[0] || store.projects[0];
+  }
+
+  var saveTimer;
+  function touch() {
+    P().updatedAt = nowISO();
+    $('#saveState').textContent = '保存中…';
+    $('#saveState').classList.add('dirty');
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(function () {
+      try {
+        localStorage.setItem(KEY, JSON.stringify(store));
+        var d = new Date();
+        var z = function (n) { return n < 10 ? '0' + n : n; };
+        $('#saveState').textContent = '已保存 ' + z(d.getHours()) + ':' + z(d.getMinutes()) + ':' + z(d.getSeconds());
+        $('#saveState').classList.remove('dirty');
+      } catch (e) {
+        $('#saveState').textContent = '保存失败（本机存储已满？）';
+        toast('保存失败：浏览器存储不可用或已满', true);
+      }
+      syncChrome();
+    }, 260);
+  }
+
+  function setPath(obj, path, val) {
+    var ks = path.split('.');
+    var o = obj;
+    for (var i = 0; i < ks.length - 1; i++) { if (!o[ks[i]]) o[ks[i]] = {}; o = o[ks[i]]; }
+    o[ks[ks.length - 1]] = val;
+  }
+
+  /* ══════════════ 示例数据 ══════════════ */
+  function seedProject() {
+    var p = blankProject('朋友公司-培训规划设计（示例）', '朋友科技公司');
+    p.bg = {
+      reorganize_bg: '老团队重组设立的新公司，由原财务负责人拟任总经理、原销售总监拟任管理顾问，销售队伍为原销售 + 新招销售混合构成。',
+      product_customer: '某 B2G 科技产品提供商（具体产品与下游客户已做中性化处理）。',
+      mgmt_team: '拟任总经理（原财务负责人）、管理顾问（原销售总监）、新组建销售团队。',
+      core_demand: '提升销售人员的商务礼仪、待人接物与沟通技巧；提升前线人员综合能力；同步培训核心管理人员。',
+      source: '朋友口述（核心股东委托）'
+    };
+    p.resources = {
+      window: '待确认',
+      budget: '待确认（历史资金曾不足，现已基本恢复）',
+      venue: '待确认',
+      trainer: '内训师本人 + 待确认外部讲师',
+      constraint: '资金约束、奖惩机制缺失，销售人员对结果负责度不足'
+    };
+    p.permissions = { allowed_tools: '本机 Office、本工作台', intranet_only: true, can_submit_desensitized: true };
+
+    p.groups = [
+      { id: uid('g'), name: '市场销售人员', headcount: '', positions: '销售代表 / 销售经理', ksa: { k: 3, s: 2, a: 3 }, note: '礼仪与沟通为重点' },
+      { id: uid('g'), name: '前线人员', headcount: '', positions: '售前 / 交付 / 客户成功', ksa: { k: 3, s: 3, a: 3 }, note: '综合能力提升' },
+      { id: uid('g'), name: '核心管理人员', headcount: '', positions: '总经理 / 管理顾问 / 部门负责人', ksa: { k: 4, s: 3, a: 3 }, note: '绩效与激励机制' }
+    ];
+
+    p.diagnoses = [
+      { id: uid('d'), type: '费用拖延史', evidence: '历史费用（如差旅报销）保障存在拖延，现已基本恢复。', data_source: '委托方口述', period: '待确认', desensitized: true },
+      { id: uid('d'), type: '奖惩缺失', evidence: '干好未兑现绩效、干差无实质考核，销售人员对结果负责度不足。', data_source: '委托方口述', period: '待确认', desensitized: true }
+    ];
+
+    p.objectives = [
+      { id: uid('o'), group: '市场销售人员', objective: '掌握商务礼仪与沟通流程，能独立完成一次客户拜访', behavior: '拜访中主动使用规范礼仪；异议处理不回避', criteria: '角色扮演评分 ≥ 80 分，主管观察 3 次达标', verifiable: true },
+      { id: uid('o'), group: '前线人员', objective: '能用顾问式方法完成需求挖掘与方案呈现', behavior: '提问结构化；方案与客户痛点对应', criteria: '情景演练通过率 ≥ 80%', verifiable: true },
+      { id: uid('o'), group: '核心管理人员', objective: '能说明并落地一套目标与绩效管理机制', behavior: '月度目标对齐会；奖惩规则书面化', criteria: '产出机制文本并经股东确认', verifiable: false }
+    ];
+
+    p.packages = [
+      { id: uid('c'), version: VERSIONS[0], group: '市场销售人员', module: '职业礼仪与客户沟通', method: '讲授 + 角色扮演', content: '商务礼仪、待人接物、倾听与表达、异议处理', schedule: '2 天', trainer: '内训师' },
+      { id: uid('c'), version: VERSIONS[1], group: '前线人员', module: '顾问式销售与协作', method: '工作坊 + 情景演练', content: '产品理解、需求挖掘、方案呈现、跨部门协作', schedule: '3 天', trainer: '内训师 + 外部讲师' },
+      { id: uid('c'), version: VERSIONS[2], group: '核心管理人员', module: '目标、绩效与激励', method: '研讨 + 教练', content: '目标拆解、绩效反馈、奖惩机制设计、团队管理', schedule: '2 天（分两次）', trainer: '外部教练' }
+    ];
+
+    p.evaluations = [
+      { id: uid('e'), level: '反应', indicator: '满意度 ≥ 4.2 / 5', method: '课后问卷', owner: '内训师', time: '每次课程结束' },
+      { id: uid('e'), level: '学习', indicator: '知识测试平均 ≥ 80 分', method: '课前课后测评', owner: '内训师', time: '课程首尾' },
+      { id: uid('e'), level: '行为', indicator: '主管观察表达标项 ≥ 3 项', method: '30/60/90 天回访', owner: '销售主管', time: '训后 3 个月' },
+      { id: uid('e'), level: '结果', indicator: '待委托方确认指标口径', method: '需委托方配合', owner: '委托方', time: '待确认' }
+    ];
+
+    p.openItems = [
+      { id: uid('i'), ref: 'I-2 对象信息', question: '各组实际人数与岗位清单', owner: '委托方', status: '待补充' },
+      { id: uid('i'), ref: 'I-4 目标', question: '可量化的行为 / 结果目标', owner: '委托方', status: '待补充' },
+      { id: uid('i'), ref: 'I-5 资源', question: '可用时间窗口、预算与场地', owner: '委托方', status: '待补充' },
+      { id: uid('i'), ref: 'I-7 审核', question: '方案审核人与确认节点', owner: '委托方', status: '待补充' },
+      { id: uid('i'), ref: 'P-5 评估', question: '结果层评估指标口径', owner: '委托方 + 内训师', status: '待补充' }
+    ];
+    return p;
+  }
+
+  /* ══════════════ 校验与规则 ══════════════ */
+  function gapList() {
+    var p = P(), g = [];
+    if (!p.name) g.push('项目名称');
+    if (!p.client) g.push('委托方名称');
+    if (!p.bg.reorganize_bg) g.push('重组 / 公司定位背景');
+    if (!p.bg.core_demand) g.push('核心需求');
+    if (!p.groups.length) g.push('培训对象分组');
+    if (!p.diagnoses.length) g.push('诊断问题条目');
+    if (!p.objectives.length) g.push('培训目标');
+    if (!p.packages.length) g.push('多版本课程包');
+    if (!p.evaluations.length) g.push('评估指标');
+    if (!p.review.reviewer) g.push('审核人（R8）');
+    return g;
+  }
+  function openItems() {
+    return P().openItems.filter(function (o) { return o.status !== '已解决'; });
+  }
+  function scanSensitive() {
+    var hits = [];
+    var p = P();
+    (function walk(o, path) {
+      if (o === null || o === undefined) return;
+      if (typeof o === 'string') {
+        SENSITIVE.forEach(function (w) {
+          if (o.indexOf(w) > -1) hits.push({ word: w, path: path, text: o.slice(0, 40) });
+        });
+        return;
+      }
+      if (typeof o !== 'object') return;
+      Object.keys(o).forEach(function (k) { walk(o[k], path ? path + '.' + k : k); });
+    })(p, '');
+    var seen = {};
+    return hits.filter(function (h) {
+      var key = h.word + '|' + h.path;
+      if (seen[key]) return false;
+      seen[key] = 1; return true;
+    });
+  }
+
+  /* ══════════════ 侧栏与外壳 ══════════════ */
+  function syncChrome() {
+    var sel = $('#projSel');
+    sel.innerHTML = store.projects.map(function (x) {
+      return '<option value="' + x.id + '"' + (x.id === store.currentId ? ' selected' : '') + '>' + esc(x.name) + '</option>';
+    }).join('');
+    var n = openItems().length;
+    var b = $('#gapBadge');
+    b.textContent = '待确认 ' + n;
+    b.className = 'badge' + (n === 0 ? ' zero' : '');
+    $('#tbTitle').textContent = (NAV.filter(function (x) { return x.id === page; })[0] || {}).name || '';
+  }
+
+  function renderNav() {
+    var counts = {
+      groups: P().groups.length,
+      dome: P().diagnoses.length + P().objectives.length + P().packages.length + P().evaluations.length,
+      open: openItems().length
+    };
+    $('#nav').innerHTML = NAV.map(function (n) {
+      var c = counts[n.id];
+      return '<button class="nav-item' + (page === n.id ? ' on' : '') + '" data-page="' + n.id + '">' +
+        '<span class="ic">' + n.ic + '</span>' + n.name +
+        (c ? '<span class="cnt">' + c + '</span>' : '') + '</button>';
+    }).join('');
+  }
+
+  function go(id) {
+    page = id;
+    renderNav();
+    render();
+    $('#side').classList.remove('open');
+    $('#mask').classList.remove('on');
+    window.scrollTo(0, 0);
+  }
+
+  /* ══════════════ 渲染入口 ══════════════ */
+  function render() {
+    var box = $('#content');
+    if (page === 'overview') box.innerHTML = viewOverview();
+    else if (page === 'project') box.innerHTML = viewProject();
+    else if (page === 'groups') box.innerHTML = viewGroups();
+    else if (page === 'dome') box.innerHTML = viewDome();
+    else if (page === 'docs') box.innerHTML = viewDocs();
+    else if (page === 'review') box.innerHTML = viewReview();
+    else if (page === 'open') box.innerHTML = viewOpen();
+    bind();
+    syncChrome();
+  }
+
+  /* ══════════════ ① 总览 ══════════════ */
+  function viewOverview() {
+    var p = P(), gaps = gapList(), oi = openItems();
+    var done = function (n) { return n ? 'done' : 'todo'; };
+    var steps = [
+      { k: 'P1', t: '接收与检查', d: '委托背景、资源约束、权限范围', done: !!(p.client && p.bg.core_demand), s: (p.client && p.bg.core_demand) ? '已填' : '待填' },
+      { k: 'D', t: '诊断', d: '问题条目与能力差距', done: p.diagnoses.length > 0, s: p.diagnoses.length + ' 条' },
+      { k: 'O', t: '目标设定', d: '按对象组的可验收目标', done: p.objectives.length > 0, s: p.objectives.length + ' 条' },
+      { k: 'M', t: '方法实施', d: '多版本课程包', done: p.packages.length > 0, s: p.packages.length + ' 模块' },
+      { k: 'E', t: '效果评估', d: '柯氏四级指标', done: p.evaluations.length > 0, s: p.evaluations.length + ' 项' },
+      { k: 'P6', t: '整合与交付', d: '审核与发布', done: p.review.status === '已审核', s: p.review.status }
+    ];
+    var finished = steps.filter(function (s) { return s.done; }).length;
+
+    return '' +
+      '<div class="page-head"><h1>项目总览</h1><p>' + esc(p.name) + ' · 最后修改 ' + fmtDate(p.updatedAt) + '</p></div>' +
+      '<div class="ov-grid">' +
+        '<div class="stat"><div class="n">' + finished + '<small>/6</small></div><div class="l">阶段完成</div></div>' +
+        '<div class="stat"><div class="n">' + p.groups.length + '</div><div class="l">培训对象组</div></div>' +
+        '<div class="stat ' + (gaps.length ? 'warn' : 'ok') + '"><div class="n">' + gaps.length + '</div><div class="l">关键信息缺口</div></div>' +
+        '<div class="stat ' + (oi.length ? 'warn' : 'ok') + '"><div class="n">' + oi.length + '</div><div class="l">待确认事项</div></div>' +
+      '</div>' +
+      (gaps.length
+        ? '<div class="banner warn"><span>⚠</span><div><b>R6 信息不足不硬推</b>：以下信息仍缺失，生成的文档会标注为「可确认草稿」——' + gaps.map(esc).join('、') + '。</div></div>'
+        : '<div class="banner ok"><span>✓</span><div><b>关键信息齐备</b>：可以生成交付文档。注意文档仍需审核人审定后才可标记发布。</div></div>') +
+      '<div class="card"><div class="card-h"><h3>DOME 阶段进度</h3><span class="hint">点击任一阶段进入对应工作区</span></div>' +
+        '<div class="card-b tight"><div class="steps">' +
+          steps.map(function (s) {
+            return '<div class="step ' + s.done + '" data-goto="' + (s.k === 'P6' ? 'review' : s.k === 'P1' ? 'project' : 'dome') + '" data-tab="' + s.k + '">' +
+              '<div class="k">' + s.k + '</div>' +
+              '<div><div class="t">' + s.t + '</div><div class="d">' + s.d + '</div></div>' +
+              '<div class="s ' + (s.done ? 'done' : 'todo') + '">' + esc(s.s) + '</div></div>';
+          }).join('') +
+        '</div></div></div>' +
+      '<div class="card"><div class="card-h"><h3>核心需求（来自委托）</h3></div><div class="card-b">' +
+        '<p style="font-size:13.5px;line-height:1.9;color:var(--ink-2)">' + (p.bg.core_demand ? nl(p.bg.core_demand) : '<span style="color:var(--muted)">尚未填写，请到「委托与背景」补全。</span>') + '</p>' +
+      '</div></div>';
+  }
+
+  /* ══════════════ ② 委托与背景 ══════════════ */
+  function field(label, path, val, opts) {
+    opts = opts || {};
+    var tag = opts.tag ? '<span class="tag">' + opts.tag + '</span>' : '';
+    var req = opts.req ? '<span class="req">*</span>' : '';
+    var cls = 'field' + (opts.full ? ' full' : '');
+    if (opts.area) {
+      return '<div class="' + cls + '"><label>' + label + req + tag + '</label>' +
+        '<textarea data-path="' + path + '" rows="' + (opts.rows || 3) + '" placeholder="' + esc(opts.ph || '') + '">' + esc(val) + '</textarea>' +
+        (opts.tip ? '<span class="tip">' + opts.tip + '</span>' : '') + '</div>';
+    }
+    return '<div class="' + cls + '"><label>' + label + req + tag + '</label>' +
+      '<input type="text" data-path="' + path + '" value="' + esc(val) + '" placeholder="' + esc(opts.ph || '') + '">' +
+      (opts.tip ? '<span class="tip">' + opts.tip + '</span>' : '') + '</div>';
+  }
+
+  function viewProject() {
+    var p = P(), hits = scanSensitive();
+    return '' +
+      '<div class="page-head"><h1>委托与背景</h1><p>对应 I-1 委托信息、I-5 资源约束、I-8 数据权限。带「待确认」标记的字段请向委托方核实后再填。</p></div>' +
+      (hits.length
+        ? '<div class="banner err"><span>⚠</span><div><b>R7 敏感资料不外发</b>：检测到 ' + hits.length + ' 处敏感表述（如「' + esc(hits[0].word) + '」）。导出文档时会被拦截，需在文档页确认后才能外发。</div></div>'
+        : '') +
+      '<div class="card"><div class="card-h"><h3>委托基础信息</h3><span class="hint">I-1</span></div><div class="card-b">' +
+        '<div class="grid2">' +
+          field('项目名称', 'name', p.name, { req: 1, full: false }) +
+          field('委托方', 'client', p.client, { req: 1 }) +
+          field('重组 / 公司定位背景', 'bg.reorganize_bg', p.bg.reorganize_bg, { area: 1, full: 1, rows: 3, req: 1 }) +
+          field('产品与客群', 'bg.product_customer', p.bg.product_customer, { area: 1, full: 1, rows: 2, tip: '默认脱敏 / 中性描述，具体产品与客户不要出现在可外发文档中' }) +
+          field('管理团队构成', 'bg.mgmt_team', p.bg.mgmt_team, { area: 1, full: 1, rows: 2 }) +
+          field('核心需求', 'bg.core_demand', p.bg.core_demand, { area: 1, full: 1, rows: 3, req: 1, tip: '朋友作为核心股东提出的需求，尽量保留原话' }) +
+          field('信息来源', 'bg.source', p.bg.source, { ph: '朋友口述 / 书面委托 / 访谈' }) +
+        '</div></div></div>' +
+
+      '<div class="card"><div class="card-h"><h3>资源与约束</h3><span class="hint">I-5</span></div><div class="card-b">' +
+        '<div class="grid2">' +
+          field('可用时间窗口', 'resources.window', p.resources.window, { tag: '待确认' }) +
+          field('预算', 'resources.budget', p.resources.budget, { tag: '待确认' }) +
+          field('场地', 'resources.venue', p.resources.venue, { tag: '待确认' }) +
+          field('讲师资源', 'resources.trainer', p.resources.trainer) +
+          field('主要约束', 'resources.constraint', p.resources.constraint, { area: 1, full: 1, rows: 2 }) +
+        '</div></div></div>' +
+
+      '<div class="card"><div class="card-h"><h3>工具与数据权限</h3><span class="hint">I-8</span></div><div class="card-b">' +
+        '<div class="grid2">' +
+          field('已确认可用工具', 'permissions.allowed_tools', p.permissions.allowed_tools, { full: 1 }) +
+          '<div class="field"><label>权限开关</label>' +
+            '<label class="check"><input type="checkbox" data-path="permissions.intranet_only" ' + (p.permissions.intranet_only ? 'checked' : '') + '>仅限内网处理</label>' +
+            '<label class="check"><input type="checkbox" data-path="permissions.can_submit_desensitized" ' + (p.permissions.can_submit_desensitized ? 'checked' : '') + '>允许提交脱敏后的需求材料</label>' +
+          '</div>' +
+        '</div>' +
+        '<div class="rule-note" style="margin-top:14px">权限不明时默认不外发。本网页版所有数据只存在本机浏览器，不上传任何服务器。</div>' +
+      '</div></div>';
+  }
+
+  /* ══════════════ ③ 培训对象 ══════════════ */
+  function viewGroups() {
+    var p = P();
+    var rows = p.groups.map(function (g) {
+      return '<tr>' +
+        '<td><input data-list="groups" data-id="' + g.id + '" data-field="name" value="' + esc(g.name) + '"></td>' +
+        '<td style="width:80px"><input data-list="groups" data-id="' + g.id + '" data-field="headcount" value="' + esc(g.headcount) + '" placeholder="待确认"></td>' +
+        '<td><input data-list="groups" data-id="' + g.id + '" data-field="positions" value="' + esc(g.positions) + '"></td>' +
+        '<td style="width:62px"><input type="number" min="1" max="5" data-list="groups" data-id="' + g.id + '" data-field="ksa.k" value="' + esc(g.ksa.k) + '"></td>' +
+        '<td style="width:62px"><input type="number" min="1" max="5" data-list="groups" data-id="' + g.id + '" data-field="ksa.s" value="' + esc(g.ksa.s) + '"></td>' +
+        '<td style="width:62px"><input type="number" min="1" max="5" data-list="groups" data-id="' + g.id + '" data-field="ksa.a" value="' + esc(g.ksa.a) + '"></td>' +
+        '<td><input data-list="groups" data-id="' + g.id + '" data-field="note" value="' + esc(g.note) + '"></td>' +
+        '<td class="td-acts"><button class="icon-btn" data-del="groups" data-id="' + g.id + '">删除</button></td>' +
+      '</tr>';
+    }).join('');
+
+    return '' +
+      '<div class="page-head"><h1>培训对象</h1><p>对应 I-2。人数与能力基线多数为待确认，请勿预填估算值；KSA 按 1–5 分标注现状水平。</p></div>' +
+      '<div class="card"><div class="card-h"><h3>对象分组与能力基线</h3><span class="hint">K 知识 · S 技能 · A 态度</span>' +
+        '<div class="r"><button class="btn sm" data-add="groups">+ 新增分组</button></div></div>' +
+        '<div class="card-b tight">' +
+        (p.groups.length
+          ? '<table><thead><tr><th>分组</th><th>人数</th><th>岗位</th><th>K</th><th>S</th><th>A</th><th>备注</th><th></th></tr></thead><tbody>' + rows + '</tbody></table>'
+          : '<div class="empty"><b>还没有对象分组</b>建议按「市场销售人员 / 前线人员 / 核心管理人员」先建三组</div>') +
+        '</div></div>' +
+      '<div class="rule-note">KSA 基线用于诊断阶段的能力差距对照。分数来自访谈或委托方评估，没有依据时留空并加入待确认项。</div>';
+  }
+
+  /* ══════════════ ④ DOME ══════════════ */
+  function viewDome() {
+    var p = P();
+    var tabs = [
+      { k: 'D', n: '诊断', c: p.diagnoses.length },
+      { k: 'O', n: '目标设定', c: p.objectives.length },
+      { k: 'M', n: '方法实施', c: p.packages.length },
+      { k: 'E', n: '效果评估', c: p.evaluations.length }
+    ];
+    return '' +
+      '<div class="page-head"><h1>DOME 工作区</h1><p>顺序固定为 D → O → M → E。每个条目都应能追溯到来源，缺来源的条目会在文档中标记为待核查。</p></div>' +
+      '<div class="tabs">' + tabs.map(function (t) {
+        return '<button class="tab' + (domeTab === t.k ? ' on' : '') + '" data-tab="' + t.k + '">' + t.k + ' ' + t.n +
+          '<span class="c">' + (t.c || '') + '</span></button>';
+      }).join('') + '</div>' +
+      (domeTab === 'D' ? domeD() : domeTab === 'O' ? domeO() : domeTab === 'M' ? domeM() : domeE());
+  }
+
+  function domeD() {
+    var p = P();
+    var rows = p.diagnoses.map(function (d) {
+      return '<tr>' +
+        '<td style="width:110px"><select data-list="diagnoses" data-id="' + d.id + '" data-field="type">' +
+          ISSUE_TYPES.map(function (t) { return '<option' + (d.type === t ? ' selected' : '') + '>' + t + '</option>'; }).join('') +
+        '</select></td>' +
+        '<td><textarea data-list="diagnoses" data-id="' + d.id + '" data-field="evidence" rows="2">' + esc(d.evidence) + '</textarea></td>' +
+        '<td style="width:120px"><input data-list="diagnoses" data-id="' + d.id + '" data-field="data_source" value="' + esc(d.data_source) + '" placeholder="来源"></td>' +
+        '<td style="width:90px"><input data-list="diagnoses" data-id="' + d.id + '" data-field="period" value="' + esc(d.period) + '" placeholder="期间"></td>' +
+        '<td class="td-acts"><button class="icon-btn" data-del="diagnoses" data-id="' + d.id + '">删除</button></td>' +
+      '</tr>';
+    }).join('');
+
+    var ksaRows = p.groups.map(function (g) {
+      return '<tr><td>' + esc(g.name) + '</td><td>' + esc(g.ksa.k) + '</td><td>' + esc(g.ksa.s) + '</td><td>' + esc(g.ksa.a) + '</td>' +
+        '<td>' + (Number(g.ksa.k) + Number(g.ksa.s) + Number(g.ksa.a)) + ' / 15</td></tr>';
+    }).join('');
+
+    return '' +
+      '<div class="card"><div class="card-h"><h3>D · 现状问题</h3><span class="hint">R2 每条必带来源</span>' +
+        '<div class="r"><button class="btn sm" data-add="diagnoses">+ 新增问题</button></div></div>' +
+        '<div class="card-b tight">' +
+        (p.diagnoses.length
+          ? '<table><thead><tr><th>问题类型</th><th>表现与影响</th><th>来源</th><th>期间</th><th></th></tr></thead><tbody>' + rows + '</tbody></table>'
+          : '<div class="empty"><b>还没有诊断条目</b>典型的两类问题：费用保障拖延史、奖惩机制缺失</div>') +
+        '</div></div>' +
+      '<div class="card"><div class="card-h"><h3>KSA 能力基线对照</h3><span class="hint">数据来自「培训对象」页，需修改请回该页</span></div>' +
+        '<div class="card-b tight">' +
+        (p.groups.length
+          ? '<table><thead><tr><th>对象组</th><th>K 知识</th><th>S 技能</th><th>A 态度</th><th>合计</th></tr></thead><tbody>' + ksaRows + '</tbody></table>'
+          : '<div class="empty">先建立培训对象分组</div>') +
+        '</div></div>' +
+      '<div class="rule-note">缺材料 ≠ 已诊断。资料不足时先保留「待确认草稿」，不要用推测值填补空白。</div>';
+  }
+
+  function domeO() {
+    var p = P();
+    var rows = p.objectives.map(function (o) {
+      var opts = p.groups.map(function (g) { return '<option' + (o.group === g.name ? ' selected' : '') + '>' + esc(g.name) + '</option>'; }).join('');
+      return '<tr>' +
+        '<td style="width:145px"><select data-list="objectives" data-id="' + o.id + '" data-field="group"><option value="">选择对象</option>' + opts + '</select></td>' +
+        '<td><textarea data-list="objectives" data-id="' + o.id + '" data-field="objective" rows="2">' + esc(o.objective) + '</textarea></td>' +
+        '<td><textarea data-list="objectives" data-id="' + o.id + '" data-field="behavior" rows="2">' + esc(o.behavior) + '</textarea></td>' +
+        '<td><textarea data-list="objectives" data-id="' + o.id + '" data-field="criteria" rows="2">' + esc(o.criteria) + '</textarea></td>' +
+        '<td style="width:80px"><label class="check"><input type="checkbox" data-list="objectives" data-id="' + o.id + '" data-field="verifiable" ' + (o.verifiable ? 'checked' : '') + '>可验收</label></td>' +
+        '<td class="td-acts"><button class="icon-btn" data-del="objectives" data-id="' + o.id + '">删除</button></td>' +
+      '</tr>';
+    }).join('');
+
+    var unverified = p.objectives.filter(function (o) { return !o.verifiable; }).length;
+
+    return '' +
+      (unverified ? '<div class="banner warn"><span>⚠</span><div>有 ' + unverified + ' 条目标未标记「可验收」。未标记的目标在文档中会写作「期望」而非「承诺结果」。</div></div>' : '') +
+      '<div class="card"><div class="card-h"><h3>O · 培训目标</h3><span class="hint">建议用 ABCD 法：对象 + 行为 + 条件 + 标准</span>' +
+        '<div class="r"><button class="btn sm" data-add="objectives">+ 新增目标</button></div></div>' +
+        '<div class="card-b tight">' +
+        (p.objectives.length
+          ? '<table class="wide"><thead><tr><th>对象组</th><th>培训目标</th><th>行为产出</th><th>成功标准</th><th>验收</th><th></th></tr></thead><tbody>' + rows + '</tbody></table>'
+          : '<div class="empty"><b>还没有目标</b>按对象组分别设定，不要三组共用一条</div>') +
+        '</div></div>';
+  }
+
+  function domeM() {
+    var p = P();
+    var cards = p.packages.map(function (c) {
+      var gopt = p.groups.map(function (g) { return '<option' + (c.group === g.name ? ' selected' : '') + '>' + esc(g.name) + '</option>'; }).join('');
+      var vopt = VERSIONS.map(function (v) { return '<option' + (c.version === v ? ' selected' : '') + '>' + v + '</option>'; }).join('');
+      var mopt = METHODS.map(function (m) { return '<option' + (c.method === m ? ' selected' : '') + '>' + m + '</option>'; }).join('');
+      return '<div class="pkg">' +
+        '<div class="pkg-h">' +
+          '<select class="pkg-v" data-list="packages" data-id="' + c.id + '" data-field="version">' + vopt + '</select>' +
+          '<select class="pkg-g" data-list="packages" data-id="' + c.id + '" data-field="group"><option value="">对象组</option>' + gopt + '</select>' +
+          '<button class="icon-btn" data-del="packages" data-id="' + c.id + '">删除</button>' +
+        '</div>' +
+        '<div class="pkg-b">' +
+          '<div class="field full"><label>模块名称</label>' +
+            '<input type="text" data-list="packages" data-id="' + c.id + '" data-field="module" value="' + esc(c.module) + '" placeholder="例如：职业礼仪与客户沟通"></div>' +
+          '<div class="grid3" style="margin-top:12px">' +
+            '<div class="field"><label>主要方法</label><input type="text" list="methodList" data-list="packages" data-id="' + c.id + '" data-field="method" value="' + esc(c.method) + '" placeholder="讲授 / 角色扮演…"></div>' +
+            '<div class="field"><label>排期</label><input type="text" data-list="packages" data-id="' + c.id + '" data-field="schedule" value="' + esc(c.schedule) + '" placeholder="例如：2 天"></div>' +
+            '<div class="field"><label>讲师</label><input type="text" data-list="packages" data-id="' + c.id + '" data-field="trainer" value="' + esc(c.trainer) + '" placeholder="内训师 / 外部讲师"></div>' +
+          '</div>' +
+          '<div class="field full" style="margin-top:12px"><label>内容要点</label>' +
+            '<textarea data-list="packages" data-id="' + c.id + '" data-field="content" rows="2" placeholder="模块内的知识点、练习与产出">' + esc(c.content) + '</textarea></div>' +
+        '</div></div>';
+    }).join('');
+
+    var versions = {};
+    p.packages.forEach(function (c) { versions[c.version] = (versions[c.version] || 0) + 1; });
+    var summary = VERSIONS.map(function (v) {
+      return '<span class="vchip' + (versions[v] ? ' on' : '') + '">' + esc(v.split(' ')[0]) + ' <b>' + (versions[v] || 0) + '</b></span>';
+    }).join('');
+
+    return '' +
+      '<datalist id="methodList">' + METHODS.map(function (m) { return '<option value="' + m + '">'; }).join('') + '</datalist>' +
+      '<div class="card"><div class="card-h"><h3>M · 多版本课程包</h3><span class="hint">按对象分版本，不要一份课件剪三份</span>' +
+        '<div class="r">' + summary + '<button class="btn sm" data-add="packages">+ 新增模块</button></div></div>' +
+        '<div class="card-b">' +
+        (p.packages.length ? cards : '<div class="empty"><b>还没有课程包</b>至少按 V1 / V2 / V3 各建一条，每条对应一个对象组</div>') +
+        '</div></div>' +
+      '<div class="rule-note">新增的培训角度（例如某个临时想到的能力项）先标为「建议」，未经委托方确认不要当成规则写进方案。</div>';
+  }
+
+  function domeE() {
+    var p = P();
+    var rows = p.evaluations.map(function (e) {
+      var lopt = KIRK.map(function (k) { return '<option' + (e.level === k ? ' selected' : '') + '>' + k + '</option>'; }).join('');
+      return '<tr>' +
+        '<td style="width:90px"><select data-list="evaluations" data-id="' + e.id + '" data-field="level">' + lopt + '</select></td>' +
+        '<td><input data-list="evaluations" data-id="' + e.id + '" data-field="indicator" value="' + esc(e.indicator) + '"></td>' +
+        '<td><input data-list="evaluations" data-id="' + e.id + '" data-field="method" value="' + esc(e.method) + '"></td>' +
+        '<td style="width:100px"><input data-list="evaluations" data-id="' + e.id + '" data-field="owner" value="' + esc(e.owner) + '"></td>' +
+        '<td style="width:110px"><input data-list="evaluations" data-id="' + e.id + '" data-field="time" value="' + esc(e.time) + '"></td>' +
+        '<td class="td-acts"><button class="icon-btn" data-del="evaluations" data-id="' + e.id + '">删除</button></td>' +
+      '</tr>';
+    }).join('');
+
+    var covered = {};
+    p.evaluations.forEach(function (e) { covered[e.level] = 1; });
+    var lack = KIRK.filter(function (k) { return !covered[k]; });
+
+    return '' +
+      (lack.length
+        ? '<div class="banner warn"><span>⚠</span><div>柯氏四级中缺少「' + lack.join('、') + '」层指标。结果层指标需委托方提供口径，不要自行编造。</div></div>'
+        : '<div class="banner ok"><span>✓</span><div>柯氏四级指标已覆盖。</div></div>') +
+      '<div class="card"><div class="card-h"><h3>E · 效果评估</h3><span class="hint">柯氏四级</span>' +
+        '<div class="r"><button class="btn sm" data-add="evaluations">+ 新增指标</button></div></div>' +
+        '<div class="card-b tight">' +
+        (p.evaluations.length
+          ? '<table><thead><tr><th>层级</th><th>指标</th><th>收集方式</th><th>责任人</th><th>时间</th><th></th></tr></thead><tbody>' + rows + '</tbody></table>'
+          : '<div class="empty"><b>还没有评估指标</b>建议按反应 / 学习 / 行为 / 结果四层各设一条</div>') +
+        '</div></div>' +
+      '<div class="rule-note">行为层与结果层需要委托方配合（主管观察、业务数据），未落实前在文档中标注「需委托方配合」，不要预设效果数据。</div>';
+  }
+
+  /* ══════════════ ⑤ 文档生成 ══════════════ */
+  function viewDocs() {
+    var gaps = gapList(), hits = scanSensitive(), p = P();
+    return '' +
+      '<div class="page-head"><h1>文档生成</h1><p>六份交付物由前面的内容自动汇总。导出前会做 R6 缺口检查与 R7 敏感检查。</p></div>' +
+      (gaps.length
+        ? '<div class="banner warn"><span>⚠</span><div><b>可确认草稿</b>：缺少 ' + gaps.length + ' 项关键信息（' + gaps.map(esc).join('、') + '），生成的文档会带「可确认草稿」标注与待补清单。</div></div>'
+        : '<div class="banner ok"><span>✓</span><div>关键信息齐备，文档按正式稿生成。</div></div>') +
+      (hits.length
+        ? '<div class="banner err"><span>⚠</span><div><b>R7 命中敏感词</b>：' + hits.length + ' 处（如「' + esc(hits[0].word) + '」）。导出时需先确认已脱敏。' +
+          (p.review.ackSensitive ? ' <b>你已确认可外发。</b>' : '') + '</div></div>'
+        : '') +
+      '<div class="doc-layout">' +
+        '<div class="doc-list">' + DOCS.map(function (d) {
+          return '<button class="doc-item' + (activeDoc === d.code ? ' on' : '') + '" data-doc="' + d.code + '">' +
+            '<span class="c">' + d.code + '</span><span>' + d.name + '</span></button>';
+        }).join('') + '</div>' +
+        '<div>' +
+          '<div class="card" style="margin-bottom:12px"><div class="card-b" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">' +
+            '<button class="btn primary sm" id="btnPrint">打印 / 存为 PDF</button>' +
+            '<button class="btn sm" id="btnWord">下载 Word (.doc)</button>' +
+            '<span style="font-size:12px;color:var(--muted);margin-left:auto">当前：' + activeDoc + '</span>' +
+          '</div></div>' +
+          '<div class="doc-preview">' + buildDoc(activeDoc) + '</div>' +
+        '</div>' +
+      '</div>';
+  }
+
+  function docWrap(title, body, extra) {
+    var p = P(), gaps = gapList(), hits = scanSensitive();
+    var draft = gaps.length
+      ? '<div class="banner warn" style="margin:14px 0"><span>⚠</span><div><b>可确认草稿</b>：本文件尚缺 ' + gaps.length + ' 项关键信息（' + gaps.map(esc).join('、') + '），结论待补充后确认。</div></div>'
+      : '';
+    return '<h2>' + esc(title) + '</h2>' +
+      '<div class="doc-meta">项目：' + esc(p.name || '—') + ' ｜ 委托方：' + esc(p.client || '—') + '<br>' +
+      '信息来源：' + esc(p.bg.source || '—') + ' ｜ 生成时间：' + fmtDate(nowISO()) + '</div>' +
+      draft + body + (extra || '') +
+      '<div class="doc-foot">' +
+      '审核人：' + (p.review.reviewer ? esc(p.review.reviewer) : '—（未填写）') + ' ｜ 审核状态：' + esc(p.review.status) +
+      ' ｜ 发布状态：' + (p.review.published ? '已发布' : '未发布') + '<br>' +
+      (hits.length ? '敏感检查：命中 ' + hits.length + ' 处，外发前需人工确认（R7）。<br>' : '') +
+      '本文件由培训规划设计工作台生成。文件生成不代表已审核，发布须经审核人审定（R8）。' +
+      '</div>';
+  }
+
+  function buildDoc(code) {
+    var p = P();
+    if (code === 'O-1') {
+      var rows = p.groups.map(function (g) {
+        return '<tr><td>' + esc(g.name) + '</td><td>' + esc(g.headcount || '待确认') + '</td><td>' + esc(g.positions) + '</td><td>' + esc(g.note) + '</td></tr>';
+      }).join('') || '<tr><td colspan="4">暂无对象分组</td></tr>';
+      var idx = [
+        ['D 诊断', p.diagnoses.length + ' 条'],
+        ['O 目标', p.objectives.length + ' 条'],
+        ['M 课程包', p.packages.length + ' 个模块'],
+        ['E 评估', p.evaluations.length + ' 项指标']
+      ].map(function (r) { return '<tr><td>' + r[0] + '</td><td>' + r[1] + '</td></tr>'; }).join('');
+      var oi = p.openItems.filter(function (o) { return o.status !== '已解决'; })
+        .map(function (o) { return '<tr><td>' + esc(o.ref) + '</td><td>' + esc(o.question) + '</td><td>' + esc(o.owner) + '</td></tr>'; }).join('');
+      return docWrap('培训规划设计书（总览）',
+        '<h3>一、委托背景</h3><p>' + (p.bg.reorganize_bg ? nl(p.bg.reorganize_bg) : '待补充') + '</p>' +
+        '<p><b>产品与客群：</b>' + (p.bg.product_customer ? nl(p.bg.product_customer) : '待补充') + '</p>' +
+        '<p><b>核心需求：</b>' + (p.bg.core_demand ? nl(p.bg.core_demand) : '待补充') + '</p>' +
+        '<h3>二、培训对象分组</h3><table><thead><tr><th>对象组</th><th>人数</th><th>岗位</th><th>备注</th></tr></thead><tbody>' + rows + '</tbody></table>' +
+        '<h3>三、DOME 构成</h3><table><thead><tr><th>阶段</th><th>条目数</th></tr></thead><tbody>' + idx + '</tbody></table>' +
+        '<h3>四、待确认事项</h3>' +
+        (oi ? '<table><thead><tr><th>关联</th><th>问题</th><th>责任人</th></tr></thead><tbody>' + oi + '</tbody></table>' : '<p>暂无</p>') +
+        '<h3>五、风险与边界</h3><p>本方案仅使用获准使用的业务背景与脱敏材料，不含具体客户与产品信息；AI 仅提供框架与建议，最终内容由内训师与委托方审核人审定。</p>');
+    }
+    if (code === 'O-2') {
+      var d = p.diagnoses.map(function (x) {
+        return '<tr><td>' + esc(x.type) + '</td><td>' + nl(x.evidence) + '</td><td>' + esc(x.data_source || '来源缺口') + '</td><td>' + esc(x.period || '待确认') + '</td></tr>';
+      }).join('') || '<tr><td colspan="4">暂无诊断条目</td></tr>';
+      var gapRows = p.diagnoses.filter(function (x) { return !x.data_source; })
+        .map(function (x) { return '<li>' + esc(x.type) + '：缺少来源</li>'; }).join('');
+      return docWrap('诊断与需求分析报告',
+        '<h3>一、现状问题</h3><table><thead><tr><th>问题类型</th><th>表现与影响</th><th>来源</th><th>期间</th></tr></thead><tbody>' + d + '</tbody></table>' +
+        '<h3>二、对象能力基线（KSA）</h3><table><thead><tr><th>对象组</th><th>K 知识</th><th>S 技能</th><th>A 态度</th></tr></thead><tbody>' +
+        (p.groups.map(function (g) { return '<tr><td>' + esc(g.name) + '</td><td>' + esc(g.ksa.k) + '</td><td>' + esc(g.ksa.s) + '</td><td>' + esc(g.ksa.a) + '</td></tr>'; }).join('') || '<tr><td colspan="4">暂无</td></tr>') +
+        '</tbody></table><p style="font-size:12px;color:#666">分值为 1–5 的相对评估，来源为访谈与委托方表述，非量化测评结果。</p>' +
+        '<h3>三、来源缺口</h3>' + (gapRows ? '<ul>' + gapRows + '</ul>' : '<p>各条目均已标注来源。</p>'));
+    }
+    if (code === 'O-3') {
+      var rows = p.objectives.map(function (o) {
+        return '<tr><td>' + esc(o.group || '—') + '</td><td>' + nl(o.objective) + '</td><td>' + nl(o.behavior) + '</td><td>' + nl(o.criteria) + '</td><td>' + (o.verifiable ? '可验收' : '期望') + '</td></tr>';
+      }).join('') || '<tr><td colspan="5">暂无目标</td></tr>';
+      return docWrap('目标设定与学习地图',
+        '<h3>一、分对象培训目标</h3><table><thead><tr><th>对象组</th><th>培训目标</th><th>行为产出</th><th>成功标准</th><th>性质</th></tr></thead><tbody>' + rows + '</tbody></table>' +
+        '<p style="font-size:12px;color:#666">标注「期望」的目标尚未确定验收方式，不作为承诺结果。</p>' +
+        '<h3>二、学习路径</h3><p>建议按「基础通用技能 → 场景应用 → 管理机制」递进：V1 打基础，V2 做场景演练，V3 固化机制。</p>');
+    }
+    if (code === 'O-4') {
+      var byV = {};
+      p.packages.forEach(function (c) { (byV[c.version] = byV[c.version] || []).push(c); });
+      var body = Object.keys(byV).map(function (v) {
+        return '<h3>' + esc(v) + '</h3><table><thead><tr><th>模块</th><th>对象</th><th>方法</th><th>内容要点</th><th>排期</th><th>讲师</th></tr></thead><tbody>' +
+          byV[v].map(function (c) {
+            return '<tr><td>' + esc(c.module) + '</td><td>' + esc(c.group) + '</td><td>' + esc(c.method) + '</td><td>' + nl(c.content) + '</td><td>' + esc(c.schedule) + '</td><td>' + esc(c.trainer) + '</td></tr>';
+          }).join('') + '</tbody></table>';
+      }).join('') || '<p>暂无课程包</p>';
+      return docWrap('实施方案与多版本课程包', '<h3>版本构成</h3>' + body);
+    }
+    if (code === 'O-5') {
+      var rows = p.evaluations.map(function (e) {
+        return '<tr><td>' + esc(e.level) + '</td><td>' + esc(e.indicator) + '</td><td>' + esc(e.method) + '</td><td>' + esc(e.owner) + '</td><td>' + esc(e.time) + '</td></tr>';
+      }).join('') || '<tr><td colspan="5">暂无评估指标</td></tr>';
+      return docWrap('评估方案',
+        '<h3>柯氏四级指标</h3><table><thead><tr><th>层级</th><th>指标</th><th>收集方式</th><th>责任人</th><th>时间</th></tr></thead><tbody>' + rows + '</tbody></table>' +
+        '<p style="font-size:12px;color:#666">行为层与结果层需委托方配合（主管观察、业务数据）。未验证的效果数据不在本方案中预设。</p>');
+    }
+    return docWrap('试讲与修订记录',
+      '<h3>记录表</h3><table><thead><tr><th>试讲日期</th><th>版本 / 模块</th><th>测试对象</th><th>发现问题</th><th>修改意见</th><th>是否复测</th></tr></thead><tbody>' +
+      '<tr><td>待执行</td><td></td><td></td><td></td><td></td><td></td></tr>' +
+      '<tr><td>待执行</td><td></td><td></td><td></td><td></td><td></td></tr>' +
+      '</tbody></table><p style="font-size:12px;color:#666">未执行的试讲请在表中标注「待执行」，不要填写虚构的测试结果。</p>');
+  }
+
+  function docHTMLForExport(code) {
+    var p = P();
+    var inner = buildDoc(code);
+    return '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">' +
+      '<head><meta charset="utf-8"><title>' + code + ' ' + esc(p.name) + '</title>' +
+      '<style>body{font-family:"Microsoft YaHei","PingFang SC",serif;font-size:11pt;line-height:1.85;color:#222;margin:0}' +
+      'h2{font-size:16pt;font-weight:700;margin:0 0 10px}p{margin:0 0 8px}' +
+      'h3{font-size:12pt;font-weight:700;margin:16px 0 6px}' +
+      'table{border-collapse:collapse;width:100%;margin:8px 0}' +
+      'th,td{border:1px solid #999;padding:5px 8px;font-size:10pt;vertical-align:top}' +
+      'th{background:#f0f0f0;text-align:left}' +
+      '.doc-meta{font-size:9.5pt;color:#555;border-bottom:1px solid #ccc;padding-bottom:8px;margin-bottom:10px}' +
+      '.banner{border:1px solid #bbb;background:#f7f7f7;padding:8px;font-size:9.5pt;margin:8px 0}' +
+      '.doc-foot{margin-top:18px;border-top:1px solid #ccc;padding-top:8px;font-size:9pt;color:#555}' +
+      '</style></head><body>' + inner + '</body></html>';
+  }
+
+  function ensureSensitiveAck(action) {
+    var hits = scanSensitive();
+    if (!hits.length || P().review.ackSensitive) { action(); return; }
+    modal(
+      '<h3>检测到敏感表述</h3>' +
+      '<p>文档中命中以下涉密关键词（R7 敏感资料不外发）。请确认已完成脱敏，再导出或外发。</p>' +
+      '<div class="hits">' + hits.slice(0, 8).map(function (h) {
+        return '「' + esc(h.word) + '」 — ' + esc(h.path) + '：' + esc(h.text) + '…';
+      }).join('<br>') + (hits.length > 8 ? '<br>…共 ' + hits.length + ' 处' : '') + '</div>' +
+      '<label class="check"><input type="checkbox" id="ackBox">我确认上述内容已脱敏，可以外发</label>' +
+      '<div class="acts"><button class="btn sm" data-close="1">取消</button>' +
+      '<button class="btn primary sm" id="ackOk" disabled>确认并导出</button></div>'
+    );
+    var box = $('#ackBox'), ok = $('#ackOk');
+    box.addEventListener('change', function () { ok.disabled = !box.checked; });
+    ok.addEventListener('click', function () {
+      P().review.ackSensitive = true;
+      touch();
+      closeModal();
+      toast('已记录外发确认');
+      action();
+    });
+  }
+
+  function doPrint() {
+    ensureSensitiveAck(function () {
+      var f = $('#printFrame');
+      var doc = f.contentWindow.document;
+      doc.open(); doc.write(docHTMLForExport(activeDoc)); doc.close();
+      setTimeout(function () { f.contentWindow.focus(); f.contentWindow.print(); }, 220);
+    });
+  }
+
+  function doWord() {
+    ensureSensitiveAck(function () {
+      var blob = new Blob(['\ufeff', docHTMLForExport(activeDoc)], { type: 'application/msword' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = activeDoc + '_' + (P().name || '培训规划设计') + '.doc';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 1500);
+      toast('已生成 Word 文件，可直接用 Word 打开');
+    });
+  }
+
+  /* ══════════════ ⑥ 审核与发布 ══════════════ */
+  function viewReview() {
+    var p = P(), r = p.review;
+    var cls = r.status === '已审核' ? 'ok' : r.status === '待审核' ? 'wait' : 'draft';
+    var canPublish = r.reviewer && r.status === '已审核';
+    return '' +
+      '<div class="page-head"><h1>审核与发布</h1><p>R8 结果人工审定：AI 只出框架，审核人必填，未审核不允许标记发布。</p></div>' +
+      '<div class="card"><div class="card-h"><h3>当前状态</h3><div class="r"><span class="pill ' + cls + '">' + esc(r.status) + '</span>' +
+        (r.published ? '<span class="pill pub">已发布</span>' : '<span class="pill draft">未发布</span>') + '</div></div>' +
+        '<div class="card-b"><div class="grid2">' +
+          '<div class="field"><label>审核人 <span class="req">*</span></label>' +
+            '<input type="text" data-path="review.reviewer" value="' + esc(r.reviewer) + '" placeholder="填写审核人姓名 / 角色"></div>' +
+          '<div class="field"><label>审核状态</label>' +
+            '<select data-path="review.status">' + REVIEW_STATES.map(function (s) {
+              return '<option' + (r.status === s ? ' selected' : '') + '>' + s + '</option>';
+            }).join('') + '</select></div>' +
+          '<div class="field full"><label>审核意见 / 修改记录</label>' +
+            '<textarea data-path="review.note" rows="3" placeholder="记录审核结论、退回原因或修改要点">' + esc(r.note) + '</textarea></div>' +
+        '</div>' +
+        '<div style="display:flex;gap:9px;margin-top:16px;flex-wrap:wrap">' +
+          '<button class="btn primary" id="btnPublish"' + (canPublish ? '' : ' disabled') + '>标记为已发布</button>' +
+          (r.published ? '<button class="btn" id="btnUnpublish">撤销发布</button>' : '') +
+        '</div>' +
+        (canPublish ? '' : '<div class="rule-note" style="margin-top:14px">要标记发布，需要先填写审核人，并把审核状态改为「已审核」。' + (r.reviewer ? '' : '当前审核人未填写。') + '</div>') +
+        (r.publishedAt ? '<div class="rule-note" style="margin-top:8px">发布时间：' + fmtDate(r.publishedAt) + '</div>' : '') +
+        '</div></div>' +
+      '<div class="card"><div class="card-h"><h3>出稿前自检</h3></div><div class="card-b">' +
+        checklist() +
+      '</div></div>';
+  }
+
+  function checklist() {
+    var p = P(), gaps = gapList(), hits = scanSensitive();
+    var items = [
+      { ok: gaps.length === 0, t: '关键信息齐备', d: gaps.length ? '缺：' + gaps.join('、') : '无缺口' },
+      { ok: p.diagnoses.every(function (d) { return d.data_source; }), t: '诊断条目均有来源', d: 'R2 信息可追溯' },
+      { ok: p.objectives.every(function (o) { return o.verifiable; }), t: '目标均可验收', d: '未验收的目标会写作「期望」' },
+      { ok: Object.keys(p.evaluations.reduce(function (a, e) { a[e.level] = 1; return a; }, {})).length === 4, t: '柯氏四级覆盖完整', d: '反应 / 学习 / 行为 / 结果' },
+      { ok: hits.length === 0 || p.review.ackSensitive, t: '敏感内容已处理', d: hits.length ? '命中 ' + hits.length + ' 处' + (p.review.ackSensitive ? '，已确认外发' : '，待确认') : '未命中' },
+      { ok: !!p.review.reviewer, t: '审核人已指定', d: 'R8 结果人工审定' }
+    ];
+    return items.map(function (i) {
+      return '<div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line-2)">' +
+        '<span style="color:' + (i.ok ? 'var(--accent)' : 'var(--amber)') + ';font-weight:700">' + (i.ok ? '✓' : '!') + '</span>' +
+        '<div><div style="font-size:13px;font-weight:500">' + i.t + '</div>' +
+        '<div style="font-size:11.5px;color:var(--muted)">' + esc(i.d) + '</div></div></div>';
+    }).join('');
+  }
+
+  /* ══════════════ ⑦ 待确认项 ══════════════ */
+  function viewOpen() {
+    var p = P();
+    var rows = p.openItems.map(function (o) {
+      return '<tr>' +
+        '<td style="width:130px"><input data-list="openItems" data-id="' + o.id + '" data-field="ref" value="' + esc(o.ref) + '"></td>' +
+        '<td><input data-list="openItems" data-id="' + o.id + '" data-field="question" value="' + esc(o.question) + '"></td>' +
+        '<td style="width:120px"><input data-list="openItems" data-id="' + o.id + '" data-field="owner" value="' + esc(o.owner) + '"></td>' +
+        '<td style="width:110px"><select data-list="openItems" data-id="' + o.id + '" data-field="status">' +
+          '<option' + (o.status === '待补充' ? ' selected' : '') + '>待补充</option>' +
+          '<option' + (o.status === '已解决' ? ' selected' : '') + '>已解决</option></select></td>' +
+        '<td class="td-acts"><button class="icon-btn" data-del="openItems" data-id="' + o.id + '">删除</button></td>' +
+      '</tr>';
+    }).join('');
+    var n = openItems().length;
+    return '' +
+      '<div class="page-head"><h1>待确认项</h1><p>全局汇总所有需要向委托方核实的问题。补充后把状态改为「已解决」，即可从所有文档的待确认清单中移除。</p></div>' +
+      (n ? '<div class="banner warn"><span>⚑</span><div>还有 <b>' + n + '</b> 项待确认。这些事项会出现在 O-1 总览的待确认清单里。</div></div>'
+        : '<div class="banner ok"><span>✓</span><div>当前没有未解决的待确认项。</div></div>') +
+      '<div class="card"><div class="card-h"><h3>清单</h3>' +
+        '<div class="r"><button class="btn sm" data-add="openItems">+ 新增事项</button>' +
+        '<button class="btn sm" id="btnCopyOpen">复制清单</button></div></div>' +
+        '<div class="card-b tight">' +
+        (p.openItems.length
+          ? '<table><thead><tr><th>关联字段 / 阶段</th><th>待确认问题</th><th>责任人</th><th>状态</th><th></th></tr></thead><tbody>' + rows + '</tbody></table>'
+          : '<div class="empty"><b>暂无待确认项</b>发现信息缺口时，在这里记一条，避免口头遗忘</div>') +
+        '</div></div>';
+  }
+
+  /* ══════════════ 新增 / 删除 ══════════════ */
+  var BLANKS = {
+    groups: function () { return { id: uid('g'), name: GROUP_TYPES[P().groups.length] || '新对象组', headcount: '', positions: '', ksa: { k: 3, s: 3, a: 3 }, note: '' }; },
+    diagnoses: function () { return { id: uid('d'), type: ISSUE_TYPES[0], evidence: '', data_source: '', period: '待确认', desensitized: true }; },
+    objectives: function () { return { id: uid('o'), group: '', objective: '', behavior: '', criteria: '', verifiable: false }; },
+    packages: function () { return { id: uid('c'), version: VERSIONS[0], group: '', module: '', method: METHODS[0], content: '', schedule: '', trainer: '' }; },
+    evaluations: function () { return { id: uid('e'), level: '反应', indicator: '', method: '', owner: '', time: '' }; },
+    openItems: function () { return { id: uid('i'), ref: '', question: '', owner: '委托方', status: '待补充' }; }
+  };
+
+  /* ══════════════ 事件绑定 ══════════════ */
+  function bind() {
+    /* 输入即存 */
+    $$('[data-path],[data-list]').forEach(function (el) {
+      el.addEventListener('input', onEdit);
+      el.addEventListener('change', onEdit);
+    });
+    /* 列表删除 */
+    $$('[data-del]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var k = b.dataset.del, id = b.dataset.id;
+        P()[k] = P()[k].filter(function (x) { return x.id !== id; });
+        touch(); render(); renderNav();
+      });
+    });
+    /* 新增 */
+    $$('[data-add]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var k = b.dataset.add;
+        P()[k].push(BLANKS[k]());
+        touch(); render(); renderNav();
+        toast('已新增一条');
+      });
+    });
+    /* 总览跳转 */
+    $$('[data-goto]').forEach(function (s) {
+      s.addEventListener('click', function () {
+        var tab = s.dataset.tab;
+        if (tab === 'D' || tab === 'O' || tab === 'M' || tab === 'E') domeTab = tab;
+        go(s.dataset.goto);
+      });
+    });
+    /* DOME tab */
+    $$('[data-tab]').forEach(function (t) {
+      if (!t.classList.contains('tab')) return;
+      t.addEventListener('click', function () {
+        domeTab = t.dataset.tab; render();
+      });
+    });
+    /* 文档切换 */
+    $$('[data-doc]').forEach(function (d) {
+      d.addEventListener('click', function () {
+        activeDoc = d.dataset.doc;
+        $$('.doc-item').forEach(function (x) { x.classList.remove('on'); });
+        d.classList.add('on');
+        $('.doc-preview').innerHTML = buildDoc(activeDoc);
+      });
+    });
+    var bp = $('#btnPrint'); if (bp) bp.addEventListener('click', doPrint);
+    var bw = $('#btnWord'); if (bw) bw.addEventListener('click', doWord);
+
+    /* 发布 */
+    var pub = $('#btnPublish');
+    if (pub) pub.addEventListener('click', function () {
+      var r = P().review;
+      if (!r.reviewer) { toast('R8：请先填写审核人', true); return; }
+      if (r.status !== '已审核') { toast('R8：审核状态需为「已审核」', true); return; }
+      r.published = true; r.publishedAt = nowISO();
+      touch(); render(); toast('已标记发布（仅本机记录）');
+    });
+    var unp = $('#btnUnpublish');
+    if (unp) unp.addEventListener('click', function () {
+      P().review.published = false; P().review.publishedAt = '';
+      touch(); render(); toast('已撤销发布');
+    });
+    var cp = $('#btnCopyOpen');
+    if (cp) cp.addEventListener('click', function () {
+      var txt = openItems().map(function (o, i) {
+        return (i + 1) + '. 【' + o.ref + '】' + o.question + '（' + o.owner + '）';
+      }).join('\n');
+      if (!txt) { toast('没有未解决的待确认项'); return; }
+      copyText(txt);
+    });
+  }
+
+  function onEdit(e) {
+    var t = e.target;
+    var val = t.type === 'checkbox' ? t.checked : t.value;
+    if (t.dataset.path) {
+      setPath(P(), t.dataset.path, val);
+    } else if (t.dataset.list) {
+      var arr = P()[t.dataset.list] || [];
+      var it = arr.filter(function (x) { return x.id === t.dataset.id; })[0];
+      if (it) {
+        var f = t.dataset.field;
+        if (f.indexOf('.') > -1) {
+          var ks = f.split('.'), o = it;
+          for (var i = 0; i < ks.length - 1; i++) o = o[ks[i]];
+          o[ks[ks.length - 1]] = val;
+        } else { it[f] = val; }
+      }
+    }
+    touch();
+    if (t.tagName === 'SELECT' && (page === 'review')) { render(); }
+  }
+
+  function copyText(txt) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(txt).then(function () { toast('清单已复制到剪贴板'); },
+        function () { fallbackCopy(txt); });
+    } else { fallbackCopy(txt); }
+  }
+  function fallbackCopy(txt) {
+    var ta = document.createElement('textarea');
+    ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); toast('清单已复制'); } catch (err) { toast('复制失败，请手动选择', true); }
+    ta.remove();
+  }
+
+  /* ══════════════ 项目与备份 ══════════════ */
+  function refreshProject() { renderNav(); render(); }
+
+  $('#projSel').addEventListener('change', function (e) {
+    store.currentId = e.target.value;
+    localStorage.setItem(KEY, JSON.stringify(store));
+    page = 'overview'; refreshProject();
+  });
+
+  $('#btnNewProj').addEventListener('click', function () {
+    modal('<h3>新建项目</h3><p>每个项目独立保存委托背景、对象分组与全部 DOME 内容。</p>' +
+      '<div class="field"><label>项目名称</label><input type="text" id="npName" placeholder="例如：某公司-销售团队培训规划"></div>' +
+      '<div class="field" style="margin-top:10px"><label>委托方</label><input type="text" id="npClient" placeholder="委托方名称"></div>' +
+      '<div class="acts"><button class="btn sm" data-close="1">取消</button><button class="btn primary sm" id="npOk">创建</button></div>');
+    $('#npOk').addEventListener('click', function () {
+      var name = ($('#npName').value || '').trim();
+      if (!name) { toast('请填写项目名称', true); return; }
+      var p = blankProject(name, ($('#npClient').value || '').trim());
+      store.projects.push(p);
+      store.currentId = p.id;
+      localStorage.setItem(KEY, JSON.stringify(store));
+      closeModal();
+      page = 'overview'; refreshProject();
+      toast('已创建项目');
+    });
+  });
+
+  $('#btnDelProj').addEventListener('click', function () {
+    if (store.projects.length <= 1) { toast('至少保留一个项目', true); return; }
+    var p = P();
+    modal('<h3>删除项目</h3><p>将删除「<b>' + esc(p.name) + '</b>」及其全部内容，不可恢复。</p>' +
+      '<div class="acts"><button class="btn sm" data-close="1">取消</button><button class="btn danger sm" id="delOk">确认删除</button></div>');
+    $('#delOk').addEventListener('click', function () {
+      store.projects = store.projects.filter(function (x) { return x.id !== p.id; });
+      store.currentId = store.projects[0].id;
+      localStorage.setItem(KEY, JSON.stringify(store));
+      closeModal(); page = 'overview'; refreshProject();
+      toast('项目已删除');
+    });
+  });
+
+  $('#btnSeed').addEventListener('click', function () {
+    var p = seedProject();
+    store.projects.push(p);
+    store.currentId = p.id;
+    localStorage.setItem(KEY, JSON.stringify(store));
+    page = 'overview'; refreshProject();
+    toast('已载入示例项目');
+  });
+
+  $('#btnExport').addEventListener('click', function () {
+    var blob = new Blob([JSON.stringify(store, null, 2)], { type: 'application/json' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = '培训规划工作台_备份_' + new Date().toISOString().slice(0, 10) + '.json';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1500);
+    toast('备份已导出');
+  });
+
+  $('#fileImp').addEventListener('change', function (e) {
+    var f = e.target.files[0];
+    if (!f) return;
+    var reader = new FileReader();
+    reader.onload = function () {
+      try {
+        var d = JSON.parse(reader.result);
+        if (!d || !Array.isArray(d.projects) || !d.projects.length) throw new Error('格式不正确');
+        d.projects = d.projects.map(normalize);
+        store = d;
+        if (!d.currentId) store.currentId = d.projects[0].id;
+        localStorage.setItem(KEY, JSON.stringify(store));
+        page = 'overview'; refreshProject();
+        toast('备份已导入（' + d.projects.length + ' 个项目）');
+      } catch (err) {
+        toast('导入失败：' + err.message, true);
+      }
+      e.target.value = '';
+    };
+    reader.readAsText(f);
+  });
+
+  $('#btnReset').addEventListener('click', function () {
+    modal('<h3>清空本机数据</h3><p>将删除本浏览器中保存的全部项目数据，不可恢复。建议先导出备份。</p>' +
+      '<div class="acts"><button class="btn sm" data-close="1">取消</button><button class="btn danger sm" id="rstOk">确认清空</button></div>');
+    $('#rstOk').addEventListener('click', function () {
+      localStorage.removeItem(KEY);
+      store = { projects: [blankProject('未命名项目')], currentId: null };
+      store.currentId = store.projects[0].id;
+      localStorage.setItem(KEY, JSON.stringify(store));
+      closeModal(); page = 'overview'; refreshProject();
+      toast('已清空，已新建空白项目');
+    });
+  });
+
+  /* 侧栏 / 弹层 */
+  $('#menuBtn').addEventListener('click', function () {
+    $('#side').classList.add('open'); $('#mask').classList.add('on');
+  });
+  $('#mask').addEventListener('click', function () {
+    $('#side').classList.remove('open'); $('#mask').classList.remove('on');
+  });
+  document.addEventListener('click', function (e) {
+    var ni = e.target.closest('[data-page]');
+    if (ni) { go(ni.dataset.page); return; }
+    if (e.target.closest('[data-close]')) { closeModal(); return; }
+    if (e.target.id === 'modalMask') closeModal();
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+
+  /* 启动 */
+  try { localStorage.setItem(KEY + '.probe', '1'); localStorage.removeItem(KEY + '.probe'); }
+  catch (e) { toast('浏览器禁用了本机存储，数据无法保存', true); }
+
+  refreshProject();
+  $('#saveState').textContent = '数据保存在本机浏览器';
+
+  /* 仅在服务端版的 /web 路径下显示「返回服务端版」入口（本地双击打开时不显示） */
+  if (/^\/web\/?$/.test(location.pathname)) {
+    var back = document.getElementById('toV1');
+    if (back) back.style.display = '';
+  }
+})();
+</script>
+</body>
+</html>

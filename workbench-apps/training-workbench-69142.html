@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>二级公司培训体系工作台</title>
+<style>
+  :root{
+    --primary:#1F3A5F; --primary2:#2d5286; --bg:#f4f6f9; --card:#fff;
+    --line:#dde3ec; --muted:#6b7686; --ok:#2e7d32; --warn:#b26a00; --bad:#b3261e;
+    --chip:#eef2f7;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;background:var(--bg);color:#1f2733;font-size:14px}
+  header{background:var(--primary);color:#fff;padding:12px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  header h1{font-size:18px;margin:0;font-weight:600}
+  header .sub{font-size:12px;opacity:.8}
+  nav{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+  nav button{background:transparent;border:1px solid rgba(255,255,255,.35);color:#fff;padding:7px 14px;border-radius:6px;cursor:pointer;font-size:14px}
+  nav button.active{background:#fff;color:var(--primary);font-weight:600}
+  main{max-width:1180px;margin:0 auto;padding:18px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:16px}
+  .card h2{margin:0 0 12px;font-size:16px;color:var(--primary)}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .stat{background:var(--chip);border-radius:8px;padding:14px}
+  .stat .v{font-size:26px;font-weight:700;color:var(--primary)}
+  .stat .k{font-size:12px;color:var(--muted);margin-top:4px}
+  .stat .v.warn{color:var(--warn)}
+  .btn{background:var(--primary);color:#fff;border:none;padding:8px 14px;border-radius:6px;cursor:pointer;font-size:14px}
+  .btn.sec{background:#fff;color:var(--primary);border:1px solid var(--primary)}
+  .btn.ghost{background:#fff;color:var(--muted);border:1px solid var(--line)}
+  .btn:disabled{opacity:.5;cursor:not-allowed}
+  table{width:100%;border-collapse:collapse;margin-top:8px}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:var(--chip);font-weight:600}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+  .toolbar input,.toolbar select{padding:7px 10px;border:1px solid var(--line);border-radius:6px;font-size:14px}
+  .pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:12px;border:1px solid var(--line)}
+  .pill.ok{background:#e7f4e8;color:var(--ok);border-color:#bfe0c2}
+  .pill.warn{background:#fdf2e0;color:var(--warn);border-color:#f0d9b0}
+  .pill.bad{background:#fbe9e7;color:var(--bad);border-color:#f1c4c0}
+  .pill.gray{background:var(--chip);color:var(--muted)}
+  .group-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+  .gcard{border:1px solid var(--line);border-radius:8px;padding:12px;cursor:pointer}
+  .gcard.sel{outline:2px solid var(--primary);background:#f0f5fb}
+  .gcard .gname{font-weight:600;color:var(--primary)}
+  .gcard .gnum{font-size:22px;font-weight:700;margin-top:6px}
+  .modal-bg{position:fixed;inset:0;background:rgba(20,30,45,.45);display:none;align-items:flex-start;justify-content:center;padding:40px 12px;overflow:auto}
+  .modal-bg.show{display:flex}
+  .modal{background:#fff;border-radius:10px;padding:18px;width:min(640px,96vw)}
+  .modal label{display:block;margin:10px 0 4px;font-size:13px;color:var(--muted)}
+  .modal input,.modal textarea,.modal select{width:100%;padding:8px;border:1px solid var(--line);border-radius:6px;font-size:14px;font-family:inherit}
+  .modal textarea{min-height:90px;resize:vertical}
+  .row2{display:flex;gap:10px}
+  .row2>div{flex:1}
+  .hidden{display:none!important}
+  .muted{color:var(--muted)}
+  .err{color:var(--bad);font-size:13px}
+  .ok-msg{color:var(--ok);font-size:13px}
+  .act{font-size:12px;color:var(--muted);border-bottom:1px dashed var(--line);padding:4px 0}
+  .mod-block{border:1px solid var(--line);border-radius:8px;padding:12px;margin-bottom:12px}
+  .mod-block .mh{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+  .mod-block h3{margin:0;font-size:15px;color:var(--primary)}
+  .upstream{font-size:12px;color:var(--muted);margin:6px 0}
+  .drop{border:2px dashed var(--line);border-radius:10px;padding:24px;text-align:center;color:var(--muted)}
+  .sumrow{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  .sum{flex:1;min-width:110px;text-align:center;border:1px solid var(--line);border-radius:8px;padding:10px}
+  .sum .sv{font-size:22px;font-weight:700}
+  .decision{font-size:12px}
+  details{margin-top:8px}
+  summary{cursor:pointer;color:var(--primary)}
+  .help-li{margin:6px 0}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>二级公司培训体系工作台</h1>
+    <div class="sub">培训岗 · 痛点诊断 → 两阶段推导 → 可编辑培养方案 · 真实持久化</div>
+  </div>
+  <nav>
+    <button data-tab="overview" class="active">概览</button>
+    <button data-tab="pains">群体与痛点</button>
+    <button data-tab="program">培养方案设计</button>
+    <button data-tab="import">导入与处理</button>
+    <button data-tab="settings">设置帮助</button>
+  </nav>
+</header>
+<main>
+
+<!-- 概览 -->
+<section id="tab-overview">
+  <div class="card">
+    <h2>关键指标</h2>
+    <div class="stats" id="ov-stats"></div>
+  </div>
+  <div class="card">
+    <h2>待处理 & 最近活动</h2>
+    <div id="ov-todo" class="muted">加载中…</div>
+    <h3 style="margin-top:14px;font-size:14px;color:var(--primary)">最近活动</h3>
+    <div id="ov-acts"></div>
+    <div style="margin-top:12px"><button class="btn" onclick="goTab('import')">去导入资料</button>
+    <button class="btn sec" onclick="goTab('program')">去设计方案</button></div>
+  </div>
+</section>
+
+<!-- 群体与痛点 -->
+<section id="tab-pains" class="hidden">
+  <div class="card">
+    <div class="toolbar">
+      <strong>按群体筛选：</strong>
+      <div class="group-cards" id="gc-cards" style="flex:1"></div>
+      <input id="p-search" placeholder="搜索痛点/场景/能力/来源" oninput="loadPains()">
+      <select id="p-status" onchange="loadPains()">
+        <option value="">全部状态</option><option>草稿</option><option>已确认</option><option>已归档</option>
+      </select>
+      <button class="btn" onclick="openPainModal()">+ 新增痛点</button>
+    </div>
+    <table id="pains-table"><thead><tr>
+      <th>群体</th><th>痛点描述</th><th>工作场景</th><th>能力需求</th><th>来源</th><th>状态</th><th>操作</th>
+    </tr></thead><tbody></tbody></table>
+  </div>
+</section>
+
+<!-- 培养方案设计 -->
+<section id="tab-program" class="hidden">
+  <div class="card">
+    <div class="toolbar">
+      <strong>方案版本：</strong>
+      <select id="prog-sel" onchange="loadProgram()"></select>
+      <button class="btn" onclick="genProgram()">⚙ 根据痛点生成草稿</button>
+      <button class="btn sec" onclick="publishProgram()">✓ 确认发布此版本</button>
+      <button class="btn ghost" onclick="archiveProgram()">归档</button>
+      <span class="muted">导出：</span>
+      <button class="btn ghost" onclick="exportProg('word')">Word</button>
+      <button class="btn ghost" onclick="exportProg('pdf')">PDF</button>
+      <button class="btn ghost" onclick="exportProg('txt')">文本</button>
+    </div>
+    <div id="prog-status" class="muted">尚未生成方案。</div>
+    <div id="prog-modules"></div>
+    <div class="ok-msg" id="prog-save-tip"></div>
+  </div>
+</section>
+
+<!-- 导入与处理 -->
+<section id="tab-import" class="hidden">
+  <div class="card">
+    <h2>导入向导（支持 Excel / Word / PDF，无需 JSON）</h2>
+    <div class="drop">
+      <input type="file" id="imp-file" accept=".xlsx,.docx,.pdf">
+      <div class="muted" style="margin-top:8px">仅显示支持类型；解析后预览校验，确认再入库。同名同内容不翻倍。</div>
+      <button class="btn" style="margin-top:10px" onclick="previewImport()">① 解析并预览</button>
+    </div>
+    <div id="imp-preview" class="hidden">
+      <div class="sumrow" id="imp-sum"></div>
+      <table id="imp-table"><thead><tr>
+        <th>分类</th><th>群体</th><th>痛点描述</th><th>工作场景</th><th>能力需求</th><th>来源</th><th>提示</th><th>导入决策</th>
+      </tr></thead><tbody></tbody></table>
+      <div class="toolbar" style="margin-top:10px">
+        <button class="btn" onclick="commitImport()">② 确认导入选中项</button>
+        <span id="imp-result" class="muted"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 设置帮助 -->
+<section id="tab-settings" class="hidden">
+  <div class="card">
+    <h2>资料库绑定状态</h2>
+    <div id="ds-status" class="ok-msg"></div>
+    <p class="muted">本工作台使用本地 SQLite 真实持久化（training.db），数据落盘可查、可备份、可恢复；非浏览器 localStorage、非演示假数据。</p>
+    <button class="btn ghost" onclick="backupDb()">下载数据库备份(.db)</button>
+  </div>
+  <div class="card">
+    <h2>业务规则（BR，均须来源可溯）</h2>
+    <div id="rules-list"></div>
+  </div>
+  <div class="card">
+    <h2>角色与权限（设计约定）</h2>
+    <ul class="help-li">培训岗：创建/编辑/归档/导出本人空间全部数据（主用）。</ul>
+    <ul class="help-li">方案查看者：只读培养方案与概览。</ul>
+    <ul class="help-li">二级公司管理方：接收方案（待确认）。</ul>
+    <p class="muted">说明：当前为单用户本地工作台，未接入企业账号体系；前端按钮隐藏不等于服务端权限隔离，正式上线须按 security-release 落到可信身份。</p>
+  </div>
+</section>
+
+</main>
+
+<!-- 痛点弹窗 -->
+<div class="modal-bg" id="pain-modal">
+  <div class="modal">
+    <h2 id="pain-modal-title">新增痛点</h2>
+    <input type="hidden" id="pain-id">
+    <div class="row2">
+      <div><label>群体 *</label><select id="pain-group"><option>干部</option><option>核保</option><option>核赔</option></select></div>
+      <div><label>状态</label><select id="pain-status"><option>草稿</option><option>已确认</option></select></div>
+    </div>
+    <label>痛点描述 *</label><textarea id="pain-desc"></textarea>
+    <label>工作场景</label><input id="pain-scene">
+    <label>能力需求（缺失将写「待确认」）</label><input id="pain-cap">
+    <label>来源</label><input id="pain-source">
+    <div class="toolbar" style="margin-top:14px;justify-content:flex-end">
+      <button class="btn ghost" onclick="closePainModal()">取消</button>
+      <button class="btn" onclick="savePain()">保存</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const API="/api";
+// 分享链接带 ?sharecode=... 才能访问；代理对每次请求都校验，前端必须把分享码透传到每个 API 与下载链接
+// 持久化到 sessionStorage，避免同会话内反复丢失
+const SHARE=new URLSearchParams(location.search).get('sharecode')||sessionStorage.getItem('sharecode')||'';
+if(SHARE) sessionStorage.setItem('sharecode',SHARE);
+function withShare(u){return SHARE? u+(u.includes('?')?'&':'?')+'sharecode='+encodeURIComponent(SHARE) : u;}
+
+// 全局错误条：任何接口失败都给出明确可见提示，而不是白屏
+function showErr(msg){
+  let b=document.getElementById('errbar');
+  if(!b){b=document.createElement('div');b.id='errbar';
+    b.style.cssText='position:fixed;left:0;right:0;top:0;z-index:9999;background:#b3261e;color:#fff;padding:10px 16px;font-size:13px;line-height:1.5;box-shadow:0 2px 8px rgba(0,0,0,.2)';
+    document.body.appendChild(b);}
+  b.innerHTML=msg; b.style.display='block';
+}
+function hideErr(){const b=document.getElementById('errbar');if(b)b.style.display='none';}
+
+function goTab(t){document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));
+  document.querySelectorAll('main section').forEach(s=>s.classList.toggle('hidden',s.id!=='tab-'+t));
+  if(t==='overview')loadOverview(); if(t==='pains')loadPains(); if(t==='program')refreshPrograms();
+  if(t==='import'){}; if(t==='settings')loadSettings();}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>goTab(b.dataset.tab));
+
+async function api(u,opt){
+  let r;
+  try{ r=await fetch(withShare(API+u),opt); }
+  catch(e){ showErr('⚠️ 网络请求失败：请检查网络后按 <b>Ctrl+Shift+R</b>（Mac 用 Cmd+Shift+R）强制刷新重试。'); throw e; }
+  if(r.status===403||r.status===404){
+    showErr('⚠️ 访问被拒绝（缺少分享码）：请使用<b>完整的带 ?sharecode= 的链接</b>打开；若已使用完整链接仍报错，请按 <b>Ctrl+Shift+R</b> 强制刷新。');
+    throw new Error('sharecode_required');
+  }
+  if(!r.ok){let e;try{e=(await r.json()).error}catch{e=r.statusText}throw new Error(e||'请求失败')}
+  return r.json();
+}
+
+// 进入页面即自检连通性，异常立刻可见
+window.addEventListener('DOMContentLoaded',async()=>{
+  try{ await api('/health'); hideErr(); }
+  catch(e){ /* 错误条已在 api 内显示 */ }
+});
+
+// 概览
+async function loadOverview(){
+  const o=await api('/overview');
+  document.getElementById('ov-stats').innerHTML=`
+    <div class="stat"><div class="v ${o.coverage_pct<100?'warn':''}">${o.coverage_pct}%</div><div class="k">三类群体覆盖率（干部${o.group_coverage.干部}/核保${o.group_coverage.核保}/核赔${o.group_coverage.核赔}）</div></div>
+    <div class="stat"><div class="v">${o.pain_total}</div><div class="k">已识别痛点数</div></div>
+    <div class="stat"><div class="v">${o.completion_pct}%</div><div class="k">方案完成度（已填模块/7）</div></div>
+    <div class="stat"><div class="v ${o.pending_count?'warn':''}">${o.pending_count}</div><div class="k">待确认项数</div></div>`;
+  let todo=[];
+  if(o.draft_program>0) todo.push(`有 ${o.draft_program} 个草稿/待确认方案版本待处理`);
+  if(o.pending_import>0) todo.push(`有 ${o.pending_import} 个异常导入批次`);
+  if(o.group_coverage.干部===0||o.group_coverage.核保===0||o.group_coverage.核赔===0) todo.push('存在未覆盖群体，请补充痛点数据（BR-011）');
+  document.getElementById('ov-todo').innerHTML = todo.length? todo.map(t=>`• ${t}`).join('<br>'):'<span class="ok-msg">暂无待处理事项。</span>';
+  document.getElementById('ov-acts').innerHTML = o.activities.length? o.activities.map(a=>`<div class="act">[${a.ts}] ${a.kind}：${a.detail}</div>`).join(''):'<span class="muted">暂无活动。</span>';
+}
+
+// 群体与痛点
+let selGroup="";
+async function loadPains(){
+  const q=document.getElementById('p-search').value;
+  const st=document.getElementById('p-status').value;
+  let u='/painpoints?'+new URLSearchParams({group:selGroup,q,status:st});
+  const rows=await api(u);
+  const tb=document.querySelector('#pains-table tbody');
+  tb.innerHTML=rows.map(r=>`<tr>
+    <td>${r.group_id}</td><td>${esc(r.pain_desc)}</td><td>${esc(r.scene||'')}</td>
+    <td>${r.capability_need==='待确认'?'<span class="pill warn">待确认</span>':esc(r.capability_need)}</td>
+    <td>${esc(r.source||'')}</td>
+    <td>${statusPill(r.status)}</td>
+    <td><button class="btn ghost" onclick="openPainModal(${r.id})">编辑</button>
+    ${r.status==='已归档'?'<button class="btn ghost" onclick="restorePain('+r.id+')">恢复</button>':'<button class="btn ghost" onclick="archivePain('+r.id+')">归档</button>'}</td></tr>`).join('');
+  // 群体卡片
+  const ov=await api('/overview');
+  document.getElementById('gc-cards').innerHTML=['干部','核保','核赔'].map(g=>
+    `<div class="gcard ${selGroup===g?'sel':''}" onclick="pickGroup('${g}')"><div class="gname">${g}</div><div class="gnum">${ov.group_coverage[g]}</div><div class="muted" style="font-size:12px">条痛点</div></div>`).join('');
+}
+function pickGroup(g){selGroup=selGroup===g?'':g;loadPains();}
+function statusPill(s){const m={草稿:'gray',已确认:'ok',已归档:'gray'};return `<span class="pill ${m[s]||'gray'}">${s}</span>`;}
+function esc(t){return (t||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+
+function openPainModal(id){
+  document.getElementById('pain-modal-title').textContent=id?'编辑痛点':'新增痛点';
+  document.getElementById('pain-id').value=id||'';
+  if(id){api('/painpoints').then(rows=>{const r=rows.find(x=>x.id==id);if(r){document.getElementById('pain-group').value=r.group_id;document.getElementById('pain-status').value=r.status;document.getElementById('pain-desc').value=r.pain_desc;document.getElementById('pain-scene').value=r.scene||'';document.getElementById('pain-cap').value=r.capability_need==='待确认'?'':r.capability_need;document.getElementById('pain-source').value=r.source||'';}});}
+  else{['pain-group','pain-status','pain-desc','pain-scene','pain-cap','pain-source'].forEach(i=>document.getElementById(i).value=i==='pain-status'?'草稿':(i==='pain-group'?'干部':''));}
+  document.getElementById('pain-modal').classList.add('show');
+}
+function closePainModal(){document.getElementById('pain-modal').classList.remove('show');}
+async function savePain(){
+  const id=document.getElementById('pain-id').value;
+  const body={group_id:document.getElementById('pain-group').value,status:document.getElementById('pain-status').value,
+    pain_desc:document.getElementById('pain-desc').value,scene:document.getElementById('pain-scene').value,
+    capability_need:document.getElementById('pain-cap').value,source:document.getElementById('pain-source').value};
+  try{if(id){await api('/painpoints/'+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});}
+    else{await api('/painpoints',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});}
+    closePainModal();loadPains();loadOverview();
+  }catch(e){alert('保存失败：'+e.message);}
+}
+async function archivePain(id){await api('/painpoints/'+id+'/archive',{method:'POST'});loadPains();}
+async function restorePain(id){await api('/painpoints/'+id+'/restore',{method:'POST'});loadPains();}
+
+// 导入
+let impRows=[];
+async function previewImport(){
+  const f=document.getElementById('imp-file').files[0];
+  if(!f){alert('请先选择文件');return;}
+  const fd=new FormData();fd.append('file',f);
+  try{const r=await api('/import/preview',{method:'POST',body:fd});
+    impRows=r.rows;
+    const s=r.summary;
+    const color=c=>({可导入:'ok',待确认:'warn',重复:'warn',无效:'bad'}[c]||'gray');
+    document.getElementById('imp-sum').innerHTML=Object.entries(s).map(([k,v])=>`<div class="sum"><div class="sv">${v}</div><div class="k">${k}</div></div>`).join('')+
+      `<div class="sum"><div class="sv">${r.sheet}</div><div class="k">解析工作表</div></div>`;
+    document.querySelector('#imp-table tbody').innerHTML=r.rows.map((row,i)=>{
+      const rec=row.record||{};
+      const def=row.category==='无效'?'skip':(row.category==='重复'?'skip':'import');
+      return `<tr>
+        <td><span class="pill ${color(row.category)}">${row.category}</span></td>
+        <td>${rec.group_id||'<span class="err">未识别</span>'}</td>
+        <td>${esc(rec.pain_desc||'')}</td><td>${esc(rec.scene||'')}</td>
+        <td>${esc(rec.capability_need||'')}</td><td>${esc(rec.source||'')}</td>
+        <td class="muted">${esc(row.message)}</td>
+        <td><select class="decision" data-i="${i}" onchange="impRows[${i}].decision=this.value">
+          <option value="import" ${def==='import'?'selected':''}>导入(新建)</option>
+          <option value="update">更新(若重复)</option>
+          <option value="skip" ${def==='skip'?'selected':''}>跳过</option></select></td></tr>`;}).join('');
+    document.getElementById('imp-preview').classList.remove('hidden');
+    document.getElementById('imp-result').textContent='';
+  }catch(e){alert('解析失败：'+e.message);}
+}
+async function commitImport(){
+  const f=document.getElementById('imp-file').files[0];
+  const rows=impRows.map((r,i)=>({decision:(document.querySelector(`select[data-i="${i}"]`)||{}).value||r.decision||'import',record:r.record}));
+  try{const r=await api('/import/commit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({file_name:f.name,rows})});
+    document.getElementById('imp-result').innerHTML=`<span class="ok-msg">导入完成：新增${r.counts.新增}/修改${r.counts.修改}/跳过${r.counts.跳过}/失败${r.counts.失败}（批次#${r.batch_id}）</span>`;
+    loadPains();loadOverview();
+  }catch(e){alert('导入失败：'+e.message);}
+}
+
+// 方案
+async function refreshPrograms(){const ps=await api('/programs');const sel=document.getElementById('prog-sel');
+  sel.innerHTML=ps.length?ps.map(p=>`<option value="${p.program_id}">${p.version_no}（${p.status}）</option>`).join(''):'<option value="">（无方案，请生成）</option>';
+  if(ps.length)loadProgram();else{document.getElementById('prog-status').textContent='尚未生成方案。';document.getElementById('prog-modules').innerHTML='';}
+}
+async function genProgram(){
+  try{const r=await api('/programs/generate',{method:'POST'});
+    await refreshPrograms();document.getElementById('prog-sel').value=r.program_id;loadProgram();
+    alert('已生成 7 模块草稿（状态：草稿/待确认），请逐模块编辑并确认。');
+  }catch(e){alert('生成失败：'+e.message);}
+}
+async function loadProgram(){
+  const pid=document.getElementById('prog-sel').value;if(!pid)return;
+  const r=await api('/programs/'+pid);
+  document.getElementById('prog-status').innerHTML=`当前版本：<b>${r.program.version_no}</b> 状态：<b>${r.program.status}</b>（草稿需人工确认后方可发布，BR-008）`;
+  document.getElementById('prog-modules').innerHTML=r.modules.map(m=>`
+    <div class="mod-block"><div class="mh"><h3>${m.module_key}</h3>
+      <select id="st-${m.module_id}"><option ${m.status==='草稿'?'selected':''}>草稿</option><option ${m.status==='待确认'?'selected':''}>待确认</option><option ${m.status==='已确认'?'selected':''}>已确认</option></select>
+      <button class="btn ghost" onclick="saveModule(${r.program.program_id},${m.module_id})">保存本模块</button></div>
+      <div class="upstream">上游依据：${esc(m.upstream_ref)}</div>
+      <textarea id="ct-${m.module_id}">${esc(m.content)}</textarea></div>`).join('');
+}
+async function saveModule(pid,mid){
+  const body={content:document.getElementById('ct-'+mid).value,status:document.getElementById('st-'+mid).value};
+  await api('/programs/'+pid+'/modules/'+mid,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  document.getElementById('prog-save-tip').textContent='模块已保存（已落库）。';
+  setTimeout(()=>document.getElementById('prog-save-tip').textContent='',2500);
+  loadOverview();
+}
+async function publishProgram(){
+  const pid=document.getElementById('prog-sel').value;if(!pid)return alert('请先生成方案');
+  if(!confirm('确认发布此版本？将校验三类群体覆盖（BR-011），发布后状态=已发布。'))return;
+  try{const r=await api('/programs/'+pid+'/publish',{method:'POST'});alert('已发布：'+r.status);refreshPrograms();}
+  catch(e){alert('发布被阻止：'+e.message);}
+}
+async function archiveProgram(){const pid=document.getElementById('prog-sel').value;if(!pid)return;await api('/programs/'+pid+'/archive',{method:'POST'});refreshPrograms();}
+function exportProg(fmt){const pid=document.getElementById('prog-sel').value;if(!pid)return alert('请先生成方案');window.open(withShare(`/api/programs/${pid}/export?format=${fmt}`));}
+
+// 设置
+async function loadSettings(){
+  const h=await api('/health');document.getElementById('ds-status').textContent='运行状态：'+h.dataspace;
+  const rs=await api('/rules');document.getElementById('rules-list').innerHTML=rs.map(r=>`<div class="help-li"><b>${r.id}</b> ${r.name}：<span class="muted">${r.desc}</span></div>`).join('');
+}
+function backupDb(){window.open(withShare('/api/backup'));}
+
+// 启动
+loadOverview();
+</script>
+</body>
+</html>

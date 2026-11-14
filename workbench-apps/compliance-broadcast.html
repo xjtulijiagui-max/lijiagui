@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>合规宣导工作台</title>
+<meta name="description" content="监管处罚数据 → 警示案例 → 宣导素材 → 触达留痕，一条闭环。">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+<div id="gh-snapshot-banner" style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#FFF7E6;border-bottom:1px solid #E8C87A;color:#8A5A00;padding:8px 16px;font:13px/1.5 'PingFang SC','Microsoft YaHei',sans-serif;text-align:center;">
+📜 这是原内网工作台的<strong>静态快照</strong>（仅供存档预览）。完整交互版本需在 WorkBuddy 内网环境打开原链接。
+<button onclick="this.parentNode.remove();document.body.style.paddingTop='0'" style="margin-left:10px;background:#8A5A00;color:#fff;border:0;border-radius:4px;padding:2px 10px;cursor:pointer;font-size:12px;">知道了</button>
+</div>
+
+<div class="app">
+  <header class="topbar">
+    <div class="brand"><span class="dot"></span>合规宣导工作台</div>
+    <nav class="nav" id="nav">
+      <button data-view="dashboard" class="on">驾驶舱</button>
+      <button data-view="punish">处罚数据</button>
+      <button data-view="cases">案例与风险点</button>
+      <button data-view="center">宣导中心</button>
+    </nav>
+    <div class="spacer"></div>
+    <div class="topmeta">
+      <span id="conn" class="conn"><i></i><span>连接中</span></span>
+      <span id="baseDate">基准日 2026-09-30</span>
+    </div>
+  </header>
+  <main class="main" id="view"><div class="loading">正在连接云端数据…</div></main>
+</div>
+
+<div class="mask" id="mask"></div>
+<aside class="drawer" id="drawer">
+  <div class="drawer-head">
+    <h2 id="drawerTitle">详情</h2>
+    <button class="x" onclick="WBUI.closeDrawer()">×</button>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+  <div class="drawer-foot" id="drawerFoot"></div>
+</aside>
+
+<div class="modal" id="modal">
+  <div class="modal-head">
+    <h2 id="modalTitle">操作</h2>
+    <button class="x" onclick="WBUI.closeModal()">×</button>
+  </div>
+  <div class="modal-body" id="modalBody"></div>
+  <div class="modal-foot" id="modalFoot"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- 依赖库：本地托管，不依赖外部 CDN -->
+<script src="assets/vendor/workbuddy-cloud-sdk.global.js"></script>
+<script src="assets/vendor/xlsx.full.min.js"></script>
+<script src="assets/vendor/jszip.min.js"></script>
+
+<script src="js/config.js"></script>
+<script src="js/core.js"></script>
+<script src="js/parse.js"></script>
+<script src="js/tpl.js"></script>
+<script src="js/data.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/boot.js"></script>
+<script>
+// 快照模式：拦截失效的相对资源请求，避免报错
+(function(){
+  try { document.body.style.paddingTop = '44px'; } catch(e) {}
+  var origFetch = window.fetch;
+  window.fetch = function(u){
+    if (typeof u === 'string' && (u.startsWith('/') || (!u.startsWith('http') && !u.startsWith('data:') && !u.startsWith('#')))) {
+      return Promise.resolve(new Response(JSON.stringify({items:[],error:'snapshot-mode'}), {status:200, headers:{'Content-Type':'application/json'}}));
+    }
+    return origFetch.apply(this, arguments);
+  };
+  // 阻止相对资源加载报错
+  document.addEventListener('error', function(e){
+    var t = e.target;
+    if (t && (t.tagName === 'SCRIPT' || t.tagName === 'LINK')) e.preventDefault();
+  }, true);
+})();
+</script>
+</body>
+</html>

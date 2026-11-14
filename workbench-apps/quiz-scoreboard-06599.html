@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>持廉守密·依规笃行 竞答争锋赛 · 积分器</title>
+<style>
+  :root{
+    --red:#C70019; --red-d:#9E0014; --gold:#D4A017;
+    --bg:#F4F5F7; --card:#FFFFFF; --line:#E3E5E9;
+    --text:#1B1D21; --text2:#5A6070; --text3:#8C94A4;
+    --must:#C70019; --rush:#E8720C; --risk:#7A1FA2; --case:#0F7B6C; --fun:#7B8496;
+    --ok:#1E9E5A; --bad:#D9342B;
+    --r:14px; --sh:0 1px 2px rgba(16,24,40,.05),0 6px 18px rgba(16,24,40,.06);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;height:100%}
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Source Han Sans SC","Noto Sans CJK SC",system-ui,-apple-system,"Segoe UI",sans-serif;
+    font-size:15px; line-height:1.5; display:flex; flex-direction:column; overflow:hidden;
+  }
+  button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+  input,select{font-family:inherit;font-size:inherit;color:inherit}
+
+  /* ---------- 顶栏 ---------- */
+  .topbar{
+    flex:0 0 auto; display:flex; align-items:center; gap:14px;
+    padding:10px 18px; background:#fff; border-bottom:1px solid var(--line);
+    box-shadow:0 1px 0 rgba(16,24,40,.03); z-index:20;
+  }
+  .brand{display:flex;align-items:center;gap:11px;min-width:0}
+  .brand .mark{
+    width:34px;height:34px;border-radius:9px;flex:0 0 auto;
+    background:linear-gradient(135deg,var(--red),#8E0012); color:#fff;
+    display:grid;place-items:center;font-weight:800;font-size:15px;letter-spacing:.5px;
+    box-shadow:0 3px 10px rgba(199,0,25,.28);
+  }
+  .brand .tt{min-width:0}
+  .brand h1{margin:0;font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .brand .sub{font-size:11.5px;color:var(--text3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .spacer{flex:1 1 auto}
+  .tbtn{
+    display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:9px;
+    border:1px solid var(--line);background:#fff;color:var(--text2);
+    font-size:13px;font-weight:600;transition:.15s;white-space:nowrap;
+  }
+  .tbtn:hover{background:#F7F8FA;border-color:#D3D7DE;color:var(--text)}
+  .tbtn.primary{background:var(--red);border-color:var(--red);color:#fff;box-shadow:0 3px 10px rgba(199,0,25,.22)}
+  .tbtn.primary:hover{background:var(--red-d);border-color:var(--red-d);color:#fff}
+  .tbtn.danger:hover{background:#FDF2F2;border-color:#F0BDB9;color:var(--bad)}
+
+  /* ---------- 环节 Tab ---------- */
+  .tabs{
+    flex:0 0 auto;display:flex;gap:8px;padding:11px 18px 0;overflow-x:auto;background:var(--bg);
+  }
+  .tab{
+    display:flex;flex-direction:column;gap:1px;padding:9px 16px 10px;border-radius:12px 12px 0 0;
+    background:#EDEFF3;color:var(--text2);border:1px solid transparent;border-bottom:0;
+    font-weight:700;font-size:14px;transition:.15s;white-space:nowrap;
+  }
+  .tab small{font-weight:500;font-size:11px;color:var(--text3)}
+  .tab:hover{background:#E7EAEF}
+  .tab.on{background:#fff;color:var(--text);box-shadow:0 -2px 0 var(--accent,var(--red)) inset}
+  .tab.on small{color:var(--text3)}
+
+  /* ---------- 主体 ---------- */
+  .wrap{flex:1 1 auto;display:flex;gap:14px;padding:0 18px 14px;min-height:0}
+  .board{
+    flex:1 1 auto;display:flex;flex-direction:column;gap:12px;min-width:0;min-height:0;
+    background:#fff;border:1px solid var(--line);border-radius:0 0 var(--r) var(--r);padding:14px;
+    box-shadow:var(--sh);
+  }
+  .boardhead{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .boardhead .bh-t{font-weight:800;font-size:15px}
+  .boardhead .bh-s{font-size:12.5px;color:var(--text3)}
+  .chip{
+    display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;
+    background:#F1F3F6;color:var(--text2);font-size:12px;font-weight:600;
+  }
+  .grid{
+    flex:1 1 auto;overflow:auto;display:grid;gap:12px;
+    grid-template-columns:repeat(auto-fill,minmax(286px,1fr));align-content:start;padding:2px;
+  }
+
+  /* ---------- 队伍卡 ---------- */
+  .card{
+    position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--r);
+    padding:13px 14px 12px;display:flex;flex-direction:column;gap:9px;transition:.16s;
+    box-shadow:0 1px 2px rgba(16,24,40,.04);
+  }
+  .card:hover{border-color:#CFD5DE;box-shadow:0 4px 14px rgba(16,24,40,.08)}
+  .card.r1{border-color:#F0D48A;background:linear-gradient(180deg,#FFFDF5,#fff 46%)}
+  .card.r2{border-color:#DCE1E8;background:linear-gradient(180deg,#FBFCFD,#fff 46%)}
+  .card.r3{border-color:#EBDCCB;background:linear-gradient(180deg,#FFFBF6,#fff 46%)}
+  .card .rank{
+    position:absolute;top:-9px;left:13px;min-width:26px;height:22px;padding:0 8px;border-radius:7px;
+    background:#EEF1F5;color:var(--text2);font-size:12px;font-weight:800;
+    display:grid;place-items:center;border:1px solid var(--line);
+  }
+  .card.r1 .rank{background:linear-gradient(135deg,#E9B949,#C9931C);color:#fff;border-color:#C9931C}
+  .card.r2 .rank{background:linear-gradient(135deg,#A9B2BF,#7E8898);color:#fff;border-color:#89929F}
+  .card.r3 .rank{background:linear-gradient(135deg,#CB9A6A,#A9764A);color:#fff;border-color:#AE7C50}
+  .card .nm{display:flex;align-items:baseline;gap:7px;margin-top:4px}
+  .card .nm .n{font-size:16px;font-weight:800;letter-spacing:.2px}
+  .card .nm .l{font-size:11.5px;color:var(--text3);white-space:nowrap}
+  .total{display:flex;align-items:flex-end;gap:8px}
+  .total .v{
+    font-size:34px;font-weight:800;line-height:1;letter-spacing:-.5px;
+    font-variant-numeric:tabular-nums;color:var(--red);
+  }
+  .total .u{font-size:12px;color:var(--text3);font-weight:600;padding-bottom:3px}
+  .total .d{font-size:12.5px;font-weight:800;padding-bottom:4px;font-variant-numeric:tabular-nums}
+  .total .d.up{color:var(--ok)} .total .d.dn{color:var(--bad)}
+  .brk{display:flex;gap:5px;flex-wrap:wrap}
+  .brk span{
+    font-size:11.5px;font-weight:700;padding:2.5px 7px;border-radius:6px;
+    background:#F3F5F8;color:var(--text2);font-variant-numeric:tabular-nums;
+  }
+  .brk span.zero{color:#AEB5C2;background:#F7F8FA}
+  .acts{display:flex;gap:7px;flex-wrap:wrap;margin-top:1px}
+  .ab{
+    flex:1 1 auto;min-width:74px;padding:9px 8px;border-radius:9px;font-size:13px;font-weight:800;
+    border:1px solid var(--line);background:#fff;color:var(--text2);transition:.12s;
+    display:inline-flex;align-items:center;justify-content:center;gap:5px;
+  }
+  .ab:hover{transform:translateY(-1px)}
+  .ab:active{transform:translateY(0)}
+  .ab.good{border-color:#BFE7CF;background:#F2FBF6;color:#137A44}
+  .ab.good:hover{background:#E6F7EE;border-color:#A5DDBB}
+  .ab.bad{border-color:#F3C9C5;background:#FDF5F4;color:#B42218}
+  .ab.bad:hover{background:#FBEAE8;border-color:#EDB2AC}
+  .ab.plain{border-color:var(--line);background:#F8F9FB;color:var(--text2)}
+  .ab.plain:hover{background:#F1F3F7}
+  .ab.sel{background:var(--red);border-color:var(--red);color:#fff}
+  .ab.sel:hover{background:var(--red-d);border-color:var(--red-d)}
+  .ab.mini{flex:0 0 auto;min-width:0;padding:7px 10px;font-size:12.5px}
+  .ab[disabled]{opacity:.4;cursor:not-allowed;transform:none!important}
+  .manual{display:flex;align-items:center;gap:6px;border-top:1px dashed var(--line);padding-top:8px}
+  .manual .lbl{font-size:11.5px;color:var(--text3);font-weight:600}
+  .manual input{
+    width:62px;padding:5px 7px;border:1px solid var(--line);border-radius:7px;
+    font-size:12.5px;text-align:center;font-variant-numeric:tabular-nums;
+  }
+  .manual input:focus{outline:2px solid rgba(199,0,25,.18);border-color:var(--red)}
+
+  /* ---------- 侧栏 ---------- */
+  .side{
+    flex:0 0 322px;display:flex;flex-direction:column;gap:12px;min-height:0;overflow:auto;padding-right:2px;
+  }
+  .pnl{background:#fff;border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);padding:13px 14px}
+  .pnl h2{margin:0 0 10px;font-size:13px;font-weight:800;color:var(--text2);letter-spacing:.4px;text-transform:uppercase}
+  .pnl .hint{font-size:12px;color:var(--text3);line-height:1.55;margin:0 0 10px}
+  .row{display:flex;gap:7px;flex-wrap:wrap}
+  .row.tight{gap:6px}
+  .seg{display:flex;gap:6px;flex-wrap:wrap}
+  .seg button{
+    padding:7px 11px;border-radius:8px;border:1px solid var(--line);background:#fff;
+    color:var(--text2);font-size:12.5px;font-weight:700;transition:.13s;font-variant-numeric:tabular-nums;
+  }
+  .seg button:hover{background:#F5F6F9}
+  .seg button.on{background:var(--accent,var(--red));border-color:var(--accent,var(--red));color:#fff}
+  .seglabel{font-size:12px;color:var(--text3);font-weight:700;margin:10px 0 6px}
+  .seglabel:first-child{margin-top:0}
+
+  /* 进度条 */
+  .prog{display:flex;flex-wrap:wrap;gap:4px;margin-top:9px}
+  .prog i{
+    width:19px;height:19px;border-radius:5px;background:#F0F2F6;border:1px solid var(--line);
+    font-style:normal;font-size:10px;font-weight:700;color:#B6BDC9;display:grid;place-items:center;
+    cursor:pointer;transition:.12s;font-variant-numeric:tabular-nums;
+  }
+  .prog i:hover{border-color:#C7CDD8}
+  .prog i.done{background:#EAF6EF;border-color:#B9DFC8;color:#137A44}
+  .prog i.cur{background:var(--red);border-color:var(--red);color:#fff;box-shadow:0 0 0 3px rgba(199,0,25,.15)}
+
+  /* 计时器 */
+  .timer{display:flex;flex-direction:column;gap:9px;align-items:center}
+  .timer .disp{
+    width:100%;text-align:center;font-size:46px;font-weight:800;line-height:1.05;
+    font-variant-numeric:tabular-nums;letter-spacing:1px;color:var(--text);
+    padding:6px 0 2px;border-radius:10px;background:#F7F8FA;border:1px solid var(--line);
+  }
+  .timer .disp.warn{color:#B26A00;background:#FFFBF0;border-color:#F5E2B8}
+  .timer .disp.over{color:var(--bad);background:#FDF3F2;border-color:#F3C9C5}
+  .timer .bar{width:100%;height:6px;border-radius:99px;background:#EDEFF3;overflow:hidden}
+  .timer .bar>i{display:block;height:100%;width:100%;background:var(--red);border-radius:99px;transition:width .1s linear}
+
+  /* 记录 */
+  .log{display:flex;flex-direction:column;gap:6px;max-height:238px;overflow:auto}
+  .log .it{
+    display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:8px;background:#F8F9FB;
+    font-size:12.5px;border:1px solid #EFF1F5;
+  }
+  .log .it .t{color:var(--text3);font-size:11px;font-variant-numeric:tabular-nums;flex:0 0 auto}
+  .log .it .x{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}
+  .log .it .p{font-weight:800;font-variant-numeric:tabular-nums;flex:0 0 auto}
+  .log .it .p.up{color:var(--ok)} .log .it .p.dn{color:var(--bad)} .log .it .p.nu{color:var(--text3)}
+  .log .empty{color:var(--text3);font-size:12.5px;text-align:center;padding:16px 0}
+
+  /* ---------- 大屏 ---------- */
+  .fs{
+    position:fixed;inset:0;z-index:99;background:linear-gradient(160deg,#12060A,#2A0207 42%,#12060A);
+    color:#fff;display:none;flex-direction:column;padding:34px 40px 30px;
+  }
+  .fs.show{display:flex}
+  .fs .fh{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+  .fs .fh h2{margin:0;font-size:22px;font-weight:800;letter-spacing:.5px}
+  .fs .fh .sub{font-size:13px;color:#E3AEB4}
+  .fs .fh .x{margin-left:auto;padding:8px 15px;border-radius:9px;background:rgba(255,255,255,.12);color:#fff;font-weight:700;font-size:13px}
+  .fs .fh .x:hover{background:rgba(255,255,255,.2)}
+  .fs .list{flex:1 1 auto;display:flex;flex-direction:column;gap:12px;justify-content:center;overflow:auto}
+  .fs .li{
+    display:flex;align-items:center;gap:20px;padding:16px 24px;border-radius:16px;
+    background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.09);
+    transition:.3s;
+  }
+  .fs .li.top{background:linear-gradient(90deg,rgba(212,160,23,.24),rgba(212,160,23,.05));border-color:rgba(212,160,23,.42)}
+  .fs .li .r{font-size:30px;font-weight:800;width:56px;color:#E9B949;font-variant-numeric:tabular-nums}
+  .fs .li .n{font-size:26px;font-weight:800;flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .fs .li .b{display:flex;gap:9px;flex:0 0 auto}
+  .fs .li .b span{font-size:12px;color:#E7C3C7;background:rgba(255,255,255,.07);padding:3px 9px;border-radius:6px;font-weight:700}
+  .fs .li .s{font-size:44px;font-weight:800;font-variant-numeric:tabular-nums;min-width:150px;text-align:right}
+  .fs .li.top .s{color:#F2CD6A}
+  .fs .ft{margin-top:18px;font-size:12.5px;color:#B98A90;text-align:center}
+
+  /* ---------- 弹层 ---------- */
+  .modal{position:fixed;inset:0;z-index:120;background:rgba(16,20,28,.5);display:none;place-items:center;padding:22px}
+  .modal.show{display:grid}
+  .mbox{background:#fff;border-radius:16px;box-shadow:0 24px 60px rgba(16,24,40,.28);width:min(680px,100%);max-height:88vh;display:flex;flex-direction:column}
+  .mbox .mh{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
+  .mbox .mh h3{margin:0;font-size:15.5px;font-weight:800}
+  .mbox .mh .x{margin-left:auto;width:30px;height:30px;border-radius:8px;background:#F4F5F7;color:var(--text2);font-size:16px;font-weight:700;display:grid;place-items:center}
+  .mbox .mh .x:hover{background:#E9EBEF}
+  .mbox .mb{padding:16px 18px;overflow:auto;display:flex;flex-direction:column;gap:14px}
+  .mbox .mf{padding:13px 18px;border-top:1px solid var(--line);display:flex;gap:9px;justify-content:flex-end}
+  .fld{display:flex;flex-direction:column;gap:6px}
+  .fld label{font-size:12.5px;font-weight:700;color:var(--text2)}
+  .fld input[type=text],.fld input[type=number],.fld textarea{
+    padding:9px 11px;border:1px solid var(--line);border-radius:9px;background:#fff;font-size:14px;
+  }
+  .fld input:focus,.fld textarea:focus{outline:2px solid rgba(199,0,25,.16);border-color:var(--red)}
+  .teamrow{display:flex;gap:8px;align-items:center}
+  .teamrow .idx{width:26px;height:26px;border-radius:7px;background:#F1F3F6;color:var(--text2);font-size:12px;font-weight:800;display:grid;place-items:center;flex:0 0 auto}
+  .teamrow input{flex:1 1 auto;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-size:13.5px}
+  .teamrow .del{width:30px;height:30px;border-radius:8px;background:#FDF3F2;color:var(--bad);font-weight:800;flex:0 0 auto}
+  .teamrow .del:hover{background:#FBE5E3}
+
+  /* 提示条 */
+  .toast{
+    position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(16px);
+    background:#1B1D21;color:#fff;padding:11px 20px;border-radius:11px;font-size:13.5px;font-weight:600;
+    box-shadow:0 10px 30px rgba(0,0,0,.26);opacity:0;pointer-events:none;transition:.22s;z-index:200;
+    display:flex;align-items:center;gap:9px;
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .toast .undo{background:rgba(255,255,255,.16);padding:3px 10px;border-radius:7px;color:#fff;font-weight:800;font-size:12.5px}
+  .toast .undo:hover{background:rgba(255,255,255,.28)}
+
+  @media (max-width:1180px){
+    body{overflow:auto}
+    .wrap{flex-direction:column}
+    .side{flex:0 0 auto;width:100%}
+    .board{min-height:420px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= 顶栏 ================= -->
+<header class="topbar">
+  <div class="brand">
+    <div class="mark">积分</div>
+    <div class="tt">
+      <h1 id="brandTitle">持廉守密 · 依规笃行 竞答争锋赛</h1>
+      <div class="sub" id="brandSub">2026年轨道交通事业部廉洁合规与保密安全竞答 · 全程积分制 · 基础分 100 分</div>
+    </div>
+  </div>
+  <div class="spacer"></div>
+  <button class="tbtn" id="btnSort" title="在固定顺序与按名次排序之间切换">固定顺序</button>
+  <button class="tbtn" id="btnFull">大屏排行</button>
+  <button class="tbtn" id="btnExport">导出成绩</button>
+  <button class="tbtn" id="btnTeams">队伍设置</button>
+  <button class="tbtn danger" id="btnReset">重置</button>
+</header>
+
+<!-- ================= 环节页签 ================= -->
+<nav class="tabs" id="tabs"></nav>
+
+<!-- ================= 主体 ================= -->
+<div class="wrap">
+  <section class="board">
+    <div class="boardhead">
+      <span class="bh-t" id="secTitle">必答题</span>
+      <span class="bh-s" id="secDesc"></span>
+      <div class="spacer"></div>
+      <span class="chip" id="chipQ">—</span>
+      <span class="chip" id="chipStat">—</span>
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <aside class="side">
+    <!-- 环节参数 -->
+    <div class="pnl" id="pnlCfg">
+      <h2 id="cfgTitle">环节设置</h2>
+      <div id="cfgBody"></div>
+    </div>
+
+    <!-- 计时器 -->
+    <div class="pnl">
+      <h2>计时器</h2>
+      <div class="timer">
+        <div class="disp" id="tDisp">20</div>
+        <div class="bar"><i id="tBar"></i></div>
+        <div class="row tight" style="width:100%">
+          <button class="seg" style="flex:1" id="t20">20 秒</button>
+          <button class="seg" style="flex:1" id="t15">15 秒</button>
+          <button class="seg" style="flex:1" id="tGo">开始</button>
+          <button class="seg" style="flex:1" id="tStop">停</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 操作记录 -->
+    <div class="pnl">
+      <h2>操作记录</h2>
+      <div class="row tight" style="margin-bottom:9px">
+        <button class="ab plain mini" id="btnUndo" style="flex:1">↩ 撤销上一步</button>
+      </div>
+      <div class="log" id="log"></div>
+    </div>
+  </aside>
+</div>
+
+<!-- ================= 大屏排行 ================= -->
+<div class="fs" id="fs">
+  <div class="fh">
+    <h2 id="fsTitle">实时排行</h2>
+    <span class="sub" id="fsSub"></span>
+    <button class="x" id="fsClose">退出大屏</button>
+  </div>
+  <div class="list" id="fsList"></div>
+  <div class="ft" id="fsFoot"></div>
+</div>
+
+<!-- ================= 队伍设置弹层 ================= -->
+<div class="modal" id="mTeams">
+  <div class="mbox">
+    <div class="mh"><h3>队伍设置</h3><button class="x" id="mTeamsClose">✕</button></div>
+    <div class="mb">
+      <div class="fld">
+        <label>赛事标题</label>
+        <input type="text" id="inTitle">
+      </div>
+      <div class="fld">
+        <label>基础分（各队起评分数）</label>
+        <input type="number" id="inBase" min="0" step="1">
+      </div>
+      <div class="fld">
+        <label>参赛队伍（队名 / 所属支会，队长可留空）</label>
+        <div id="teamList" style="display:flex;flex-direction:column;gap:8px"></div>
+        <div class="row" style="margin-top:2px">
+          <button class="ab plain mini" id="btnAddTeam">＋ 添加队伍</button>
+        </div>
+      </div>
+    </div>
+    <div class="mf">
+      <button class="ab plain" id="mTeamsCancel">取消</button>
+      <button class="ab good" id="mTeamsSave" style="flex:0 0 auto;padding:9px 20px">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 导出弹层 ================= -->
+<div class="modal" id="mExport">
+  <div class="mbox">
+    <div class="mh"><h3>导出成绩</h3><button class="x" id="mExportClose">✕</button></div>
+    <div class="mb">
+      <p class="hint" style="margin:0">可直接复制下表，或下载文件保存留档。</p>
+      <div class="fld">
+        <label>成绩明细（Markdown / 表格）</label>
+        <textarea id="outText" rows="14" spellcheck="false"></textarea>
+      </div>
+    </div>
+    <div class="mf">
+      <button class="ab plain" id="btnCopy">复制表格</button>
+      <button class="ab plain" id="btnCsv">下载 CSV</button>
+      <button class="ab plain" id="btnJson">下载 JSON</button>
+      <button class="ab plain" id="btnImport">导入 JSON</button>
+    </div>
+  </div>
+</div>
+
+<input type="file" id="fileIn" accept=".json" style="display:none">
+<div class="toast" id="toast"></div>
+
+<script>
+/* =========================================================================
+   竞答积分器 —— 依据 PPT《2026年轨道交通事业部廉洁合规与保密安全竞答争锋赛》流程
+   规则来源：PPT 第4页「竞赛规则」
+     · 必答题  35题 / 7题库×5题 / 单选 / 答对 +10、答错 0
+     · 抢答题  20题 / 判断 / 答对 +5、解析正确再 +5、答错 -10
+     · 风险题  低风险单选 10 分、中风险不定项 20 分、高风险填空 30 分 / 答对加、答错扣
+     · 案例分析 6 个案例 / 评委评分 / 每案例 25 分（问1 10 + 问2 15）
+     · 现场互动 谐音梗猜猜看 / 不计入总分
+   各队基础分 100 分，各环节累加为总分，按总分排名。
+   ========================================================================= */
+
+const SECTIONS = [
+  {key:'must', name:'必答题',  short:'单选 · 每题10分', accent:'#C70019',
+   desc:'共35题 / 7个题库×5题 · 单选 · 答对 +10 分、答错不扣分', counted:true},
+  {key:'rush', name:'抢答题',  short:'判断 · 答对5+5',  accent:'#E8720C',
+   desc:'共20题 · 判断 · 答对 +5、解析正确再 +5、答错 −10', counted:true},
+  {key:'risk', name:'风险题',  short:'低10/中20/高30',  accent:'#7A1FA2',
+   desc:'低风险单选 10 分 / 中风险不定项 20 分 / 高风险填空 30 分 · 答对加、答错扣', counted:true},
+  {key:'case', name:'案例分析', short:'评委评分 · 每案25分', accent:'#0F7B6C',
+   desc:'6 个案例 · 评委现场评分 · 每案例 25 分（问1 10 分 + 问2 15 分）', counted:true},
+  {key:'fun',  name:'现场互动', short:'谐音梗 · 不计分', accent:'#7B8496',
+   desc:'谐音梗猜猜看 · 观众自由抢答 · 不计入竞赛总分', counted:false},
+];
+
+const MUST_LIBS = ['题库一','题库二','题库三','题库四','题库五','题库六','备用题库'];
+const MUST_PER = 5;                       // 每库 5 题
+const RUSH_COUNT = 20;                    // 抢答题 20 题
+const RISK_LEVELS = [
+  {key:'low',  name:'低风险', type:'单选',    pts:10},
+  {key:'mid',  name:'中风险', type:'不定项',  pts:20},
+  {key:'high', name:'高风险', type:'填空',    pts:30},
+];
+const CASES = [
+  {name:'案例一', topic:'廉洁 · 商业贿赂'},
+  {name:'案例二', topic:'廉洁 · 内部职务贪腐'},
+  {name:'案例三', topic:'保密 · 刺探商业秘密'},
+  {name:'案例四', topic:'保密 · 离职技术泄密'},
+  {name:'案例五', topic:'合规 · 财务造假'},
+  {name:'案例六', topic:'合规 · 数据合规'},
+];
+const CASE_MAX = 25;
+
+const DEFAULT_TEAMS = [
+  {name:'株洲瑞唯支会',  leader:'武子刚'},
+  {name:'开发一支会',    leader:'长孙旭博'},
+  {name:'开发二支会',    leader:'罗健'},
+  {name:'海外市场支会',  leader:'范一安'},
+  {name:'产品管理支会',  leader:'张训彪'},
+  {name:'采购制造支会',  leader:'王希贤'},
+];
+
+const STORE_KEY = 'quizscore.v1';
+
+/* ------------------------------------------------------------------ 状态 */
+let S = null;
+let ui = {
+  sec: 'must',
+  sortByRank: false,
+  must: {lib:0, q:1, done:{}},          // done: "lib-q" -> teamId
+  rush: {q:1, done:{}},                 // done: q -> teamId
+  risk: {level:'mid', done:{}},         // done: seq -> true
+  riskSeq: 0,
+  cs: {idx:0},                          // 当前案例
+};
+
+function fresh(){
+  return {
+    title:'持廉守密 · 依规笃行 竞答争锋赛',
+    sub:'2026年轨道交通事业部廉洁合规与保密安全竞答',
+    base:100,
+    teams: DEFAULT_TEAMS.map((t,i)=>({
+      id:'t'+(i+1), name:t.name, leader:t.leader,
+      must:0, rush:0, risk:0, fun:0, manual:0,
+      cases: CASES.map(()=>null),         // null = 未评分
+    })),
+    log: [],
+    seq: 1,
+  };
+}
+
+function load(){
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    if(raw){
+      const d = JSON.parse(raw);
+      if(d && Array.isArray(d.teams) && d.teams.length){ S = migrate(d); return; }
+    }
+  }catch(e){ /* 忽略损坏数据 */ }
+  S = fresh();
+}
+function migrate(d){
+  d.base = (typeof d.base === 'number') ? d.base : 100;
+  d.teams.forEach(t=>{
+    t.must = t.must||0; t.rush = t.rush||0; t.risk = t.risk||0;
+    t.fun = t.fun||0; t.manual = t.manual||0;
+    if(!Array.isArray(t.cases)) t.cases = CASES.map(()=>null);
+    while(t.cases.length < CASES.length) t.cases.push(null);
+  });
+  if(!Array.isArray(d.log)) d.log = [];
+  if(typeof d.seq !== 'number') d.seq = d.log.length+1;
+  return d;
+}
+function save(){
+  try{ localStorage.setItem(STORE_KEY, JSON.stringify(S)); }catch(e){}
+}
+
+/* ---------------------------------------------------------------- 计算 */
+function caseSum(t){ return t.cases.reduce((a,v)=> a + (typeof v === 'number' ? v : 0), 0); }
+function total(t){
+  return (S.base||0) + t.must + t.rush + t.risk + caseSum(t) + (t.manual||0);
+}
+function ranked(){
+  return S.teams.slice().sort((a,b)=> total(b)-total(a));
+}
+function rankOf(id){
+  const r = ranked();
+  const i = r.findIndex(t=>t.id===id);
+  return i<0 ? null : i+1;
+}
+function shortName(n){ return n; }
+
+/* ---------------------------------------------------------------- 记录 */
+function pushLog(entry){
+  entry.id = S.seq++;
+  entry.ts = Date.now();
+  S.log.push(entry);
+  if(S.log.length > 400) S.log.splice(0, S.log.length-400);
+}
+function applyDelta(sec, teamId, delta, label){
+  const t = S.teams.find(x=>x.id===teamId);
+  if(!t || !delta) return;
+  const before = t[sec]||0;
+  t[sec] = before + delta;
+  pushLog({kind:'delta', sec, teamId, delta, before, after:t[sec], label});
+  save(); render();
+  toast(`${t.name} ${delta>0?'+':''}${delta}　${label}`, true);
+}
+function setCase(teamId, caseIdx, val){
+  const t = S.teams.find(x=>x.id===teamId);
+  if(!t) return;
+  const before = t.cases[caseIdx];
+  if(before === val) return;
+  t.cases[caseIdx] = val;
+  pushLog({kind:'case', teamId, caseIdx, before, after:val,
+           label:`${CASES[caseIdx].name} 评分 ${val==null?'—':val+' 分'}`});
+  save(); render();
+  toast(`${t.name} · ${CASES[caseIdx].name} 记 ${val} 分`, true);
+}
+function setManual(teamId, val){
+  const t = S.teams.find(x=>x.id===teamId);
+  if(!t) return;
+  const before = t.manual||0;
+  const after = (typeof val === 'number' && !isNaN(val)) ? val : 0;
+  if(before === after) return;
+  t.manual = after;
+  pushLog({kind:'manual', teamId, before, after, label:`手动修正 ${after-before>=0?'+':''}${after-before} 分`});
+  save(); render();
+}
+function undo(){
+  const e = S.log.pop();
+  if(!e){ toast('没有可撤销的操作'); return; }
+  const t = S.teams.find(x=>x.id===e.teamId);
+  if(t){
+    if(e.kind==='delta') t[e.sec] = e.before;
+    else if(e.kind==='case') t.cases[e.caseIdx] = e.before;
+    else if(e.kind==='manual') t.manual = e.before;
+  }
+  save(); render();
+  toast(`已撤销：${e.label||'上一步操作'}`);
+}
+
+/* ---------------------------------------------------------------- 渲染 */
+const $ = s => document.querySelector(s);
+function el(tag, cls, txt){ const e=document.createElement(tag); if(cls) e.className=cls; if(txt!=null) e.textContent=txt; return e; }
+
+function renderTabs(){
+  const nav = $('#tabs'); nav.innerHTML='';
+  SECTIONS.forEach(s=>{
+    const b = el('button','tab'+(ui.sec===s.key?' on':'')); b.style.setProperty('--accent', s.accent);
+    b.appendChild(el('span',null,s.name));
+    b.appendChild(el('small',null,s.short));
+    b.onclick = ()=>{ ui.sec = s.key; render(); };
+    nav.appendChild(b);
+  });
+}
+function secDef(){ return SECTIONS.find(s=>s.key===ui.sec); }
+
+function renderBoardHead(){
+  const s = secDef();
+  $('#secTitle').textContent = s.name;
+  $('#secDesc').textContent = s.desc;
+  const chipQ = $('#chipQ'), chipStat = $('#chipStat');
+  chipQ.textContent = '—'; chipStat.textContent = '—';
+
+  if(s.key==='must'){
+    chipQ.textContent = `${MUST_LIBS[ui.must.lib]} · 第 ${ui.must.q} 题`;
+    const done = Object.keys(ui.must.done).length;
+    chipStat.textContent = `已答 ${done} / ${MUST_LIBS.length*MUST_PER} 题`;
+  } else if(s.key==='rush'){
+    chipQ.textContent = `第 ${ui.rush.q} 题 / ${RUSH_COUNT}`;
+    chipStat.textContent = `已判 ${Object.keys(ui.rush.done).length} / ${RUSH_COUNT} 题`;
+  } else if(s.key==='risk'){
+    const L = RISK_LEVELS.find(x=>x.key===ui.risk.level);
+    chipQ.textContent = `${L.name} · 每题 ${L.pts} 分`;
+    chipStat.textContent = `累计判题 ${Object.keys(ui.risk.done).length} 道`;
+  } else if(s.key==='case'){
+    chipQ.textContent = `${CASES[ui.cs.idx].name} · ${CASES[ui.cs.idx].topic}`;
+    const scored = S.teams.reduce((a,t)=> a + (t.cases[ui.cs.idx]!=null?1:0), 0);
+    chipStat.textContent = `本案例已评 ${scored} / ${S.teams.length} 队`;
+  } else {
+    chipQ.textContent = '不计入总分';
+    const g = S.teams.reduce((a,t)=> a + (t.fun||0), 0);
+    chipStat.textContent = `共送出礼品 ${g} 份`;
+  }
+}
+
+function renderGrid(){
+  const grid = $('#grid'); grid.innerHTML='';
+  const list = ui.sortByRank ? ranked() : S.teams.slice();
+  const ranks = ranked().map(t=>t.id);
+
+  list.forEach(t=>{
+    const rk = ranks.indexOf(t.id)+1;
+    const card = el('div','card'+(rk<=3?' r'+rk:''));
+    card.appendChild(el('div','rank', rk===1?'第1名':(rk===2?'第2名':(rk===3?'第3名':'第'+rk+'名'))));
+
+    const nm = el('div','nm');
+    nm.appendChild(el('span','n', t.name));
+    if(t.leader) nm.appendChild(el('span','l','队长 '+t.leader));
+    card.appendChild(nm);
+
+    const tot = total(t);
+    const diff = tot - (S.base||0);
+    const tp = el('div','total');
+    tp.appendChild(el('span','v', String(tot)));
+    tp.appendChild(el('span','u','分'));
+    const dEl = el('span','d '+(diff>0?'up':(diff<0?'dn':'')), (diff>0?'+':'')+diff);
+    tp.appendChild(dEl);
+    card.appendChild(tp);
+
+    // 分项
+    const brk = el('div','brk');
+    const items = [
+      ['必答', t.must], ['抢答', t.rush], ['风险', t.risk],
+      ['案例', caseSum(t)], ['互动', t.fun],
+    ];
+    if(t.manual) items.push(['修正', t.manual]);
+    items.forEach(([k,v])=>{
+      const sp = el('span', v? '' : 'zero', `${k} ${v>0?'+':''}${v}`);
+      brk.appendChild(sp);
+    });
+    card.appendChild(brk);
+
+    // 操作区
+    card.appendChild(buildActions(t));
+
+    // 手动修正
+    const mn = el('div','manual');
+    mn.appendChild(el('span','lbl','手动修正'));
+    const inp = document.createElement('input');
+    inp.type='number'; inp.value = t.manual||0; inp.step='1';
+    inp.title='直接设定该队的修正分（可为负）';
+    inp.onchange = ()=> setManual(t.id, Number(inp.value));
+    mn.appendChild(inp);
+    mn.appendChild(el('span','lbl','分'));
+    card.appendChild(mn);
+
+    grid.appendChild(card);
+  });
+}
+
+function buildActions(t){
+  const wrap = el('div','acts');
+  const sec = ui.sec;
+
+  if(sec==='must'){
+    const L = MUST_LIBS[ui.must.lib];
+    const key = ui.must.lib + '-' + ui.must.q;
+    const answeredBy = ui.must.done[key];
+    const a = mk(`+10　答对`, 'good', ()=>{
+      if(answeredBy && answeredBy!==t.id){
+        const o = S.teams.find(x=>x.id===answeredBy);
+        if(!confirm(`本题已记录为「${o?o.name:'其他队'}」作答，是否仍为 ${t.name} 记分？`)) return;
+      }
+      ui.must.done[key] = t.id;
+      applyDelta('must', t.id, 10, `${L} 第${ui.must.q}题 答对`);
+      nextMust();
+    });
+    const b = mk(`0　答错`, 'plain', ()=>{
+      ui.must.done[key] = t.id;
+      pushLog({kind:'delta', sec:'must', teamId:t.id, delta:0, before:t.must, after:t.must,
+               label:`${L} 第${ui.must.q}题 答错（不扣分）`});
+      save(); render(); toast(`${t.name} 未得分（不扣分）`);
+      nextMust();
+    });
+    wrap.appendChild(a); wrap.appendChild(b);
+    if(answeredBy === t.id){
+      a.classList.add('sel'); a.textContent = '+10　已计分';
+    }
+  }
+
+  else if(sec==='rush'){
+    const q = ui.rush.q, doneBy = ui.rush.done[q];
+    const a = mk('+5　答对', 'good', ()=>{
+      ui.rush.done[q] = t.id;
+      applyDelta('rush', t.id, 5, `第${q}题 答对`);
+    });
+    const b = mk('+5　解析对', 'good', ()=>{
+      ui.rush.done[q] = t.id;
+      applyDelta('rush', t.id, 5, `第${q}题 解析正确`);
+    });
+    const c = mk('−10　答错', 'bad', ()=>{
+      ui.rush.done[q] = t.id;
+      applyDelta('rush', t.id, -10, `第${q}题 答错`);
+      nextRush();
+    });
+    wrap.appendChild(a); wrap.appendChild(b); wrap.appendChild(c);
+    if(doneBy === t.id) a.classList.add('sel');
+  }
+
+  else if(sec==='risk'){
+    const L = RISK_LEVELS.find(x=>x.key===ui.risk.level);
+    const a = mk(`+${L.pts}　答对`, 'good', ()=>{
+      ui.riskSeq++; ui.risk.done[ui.riskSeq] = t.id;
+      applyDelta('risk', t.id, L.pts, `${L.name} 答对`);
+    });
+    const b = mk(`−${L.pts}　答错`, 'bad', ()=>{
+      ui.riskSeq++; ui.risk.done[ui.riskSeq] = t.id;
+      applyDelta('risk', t.id, -L.pts, `${L.name} 答错`);
+    });
+    wrap.appendChild(a); wrap.appendChild(b);
+  }
+
+  else if(sec==='case'){
+    const idx = ui.cs.idx;
+    const cur = t.cases[idx];
+    [25,20,15,10,5,0].forEach(v=>{
+      const b = mk(String(v), cur===v ? 'sel' : 'plain', ()=> setCase(t.id, idx, v));
+      b.classList.add('mini');
+      wrap.appendChild(b);
+    });
+    const b = mk('清除', 'plain', ()=> setCase(t.id, idx, null));
+    b.classList.add('mini');
+    wrap.appendChild(b);
+  }
+
+  else { // fun
+    const a = mk('＋1 礼品', 'good', ()=>{
+      t.fun = (t.fun||0) + 1;
+      pushLog({kind:'delta', sec:'fun', teamId:t.id, delta:1, before:t.fun-1, after:t.fun,
+               label:'现场互动 送出礼品 1 份（不计分）'});
+      save(); render(); toast(`${t.name} +1 份礼品（不计入总分）`, true);
+    });
+    const b = mk('−1', 'plain', ()=>{
+      if(!t.fun) return;
+      t.fun -= 1;
+      pushLog({kind:'delta', sec:'fun', teamId:t.id, delta:-1, before:t.fun+1, after:t.fun,
+               label:'现场互动 礼品 −1 份'});
+      save(); render();
+    });
+    wrap.appendChild(a); wrap.appendChild(b);
+  }
+
+  return wrap;
+}
+function mk(txt, cls, fn){ const b = el('button','ab '+(cls||''), txt); b.onclick = fn; return b; }
+
+/* 必答题 / 抢答题 自动推进 */
+function nextMust(){
+  if(ui.must.q < MUST_PER){ ui.must.q++; }
+  else if(ui.must.lib < MUST_LIBS.length-1){ ui.must.lib++; ui.must.q = 1; }
+  else { toast('必答题 35 题已全部作答完毕'); }
+  render();
+}
+function nextRush(){
+  if(ui.rush.q < RUSH_COUNT) ui.rush.q++;
+  else toast('抢答题 20 题已全部判分完毕');
+  render();
+}
+
+/* ------------------------------------------------------------ 环节参数面板 */
+function renderCfg(){
+  const box = $('#cfgBody'), title = $('#cfgTitle');
+  box.innerHTML='';
+  const sec = ui.sec;
+
+  if(sec==='must'){
+    title.textContent = '必答题 · 选择题库';
+    box.appendChild(hint('7 个题库各 5 题，共 35 题。点击题号可跳题；评分后自动跳到下一题。'));
+    box.appendChild(lbl('题库'));
+    const seg = el('div','seg');
+    MUST_LIBS.forEach((n,i)=>{
+      const b = el('button', ui.must.lib===i?'on':'', n);
+      b.style.setProperty('--accent', secDef().accent);
+      b.onclick = ()=>{ ui.must.lib=i; ui.must.q=1; render(); };
+      seg.appendChild(b);
+    });
+    box.appendChild(seg);
+    box.appendChild(lbl('题号'));
+    const seg2 = el('div','seg');
+    for(let i=1;i<=MUST_PER;i++){
+      const b = el('button', ui.must.q===i?'on':'', '第 '+i+' 题');
+      b.style.setProperty('--accent', secDef().accent);
+      b.onclick = ()=>{ ui.must.q=i; render(); };
+      seg2.appendChild(b);
+    }
+    box.appendChild(seg2);
+    box.appendChild(lbl('答题进度（点击跳转）'));
+    const prog = el('div','prog');
+    MUST_LIBS.forEach((n,li)=>{
+      for(let qi=1; qi<=MUST_PER; qi++){
+        const key = li+'-'+qi;
+        const i = el('i', (ui.must.done[key]?'done ':'') + (ui.must.lib===li&&ui.must.q===qi?'cur':''), String(qi));
+        i.title = n + ' 第' + qi + '题' + (ui.must.done[key] ? '（已答）' : '');
+        i.onclick = ()=>{ ui.must.lib=li; ui.must.q=qi; render(); };
+        prog.appendChild(i);
+      }
+    });
+    box.appendChild(prog);
+  }
+
+  else if(sec==='rush'){
+    title.textContent = '抢答题 · 选题';
+    box.appendChild(hint('共 20 题判断题。抢到答题权的队伍点「+5 答对」；解析正确再点「+5 解析对」；答错点「−10 答错」并自动跳到下一题。'));
+    box.appendChild(lbl('题号'));
+    const seg = el('div','seg');
+    for(let i=1;i<=RUSH_COUNT;i++){
+      const b = el('button', ui.rush.q===i?'on':'', String(i));
+      b.style.setProperty('--accent', secDef().accent);
+      b.onclick = ()=>{ ui.rush.q=i; render(); };
+      seg.appendChild(b);
+    }
+    box.appendChild(seg);
+    box.appendChild(lbl('进度（点击跳转）'));
+    const prog = el('div','prog');
+    for(let i=1;i<=RUSH_COUNT;i++){
+      const it = el('i', (ui.rush.done[i]?'done ':'') + (ui.rush.q===i?'cur':''), String(i));
+      it.onclick = ()=>{ ui.rush.q=i; render(); };
+      prog.appendChild(it);
+    }
+    box.appendChild(prog);
+  }
+
+  else if(sec==='risk'){
+    title.textContent = '风险题 · 选难度';
+    box.appendChild(hint('先选难度，再点队伍卡上的「答对 / 答错」，按对应分值加或扣。'));
+    box.appendChild(lbl('难度与分值'));
+    const seg = el('div','seg');
+    RISK_LEVELS.forEach(L=>{
+      const b = el('button', ui.risk.level===L.key?'on':'', `${L.name} ${L.pts}分`);
+      b.style.setProperty('--accent', secDef().accent);
+      b.title = `${L.name} · ${L.type} · 每题 ${L.pts} 分`;
+      b.onclick = ()=>{ ui.risk.level = L.key; render(); };
+      seg.appendChild(b);
+    });
+    box.appendChild(seg);
+    const L = RISK_LEVELS.find(x=>x.key===ui.risk.level);
+    box.appendChild(hint(`当前：${L.name}（${L.type}）· 答对 +${L.pts} 分，答错 −${L.pts} 分。`));
+  }
+
+  else if(sec==='case'){
+    title.textContent = '案例分析 · 选案例';
+    box.appendChild(hint('每个案例共 25 分（问1 10 分 + 问2 15 分）。选择案例后，在队伍卡上点 0–25 的档位即记录评委评分。'));
+    box.appendChild(lbl('案例'));
+    const seg = el('div','seg');
+    CASES.forEach((c,i)=>{
+      const b = el('button', ui.cs.idx===i?'on':'', c.name);
+      b.style.setProperty('--accent', secDef().accent);
+      b.title = c.topic;
+      b.onclick = ()=>{ ui.cs.idx=i; render(); };
+      seg.appendChild(b);
+    });
+    box.appendChild(seg);
+    box.appendChild(hint(`当前：${CASES[ui.cs.idx].name}（${CASES[ui.cs.idx].topic}）· 满分 ${CASE_MAX} 分`));
+  }
+
+  else {
+    title.textContent = '现场互动';
+    box.appendChild(hint('谐音梗猜猜看，观众自由抢答，答对得礼品。本环节不计入竞赛总分，仅用于记录礼品发放数量。'));
+    const g = S.teams.reduce((a,t)=> a + (t.fun||0), 0);
+    box.appendChild(hint(`当前共送出礼品 ${g} 份。`));
+  }
+}
+function hint(t){ const p = el('p','hint',t); return p; }
+function lbl(t){ const d = el('div','seglabel',t); return d; }
+
+/* ---------------------------------------------------------------- 记录面板 */
+function renderLog(){
+  const box = $('#log'); box.innerHTML='';
+  if(!S.log.length){ box.appendChild(el('div','empty','暂无操作记录')); return; }
+  S.log.slice(-40).reverse().forEach(e=>{
+    const t = S.teams.find(x=>x.id===e.teamId);
+    const row = el('div','it');
+    const d = new Date(e.ts);
+    row.appendChild(el('span','t', `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`));
+    row.appendChild(el('span','x', `${t?t.name:'—'}　${e.label||''}`));
+    let p;
+    if(e.kind==='delta'){ p = (e.delta>0?'+':(e.delta<0?'':'±')) + (e.delta===0 ? '0' : e.delta); }
+    else if(e.kind==='case'){ p = (e.after==null?'—':e.after+'分'); }
+    else { p = (e.after-e.before>0?'+':'') + (e.after-e.before) + '分'; }
+    const cls = (e.kind==='delta' ? (e.delta>0?'up':(e.delta<0?'dn':'nu')) : (e.after>e.before?'up':'dn'));
+    row.appendChild(el('span','p '+cls, String(p)));
+    box.appendChild(row);
+  });
+}
+
+/* ---------------------------------------------------------------- 渲染入口 */
+function render(){
+  renderTabs();
+  renderBoardHead();
+  renderGrid();
+  renderCfg();
+  renderLog();
+  $('#brandTitle').textContent = S.title;
+  $('#brandSub').textContent = `${S.sub} · 全程积分制 · 基础分 ${S.base} 分`;
+  $('#btnSort').textContent = ui.sortByRank ? '按名次排序' : '固定顺序';
+  renderFs();
+}
+
+/* ---------------------------------------------------------------- 大屏 */
+function renderFs(){
+  const box = $('#fsList'); if(!box) return;
+  box.innerHTML='';
+  const r = ranked();
+  r.forEach((t,i)=>{
+    const row = el('div','li'+(i===0?' top':''));
+    row.appendChild(el('div','r', String(i+1)));
+    row.appendChild(el('div','n', t.name));
+    const b = el('div','b');
+    b.appendChild(el('span',null,`必答 +${t.must}`));
+    b.appendChild(el('span',null,`抢答 +${t.rush}`));
+    b.appendChild(el('span',null,`风险 ${t.risk>0?'+':''}${t.risk}`));
+    b.appendChild(el('span',null,`案例 +${caseSum(t)}`));
+    row.appendChild(b);
+    row.appendChild(el('div','s', String(total(t))));
+    box.appendChild(row);
+  });
+  $('#fsSub').textContent = `${S.title} · 基础分 ${S.base}`;
+  $('#fsFoot').textContent = '按总分排名 · 现场互动环节不计入总分';
+}
+
+/* ---------------------------------------------------------------- 计时器 */
+let T = {total:20, left:20, id:null, running:false};
+let AC = null;
+function beep(freq, dur){
+  try{
+    AC = AC || new (window.AudioContext||window.webkitAudioContext)();
+    const o = AC.createOscillator(), g = AC.createGain();
+    o.connect(g); g.connect(AC.destination);
+    o.type='sine'; o.frequency.value=freq;
+    g.gain.setValueAtTime(0.0001, AC.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.28, AC.currentTime+0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, AC.currentTime+dur);
+    o.start(); o.stop(AC.currentTime+dur+0.02);
+  }catch(e){}
+}
+function tRender(){
+  const d = $('#tDisp'), bar = $('#tBar');
+  d.textContent = String(Math.max(0, Math.ceil(T.left)));
+  d.className = 'disp' + (T.left<=0 ? ' over' : (T.left<=5 ? ' warn' : ''));
+  const pct = T.total>0 ? Math.max(0, Math.min(1, T.left/T.total)) : 0;
+  bar.style.width = (pct*100)+'%';
+  bar.style.background = T.left<=0 ? 'var(--bad)' : (T.left<=5 ? '#E09A00' : 'var(--red)');
+}
+function tStart(sec){
+  tStopSilent();
+  T.total = sec; T.left = sec; T.running = true;
+  let last = performance.now();
+  T.id = setInterval(()=>{
+    const now = performance.now();
+    T.left -= (now-last)/1000; last = now;
+    if(T.left<=0){ T.left=0; tRender(); beep(660,0.5); setTimeout(()=>beep(440,0.6),230); tStopSilent(); return; }
+    if(T.left<=5 && Math.abs(T.left - Math.round(T.left))<0.02){ /* 每秒 */ }
+    tRender();
+  }, 60);
+  tRender();
+}
+function tStopSilent(){ if(T.id){ clearInterval(T.id); T.id=null; } T.running=false; }
+
+/* ---------------------------------------------------------------- 提示 */
+let toastTimer = null;
+function toast(msg, undoable){
+  const box = $('#toast');
+  box.innerHTML = '';
+  box.appendChild(el('span',null,msg));
+  if(undoable){
+    const b = el('button','undo','撤销');
+    b.onclick = ()=>{ undo(); box.classList.remove('show'); };
+    box.appendChild(b);
+  }
+  box.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=> box.classList.remove('show'), undoable ? 4200 : 2400);
+}
+
+/* ------------------------------------------------------------ 导出 / 导入 */
+function buildTable(){
+  const r = ranked();
+  const head = ['名次','支会','队长','必答题','抢答题','风险题','案例分析','现场互动(不计分)','手动修正','总分'];
+  const lines = [head.join('\t')];
+  r.forEach((t,i)=>{
+    lines.push([i+1, t.name, t.leader||'', t.must, t.rush, t.risk, caseSum(t), t.fun||0, t.manual||0, total(t)].join('\t'));
+  });
+  return lines.join('\n');
+}
+function buildMd(){
+  const r = ranked();
+  let md = `## ${S.title} · 成绩单\n\n`;
+  md += `> ${S.sub}｜基础分 ${S.base} 分｜现场互动不计入总分\n\n`;
+  md += `| 名次 | 所属支会 | 队长 | 必答题 | 抢答题 | 风险题 | 案例分析 | 现场互动 | 手动修正 | **总分** |\n`;
+  md += `|:--:|---|---|--:|--:|--:|--:|--:|--:|--:|\n`;
+  r.forEach((t,i)=>{
+    md += `| ${i+1} | ${t.name} | ${t.leader||''} | ${t.must>0?'+':''}${t.must} | ${t.rush>0?'+':''}${t.rush} | ${t.risk>0?'+':''}${t.risk} | +${caseSum(t)} | ${t.fun||0} | ${t.manual>0?'+':''}${t.manual||0} | **${total(t)}** |\n`;
+  });
+  md += `\n### 案例分析明细（每案例 25 分）\n\n`;
+  md += `| 支会 | ` + CASES.map(c=>c.name).join(' | ') + ` | 小计 |\n`;
+  md += `|---|` + CASES.map(()=>'--:').join('|') + `|--:|\n`;
+  S.teams.forEach(t=>{
+    md += `| ${t.name} | ` + t.cases.map(v=> v==null?'—':v).join(' | ') + ` | ${caseSum(t)} |\n`;
+  });
+  return md;
+}
+function download(name, text, mime){
+  const blob = new Blob([text], {type:mime||'text/plain;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = name;
+  document.body.appendChild(a); a.click();
+  setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 400);
+}
+function stamp(){
+  const d = new Date();
+  const p = n=>String(n).padStart(2,'0');
+  return `${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}`;
+}
+
+/* ---------------------------------------------------------------- 事件绑定 */
+function bind(){
+  $('#btnSort').onclick = ()=>{ ui.sortByRank = !ui.sortByRank; render(); };
+  $('#btnFull').onclick = ()=>{ renderFs(); $('#fs').classList.add('show'); };
+  $('#fsClose').onclick = ()=> $('#fs').classList.remove('show');
+  $('#btnUndo').onclick = undo;
+
+  // 计时器
+  $('#t20').onclick = ()=> tStart(20);
+  $('#t15').onclick = ()=> tStart(15);
+  $('#tGo').onclick = ()=>{ if(T.running){ return; } tStart(T.total); };
+  $('#tStop').onclick = ()=>{ tStopSilent(); T.left = T.total; tRender(); };
+
+  // 队伍设置
+  $('#btnTeams').onclick = openTeams;
+  $('#mTeamsClose').onclick = $('#mTeamsCancel').onclick = ()=> $('#mTeams').classList.remove('show');
+  $('#btnAddTeam').onclick = ()=> addTeamRow('', '');
+  $('#mTeamsSave').onclick = saveTeams;
+
+  // 导出
+  $('#btnExport').onclick = ()=>{
+    $('#outText').value = buildMd();
+    $('#mExport').classList.add('show');
+  };
+  $('#mExportClose').onclick = ()=> $('#mExport').classList.remove('show');
+  $('#btnCopy').onclick = async ()=>{
+    const txt = $('#outText').value;
+    try{ await navigator.clipboard.writeText(txt); toast('已复制到剪贴板'); }
+    catch(e){ $('#outText').select(); document.execCommand('copy'); toast('已复制到剪贴板'); }
+  };
+  $('#btnCsv').onclick = ()=> download(`竞答成绩_${stamp()}.csv`, '\uFEFF' + buildTable(), 'text/csv;charset=utf-8');
+  $('#btnJson').onclick = ()=> download(`竞答成绩_${stamp()}.json`, JSON.stringify(S, null, 2), 'application/json');
+  $('#btnImport').onclick = ()=> $('#fileIn').click();
+  $('#fileIn').onchange = ev=>{
+    const f = ev.target.files[0]; if(!f) return;
+    const rd = new FileReader();
+    rd.onload = ()=>{
+      try{
+        const d = JSON.parse(rd.result);
+        if(!d || !Array.isArray(d.teams)) throw new Error('格式不正确');
+        S = migrate(d);
+        ui.must.done = {}; ui.rush.done = {}; ui.risk.done = {}; ui.riskSeq = 0;
+        save(); render(); toast('导入成功');
+        $('#mExport').classList.remove('show');
+      }catch(e){ alert('导入失败：' + e.message); }
+    };
+    rd.readAsText(f, 'utf-8');
+    ev.target.value = '';
+  };
+
+  // 重置
+  $('#btnReset').onclick = ()=>{
+    if(!confirm('确定要清空全部计分与记录、恢复到初始状态吗？\n（此操作不可撤销，建议先导出成绩）')) return;
+    S = fresh();
+    ui.must.done = {}; ui.must.lib = 0; ui.must.q = 1;
+    ui.rush.done = {}; ui.rush.q = 1;
+    ui.risk.done = {}; ui.riskSeq = 0;
+    ui.cs.idx = 0;
+    save(); render(); toast('已重置为初始状态');
+  };
+
+  // 快捷键
+  document.addEventListener('keydown', ev=>{
+    const tag = (ev.target.tagName||'').toLowerCase();
+    if(tag==='input' || tag==='textarea' || tag==='select') return;
+    if((ev.ctrlKey||ev.metaKey) && ev.key.toLowerCase()==='z'){ ev.preventDefault(); undo(); return; }
+    if(ev.key==='Escape'){ $('#fs').classList.remove('show'); $('#mTeams').classList.remove('show'); $('#mExport').classList.remove('show'); }
+    if(ev.key===' '){ ev.preventDefault(); if(T.running) { tStopSilent(); } else { tStart(T.total); } }
+    if(/^[1-9]$/.test(ev.key)){
+      const i = Number(ev.key)-1;
+      if(S.teams[i]){ S.teams[i]._hl = true; render(); }
+    }
+  });
+}
+
+/* 队伍设置 */
+function openTeams(){
+  $('#inTitle').value = S.title;
+  $('#inBase').value = S.base;
+  const box = $('#teamList'); box.innerHTML='';
+  S.teams.forEach(t=> addTeamRow(t.name, t.leader));
+  $('#mTeams').classList.add('show');
+}
+function addTeamRow(name, leader){
+  const box = $('#teamList');
+  const row = el('div','teamrow');
+  row.appendChild(el('div','idx', String(box.children.length+1)));
+  const i1 = document.createElement('input'); i1.type='text'; i1.value=name; i1.placeholder='队名 / 所属支会';
+  const i2 = document.createElement('input'); i2.type='text'; i2.value=leader; i2.placeholder='队长（可空）';
+  i2.style.maxWidth='150px';
+  const del = el('button','del','✕'); del.title='删除该队';
+  del.onclick = ()=>{ if(box.children.length<=1){ alert('至少保留一支队伍'); return; } row.remove(); renumber(); };
+  row.appendChild(i1); row.appendChild(i2); row.appendChild(del);
+  box.appendChild(row);
+}
+function renumber(){
+  [...$('#teamList').children].forEach((r,i)=> r.querySelector('.idx').textContent = String(i+1));
+}
+function saveTeams(){
+  const rows = [...$('#teamList').children];
+  const names = rows.map(r=> r.querySelectorAll('input')[0].value.trim());
+  if(names.some(n=>!n)){ alert('队名不能为空'); return; }
+  const base = Number($('#inBase').value);
+  if(isNaN(base) || base<0){ alert('基础分需为不小于 0 的数字'); return; }
+  const old = S.teams;
+
+  S.title = $('#inTitle').value.trim() || '竞答争锋赛';
+  S.base = base;
+
+  const next = rows.map((r,i)=>{
+    const nm = r.querySelectorAll('input')[0].value.trim();
+    const ld = r.querySelectorAll('input')[1].value.trim();
+    const prev = old[i];
+    if(prev) return Object.assign(prev, {name:nm, leader:ld});
+    return {id:'t'+Date.now()+'_'+i, name:nm, leader:ld,
+            must:0, rush:0, risk:0, fun:0, manual:0, cases: CASES.map(()=>null)};
+  });
+  // 队伍数量变化时，清理失效引用
+  const ids = new Set(next.map(t=>t.id));
+  Object.keys(ui.must.done).forEach(k=>{ if(!ids.has(ui.must.done[k])) delete ui.must.done[k]; });
+  Object.keys(ui.rush.done).forEach(k=>{ if(!ids.has(ui.rush.done[k])) delete ui.rush.done[k]; });
+  Object.keys(ui.risk.done).forEach(k=>{ if(!ids.has(ui.risk.done[k])) delete ui.risk.done[k]; });
+
+  S.teams = next;
+  save(); render();
+  $('#mTeams').classList.remove('show');
+  toast('队伍设置已保存');
+}
+
+/* ---------------------------------------------------------------- 启动 */
+load();
+bind();
+tRender();
+render();
+</script>
+</body>
+</html>

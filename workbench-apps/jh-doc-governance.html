@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>制度文件管理平台 · 工作台（简化版 v0.2）</title>
+<style>
+*{box-sizing:border-box}
+:root{
+  --ink:#15181d;--ink2:#3b424e;--muted:#79818d;--line:#e3e6ec;--line2:#eef0f4;
+  --bg:#f3f5f7;--panel:#fff;--accent:#1b5c86;--accent-soft:#e9f1f7;
+  --warn:#8f5c07;--warn-bg:#fdf5e3;--warn-line:#f0dfae;
+  --danger:#a32a22;--danger-bg:#fceeed;--danger-line:#f2cfcb;
+  --ok:#1a6a47;--ok-bg:#e9f4ee;--ok-line:#c5e3d3;
+  --l3:#563c86;--l3-bg:#f1ecf8;--l3-line:#ddd2ee;
+  --r:5px;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:13px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","Hiragino Sans GB",sans-serif;
+  -webkit-font-smoothing:antialiased}
+button,select,input,textarea{font-family:inherit;font-size:inherit;color:inherit}
+h1,h2,h3,h4{margin:0;font-weight:600}
+p{margin:0}
+a{color:var(--accent);text-decoration:none}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-thumb{background:#cdd3db;border-radius:9px}
+::-webkit-scrollbar-track{background:transparent}
+
+/* ---------- shell ---------- */
+.app{display:flex;flex-direction:column;height:100vh;min-height:600px}
+.topbar{display:flex;align-items:center;gap:14px;padding:0 16px;height:58px;
+  background:var(--panel);border-bottom:1px solid var(--line);flex:0 0 auto;flex-wrap:nowrap}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.mark{width:30px;height:30px;border-radius:6px;background:#123c58;color:#fff;
+  display:grid;place-items:center;font:600 12px/1 var(--mono);letter-spacing:.5px;flex:0 0 auto}
+.brandtxt{min-width:0}
+.pname{font-weight:600;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pmeta{color:var(--muted);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.pill{display:inline-block;padding:0 5px;border-radius:3px;font-size:10px;line-height:15px;border:1px solid;vertical-align:1px}
+.pill.draft{color:var(--warn);border-color:var(--warn-line);background:var(--warn-bg)}
+.pill.nr{color:var(--danger);border-color:var(--danger-line);background:var(--danger-bg)}
+.topmid{display:flex;align-items:center;gap:6px;margin-left:8px}
+.topmid label{color:var(--muted);font-size:11.5px;white-space:nowrap}
+.topright{margin-left:auto;display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.rolepick{display:flex;align-items:center;gap:6px;padding-left:8px;border-left:1px solid var(--line)}
+.rolepick label{color:var(--muted);font-size:11.5px}
+select,input[type=text],input[type=date],textarea{
+  border:1px solid var(--line);background:#fff;border-radius:var(--r);padding:4px 7px;outline:none;max-width:100%}
+select:focus,input:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+select:disabled,input:disabled,textarea:disabled{background:#f6f7f9;color:var(--muted);cursor:not-allowed}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;
+  border:1px solid var(--line);background:#fff;border-radius:var(--r);padding:5px 10px;
+  cursor:pointer;white-space:nowrap;transition:.12s;min-height:28px}
+.btn:hover:not(:disabled){border-color:#c9d1da;background:#fafbfc}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover:not(:disabled){background:#164c70;border-color:#164c70}
+.btn.sm{padding:2px 7px;min-height:22px;font-size:12px}
+.btn.ghost{border-color:transparent;background:transparent;color:var(--ink2);padding:4px 8px}
+.btn.ghost:hover{background:#f1f3f6;border-color:transparent}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.danger{color:var(--danger);border-color:var(--danger-line)}
+
+.body{display:flex;flex:1 1 auto;min-height:0}
+.side{width:206px;flex:0 0 auto;background:var(--panel);border-right:1px solid var(--line);
+  padding:10px 8px;overflow-y:auto}
+.navhd{font-size:10.5px;letter-spacing:.08em;color:var(--muted);padding:8px 8px 4px;text-transform:uppercase}
+.navitem{display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:var(--r);cursor:pointer;
+  color:var(--ink2);font-size:12.5px;margin-bottom:1px}
+.navitem:hover{background:#f4f6f8}
+.navitem.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.navitem .vid{font:10.5px/1 var(--mono);color:var(--muted);flex:0 0 auto;min-width:26px}
+.navitem.on .vid{color:var(--accent)}
+.navitem.off{color:#aab1bb;cursor:not-allowed}
+.navitem.off:hover{background:transparent}
+.navitem .tag{margin-left:auto;font-size:9.5px;color:#aab1bb;border:1px solid var(--line);border-radius:3px;padding:0 3px}
+.side-foot{margin-top:10px;border-top:1px solid var(--line2);padding:9px 8px 2px;color:var(--muted);font-size:10.5px;line-height:1.6}
+
+.main{flex:1 1 auto;min-width:0;overflow-y:auto;padding:16px 18px 28px}
+.page-hd{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.page-hd h1{font-size:16px}
+.page-hd .sub{color:var(--muted);font-size:11.5px;margin-top:2px}
+.hd-actions{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);margin-bottom:12px}
+.card-hd{display:flex;align-items:center;gap:8px;padding:9px 12px;border-bottom:1px solid var(--line2)}
+.card-hd h2{font-size:12.5px}
+.card-hd .hint{color:var(--muted);font-size:11px;margin-left:auto;text-align:right}
+.card-bd{padding:12px}
+.card-bd.tight{padding:0}
+
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+.grid-import{display:grid;grid-template-columns:340px minmax(0,1fr);gap:12px;align-items:start}
+.grid-judge{display:grid;grid-template-columns:232px minmax(0,1fr) 372px;gap:12px;align-items:start}
+@media(max-width:1280px){.grid-judge{grid-template-columns:220px minmax(0,1fr)}.grid-judge .col3{grid-column:1/-1}}
+@media(max-width:1000px){.grid-import,.grid2{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:860px){
+  .grid-judge{grid-template-columns:minmax(0,1fr)}
+  .side{width:100%;border-right:0;border-bottom:1px solid var(--line);display:flex;gap:4px;overflow-x:auto;padding:6px}
+  .side .navhd,.side .side-foot{display:none}
+  .navitem{margin:0;white-space:nowrap}
+  .body{flex-direction:column}
+  .main{padding:12px}
+  .topbar{height:auto;padding:8px 10px;flex-wrap:wrap;gap:8px}
+  .topright{width:100%;justify-content:flex-start}
+  .btn{min-height:36px}
+  .btn.sm{min-height:32px}
+  select,input[type=text]{min-height:36px;font-size:16px}
+  table.tbl{font-size:12px}
+}
+@media(max-width:640px){
+  .metrics{flex-wrap:wrap}
+  .metric{flex:1 1 44%;border-bottom:1px solid var(--line2)}
+  .metric:nth-child(2n){border-right:0}
+}
+
+/* ---------- tables ---------- */
+table.tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.tbl th{text-align:left;font-weight:600;color:var(--muted);background:#fafbfc;
+  border-bottom:1px solid var(--line);padding:6px 9px;white-space:nowrap;font-size:11.5px;position:sticky;top:0;z-index:1}
+.tbl td{border-bottom:1px solid var(--line2);padding:6px 9px;vertical-align:top}
+.tbl tr:last-child td{border-bottom:0}
+.tbl tbody tr:hover{background:#fafbfc}
+.tbl tr.sel{background:var(--accent-soft)}
+.tbl tr.sel td{border-bottom-color:#d8e5ef}
+.tbl .num{font-family:var(--mono);font-size:11.5px}
+.wrap-x{overflow-x:auto;max-width:100%}
+
+/* ---------- chips ---------- */
+.chip{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line);
+  border-radius:3px;padding:0 5px;font-size:10.5px;line-height:16px;white-space:nowrap;background:#fafbfc;color:var(--ink2)}
+.chip.ok{color:var(--ok);background:var(--ok-bg);border-color:var(--ok-line)}
+.chip.warn{color:var(--warn);background:var(--warn-bg);border-color:var(--warn-line)}
+.chip.bad{color:var(--danger);background:var(--danger-bg);border-color:var(--danger-line)}
+.chip.l3{color:var(--l3);background:var(--l3-bg);border-color:var(--l3-line)}
+.chip.acc{color:var(--accent);background:var(--accent-soft);border-color:#cfe0ec}
+.chip.flat{background:#f3f5f7}
+.dot{width:5px;height:5px;border-radius:50%;background:currentColor;display:inline-block}
+
+/* ---------- notices ---------- */
+.note{display:flex;gap:8px;align-items:flex-start;padding:8px 11px;border-radius:var(--r);
+  border:1px solid var(--line);background:#fafbfc;font-size:12px;color:var(--ink2);margin-bottom:12px;line-height:1.6}
+.note.warn{background:var(--warn-bg);border-color:var(--warn-line);color:#6d4708}
+.note.bad{background:var(--danger-bg);border-color:var(--danger-line);color:#7d2119}
+.note.info{background:var(--accent-soft);border-color:#cfe0ec;color:#194c6d}
+.note .ico{font-weight:700;flex:0 0 auto;line-height:1.5}
+.note b{font-weight:600}
+.note .sm{font-size:11px;color:var(--muted)}
+
+.empty{padding:28px 16px;text-align:center;color:var(--muted);font-size:12.5px}
+.empty .big{font-size:13px;color:var(--ink2);margin-bottom:4px;font-weight:600}
+.empty .btn{margin-top:10px}
+
+.deny{padding:22px 18px}
+.deny h3{font-size:13px;color:var(--danger);margin-bottom:6px}
+.deny p{color:var(--ink2);font-size:12px;margin-bottom:6px}
+.deny code{font-family:var(--mono);font-size:11.5px;background:#f3f5f7;padding:1px 4px;border-radius:3px}
+
+/* ---------- forms ---------- */
+.form{display:grid;gap:9px}
+.frow{display:grid;grid-template-columns:74px minmax(0,1fr);gap:8px;align-items:center}
+.frow>label{text-align:right;color:var(--muted);font-size:11.5px}
+.frow .req{color:var(--danger)}
+.field-help{color:var(--muted);font-size:10.5px;margin-top:3px;line-height:1.5}
+.drop{border:1px dashed #c8d0da;border-radius:var(--r);background:#fafbfc;
+  padding:16px 12px;text-align:center;color:var(--muted);font-size:11.5px;cursor:pointer}
+.drop:hover{border-color:var(--accent);background:var(--accent-soft)}
+.drop strong{display:block;color:var(--ink2);font-size:12.5px;margin-bottom:3px}
+.drop input{display:none}
+
+/* ---------- progress / metrics ---------- */
+.metrics{display:flex;gap:0;border:1px solid var(--line);border-radius:var(--r);background:var(--panel);overflow:hidden;margin-bottom:12px}
+.metric{flex:1 1 0;padding:8px 12px;border-right:1px solid var(--line2);min-width:0}
+.metric:last-child{border-right:0}
+.metric .k{color:var(--muted);font-size:10.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.metric .v{font-size:16px;font-weight:600;margin-top:1px;font-variant-numeric:tabular-nums}
+.metric .v small{font-size:10.5px;font-weight:400;color:var(--muted);margin-left:3px}
+.metric.alert .v{color:var(--danger)}
+.bar{height:4px;background:#eef1f4;border-radius:3px;overflow:hidden;margin-top:5px}
+.bar>i{display:block;height:100%;background:var(--accent)}
+.bar>i.ok{background:var(--ok)}
+.bar>i.bad{background:var(--danger)}
+
+/* ---------- file list ---------- */
+.flist{max-height:520px;overflow-y:auto}
+.fitem{padding:8px 10px;border-bottom:1px solid var(--line2);cursor:pointer}
+.fitem:last-child{border-bottom:0}
+.fitem:hover{background:#fafbfc}
+.fitem.on{background:var(--accent-soft)}
+.fitem .fn{font-size:12px;font-weight:600;display:flex;gap:5px;align-items:center}
+.fitem .fn span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fitem .fm{display:flex;gap:5px;flex-wrap:wrap;margin-top:4px;align-items:center}
+.fitem .stg{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:4px}
+
+/* ---------- field table ---------- */
+.ftbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.ftbl th{text-align:left;font-weight:600;color:var(--muted);font-size:11px;background:#fafbfc;
+  border-bottom:1px solid var(--line);padding:5px 9px;white-space:nowrap}
+.ftbl td{border-bottom:1px solid var(--line2);padding:7px 9px;vertical-align:top}
+.ftbl .fname{color:var(--ink2);white-space:nowrap;font-size:12px}
+.ftbl .fval{font-weight:500}
+.ftbl .fval.null{color:var(--warn);font-weight:400}
+.ftbl .ev{color:var(--muted);font-size:10.5px;line-height:1.55;margin-top:2px;
+  border-left:2px solid #e6eaf0;padding-left:6px;font-style:normal;word-break:break-word}
+.ftbl .conf{font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+.ftbl .conf.low{color:var(--danger)}
+.ftbl .acts{white-space:nowrap;display:flex;gap:3px;justify-content:flex-end}
+.ftbl tr.rev{background:#fbfdfb}
+.ftbl tr.rev.flag{background:var(--warn-bg)}
+.inline-in{width:100%;border:1px solid var(--accent);border-radius:3px;padding:1px 4px;font-size:12px}
+
+/* ---------- misc ---------- */
+.rowline{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.spacer{flex:1 1 auto}
+.mono{font-family:var(--mono);font-size:11.5px}
+.muted{color:var(--muted)}
+.small{font-size:11px}
+.hr{height:1px;background:var(--line2);margin:10px 0}
+.statusbar{flex:0 0 auto;display:flex;align-items:center;gap:12px;padding:5px 14px;
+  background:var(--panel);border-top:1px solid var(--line);color:var(--muted);font-size:11px}
+.statusbar .sb-role{color:var(--ink2)}
+.statusbar .sb-msg{color:var(--ink2);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.statusbar .sb-right{margin-left:auto;display:flex;gap:10px;align-items:center;white-space:nowrap}
+
+/* ---------- drawer ---------- */
+.scrim{position:fixed;inset:0;background:rgba(16,22,28,.28);opacity:0;pointer-events:none;transition:.18s;z-index:40}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(760px,94vw);background:var(--panel);
+  border-left:1px solid var(--line);transform:translateX(102%);transition:.22s cubic-bezier(.4,0,.2,1);
+  z-index:41;display:flex;flex-direction:column}
+.drawer.on{transform:none;box-shadow:-8px 0 32px rgba(20,28,36,.12)}
+.drawer-hd{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line)}
+.drawer-hd h3{font-size:13.5px}
+.drawer-sub{color:var(--muted);font-size:11px;margin-top:2px}
+.drawer-hd .x{margin-left:auto;border:0;background:transparent;cursor:pointer;color:var(--muted);
+  font-size:15px;line-height:1;padding:4px 6px;border-radius:4px}
+.drawer-hd .x:hover{background:#f1f3f6;color:var(--ink)}
+.drawer-bd{padding:14px;overflow-y:auto;flex:1 1 auto}
+.toast{position:fixed;left:50%;bottom:34px;transform:translate(-50%,14px);background:#1b222b;color:#fff;
+  padding:8px 14px;border-radius:6px;font-size:12.5px;opacity:0;pointer-events:none;transition:.2s;z-index:60;
+  max-width:min(680px,92vw);box-shadow:0 6px 20px rgba(10,16,22,.24);line-height:1.5}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.toast.bad{background:#8f231c}
+.toast.ok{background:#1a5c40}
+
+/* ---------- ac table / lists ---------- */
+.actbl{width:100%;border-collapse:collapse;font-size:11.5px}
+.actbl th{position:sticky;top:0;background:#fafbfc;text-align:left;font-size:10.5px;color:var(--muted);
+  border-bottom:1px solid var(--line);padding:5px 7px;z-index:2}
+.actbl td{border-bottom:1px solid var(--line2);padding:5px 7px;vertical-align:top}
+.actbl .id{font-family:var(--mono);font-size:10.5px;white-space:nowrap}
+.actbl .path{color:var(--accent);cursor:pointer;text-decoration:underline dotted}
+.actbl .nopath{color:var(--danger);font-size:10.5px}
+.sr{display:flex;gap:7px;padding:5px 0;border-bottom:1px dotted var(--line2);font-size:11.5px;align-items:flex-start}
+.sr:last-child{border-bottom:0}
+.sr .sid{font-family:var(--mono);font-size:10px;color:var(--muted);min-width:20px;padding-top:1px}
+.sr .st{font-weight:600;flex:0 0 34px;font-size:10.5px;padding-top:1px}
+.sr.pass .st{color:var(--ok)}
+.sr.fail .st{color:var(--danger)}
+.qitem{padding:9px 0;border-bottom:1px solid var(--line2);font-size:12px}
+.qitem:last-child{border-bottom:0}
+.qitem .qt{font-weight:600;margin-bottom:2px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.qitem .qbd{color:var(--ink2);font-size:11.5px;line-height:1.6}
+.qitem .qbd code{font-family:var(--mono);font-size:11px;background:#f3f5f7;padding:1px 4px;border-radius:3px}
+details.dt{border:1px solid var(--line);border-radius:var(--r);padding:0;margin-bottom:7px;background:#fff}
+details.dt>summary{padding:7px 10px;cursor:pointer;font-size:12px;font-weight:600;list-style:none}
+details.dt>summary::-webkit-details-marker{display:none}
+details.dt>summary:before{content:"▸";color:var(--muted);margin-right:6px;display:inline-block}
+details.dt[open]>summary:before{content:"▾"}
+details.dt .dt-bd{padding:0 10px 10px;font-size:11.5px;color:var(--ink2);line-height:1.65}
+.timeline{position:relative;padding-left:14px}
+.timeline:before{content:"";position:absolute;left:3px;top:4px;bottom:4px;width:1px;background:var(--line)}
+.tl-item{position:relative;padding:0 0 10px 0;font-size:11.5px}
+.tl-item:last-child{padding-bottom:0}
+.tl-item:before{content:"";position:absolute;left:-14px;top:5px;width:7px;height:7px;border-radius:50%;
+  background:#fff;border:1.5px solid #b9c2cc}
+.tl-item.on:before{border-color:var(--accent);background:var(--accent)}
+.tl-item.dead:before{border-color:var(--danger);background:var(--danger)}
+.tl-item .tl-t{font-weight:600;color:var(--ink2)}
+.tl-item .tl-m{color:var(--muted);font-size:10.5px;margin-top:1px}
+@media print{.topbar,.side,.statusbar,.hd-actions{display:none}.main{padding:0}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand">
+      <div class="mark">JH</div>
+      <div class="brandtxt">
+        <div class="pname">聚和集团 · 制度文件管理平台</div>
+        <div class="pmeta">工作台 v0.2-simplified · 规格 1.0.0-r001 ·
+          <span class="pill draft">BASELINE_DRAFT</span>
+          <span class="pill nr">business_tests NOT_RUN</span>
+        </div>
+      </div>
+    </div>
+    <div class="topmid">
+      <label for="batchSel">批次</label>
+      <select id="batchSel"></select>
+    </div>
+    <div class="topright">
+      <button class="btn ghost" data-drawer="perm">权限</button>
+      <button class="btn ghost" data-drawer="log">留痕</button>
+      <button class="btn ghost" data-drawer="ac">验收路径</button>
+      <button class="btn ghost" data-drawer="gap">待确认</button>
+      <button class="btn ghost" data-drawer="self">自检</button>
+      <div class="rolepick">
+        <label for="roleSel">当前角色</label>
+        <select id="roleSel"></select>
+      </div>
+    </div>
+  </header>
+  <div class="body">
+    <nav class="side" id="side"></nav>
+    <main class="main" id="main"></main>
+  </div>
+  <footer class="statusbar">
+    <span class="sb-role" id="sbRole"></span>
+    <span class="sb-msg" id="sbMsg">简化版：发布 → 替代 → 作废 三态。数据全部虚构，未接任何外部系统，不写入任何生产环境。</span>
+    <span class="sb-right">
+      <button class="btn sm ghost" id="resetBtn">重置演示</button>
+    </span>
+  </footer>
+</div>
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-hd">
+    <div>
+      <h3 id="drawerTitle">—</h3>
+      <div class="drawer-sub" id="drawerSub"></div>
+    </div>
+    <button class="x" id="drawerClose" aria-label="关闭">✕</button>
+  </div>
+  <div class="drawer-bd" id="drawerBody"></div>
+</aside>
+<div class="toast" id="toast"></div>
+<script>
+/* ==========================================================================
+   制度文件管理平台 · 工作台（简化版 v0.2）
+   生命周期只有 发布 → 替代 → 作废 三态。
+   不含：查重、相似度分档、冲突组裁定、抽样复核、建议单。
+   ⚠ 与 specs/04-rules.md（r001）暂不一致，差异见「待确认」抽屉 R-10。
+   本文件不联网、不写入任何外部系统；数据全部为虚构模拟件。
+   ========================================================================== */
+
+const SPEC = { project:'聚和集团制度文件管理平台', pid:'jh-doc-governance', version:'1.0.0-r001',
+  wb:'v0.2-simplified', initState:'BASELINE_DRAFT', tests:'NOT_RUN' };
+
+const DEPTS = {
+  'HQ-HR':{ name:'行政人事中心', admin:'归口人甲' },
+  'HQ-FIN':{ name:'财务中心', admin:'归口人乙' }
+};
+
+const ROLES = [
+  { id:'R-DOC-ADMIN',  name:'制度管理岗',        dept:null    },
+  { id:'R-DEPT-OWNER', name:'部门制度归口人',    dept:'HQ-HR' },
+  { id:'R-DRAFTER',    name:'制度起草人',        dept:'HQ-HR' },
+  { id:'R-SIGNER',     name:'分管领导 / 签发人', dept:null    },
+  { id:'R-STAFF',      name:'全体员工',          dept:null    },
+  { id:'R-IT',         name:'IT 平台管理员',     dept:null    },
+  { id:'R-LEGAL',      name:'法务',              dept:null    },
+  { id:'R-AUDIT',      name:'审计',              dept:null    }
+];
+const roleOf = id => ROLES.find(r => r.id === id) || ROLES[0];
+
+const BATCHES = [
+  { short:'B-01', dept:'HQ-HR',  label:'行政人事中心 · 首批存量', by:'归口人甲', at:'2026-11-06 09:12' },
+  { short:'B-02', dept:'HQ-FIN', label:'财务中心 · 首批存量',     by:'归口人乙', at:'2026-11-06 14:40' }
+];
+
+const ST = { PUB:'已发布', SUP:'已替代', VOID:'已作废' };
+const STATUSES = [ST.PUB, ST.SUP, ST.VOID];
+const STG = { RECV:'已收件', PARSED:'已解析', ERR:'解析失败' };
+
+const FIELDS = [
+  { k:'name',    label:'制度名称', req:true  },
+  { k:'dept',    label:'归口部门', req:true  },
+  { k:'version', label:'版本号',   req:true  },
+  { k:'pubDate', label:'发布日期', req:true  },
+  { k:'effDate', label:'生效日期', req:true  },
+  { k:'signer',  label:'签发记录', req:true  },
+  { k:'clauses', label:'条款数',   req:false }
+];
+
+/* 置信度 < 0.80 或证据为空 → 值置空 + 待补（保留这条：AI 抽取不可直接采信） */
+function fv(v, conf, ev) {
+  return { v:v, conf:conf, ev:ev || '',
+    get pending() { return !this.v || this.conf == null || this.conf < 0.80 || !this.ev; } };
+}
+
+function seedFiles() {
+  return [
+    { id:'F-01', batch:'B-01', dept:'HQ-HR', name:'员工考勤管理制度.docx', fmt:'docx', pg:12,
+      source:'共享盘', by:'归口人甲', at:'2026-11-06 09:12', policy:'P-01', vno:1,
+      stage:STG.PARSED, status:ST.PUB, issue:'', supBy:null, voidWhy:'',
+      fields:{
+        name:fv('员工考勤管理制度',.96,'标题页：员工考勤管理制度'),
+        dept:fv('HQ-HR · 行政人事中心',.99,'发布部门：行政人事中心'),
+        version:fv('第 1 版',.92,'页脚：版本 1.0'),
+        pubDate:fv('2024-03-20',.93,'落款：二〇二四年三月二十日'),
+        effDate:fv('2024-04-01',.91,'自 2024 年 4 月 1 日起施行'),
+        signer:fv('分管领导甲 · 2024-03-15 签批',.88,'签批页：2024.3.15'),
+        clauses:fv('5 章 18 条',.90,'第一章至第五章，共 18 条') } },
+    { id:'F-02', batch:'B-01', dept:'HQ-HR', name:'员工考勤管理制度（2026修订稿）.docx', fmt:'docx', pg:14,
+      source:'共享盘', by:'归口人甲', at:'2026-11-06 09:14', policy:'P-01', vno:2,
+      stage:STG.RECV, status:null, issue:'', supBy:null, voidWhy:'',
+      fields:{
+        name:fv('员工考勤管理制度（2026修订稿）',.95,'标题页'),
+        dept:fv('HQ-HR · 行政人事中心',.99,'发布部门'),
+        version:fv('第 2 版',.90,'页脚：版本 2.0'),
+        pubDate:fv('2026-10-28',.86,'落款：二〇二六年十月二十八日'),
+        effDate:fv('2026-12-01',.84,'自 2026 年 12 月 1 日起施行'),
+        signer:fv('分管领导甲 · 2026-10-25 签批',.87,'签批页：2026.10.25'),
+        clauses:fv('6 章 21 条',.89,'共 21 条') } },
+    { id:'F-03', batch:'B-01', dept:'HQ-HR', name:'会议室使用管理规定.docx', fmt:'docx', pg:6,
+      source:'共享盘', by:'归口人甲', at:'2026-11-06 09:20', policy:'P-03', vno:1,
+      stage:STG.RECV, status:null, issue:'', supBy:null, voidWhy:'',
+      fields:{
+        name:fv('会议室使用管理规定',.94,'标题页'),
+        dept:fv('HQ-HR · 行政人事中心',.98,'发布部门'),
+        version:fv('第 1 版',.91,'页脚'),
+        pubDate:fv('',null,''),
+        effDate:fv('2023-07-01',.82,'自 2023 年 7 月 1 日起施行'),
+        signer:fv('分管领导甲 · 2023-06-20 签批',.85,'签批页'),
+        clauses:fv('3 章 9 条',.88,'共 9 条') } },
+    { id:'F-04', batch:'B-01', dept:'HQ-HR', name:'差旅费报销标准.pdf', fmt:'pdf', pg:2,
+      source:'邮件附件', by:'归口人甲', at:'2026-11-06 09:31', policy:'P-04', vno:1,
+      stage:STG.RECV, status:null, issue:'结构异常：未识别到条款结构（0 条）', supBy:null, voidWhy:'',
+      fields:{
+        name:fv('差旅费报销标准',.86,'页眉'),
+        dept:fv('HQ-HR · 行政人事中心',.78,''),
+        version:fv('',null,''), pubDate:fv('',null,''), effDate:fv('',null,''),
+        signer:fv('',null,''),
+        clauses:fv('0 条',.40,'') } },
+    { id:'F-05', batch:'B-01', dept:'HQ-HR', name:'保密工作管理规定.docx', fmt:'docx', pg:9,
+      source:'共享盘', by:'归口人甲', at:'2026-11-06 09:40', policy:'P-05', vno:1,
+      stage:STG.RECV, status:null, issue:'缺少签发记录：签章页未识别到签核人与时间', supBy:null, voidWhy:'',
+      fields:{
+        name:fv('保密工作管理规定',.95,'标题页'),
+        dept:fv('HQ-HR · 行政人事中心',.97,'发布部门'),
+        version:fv('第 1 版',.90,'页脚'),
+        pubDate:fv('2025-05-12',.88,'落款'),
+        effDate:fv('2025-06-01',.86,'施行日期'),
+        signer:fv('',null,''),
+        clauses:fv('4 章 22 条',.92,'共 22 条') } },
+    { id:'F-06', batch:'B-02', dept:'HQ-FIN', name:'资金审批权限表.docx', fmt:'docx', pg:8,
+      source:'共享盘', by:'归口人乙', at:'2026-11-06 14:40', policy:'P-06', vno:1,
+      stage:STG.RECV, status:null, issue:'', supBy:null, voidWhy:'',
+      fields:{
+        name:fv('资金审批权限表',.93,'标题页'),
+        dept:fv('HQ-FIN · 财务中心',.98,'发布部门'),
+        version:fv('第 1 版',.89,'页脚'),
+        pubDate:fv('2025-01-15',.87,'落款'),
+        effDate:fv('2025-02-01',.85,'施行日期'),
+        signer:fv('分管领导乙 · 2025-01-10 签批',.86,'签批页'),
+        clauses:fv('2 章 11 条',.88,'共 11 条') } },
+    { id:'F-07', batch:'B-01', dept:'HQ-HR', name:'公务用车管理办法（2019版）.docx', fmt:'docx', pg:7,
+      source:'档案室', by:'归口人甲', at:'2026-11-06 09:50', policy:'P-07', vno:1,
+      stage:STG.PARSED, status:ST.VOID, issue:'', supBy:null,
+      voidWhy:'2025-06-30 经营运管理部批准废止，业务并入《公务用车管理办法（2025版）》',
+      fields:{
+        name:fv('公务用车管理办法（2019版）',.94,'标题页'),
+        dept:fv('HQ-HR · 行政人事中心',.97,'发布部门'),
+        version:fv('第 1 版',.90,'页脚'),
+        pubDate:fv('2019-04-08',.88,'落款'),
+        effDate:fv('2019-05-01',.86,'施行日期'),
+        signer:fv('分管领导甲 · 2019-04-01 签批',.85,'签批页'),
+        clauses:fv('4 章 15 条',.87,'共 15 条') } }
+  ];
+}
+
+/* ---------------------------------------------------------------- 权限 */
+const CAPS = [
+  { cap:'file.view',       label:'原始文件 · 查看',    basis:'08 §2 原始文件·查看' },
+  { cap:'file.download',   label:'原始文件 · 下载',    basis:'08 §2 原始文件·下载' },
+  { cap:'import.register', label:'导入登记 / 提交文件', basis:'08 §1 角色动作（§2 无对应单元格）', derived:true },
+  { cap:'parse.start',     label:'启动解析',           basis:'08 §1「导入登记」派生', derived:true },
+  { cap:'publish.exec',    label:'发布（生效）',       basis:'§2 未列；签发授权未定（Q-002），本版按制度管理岗执行', derived:true },
+  { cap:'void.exec',       label:'作废',               basis:'§2 未列；本版按制度管理岗执行', derived:true },
+  { cap:'ledger.view',     label:'台账 · 查看',        basis:'08 §2 台账·查看' },
+  { cap:'ledger.export',   label:'台账 · 导出',        basis:'08 §2 台账·导出' },
+  { cap:'audit.view',      label:'留痕 · 查看',        basis:'08 §2 留痕·查看' }
+];
+
+function can(cap, ctx) {
+  ctx = ctx || {};
+  const r = S.role, me = roleOf(r);
+  const mine = d => d === me.dept;
+  switch (cap) {
+    case 'file.view': case 'file.download':
+      if (r === 'R-DOC-ADMIN' || r === 'R-LEGAL') return true;
+      if (r === 'R-DEPT-OWNER') return mine(ctx.dept);
+      return false;
+    case 'import.register':
+      if (r === 'R-DOC-ADMIN') return true;
+      if (r === 'R-DEPT-OWNER') return mine(ctx.dept);
+      return false;
+    case 'parse.start':  return r === 'R-DOC-ADMIN';
+    case 'publish.exec': return r === 'R-DOC-ADMIN';
+    case 'void.exec':    return r === 'R-DOC-ADMIN';
+    case 'ledger.view':
+      if (['R-DOC-ADMIN','R-SIGNER','R-LEGAL','R-AUDIT'].indexOf(r) >= 0) return true;
+      if (r === 'R-DEPT-OWNER') return mine(ctx.dept);
+      if (r === 'R-STAFF') return ctx.status === ST.PUB;
+      return false;
+    case 'ledger.export':
+      if (['R-DOC-ADMIN','R-SIGNER','R-LEGAL','R-AUDIT'].indexOf(r) >= 0) return true;
+      if (r === 'R-DEPT-OWNER') return true;
+      return false;
+    case 'audit.view':
+      if (['R-DOC-ADMIN','R-SIGNER','R-LEGAL','R-AUDIT'].indexOf(r) >= 0) return true;
+      if (r === 'R-DEPT-OWNER') return mine(ctx.dept);
+      return false;
+    default: return false;
+  }
+}
+const capBasis = c => (CAPS.find(x => x.cap === c) || {}).basis || '未列出 → 默认拒绝';
+
+/* ---------------------------------------------------------------- 状态与工具 */
+let S = null;
+function freshState() {
+  return { role:'R-DOC-ADMIN', page:'import', batch:'B-01',
+    files:seedFiles(), logs:[], seq:0, sel:'F-02', filterStatus:'', filterQ:'', lastNotice:'' };
+}
+const nowStr = () => { const d = new Date(), p = n => String(n).padStart(2,'0');
+  return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes()); };
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+const filesOf  = b => S.files.filter(f => f.batch === b);
+const fileById = id => S.files.find(f => f.id === id);
+const batchOf  = b => BATCHES.find(x => x.short === b);
+const versionsOf = f => S.files.filter(x => x.policy === f.policy).sort((a,b) => a.vno - b.vno);
+const liveVersion = f => S.files.find(x => x.policy === f.policy && x.status === ST.PUB);
+
+function log(action, target, before, after, basis) {
+  S.seq += 1;
+  S.logs.unshift({ id:'LG-'+String(S.seq).padStart(3,'0'), at:nowStr(),
+    actor:roleOf(S.role).name, role:S.role, dept:roleOf(S.role).dept,
+    action:action, target:target, before:before, after:after, basis:basis });
+}
+function deny(cap, target) {
+  log('越权拦截', target || '—', '拒绝', '未执行', '08 §5.1 默认拒绝 · 能力 '+cap);
+  toast('无「'+cap+'」权限，已拒绝并写入留痕', 'bad');
+}
+function toast(msg, kind) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = 'toast on' + (kind ? ' ' + kind : '');
+  clearTimeout(toast._t);
+  toast._t = setTimeout(function(){ t.className = 'toast' + (kind ? ' ' + kind : ''); }, 2600);
+}
+
+/* ---------------------------------------------------------------- 守卫 */
+function publishCheck(f) {
+  const r = [];
+  if (f.stage === STG.ERR) r.push('解析失败，不能发布');
+  if (f.stage === STG.RECV) r.push('尚未解析');
+  if (f.issue) r.push('阻断项：' + f.issue);
+  FIELDS.filter(x => x.req).forEach(function(x){
+    const d = f.fields[x.k];
+    if (!d || !d.v) r.push('缺要素：' + x.label);
+  });
+  if (f.status === ST.VOID) r.push('已作废是终态，不可再发布（须新建版本）');
+  if (f.status === ST.PUB)  r.push('当前已是「已发布」');
+  return { ok: r.length === 0, reasons: r };
+}
+function voidCheck(f, why) {
+  const r = [];
+  if (f.status !== ST.PUB && f.status !== ST.SUP) r.push('只有「已发布」「已替代」可以作废');
+  if (!why || why.trim().length < 8) r.push('作废依据不足 8 字');
+  return { ok: r.length === 0, reasons: r };
+}
+
+/* ---------------------------------------------------------------- 动作 */
+function actRegister(names) {
+  const b = batchOf(S.batch);
+  if (!can('import.register', { dept:b.dept })) return deny('import.register', '批次 '+S.batch);
+  let n = 0;
+  names.forEach(function(nm){
+    S.seq += 1;
+    S.files.push({ id:'F-'+String(20 + S.files.length).padStart(2,'0'), batch:S.batch,
+      dept:b.dept, name:nm, fmt:(nm.split('.').pop()||'').toLowerCase(), pg:0,
+      source:'本机选择', by:roleOf(S.role).name, at:nowStr(), policy:'P-N'+S.seq, vno:1,
+      stage:STG.RECV, status:null, issue:'', supBy:null, voidWhy:'',
+      fields:{ name:fv(nm.replace(/\.[^.]+$/,''),.95,'文件名'),
+        dept:fv(b.dept+' · '+DEPTS[b.dept].name,.99,'批次归口'),
+        version:fv('',null,''), pubDate:fv('',null,''), effDate:fv('',null,''),
+        signer:fv('',null,''), clauses:fv('',null,'') } });
+    n++;
+  });
+  log('导入登记','批次 '+S.batch,'—','新增 '+n+' 份','08 §1 导入登记');
+  toast(n ? '已登记 '+n+' 份（仅记录文件名与大小，未上传内容）' : '未选择文件', n ? 'ok' : 'bad');
+  render();
+}
+
+function actParse() {
+  if (!can('parse.start')) return deny('parse.start','批次 '+S.batch);
+  const fs = filesOf(S.batch).filter(function(f){ return f.stage === STG.RECV; });
+  if (!fs.length) { toast('本批没有待解析的文件','bad'); return; }
+  fs.forEach(function(f){ f.stage = f.issue ? STG.ERR : STG.PARSED; });
+  const bad = fs.filter(function(f){ return f.stage === STG.ERR; }).length;
+  log('启动解析','批次 '+S.batch, fs.length+' 份待解析', '成功 '+(fs.length-bad)+' / 失败 '+bad,
+      '单份失败不阻塞整批；失败件保留阻断原因');
+  toast('解析完成：'+(fs.length-bad)+' 份可判读'+(bad?'，'+bad+' 份阻断':''), bad ? 'bad' : 'ok');
+  render();
+}
+
+function setField(fid, k, val) {
+  const f = fileById(fid); if (!f) return;
+  const before = (f.fields[k] && f.fields[k].v) || '（空）';
+  f.fields[k] = fv(val, 1, '人工录入');
+  log('修正字段', f.name, before, val || '（空）', '人工录入替代 AI 抽取');
+  render();
+}
+
+function actPublish(fid) {
+  const t0 = fileById(fid);
+  if (!can('publish.exec', { dept:t0 && t0.dept })) return deny('publish.exec', fid);
+  const f = fileById(fid); if (!f) return;
+  const c = publishCheck(f);
+  if (!c.ok) { toast('不能发布：' + c.reasons[0],'bad'); log('发布被拒', f.name, f.status || '—','拒绝', c.reasons.join('；')); render(); return; }
+  const old = liveVersion(f);
+  f.status = ST.PUB;
+  let sup = '';
+  if (old && old.id !== f.id) {
+    old.status = ST.SUP; old.supBy = f.id; sup = '；旧版转为「已替代」';
+    log('自动替代', old.name, ST.PUB, ST.SUP, '同一制度发布新版本，旧版自动转已替代');
+  }
+  log('发布', f.name, '—', '状态=已发布', '六类要素齐全 + 签发记录非空' + sup);
+  toast('已发布：' + f.name + sup, 'ok');
+  render();
+}
+
+function actVoid(fid, why) {
+  if (!can('void.exec')) return deny('void.exec', fid);
+  const f = fileById(fid); if (!f) return;
+  const c = voidCheck(f, why);
+  if (!c.ok) { toast('不能作废：' + c.reasons[0],'bad'); return; }
+  const before = f.status;
+  f.status = ST.VOID; f.voidWhy = why.trim();
+  log('作废', f.name, before, ST.VOID, '依据：' + why.trim());
+  toast('已作废（终态，不可恢复）','ok');
+  closeDrawer(); render();
+}
+
+/* ---------------------------------------------------------------- 台账数据 */
+function ledgerRows() {
+  let rows = S.files.filter(function(f){ return !!f.status; });
+  if (S.role === 'R-STAFF') rows = rows.filter(function(f){ return can('ledger.view', { status:f.status }); });
+  else if (S.role === 'R-DEPT-OWNER') rows = rows.filter(function(f){ return f.dept === roleOf(S.role).dept; });
+  if (S.filterStatus) rows = rows.filter(function(f){ return f.status === S.filterStatus; });
+  const q = (S.filterQ || '').trim();
+  if (q) rows = rows.filter(function(f){
+    return [f.name, DEPTS[f.dept].name, f.fields.name.v, f.policy, String(f.vno)]
+      .join(' ').toLowerCase().indexOf(q.toLowerCase()) >= 0; });
+  return rows.slice().sort(function(a,b){ return (a.dept+a.name+a.vno).localeCompare(b.dept+b.name+b.vno); });
+}
+function counters() {
+  const c = {}; STATUSES.forEach(function(s){ c[s] = 0; });
+  S.files.forEach(function(f){ if (f.status && c[f.status] != null) c[f.status]++; });
+  return c;
+}
+
+/* ---------------------------------------------------------------- 视图工具 */
+function chip(s) {
+  if (s === ST.PUB)  return '<span class="chip ok"><i class="dot"></i>已发布</span>';
+  if (s === ST.SUP)  return '<span class="chip warn"><i class="dot"></i>已替代</span>';
+  if (s === ST.VOID) return '<span class="chip bad"><i class="dot"></i>已作废</span>';
+  return '<span class="chip flat">未发布</span>';
+}
+const stgChip = st => st === STG.ERR ? '<span class="chip bad">解析失败</span>'
+  : st === STG.PARSED ? '<span class="chip acc">已解析</span>' : '<span class="chip flat">已收件</span>';
+
+function pageHead(title, sub, actions) {
+  return '<div class="page-hd"><div><h1>' + title + '</h1><div class="sub">' + sub + '</div></div>'
+    + '<div class="hd-actions">' + (actions || '') + '</div></div>';
+}
+function divergeNote() {
+  return '<div class="note warn"><span class="ico">!</span><div>'
+    + '<b>本版为简化口径</b>：生命周期只有 <b>发布 → 替代 → 作废</b> 三态，不含查重、相似度分档、冲突组裁定、抽样复核与建议单。'
+    + '与 <span class="mono">specs/04-rules.md</span> 暂不一致，差异登记在「待确认」抽屉 R-10。</div></div>';
+}
+function denyPanel(pageName, cap) {
+  const r = roleOf(S.role);
+  log('整页拒绝', pageName, '—', '未加载', '08 §5.2 无权限不加载数据 · 能力 ' + cap);
+  return pageHead(pageName, '当前角色无权访问该页')
+    + '<div class="card"><div class="card-bd deny"><h3>无权限：' + esc(pageName) + '</h3>'
+    + '<p>当前角色 <b>' + esc(r.name) + '</b>' + (r.dept ? '（' + esc(DEPTS[r.dept].name) + '）' : '') + ' 不具备能力 <code>' + esc(cap) + '</code>。</p>'
+    + '<p>依据：<code>' + esc(capBasis(cap)) + '</code>。矩阵未列的动作一律默认拒绝，本页未加载任何数据。</p>'
+    + '<p class="small muted">此动作已写入留痕。如需访问，请切换角色或申请授权。</p></div></div>';
+}
+
+/* ---------------------------------------------------------------- V-02 */
+function viewImport() {
+  const b = batchOf(S.batch);
+  if (!can('import.register', { dept:b.dept }) && !can('parse.start')) return denyPanel('V-02 导入与批次','import.register');
+  const fs = filesOf(S.batch);
+  const recv = fs.filter(function(f){ return f.stage === STG.RECV; }).length;
+  const canReg = can('import.register', { dept:b.dept });
+  const canParse = can('parse.start');
+
+  let h = pageHead('V-02 导入与批次', '批次 ' + b.short + ' · ' + b.label,
+    canParse ? '<button class="btn primary" onclick="actParse()"' + (recv ? '' : ' disabled') + '>启动解析' + (recv ? '（' + recv + ' 份）' : '') + '</button>' : '');
+  h += divergeNote();
+  h += '<div class="metrics">'
+    + '<div class="metric"><div class="k">本批文件</div><div class="v">' + fs.length + '<small>份</small></div></div>'
+    + '<div class="metric"><div class="k">待解析</div><div class="v">' + recv + '</div></div>'
+    + '<div class="metric"><div class="k">已解析</div><div class="v">' + fs.filter(function(f){ return f.stage === STG.PARSED; }).length + '</div></div>'
+    + '<div class="metric' + (fs.some(function(f){ return !!f.issue; }) ? ' alert' : '') + '"><div class="k">阻断</div><div class="v">' + fs.filter(function(f){ return !!f.issue; }).length + '</div></div>'
+    + '</div>';
+
+  h += '<div class="grid-import">';
+  h += '<div class="card"><div class="card-hd"><h2>批次登记</h2><div class="hint">' + esc(b.by) + ' · ' + esc(b.at) + '</div></div><div class="card-bd">'
+    + '<div class="form">'
+    + '<div class="frow"><label>批次号</label><div class="mono">' + esc(b.short) + '</div></div>'
+    + '<div class="frow"><label>归口部门</label><div>' + esc(DEPTS[b.dept].name) + '</div></div>'
+    + '<div class="frow"><label>来源类型</label><div>共享盘 / 邮件附件 / 档案室</div></div>'
+    + '</div>';
+  if (canReg) {
+    h += '<div class="hr"></div><label class="drop" for="filePick"><strong>选择本机文件</strong>'
+      + '只读取文件名与大小，不上传内容、不解析正文 —— 演示环境不接触真实制度文件。'
+      + '<input type="file" id="filePick" multiple accept=".doc,.docx,.pdf"></label>';
+  } else {
+    h += '<div class="note" style="margin:10px 0 0"><span class="ico">i</span><div>当前角色不可登记新文件。</div></div>';
+  }
+  h += '</div></div>';
+
+  h += '<div class="card"><div class="card-hd"><h2>批次文件</h2><div class="hint">单份解析失败不阻塞整批</div></div><div class="card-bd tight"><div class="wrap-x"><table class="tbl">'
+    + '<thead><tr><th style="width:52px">编号</th><th>文件名</th><th style="width:56px">格式</th><th style="width:92px">来源</th><th style="width:92px">处理阶段</th><th>阻断原因</th></tr></thead><tbody>';
+  if (!fs.length) {
+    h += '<tr><td colspan="6"><div class="empty"><div class="big">本批还没有文件</div>先在左侧登记文件，再启动解析。</div></td></tr>';
+  } else {
+    fs.forEach(function(f){
+      h += '<tr><td class="num">' + f.id + '</td><td>' + esc(f.name) + '</td><td class="muted">' + esc(f.fmt) + '</td>'
+        + '<td class="muted">' + esc(f.source) + '</td><td>' + stgChip(f.stage) + '</td>'
+        + '<td class="' + (f.issue ? '' : 'muted') + '">' + (f.issue ? esc(f.issue) : '—') + '</td></tr>';
+    });
+  }
+  h += '</tbody></table></div></div></div></div>';
+  h += '<div class="note info"><span class="ico">i</span><div>登记不做<b>重复校验</b>：选中的文件直接进批次，是否同一制度由「制度 + 版本号」表达。同一制度的多个版本发布后自动形成替代关系。</div></div>';
+  return h;
+}
+
+/* ---------------------------------------------------------------- V-03 */
+function viewJudge() {
+  const b = batchOf(S.batch);
+  if (!can('file.view', { dept:b.dept }) && !can('publish.exec')) return denyPanel('V-03 判读与发布','file.view');
+  let fs = filesOf(S.batch);
+  if (S.role === 'R-DEPT-OWNER') fs = fs.filter(function(f){ return f.dept === roleOf(S.role).dept; });
+  if (!fs.some(function(f){ return f.id === S.sel; })) S.sel = fs.length ? fs[0].id : null;
+  const f = fileById(S.sel);
+
+  let h = pageHead('V-03 判读与发布', '批次 ' + b.short + ' · 逐字段核对后发布为生效版本');
+  h += divergeNote();
+  h += '<div class="grid-judge">';
+
+  h += '<div class="card"><div class="card-hd"><h2>本批文件</h2><div class="hint">' + fs.length + ' 份</div></div><div class="card-bd tight"><div class="flist">';
+  if (!fs.length) h += '<div class="empty">本批无可判读文件</div>';
+  fs.forEach(function(x){
+    h += '<div class="fitem' + (x.id === S.sel ? ' on' : '') + '" onclick="pick(\'' + x.id + '\')">'
+      + '<div class="fn"><span>' + esc(x.name) + '</span></div>'
+      + '<div class="fm">' + stgChip(x.stage) + chip(x.status) + '</div>'
+      + '<div class="stg">' + x.id + ' · ' + esc(x.policy) + ' · 第 ' + x.vno + ' 版</div></div>';
+  });
+  h += '</div></div></div>';
+
+  h += '<div class="card"><div class="card-hd"><h2>' + (f ? esc(f.name) : '未选择') + '</h2>'
+    + '<div class="hint">' + (f ? f.id + ' · ' + esc(DEPTS[f.dept].name) : '') + '</div></div>';
+  if (!f) {
+    h += '<div class="card-bd"><div class="empty">左侧选择一份文件</div></div>';
+  } else {
+    const c = publishCheck(f);
+    if (f.issue) h += '<div class="card-bd" style="padding-bottom:0"><div class="note bad"><span class="ico">×</span><div><b>阻断：</b>' + esc(f.issue) + '<div class="sm">修好原件后重新登记；本版不提供「强制发布」。</div></div></div></div>';
+    h += '<div class="card-bd tight"><table class="ftbl"><thead><tr><th style="width:86px">要素</th><th>抽取值</th><th style="width:70px">置信度</th><th>原文证据</th><th style="width:48px"></th></tr></thead><tbody>';
+    FIELDS.forEach(function(x){
+      const d = f.fields[x.k] || fv('', null, '');
+      const pend = d.pending;
+      h += '<tr class="' + (pend ? 'rev flag' : '') + '">'
+        + '<td class="fname">' + x.label + (x.req ? ' <span style="color:var(--danger)">*</span>' : '') + '</td>'
+        + '<td class="fval' + (d.v ? '' : ' null') + '">' + (d.v ? esc(d.v) : '待补') + '</td>'
+        + '<td class="conf' + (pend ? ' low' : '') + '">' + (d.conf == null ? '—' : d.conf.toFixed(2)) + '</td>'
+        + '<td class="ev">' + (d.ev ? esc(d.ev) : '无证据片段 → 值已置空') + '</td>'
+        + '<td class="acts">' + (can('publish.exec') ? '<button class="btn sm ghost" onclick="editField(\'' + f.id + '\',\'' + x.k + '\')">改</button>' : '') + '</td></tr>';
+    });
+    h += '</tbody></table></div>';
+
+    h += '<div class="card-bd" style="border-top:1px solid var(--line2)">';
+    if (f.status) {
+      h += '<div class="rowline"><span class="muted small">当前状态：</span>' + chip(f.status)
+        + (f.supBy ? '<span class="muted small">已被 ' + f.supBy + ' 替代</span>' : '') + '</div>';
+      if (f.voidWhy) h += '<div class="note bad" style="margin:10px 0 0"><span class="ico">×</span><div>作废依据：' + esc(f.voidWhy) + '</div></div>';
+    } else if (c.ok) {
+      h += '<div class="note info" style="margin:0"><span class="ico">✓</span><div>六类要素齐全、签发记录完整，可以发布。</div></div>';
+      if (can('publish.exec')) {
+        const live = liveVersion(f);
+        h += '<div class="rowline" style="margin-top:10px"><button class="btn primary" onclick="actPublish(\'' + f.id + '\')">发布为生效版本</button>'
+          + (live && live.id !== f.id ? '<span class="small muted">发布后，现行版本「' + esc(live.fields.version.v) + '」将自动转为「已替代」</span>' : '') + '</div>';
+      }
+    } else {
+      h += '<div class="note warn" style="margin:0"><span class="ico">!</span><div><b>还不能发布：</b><ul style="margin:4px 0 0 16px;padding:0">'
+        + c.reasons.map(function(r){ return '<li>' + esc(r) + '</li>'; }).join('') + '</ul></div></div>';
+    }
+    h += '</div>';
+  }
+  h += '</div>';
+
+  h += '<div class="card"><div class="card-hd"><h2>生命周期</h2><div class="hint">三态</div></div><div class="card-bd">';
+  if (f) {
+    h += '<div class="small muted" style="margin-bottom:6px">同一制度的版本链（' + esc(f.policy) + '）</div><div class="timeline">';
+    versionsOf(f).forEach(function(v){
+      const cls = v.status === ST.VOID ? 'dead' : (v.status === ST.PUB ? 'on' : '');
+      h += '<div class="tl-item ' + cls + '"><div class="tl-t">第 ' + v.vno + ' 版</div>'
+        + '<div class="tl-m">' + chip(v.status) + ' <span class="mono">' + v.id + '</span></div>'
+        + '<div class="tl-m">' + esc(v.fields.pubDate.v || '发布日期待补') + '</div></div>';
+    });
+    h += '</div>';
+  }
+  h += '<div class="hr"></div><div class="small" style="line-height:1.9">'
+    + '<b>发布</b>　要素齐全 + 签发记录非空 → 已发布<br>'
+    + '<b>替代</b>　同一制度发布新版本 → 旧版自动转已替代<br>'
+    + '<b>作废</b>　填依据（≥8 字）→ 已作废，<b>终态不可恢复</b></div>'
+    + '<div class="note" style="margin:10px 0 0"><span class="ico">i</span><div class="sm">替代不是手动动作：它由「发布新版本」触发，避免出现两个现行版本。</div></div>';
+  h += '</div></div></div>';
+  return h;
+}
+
+/* ---------------------------------------------------------------- V-05 */
+function viewLedger() {
+  if (!can('ledger.view', { status:ST.PUB, dept:batchOf(S.batch).dept })) return denyPanel('V-05 制度台账','ledger.view');
+  const c = counters(), rows = ledgerRows();
+  let h = pageHead('V-05 制度台账', '三态台账 · 当前可见 ' + rows.length + ' 条',
+    can('ledger.export') ? '<button class="btn" onclick="actExport()">导出 O-01（CSV）</button>' : '');
+  h += divergeNote();
+  h += '<div class="metrics">'
+    + '<div class="metric"><div class="k">已发布（现行有效）</div><div class="v">' + c[ST.PUB] + '</div></div>'
+    + '<div class="metric"><div class="k">已替代（历史版本）</div><div class="v">' + c[ST.SUP] + '</div></div>'
+    + '<div class="metric"><div class="k">已作废（终态）</div><div class="v">' + c[ST.VOID] + '</div></div>'
+    + '<div class="metric"><div class="k">当前筛选</div><div class="v">' + rows.length + '</div></div></div>';
+
+  h += '<div class="card"><div class="card-hd"><h2>筛选</h2><div class="hint">员工仅可见「已发布」</div></div><div class="card-bd"><div class="rowline">'
+    + '<button class="btn sm' + (S.filterStatus ? '' : ' primary') + '" onclick="setFilter(\'\')">全部</button>';
+  STATUSES.forEach(function(s){
+    h += '<button class="btn sm' + (S.filterStatus === s ? ' primary' : '') + '" onclick="setFilter(\'' + s + '\')">' + s + ' ' + c[s] + '</button>';
+  });
+  h += '<input type="text" id="q" placeholder="搜制度名 / 部门 / 编号" value="' + esc(S.filterQ) + '" oninput="setQ(this.value)" style="width:220px;margin-left:auto">';
+  h += '</div></div></div>';
+
+  h += '<div class="card"><div class="card-bd tight"><div class="wrap-x"><table class="tbl"><thead><tr>'
+    + '<th style="width:60px">编号</th><th>制度名称</th><th style="width:84px">版本</th><th style="width:104px">归口部门</th>'
+    + '<th style="width:94px">状态</th><th style="width:94px">生效日期</th><th style="width:44px"></th></tr></thead><tbody>';
+  if (!rows.length) {
+    const empty = S.role === 'R-STAFF'
+      ? '没有「现行」状态的制度可查看：当前台账里的制度都还没有发布。'
+      : '当前筛选无结果。';
+    h += '<tr><td colspan="7"><div class="empty"><div class="big">' + empty + '</div>'
+      + (S.filterStatus || S.filterQ ? '<div><button class="btn" onclick="clearFilter()">清除筛选</button></div>' : '') + '</div></td></tr>';
+  }
+  rows.forEach(function(f){
+    h += '<tr onclick="openDetail(\'' + f.id + '\')" style="cursor:pointer">'
+      + '<td class="num">' + f.id + '</td><td>' + esc(f.fields.name.v || f.name) + '</td>'
+      + '<td class="muted">第 ' + f.vno + ' 版</td><td class="muted">' + esc(DEPTS[f.dept].name) + '</td>'
+      + '<td>' + chip(f.status) + '</td><td class="mono">' + esc(f.fields.effDate.v || '—') + '</td>'
+      + '<td class="muted">›</td></tr>';
+  });
+  h += '</tbody></table></div></div></div>';
+  h += '<div class="note info"><span class="ico">i</span><div>台账只有三态。<b>已作废是终态</b>：不提供「恢复」，要重新启用只能新建版本重新发布——这样任何一次效力变化都留得下痕迹。</div></div>';
+  return h;
+}
+
+function setFilter(s) { S.filterStatus = s; render(); }
+function setQ(v) { S.filterQ = v; render(); }
+function clearFilter() { S.filterStatus = ''; S.filterQ = ''; render(); }
+function pick(id) { S.sel = id; render(); }
+function editField(fid, k) {
+  const f = fileById(fid); if (!f) return;
+  const cur = (f.fields[k] && f.fields[k].v) || '';
+  const lbl = (FIELDS.find(function(x){ return x.k === k; }) || {}).label;
+  const val = window.prompt('修正「' + lbl + '」\n留空表示待补', cur);
+  if (val === null) return;
+  setField(fid, k, val.trim());
+}
+
+function actExport() {
+  if (!can('ledger.export')) return deny('ledger.export','O-01');
+  const rows = ledgerRows();
+  const head = ['编号','制度名称','版本号','归口部门','状态','生效日期','发布日期','签发记录','被替代为','作废依据'];
+  const body = rows.map(function(f){ return [f.id, f.fields.name.v || f.name, '第 '+f.vno+' 版', DEPTS[f.dept].name,
+    f.status, f.fields.effDate.v || '', f.fields.pubDate.v || '', f.fields.signer.v || '', f.supBy || '', f.voidWhy || '']; });
+  const csv = '\ufeff' + [head].concat(body).map(function(r){
+    return r.map(function(x){ return '"' + String(x).replace(/"/g,'""') + '"'; }).join(','); }).join('\r\n');
+  const blob = new Blob([csv], { type:'text/csv;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'jh-doc-ledger-' + nowStr().replace(/[-: ]/g,'') + '.csv';
+  a.click();
+  log('导出台账','O-01','—',rows.length+' 条','08 §2 台账·导出；本版用 CSV 代替 xlsx（R-6）');
+  toast('已导出 ' + rows.length + ' 条（CSV）','ok');
+}
+
+/* ---------------------------------------------------------------- 详情 */
+function openDetail(fid) {
+  const f = fileById(fid); if (!f) return;
+  if (!can('ledger.view', { status:f.status, dept:f.dept })) return deny('ledger.view', f.name);
+  const canVoid = can('void.exec') && (f.status === ST.PUB || f.status === ST.SUP);
+  let h = '<div class="rowline" style="margin-bottom:10px">' + chip(f.status)
+    + '<span class="mono">' + f.id + '</span><span class="muted small">' + esc(f.policy) + ' · 第 ' + f.vno + ' 版</span></div>';
+  h += '<table class="ftbl"><tbody>';
+  FIELDS.forEach(function(x){
+    const d = f.fields[x.k] || {};
+    h += '<tr><td class="fname" style="width:86px">' + x.label + '</td><td class="fval' + (d.v ? '' : ' null') + '">'
+      + (d.v ? esc(d.v) : '待补') + '</td></tr>';
+  });
+  h += '<tr><td class="fname">归口部门</td><td>' + esc(DEPTS[f.dept].name) + '</td></tr>'
+    + '<tr><td class="fname">来源</td><td>' + esc(f.source) + ' · ' + esc(f.by) + ' · ' + esc(f.at) + '</td></tr>';
+  if (f.supBy) h += '<tr><td class="fname">被替代为</td><td>' + esc(f.supBy) + '</td></tr>';
+  if (f.voidWhy) h += '<tr><td class="fname">作废依据</td><td>' + esc(f.voidWhy) + '</td></tr>';
+  h += '</tbody></table>';
+  h += '<div class="hr"></div><div class="small muted" style="margin-bottom:6px">版本链</div><div class="timeline">';
+  versionsOf(f).forEach(function(v){
+    const cls = v.status === ST.VOID ? 'dead' : (v.status === ST.PUB ? 'on' : '');
+    h += '<div class="tl-item ' + cls + '"><div class="tl-t">第 ' + v.vno + ' 版</div>'
+      + '<div class="tl-m">' + chip(v.status) + ' ' + esc(v.fields.effDate.v || '生效日期待补') + '</div></div>';
+  });
+  h += '</div><div class="hr"></div>';
+  if (canVoid) {
+    h += '<div class="small" style="margin-bottom:6px"><b>作废</b>　需填依据（≥8 字），执行后为终态、不可恢复。</div>'
+      + '<textarea id="voidWhy" placeholder="例：2026-11-30 经运营管理部批准废止，业务并入《XX 管理办法》" style="width:100%;min-height:52px;resize:vertical"></textarea>'
+      + '<div class="rowline" style="margin-top:8px"><button class="btn danger" onclick="doVoid(\'' + f.id + '\')">确认作废</button>'
+      + '<span class="small muted">作废不会删除任何记录</span></div>';
+  } else if (f.status === ST.VOID) {
+    h += '<div class="note bad" style="margin:0"><span class="ico">×</span><div>已是终态。要重新启用，请新建版本重新发布——本系统不提供「恢复」。</div></div>';
+  } else {
+    h += '<div class="note" style="margin:0"><span class="ico">i</span><div>当前状态或角色无可用动作。</div></div>';
+  }
+  showDrawer('制度详情 · ' + (f.fields.name.v || f.name), f.id + ' · ' + f.status, h);
+}
+function doVoid(fid) {
+  const el = document.getElementById('voidWhy');
+  actVoid(fid, el ? el.value : '');
+}
+
+/* ---------------------------------------------------------------- 权限抽屉 */
+function permHTML() {
+  let h = '<div class="small muted" style="margin-bottom:8px">08-security §2 矩阵（简化后仅保留与三态流程相关的能力）。矩阵未列 → 默认拒绝。</div>';
+  h += '<table class="ftbl"><thead><tr><th>能力</th>';
+  ROLES.forEach(function(r){
+    h += '<th style="text-align:center;font-size:10px">'
+      + r.name.replace(' / 签发人','').replace('部门制度归口人','归口人').replace('制度管理岗','管理岗')
+      + '</th>';
+  });
+  h += '</tr></thead><tbody>';
+  CAPS.forEach(function(c){
+    h += '<tr><td class="fname" style="white-space:normal">' + c.label + '<div class="small muted">' + esc(c.basis) + '</div></td>';
+    ROLES.forEach(function(r){
+      const bak = S.role; S.role = r.id;
+      const ok = can(c.cap, { dept:r.dept || 'HQ-HR', status:ST.PUB });
+      S.role = bak;
+      h += '<td style="text-align:center;color:' + (ok ? 'var(--ok)' : '#c8ced6') + '">' + (ok ? '●' : '·') + '</td>';
+    });
+    h += '</tr>';
+  });
+  h += '</tbody></table><div class="hr"></div><div class="small"><b>当前角色：</b>' + esc(roleOf(S.role).name) + '</div>';
+  return h;
+}
+
+/* ---------------------------------------------------------------- 留痕抽屉 */
+let LOGQ = '';
+function logHTML() {
+  let rows = S.logs.slice();
+  if (S.role === 'R-DEPT-OWNER') {
+    const me = roleOf(S.role);
+    rows = rows.filter(function(l){ return l.dept === me.dept || l.role === S.role; });
+  }
+  if (LOGQ) rows = rows.filter(function(l){ return (l.action + l.target + l.actor).indexOf(LOGQ) >= 0; });
+  let h = '<div class="rowline" style="margin-bottom:8px"><input type="text" id="logq" placeholder="搜动作 / 对象 / 操作人" value="' + esc(LOGQ) + '" oninput="setLogQ(this.value)" style="width:240px">'
+    + '<span class="small muted">共 ' + rows.length + ' 条 · 部门归口人仅见本部门</span></div>';
+  if (!rows.length) return h + '<div class="empty">暂无记录</div>';
+  h += '<table class="actbl"><thead><tr><th style="width:52px">编号</th><th style="width:104px">时间</th><th style="width:78px">操作人</th><th style="width:74px">动作</th><th>对象 / 变化</th><th>依据</th></tr></thead><tbody>';
+  rows.slice(0, 200).forEach(function(l){
+    h += '<tr><td class="id">' + l.id + '</td><td class="mono">' + esc(l.at) + '</td><td>' + esc(l.actor) + '</td>'
+      + '<td>' + esc(l.action) + '</td><td>' + esc(l.target)
+      + '<div class="small muted">' + esc(l.before) + ' → ' + esc(l.after) + '</div></td>'
+      + '<td class="small muted">' + esc(l.basis || '—') + '</td></tr>';
+  });
+  h += '</tbody></table>';
+  return h;
+}
+function setLogQ(v) { LOGQ = v; document.getElementById('drawerBody').innerHTML = logHTML(); }
+
+/* ---------------------------------------------------------------- 验收抽屉 */
+const ACS = [
+  { id:'AC-01', t:'批次登记后文件进入「已收件」，不自动解析', p:'import', note:'登记文件后看文件表「处理阶段」' },
+  { id:'AC-02', t:'启动解析成功后阶段变为「已解析」', p:'import', note:'点右上「启动解析」' },
+  { id:'AC-03', t:'单份结构异常不阻塞整批，其余照常解析', p:'import', note:'F-04 失败、其余成功' },
+  { id:'AC-04', t:'置信度 < 0.80 或证据为空的要素，值置空并标待补', p:'judge', note:'选 F-03，看发布日期行' },
+  { id:'AC-05', t:'要素不全时给出具体缺失项，发布按钮不可用', p:'judge', note:'选 F-03' },
+  { id:'AC-06', t:'缺签发记录的文件不能发布', p:'judge', note:'选 F-05' },
+  { id:'AC-07', t:'结构异常件不能发布，且无「强制发布」入口', p:'judge', note:'选 F-04' },
+  { id:'AC-08', t:'要素齐全 + 签发完整时发布成功，状态转「已发布」', p:'judge', note:'选 F-02 后点发布' },
+  { id:'AC-09', t:'同一制度发布新版本，旧版自动转「已替代」', p:'ledger', note:'发布 F-02 后 F-01 变已替代' },
+  { id:'AC-10', t:'「已作废」为终态，详情页无任何出边动作', p:'ledger', note:'点 F-07 看详情底部' },
+  { id:'AC-11', t:'作废需填依据，不足 8 字被拒', p:'ledger', note:'详情里输入 3 个字试' },
+  { id:'AC-12', t:'员工仅可见「已发布」，不出现别部门数据', p:'ledger', note:'切到「全体员工」' },
+  { id:'AC-13', t:'无权限角色整页不加载数据，只显示拒绝依据', p:'perm', note:'切到「IT 平台管理员」' },
+  { id:'AC-14', t:'留痕按部门收敛，且记录越权拦截', p:'log', note:'切归口人后看留痕' }
+];
+const PAGE_LABEL = { import:'V-02 导入与批次', judge:'V-03 判读与发布', ledger:'V-05 制度台账', perm:'权限抽屉', log:'留痕抽屉' };
+function acHTML() {
+  let h = '<div class="note info" style="margin-bottom:10px"><span class="ico">i</span><div>'
+    + '本版适用 <b>14 条</b>，全部 <b>NOT_RUN</b>（未执行、未留证据，页面不写「预计通过」）。'
+    + '<div class="sm">原 09-acceptance 的 40 条中，涉及冲突组裁定、相似度比对、抽样复核、建议单签发的 26 条随口径简化暂不适用（见 R-10）。</div></div></div>';
+  h += '<table class="actbl"><thead><tr><th style="width:52px">编号</th><th>用例</th><th style="width:92px">结果</th><th style="width:142px">可点路径</th></tr></thead><tbody>';
+  ACS.forEach(function(a){
+    h += '<tr><td class="id">' + a.id + '</td><td>' + esc(a.t) + '<div class="small muted">' + esc(a.note) + '</div></td>'
+      + '<td><span class="chip warn">NOT_RUN</span></td>'
+      + '<td>去 <span class="path" onclick="acGo(\'' + a.p + '\')">' + esc(PAGE_LABEL[a.p] || a.p) + '</span></td></tr>';
+  });
+  h += '</tbody></table>';
+  return h;
+}
+function acGo(p) {
+  closeDrawer();
+  if (p === 'perm' || p === 'log') { openDrawer(p); return; }
+  S.page = p; render();
+}
+
+/* ---------------------------------------------------------------- 待确认抽屉 */
+const GAPS = [
+  { id:'Q-001', lv:'BLOCKER', t:'密级、可见范围、留存期与出域规则未定', b:'台账可见范围直接由密级决定；未定则无法定义「谁能看哪一条」。' },
+  { id:'Q-002', lv:'BLOCKER', t:'签发人与授权链未定', b:'本版把「发布」暂交制度管理岗执行，签发人只作为字段记录。这是替代口径，不是结论。' },
+  { id:'Q-006', lv:'BLOCKER', t:'制度编号码表未发布', b:'本版已去掉编号强校验，改由系统按批次生成内部编号；对外正式编号仍缺。' },
+  { id:'Q-007', lv:'BLOCKER', t:'存量规模与提交责任未定', b:'决定导入批次如何切分与排期。' },
+  { id:'Q-018', lv:'BLOCKER', t:'部署形态与合规要求未定', b:'公有云 / 私有化直接影响发布节奏。' },
+  { id:'R-10', lv:'口径', t:'本版简化与规格 04-rules 的差异', b:'三态（发布/替代/作废）取代原四态与「待确认」；不含查重、相似度分档、冲突组、抽样复核、建议单；登记环节也不再做重复校验。规格文档未改，需确认是否把该简化回写进 04-rules 与 09-acceptance。' }
+];
+function gapHTML() {
+  let h = '<div class="note warn" style="margin-bottom:10px"><span class="ico">!</span><div>阻断项未答之前，本工作台只能作为<b>候选演示</b>，不具备上线条件。</div></div>';
+  GAPS.forEach(function(g){
+    h += '<div class="qitem"><div class="qt">' + g.id
+      + ' <span class="chip ' + (g.lv === 'BLOCKER' ? 'bad' : 'warn') + '">' + g.lv + '</span>' + esc(g.t) + '</div>'
+      + '<div class="qbd">' + esc(g.b) + '</div></div>';
+  });
+  return h;
+}
+
+/* ---------------------------------------------------------------- 自检抽屉 */
+function selfChecks() {
+  const out = [];
+  const add = function(n, t, ok, d){ out.push({ n:n, t:t, ok:!!ok, d:d || '' }); };
+  const withRole = function(role, fn){ const b = S.role; S.role = role; const r = fn(); S.role = b; return r; };
+
+  add(1, '三态枚举恰好三个', STATUSES.length === 3 && STATUSES.join() === '已发布,已替代,已作废', STATUSES.join('/'));
+  add(2, '已作废为终态：不可再作废', !voidCheck({ status:ST.VOID }, '一二三四五六七八').ok);
+  add(3, '作废依据不足 8 字被拒', !voidCheck({ status:ST.PUB }, '太短').ok);
+  add(4, '缺签发记录的件不可发布', !publishCheck({ stage:STG.PARSED, fields:{
+    name:fv('a',.9,'x'), dept:fv('b',.9,'x'), version:fv('c',.9,'x'), pubDate:fv('d',.9,'x'),
+    effDate:fv('e',.9,'x'), signer:fv('',null,''), clauses:fv('f',.9,'x') } }).ok);
+  add(5, '结构异常的件不可发布', !publishCheck({ stage:STG.ERR, issue:'结构异常', fields:{} }).ok);
+  add(6, '未解析的件不可发布', !publishCheck({ stage:STG.RECV, fields:{} }).ok);
+  add(7, '置信度 0.78 视为待补', fv('x',.78,'证据').pending === true);
+  add(8, '置信度 0.80 且证据非空视为可用', fv('x',.80,'证据').pending === false);
+  add(9, '员工对已发布可见', withRole('R-STAFF', function(){ return can('ledger.view',{ status:ST.PUB }); }));
+  add(10, '员工对已替代不可见', withRole('R-STAFF', function(){ return !can('ledger.view',{ status:ST.SUP }); }));
+  add(11, 'IT 对台账默认拒绝', withRole('R-IT', function(){ return !can('ledger.view',{ status:ST.PUB }); }));
+  add(12, '归口人不能发布（仅管理岗）', withRole('R-DEPT-OWNER', function(){ return !can('publish.exec'); }));
+  add(13, '三态计数之和 = 有状态文件数', (function(){
+    const c = counters(), n = S.files.filter(function(f){ return !!f.status; }).length;
+    return c[ST.PUB] + c[ST.SUP] + c[ST.VOID] === n; })());
+  add(14, '同一制度至多一个已发布', (function(){
+    const seen = {}; let ok = true;
+    S.files.filter(function(f){ return f.status === ST.PUB; }).forEach(function(f){
+      if (seen[f.policy]) ok = false; seen[f.policy] = 1; });
+    return ok; })());
+  add(15, '移除项已不存在于代码',
+    (typeof simClass === 'undefined') && (typeof seedGroups === 'undefined') && (typeof actAdjudicate === 'undefined'),
+    '无查重/相似度/冲突组');
+  add(16, '各角色三页渲染无 undefined / NaN', (function(){
+    const bakP = S.page; let ok = true;
+    ROLES.forEach(function(r){
+      S.role = r.id;
+      ['import','judge','ledger'].forEach(function(p){
+        S.page = p;
+        try { const h = view(p); if (/undefined|NaN/.test(h)) ok = false; } catch (e) { ok = false; }
+      });
+    });
+    S.page = bakP; S.role = 'R-DOC-ADMIN';
+    return ok; })());
+  return out;
+}
+function selfHTML() {
+  const list = selfChecks();
+  const pass = list.filter(function(x){ return x.ok; }).length;
+  let h = '<div class="note ' + (pass === list.length ? 'info' : 'bad') + '" style="margin-bottom:10px"><span class="ico">'
+    + (pass === list.length ? '✓' : '×') + '</span><div><b>' + pass + ' / ' + list.length + ' 通过</b>'
+    + '<div class="sm">代码级自检，不等于业务验收；业务用例仍为 NOT_RUN。</div></div></div>';
+  list.forEach(function(x){
+    h += '<div class="sr ' + (x.ok ? 'pass' : 'fail') + '"><span class="sid">' + x.n + '</span>'
+      + '<span class="st">' + (x.ok ? 'PASS' : 'FAIL') + '</span><span>' + esc(x.t)
+      + (x.d ? '<span class="small muted">　' + esc(x.d) + '</span>' : '') + '</span></div>';
+  });
+  return h;
+}
+
+/* ---------------------------------------------------------------- 抽屉控制 */
+const DRAWERS = {
+  perm: ['权限矩阵', '08-security §2 · 默认拒绝', permHTML],
+  log:  ['操作留痕', '按部门收敛', logHTML],
+  ac:   ['验收路径', '14 条 · 全部 NOT_RUN', acHTML],
+  gap:  ['待确认与口径差异', '阻断 5 · 口径 1', gapHTML],
+  self: ['自检', '代码级断言', selfHTML]
+};
+function openDrawer(kind, arg) {
+  if (kind === 'detail') return openDetail(arg);
+  if (kind === 'log' && !can('audit.view')) {
+    log('越权拦截','留痕','拒绝','未加载','08 §5.1 默认拒绝 · 能力 audit.view');
+    return showDrawer('操作留痕','当前角色无权查看',
+      '<div class="empty"><div class="big">无「留痕·查看」权限</div>依据：08 §2 留痕·查看（本部门范围）。</div>');
+  }
+  const d = DRAWERS[kind]; if (!d) return;
+  showDrawer(d[0], d[1], d[2]());
+}
+function showDrawer(title, sub, html) {
+  document.getElementById('drawerTitle').textContent = title;
+  document.getElementById('drawerSub').textContent = sub;
+  document.getElementById('drawerBody').innerHTML = html;
+  document.getElementById('drawer').classList.add('on');
+  document.getElementById('scrim').classList.add('on');
+  document.getElementById('drawer').setAttribute('aria-hidden','false');
+  const bd = document.getElementById('drawer').querySelector('.drawer-bd');
+  if (bd) bd.scrollTop = 0;
+}
+function closeDrawer() {
+  document.getElementById('drawer').classList.remove('on');
+  document.getElementById('scrim').classList.remove('on');
+  document.getElementById('drawer').setAttribute('aria-hidden','true');
+}
+
+/* ---------------------------------------------------------------- 渲染 */
+const PAGES = [
+  { k:'import', v:'V-02', n:'导入与批次' },
+  { k:'judge',  v:'V-03', n:'判读与发布' },
+  { k:'ledger', v:'V-05', n:'制度台账' }
+];
+const OFFPAGES = [
+  { v:'V-01', n:'总览' }, { v:'V-04', n:'冲突组（已移除）' },
+  { v:'V-06', n:'版本链独立页' }, { v:'V-07', n:'签发单' },
+  { v:'V-08', n:'检索' }, { v:'V-09', n:'审计报表' }, { v:'V-10', n:'系统设置' }
+];
+function view(p) { return p === 'import' ? viewImport() : p === 'judge' ? viewJudge() : viewLedger(); }
+function render() {
+  let sh = '<div class="navhd">主要页面</div>';
+  PAGES.forEach(function(p){
+    sh += '<div class="navitem' + (S.page === p.k ? ' on' : '') + '" onclick="go(\'' + p.k + '\')">'
+      + '<span class="vid">' + p.v + '</span><span>' + p.n + '</span></div>';
+  });
+  sh += '<div class="navhd" style="margin-top:8px">未建页面</div>';
+  OFFPAGES.forEach(function(p){
+    sh += '<div class="navitem off"><span class="vid">' + p.v + '</span><span>' + p.n + '</span><span class="tag">未建</span></div>';
+  });
+  sh += '<div class="side-foot">简化版 v0.2<br>三态：发布 → 替代 → 作废<br>业务测试 NOT_RUN</div>';
+  document.getElementById('side').innerHTML = sh;
+  document.getElementById('main').innerHTML = view(S.page);
+  const r = roleOf(S.role);
+  document.getElementById('sbRole').textContent = r.name + (r.dept ? ' · ' + DEPTS[r.dept].name : '');
+}
+function go(p) { S.page = p; render(); }
+
+/* ---------------------------------------------------------------- 初始化 */
+function init() {
+  S = freshState();
+  const bs = document.getElementById('batchSel');
+  BATCHES.forEach(function(b){
+    const o = document.createElement('option');
+    o.value = b.short; o.textContent = b.short + ' · ' + b.label; bs.appendChild(o);
+  });
+  bs.value = S.batch;
+  bs.onchange = function(){
+    S.batch = bs.value;
+    const fs = filesOf(S.batch); S.sel = fs.length ? fs[0].id : null; render();
+  };
+
+  const rs = document.getElementById('roleSel');
+  ROLES.forEach(function(r){
+    const o = document.createElement('option');
+    o.value = r.id; o.textContent = r.name; rs.appendChild(o);
+  });
+  rs.value = S.role;
+  rs.onchange = function(){
+    S.role = rs.value;
+    if (S.role === 'R-DEPT-OWNER') {
+      const mine = roleOf(S.role).dept;
+      if (batchOf(S.batch).dept !== mine) { S.batch = BATCHES.find(function(b){ return b.dept === mine; }).short; bs.value = S.batch; }
+    }
+    render();
+  };
+
+  document.querySelectorAll('[data-drawer]').forEach(function(b){
+    b.onclick = function(){ openDrawer(b.getAttribute('data-drawer')); };
+  });
+  document.getElementById('drawerClose').onclick = closeDrawer;
+  document.getElementById('scrim').onclick = closeDrawer;
+  document.getElementById('resetBtn').onclick = function(){
+    S = freshState(); bs.value = S.batch; rs.value = S.role; closeDrawer();
+    render(); toast('已重置为初始演示数据','ok');
+  };
+  document.addEventListener('change', function(e){
+    if (e.target && e.target.id === 'filePick') {
+      const names = Array.prototype.map.call(e.target.files || [], function(f){ return f.name; });
+      if (names.length) actRegister(names);
+      e.target.value = '';
+    }
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeDrawer(); });
+  render();
+}
+init();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>产险知识图书馆 · 培训管理岗编目工作台</title>
+<style>
+  :root{
+    --navy:#1F4E79; --navy2:#2E6CA4; --navy3:#EAF1F8; --ink:#1f2937; --line:#dce4ee;
+    --ok:#2e8b57; --warn:#d9822b; --bad:#c0392b; --grey:#6b7280; --bg:#f4f7fb; --card:#fff;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:-apple-system,"Microsoft YaHei","PingFang SC",Segoe UI,sans-serif;color:var(--ink);background:var(--bg);font-size:14px;}
+  header{background:var(--navy);color:#fff;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+  header h1{font-size:18px;margin:0;font-weight:600;letter-spacing:.5px;}
+  header .sub{font-size:12px;opacity:.85;margin-top:2px;}
+  .role-box{display:flex;align-items:center;gap:8px;font-size:13px;}
+  .role-box select{padding:5px 8px;border-radius:6px;border:none;font-size:13px;}
+  nav{background:var(--navy2);display:flex;flex-wrap:wrap;padding:0 10px;}
+  nav button{background:none;border:none;color:#fff;padding:11px 16px;cursor:pointer;font-size:14px;opacity:.85;border-bottom:3px solid transparent;}
+  nav button.active{opacity:1;border-bottom-color:#ffd24a;font-weight:600;}
+  nav button:hover{opacity:1;}
+  main{padding:18px 20px;max-width:1240px;margin:0 auto;}
+  .view{display:none;}
+  .view.active{display:block;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px;box-shadow:0 1px 3px rgba(31,78,121,.06);}
+  .card h2{margin:0 0 12px;font-size:16px;color:var(--navy);border-left:4px solid var(--navy);padding-left:10px;}
+  .card h3{font-size:14px;color:var(--navy2);margin:14px 0 8px;}
+  .stat-row{display:flex;flex-wrap:wrap;gap:12px;}
+  .stat{flex:1;min-width:120px;background:var(--navy3);border-radius:10px;padding:14px;text-align:center;}
+  .stat .num{font-size:26px;font-weight:700;color:var(--navy);}
+  .stat .lbl{font-size:12px;color:var(--grey);margin-top:4px;}
+  .toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:12px;}
+  input,select,textarea{padding:8px 10px;border:1px solid var(--line);border-radius:7px;font-size:13px;font-family:inherit;background:#fff;color:var(--ink);}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--navy2);}
+  button.btn{background:var(--navy);color:#fff;border:none;padding:8px 14px;border-radius:7px;cursor:pointer;font-size:13px;}
+  button.btn:hover{background:var(--navy2);}
+  button.btn.ghost{background:#fff;color:var(--navy);border:1px solid var(--navy);}
+  button.btn.sm{padding:5px 10px;font-size:12px;}
+  button.btn.danger{background:var(--bad);}
+  button.btn.warn{background:var(--warn);}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top;}
+  th{background:var(--navy3);color:var(--navy);position:sticky;top:0;}
+  tr:hover td{background:#fafcff;}
+  .badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;}
+  .badge.ok{background:#e6f4ea;color:var(--ok);}
+  .badge.warn{background:#fdf0e3;color:var(--warn);}
+  .badge.bad{background:#fbe9e7;color:var(--bad);}
+  .badge.grey{background:#eef1f4;color:var(--grey);}
+  .search-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;}
+  .tree{font-size:13px;line-height:1.7;}
+  .tree .lvl1{font-weight:700;color:var(--navy);margin:10px 0 4px;}
+  .tree .lvl2{margin-left:18px;color:var(--navy2);font-weight:600;}
+  .tree .lvl3{margin-left:36px;}
+  .tree .item{margin-left:54px;padding:2px 0;border-bottom:1px dashed #eef1f4;}
+  .tree .item .code{color:var(--navy);font-family:monospace;font-weight:600;}
+  .tree .item .ttl{color:var(--ink);}
+  .modal{position:fixed;inset:0;background:rgba(20,40,70,.45);display:none;align-items:flex-start;justify-content:center;padding:30px 10px;overflow:auto;z-index:50;}
+  .modal.show{display:flex;}
+  .modal .box{background:#fff;border-radius:12px;width:100%;max-width:680px;padding:20px 22px;box-shadow:0 8px 40px rgba(0,0,0,.25);}
+  .modal h3{margin-top:0;color:var(--navy);}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .form-grid label{display:block;font-size:12px;color:var(--grey);margin-bottom:3px;}
+  .form-grid .full{grid-column:1/-1;}
+  .form-grid input,.form-grid select,.form-grid textarea{width:100%;}
+  .hint{font-size:12px;color:var(--grey);background:var(--navy3);padding:8px 10px;border-radius:7px;margin:8px 0;}
+  .err{color:var(--bad);font-size:12px;}
+  .ok-msg{color:var(--ok);font-size:13px;margin:6px 0;}
+  .preview-table{max-height:320px;overflow:auto;border:1px solid var(--line);border-radius:8px;}
+  .preview-table tr.badrow{background:#fbe9e7;}
+  .pill{display:inline-block;background:#eef1f4;border-radius:12px;padding:2px 9px;font-size:12px;margin:2px;}
+  .empty{color:var(--grey);text-align:center;padding:30px;}
+  .footer-note{font-size:12px;color:var(--grey);text-align:center;padding:20px;}
+  .linkbtn{color:var(--navy2);text-decoration:underline;cursor:pointer;}
+  @media(max-width:640px){.form-grid{grid-template-columns:1fr;}main{padding:12px;}nav button{padding:9px 10px;font-size:13px;}}
+</style>
+</head>
+<body>
+<div id="gh-snapshot-banner" style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#FFF7E6;border-bottom:1px solid #E8C87A;color:#8A5A00;padding:8px 16px;font:13px/1.5 'PingFang SC','Microsoft YaHei',sans-serif;text-align:center;">
+📜 这是原内网工作台的<strong>静态快照</strong>（仅供存档预览）。完整交互版本需在 WorkBuddy 内网环境打开原链接。
+<button onclick="this.parentNode.remove();document.body.style.paddingTop='0'" style="margin-left:10px;background:#8A5A00;color:#fff;border:0;border-radius:4px;padding:2px 10px;cursor:pointer;font-size:12px;">知道了</button>
+</div>
+
+<header>
+  <div>
+    <h1>产险知识图书馆</h1>
+    <div class="sub">平安金服内江 · 培训管理岗 · 编目工作台（产险试点）</div>
+  </div>
+  <div class="role-box">
+    <span>当前视角：</span>
+    <select id="roleSel">
+      <option value="全员">一线员工（只读检索）</option>
+      <option value="培训岗">培训管理岗（维护）</option>
+      <option value="管理层">管理层</option>
+    </select>
+  </div>
+</header>
+<nav id="nav">
+  <button data-view="overview" class="active">① 概览全景</button>
+  <button data-view="search">② 检索入口</button>
+  <button data-view="ledger">③ 编目台账</button>
+  <button data-view="import">④ 导入中心</button>
+  <button data-view="feedback">⑤ 试点反馈</button>
+  <button data-view="help">⑥ 设置帮助</button>
+</nav>
+<main>
+  <!-- 概览 -->
+  <section id="view-overview" class="view active">
+    <div class="card">
+      <h2>核心统计</h2>
+      <div class="stat-row" id="statRow"></div>
+    </div>
+    <div class="card">
+      <h2>知识全景图（L0 总览 → L4 条目）</h2>
+      <div class="hint">只展示当前视角有权限的材料。编号即身份；点击条目可查看存放位置（内网链接）。</div>
+      <div class="tree" id="panorama"></div>
+    </div>
+  </section>
+
+  <!-- 检索 -->
+  <section id="view-search" class="view">
+    <div class="card">
+      <h2>四维度检索</h2>
+      <div class="search-grid">
+        <div><label>关键词（标题/编号/提示）</label><input id="sQ" placeholder="如 车险 承保 规范" oninput="doSearch()"></div>
+        <div><label>业务主题</label><select id="sTopic" onchange="doSearch()"><option value="">全部</option></select></div>
+        <div><label>知识类型</label><select id="sType" onchange="doSearch()"><option value="">全部</option><option>课件</option><option>案例</option><option>题库</option><option>模拟场景</option><option>作业规范</option></select></div>
+        <div><label>队列标签</label><input id="sQueue" placeholder="如 车险核保" oninput="doSearch()"></div>
+        <div><label>适用对象</label><input id="sAud" placeholder="如 新人" oninput="doSearch()"></div>
+        <div><label>状态</label><select id="sStatus" onchange="doSearch()"><option value="">全部</option><option>现行</option><option>已废止</option><option>待归类</option></select></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>检索结果</h2>
+      <div id="searchResult"></div>
+    </div>
+  </section>
+
+  <!-- 台账 -->
+  <section id="view-ledger" class="view">
+    <div class="card">
+      <div class="toolbar">
+        <button class="btn" onclick="openForm()">＋ 新增编目</button>
+        <input id="lQ" placeholder="搜索标题/编号" oninput="loadLedger()">
+        <select id="lStatus" onchange="loadLedger()"><option value="">全部状态</option><option>现行</option><option>已废止</option><option>待归类</option></select>
+        <a class="btn ghost" id="exportBtn" href="/api/export?role=全员">⬇ 导出 CSV</a>
+        <span id="ledgerCount" class="pill"></span>
+      </div>
+      <div id="ledgerTable"></div>
+    </div>
+  </section>
+
+  <!-- 导入 -->
+  <section id="view-import" class="view">
+    <div class="card">
+      <h2>上传编目表（Excel / CSV）</h2>
+      <div class="hint">支持 .xlsx / .csv。系统按表头映射字段并校验，预览确认后再写入数据库。模板见「设置帮助」或工作包 05_输入样本。</div>
+      <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" onchange="handleFile()">
+      <div id="importPreview"></div>
+    </div>
+  </section>
+
+  <!-- 反馈 -->
+  <section id="view-feedback" class="view">
+    <div class="card">
+      <h2>试点反馈</h2>
+      <div class="form-grid">
+        <div class="full"><label>反馈内容（如：某材料归属不清 / 想加某业务主题 / 检索不便）</label><textarea id="fbContent" rows="4" placeholder="请描述你的建议或问题"></textarea></div>
+        <div><label>所在页面</label><input id="fbPage" placeholder="如 概览 / 检索"></div>
+        <div><label>联系方式（选填）</label><input id="fbContact" placeholder="工号或企业微信"></div>
+      </div>
+      <button class="btn" onclick="submitFeedback()">提交反馈</button>
+      <div id="fbMsg"></div>
+    </div>
+  </section>
+
+  <!-- 帮助 -->
+  <section id="view-help" class="view">
+    <div class="card">
+      <h2>使用说明</h2>
+      <h3>编号规则（编号即身份）</h3>
+      <p><b>板块(2)-业务主题(2)-知识类型(1)-流水(3)</b>。例：<code>CX-CL-K-001</code> = 产险 / 车险承保 / 课件 / 第1条。板块：CX产险、GEN通用（首期启用）；RS人身险、CW财务占位。流水号不复用、不回收。</p>
+      <h3>业务主题（首期试点，待您确认）</h3>
+      <p>车险承保、非车险、理赔查勘、客服、通用入门、待归类。不确定归属的请放「待归类」，不要猜。</p>
+      <h3>知识类型</h3>
+      <p>课件 K、案例 A、题库 Q、模拟场景 S、作业规范 P。</p>
+      <h3>权限分级</h3>
+      <p>全员 / 培训岗 / 管理层。题库答案、管理层材料默认不向全员开放——切换顶部「当前视角」即可验证权限过滤。</p>
+      <h3>红线（不可破）</h3>
+      <p>材料原件不离开内网；本工作台只存<b>编目元数据 + 内网存放位置链接</b>，不收录课件/题库文件本身。「存放位置」填共享盘路径或内网链接。</p>
+      <h3>维护操作</h3>
+      <p>台账页可新增、编辑、归档（废止/恢复）、删除。导入页可批量导入 Excel/CSV。导出可下载当前视角可见的 CSV。</p>
+    </div>
+  </section>
+</main>
+
+<div class="modal" id="formModal">
+  <div class="box">
+    <h3 id="formTitle">新增编目</h3>
+    <div class="form-grid">
+      <div class="full"><label>标题 *</label><input id="fTitle" placeholder="如 车险基础承保课件（2026版）"></div>
+      <div><label>编号（留空自动生成）</label><input id="fCode" placeholder="如 CX-CL-K-001"></div>
+      <div><label>板块</label><select id="fSegment"><option>产险</option><option>通用</option><option>人身险</option><option>财务</option></select></div>
+      <div><label>业务主题</label><select id="fTopic"><option>通用入门</option><option>车险承保</option><option>非车险</option><option>理赔查勘</option><option>客服</option><option>待归类</option></select></div>
+      <div><label>知识类型</label><select id="fType"><option>课件</option><option>案例</option><option>题库</option><option>模拟场景</option><option>作业规范</option></select></div>
+      <div><label>状态</label><select id="fStatus"><option>现行</option><option>已废止</option><option>待归类</option></select></div>
+      <div class="full"><label>队列标签（分号分隔）</label><input id="fQueue" placeholder="如 车险受理;车险核保"></div>
+      <div class="full"><label>适用对象（分号分隔）</label><input id="fAud" placeholder="如 新人;在岗"></div>
+      <div><label>版本</label><input id="fVersion" placeholder="如 2026版 v1.0"></div>
+      <div><label>生效日期</label><input id="fEff" type="date"></div>
+      <div><label>权限级别</label><select id="fPerm"><option>全员</option><option>培训岗</option><option>管理层</option></select></div>
+      <div><label>更新人</label><input id="fBy" placeholder="如 培训管理岗"></div>
+      <div class="full"><label>存放位置（内网共享盘路径 / 链接）*</label><input id="fLoc" placeholder="共享盘\培训\产险\车险\...（切勿上传原件）"></div>
+      <div class="full"><label>配套材料（关联编号，分号分隔）</label><input id="fRel" placeholder="如 CX-CL-A-003;CX-CL-S-002"></div>
+      <div class="full"><label>使用提示</label><textarea id="fTips" rows="2" placeholder="如 先看第3章再做题"></textarea></div>
+    </div>
+    <div id="formErr" class="err"></div>
+    <div class="toolbar" style="margin-top:14px;justify-content:flex-end;">
+      <button class="btn ghost" onclick="closeForm()">取消</button>
+      <button class="btn" onclick="saveForm()">保存</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="detailModal">
+  <div class="box">
+    <h3 id="dTitle">材料详情</h3>
+    <div id="dBody"></div>
+    <div class="toolbar" style="margin-top:14px;justify-content:flex-end;">
+      <button class="btn ghost" onclick="closeDetail()">关闭</button>
+    </div>
+  </div>
+</div>
+
+<div class="footer-note">产险知识图书馆工作台 v1.0 · 数据真实保存于本地资料库（SQLite）· 材料原件不离开内网</div>
+
+<script>
+let currentRole = '全员';
+let editId = null;
+
+document.getElementById('roleSel').addEventListener('change', e => {
+  currentRole = e.target.value;
+  document.getElementById('exportBtn').href = '/api/export?role=' + encodeURIComponent(currentRole);
+  refreshAll();
+});
+document.getElementById('nav').addEventListener('click', e => {
+  if (e.target.tagName !== 'BUTTON') return;
+  document.querySelectorAll('#nav button').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  const v = e.target.dataset.view;
+  document.querySelectorAll('.view').forEach(s => s.classList.remove('active'));
+  document.getElementById('view-' + v).classList.add('active');
+  if (v === 'overview') loadOverview();
+  if (v === 'search') loadSearchFilters();
+  if (v === 'ledger') loadLedger();
+});
+
+function api(path, opts){ return fetch(path, opts).then(r => r.json()); }
+function refreshAll(){ loadOverview(); loadLedger(); }
+
+// ---------- 概览 ----------
+async function loadOverview(){
+  const stats = await api('/api/stats?role=' + encodeURIComponent(currentRole));
+  const s = stats;
+  const byStatus = Object.fromEntries((s.byStatus||[]).map(x=>[x.status,x.c]));
+  const byType = Object.fromEntries((s.byType||[]).map(x=>[x.knowledge_type,x.c]));
+  const byPerm = Object.fromEntries((s.byPermission||[]).map(x=>[x.permission,x.c]));
+  const statRow = document.getElementById('statRow');
+  statRow.innerHTML = `
+    <div class="stat"><div class="num">${s.total}</div><div class="lbl">编目总数</div></div>
+    <div class="stat"><div class="num" style="color:var(--warn)">${s.pending}</div><div class="lbl">待归类</div></div>
+    <div class="stat"><div class="num">${byStatus['现行']||0}</div><div class="lbl">现行</div></div>
+    <div class="stat"><div class="num">${byStatus['已废止']||0}</div><div class="lbl">已废止</div></div>
+    <div class="stat"><div class="num">${byType['K']||0}</div><div class="lbl">课件</div></div>
+    <div class="stat"><div class="num">${byType['P']||0}</div><div class="lbl">作业规范</div></div>
+    <div class="stat"><div class="num">${byPerm['全员']||0}</div><div class="lbl">全员可见</div></div>`;
+  const pan = await api('/api/panorama?role=' + encodeURIComponent(currentRole));
+  const tree = document.getElementById('panorama');
+  const t = pan.tree || {};
+  let html = '<div class="lvl1">L0 全部材料库（' + s.total + '）</div>';
+  const segKeys = Object.keys(t).sort();
+  if (!segKeys.length) html += '<div class="empty">暂无数据，请先导入或新增。</div>';
+  for (const seg of segKeys){
+    const segObj = t[seg];
+    const topics = segObj.topics || {};
+    let segCount = 0; Object.values(topics).forEach(tp => Object.values(tp.types).forEach(ty => segCount += ty.count));
+    html += `<div class="lvl1">L1 ${segObj.name}（${seg}）— ${segCount} 条</div>`;
+    for (const top of Object.keys(topics).sort()){
+      const topObj = topics[top];
+      let topCount = 0; Object.values(topObj.types).forEach(ty => topCount += ty.count);
+      html += `<div class="lvl2">L2 ${top} — ${topCount} 条</div>`;
+      for (const typ of Object.keys(topObj.types).sort()){
+        const tyObj = topObj.types[typ];
+        html += `<div class="lvl3">L3 ${typ}（${tyObj.count}）</div>`;
+        for (const it of tyObj.items){
+          const badge = it.status==='现行' ? '<span class="badge ok">现行</span>' : it.status==='已废止' ? '<span class="badge bad">已废止</span>' : '<span class="badge warn">待归类</span>';
+          html += `<div class="item"><span class="code">${it.code}</span> <span class="ttl">${it.title}</span> ${badge} <span class="linkbtn" onclick="openDetailByCode('${it.code}')">查看</span></div>`;
+        }
+      }
+    }
+  }
+  tree.innerHTML = html;
+}
+
+// ---------- 检索 ----------
+async function loadSearchFilters(){
+  const r = await api('/api/materials?role=' + encodeURIComponent(currentRole) + '&status=现行');
+  const topics = [...new Set((r.items||[]).map(x=>x.topic).filter(Boolean))].sort();
+  const sel = document.getElementById('sTopic');
+  sel.innerHTML = '<option value="">全部</option>' + topics.map(t=>`<option>${t}</option>`).join('');
+  doSearch();
+}
+async function doSearch(){
+  const q = document.getElementById('sQ').value;
+  const topic = document.getElementById('sTopic').value;
+  const type = document.getElementById('sType').value;
+  const queue = document.getElementById('sQueue').value;
+  const aud = document.getElementById('sAud').value;
+  const status = document.getElementById('sStatus').value;
+  const params = new URLSearchParams({ role: currentRole });
+  if (q) params.set('q', q);
+  if (topic) params.set('topic', topic);
+  if (type) params.set('knowledgeType', type);
+  if (queue) params.set('queue', queue);
+  if (aud) params.set('audience', aud);
+  if (status) params.set('status', status);
+  const r = await api('/api/materials?' + params.toString());
+  const box = document.getElementById('searchResult');
+  if (!r.items || !r.items.length){ box.innerHTML = '<div class="empty">未找到匹配材料。试试放宽条件。</div>'; return; }
+  let html = `<div class="pill">共 ${r.items.length} 条</div><table><thead><tr><th>编号</th><th>标题</th><th>业务主题</th><th>类型</th><th>状态</th><th>存放位置（内网）</th><th></th></tr></thead><tbody>`;
+  for (const it of r.items){
+    const badge = it.status==='现行' ? '<span class="badge ok">现行</span>' : it.status==='已废止' ? '<span class="badge bad">已废止</span>' : '<span class="badge warn">待归类</span>';
+    html += `<tr><td>${it.code}</td><td>${it.title}</td><td>${it.topic||''}</td><td>${it.knowledgeType||''}</td><td>${badge}</td><td>${it.storageLocation||''}</td><td><span class="linkbtn" onclick="openDetail(${it.id})">详情</span></td></tr>`;
+  }
+  html += '</tbody></table>';
+  box.innerHTML = html;
+}
+
+// ---------- 台账 ----------
+async function loadLedger(){
+  const q = document.getElementById('lQ').value;
+  const status = document.getElementById('lStatus').value;
+  const params = new URLSearchParams({ role: currentRole });
+  if (q) params.set('q', q);
+  if (status) params.set('status', status);
+  const r = await api('/api/materials?' + params.toString());
+  document.getElementById('ledgerCount').textContent = '共 ' + (r.items?r.items.length:0) + ' 条';
+  const box = document.getElementById('ledgerTable');
+  if (!r.items || !r.items.length){ box.innerHTML = '<div class="empty">暂无数据。</div>'; return; }
+  const canEdit = currentRole !== '全员';
+  let html = '<table><thead><tr><th>编号</th><th>标题</th><th>业务主题</th><th>类型</th><th>状态</th><th>权限</th><th>存放位置</th>' + (canEdit?'<th>操作</th>':'') + '</tr></thead><tbody>';
+  for (const it of r.items){
+    const badge = it.status==='现行' ? '<span class="badge ok">现行</span>' : it.status==='已废止' ? '<span class="badge bad">已废止</span>' : '<span class="badge warn">待归类</span>';
+    html += `<tr><td>${it.code}</td><td>${it.title}</td><td>${it.topic||''}</td><td>${it.knowledgeType||''}</td><td>${badge}</td><td>${it.permission||''}</td><td>${it.storageLocation||''}</td>`;
+    if (canEdit){
+      html += `<td><button class="btn sm" onclick="openDetail(${it.id})">详情</button> <button class="btn sm ghost" onclick="openForm(${it.id})">编辑</button> <button class="btn sm warn" onclick="toggleArchive(${it.id},'${it.status}')">${it.status==='已废止'?'恢复':'归档'}</button> <button class="btn sm danger" onclick="delItem(${it.id})">删除</button></td>`;
+    }
+    html += '</tr>';
+  }
+  html += '</tbody></table>';
+  box.innerHTML = html;
+}
+
+function toggleArchive(id, status){
+  if (!confirm('确认' + (status==='已废止'?'恢复为现行':'归档/废止') + '？')) return;
+  api('/api/materials/' + id + '/archive', {method:'POST'}).then(()=>loadLedger());
+}
+function delItem(id){
+  if (!confirm('确认删除该编目？此操作不可恢复。')) return;
+  api('/api/materials/' + id, {method:'DELETE'}).then(()=>{ loadLedger(); loadOverview(); });
+}
+
+// ---------- 详情 ----------
+async function openDetail(id){
+  const it = await api('/api/materials/' + id);
+  renderDetail(it);
+}
+async function openDetailByCode(code){
+  const r = await api('/api/materials?role=' + encodeURIComponent(currentRole) + '&q=' + encodeURIComponent(code));
+  if (r.items && r.items[0]) renderDetail(r.items[0]);
+}
+function renderDetail(it){
+  if (!it || it.error){ alert('未找到'); return; }
+  document.getElementById('dTitle').textContent = it.title + '（' + it.code + '）';
+  const rows = [['板块', it.segment],['业务主题', it.topic],['知识类型', it.knowledgeType],['队列标签', it.queueTags],['适用对象', it.audience],['版本', it.version],['生效日期', it.effectiveDate],['状态', it.status],['存放位置（内网）', it.storageLocation],['权限级别', it.permission],['更新人', it.updatedBy],['更新日期', it.updatedAt],['配套材料', it.relatedMaterials],['使用提示', it.usageTips]];
+  let html = '<table>';
+  for (const [k,v] of rows) html += `<tr><th style="width:140px;background:var(--navy3)">${k}</th><td>${v||'-'}</td></tr>`;
+  html += '</table>';
+  document.getElementById('dBody').innerHTML = html;
+  document.getElementById('detailModal').classList.add('show');
+}
+function closeDetail(){ document.getElementById('detailModal').classList.remove('show'); }
+
+// ---------- 表单 ----------
+async function openForm(id){
+  editId = id || null;
+  document.getElementById('formErr').textContent = '';
+  if (id){
+    const it = await api('/api/materials/' + id);
+    document.getElementById('formTitle').textContent = '编辑编目';
+    document.getElementById('fTitle').value = it.title||'';
+    document.getElementById('fCode').value = it.code||'';
+    document.getElementById('fSegment').value = ({CX:'产险',GEN:'通用',RS:'人身险',CW:'财务'})[it.segment]||'产险';
+    document.getElementById('fTopic').value = it.topic||'待归类';
+    document.getElementById('fType').value = ({K:'课件',A:'案例',Q:'题库',S:'模拟场景',P:'作业规范'})[it.knowledgeType]||'课件';
+    document.getElementById('fStatus').value = it.status||'现行';
+    document.getElementById('fQueue').value = it.queueTags||'';
+    document.getElementById('fAud').value = it.audience||'';
+    document.getElementById('fVersion').value = it.version||'';
+    document.getElementById('fEff').value = it.effectiveDate||'';
+    document.getElementById('fPerm').value = it.permission||'全员';
+    document.getElementById('fBy').value = it.updatedBy||'';
+    document.getElementById('fLoc').value = it.storageLocation||'';
+    document.getElementById('fRel').value = it.relatedMaterials||'';
+    document.getElementById('fTips').value = it.usageTips||'';
+  } else {
+    document.getElementById('formTitle').textContent = '新增编目';
+    ['fTitle','fCode','fQueue','fAud','fVersion','fEff','fBy','fLoc','fRel','fTips'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('fSegment').value='产险'; document.getElementById('fTopic').value='通用入门';
+    document.getElementById('fType').value='课件'; document.getElementById('fStatus').value='现行'; document.getElementById('fPerm').value='全员';
+  }
+  document.getElementById('formModal').classList.add('show');
+}
+function closeForm(){ document.getElementById('formModal').classList.remove('show'); }
+function saveForm(){
+  const payload = {
+    title: document.getElementById('fTitle').value.trim(),
+    code: document.getElementById('fCode').value.trim(),
+    segment: document.getElementById('fSegment').value,
+    topic: document.getElementById('fTopic').value,
+    knowledge_type: document.getElementById('fType').value,
+    status: document.getElementById('fStatus').value,
+    queue_tags: document.getElementById('fQueue').value.trim(),
+    audience: document.getElementById('fAud').value.trim(),
+    version: document.getElementById('fVersion').value.trim(),
+    effective_date: document.getElementById('fEff').value,
+    permission: document.getElementById('fPerm').value,
+    updated_by: document.getElementById('fBy').value.trim() || '培训管理岗',
+    storage_location: document.getElementById('fLoc').value.trim(),
+    related_materials: document.getElementById('fRel').value.trim(),
+    usage_tips: document.getElementById('fTips').value.trim()
+  };
+  if (!payload.title){ document.getElementById('formErr').textContent='标题不能为空'; return; }
+  if (!payload.storage_location){ document.getElementById('formErr').textContent='存放位置（内网链接/路径）必填，且请勿上传原件'; return; }
+  const opt = { method: editId ? 'PUT' : 'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) };
+  const url = editId ? ('/api/materials/' + editId) : '/api/materials';
+  api(url, opt).then(r=>{
+    if (r.error){ document.getElementById('formErr').textContent = r.error; return; }
+    closeForm(); loadLedger(); loadOverview();
+  });
+}
+
+// ---------- 导入 ----------
+function handleFile(){
+  const file = document.getElementById('fileInput').files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = async () => {
+    const base64 = reader.result.split(',')[1];
+    const r = await api('/api/import/validate', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({filename:file.name, content:base64})});
+    renderImportPreview(r);
+  };
+  reader.readAsDataURL(file);
+}
+function renderImportPreview(r){
+  const box = document.getElementById('importPreview');
+  if (r.error){ box.innerHTML = '<div class="err">'+r.error+'</div>'; return; }
+  if (!r.preview || !r.preview.length){ box.innerHTML = '<div class="empty">未解析到有效数据行（请检查表头或是否为空表）。</div>'; return; }
+  let html = `<div class="ok-msg">解析 ${r.previewCount} 行，其中错误 ${r.errorCount} 行。错误行将跳过，不会写入。</div>`;
+  html += '<div class="preview-table"><table><thead><tr><th>行</th><th>编号</th><th>标题</th><th>业务主题</th><th>类型</th><th>状态</th><th>存放位置</th><th>权限</th><th>校验</th></tr></thead><tbody>';
+  for (const pv of r.preview){
+    const bad = pv.errors && pv.errors.length;
+    html += `<tr class="${bad?'badrow':''}"><td>${pv.row}</td><td>${pv.code}</td><td>${pv.title}</td><td>${pv.topic||''}</td><td>${pv.knowledgeType||''}</td><td>${pv.status||'现行'}</td><td>${pv.storageLocation||''}</td><td>${pv.permission||'全员'}</td><td>${bad?'<span class="badge bad">'+pv.errors.join(';')+'</span>':'<span class="badge ok">通过</span>'}</td></tr>`;
+  }
+  html += '</tbody></table></div>';
+  html += '<div class="toolbar" style="margin-top:12px;"><button class="btn" onclick="confirmImport()">确认导入（仅写入通过行）</button></div>';
+  box.innerHTML = html;
+  window.__importPreview = r.preview;
+}
+function confirmImport(){
+  const rows = (window.__importPreview||[]).filter(pv=>!pv.errors || !pv.errors.length).map(pv=>({
+    code:pv.code, title:pv.title, segment: undefined, topic:pv.topic, knowledgeType:pv.knowledgeType,
+    status:pv.status||'现行', storageLocation:pv.storageLocation, permission:pv.permission||'全员'
+  }));
+  api('/api/import/confirm', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({filename:'导入', rows, importedBy:'培训管理岗'})})
+    .then(r=>{ alert('导入完成：成功 '+r.imported+' 条，跳过 '+r.skipped+' 条'); document.getElementById('importPreview').innerHTML=''; loadOverview(); loadLedger(); });
+}
+
+// ---------- 反馈 ----------
+function submitFeedback(){
+  const content = document.getElementById('fbContent').value.trim();
+  if (!content){ document.getElementById('fbMsg').innerHTML='<span class="err">请填写反馈内容</span>'; return; }
+  api('/api/feedback', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({content, page:document.getElementById('fbPage').value, contact:document.getElementById('fbContact').value})})
+    .then(()=>{ document.getElementById('fbMsg').innerHTML='<span class="ok-msg">已收到，感谢反馈！</span>'; document.getElementById('fbContent').value=''; });
+}
+
+// 初始
+loadOverview();
+</script>
+<script>
+// 快照模式：拦截失效的相对资源请求，避免报错
+(function(){
+  try { document.body.style.paddingTop = '44px'; } catch(e) {}
+  var origFetch = window.fetch;
+  window.fetch = function(u){
+    if (typeof u === 'string' && (u.startsWith('/') || (!u.startsWith('http') && !u.startsWith('data:') && !u.startsWith('#')))) {
+      return Promise.resolve(new Response(JSON.stringify({items:[],error:'snapshot-mode'}), {status:200, headers:{'Content-Type':'application/json'}}));
+    }
+    return origFetch.apply(this, arguments);
+  };
+  // 阻止相对资源加载报错
+  document.addEventListener('error', function(e){
+    var t = e.target;
+    if (t && (t.tagName === 'SCRIPT' || t.tagName === 'LINK')) e.preventDefault();
+  }, true);
+})();
+</script>
+</body>
+</html>

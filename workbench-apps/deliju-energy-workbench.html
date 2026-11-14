@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>德力聚能耗管理平台 · 工作台原型</title>
+<style>
+:root{
+  --bg:#f4f6f9; --panel:#ffffff; --line:#e3e8ef; --line2:#eef1f5;
+  --ink:#152232; --ink2:#4a5b70; --ink3:#7c8b9e;
+  --blue:#0b2743; --blue2:#1f4b7a; --accent:#2f6fae;
+  --green:#1a6b4a; --amber:#8a5b00; --red:#b3261e; --gray:#6b7a8d;
+  --radius:12px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:14px/1.65 "Microsoft YaHei","PingFang SC","Hiragino Sans GB",system-ui,sans-serif;}
+button,select,input{font-family:inherit;font-size:14px}
+h1,h2,h3{margin:0;font-weight:700}
+.wrap{max-width:1180px;margin:auto;padding:0 16px 56px}
+
+/* 顶栏 */
+.top{background:var(--blue);color:#fff;position:sticky;top:0;z-index:20;box-shadow:0 1px 0 rgba(0,0,0,.08)}
+.top .in{max-width:1180px;margin:auto;padding:12px 16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.brand{font-size:16px;font-weight:700;letter-spacing:.3px}
+.brand small{display:block;font-weight:400;font-size:11.5px;opacity:.72;letter-spacing:0}
+.spacer{flex:1}
+.rolebox{display:flex;align-items:center;gap:8px;font-size:12.5px;opacity:.95}
+.rolebox select{background:#12345a;color:#fff;border:1px solid #2b577f;border-radius:8px;padding:5px 8px}
+.chip{display:inline-block;border-radius:6px;padding:2px 8px;font-size:12px;font-weight:600;white-space:nowrap}
+.chip.b{background:#ffffff1f;color:#fff;border:1px solid #ffffff33}
+.chip.g{background:#e6f4ec;color:var(--green)}
+.chip.y{background:#fdf3dc;color:var(--amber)}
+.chip.r{background:#fbe9e7;color:var(--red)}
+.chip.n{background:#eef2f7;color:var(--ink2)}
+
+/* 导航 */
+.tabs{max-width:1180px;margin:0 auto;padding:10px 16px 0;display:flex;gap:6px;flex-wrap:wrap;
+  position:sticky;top:60px;background:var(--bg);z-index:15}
+.tab{border:1px solid var(--line);background:#fff;color:var(--ink2);border-radius:9px;padding:7px 13px;cursor:pointer}
+.tab:hover{border-color:#c9d5e3}
+.tab.on{background:var(--blue2);border-color:var(--blue2);color:#fff;font-weight:600}
+.tab.hide{display:none}
+
+/* 卡片 */
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;margin-top:14px}
+.card>h3{font-size:15px;margin-bottom:4px}
+.card .sub{color:var(--ink3);font-size:12.5px;margin-bottom:10px}
+.grid{display:grid;gap:12px}
+.g4{grid-template-columns:repeat(4,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g2{grid-template-columns:repeat(2,1fr)}
+@media(max-width:900px){.g4{grid-template-columns:repeat(2,1fr)}.g3,.g2{grid-template-columns:1fr}}
+
+/* KPI */
+.kpi{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px}
+.kpi .k{color:var(--ink3);font-size:12.5px}
+.kpi .v{font-size:24px;font-weight:700;line-height:1.25;margin-top:4px;font-variant-numeric:tabular-nums}
+.kpi .v small{font-size:12.5px;font-weight:600;color:var(--ink3);margin-left:3px}
+.kpi .f{font-size:12px;color:var(--ink3);margin-top:2px}
+
+/* 表格 */
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{border-bottom:1px solid var(--line2);padding:7px 8px;text-align:left;vertical-align:middle;white-space:nowrap}
+th{background:#f8fafc;font-weight:700;color:var(--ink2);position:sticky;top:0}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+tr.void td{opacity:.45;text-decoration:line-through}
+tr.redrow td{background:#fdf5f4}
+
+/* 表单 */
+.frow{display:grid;grid-template-columns:150px 1fr;gap:10px;align-items:center;margin-bottom:9px}
+@media(max-width:700px){.frow{grid-template-columns:1fr;gap:4px}}
+.frow label{color:var(--ink2);font-size:13px}
+.frow input,.frow select{width:100%;padding:9px 10px;border:1px solid #cfd9e5;border-radius:9px;background:#fff;color:var(--ink)}
+.frow input:focus,.frow select:focus{outline:2px solid #bcd4ea;border-color:#8fb3d4}
+.hint{color:var(--ink3);font-size:12px;margin-top:-4px;margin-bottom:8px}
+.btn{background:var(--blue2);color:#fff;border:0;border-radius:9px;padding:10px 18px;cursor:pointer;font-weight:600}
+.btn:hover{background:#183f66}
+.btn.ghost{background:#fff;color:var(--blue2);border:1px solid #c9d5e3}
+.btn.ghost:hover{background:#f4f8fc}
+.btn.sm{padding:5px 11px;font-size:12.5px;font-weight:600}
+.btn.danger{background:#fff;color:var(--red);border:1px solid #e8c3bf}
+.banner{border-radius:10px;padding:11px 14px;font-size:12.8px;margin-top:12px;border:1px solid}
+.banner.warn{background:#fff8e8;border-color:#f0dcae;color:#7a5000}
+.banner.info{background:#eef5fc;border-color:#cfe1f2;color:#1f4b7a}
+.banner.bad{background:#fbeceb;border-color:#eec9c5;color:#8f221c}
+.empty{color:var(--ink3);text-align:center;padding:22px 8px;font-size:13px}
+.muted{color:var(--ink3)}
+.mono{font-variant-numeric:tabular-nums}
+.pill{display:inline-block;border-radius:999px;padding:1px 9px;font-size:11.5px;border:1px solid}
+.pill.g{color:var(--green);border-color:#bfe0cd;background:#f2faf5}
+.pill.y{color:var(--amber);border-color:#eedcb0;background:#fffaf0}
+.pill.r{color:var(--red);border-color:#eec9c5;background:#fdf5f4}
+.pill.n{color:var(--gray);border-color:#dde4ec;background:#f8fafc}
+
+/* 图表 */
+.chart{width:100%;height:auto;display:block}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--ink2);margin-top:6px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+
+/* 登录门 */
+.gate{position:fixed;inset:0;background:#0b2743ee;display:flex;align-items:center;justify-content:center;padding:18px;z-index:99}
+.gate .box{background:#fff;border-radius:16px;padding:24px;max-width:520px;width:100%}
+.gate h1{font-size:19px;margin-bottom:4px}
+.gate p{color:var(--ink2);font-size:13px;margin:6px 0 16px}
+.roles{display:grid;gap:8px;margin-bottom:14px}
+.role{display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer}
+.role:hover{border-color:#8fb3d4;background:#f7fbff}
+.role b{font-size:13.5px}
+.role span{font-size:12px;color:var(--ink3)}
+.foot{color:var(--ink3);font-size:12px;text-align:center;margin-top:26px;line-height:1.8}
+.kv{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px dashed var(--line2);font-size:13px}
+.kv:last-child{border-bottom:0}
+.kv b{font-weight:700;font-variant-numeric:tabular-nums}
+details summary{cursor:pointer;color:var(--blue2);font-size:12.5px;margin-top:6px}
+.insight li{margin-bottom:6px}
+</style>
+</head>
+<body>
+
+<div class="gate" id="gate">
+  <div class="box">
+    <h1>德力聚能耗管理平台 · 工作台原型</h1>
+    <p>选择角色进入。<b>本原型为候选基线实现</b>，权限为界面级（见 Q-001），口令仅作演示，不构成生产鉴权。</p>
+    <div class="roles">
+      <div class="role" data-role="tech"><div><b>抄表技术员</b><br><span>仅抄表录入 · 处置本人预警</span></div><span>口令 1111</span></div>
+      <div class="role" data-role="lead"><div><b>厂领导</b><br><span>驾驶舱 / 单耗 / 月度对照（只读）</span></div><span>口令 2222</span></div>
+      <div class="role" data-role="admin"><div><b>管理员</b><br><span>全部功能 · 口径与发布</span></div><span>口令 3333</span></div>
+    </div>
+    <div class="frow"><label>演示口令</label><input id="pw" placeholder="输入上方对应口令" autocomplete="off"></div>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button class="btn" id="enter">进入</button>
+      <button class="btn ghost" id="skip">跳过（管理员）</button>
+    </div>
+    <div class="banner info" style="margin-top:14px">默认台账为<b>2026-10 真实抄表</b>（《2026年10月能耗记录抄表.xlsx》，27 天累计读数 + 29 条支路）。三线产量与单价未提供，单耗与金额列留空不估。可一键切回模拟台账演示规则。</div>
+  </div>
+</div>
+
+<div class="top"><div class="in">
+  <div class="brand">德力聚能耗管理平台<small>AI 能耗核算与单耗复盘助手 · 工作台原型 v0.1</small></div>
+  <div class="spacer"></div>
+  <div class="rolebox">
+    <span class="chip b" id="chipState">BASELINE_DRAFT</span>
+    <span class="chip b" id="chipSrc">模拟数据</span>
+    <label for="roleSel" style="opacity:.8">角色</label>
+    <select id="roleSel">
+      <option value="tech">抄表技术员</option>
+      <option value="lead">厂领导</option>
+      <option value="admin">管理员</option>
+    </select>
+  </div>
+</div></div>
+
+<div class="tabs" id="tabs">
+  <button class="tab" data-v="dash">驾驶舱</button>
+  <button class="tab" data-v="entry">抄表录入</button>
+  <button class="tab" data-v="ledger">数据台账</button>
+  <button class="tab" data-v="unit">单耗统计</button>
+  <button class="tab" data-v="bill">月度对照</button>
+  <button class="tab" data-v="alert">预警与归因</button>
+  <button class="tab" data-v="health">数据体检</button>
+  <button class="tab" data-v="set">设置与导出</button>
+</div>
+
+<div class="wrap"><div id="view"></div>
+  <div class="foot">
+    原型状态：候选基线实现（BASELINE_DRAFT）· 脚本级自检通过（语法 / 引擎数值 / 24 组视图渲染）· 未接入数据库与发布<br>
+    数据源：内置模拟台账 / 2026-10 真实抄表（29 条支路读数，缺倍率 Q-007）· 未接入：能耗预测（Q-006）、OEE 联动（Q-011）、简报自动生成（Q-004）
+  </div>
+</div>
+
+<script>
+/* ============ 常量 ============ */
+var LS='dlj_energy_v1';
+var BANDS=[['tip','尖'],['peak','峰'],['flat','平'],['valley','谷']];
+var MEDIA=[
+  {k:'elec',name:'电',unit:'kWh',band:true},
+  {k:'water',name:'自来水',unit:'吨'},
+  {k:'steam',name:'蒸汽',unit:'吨'},
+  {k:'nitrogen',name:'氮气',unit:'Nm³'}
+];
+var REASONS=['设备','工艺','计划','计量','录入'];
+var DEFAULT_SET={
+  magnitude:1.5, deviation:0.30, branchYellow:0.30, branchRed:0.50, branchFloor:200,
+  steamBase:8, statStart:'2026-04-01', debugEnd:'2026-03-31',
+  billGreen:5, billRed:15,
+  tipBand:false, rampRatio:1.3, dodDev:0.50, minSamples:3, stops:[],
+  price:{elec:null,water:null,steam:null,nitrogen:null},
+  priceUnit:{elec:'元/kWh',water:'元/吨',steam:'元/吨',nitrogen:'元/Nm³'}
+};
+var S=null, VIEW='dash', ROLE='admin', ENTRY_DATE=null;
+
+/* 费率档：本厂电费无尖段（2026-11-07 确认），三段制下尖段读数保留但不出用量 */
+function activeBands(){
+  if(typeof S==='undefined'||!S||!S.settings) return BANDS;
+  return S.settings.tipBand===true?BANDS:BANDS.slice(1);
+}
+function isStop(d){
+  if(!S||!S.settings||!S.settings.stops) return false;
+  return S.settings.stops.indexOf(d)>=0;
+}
+
+/* ============ 工具 ============ */
+function pad(n){return (n<10?'0':'')+n}
+function iso(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
+function addDays(k,n){var d=new Date(k+'T00:00:00');d.setDate(d.getDate()+n);return iso(d)}
+function monthOf(k){return k.slice(0,7)}
+function dow(k){return new Date(k+'T00:00:00').getDay()}
+function isWeekend(k){var w=dow(k);return w===0||w===6}
+function num(v,d){if(v===null||v===undefined||isNaN(v))return '—';return Number(v).toFixed(d===undefined?2:d)}
+function intf(v){if(v===null||v===undefined||isNaN(v))return '—';return Math.round(v).toLocaleString('zh-CN')}
+function esc(s){return String(s===undefined||s===null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function mean(a){if(!a.length)return null;var s=0;for(var i=0;i<a.length;i++)s+=a[i];return s/a.length}
+function todayStr(){return iso(new Date())}
+
+function load(){
+  try{
+    var raw=localStorage.getItem(LS);
+    if(raw){
+      S=JSON.parse(raw);S.settings=mix(DEFAULT_SET,S.settings||{});
+      S.meta=S.meta||{source:'seed',created:todayStr()};
+      if(!S.meta.source)S.meta.source='seed';
+      return
+    }
+  }catch(e){}
+  /* 首次打开默认装载 2026-10 真实抄表（若需演示模拟异常，可在「设置与导出」切回） */
+  S=buildRealState(REAL_SRC,JSON.parse(JSON.stringify(DEFAULT_SET)));save();
+}
+function mix(base,over){var o={};for(var k in base)o[k]=base[k];for(var k2 in over)if(over[k2]!==undefined)o[k2]=over[k2];return o}
+function save(){try{localStorage.setItem(LS,JSON.stringify(S))}catch(e){}}
+
+/* ============ 模拟数据（明确标注：模拟，非真实台账） ============ */
+function seed(){
+  var rand=(function(){var s=20261107;return function(){s=(s*1103515245+12345)&0x7fffffff;return s/0x7fffffff}})();
+  function r(a,b){return a+(b-a)*rand()}
+  var st={settings:JSON.parse(JSON.stringify(DEFAULT_SET)),records:{},bills:{},plan:{},meta:{seed:true,source:'seed',created:todayStr()}};
+  var start='2026-09-18', end='2026-11-06';
+  var cur={tip:0,peak:260,flat:820,valley:620,water:60,steam:90,nitrogen:6000};
+  var d=start;
+  while(d<=end){
+    var dom=Number(d.slice(8,10));
+    if(dom===1){cur.tip=0;cur.peak=Math.round(r(80,160));cur.flat=Math.round(r(120,220));cur.valley=Math.round(r(90,180));}
+    var inc={
+      tip:0, peak:Math.round(r(46,56)),
+      flat:Math.round(r(345,395)), valley:Math.round(r(240,275)),
+      water:Math.round(r(32,36)), steam:Math.round(r(36,42)), nitrogen:Math.round(r(3700,4200))
+    };
+    /* —— 构造异常样本（用于演示规则，非真实事件）——
+       注意：用量是「次日读数 − 当日读数」，异常增量必须落在目标日的次日 */
+    if(d==='2026-10-12'){inc.tip=0;inc.peak=0;inc.flat=0;inc.valley=0;inc.water=0;inc.steam=4;inc.nitrogen=0;}
+    if(d==='2026-10-16'){inc.water=-2;}
+    if(d==='2026-10-23'){inc.peak=Math.round(inc.peak*9);}
+    for(var k in inc)cur[k]=cur[k]+inc[k];
+    var rec={
+      date:d,
+      rd:{tip:cur.tip,peak:cur.peak,flat:cur.flat,valley:cur.valley,water:cur.water,steam:cur.steam,nitrogen:cur.nitrogen},
+      prod:{S05:Math.round(r(300,450)),S04:Math.round(r(280,420)),S01:Math.round(r(180,300))},
+      plan:{S05:400,S04:380,S01:250},
+      reasons:{}, verified:false, voided:false,
+      enteredBy:'技术员A', enteredAt:d+' 07:4'+Math.floor(r(0,9))
+    };
+    if(d==='2026-10-11'){rec.prod={S05:0,S04:0,S01:0};}
+    /* 月末双读数（电四费率）：「下班后」= 当日晨读数 + 当日全天用电估算 */
+    if(d==='2026-09-30'||d==='2026-10-31'){
+      var est={tip:14,peak:52,flat:370,valley:255};
+      rec.me={tip:cur.tip+est.tip,peak:cur.peak+est.peak,flat:cur.flat+est.flat,valley:cur.valley+est.valley};
+    }
+    st.records[d]=rec;
+    d=addDays(d,1);
+  }
+  /* 已处置的红警原因（模拟）：按实际触发的报警日期挂载，保证状态机自洽 */
+  var redReason={
+    elec:{code:'设备',text:'空压机 A 台加卸载频繁，待现场核查（模拟记录）'},
+    water:{code:'录入',text:'水表读数录错位，已核对原始抄表单（模拟记录）'},
+    steam:{code:'工艺',text:'批次升温段延长，蒸汽用量抬升（模拟记录）'},
+    nitrogen:{code:'计划',text:'临时插单导致吹扫次数增加（模拟记录）'}
+  };
+  var sorted=Object.keys(st.records).sort();
+  var verifiedUsed=0;
+  for(var i=0;i<sorted.length;i++){
+    var kk=sorted[i], rec2=st.records[kk], tmpS={records:st.records,settings:st.settings};
+    /* 借用全局计算（此时 S 尚未赋值，故临时构造） */
+    var bakS=S; S=tmpS;
+    var als=alertsOf(kk);
+    S=bakS;
+    als.forEach(function(a){
+      if(a.level!=='red') return;
+      if(!rec2.reasons[a.med]) rec2.reasons[a.med]={code:redReason[a.med].code,text:redReason[a.med].text,by:'技术员A',at:kk+' 08:1'+verifiedUsed%10};
+    });
+    if(als.some(function(a){return a.level==='red'})&&verifiedUsed<2){ rec2.verified=true; verifiedUsed++; }
+  }
+
+  /* 模拟账单（2026-10 期，仅用于演示差异算法，非真实结算） */
+  var sums=monthSumsIn(st,'2026-10');
+  st.bills['2026-10|elec']={qty:Math.round(sums.elec*1.030), amount:null, period:'2026-10'};
+  st.bills['2026-10|water']={qty:Math.round(sums.water*1.10), amount:null, period:'2026-10'};
+  st.bills['2026-10|steam']={qty:Math.round(sums.steam*0.982), amount:null, period:'2026-10'};
+  st.bills['2026-10|nitrogen']={qty:Math.round(sums.nitrogen*1.19), amount:null, period:'2026-10'};
+  return st;
+}
+
+/* ============ 真实抄表数据源（2026-10，抄表原件导入） ============ */
+var REAL_SRC={
+  meta:{file:'2026年10月能耗记录抄表.xlsx',sheets:['2026年10月','2026年10月细'],
+        from:'2026-10-01',to:'2026-10-27',days:27,
+        note:'抄表至 2026-10-27 晨；缺 10-28~10-31 与 11-01 读数，月末双读数未抄'}};
+REAL_SRC.rd={
+'2026-10-01':[0,227,0,1977,75670,983,36113],
+'2026-10-02':[0,1089,831,2399,75690,983,36286],
+'2026-10-03':[0,2517,2193,2810,75730,983,36293],
+'2026-10-04':[0,3734,3461,3228,75740,983,36300],
+'2026-10-05':[0,4962,4761,3578,75780,983,36308],
+'2026-10-06':[0,6402,6273,4000,75790,983,36315],
+'2026-10-07':[0,7952,7867,4634,75940,983,36323],
+'2026-10-08':[0,11140,11216,7223,76050,986,36347],
+'2026-10-09':[0,16437,16162,11768,77110,991,36566],
+'2026-10-10':[0,23725,22518,17549,77340,995,36880],
+'2026-10-11':[0,28063,28120,22475,77510,999,37084],
+'2026-10-12':[0,33957,33515,26793,77630,1004,37231],
+'2026-10-13':[0,39673,39192,33204,77840,1008,37571],
+'2026-10-14':[0,47168,46629,39687,78110,1013,38060],
+'2026-10-15':[0,54007,53780,46232,78480,1017,38486],
+'2026-10-16':[0,60801,60832,52564,78700,1022,38854],
+'2026-10-17':[0,67516,67787,58709,78950,1026,39254],
+'2026-10-18':[0,73519,74094,63418,79050,1030,39447],
+'2026-10-19':[0,75627,76130,66141,79120,1034,39453],
+'2026-10-20':[0,81361,81873,71053,79710,1039,39765],
+'2026-10-21':[0,86673,87421,75903,79870,1043,39889],
+'2026-10-22':[0,92207,93600,80811,79950,1047,40035],
+'2026-10-23':[0,98794,100073,86682,80160,1051,40272],
+'2026-10-24':[0,105309,106250,92647,80400,1056,40608],
+'2026-10-25':[0,111406,112457,98888,80600,1060,40931],
+'2026-10-26':[0,116908,118490,104131,80700,1065,41025],
+'2026-10-27':[0,123392,124714,110093,80960,1069,41413],
+};
+REAL_SRC.bn=["WKTAP1 检测室", "WKTAP2 南包装、北包装", "WKTAP3 干式南", "WKTAP4 干式北", "WKTAP5 湿式送风", "纯水", "空压机A", "空压机B", "空压机C", "空压机D", "冷水机组A", "冷水机组B", "10D-1AP 公用工程水泵", "10D-2AP 冷干、吸干、制氮、制氧、危废尾气", "10D-3AP 冷却水塔", "中水", "MVR", "MCC Ⅰ段 生产设备", "MCC Ⅱ段 生产设备", "201干式", "5系干式", "干式废气", "实验室废气", "生产废气", "导热油", "综合楼2AP", "G02线配电柜", "中试线湿式AP 中试线湿式区设备", "中试线总柜AP 空调、照明、插座、助剂间、银包铜、干式设备"];
+REAL_SRC.br={
+'2026-10-01':[195531,31651,45540,136471,44800,179433,527933,1466,541710,1033,28416,147452,699494,227698,102038,123060,297285,194058,102137,12257,47420,15330,3914,143136,13926,24540,42603,10316,99243],
+'2026-10-02':[195543,31651,45541,136472,44801,179449,528225,1468,541711,1035,28427,147463,699589,227779,102064,123249,297341,194119,102164,12271,47428,15332,3915,143140,13927,24557,42604,10323,99253],
+'2026-10-03':[195556,31652,45543,136474,44803,179506,529143,1470,541713,1036,28439,147475,699808,228036,102126,123593,297374,194181,102191,12285,47436,15334,3917,143144,13928,24614,42606,10331,99262],
+'2026-10-04':[195568,31653,45544,136475,44805,179518,529897,1472,541735,1038,28450,147487,700010,228272,102184,123811,297407,194242,102218,12299,47444,15336,3918,143147,13929,24651,42607,10339,99272],
+'2026-10-05':[195597,31654,45545,136477,44807,179593,529981,1473,542613,1040,28462,147498,700232,228515,102243,123894,297459,194304,102246,12313,47452,15338,3919,143151,13930,24690,42608,10346,99281],
+'2026-10-06':[195938,31655,45547,136479,44809,179621,530844,1475,542615,1042,28474,147510,700460,228775,102306,124075,297527,194365,102273,12327,47460,15340,3920,143154,13931,24726,42610,10354,99290],
+'2026-10-07':[196737,31656,45548,136480,44811,179858,531566,1477,542617,1044,28485,147521,700660,229007,102362,124157,297577,194437,102318,12341,47468,15342,3921,143156,13932,24762,42611,10361,99300],
+'2026-10-08':[197144,31657,45549,136482,44868,180070,533217,1479,542618,1045,28497,148047,702438,229528,102652,124316,297601,195525,102549,12356,47476,15344,3922,143725,13933,24803,42612,10369,99315],
+'2026-10-09':[198057,31658,45551,136484,45239,180382,533843,1481,544266,1047,28508,148529,704276,230065,102945,125137,298984,196712,103026,12394,47651,15404,3929,144359,13977,24858,42618,10415,99596],
+'2026-10-10':[199006,31659,45564,136485,46072,180665,533845,1482,546690,1049,28519,149152,706076,230588,103227,125944,300462,198018,103503,12486,47816,15473,3937,144988,15492,24919,42718,10466,100037],
+'2026-10-11':[199969,31660,45569,136487,46115,180980,533847,1484,549409,1050,28531,149762,707893,231126,103514,126748,302553,199125,103973,12546,48084,15546,3945,145623,15709,24975,42779,10509,100476],
+'2026-10-12':[200884,31661,45572,136489,46119,181246,533849,1486,552004,1052,28542,150367,709694,231666,103803,127498,304859,200220,104355,12595,48491,15615,3953,146257,15711,25016,42845,10557,100830],
+'2026-10-13':[201835,31844,45803,136490,47372,181645,533851,1488,554570,1054,28554,151061,711492,232189,104089,128385,306339,201460,104945,12752,48735,15684,3961,146887,15712,25082,42851,10610,101283],
+'2026-10-14':[202762,31970,45975,137126,48075,182063,533853,1490,558468,1056,28565,151722,713294,232740,104376,129479,308828,203163,105589,13043,49259,15772,3969,147522,15712,25158,42857,10687,101776],
+'2026-10-15':[203692,31996,45980,138012,48079,182500,533855,1491,562506,1058,28576,152323,715091,233266,104665,130618,311308,204830,106200,13241,49804,15863,3977,148152,15712,25236,42980,10748,102165],
+'2026-10-16':[204660,32079,45988,139123,48083,182857,533857,1493,566198,1059,28588,152924,716896,233788,104953,131670,313552,206518,106748,13381,50407,15957,3984,148783,15712,25304,43202,10783,102631],
+'2026-10-17':[205616,32121,45999,140349,48087,183257,533859,1495,569304,1061,28599,153623,718699,234323,105240,132851,315964,208128,107273,13515,51114,16046,3992,149414,15712,25370,43375,10840,103074],
+'2026-10-18':[206477,32204,46002,141771,48091,183492,535473,1497,570202,1063,28610,154189,720400,234802,105510,133862,317962,208929,107539,13646,51636,16121,4000,149978,15712,25412,43571,10893,103513],
+'2026-10-19':[206504,32205,46004,141771,48093,183652,537095,1498,570203,1065,28619,154584,721789,235189,105732,133894,318092,209523,107707,13657,51695,16121,4000,150463,15712,25452,43577,10911,103528],
+'2026-10-20':[207345,32206,46007,141772,48097,183944,537843,1500,572076,1066,28631,155190,723598,235704,106019,134878,320459,210728,108218,13875,52193,16200,4007,151086,15712,25530,43583,10963,103590],
+'2026-10-21':[208225,32207,46014,141773,48101,184243,537846,1502,574853,1068,28642,155721,725390,236211,106304,135849,322812,211882,108737,13988,52601,16270,4015,151708,15712,25598,43589,11031,103694],
+'2026-10-22':[209004,32226,46023,141774,48105,184460,537848,1503,577447,1070,28653,156120,727193,236731,106598,136909,325071,212934,109187,14048,53045,16339,4022,152332,16186,25663,43595,11102,103883],
+'2026-10-23':[209905,32227,46034,142188,48110,184815,537849,1505,580251,1072,28665,156642,728994,237241,106889,137872,327118,214158,109715,14134,53436,16405,4030,152954,17643,25722,43602,11169,104060],
+'2026-10-24':[210816,32228,46037,142876,48114,185216,539948,1507,580978,1073,28676,157193,730798,237762,107176,138806,329615,215634,110255,14344,53889,16476,4037,153578,18034,25787,43608,11220,104203],
+'2026-10-25':[211545,32229,46043,143224,48117,185627,543116,1509,580980,1075,28687,157805,732596,238261,107460,139725,332049,217387,110870,14589,54375,16551,4045,154204,18424,25831,43614,11265,104336],
+'2026-10-26':[212456,32230,46046,143907,48121,185825,546107,1510,580981,1077,28698,158278,734370,238766,107742,140867,334300,218645,111272,14716,54898,16636,4053,154821,18812,25875,43783,11311,104466],
+'2026-10-27':[213334,32231,46051,144670,48125,186224,549062,1512,580983,1078,28710,158845,736168,239267,108029,141911,336604,220450,111898,14735,55458,16700,4060,155448,19202,25942,43799,11362,104571],
+};
+
+
+
+
+/* ============ 真实抄表：装载 / 转换 / 分支路 ============ */
+var SRC_NAME={seed:'模拟数据',real:'真实抄表'};
+function isReal(){return !!S.meta&&S.meta.source==='real'}
+function srcLabel(){return isReal()?('真实抄表 '+monthOf((S.meta.to||'')||todayStr())):'模拟数据'}
+function syncChips(){
+  var el=document.getElementById('chipSrc');
+  if(el){el.textContent=isReal()?'真实抄表 2026-10':'模拟数据'}
+}
+
+/* 把 {meta,rd,bn,br} 统一转成平台状态；prod 一律 null（不补 0） */
+function buildRealState(obj,settings){
+  var st={settings:settings||JSON.parse(JSON.stringify(DEFAULT_SET)),
+          records:{},bills:{},plan:{},
+          meta:{source:'real',file:(obj.meta&&obj.meta.file)||'抄表导入',
+                from:null,to:null,days:0,imported:((obj.meta&&obj.meta.imported_at)||todayStr())}};
+  var ks=Object.keys(obj.rd||{}).sort(),i;
+  for(i=0;i<ks.length;i++){
+    var d=ks[i],a=obj.rd[d];
+    st.records[d]={date:d,
+      rd:{tip:a[0],peak:a[1],flat:a[2],valley:a[3],water:a[4],steam:a[5],nitrogen:a[6]},
+      prod:null,plan:null,reasons:{},verified:false,voided:false,
+      enteredBy:'技术员A · 抄表导入',enteredAt:st.meta.imported,src:'real'};
+  }
+  if(ks.length){st.meta.from=ks[0];st.meta.to=ks[ks.length-1];st.meta.days=ks.length}
+  if(obj.bn&&obj.br){st.branch={names:obj.bn,rows:obj.br}}
+  /* 停产/检修日建议：取开头连续低用量段（< 中位数 60%），可在设置页改 */
+  if(ks.length>3){
+    var ev=[],k2;
+    for(k2=1;k2<ks.length;k2++){
+      var pa=st.records[ks[k2-1]].rd, pb=st.records[ks[k2]].rd;
+      ev.push({d:ks[k2-1],v:(pb.peak+pb.flat+pb.valley)-(pa.peak+pa.flat+pa.valley)});
+    }
+    var med2=median(ev.map(function(x){return x.v})),lead2=0;
+    while(med2&&lead2<ev.length&&ev[lead2].v<med2*0.6)lead2++;
+    st.settings.stops=ev.slice(0,lead2).map(function(x){return x.d});
+  }
+  return st;
+}
+function loadReal(){
+  if(!confirm('载入《'+REAL_SRC.meta.file+'》真实抄表？\n\n· 区间 '+REAL_SRC.meta.from+' ~ '+REAL_SRC.meta.to+'，共 '+REAL_SRC.meta.days+' 天累计读数\n· 现有模拟台账将被替换（可用「恢复模拟数据」重建）\n· 三线产量未提供，单耗将全部显示「—」'))return;
+  var keep=JSON.parse(JSON.stringify(S.settings));
+  S=buildRealState(REAL_SRC,keep);save();ENTRY_DATE=null;syncChips();
+  document.querySelectorAll('.tab').forEach(function(b){b.classList.toggle('on',b.dataset.v===VIEW)});
+  render();
+}
+function resetSeed(){
+  if(!confirm('清空当前数据并重建模拟台账（保留已录单价与阈值）？'))return;
+  var keep=JSON.parse(JSON.stringify(S.settings));
+  keep.stops=[];S=seed();S.settings=keep;save();ENTRY_DATE=null;syncChips();render();
+}
+function importRealJson(e){
+  var f=e.target.files[0];if(!f)return;
+  var fr=new FileReader();
+  fr.onload=function(){
+    var out=document.getElementById('impOut');
+    try{
+      var o=JSON.parse(String(fr.result));
+      if(!o.records||typeof o.records!=='object')throw new Error('缺少 records 字段');
+      var rd={},n=0;
+      Object.keys(o.records).forEach(function(d){
+        if(!/^\d{4}-\d{2}-\d{2}$/.test(d))return;
+        var r=o.records[d]||{},x=r.rd||r;
+        rd[d]=[x.tip||0,x.peak||0,x.flat||0,x.valley||0,x.water||0,x.steam||0,x.nitrogen||0];n++;
+      });
+      var bn=null,br=null;
+      if(o.branch_names&&o.branches){
+        var order=Object.keys(o.branch_names).map(Number).sort(function(a,b){return a-b});
+        bn=order.map(function(c){return o.branch_names[String(c)]});
+        br={};
+        Object.keys(o.branches).forEach(function(d){
+          var row=o.branches[d];
+          br[d]=order.map(function(c){var v=row[o.branch_names[String(c)]];return v===undefined?0:v});
+        });
+      }
+      if(!n)throw new Error('没有可用的日期行');
+      var keep=JSON.parse(JSON.stringify(S.settings));
+      S=buildRealState({meta:o.meta||{},rd:rd,bn:bn,br:br},keep);save();ENTRY_DATE=null;syncChips();render();
+      if(out)out.innerHTML='导入完成：'+n+' 天读数'+(bn?('，'+bn.length+' 条支路'):'')+'。缺日不补 0，请到「数据体检」核对口径。';
+    }catch(err){
+      if(out)out.innerHTML='<span style="color:#b3261e">导入失败：'+esc(err.message||String(err))+'。请使用 import/extract_xlsx.py 生成的 JSON。</span>';
+    }
+  };
+  fr.readAsText(f,'utf-8');
+}
+
+/* —— 分支路（真实读数才有） —— */
+function branchMonth(){
+  var B=S.branch;if(!B)return null;
+  var ks=dates().filter(function(d){return B.rows[d]});
+  if(ks.length<2)return null;
+  var a=B.rows[ks[0]],b=B.rows[ks[ks.length-1]],list=[],sum=0,i;
+  for(i=0;i<B.names.length;i++){var v=(b[i]||0)-(a[i]||0);sum+=v;list.push({name:B.names[i],v:v})}
+  list.sort(function(x,y){return y.v-x.v});
+  return {from:ks[0],to:ks[ks.length-1],days:ks.length,list:list,sum:sum};
+}
+function mainElecBetween(a,b){
+  var ra=S.records[a],rb=S.records[b];if(!ra||!rb)return null;
+  return (rb.rd.tip+rb.rd.peak+rb.rd.flat+rb.rd.valley)-(ra.rd.tip+ra.rd.peak+ra.rd.flat+ra.rd.valley);
+}
+function branchAlerts(d){
+  var B=S.branch;if(!B)return [];
+  var n=addDays(d,1);if(!B.rows[d]||!B.rows[n])return [];
+  var prev=[],i,j;
+  for(i=1;i<=7;i++){var p=addDays(d,-i),q=addDays(p,1);
+    if(B.rows[p]&&B.rows[q]){var arr=[],s=0;
+      for(j=0;j<B.names.length;j++){var v=(B.rows[q][j]||0)-(B.rows[p][j]||0);arr.push(v);s+=v}
+      prev.push({a:arr,s:s});
+    }}
+  if(prev.length<3)return [];
+  var cur=[],s2=0,out=[];
+  for(j=0;j<B.names.length;j++){var v2=(B.rows[n][j]||0)-(B.rows[d][j]||0);cur.push(v2);s2+=v2}
+  for(j=0;j<B.names.length;j++){
+    var base=mean(prev.map(function(x){return x.a[j]}));
+    if(base===null||base<=S.settings.branchFloor)continue;
+    var dev=(cur[j]-base)/base;
+    if(Math.abs(dev)>=S.settings.branchRed)out.push({name:B.names[j],val:cur[j],base:base,dev:dev,level:'red'});
+    else if(Math.abs(dev)>=S.settings.branchYellow)out.push({name:B.names[j],val:cur[j],base:base,dev:dev,level:'yellow'});
+  }
+  return out.sort(function(x,y){return Math.abs(y.dev)-Math.abs(x.dev)}).slice(0,8);
+}
+
+/* ============ 数据体检 ============ */
+function median(a){
+  if(!a.length)return null;var b=a.slice().sort(function(x,y){return x-y}),i=b.length>>1;
+  return b.length%2?b[i]:(b[i-1]+b[i])/2;
+}
+function vHealth(){
+  if(!isReal()){
+    return '<div class="banner info">数据体检只针对<b>真实抄表</b>；当前是模拟台账（'+dates().length+' 天），模拟数据不体检。</div>'
+    +'<div class="card"><h3>怎么切到真实数据</h3><div class="sub">「设置与导出 → 数据源」点「载入 2026-10 真实抄表」，再回到本页。</div></div>';
+  }
+  var ds=dates(),from=ds[0],to=ds[ds.length-1],mo=monthOf(to),dim=daysInMonth(mo);
+  var miss=[];for(var i=1;i<=dim;i++){var k=mo+'-'+(i<10?'0':'')+i;if(!S.records[k])miss.push(k)}
+  var needNext=addDays(to,1);
+  var hasNext=!!S.records[needNext];
+  var meCnt=ds.filter(function(d){return S.records[d].me}).length;
+  var tipSum=0;ds.forEach(function(d){tipSum+=S.records[d].rd.tip});
+  /* 日电量序列（相邻日差） */
+  var day=[],d2=from;
+  while(addDays(d2,1)<=to){
+    var v=mainElecBetween(d2,addDays(d2,1));if(v!==null)day.push({d:d2,v:v});
+    d2=addDays(d2,1);
+  }
+  var vs=day.map(function(x){return x.v}),med=median(vs);
+  /* 开头连续低用量段（停产） */
+  var lead=0;
+  while(lead<day.length&&day[lead].v<med*0.6)lead++;
+  var low=day.slice(0,lead);
+  /* 停产段之后的单日骤降 */
+  var drops=[];
+  day.forEach(function(x,idx){
+    if(idx<lead||idx<8)return;
+    var w=vs.slice(Math.max(0,idx-7),idx),m7=mean(w);
+    if(m7&&x.v<m7*0.5)drops.push({d:x.d,v:x.v,m7:m7});
+  });
+  /* 介质倒退 & 支路倒退 */
+  var back=0;
+  for(i=0;i<ds.length-1;i++){
+    var a=S.records[ds[i]].rd,b=S.records[ds[i+1]].rd;
+    if(b.water<a.water||b.steam<a.steam||b.nitrogen<a.nitrogen||b.peak<a.peak||b.flat<a.flat||b.valley<a.valley)back++;
+  }
+  var bm=branchMonth(),cov=null,cumMain=null,bneg=0;
+  if(bm){cumMain=mainElecBetween(bm.from,bm.to);cov=cumMain?bm.sum/cumMain*100:null}
+  if(S.branch){
+    var ksB=dates().filter(function(d){return S.branch.rows[d]});
+    for(i=0;i<ksB.length-1;i++)for(var j=0;j<S.branch.names.length;j++){
+      if((S.branch.rows[ksB[i+1]][j]||0)-(S.branch.rows[ksB[i]][j]||0)<0)bneg++;
+    }
+  }
+  var prodSum=0;ds.forEach(function(d){prodSum+=prodOf(d).total});
+  var alCnt={red:0,yellow:0},redList=[];
+  ds.forEach(function(d){
+    alertsOf(d).forEach(function(a){
+      if(a.level==='red'){alCnt.red++;redList.push(d.slice(5)+' '+a.name+' '+a.type)}else alCnt.yellow++;
+    });
+  });
+  var cumRead=(S.records[to].rd.tip+S.records[to].rd.peak+S.records[to].rd.flat+S.records[to].rd.valley);
+  var sumDaily=0;day.forEach(function(x){sumDaily+=x.v});
+  var firstUsable=day.length?day[0].v:null,lastUsable=day.length?day[day.length-1].v:null;
+
+  var rowsArr=[];
+  function row(item,res,cls,impact,fix){
+    rowsArr.push('<tr><td>'+item+'</td><td><span class="pill '+cls+'">'+res+'</span></td><td style="white-space:normal">'+impact+'</td><td style="white-space:normal">'+fix+'</td></tr>');
+    return '';
+  }
+  var checks=''
+  + row('抄表覆盖',ds.length+' / '+dim+' 天',(miss.length?'y':'g'),
+        '缺 '+miss.length+' 天：'+(miss.join('、')||'无'),'到「抄表录入」逐日补录，或等下月合并导入')
+  + row('次日读数',hasNext?'已具备 '+needNext:'缺 '+needNext,hasNext?'g':'r',
+        hasNext?'可核算至 '+to:'<b>'+to+' 当日用量无法核算</b>（'+to+' 需要 '+needNext+' 读数）','补录 '+needNext+' 晨读数即自动解锁')
+  + row('月末双读数',meCnt?('已录 '+meCnt+' 天'):'未录',(meCnt?'g':'r'),
+        meCnt?'满足 RULE-MET-002':'电表次月 1 日清零，缺 '+mo+'-'+dim+' 下班后读数 → 当月电量只能逐日累加，不能一次核准',
+        '补录 '+mo+'-'+dim+' 的「下班后」四项读数（录入页月末当天自动出现该区）')
+  + row('费率档',(S.settings.tipBand?'四段（尖/峰/平/谷）':'三段（峰/平/谷）'),'g'==='g'?'g':'g',
+        '尖段读数 '+ds.length+' 天合计 '+intf(tipSum)+' kWh，与「本厂无尖段计费」一致；平台已关闭尖段，不参与核算与显示',
+        '如需改回四段：「设置与导出 → 费率档」，尖段读数一直保留未删')
+  + row('开头低用量段',low.length?(low[0].d+' ~ '+low[low.length-1].d+'（'+low.length+' 天）'):'无',(low.length?'y':'g'),
+        low.length?('这 '+low.length+' 天日电量 '+intf(low[0].v)+'~'+intf(low[low.length-1].v)+' kWh，不足月中位数 '+intf(med)+' 的 60%；同期水/汽/氮增量也接近 0 → 判为<b>停产</b>，非计量异常'):'无停产段',
+        '已自动写入「停产/检修日」（'+((S.settings.stops||[]).length)+' 天），该段不入基线、当天不判量级/偏离；如与实际不符在设置页改')
+  + row('单日骤降',drops.length?drops.map(function(x){return x.d+' '+intf(x.v)+' kWh（前7日均 '+intf(x.m7)+'）'}).join('；'):'无',
+        drops.length?'r':'g',drops.length?'跌幅超 50%，需区分检修停产与计量故障':'','现场核对当日排产与电表告警记录')
+  + row('基线口径 v2',((S.settings.stops||[]).length||0)+' 天停产日已排除','g',
+        '停产日不入基线且不判量级/偏离；基线样本 &lt;'+S.settings.minSamples+' 天不判量级异常；爬坡期（近 7 日均 &gt; 近 30 日均 × '+S.settings.rampRatio+'）改用日环比 ±'+Math.round(S.settings.dodDev*100)+'%',
+        '本批自动建议的停产日：'+((S.settings.stops||[]).join('、')||'无')+'；可在「设置与导出」增删')
+  + row('读数单调性',back?'倒退 '+back+' 天':(day.length+' 对相邻夜 × 6 项全部递增'),(back?'r':'g'),
+        back?'存在读数倒退，按 RULE-ALM-001 应报红警':'累计读数可自洽，可直接做差',back?'核对原始抄表单':'—')
+  + row('分支路读数',bneg?('倒退 '+bneg+' 处'):(S.branch?('29 条 × '+Math.max(0,ds.length-1)+' 天无倒退'):'未导入'),bneg?'r':'g',
+        bneg?'支路表存在倒退，需核倍率':'支路增量可直接汇总','—')
+  + row('支路覆盖率',cov===null?'无支路数据':(cov.toFixed(1)+'%'),cov===null?'n':(cov>95?'g':'y'),
+        cov===null?'—':('支路合计 '+intf(bm.sum)+' kWh，总表 '+intf(cumMain)+' kWh，<b>缺口 '+intf(cumMain-bm.sum)+' kWh</b> 未进分表'),
+        '未覆盖部分为照明/办公/线损，或存在未装表支路；倍率未提供前绝对量仅供参考（Q-007）')
+  + row('三线产量',prodSum?'合计 '+intf(prodSum)+' kg':'全部缺失','r',
+        prodSum?'可算单耗':'<b>单耗 = 用量 ÷ 实际产量</b>，产量缺失 → 单耗全部「—」，不补 0 不估值',
+        '导入三线产量表，或在录入页逐日补填')
+  + row('氮气单位','Nm³（表头笔误，已确认）','g',
+        '10-27 读数 41,413、27 天增量 '+intf(S.records[to].rd.nitrogen-S.records[from].rd.nitrogen)+'；原表标「吨」，按吨读约 196 吨/日量级不合理，按 Nm³ 读≈57 Nm³/h 与制氮机产能吻合',
+        '平台按 Nm³ 计，读数原值不变；建议把原始表列名一并改掉')
+  + row('单价',S.settings.price.elec===null?'未录入':'已录入','y',
+        '金额列全部「单价缺失」，月度对照只有用量没有钱','财务提供单价后录入（Q-017）');
+  checks=rowsArr.join('');
+
+  var gap=cumRead-sumDaily, gapPct=cumRead?gap/cumRead*100:0;
+  var mtdOK=(gap>=0&&gapPct<5);   /* 电表若为自然月清零，读数即月内累计；否则本卡片不成立 */
+  var cov2=mtdOK
+  ?('<div class="kv"><span>口径 A：'+to+' 晨读数合计（电表 1 日清零 → 月内累计）</span><b>'+intf(cumRead)+' kWh</b></div>'
+   +'<div class="kv"><span>口径 B：逐日累加（'+day.length+' 天相邻差之和）</span><b>'+intf(sumDaily)+' kWh</b></div>'
+   +'<div class="kv"><span>A − B</span><b>'+intf(gap)+' kWh（'+gapPct.toFixed(2)+'%）</b></div>'
+   +'<div class="hint">差额 = '+from+' 从 00:00 到抄表时刻（约 07:40）的用电：逐日累加从第一对相邻读数起算，天然漏掉这一段。'
+   +'\n真正的月电量应取 <b>'+mo+'-'+dim+' 下班后读数 − 月初零点</b>（RULE-MET-002 月末双读数），两者都不该拿来当最终结算值。</div>')
+  :('<div class="kv"><span>逐日累加（'+day.length+' 天）</span><b>'+intf(sumDaily)+' kWh</b></div>'
+   +'<div class="hint">'+to+' 读数合计 '+intf(cumRead)+' kWh，远大于逐日累加，说明电能表<b>不是自然月清零</b>或历史基数被带入；本表暂不做月累计对照。</div>');
+
+  var top=bm?bm.list.slice(0,10):[];
+  var branchTable=bm?('<div class="tw"><table><tr><th>支路</th><th class="num">'+bm.from.slice(5)+'→'+bm.to.slice(5)+' 增量 kWh</th><th class="num">占支路合计</th></tr>'
+    +top.map(function(x){return '<tr><td style="white-space:normal">'+esc(x.name)+'</td><td class="num">'+intf(x.v)+'</td><td class="num">'+(bm.sum?(x.v/bm.sum*100).toFixed(1)+'%':'—')+'</td></tr>'}).join('')
+    +'</table></div><div class="hint">TOP10 占支路合计 '+(bm.sum?(top.reduce(function(s,x){return s+x.v},0)/bm.sum*100).toFixed(1):'—')+'%。增量未乘倍率，仅用于相对比较。</div>')
+    :'<div class="empty">未导入支路读数</div>';
+
+  return '<div class="banner warn">本页只陈述<b>可复核事实</b>与<b>待确认口径</b>，不做业务判断。带 <span class="pill r">红</span> 的项会直接改变用量或单耗结果，须先确认再用数据对外。</div>'
+  +'<div class="card"><h3>数据源</h3><div class="sub">'+esc(S.meta.file||'')+' · '+ds.length+' 天 · 导入于 '+esc(S.meta.imported||'')+'</div>'
+    +'<div class="kv"><span>区间</span><b>'+from+' ~ '+to+'</b></div>'
+    +'<div class="kv"><span>日电量（相邻日差）</span><b>'+(firstUsable?intf(firstUsable):'—')+' → '+(lastUsable?intf(lastUsable):'—')+' kWh</b></div>'
+    +'<div class="kv"><span>中位日电量</span><b>'+intf(med)+' kWh</b></div>'
+    +'<div class="kv"><span>产量</span><b>'+(prodSum?'已录':'0（未提供）')+'</b></div>'
+    +'<div class="kv"><span>本批触发的预警</span><b>红 '+alCnt.red+' / 黄 '+alCnt.yellow+' 条</b></div>'
+    +(redList.length
+            ?('<div class="banner bad" style="margin-top:10px">红级 '+redList.length+' 条：'+redList.join('；')+'。均为复产后用量跃升，可归因为计划/工艺；口径 v2 已把 '+intf(firstUsable)+' → '+intf(lastUsable)+' kWh 的电量爬升改判日环比，不再连日报红。</div>')
+            :('<div class="banner info" style="margin-top:10px">口径 v2 已生效：停产段（'+((S.settings.stops||[]).length)+' 天）排除出基线，爬坡段改判日环比，本批无红级预警。</div>'))
+  +'</div>'
+  +'<div class="card"><h3>检查清单（'+rowsArr.length+' 项）</h3><div class="sub">红=会改变结果须先确认 · 黄=影响解读 · 绿=通过</div>'
+    +'<div class="tw"><table><tr><th>检查项</th><th>结果</th><th>影响</th><th>处理</th></tr>'+checks+'</table></div></div>'
+  +'<div class="card"><h3>两种月度电量口径</h3><div class="sub">同一份读数，两种算法差多少</div>'+cov2+'</div>'
+  +'<div class="card"><h3>分支路 TOP10（真实读数）</h3><div class="sub">'+bm.from+' ~ '+bm.to+' 增量</div>'+branchTable+'</div>'
+  +'<div class="card"><h3>本轮确认的口径（决策留痕）</h3><div class="sub">2026-11-07 由业务方确认，已落到代码与设置项</div>'
+    +'<div class="tw"><table><tr><th>编号</th><th>口径</th><th>落地方式</th></tr>'
+    +'<tr><td>Q-018</td><td>本厂电费<b>无尖段</b>，按三段（峰/平/谷）核算</td><td>设置 → 费率档 = 三段；尖段读数保留不删，不参与合计与显示</td></tr>'
+    +'<tr><td>Q-019</td><td>基线口径 v2：停产日排除 + 最小样本 '+S.settings.minSamples+' 天 + 爬坡期改日环比</td><td>计算层 inRamp/isStop/priorVals；停产日可在设置页增删</td></tr>'
+    +'<tr><td>Q-020</td><td>氮气单位为 <b>Nm³</b>（抄表表头笔误）</td><td>平台按 Nm³，读数原值不变；建议改原始表列名</td></tr>'
+    +'<tr><td>Q-021</td><td>10-28~10-31 与月末双读数暂不补，<b>等下月一并导入</b></td><td>10-27 用量保持「待次日读数」，10 月电量只出逐日累加值</td></tr>'
+    +'</table></div><div class="hint">这 4 条需在下一版并入 specs / open-questions.md 并重出 Workspace r002。</div></div>';
+}
+
+/* ============ 计算引擎 ============ */
+function dates(){return Object.keys(S.records).sort()}
+function usage(key){
+  var r=S.records[key]; if(!r) return null;
+  var n=S.records[addDays(key,1)], o={}, i, bs=activeBands();
+  var src=null, sum=0, ok=true;
+  for(i=0;i<bs.length;i++){
+    var b=bs[i][0], v=null;
+    if(r.me && r.me[b]!==null && r.me[b]!==undefined){ v=r.me[b]-r.rd[b]; src='me'; }
+    else if(n){ v=n.rd[b]-r.rd[b]; src='next'; }
+    o[b]=v;
+    if(v===null||v===undefined||isNaN(v)) ok=false; else sum+=v;
+  }
+  o.elecSrc=src;
+  o.elec=ok?sum:null;
+  ['water','steam','nitrogen'].forEach(function(m){ o[m]= n? n.rd[m]-r.rd[m] : null; });
+  return o;
+}
+function priorVals(med,key,n){
+  /* 基线口径 v2（Q-019 已确认）：剔除 ≤0 异常值 + 剔除停产/检修日，避免一次异常或停产污染后续判定 */
+  var ds=dates().filter(function(d){return d<key&&!isStop(d)}).slice(-n), out=[];
+  for(var i=0;i<ds.length;i++){
+    var u=usage(ds[i]);
+    if(u&&u[med]!==null&&u[med]!==undefined&&!isNaN(u[med])&&u[med]>0) out.push(u[med]);
+  }
+  return out;
+}
+function inRamp(key){
+  /* 爬坡判定：近 7 日均值 > 近 30 日均值 × 倍数（默认 1.3）→ 均值滞后，量级异常失效 */
+  var p30=priorVals('elec',key,30), p7=priorVals('elec',key,7);
+  var m30=mean(p30), m7=mean(p7);
+  if(m30===null||m7===null||m30<=0) return false;
+  return m7>m30*(S.settings.rampRatio||1.3);
+}
+function alertsOf(key){
+  var r=S.records[key]; if(!r||r.voided) return [];
+  var u=usage(key); if(!u) return [];
+  var st=S.settings, out=[], wk=isWeekend(key), seen={};
+  function push(a){ if(seen[a.med])return; seen[a.med]=1; out.push(a) }
+  var ramp=inRamp(key), minN=st.minSamples||3;
+  MEDIA.forEach(function(m){
+    var v=u[m.k];
+    if(v===null||v===undefined||isNaN(v)) return;
+    if(m.k==='steam'&&v>=0&&v<=st.steamBase) return;      /* 蒸汽基荷豁免 */
+    if(v<0){ push({med:m.k,name:m.name,level:'red',type:'读数倒退',base:null,dev:null,val:v,unit:m.unit}); return; }
+    if(isStop(key)) return;                                /* 停产/检修日：除读数倒退外不判 */
+    if(wk&&v===0&&m.k!=='steam'){ push({med:m.k,name:m.name,level:'yellow',type:'周末零用量',base:null,dev:null,val:v,unit:m.unit}); return; }
+    var p30=priorVals(m.k,key,30), p7=priorVals(m.k,key,7);
+    var m30=mean(p30), m7=mean(p7);
+    if(!ramp&&p30.length>=minN&&m30&&m30>0&&v>m30*st.magnitude){ push({med:m.k,name:m.name,level:'red',type:'量级异常',base:m30,dev:v/m30,val:v,unit:m.unit}); return; }
+    if(p7.length>=minN&&m7&&m7>0&&Math.abs(v-m7)/m7>=st.deviation){ push({med:m.k,name:m.name,level:'yellow',type:'偏离基线',base:m7,dev:(v-m7)/m7,val:v,unit:m.unit}); return; }
+    if(ramp){                                              /* 爬坡期改用日环比 */
+      var pu=usage(addDays(key,-1)), pv=pu?pu[m.k]:null;
+      if(pv&&pv>0&&Math.abs(v-pv)/pv>=st.dodDev){
+        push({med:m.k,name:m.name,level:'yellow',type:v>pv?'日环比突增':'日环比突降',base:pv,dev:(v-pv)/pv,val:v,unit:m.unit});
+      }
+    }
+  });
+  return out.sort(function(a,b){return a.level==='red'?-1:b.level==='red'?1:0});
+}
+function monthSumsIn(st,m){
+  var o={elec:0,water:0,steam:0,nitrogen:0},cnt=0;
+  for(var k in st.records){
+    if(monthOf(k)!==m) continue;
+    var r=st.records[k]; if(r.voided) continue;
+    var u=usageIn(st,k); if(!u) continue;
+    if(u.elec===null&&u.water===null&&u.steam===null&&u.nitrogen===null) continue;  /* 次日读数缺失：该日不可核算，不计入天数 */
+    if(u.elec!==null) o.elec+=u.elec;
+    ['water','steam','nitrogen'].forEach(function(x){ if(u[x]!==null) o[x]+=u[x]; });
+    cnt++;
+  }
+  o.days=cnt; return o;
+}
+function usageIn(st,key){
+  var r=st.records[key]; if(!r) return null;
+  var n=st.records[addDays(key,1)], o={}, i;
+  var bs=(st.settings&&st.settings.tipBand===true)?BANDS:BANDS.slice(1);
+  var sum=0, ok=true;
+  for(i=0;i<bs.length;i++){
+    var b=bs[i][0], v=null;
+    if(r.me&&r.me[b]!==null&&r.me[b]!==undefined){v=r.me[b]-r.rd[b];}
+    else if(n){v=n.rd[b]-r.rd[b];}
+    o[b]=v;
+    if(v===null||v===undefined||isNaN(v)) ok=false; else sum+=v;
+  }
+  o.elec=ok?sum:null;
+  ['water','steam','nitrogen'].forEach(function(m){o[m]=n?n.rd[m]-r.rd[m]:null});
+  return o;
+}
+function prodOf(key){var r=S.records[key];if(!r)return null;var p=r.prod||{};var t=(p.S05||0)+(p.S04||0)+(p.S01||0);return {S05:p.S05||0,S04:p.S04||0,S01:p.S01||0,total:t}}
+function unitOf(key){
+  var u=usage(key), p=prodOf(key); if(!u||!p) return null;
+  var inStat = key>=S.settings.statStart;
+  if(!inStat) return {skip:true,reason:'调试期/统计起点前'};
+  if(!p.total||p.total<=0) return {na:true,prod:p.total};
+  return {
+    elec: u.elec===null?null:u.elec/p.total,
+    water: u.water===null?null:(u.water*1000)/p.total,
+    steam: u.steam===null?null:(u.steam*1000)/p.total,
+    nitrogen: u.nitrogen===null?null:u.nitrogen/p.total,
+    prod:p.total
+  };
+}
+function statusOf(key){
+  var r=S.records[key]; if(!r) return {k:'n',t:'无记录'};
+  if(r.voided) return {k:'n',t:'已作废'};
+  var al=alertsOf(key), red=al.filter(function(a){return a.level==='red'});
+  var lack=red.filter(function(a){var x=r.reasons&&r.reasons[a.med];return !(x&&x.code&&x.text)});
+  if(lack.length) return {k:'r',t:'待补原因'};
+  if(r.verified) return {k:'g',t:'已复核'};
+  if(al.length) return {k:'y',t:'已保存·含预警'};
+  return {k:'g',t:'已保存'};
+}
+
+/* ============ 图表 ============ */
+function chartLine(el,labels,series,opt){
+  opt=opt||{};
+  var W=opt.w||760,H=opt.h||230,pad={l:54,r:16,t:14,b:26};
+  var dec=opt.dec===undefined?0:opt.dec;
+  function fmt(v){return dec===0?intf(v):Number(v).toFixed(dec)}
+  var left=series.filter(function(s){return s.axis!=='right'});
+  var right=series.filter(function(s){return s.axis==='right'});
+  function rng(list){
+    var a=[];list.forEach(function(s){s.data.forEach(function(v){if(v!==null&&v!==undefined&&!isNaN(v))a.push(v)})});
+    if(!a.length)return null;
+    var mx=Math.max.apply(null,a),mn=Math.min.apply(null,a);
+    if(mn>0)mn=0;
+    var sp=(mx-mn)||1;return {min:mn,max:mx+sp*0.08};
+  }
+  var RL=rng(left)||rng(series), RR=rng(right);
+  if(!RL){el.innerHTML='<div class="empty">暂无数据</div>';return}
+  function X(i){return pad.l+(W-pad.l-pad.r)*(labels.length<2?0.5:i/(labels.length-1))}
+  function Y(v,axis){
+    var r=(axis==='right'&&RR)?RR:RL;
+    return H-pad.b-(H-pad.t-pad.b)*((v-r.min)/((r.max-r.min)||1));
+  }
+  var g='';
+  for(var t=0;t<=4;t++){
+    var vv=RL.min+(RL.max-RL.min)*t/4,yy=Y(vv);
+    g+='<line x1="'+pad.l+'" y1="'+yy.toFixed(1)+'" x2="'+(W-pad.r)+'" y2="'+yy.toFixed(1)+'" stroke="#eef1f5"/>';
+    g+='<text x="'+(pad.l-8)+'" y="'+(yy+4).toFixed(1)+'" font-size="10.5" fill="#7c8b9e" text-anchor="end">'+fmt(vv)+'</text>';
+    if(RR){
+      var rv=RR.min+(RR.max-RR.min)*t/4;
+      g+='<text x="'+(W-pad.r+6)+'" y="'+(yy+4).toFixed(1)+'" font-size="10" fill="#a8b4c3" text-anchor="start">'+intf(rv)+'</text>';
+    }
+  }
+  var body='';
+  series.forEach(function(s){
+    var d='',open=false;
+    s.data.forEach(function(v,i){
+      if(v===null||v===undefined||isNaN(v)){open=false;return}
+      d+=(open?'L':'M')+X(i).toFixed(1)+' '+Y(v,s.axis).toFixed(1)+' ';open=true;
+    });
+    body+='<path d="'+d.trim()+'" fill="none" stroke="'+s.color+'" stroke-width="'+(s.w||2)+'" '+(s.dash?'stroke-dasharray="5 4"':'')+' stroke-linejoin="round"/>';
+    if(labels.length<=16){s.data.forEach(function(v,i){if(v===null||v===undefined||isNaN(v))return;body+='<circle cx="'+X(i).toFixed(1)+'" cy="'+Y(v,s.axis).toFixed(1)+'" r="2.4" fill="'+s.color+'"/>'})}
+  });
+  var xt='',step=Math.ceil(labels.length/7)||1;
+  labels.forEach(function(l,i){ if(i%step===0||i===labels.length-1){xt+='<text x="'+X(i).toFixed(1)+'" y="'+(H-8)+'" font-size="10.5" fill="#7c8b9e" text-anchor="middle">'+l+'</text>'} });
+  el.innerHTML='<svg class="chart" viewBox="0 0 '+W+' '+H+'">'+g+body+xt+'</svg>'
+    +'<div class="legend">'+series.map(function(s){return '<span><i style="background:'+s.color+'"></i>'+s.name+(s.axis==='right'?'（右轴）':'')+'</span>'}).join('')+'</div>';
+}
+function chartBars(el,items){
+  var max=1; items.forEach(function(x){if(x.v>max)max=x.v});
+  var h=items.map(function(x){
+    var w=(x.v/max)*100;
+    return '<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:12.5px;color:#4a5b70;margin-bottom:3px"><span>'+x.name+'</span><span class="mono">'+intf(x.v)+' '+x.unit+' · '+x.pct+'</span></div>'
+      +'<div style="background:#eef2f7;border-radius:6px;height:9px;overflow:hidden"><div style="width:'+w.toFixed(1)+'%;height:100%;background:'+x.color+'"></div></div></div>';
+  }).join('');
+  el.innerHTML=h;
+}
+
+/* ============ 视图 ============ */
+function setView(v){
+  VIEW=v; ENTRY_DATE=ENTRY_DATE||latestDate();
+  document.querySelectorAll('.tab').forEach(function(b){b.classList.toggle('on',b.dataset.v===v)});
+  applyRole(); render();
+}
+function latestDate(){var ds=dates();return ds.length?ds[ds.length-1]:todayStr()}
+function lastUsableDate(){
+  var ds=dates();
+  for(var i=ds.length-1;i>=0;i--){var u=usage(ds[i]);if(u&&u.elec!==null&&u.elec!==undefined)return ds[i]}
+  return latestDate();
+}
+function daysInMonth(m){var y=Number(m.slice(0,4)),mo=Number(m.slice(5,7));return new Date(y,mo,0).getDate()}
+function applyRole(){
+  var allow={tech:['entry','ledger','alert'],lead:['dash','unit','bill','alert','health'],admin:['dash','entry','ledger','unit','bill','alert','health','set']}[ROLE];
+  document.querySelectorAll('.tab').forEach(function(b){b.classList.toggle('hide',allow.indexOf(b.dataset.v)<0)});
+  if(allow.indexOf(VIEW)<0){ VIEW=allow[0]; document.querySelectorAll('.tab').forEach(function(b){b.classList.toggle('on',b.dataset.v===VIEW)}) }
+}
+function render(){
+  var el=document.getElementById('view');
+  if(VIEW==='dash') el.innerHTML=vDash();
+  else if(VIEW==='entry') el.innerHTML=vEntry();
+  else if(VIEW==='ledger') el.innerHTML=vLedger();
+  else if(VIEW==='unit') el.innerHTML=vUnit();
+  else if(VIEW==='bill') el.innerHTML=vBill();
+  else if(VIEW==='alert') el.innerHTML=vAlert();
+  else if(VIEW==='health') el.innerHTML=vHealth();
+  else el.innerHTML=vSet();
+  bind();
+}
+
+/* —— 驾驶舱 —— */
+function vDash(){
+  var m=monthOf(latestDate()), sums=monthSumsIn(S,m);
+  var ds=dates().filter(function(d){return monthOf(d)===m&&!S.records[d].voided});
+  var nowM=todayStr().slice(0,7);
+  var should=(m===nowM)?Math.min(Number(todayStr().slice(8,10)),daysInMonth(m)):daysInMonth(m);
+  var rate=should?Math.round(ds.length/should*1000)/10:0;
+  var price=S.settings.price.elec;
+  var fee=(price!==null&&price!==undefined)?sums.elec*price:null;
+  var last=lastUsableDate(), lu=usage(last), lp=prodOf(last), lr=S.records[last];
+  var un=unitOf(last);
+  var trend=dates().slice(-45);
+  var elecSeries=trend.map(function(d){var u=usage(d);return u&&u.elec!==null?u.elec:null});
+  var ma=[]; for(var i=0;i<elecSeries.length;i++){var w=elecSeries.slice(Math.max(0,i-6),i+1).filter(function(x){return x!==null});ma.push(w.length?mean(w):null)}
+  var u30=dates().slice(-30);
+  var nb=activeBands(), bandSum={},uTot=0;
+  nb.forEach(function(b){bandSum[b[0]]=0});
+  u30.forEach(function(d){var u=usage(d);if(!u||u.elec===null)return;nb.forEach(function(b){bandSum[b[0]]+=u[b[0]]||0});uTot+=u.elec});
+  var bandItems=nb.map(function(b,i){
+    var cols=['#0b2743','#2f6fae','#7ba7cd','#c6d8e8'];
+    return {name:b[1]+'段',v:bandSum[b[0]],unit:'kWh',pct:uTot?((bandSum[b[0]]/uTot*100).toFixed(1)+'%'):'—',color:cols[i]};
+  });
+  /* 单耗×产量 */
+  var uu=u30.filter(function(d){return d>=S.settings.statStart});
+  var uLabels=uu.map(function(d){return d.slice(5)});
+  var uElec=uu.map(function(d){var x=unitOf(d);return (x&&!x.skip&&!x.na&&x.elec!==null)?x.elec:null});
+  var uProd=uu.map(function(d){var p=prodOf(d);return p?p.total:null});
+  /* 原因分布（近30天） */
+  var rc={}; REASONS.forEach(function(r){rc[r]=0});
+  var openCnt=0;
+  u30.forEach(function(d){
+    alertsOf(d).forEach(function(a){
+      var rs=S.records[d].reasons&&S.records[d].reasons[a.med];
+      if(rs&&rs.code) rc[rs.code]=(rc[rs.code]||0)+1; else openCnt++;
+    });
+  });
+  var fact=[];
+  fact.push('本月（'+m+'）有数 '+sums.days+' 天 / 应有 '+should+' 天，数据完整率 '+rate+'%。');
+  if(sums.elec) fact.push('本月电量合计 '+intf(sums.elec)+' kWh，日均 '+intf(sums.elec/Math.max(1,sums.days))+' kWh。');
+  if(uTot) fact.push('近 30 日费率结构：'+nb.map(function(b){return b[1]+' '+(bandSum[b[0]]/uTot*100).toFixed(1)+'%'}).join(' · ')+'（'+nb.length+' 段制）。');
+  var al7=[]; dates().slice(-7).forEach(function(d){al7=al7.concat(alertsOf(d))});
+  fact.push('近 7 日预警 '+al7.length+' 条，其中红级 '+al7.filter(function(a){return a.level==='red'}).length+' 条，未录原因 '+openCnt+' 条。');
+
+  return ''
+  +'<div class="banner '+(isReal()?'warn':'info')+'">驾驶舱为<b>管理层第一屏</b>：只呈现结论与异常，不要求接触原始表。'
+    +(isReal()
+      ? '当前数据源为<b>真实抄表</b>《'+esc(S.meta.file||'')+'》（'+S.meta.from+' ~ '+S.meta.to+'，'+S.meta.days+' 天）；三线产量未提供，单耗全部「—」；费率档为'+(S.settings.tipBand?'四段':'三段')+'制，氮气按 Nm³ 计（表头笔误已确认）。'
+      : '当前为<b>模拟数据</b>；单价未录入时金额列显示「单价缺失」。')
+  +'</div>'
+  +'<div class="grid g4" style="margin-top:14px">'
+    +kpi('当月电量', intf(sums.elec), ' kWh', m+' · 逐日累加 '+sums.days+' 天')
+    +kpi('当月电费估算', fee===null?'单价缺失':num(fee,0), fee===null?'':' 元', fee===null?'去「设置与导出」录入单价':'用量 × 单价（估算）')
+    +kpi('日均用电', intf(sums.days?sums.elec/sums.days:null), ' kWh', '按可核算 '+sums.days+' 天计算')
+    +kpi('数据完整率', rate.toFixed(1), ' %', '有数 '+ds.length+' / 应有 '+should+' 天')
+  +'</div>'
+  +'<div class="grid g4" style="margin-top:12px">'
+    +kpi('自来水', intf(sums.water), ' 吨', '本月累计')
+    +kpi('蒸汽', intf(sums.steam), ' 吨', '本月累计')
+    +kpi('氮气', intf(sums.nitrogen), ' Nm³', '本月累计')
+    +kpi('待归因预警', String(openCnt), ' 条', '近 30 天 · 未录原因')
+  +'</div>'
+
+  +'<div class="card"><h3>昨日速览 · '+last+'</h3><div class="sub">用量按相邻两日读数差核算；末月最后一天按月末双读数（下班后−上班前）。</div>'
+    +'<div class="tw"><table><tr><th>介质</th><th class="num">昨日用量</th><th class="num">单耗</th><th>单位</th><th>备注</th></tr>'
+    +MEDIA.map(function(md){
+      var v=lu?lu[md.k]:null, uu2=un&&!un.skip&&!un.na?un[md.k]:null;
+      var note = v===null?'待次日读数':(v<0?'读数为负，见预警':'');
+      return '<tr><td>'+md.name+'</td><td class="num">'+(md.k==='elec'?intf(v):num(v,1))+'</td><td class="num">'+num(uu2,2)+'</td><td>'+md.unit+(md.k==='water'||md.k==='steam'?' / kg':' / kg')+'</td><td class="muted">'+note+'</td></tr>'
+    }).join('')
+    +'</table></div></div>'
+
+  +'<div class="grid g2">'
+    +'<div class="card"><h3>45 天电量趋势</h3><div class="sub">实线=当日电量，虚线=7 日均线</div><div id="c1"></div></div>'
+    +'<div class="card"><h3>近 30 日分时结构</h3><div class="sub">尖 / 峰 / 平 / 谷 电量合计与占比</div><div id="c2"></div></div>'
+  +'</div>'
+  +'<div class="card"><h3>单耗 × 产量（近 30 日）</h3><div class="sub">单耗分母只用实际产量；产量为 0 或缺显示「—」，不补零不插值</div><div id="c3"></div></div>'
+  +'<div class="grid g2">'
+    +'<div class="card"><h3>预警原因分布</h3><div class="sub">五类原因（设备/工艺/计划/计量/录入）；未录原因 '+openCnt+' 条</div>'
+      +'<div class="tw"><table><tr><th>原因分类</th><th class="num">条数</th></tr>'
+      +REASONS.map(function(r){return '<tr><td>'+r+'</td><td class="num">'+(rc[r]||0)+'</td></tr>'}).join('')
+      +'</table></div></div>'
+    +'<div class="card"><h3>管理洞察（事实）</h3><div class="sub">仅陈述可复核事实；假设与建议见单耗页与预警页</div><ul class="insight">'
+      +fact.map(function(f){return '<li>'+esc(f)+'</li>'}).join('')+'</ul>'
+      +'<div class="banner warn" style="margin-top:10px">预测模块未接入：缺气温与 PMC 计划输入（Q-006），本页不出任何预测值。</div></div>'
+  +'</div>';
+}
+function kpi(k,v,u,f){
+  return '<div class="kpi"><div class="k">'+k+'</div><div class="v">'+v+'<small>'+u+'</small></div><div class="f">'+esc(f||'')+'</div></div>';
+}
+
+/* —— 抄表录入 —— */
+function vEntry(){
+  var d=ENTRY_DATE||latestDate();
+  var r=S.records[d]||{rd:{tip:'',peak:'',flat:'',valley:'',water:'',steam:'',nitrogen:''},prod:{S05:'',S04:'',S01:''},plan:{},reasons:{}};
+  r.prod=r.prod||{S05:0,S04:0,S01:0};   /* 抄表导入的记录没有产量：按缺省显示空，不补 0 进分母 */
+  var isME=(d.slice(8,10)===String(new Date(Number(d.slice(0,4)),Number(d.slice(5,7)),0).getDate()));
+  var pre=previewFromRecord(d);
+  return '<div class="banner info">录入为<b>每日一次</b>：六项<b>累计读数</b>（非用量），用量由相邻两日差自动核算。产量另开窗口提交，避免串日。</div>'
+  +'<div class="card"><h3>抄表录入</h3><div class="sub">日期与录入人自动留痕（UTC+8）；同一日期重复提交将被拦截，只能修订。</div>'
+  +'<div class="frow"><label>数据日期</label><input type="date" id="edate" value="'+d+'" '+(ROLE==='tech'?'':'')+'></div>'
+  +'<div class="grid g2">'
+    +'<div>'
+      +'<div class="sub" style="margin:10px 0 6px;font-weight:700;color:#152232">电（累计读数 kWh）</div>'
+      +activeBands().map(function(b){return '<div class="frow"><label>'+b[1]+'段</label><input type="number" step="0.01" id="rd_'+b[0]+'" value="'+(r.rd[b[0]]===undefined?'':r.rd[b[0]])+'"></div>'}).join('')
+    +'</div>'
+    +'<div>'
+      +'<div class="sub" style="margin:10px 0 6px;font-weight:700;color:#152232">其他介质（累计读数）</div>'
+      +'<div class="frow"><label>自来水（吨）</label><input type="number" step="0.01" id="rd_water" value="'+(r.rd.water===undefined?'':r.rd.water)+'"></div>'
+      +'<div class="frow"><label>蒸汽（吨）</label><input type="number" step="0.01" id="rd_steam" value="'+(r.rd.steam===undefined?'':r.rd.steam)+'"></div>'
+      +'<div class="frow"><label>氮气（Nm³）</label><input type="number" step="0.01" id="rd_nitrogen" value="'+(r.rd.nitrogen===undefined?'':r.rd.nitrogen)+'"></div>'
+    +'</div>'
+  +'</div>'
+  +(isME?'<div class="banner warn">今天为<b>月末最后一天</b>：电表次日 1 号清零，请补充「下班后」四项读数；缺复读时按昨日总电量兜底并<b>标注来源</b>。</div>'
+      +'<div class="grid g4" style="margin-top:8px">'
+      +activeBands().map(function(b){return '<div class="frow" style="grid-template-columns:1fr"><label>下班后 '+b[1]+'</label><input type="number" step="0.01" id="me_'+b[0]+'" value="'+(r.me&&r.me[b[0]]!==undefined?r.me[b[0]]:'')+'"></div>'}).join('')
+      +'</div>':'')
+  +'<div class="sub" style="margin:16px 0 6px;font-weight:700;color:#152232">三线产量（kg，2 位小数）</div>'
+  +'<div class="grid g3">'
+    +['S05','S04','S01'].map(function(l){return '<div class="frow" style="grid-template-columns:1fr"><label>'+l+' 当日产量</label><input type="number" step="0.01" id="p_'+l+'" value="'+(r.prod[l]===undefined?'':r.prod[l])+'"></div>'}).join('')
+  +'</div>'
+  +'<div id="preview" style="margin-top:12px">'+renderPreview(pre)+'</div>'
+  +'<div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">'
+    +'<button class="btn" id="save">保存并校验</button>'
+    +'<button class="btn ghost" id="recalc">重新校验</button>'
+    +'<span class="muted" style="align-self:center;font-size:12.5px">红级预警须录原因方可保存</span>'
+  +'</div></div>'
+  +'<div class="card"><h3>口径提示</h3><div class="sub">来自 specs/04-rules.md，可在「设置与导出」调整阈值</div>'
+    +'<div class="tw"><table><tr><th>规则</th><th>判据</th></tr>'
+    +'<tr><td>RULE-MET-001</td><td>当日用量 = 次日晨读数 − 当日晨读数</td></tr>'
+    +'<tr><td>RULE-MET-002</td><td>月末全天电量 = 下班后 − 上班前</td></tr>'
+    +'<tr><td>RULE-ALM-004</td><td>周末零用量报警；蒸汽 0~'+S.settings.steamBase+' 吨/日为锅炉基荷，不报警</td></tr>'
+    +'<tr><td>RULE-ALM-005/006</td><td>分支路 ±30% 黄 / ±50% 红，绝对差 &lt;'+S.settings.branchFloor+' kWh 不计（本轮未接入分表，见 Q-007）</td></tr>'
+    +'<tr><td>RULE-INP-001</td><td>缺失读数标记缺失，不补 0、不插值</td></tr>'
+    +'</table></div></div>';
+}
+function evalAlerts(d,rd,prod,me){
+  /* 用临时记录预演校验，不落库 */
+  var bak=S.records[d], existed=!!bak;
+  var tmp={date:d,rd:rd,prod:prod,plan:(bak&&bak.plan)||{},reasons:{},verified:false,voided:false,me:me||null};
+  S.records[d]=tmp;
+  var al=alertsOf(d), u=usage(d);
+  if(existed) S.records[d]=bak; else delete S.records[d];
+  return {alerts:al,usage:u};
+}
+function previewBox(res){
+  var al=res.alerts, u=res.usage, rows='';
+  if(u){
+    rows=activeBands().map(function(b){return '<td class="num">'+(u[b[0]]===null||u[b[0]]===undefined?'—':num(u[b[0]],1))+'</td>'}).join('')
+      +'<td class="num">'+(u.elec===null?'—':intf(u.elec))+'</td>'
+      +'<td class="num">'+(u.water===null?'—':num(u.water,1))+'</td>'
+      +'<td class="num">'+(u.steam===null?'—':num(u.steam,1))+'</td>'
+      +'<td class="num">'+(u.nitrogen===null?'—':intf(u.nitrogen))+'</td>';
+  }
+  var alHtml = al.length
+    ? '<table style="margin-top:8px"><tr><th>等级</th><th>介质</th><th>类型</th><th class="num">当日值</th><th class="num">基线</th><th>偏离</th></tr>'
+      + al.map(function(a){return '<tr class="'+(a.level==='red'?'redrow':'')+'"><td>'+(a.level==='red'?'<span class="pill r">红</span>':'<span class="pill y">黄</span>')+'</td><td>'+a.name+'</td><td>'+a.type+'</td><td class="num">'+num(a.val,1)+' '+a.unit+'</td><td class="num">'+(a.base===null?'—':num(a.base,1))+'</td><td>'+(a.dev===null?'—':(a.type==='量级异常'?a.dev.toFixed(2)+'×':(a.dev*100).toFixed(1)+'%'))+'</td></tr>'}).join('')
+      +'</table>'
+    : '<div class="banner info" style="margin-top:8px">未触发任何预警。</div>';
+  return '<div class="sub" style="font-weight:700;color:#152232">实时用量（按相邻两日读数差）</div>'
+    +'<div class="tw"><table><tr>'+activeBands().map(function(b){return '<th>'+b[1]+'</th>'}).join('')+'<th>电合计</th><th>水</th><th>汽</th><th>氮</th></tr><tr>'+rows+'</tr></table></div>'
+    +alHtml;
+}
+function previewAlerts(){
+  var rd={},ok=true;
+  activeBands().forEach(function(b){
+    var el=document.getElementById('rd_'+b[0]); var v=el?parseFloat(el.value):NaN;
+    if(isNaN(v)){ok=false;v=null} rd[b[0]]=v;
+  });
+  ['water','steam','nitrogen'].forEach(function(m){
+    var el=document.getElementById('rd_'+m); var v=el?parseFloat(el.value):NaN;
+    if(isNaN(v)){ok=false;v=null} rd[m]=v;
+  });
+  if(!ok) return '<div class="empty">填入六项读数后显示实时校验结果</div>';
+  var prod={};
+  ['S05','S04','S01'].forEach(function(l){var el=document.getElementById('p_'+l);var v=el?parseFloat(el.value):0;prod[l]=isNaN(v)?0:v});
+  var me=null;
+  activeBands().forEach(function(b){var el=document.getElementById('me_'+b[0]);if(el){var v=parseFloat(el.value);if(!isNaN(v)){me=me||{};me[b[0]]=v}}});
+  var dNow=(document.getElementById('edate')||{}).value||ENTRY_DATE;
+  return previewBox(evalAlerts(dNow,rd,prod,me));
+}
+function previewFromRecord(d){
+  var r=S.records[d];
+  if(!r||!r.rd||r.rd.tip===null||r.rd.tip===undefined) return '<div class="empty">该日期尚无记录，填入六项读数后显示实时校验结果</div>';
+  return previewBox(evalAlerts(d,r.rd,r.prod||{},r.me||null));
+}
+function renderPreview(html){return html}
+
+/* —— 台账 —— */
+function vLedger(){
+  var all=dates().slice().reverse();
+  /* 最小授权：技术员只看本人录入记录（RULE-PRM-001） */
+  var ds=(ROLE==='tech')?all.filter(function(d){return (S.records[d].enteredBy||'').indexOf('技术员A')>=0}):all;
+  var rows=ds.map(function(d){
+    var r=S.records[d],u=usage(d),st=statusOf(d),al=alertsOf(d);
+    var isRed=al.some(function(a){return a.level==='red'});
+    return '<tr class="'+(r.voided?'void':isRed?'redrow':'')+'">'
+      +'<td>'+d+(isWeekend(d)?' <span class="pill n">周末</span>':'')+'</td>'
+      +activeBands().map(function(b){return '<td class="num">'+(u&&u[b[0]]!==null&&u[b[0]]!==undefined?num(u[b[0]],1):'—')+'</td>'}).join('')
+      +'<td class="num">'+(u&&u.water!==null?num(u.water,1):'—')+'</td>'
+      +'<td class="num">'+(u&&u.steam!==null?num(u.steam,1):'—')+'</td>'
+      +'<td class="num">'+(u&&u.nitrogen!==null?intf(u.nitrogen):'—')+'</td>'
+      +'<td class="num">'+(u&&u.elec!==null?intf(u.elec):'—')+'</td>'
+      +'<td><span class="pill '+st.k+'">'+st.t+'</span></td>'
+      +'<td class="muted">'+esc(r.enteredBy||'')+'</td>'
+      +'<td>'+(ROLE==='admin'?'<button class="btn sm ghost act" data-act="verify" data-d="'+d+'">'+(r.verified?'取消复核':'复核')+'</button> <button class="btn sm danger act" data-act="void" data-d="'+d+'">'+(r.voided?'恢复':'作废')+'</button>':'—')+'</td>'
+      +'</tr>';
+  }).join('');
+  return '<div class="banner info">台账只增不删：修订与作废均留痕（RULE-PRM-002）。缺录日不会被补齐，也不参与均值与排名。'
+  +(ROLE==='tech'?'<br><b>当前为技术员视角</b>：仅显示本人录入的记录，看不到他人明细与驾驶舱（RULE-PRM-001）。':'')+'</div>'
+  +'<div class="card"><h3>数据台账</h3><div class="sub">共 '+ds.length+' 天（'+(ROLE==='tech'?'本人':'全部')+'）· 按日期倒序 · 尖/峰/平/谷 为当日用量</div>'
+  +'<div class="tw"><table><tr><th>日期</th>'+activeBands().map(function(b){return '<th>'+b[1]+'</th>'}).join('')+'<th>水</th><th>汽</th><th>氮</th><th>电合计</th><th>状态</th><th>录入人</th><th>操作</th></tr>'+rows+'</table></div></div>';
+}
+
+/* —— 单耗 —— */
+function vUnit(){
+  var ds=dates().filter(function(d){return d>=S.settings.statStart&&!S.records[d].voided}).slice(-30).reverse();
+  var rows=ds.map(function(d){
+    var x=unitOf(d),p=prodOf(d),r=S.records[d],pl=r.plan||{};
+    var cells;
+    if(!x){cells='<td colspan="5" class="muted">无用量</td>'}
+    else if(x.skip){cells='<td colspan="5" class="muted">调试期/统计起点前 · 不计单耗</td>'}
+    else if(x.na){cells='<td class="muted">'+num(p.total,0)+'</td><td colspan="4" class="muted">产量为 0 或缺失 → 单耗显示「—」</td>'}
+    else cells='<td class="num">'+num(x.prod,0)+'</td><td class="num">'+num(x.elec,2)+'</td><td class="num">'+num(x.water,2)+'</td><td class="num">'+num(x.steam,2)+'</td><td class="num">'+num(x.nitrogen,2)+'</td>';
+    return '<tr><td>'+d+'</td>'+cells+'</tr>';
+  }).join('');
+  var planTot={S05:0,S04:0,S01:0,act:{S05:0,S04:0,S01:0},n:0};
+  ds.forEach(function(d){var p=prodOf(d),r=S.records[d],pl=r.plan||{};planTot.n++;['S05','S04','S01'].forEach(function(l){planTot[l]+=pl[l]||0;planTot.act[l]+=p[l]||0})});
+  return '<div class="banner warn">分线单耗需要分线计量，本轮<b>未接入</b>（29 支路为部分计量、覆盖率约 90%+，见 Q-007）。下表为<b>全厂单耗</b>，分母只用三线实际产量合计，<b>不用计划值</b>。</div>'
+  +'<div class="card"><h3>计划 — 实际 — 单耗</h3><div class="sub">近 30 天 · 单位 kWh/kg、kg/kg、Nm³/kg · 小数位为候选值（Q-014）</div>'
+  +'<div class="tw"><table><tr><th>产线</th><th class="num">计划产量合计</th><th class="num">实际产量合计</th><th class="num">差异</th></tr>'
+  +['S05','S04','S01'].map(function(l){var dif=planTot[l]?((planTot.act[l]-planTot[l])/planTot[l]*100):null;
+      return '<tr><td>'+l+'</td><td class="num">'+intf(planTot[l])+'</td><td class="num">'+intf(planTot.act[l])+'</td><td class="num">'+(dif===null?'—':(dif>0?'+':'')+dif.toFixed(1)+'%')+'</td></tr>'}).join('')
+  +'</table></div><div class="hint">计划值仅用于偏差分析，不进单耗分母（RULE-UNIT-001）。</div></div>'
+  +'<div class="card"><h3>日单耗表</h3><div class="tw"><table><tr><th>日期</th><th class="num">实际产量 kg</th><th class="num">电 kWh/kg</th><th class="num">水 kg/kg</th><th class="num">汽 kg/kg</th><th class="num">氮 Nm³/kg</th></tr>'+rows+'</table></div></div>'
+  +'<div class="card"><h3>单耗与产量走势</h3><div id="c4"></div></div>';
+}
+
+/* —— 月度对照 —— */
+function vBill(){
+  var periods=[{m:'2026-10',label:'2026-10'}];
+  var rows='';
+  MEDIA.forEach(function(md){
+    var st={elec:'自然月',water:'每月 5 日',steam:'每月 25 日',nitrogen:'每月 20 日'}[md.k];
+    periods.forEach(function(p){
+      var sums=monthSumsIn(S,p.m);
+      var plat=sums[md.k];
+      var b=S.bills[p.m+'|'+md.k];
+      var diff=(b&&b.qty)?((plat-b.qty)/b.qty*100):null;
+      var cls='',lab='—';
+      if(diff!==null){
+        if(Math.abs(diff)<=S.settings.billGreen){cls='pill g';lab=diff.toFixed(1)+'%'}
+        else if(Math.abs(diff)>S.settings.billRed){cls='pill r';lab=diff.toFixed(1)+'%'}
+        else {cls='pill y';lab=diff.toFixed(1)+'%'}
+      }
+      var price=S.settings.price[md.k];
+      var est=(price!==null&&price!==undefined)?plat*price:null;
+      rows+='<tr><td>'+md.name+'</td><td>'+st+'</td><td>'+p.label+'</td><td class="num">'+(plat?num(plat,1):'—')+'</td><td class="num">'+(b&&b.qty?num(b.qty,1):'未录')+'</td>'
+        +'<td class="num">'+(diff===null?'无法对照':'<span class="'+cls+'">'+lab+'</span>')+'</td>'
+        +'<td class="num">'+(est===null?'单价缺失':num(est,0)+'<span class="muted"> 估算</span>')+'</td>'
+        +'<td class="num">'+(b&&b.amount?num(b.amount,0):'未录')+'</td>'
+        +'<td class="muted">'+(diff===null?'先补账单':Math.abs(diff)>S.settings.billRed?'按 计量→抄录→结算周期 排查':'—')+'</td></tr>';
+    });
+  });
+  return '<div class="banner warn">5%~15% 区间在 PRD 中<b>未定义</b>（Q-013），本原型按示意标黄；差异 &gt;15% 必须按「计量→抄录→结算周期」排查，不得直接归因为浪费或设备故障。</div>'
+  +'<div class="card"><h3>月度对照（平台测算 vs 账单）</h3><div class="sub">按各介质结算周期一行一期；跨期不直接相加（RULE-MET-004/007）</div>'
+  +'<div class="tw"><table><tr><th>介质</th><th>结算周期</th><th>期次</th><th class="num">平台用量</th><th class="num">账单用量</th><th class="num">差异</th><th class="num">金额（估算）</th><th class="num">账单金额</th><th>排查建议</th></tr>'+rows+'</table></div>'
+  +'<div class="hint">金额 = 用量 × 单价；账单缺失时标「估算」。单价与账单在「设置与导出」录入。</div></div>';
+}
+
+/* —— 预警 —— */
+function vAlert(){
+  var ds=dates().slice(-45).reverse(), rows='', open=0;
+  ds.forEach(function(d){
+    alertsOf(d).forEach(function(a){
+      var r=S.records[d], rs=r.reasons&&r.reasons[a.med];
+      if(!(rs&&rs.code)) open++;
+      rows+='<tr class="'+(a.level==='red'?'redrow':'')+'"><td>'+d+'</td><td>'+(a.level==='red'?'<span class="pill r">红</span>':'<span class="pill y">黄</span>')+'</td><td>'+a.name+'</td><td>'+a.type+'</td>'
+        +'<td class="num">'+num(a.val,1)+' '+a.unit+'</td><td class="num">'+(a.base===null?'—':num(a.base,1))+'</td><td class="num">'+(a.dev===null?'—':(a.type==='量级异常'?a.dev.toFixed(2)+'×':(a.dev*100).toFixed(1)+'%'))+'</td>'
+        +'<td>'+(rs&&rs.code?'<span class="pill g">'+esc(rs.code)+'</span> <span class="muted">'+esc(rs.text||'')+'</span>':'<span class="pill r">未录原因</span>')+'</td>'
+        +'<td>'+(rs&&rs.code?'—':'<button class="btn sm act" data-act="reason" data-d="'+d+'" data-m="'+a.med+'">录入原因</button>')+'</td></tr>';
+    });
+  });
+  if(!rows) rows='<tr><td colspan="9" class="empty">近 45 日无预警</td></tr>';
+  var rampCnt=0;
+  if(isReal()){ ds.forEach(function(d){ if(d>='2026-10-02'&&d<='2026-10-20') rampCnt+=alertsOf(d).length }) }
+  var stopTxt=(S.settings.stops||[]).join('、')||'无';
+  return '<div class="banner info">当前待归因 <b>'+open+'</b> 条。原因分五类：设备 / 工艺 / 计划 / 计量 / 录入；<b>未录原因不得关闭</b>（RULE-ATTR-001）。</div>'
+  +(isReal()?('<div class="banner info" style="margin-top:8px"><b>基线口径 v2 已生效</b>：停产/检修日 '+((S.settings.stops||[]).length)+' 天（'+stopTxt+'）已排除出基线且当天不判量级/偏离；基线样本不足 '+S.settings.minSamples+' 天不判量级异常；爬坡期（近 7 日均 &gt; 近 30 日均 × '+S.settings.rampRatio+'）改判日环比 ±'+Math.round(S.settings.dodDev*100)+'%。'
+     +(rampCnt?('仍有 <b>'+rampCnt+'</b> 条落在 10-02~10-20 段，多为停产日边界与爬坡首日，可核对后归因。'):'停产段与爬坡段的系统误报已基本消除。')+'</div>'):'')
+  +'<div class="card"><h3>预警与归因（近 45 日）</h3><div class="sub">基线：近 30 日均值（量级异常）/ 近 7 日均值（偏离基线）；蒸汽 ≤'+S.settings.steamBase+' 吨/日豁免</div>'
+  +'<div class="tw"><table><tr><th>数据日期</th><th>等级</th><th>介质</th><th>类型</th><th class="num">当日值</th><th class="num">基线</th><th class="num">偏离</th><th>原因</th><th>操作</th></tr>'+rows+'</table></div></div>'
+  +'<div class="card"><h3>分支路监测</h3>'+branchCard()+'</div>';
+}
+function R_dailyFirst(){var d=dates()[0],v=mainElecBetween(d,addDays(d,1));return v===null?0:v}
+function R_dailyLast(){var d=lastUsableDate(),v=mainElecBetween(d,addDays(d,1));return v===null?0:v}
+function branchCard(){
+  var st=S.settings;
+  if(!S.branch){
+    return '<div class="empty">未接入：29 块分表编码与倍率清单未提供（Q-007）。规则已就绪（±'+Math.round(st.branchYellow*100)+'% 黄 / ±'+Math.round(st.branchRed*100)+'% 红，绝对差 &lt;'+st.branchFloor+' kWh 不计），待数据接入。</div>';
+  }
+  var bm=branchMonth(),bd=lastUsableDate(),al=branchAlerts(bd);
+  var cum=bm?mainElecBetween(bm.from,bm.to):null;
+  var rows=al.length?al.map(function(a){
+      return '<tr><td style="white-space:normal">'+esc(a.name)+'</td><td class="num">'+intf(a.val)+'</td><td class="num">'+intf(a.base)+'</td>'
+        +'<td class="num">'+(a.dev>0?'+':'')+(a.dev*100).toFixed(1)+'%</td>'
+        +'<td>'+(a.level==='red'?'<span class="pill r">红</span>':'<span class="pill y">黄</span>')+'</td></tr>';
+    }).join('')
+    :'<tr><td colspan="5" class="empty">'+bd+' 的 29 条支路均未超过 ±'+Math.round(st.branchYellow*100)+'%</td></tr>';
+  return '<div class="sub">真实支路读数 '+S.branch.names.length+' 条 · 与总表同期口径 · 阈值为候选值（Q-008）</div>'
+    +'<div class="tw"><table><tr><th>支路</th><th class="num">'+bd+' 用量 kWh</th><th class="num">近 7 日均</th><th class="num">偏离</th><th>等级</th></tr>'+rows+'</table></div>'
+    +'<div class="hint">支路合计 '+(bm?intf(bm.sum):'—')+' kWh，同期总表 '+(cum===null?'—':intf(cum))+' kWh，覆盖率 '+(cum&&bm?(bm.sum/cum*100).toFixed(1)+'%':'—')
+    +'；未乘倍率，绝对量仅供参考，TOP10 见「数据体检」。</div>';
+}
+
+/* —— 设置 —— */
+function vSet(){
+  var p=S.settings.price;
+  return '<div class="banner warn">阈值与单价为<b>候选配置</b>：阈值为 PRD 经验值，须管理员批准生效（Q-008）；单价须财务提供（Q-017）。修改会记录生效时间。</div>'
+  +'<div class="card"><h3>数据源</h3><div class="sub">同一份口径只能有一套台账：切换会替换现有记录，不合并</div>'
+    +'<div class="kv"><span>当前</span><b>'+(isReal()?('真实抄表 · '+esc(S.meta.from||'')+' ~ '+esc(S.meta.to||'')+' · '+S.meta.days+' 天'):'模拟台账 · '+dates().length+' 天')+'</b></div>'
+    +'<div class="kv"><span>来源文件</span><b>'+(isReal()?esc(S.meta.file||''):'（内置模拟，无来源文件）')+'</b></div>'
+    +'<div class="kv"><span>支路读数</span><b>'+(S.branch?S.branch.names.length+' 条 · 未乘倍率':'未导入')+'</b></div>'
+    +'<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">'
+      +'<button class="btn" id="loadReal">载入 2026-10 真实抄表</button>'
+      +'<button class="btn ghost" id="impRealBtn">导入抄表 JSON</button>'
+      +'<input type="file" id="impRealFile" accept=".json,application/json" style="display:none">'
+      +'<button class="btn ghost" id="reset2">恢复模拟数据</button>'
+    +'</div>'
+    +'<div class="hint">JSON 由 <code>import/extract_xlsx.py</code> 从《能耗记录抄表.xlsx》解析，11 月照此复用；缺日不补 0，导入后先看「数据体检」。</div></div>'
+  +'<div class="grid g2">'
+  +'<div class="card"><h3>单价（金额计算用）</h3><div class="sub">留空则金额列显示「单价缺失」，不猜值</div>'
+    +MEDIA.map(function(m){return '<div class="frow"><label>'+m.name+'（'+S.settings.priceUnit[m.k]+'）</label><input type="number" step="0.0001" id="pr_'+m.k+'" value="'+(p[m.k]===null||p[m.k]===undefined?'':p[m.k])+'" placeholder="未录入"></div>'}).join('')
+    +'<button class="btn" id="savePrice">保存单价</button></div>'
+  +'<div class="card"><h3>报警阈值</h3><div class="sub">对应 RULE-ALM-002/003/005/006/004</div>'
+    +'<div class="frow"><label>量级异常倍数</label><input type="number" step="0.1" id="s_mag" value="'+S.settings.magnitude+'"></div>'
+    +'<div class="frow"><label>偏离基线 ±%</label><input type="number" step="1" id="s_dev" value="'+(S.settings.deviation*100)+'"></div>'
+    +'<div class="frow"><label>蒸汽基荷（吨/日）</label><input type="number" step="1" id="s_steam" value="'+S.settings.steamBase+'"></div>'
+    +'<div class="frow"><label>费率档</label><select id="s_tipband"><option value="3"'+(S.settings.tipBand?'':' selected')+'>三段（峰/平/谷）</option><option value="4"'+(S.settings.tipBand?' selected':'')+'>四段（尖/峰/平/谷）</option></select></div>'
+    +'<div class="frow"><label>爬坡判定倍数</label><input type="number" step="0.1" id="s_ramp" value="'+S.settings.rampRatio+'"></div>'
+    +'<div class="frow"><label>爬坡期日环比 ±%</label><input type="number" step="1" id="s_dod" value="'+(S.settings.dodDev*100)+'"></div>'
+    +'<div class="frow"><label>停产/检修日</label><input type="text" id="s_stops" value="'+esc((S.settings.stops||[]).join(','))+'" placeholder="YYYY-MM-DD,YYYY-MM-DD"></div>'
+    +'<div class="hint">停产日不入基线，且当天不判量级/偏离（读数倒退仍报）；基线样本少于 '+S.settings.minSamples+' 天不判量级异常；爬坡期（近 7 日均 &gt; 近 30 日均 ×「爬坡判定倍数」）改用日环比。</div>'
+    +'<div class="frow"><label>单耗统计起点</label><input type="date" id="s_stat" value="'+S.settings.statStart+'"></div>'
+    +'<button class="btn" id="saveTh">保存阈值</button></div>'
+  +'</div>'
+  +'<div class="card"><h3>账单录入（月度对照用）</h3><div class="sub">按介质 + 期次录入实际用量与金额；金额缺失时平台只做估算</div>'
+  +'<div class="grid g4">'
+  +MEDIA.map(function(m){var b=S.bills['2026-10|'+m.k]||{};
+    return '<div><div class="sub" style="font-weight:700;color:#152232">'+m.name+' · 2026-10</div>'
+      +'<div class="frow" style="grid-template-columns:1fr"><label>实际用量</label><input type="number" step="0.01" id="bq_'+m.k+'" value="'+(b.qty===undefined?'':b.qty)+'"></div>'
+      +'<div class="frow" style="grid-template-columns:1fr"><label>账单金额</label><input type="number" step="0.01" id="ba_'+m.k+'" value="'+(b.amount===undefined||b.amount===null?'':b.amount)+'"></div></div>'}).join('')
+  +'</div><button class="btn" id="saveBill" style="margin-top:8px">保存账单</button></div>'
+  +'<div class="card"><h3>导出与备份</h3><div class="sub">仅导出本机演示数据；真实部署前须做授权门（G-EXPORT）</div>'
+  +'<div style="display:flex;gap:8px;flex-wrap:wrap">'
+    +'<button class="btn" id="expCsv">导出台账 CSV</button>'
+    +'<button class="btn ghost" id="expJson">全量 JSON 备份</button>'
+    +'<button class="btn ghost" id="impBtn">导入 CSV</button>'
+    +'<input type="file" id="impFile" accept=".csv,text/csv" style="display:none">'
+    +'<button class="btn danger" id="reset">恢复模拟数据</button>'
+  +'</div><div id="impOut" class="hint"></div></div>'
+  +'<div class="card"><h3>未实现与待确认（如实标注）</h3>'
+    +'<div class="tw"><table><tr><th>项</th><th>状态</th><th>阻塞原因</th></tr>'
+    +'<tr><td>29 块分支路分表与 TOP10</td><td>'+(S.branch?'<span class="pill y">读数已接入</span>':'<span class="pill r">未接入</span>')+'</td><td>'+(S.branch?'增量可汇总（覆盖率见体检），但 CT 倍率未提供 → 绝对量待校（Q-007）':'支路编码与倍率清单未提供（Q-007）')+'</td></tr>'
+    +'<tr><td>能耗预测（下周/下月）</td><td><span class="pill r">未实现</span></td><td>缺气温数据与 PMC 计划接口；模型方法未定（Q-006）</td></tr>'
+    +'<tr><td>月度简报自动生成</td><td><span class="pill r">未实现</span></td><td>签核链与对外授权未定（Q-004）</td></tr>'
+    +'<tr><td>能耗 × OEE 联动</td><td><span class="pill r">未接入</span></td><td>批次—日期—产线映射待对齐（Q-011）</td></tr>'
+    +'<tr><td>后端鉴权与账号体系</td><td><span class="pill y">界面级</span></td><td>现为角色切换 + 演示口令，非生产鉴权（Q-001）</td></tr>'
+    +'<tr><td>云端数据库持久化</td><td><span class="pill y">本机存储</span></td><td>当前写浏览器 localStorage，未接 energy_records / platform_settings（Q-002）</td></tr>'
+    +'</table></div></div>';
+}
+
+/* ============ 交互 ============ */
+function bind(){
+  var el=document.getElementById('view');
+  el.querySelectorAll('.act').forEach(function(b){
+    b.onclick=function(){
+      var d=b.dataset.d, act=b.dataset.act;
+      if(act==='verify'){S.records[d].verified=!S.records[d].verified;save();render();}
+      else if(act==='void'){
+        if(!S.records[d].voided){
+          var why=prompt('作废原因（必填，留痕）：');
+          if(!why) return;
+        }
+        S.records[d].voided=!S.records[d].voided;save();render();
+      }
+      else if(act==='reason'){ openReason(d,b.dataset.m) }
+    };
+  });
+  if(VIEW==='dash'){
+    var last=latestDate(),trend=dates().slice(-45);
+    var tEl=document.getElementById('c1');
+    if(tEl){
+      var es=trend.map(function(d){var u=usage(d);return u&&u.elec!==null?u.elec:null});
+      var ma=[];for(var i=0;i<es.length;i++){var w=es.slice(Math.max(0,i-6),i+1).filter(function(x){return x!==null});ma.push(w.length?mean(w):null)}
+      chartLine(tEl,trend.map(function(d){return d.slice(5)}),[
+        {name:'当日电量',color:'#2f6fae',data:es},
+        {name:'7 日均线',color:'#b3261e',data:ma,dash:true,w:1.6}
+      ],{w:760,h:230});
+    }
+    var c2=document.getElementById('c2');
+    if(c2){
+      var u30=dates().slice(-30),nb2=activeBands(),bs={},tot=0;
+      nb2.forEach(function(b){bs[b[0]]=0});
+      u30.forEach(function(d){var u=usage(d);if(!u||u.elec===null)return;nb2.forEach(function(b){bs[b[0]]+=u[b[0]]||0});tot+=u.elec});
+      var cols=['#0b2743','#2f6fae','#7ba7cd','#c6d8e8'];
+      chartBars(c2,nb2.map(function(b,i){return {name:b[1]+'段',v:bs[b[0]],unit:'kWh',pct:tot?((bs[b[0]]/tot*100).toFixed(1)+'%'):'—',color:cols[i]}}));
+    }
+    var c3=document.getElementById('c3');
+    if(c3){
+      var uu=dates().slice(-30).filter(function(d){return d>=S.settings.statStart});
+      var lab=uu.map(function(d){return d.slice(5)});
+      var ue=uu.map(function(d){var x=unitOf(d);return (x&&!x.skip&&!x.na&&x.elec!==null)?x.elec:null});
+      var pr=uu.map(function(d){var p=prodOf(d);return p?p.total:null});
+      chartLine(c3,lab,[
+        {name:'电单耗 kWh/kg',color:'#2f6fae',data:ue},
+        {name:'产量 kg',color:'#7c8b9e',data:pr,dash:true,w:1.4,axis:'right'}
+      ],{w:760,h:230,dec:2});
+      if(c3.querySelector('svg')){
+        c3.insertAdjacentHTML('beforeend','<div class="hint">产量为右轴。产量为 0 或缺的日子不出单耗点，曲线在该日断开。</div>');
+      }
+    }
+  }
+  if(VIEW==='unit'){
+    var c4=document.getElementById('c4');
+    if(c4){
+      var ds=dates().filter(function(d){return d>=S.settings.statStart}).slice(-30);
+      var lab=ds.map(function(d){return d.slice(5)});
+      var ue=ds.map(function(d){var x=unitOf(d);return (x&&!x.skip&&!x.na&&x.elec!==null)?x.elec:null});
+      var uw=ds.map(function(d){var x=unitOf(d);return (x&&!x.skip&&!x.na&&x.water!==null)?x.water:null});
+      var us=ds.map(function(d){var x=unitOf(d);return (x&&!x.skip&&!x.na&&x.steam!==null)?x.steam:null});
+      chartLine(c4,lab,[
+        {name:'电 kWh/kg',color:'#2f6fae',data:ue},
+        {name:'水 kg/kg',color:'#1a6b4a',data:uw},
+        {name:'汽 kg/kg',color:'#8a5b00',data:us}
+      ],{w:760,h:240,dec:2});
+    }
+  }
+  if(VIEW==='entry'){
+    var sd=document.getElementById('edate');
+    if(sd){sd.onchange=function(){ENTRY_DATE=sd.value;render()}}
+    var rc=document.getElementById('recalc');
+    if(rc){rc.onclick=function(){document.getElementById('preview').innerHTML=previewAlerts(ENTRY_DATE)}}
+    var sv=document.getElementById('save');
+    if(sv){sv.onclick=function(){submitEntry()}}
+  }
+  if(VIEW==='set'){
+    var sp=document.getElementById('savePrice');
+    if(sp){sp.onclick=function(){
+      MEDIA.forEach(function(m){var v=parseFloat(document.getElementById('pr_'+m.k).value);S.settings.price[m.k]=isNaN(v)?null:v});
+      save();alert('单价已保存'+(S.settings.price.elec===null?'（电单价仍为空，金额列将显示「单价缺失」）':''));render();
+    }}
+    var st=document.getElementById('saveTh');
+    if(st){st.onclick=function(){
+      S.settings.magnitude=parseFloat(document.getElementById('s_mag').value)||1.5;
+      S.settings.deviation=(parseFloat(document.getElementById('s_dev').value)||30)/100;
+      S.settings.steamBase=parseFloat(document.getElementById('s_steam').value)||8;
+      S.settings.tipBand=document.getElementById('s_tipband').value==='4';
+      S.settings.rampRatio=parseFloat(document.getElementById('s_ramp').value)||1.3;
+      S.settings.dodDev=(parseFloat(document.getElementById('s_dod').value)||50)/100;
+      var sb2=document.getElementById('s_stops');
+      if(sb2)S.settings.stops=String(sb2.value||'').split(/[,，\s]+/).filter(function(x){return /^\d{4}-\d{2}-\d{2}$/.test(x)}).sort();
+      var ds=document.getElementById('s_stat').value; if(ds)S.settings.statStart=ds;
+      save();alert('阈值已保存（候选配置，待 Q-008 批准后生效）');render();
+    }}
+    var sb=document.getElementById('saveBill');
+    if(sb){sb.onclick=function(){
+      MEDIA.forEach(function(m){
+        var q=parseFloat(document.getElementById('bq_'+m.k).value), a=parseFloat(document.getElementById('ba_'+m.k).value);
+        S.bills['2026-10|'+m.k]={qty:isNaN(q)?null:q,amount:isNaN(a)?null:a,period:'2026-10'};
+      });
+      save();alert('账单已保存');render();
+    }}
+    document.getElementById('expCsv').onclick=exportCsv;
+    document.getElementById('expJson').onclick=exportJson;
+    document.getElementById('impBtn').onclick=function(){document.getElementById('impFile').click()};
+    document.getElementById('impFile').onchange=importCsv;
+    var lr=document.getElementById('loadReal');
+    if(lr)lr.onclick=loadReal;
+    var ib=document.getElementById('impRealBtn');
+    if(ib)ib.onclick=function(){document.getElementById('impRealFile').click()};
+    var ifl=document.getElementById('impRealFile');
+    if(ifl)ifl.onchange=importRealJson;
+    var r2=document.getElementById('reset2');
+    if(r2)r2.onclick=resetSeed;
+    document.getElementById('reset').onclick=resetSeed;
+  }
+}
+
+function submitEntry(){
+  var d=document.getElementById('edate').value||ENTRY_DATE;
+  var rd={},miss=[];
+  activeBands().forEach(function(b){var v=parseFloat((document.getElementById('rd_'+b[0])||{}).value);if(isNaN(v)){miss.push(b[1]+'段');v=null}rd[b[0]]=v});
+  ['water','steam','nitrogen'].forEach(function(m){
+    var v=parseFloat(document.getElementById('rd_'+m).value);
+    if(isNaN(v)){miss.push({water:'自来水',steam:'蒸汽',nitrogen:'氮气'}[m]);v=null}rd[m]=v});
+  if(miss.length){alert('以下读数缺失：'+miss.join('、')+'。\n按 RULE-INP-001，缺失不补 0，请补齐后再保存。');return}
+  /* 三段制下表单不收尖段：保留原始尖段读数，避免切回四段时丢数 */
+  if(rd.tip===undefined&&S.records[d]&&S.records[d].rd) rd.tip=S.records[d].rd.tip;
+  var exists=!!S.records[d]&&!S.records[d].voided;
+  if(exists&&!confirm('该日期已有记录，将作为「修订」保存并留痕（不覆盖原值），继续？'))return;
+  var prod={};['S05','S04','S01'].forEach(function(l){var v=parseFloat(document.getElementById('p_'+l).value);prod[l]=isNaN(v)?0:v});
+  var me=null;
+  activeBands().forEach(function(b){var el=document.getElementById('me_'+b[0]);if(el){var v=parseFloat(el.value);if(!isNaN(v)){me=me||{};me[b[0]]=v}}});
+  var rec=S.records[d]||{date:d,reasons:{},verified:false,voided:false};
+  rec.rd=rd; rec.prod=prod; if(me)rec.me=me;
+  rec.enteredBy=ROLE==='tech'?'技术员A':'管理员';
+  rec.enteredAt=iso(new Date())+' '+new Date().toTimeString().slice(0,5);
+  S.records[d]=rec; save();
+  var al=alertsOf(d), red=al.filter(function(a){return a.level==='red'});
+  var lack=red.filter(function(a){var x=rec.reasons&&rec.reasons[a.med];return !(x&&x.code)});
+  if(lack.length){
+    var m=lack[0].med;
+    alert('存在红级预警且未录原因，按 RULE-ALM-009 须先填原因方可保存：\n· '+lack.map(function(a){return a.name+' '+a.type}).join('\n· '));
+    render(); openReason(d,m); return;
+  }
+  alert('已保存（'+d+'）。'+(al.length?('触发 '+al.length+' 条预警，其中红级 '+red.length+' 条。'):'未触发预警。'));
+  render();
+}
+
+function openReason(d,med){
+  var mname={elec:'电',water:'自来水',steam:'蒸汽',nitrogen:'氮气'}[med]||med;
+  var code=prompt('为 '+d+' · '+mname+' 的预警选择原因分类（输入序号）：\n1 设备\n2 工艺\n3 计划\n4 计量\n5 录入');
+  if(!code) return;
+  var c=REASONS[Number(code)-1];
+  if(!c){alert('请输入 1~5');return}
+  var text=prompt('原因说明（必填，将写入原因台账并可检索）：');
+  if(!text||!text.trim()){alert('原因说明不得为空，预警不可关闭（RULE-ATTR-001）');return}
+  var r=S.records[d]; r.reasons=r.reasons||{};
+  r.reasons[med]={code:c,text:text.trim(),by:ROLE==='tech'?'技术员A':'管理员',at:iso(new Date())+' '+new Date().toTimeString().slice(0,5)};
+  save();render();
+}
+
+function exportCsv(){
+  var nb=activeBands();
+  var head=['日期'].concat(nb.map(function(b){return b[1]})).concat(['水','汽','氮','电合计','产量S05','产量S04','产量S01','状态','录入人','是否作废']);
+  var lines=[head.join(',')];
+  dates().forEach(function(d){
+    var u=usage(d),r=S.records[d],st=statusOf(d),p=prodOf(d);
+    var cells=[d];
+    nb.forEach(function(b){cells.push(u&&u[b[0]]!==null&&u[b[0]]!==undefined?num(u[b[0]],2):'')});
+    cells=cells.concat([
+      u&&u.water!==null?num(u.water,2):'',u&&u.steam!==null?num(u.steam,2):'',u&&u.nitrogen!==null?num(u.nitrogen,2):'',
+      u&&u.elec!==null?num(u.elec,2):'',p?num(p.S05,2):'',p?num(p.S04,2):'',p?num(p.S01,2):'',st.t,r.enteredBy||'',r.voided?'是':'否'
+    ]);
+    lines.push(cells.join(','));
+  });
+  dl('能耗台账_'+todayStr()+'.csv','\ufeff'+lines.join('\n'),'text/csv;charset=utf-8');
+}
+function exportJson(){
+  dl('backup_'+todayStr()+'.json',JSON.stringify({meta:{project:'deliju-energy-ai',version:'prototype-v0.1',exported:iso(new Date())},data:S},null,2),'application/json');
+}
+function dl(name,content,type){
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([content],{type:type}));
+  a.download=name;a.click();setTimeout(function(){URL.revokeObjectURL(a.href)},1500);
+}
+function importCsv(e){
+  var f=e.target.files[0]; if(!f) return;
+  var fr=new FileReader();
+  fr.onload=function(){
+    var rows=String(fr.result).replace(/^\ufeff/,'').split(/\r?\n/).filter(function(x){return x.trim()});
+    if(rows.length<2){document.getElementById('impOut').textContent='文件为空或只有表头';return}
+    var head=rows[0].split(',').map(function(s){return s.trim()});
+    var need=['日期'].concat(activeBands().map(function(b){return b[1]})).concat(['水','汽','氮']);
+    var idx={},missing=[];
+    need.forEach(function(n){var i=head.indexOf(n);if(i<0)missing.push(n);else idx[n]=i});
+    var pS05=head.indexOf('产量S05'),pS04=head.indexOf('产量S04'),pS01=head.indexOf('产量S01');
+    if(missing.length){document.getElementById('impOut').textContent='缺少列：'+missing.join('、')+'。请使用导出的 CSV 作为模板（列名须一致）。';return}
+    var ok=0,errs=[];
+    for(var i=1;i<rows.length;i++){
+      var c=rows[i].split(',');
+      var d=(c[idx['日期']]||'').trim();
+      if(!/^\d{4}-\d{2}-\d{2}$/.test(d)){errs.push('第'+(i+1)+'行：日期格式无效（'+d+'）');continue}
+      var rd={},bad=[];
+      activeBands().forEach(function(b){var v=parseFloat(c[idx[b[1]]]);if(isNaN(v))bad.push(b[1]);rd[b[0]]=isNaN(v)?null:v});
+      [['water','水'],['steam','汽'],['nitrogen','氮']].forEach(function(mm){var v=parseFloat(c[idx[mm[1]]]);if(isNaN(v))bad.push(mm[1]);rd[mm[0]]=isNaN(v)?null:v});
+      if(bad.length){errs.push('第'+(i+1)+'行：读数缺失（'+bad.join('、')+'），整行不导入');continue}
+      var prod={S05:pS05>=0?(parseFloat(c[pS05])||0):0,S04:pS04>=0?(parseFloat(c[pS04])||0):0,S01:pS01>=0?(parseFloat(c[pS01])||0):0};
+      var rec=S.records[d]||{date:d,reasons:{},verified:false,voided:false};
+      rec.rd=rd;rec.prod=prod;rec.enteredBy='CSV导入';rec.enteredAt=iso(new Date());
+      S.records[d]=rec;ok++;
+    }
+    save();
+    document.getElementById('impOut').innerHTML='导入完成：成功 '+ok+' 行，失败 '+errs.length+' 行。'
+      +(errs.length?'<br><span style="color:#b3261e">'+errs.slice(0,12).map(esc).join('<br>')+(errs.length>12?'<br>…共 '+errs.length+' 条':'')+'</span>':'');
+    setTimeout(render,600);
+  };
+  fr.readAsText(f,'utf-8');
+}
+
+/* ============ 启动 ============ */
+function enter(role){
+  ROLE=role;
+  document.getElementById('roleSel').value=role;
+  document.getElementById('gate').style.display='none';
+  document.getElementById('chipState').textContent='BASELINE_DRAFT · '+({tech:'技术员',lead:'领导',admin:'管理员'}[role]);
+  syncChips();
+  setView(VIEW);
+}
+document.getElementById('roleSel').onchange=function(e){
+  ROLE=e.target.value;
+  document.getElementById('chipState').textContent='BASELINE_DRAFT · '+({tech:'技术员',lead:'领导',admin:'管理员'}[ROLE]);
+  applyRole(); render();
+};
+document.querySelectorAll('.tab').forEach(function(b){b.onclick=function(){setView(b.dataset.v)}});
+document.querySelectorAll('.role').forEach(function(b){
+  b.onclick=function(){ var r=b.dataset.role; document.getElementById('pw').value={tech:'1111',lead:'2222',admin:'3333'}[r]; document.getElementById('pw').focus(); document.getElementById('pw').dataset.r=r; };
+});
+document.getElementById('enter').onclick=function(){
+  var pw=document.getElementById('pw').value.trim();
+  var map={'1111':'tech','2222':'lead','3333':'admin'};
+  var r=map[pw];
+  if(!r){ /* 允许点选卡片后输入错误提示 */
+    r=document.getElementById('pw').dataset.r;
+    if(r&&pw===''){ enter(r); return }
+    alert('演示口令不正确：技术员 1111 / 领导 2222 / 管理员 3333');
+    return;
+  }
+  enter(r);
+};
+document.getElementById('skip').onclick=function(){enter('admin')};
+
+load();
+syncChips();
+setView('dash');
+</script>
+</body>
+</html>

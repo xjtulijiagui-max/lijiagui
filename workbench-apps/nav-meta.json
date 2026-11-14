@@ -1,0 +1,26 @@
+{
+  "id": "workbench-apps",
+  "title": "Workbench Apps 镜像库｜内网工作台 GitHub 存档（26 个）",
+  "shortTitle": "工作台镜像库",
+  "category": "培训与组织",
+  "description": "企业 AI 培训产出的 32 个 WorkBuddy 内网工作台的 GitHub 永久存档：10 个完整可交互镜像、16 个静态快照、3 条失效存档（缺分享码），另含 3 个公网空间直链。原 app.workbuddy.host 链接存在失效风险，本库为防失效副本。",
+  "url": "https://xjtulijiagui-max.github.io/lijiagui/workbench-apps/",
+  "path": "workbench-apps/",
+  "tags": [
+    "工作台镜像",
+    "Workbench Apps",
+    "内网存档",
+    "静态快照",
+    "WorkBuddy",
+    "防失效",
+    "培训成果",
+    "GitHub Pages"
+  ],
+  "type": "教学资料",
+  "client": "多客户",
+  "status": "正常",
+  "featured": false,
+  "updated": "2026-11-15",
+  "source": "2026-11-15 从 29 条 app.workbuddy.host 内网链接抓取存档（26 成功 / 3 失效），配合 workbench-list 使用",
+  "order": 282
+}

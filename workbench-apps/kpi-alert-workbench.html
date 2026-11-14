@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>综合金融考核预警工作台</title>
+<link rel="stylesheet" href="assets/app.css?v=20261023d">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231F3864'/%3E%3Cpath d='M8 22l5-7 4 4 7-9' stroke='%23fff' stroke-width='2.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+</head>
+<body>
+<div id="gh-snapshot-banner" style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#FFF7E6;border-bottom:1px solid #E8C87A;color:#8A5A00;padding:8px 16px;font:13px/1.5 'PingFang SC','Microsoft YaHei',sans-serif;text-align:center;">
+📜 这是原内网工作台的<strong>静态快照</strong>（仅供存档预览）。完整交互版本需在 WorkBuddy 内网环境打开原链接。
+<button onclick="this.parentNode.remove();document.body.style.paddingTop='0'" style="margin-left:10px;background:#8A5A00;color:#fff;border:0;border-radius:4px;padding:2px 10px;cursor:pointer;font-size:12px;">知道了</button>
+</div>
+
+
+<!-- 全局：数据状态条（由 app.js 按真实云端连接状态更新，不写死环境结论） -->
+<div class="sim-banner" id="simBanner" data-state="pending">
+  <span class="sim-dot"></span>
+  <span id="simBannerText">正在连接云端数据库…</span>
+</div>
+
+<header class="app-header">
+  <div class="hd-left">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" width="26" height="26"><rect width="32" height="32" rx="7" fill="#1F3864"/><path d="M8 22l5-7 4 4 7-9" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <div>
+        <h1>综合金融考核预警工作台</h1>
+        <p class="hd-sub" id="hdSub">考核指标预警与考核差距分析</p>
+      </div>
+    </div>
+  </div>
+  <div class="hd-right">
+    <label class="period-pick">
+      <span>考核周期</span>
+      <select id="periodSelect" aria-label="考核周期"></select>
+    </label>
+    <div class="save-state" id="saveState" data-state="idle" title="数据保存状态">
+      <span class="dot"></span><span class="txt">就绪</span>
+    </div>
+    <button class="btn btn-ghost" id="btnRefresh" title="重新从云端读取">刷新</button>
+  </div>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="主导航">
+  <button class="tab is-active" data-view="overview" role="tab" aria-selected="true">概览</button>
+  <button class="tab" data-view="alerts" role="tab" aria-selected="false">预警清单</button>
+  <button class="tab" data-view="import" role="tab" aria-selected="false">导入与核对</button>
+  <button class="tab" data-view="output" role="tab" aria-selected="false">差距分析与导出</button>
+  <button class="tab" data-view="help" role="tab" aria-selected="false">口径与帮助</button>
+</nav>
+
+<main class="app-main">
+
+  <!-- ================= 概览 ================= -->
+  <section class="view is-active" id="view-overview">
+    <div class="view-head">
+      <div>
+        <h2>本期预警概览</h2>
+        <p class="muted" id="ovMeta">数据截止：—　来源：—</p>
+      </div>
+      <div class="head-actions">
+        <button class="btn btn-primary" data-goto="import">导入本期报表</button>
+      </div>
+    </div>
+
+    <div class="kpi-grid" id="ovCards"></div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-head"><h3>预警等级分布</h3><span class="muted small">点击进入对应清单</span></div>
+        <div class="level-bars" id="ovLevels"></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h3>机构加权得分</h3><span class="muted small">Σ(min(完成率,100)×权重)</span></div>
+        <div class="org-bars" id="ovOrgScores"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h3>指标维度缺口汇总</h3><span class="muted small">不同单位不合并</span></div>
+      <div class="table-wrap"><table class="dt" id="ovKpiTable"></table></div>
+    </div>
+
+    <div class="two-col">
+      <div class="card card-todo">
+        <div class="card-head"><h3>待办</h3></div>
+        <div id="ovTodo" class="todo-list"></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h3>数据状态</h3></div>
+        <div id="ovStatus" class="todo-list"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 预警清单 ================= -->
+  <section class="view" id="view-alerts">
+    <div class="view-head">
+      <div>
+        <h2>预警清单</h2>
+        <p class="muted" id="alMeta">—</p>
+      </div>
+      <div class="head-actions">
+        <button class="btn" id="btnExportList">导出清单 Excel</button>
+      </div>
+    </div>
+
+    <div class="filters">
+      <label>机构<select id="fOrg"></select></label>
+      <label>指标<select id="fKpi"></select></label>
+      <label>等级<select id="fLevel"></select></label>
+      <label>状态<select id="fStatus"></select></label>
+      <label class="grow">关键词<input id="fKeyword" type="search" placeholder="机构 / 指标名称"></label>
+      <button class="btn btn-ghost" id="fClear">清除筛选</button>
+    </div>
+
+    <div class="split">
+      <div class="list-pane">
+        <div class="list-meta" id="listMeta"></div>
+        <div class="table-wrap"><table class="dt" id="alertTable"></table></div>
+      </div>
+      <aside class="detail-pane" id="detailPane">
+        <div class="empty-detail">从左侧选择一条指标查看详情</div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ================= 导入与核对 ================= -->
+  <section class="view" id="view-import">
+    <div class="view-head">
+      <div>
+        <h2>导入与核对</h2>
+        <p class="muted">支持系统导出的 .xlsx / .csv 考核明细，以及 .docx 口径说明；无需改列名、无需填写 JSON</p>
+      </div>
+    </div>
+
+    <div class="steps" id="importSteps">
+      <span class="step is-active" data-step="1">1 选择文件</span>
+      <span class="step" data-step="2">2 识别范围</span>
+      <span class="step" data-step="3">3 字段映射</span>
+      <span class="step" data-step="4">4 校验预览</span>
+      <span class="step" data-step="5">5 确认提交</span>
+      <span class="step" data-step="6">6 批次结果</span>
+    </div>
+
+    <!-- 步骤1 -->
+    <div class="card" id="step1">
+      <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="选择或拖拽文件">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#1F3864" stroke-width="1.6"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5"/><path d="M3.5 15v3.5A1.5 1.5 0 005 20h14a1.5 1.5 0 001.5-1.5V15"/></svg>
+        <p class="dz-title">点击选择文件，或拖拽到此处</p>
+        <p class="muted small">支持 .xlsx、.csv、.docx；单个文件建议 ≤ 10 MB</p>
+        <input type="file" id="fileInput" accept=".xlsx,.xls,.csv,.docx" hidden>
+      </div>
+      <div class="file-info" id="fileInfo" hidden></div>
+      <div class="auth-check">
+        <label class="chk"><input type="checkbox" id="chkAuth"> 我已确认：本次数据在允许使用范围内，且不含考核基本法等制度文件</label>
+      </div>
+    </div>
+
+    <!-- 步骤2 -->
+    <div class="card" id="step2" hidden>
+      <div class="card-head"><h3>识别工作表与表头</h3></div>
+      <div class="row-form">
+        <label>工作表<select id="sheetSelect"></select></label>
+        <label>表头所在行<input type="number" id="headerRowInput" min="1" max="10" value="1"></label>
+        <button class="btn btn-ghost" id="btnReparse">重新识别</button>
+      </div>
+      <p class="hint" id="headerHint"></p>
+      <div class="table-wrap"><table class="dt dt-compact" id="previewTable"></table></div>
+    </div>
+
+    <!-- 步骤3 -->
+    <div class="card" id="step3" hidden>
+      <div class="card-head"><h3>字段映射</h3><span class="muted small">原字段 → 业务字段</span></div>
+      <div class="table-wrap"><table class="dt dt-compact" id="mappingTable"></table></div>
+      <div id="mapIssues"></div>
+      <button class="btn btn-primary" id="btnConfirmMap">确认映射，开始校验</button>
+    </div>
+
+    <!-- 步骤4 -->
+    <div class="card" id="step4" hidden>
+      <div class="card-head"><h3>校验结果</h3><span class="muted small" id="parseNote"></span></div>
+      <div class="count-cards" id="countCards"></div>
+      <div id="dictFixBar"></div>
+      <div class="tabbar" id="catTabs"></div>
+      <div class="table-wrap"><table class="dt dt-compact" id="catTable"></table></div>
+      <div class="submit-bar">
+        <label class="chk"><input type="checkbox" id="chkReplace"> 允许按业务键更新已有记录（不勾选则只新增，冲突行跳过）</label>
+        <button class="btn btn-primary" id="btnSubmitImport">确认提交</button>
+      </div>
+    </div>
+
+    <!-- 步骤5/6 -->
+    <div class="card" id="step6" hidden>
+      <div class="card-head"><h3>批次结果</h3></div>
+      <div id="batchResult"></div>
+    </div>
+
+    <!-- 文档解析 -->
+    <div class="card" id="docPanel" hidden>
+      <div class="card-head"><h3>文档口径提取（.docx）</h3><span class="muted small">建议/未批准内容不会自动生效</span></div>
+      <div id="docResult"></div>
+    </div>
+
+    <!-- 批次历史 -->
+    <div class="card">
+      <div class="card-head"><h3>导入批次</h3><span class="muted small">仅本工作台记录</span></div>
+      <div class="table-wrap"><table class="dt dt-compact" id="batchTable"></table></div>
+    </div>
+  </section>
+
+  <!-- ================= 差距分析与导出 ================= -->
+  <section class="view" id="view-output">
+    <div class="view-head">
+      <div>
+        <h2>差距分析与导出</h2>
+        <p class="muted" id="outMeta">—</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h3>① 本期范围摘要</h3></div>
+      <div id="outSummary" class="sum-grid"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <h3>② 差距汇总</h3>
+        <div class="seg" id="gapSeg">
+          <button class="seg-btn is-active" data-gap="org">按机构</button>
+          <button class="seg-btn" data-gap="kpi">按指标</button>
+        </div>
+      </div>
+      <div class="table-wrap"><table class="dt" id="gapTable"></table></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h3>③ 待确认事项</h3><span class="muted small">导出时必须保留本节</span></div>
+      <div id="pendingList" class="todo-list"></div>
+    </div>
+
+    <div class="card export-card">
+      <div class="card-head"><h3>④ 导出</h3></div>
+      <div class="export-row">
+        <div>
+          <strong>预警清单（Excel）</strong>
+          <p class="muted small">按当前筛选范围导出；含完成率、缺口率、等级与数据来源</p>
+          <button class="btn btn-primary" id="btnExportXlsx">导出 Excel</button>
+        </div>
+        <div>
+          <strong>考核差距分析（Word 草稿）</strong>
+          <p class="muted small">固定 6 个模块；首段带"初稿，待人工确认"声明；不含考核结论</p>
+          <button class="btn btn-primary" id="btnExportDocx">导出 Word</button>
+        </div>
+      </div>
+      <p class="hint">导出内容由程序按已入库记录计算，AI 只组织文字，不新增未经确认的事实。</p>
+    </div>
+  </section>
+
+  <!-- ================= 口径与帮助 ================= -->
+  <section class="view" id="view-help">
+    <div class="view-head"><div><h2>口径与帮助</h2><p class="muted">公式、阈值、状态含义与数据边界</p></div></div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-head"><h3>计算公式</h3></div>
+        <ul class="plain">
+          <li><b>正向指标</b>：完成率 = 实际值 ÷ 目标值 × 100%</li>
+          <li><b>逆向指标</b>：完成率 = 目标值 ÷ 实际值 × 100%（如投诉件数，越低越好）</li>
+          <li><b>缺口率</b>：正向 =（目标−实际）÷ 目标；逆向 =（实际−目标）÷ 目标</li>
+          <li><b>达标判定</b>：完成率 ≥ 100.00% 为达标；比较前先四舍五入到 2 位</li>
+          <li><b>机构加权得分</b>：Σ（min(完成率,100) × 权重），单条得分先保留 2 位再求和；权重合计≠100% 不出得分</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-head"><h3>预警分级阈值</h3><span class="muted small">设计默认值，待业务确认</span></div>
+        <div class="level-bars" id="helpLevels"></div>
+        <p class="hint">缺口率 ≥20% 高风险；10%–20%（含 10）中风险；0–10% 低风险；≤0 达标。</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h3>数据状态含义</h3></div>
+      <div class="table-wrap"><table class="dt dt-compact" id="helpStatusTable"></table></div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-head"><h3>指标字典</h3></div>
+        <div class="table-wrap"><table class="dt dt-compact" id="helpKpiDict"></table></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h3>机构字典</h3></div>
+        <div class="table-wrap"><table class="dt dt-compact" id="helpOrgDict"></table></div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-head"><h3>数据边界</h3></div>
+        <ul class="plain">
+          <li>只处理获准使用的报表数据；<b>考核基本法等制度文件不得上传</b>。</li>
+          <li>不虚构、不修改原始考核数据；差距与措施由人工确认。</li>
+          <li>追赶措施必须人工填写，AI 不代拟考核结论。</li>
+          <li>文档中的"建议/未批准"内容不会自动生效。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-head"><h3>技术信息</h3></div>
+        <dl class="kv" id="techInfo"></dl>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="toast-wrap" id="toastWrap" aria-live="polite"></div>
+
+<!-- 文档解析/详情用的浮层 -->
+<div class="overlay" id="overlay" hidden>
+  <div class="overlay-box" role="dialog" aria-modal="true" aria-labelledby="ovTitle">
+    <div class="overlay-head">
+      <h3 id="ovTitle">提示</h3>
+      <button class="btn-icon" id="ovClose" aria-label="关闭">✕</button>
+    </div>
+    <div class="overlay-body" id="ovBody"></div>
+  </div>
+</div>
+
+<script src="assets/vendor/xlsx-0.20.3.min.js"></script>
+<script src="assets/vendor/mammoth.browser.min.js"></script>
+<script src="assets/vendor/docx.umd.js"></script>
+<script src="assets/vendor/workbuddy-cloud-sdk.global.js"></script>
+<script src="assets/engine.js?v=20261023d"></script>
+<script src="assets/report.js?v=20261023d"></script>
+<script src="assets/config.js?v=20261023d"></script>
+<script src="assets/app.js?v=20261023d"></script>
+<script>
+// 快照模式：拦截失效的相对资源请求，避免报错
+(function(){
+  try { document.body.style.paddingTop = '44px'; } catch(e) {}
+  var origFetch = window.fetch;
+  window.fetch = function(u){
+    if (typeof u === 'string' && (u.startsWith('/') || (!u.startsWith('http') && !u.startsWith('data:') && !u.startsWith('#')))) {
+      return Promise.resolve(new Response(JSON.stringify({items:[],error:'snapshot-mode'}), {status:200, headers:{'Content-Type':'application/json'}}));
+    }
+    return origFetch.apply(this, arguments);
+  };
+  // 阻止相对资源加载报错
+  document.addEventListener('error', function(e){
+    var t = e.target;
+    if (t && (t.tagName === 'SCRIPT' || t.tagName === 'LINK')) e.preventDefault();
+  }, true);
+})();
+</script>
+</body>
+</html>

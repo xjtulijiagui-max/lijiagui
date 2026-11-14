@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>团体渠道商机转化工作台</title>
+<style>
+  :root{
+    --navy:#1F3864; --navy2:#2F5597; --navy3:#3B6BB5;
+    --bg:#f4f6fb; --card:#ffffff; --line:#e2e8f2; --ink:#1c2434; --muted:#6b7891;
+    --green:#1f8a5b; --greenbg:#e6f5ee; --amber:#a86a00; --amberbg:#fff4dd;
+    --red:#c0392b; --redbg:#fdecea; --purple:#6a3fb5; --purplebg:#f0e9fb; --gray:#6b7280; --graybg:#eef1f5;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:"Microsoft YaHei","PingFang SC","Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:14px;}
+  header{background:linear-gradient(100deg,var(--navy),var(--navy3));color:#fff;padding:14px 22px;display:flex;flex-wrap:wrap;align-items:center;gap:12px;}
+  header h1{font-size:18px;margin:0;font-weight:600;letter-spacing:.5px;}
+  .badges{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto;}
+  .badge{font-size:12px;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);}
+  .badge.ok{background:#0f6b45;border-color:#0f6b45;}
+  .badge.warn{background:#8a5a00;border-color:#8a5a00;}
+  .empty-hint{background:#fff9ee;border-left:4px solid var(--amber);padding:14px 16px;border-radius:8px;margin:10px 0;font-size:13.5px;color:#5a4300;line-height:1.7;}
+  .empty-hint b{color:#8a5a00;}
+  .empty-hint .go{display:inline-block;margin-top:8px;padding:6px 14px;background:var(--navy2);color:#fff;border-radius:6px;font-size:13px;cursor:pointer;border:none;}
+  nav{display:flex;gap:4px;background:#fff;border-bottom:1px solid var(--line);padding:0 18px;position:sticky;top:0;z-index:20;overflow-x:auto;}
+  nav button{border:none;background:none;padding:13px 18px;font-size:14px;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;font-family:inherit;}
+  nav button.active{color:var(--navy);border-bottom-color:var(--navy);font-weight:600;}
+  main{padding:18px 22px 60px;max-width:1280px;margin:0 auto;}
+  .view{display:none;} .view.active{display:block;}
+  .grid{display:grid;gap:14px;}
+  .kpis{grid-template-columns:repeat(6,1fr);}
+  @media(max-width:1000px){.kpis{grid-template-columns:repeat(3,1fr);}}
+  @media(max-width:620px){.kpis{grid-template-columns:repeat(2,1fr);}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;box-shadow:0 1px 3px rgba(31,56,100,.05);}
+  .card h3{margin:0 0 12px;font-size:15px;color:var(--navy);}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;}
+  .kpi .lbl{font-size:12px;color:var(--muted);margin-bottom:6px;}
+  .kpi .val{font-size:26px;font-weight:700;color:var(--navy);line-height:1.1;}
+  .kpi .sub{font-size:12px;color:var(--muted);margin-top:4px;}
+  .row{display:flex;gap:14px;flex-wrap:wrap;}
+  .col{flex:1;min-width:260px;}
+  table{border-collapse:collapse;width:100%;font-size:13px;}
+  th,td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:middle;}
+  th{background:#f7f9fd;color:var(--navy);font-weight:600;white-space:nowrap;position:sticky;top:0;}
+  tbody tr:hover{background:#fafcff;}
+  .scroll{overflow:auto;max-height:520px;border:1px solid var(--line);border-radius:10px;}
+  .tag{display:inline-block;font-size:12px;padding:2px 9px;border-radius:20px;white-space:nowrap;}
+  .t-ok{background:var(--greenbg);color:var(--green);}
+  .t-pending{background:var(--amberbg);color:var(--amber);}
+  .t-dup{background:var(--purplebg);color:var(--purple);}
+  .t-invalid{background:var(--redbg);color:var(--red);}
+  .t-exclude{background:var(--graybg);color:var(--gray);}
+  .t-status{background:#eaf0fb;color:var(--navy2);}
+  .btn{border:1px solid var(--navy2);background:var(--navy2);color:#fff;padding:8px 14px;border-radius:8px;font-size:13px;cursor:pointer;font-family:inherit;}
+  .btn:hover{background:var(--navy);}
+  .btn.ghost{background:#fff;color:var(--navy2);}
+  .btn.ghost:hover{background:#eef3fc;}
+  .btn.small{padding:5px 10px;font-size:12px;}
+  .btn:disabled{opacity:.5;cursor:not-allowed;}
+  .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;align-items:center;}
+  input[type=text],select{padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-size:13px;font-family:inherit;background:#fff;color:var(--ink);}
+  input[type=text]{min-width:180px;}
+  .muted{color:var(--muted);font-size:12px;}
+  .note{background:#f0f5ff;border-left:3px solid var(--navy3);padding:10px 12px;border-radius:6px;font-size:12.5px;color:#3a4a66;margin:10px 0;}
+  .funnel{display:flex;flex-direction:column;gap:10px;}
+  .fstep{display:flex;align-items:center;gap:12px;}
+  .fstep .name{width:120px;font-size:13px;color:var(--navy);flex:none;}
+  .fbar{height:34px;border-radius:6px;background:linear-gradient(90deg,var(--navy2),var(--navy3));display:flex;align-items:center;padding:0 12px;color:#fff;font-size:13px;min-width:60px;transition:width .4s;}
+  .fstep .rate{width:110px;font-size:12px;color:var(--muted);flex:none;text-align:right;}
+  .loss{color:var(--red);font-weight:600;}
+  .msg{margin:10px 0;padding:10px 12px;border-radius:8px;font-size:13px;display:none;}
+  .msg.show{display:block;}
+  .msg.ok{background:var(--greenbg);color:var(--green);}
+  .msg.err{background:var(--redbg);color:var(--red);}
+  .overlay{position:fixed;inset:0;background:rgba(20,28,42,.35);display:none;z-index:40;}
+  .overlay.show{display:block;}
+  .drawer{position:fixed;top:0;right:0;width:520px;max-width:94vw;height:100%;background:#fff;z-index:50;box-shadow:-6px 0 24px rgba(0,0,0,.12);transform:translateX(100%);transition:transform .25s;display:flex;flex-direction:column;}
+  .drawer.show{transform:translateX(0);}
+  .drawer .head{padding:16px 18px;background:var(--navy);color:#fff;display:flex;justify-content:space-between;align-items:center;}
+  .drawer .body{padding:16px 18px;overflow:auto;flex:1;}
+  .drawer .foot{padding:12px 18px;border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-end;}
+  .formgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .formgrid label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted);}
+  .formgrid input,.formgrid select{padding:7px 9px;border:1px solid var(--line);border-radius:7px;font-size:13px;font-family:inherit;}
+  .upload-card{border:1px dashed #c3d0e6;border-radius:12px;padding:16px;background:#fbfdff;}
+  .upload-card h4{margin:0 0 6px;font-size:14px;color:var(--navy);}
+  .stat-inline{display:flex;gap:18px;flex-wrap:wrap;margin:8px 0;}
+  .stat-inline b{color:var(--navy);font-size:16px;}
+  .sec-title{font-size:14px;color:var(--navy);font-weight:600;margin:16px 0 8px;}
+  .layer{border-left:4px solid;padding:8px 12px;margin:8px 0;border-radius:6px;font-size:13px;}
+  .layer.fact{border-color:var(--green);background:#f2faf6;}
+  .layer.infer{border-color:var(--amber);background:#fff9ee;}
+  .layer.sug{border-color:var(--navy2);background:#f2f6fd;}
+  .layer h5{margin:0 0 6px;font-size:12px;letter-spacing:1px;}
+  ul.tight{margin:4px 0;padding-left:18px;} ul.tight li{margin:4px 0;line-height:1.5;}
+  .file-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:10px 0;}
+  .hidden{display:none!important;}
+</style>
+</head>
+<body>
+<div id="gh-snapshot-banner" style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#FFF7E6;border-bottom:1px solid #E8C87A;color:#8A5A00;padding:8px 16px;font:13px/1.5 'PingFang SC','Microsoft YaHei',sans-serif;text-align:center;">
+📜 这是原内网工作台的<strong>静态快照</strong>（仅供存档预览）。完整交互版本需在 WorkBuddy 内网环境打开原链接。
+<button onclick="this.parentNode.remove();document.body.style.paddingTop='0'" style="margin-left:10px;background:#8A5A00;color:#fff;border:0;border-radius:4px;padding:2px 10px;cursor:pointer;font-size:12px;">知道了</button>
+</div>
+
+<header>
+  <h1>团体渠道商机转化工作台</h1>
+  <div class="badges">
+    <span class="badge ok" id="dbBadge">资料库：检测中…</span>
+    <span class="badge" id="dataBadge">数据：检测中…</span>
+    <span class="badge">基准日 2026-09-30</span>
+  </div>
+</header>
+
+<nav>
+  <button data-view="overview" class="active">概览</button>
+  <button data-view="opps">商机</button>
+  <button data-view="import">导入与复核</button>
+  <button data-view="analysis">分析与匹配</button>
+</nav>
+
+<main>
+  <!-- 概览 -->
+  <section class="view active" id="view-overview">
+    <div id="emptyHint"></div>
+    <div class="note">口径：上传=状态≠无效；分配=有分配日期；拜访=有「已完成」拜访记录（按商机去重）；成交=已成交且有成交保费。分母为 0 显示「暂无可计算数据」，不显示 0%。</div>
+    <div class="grid kpis" id="kpis"></div>
+    <div class="row" style="margin-top:14px;">
+      <div class="card col">
+        <h3>待处理事项</h3>
+        <div id="todoList" class="muted">加载中…</div>
+      </div>
+      <div class="card col">
+        <h3>最近导入批次</h3>
+        <div class="scroll" style="max-height:260px;"><table><thead><tr><th>批次</th><th>类型</th><th>文件</th><th>导入</th><th>跳过</th><th>时间</th></tr></thead><tbody id="batchBody"></tbody></table></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 商机 -->
+  <section class="view" id="view-opps">
+    <div class="filters">
+      <input type="text" id="fq" placeholder="搜索商机编号/客户代号/行业" />
+      <select id="ftype"><option value="">全部类型</option></select>
+      <select id="fregion"><option value="">全部区域</option></select>
+      <select id="fstatus"><option value="">全部状态</option></select>
+      <select id="fsource"><option value="">全部来源</option></select>
+      <button class="btn" onclick="loadOpps()">查询</button>
+      <button class="btn ghost" onclick="resetFilters()">重置</button>
+    </div>
+    <div class="scroll"><table><thead><tr>
+      <th>商机编号</th><th>客户代号</th><th>类型</th><th>行业</th><th>区域</th><th>规模(万)</th><th>来源</th><th>状态</th><th>分配人</th><th>操作</th>
+    </tr></thead><tbody id="oppBody"></tbody></table></div>
+    <div class="muted" id="oppCount" style="margin-top:8px;"></div>
+  </section>
+
+  <!-- 导入与复核 -->
+  <section class="view" id="view-import">
+    <div class="row">
+      <div class="col card">
+        <h3>① 商机台账（Excel）</h3>
+        <div class="upload-card">
+          <h4>上传公司系统导出的商机台账</h4>
+          <div class="muted">支持 .xlsx / .xlsm / .csv（自动识别 UTF-8 与 GBK 编码），自动识别表头与中文字段别名。业务人员无需改表。</div>
+          <div class="file-row"><input type="file" id="fileOpps" accept=".xlsx,.xlsm,.csv,.txt" /><button class="btn" onclick="parseFile('opps')">解析预览</button></div>
+          <div id="prevOpps"></div>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-top:14px;">
+      <div class="col card">
+        <h3>② 拜访跟进记录（Word）</h3>
+        <div class="upload-card">
+          <h4>上传 Word 拜访记录</h4>
+          <div class="muted">自动解析 8 列表格；仅「拜访结果=已完成」计入拜访，已取消/计划不计入。</div>
+          <div class="file-row"><input type="file" id="fileVisits" accept=".docx" /><button class="btn" onclick="parseFile('visits')">解析预览</button></div>
+          <div id="prevVisits"></div>
+        </div>
+      </div>
+      <div class="col card">
+        <h3>③ 业务员关系资源（Excel）</h3>
+        <div class="upload-card">
+          <h4>上传业务员关系资源表</h4>
+          <div class="muted">用于商机-业务员匹配打分（类型/行业/区域/规模/关系）。支持 .xlsx / .xlsm / .csv。</div>
+          <div class="file-row"><input type="file" id="fileStaff" accept=".xlsx,.xlsm,.csv,.txt" /><button class="btn" onclick="parseFile('staff')">解析预览</button></div>
+          <div id="prevStaff"></div>
+        </div>
+      </div>
+    </div>
+    <div class="empty-hint" style="margin-top:14px;">
+      <b>手上暂时没有真实文件？</b> 可以载入一份<b>课堂模拟样本</b>（30 行虚构台账 + 21 条拜访记录 + 6 个业务员）
+      先熟悉流程。这些是编造的测试数据，<b>只用于验证功能，不能当作业务结论</b>；载入后会真实写入数据库，可随时清空。
+      <br><button class="go" onclick="loadDemo()">载入课堂模拟样本（演示用）</button>
+      <button class="go" style="background:#a12b2b;margin-left:8px;" onclick="resetAll()">清空全部数据（谨慎）</button>
+    </div>
+    <div class="msg" id="importMsg"></div>
+  </section>
+
+  <!-- 分析与匹配 -->
+  <section class="view" id="view-analysis">
+    <div class="card">
+      <h3>转化漏斗</h3>
+      <div class="funnel" id="funnel"></div>
+      <div class="muted" id="funnelNote" style="margin-top:8px;"></div>
+    </div>
+    <div class="row" style="margin-top:14px;">
+      <div class="card col"><h3>按客户类型</h3><div class="scroll" style="max-height:300px;"><table><thead><tr><th>类型</th><th>上传</th><th>分配</th><th>拜访</th><th>成交</th><th>成交率</th></tr></thead><tbody id="typeBody"></tbody></table></div></div>
+      <div class="card col"><h3>按来源</h3><div class="scroll" style="max-height:300px;"><table><thead><tr><th>来源</th><th>上传</th><th>成交</th><th>成交率</th></tr></thead><tbody id="srcBody"></tbody></table></div></div>
+    </div>
+
+    <div class="card" style="margin-top:14px;">
+      <h3>商机-业务员匹配建议 <span class="muted" id="matchMeta"></span></h3>
+      <div class="note">规则确定性打分（类型30/行业25/区域20/规模15/关系10），建议仅作参考，非分配指令；关系资源缺失标「待补」。</div>
+      <div class="scroll"><table><thead><tr><th>商机</th><th>类型</th><th>行业/区域</th><th>当前责任人</th><th>建议业务员</th><th>得分</th><th>等级</th><th>判定</th><th>依据</th></tr></thead><tbody id="matchBody"></tbody></table></div>
+    </div>
+
+    <div class="card" style="margin-top:14px;">
+      <h3>原因分析与行动清单（AI 初稿）</h3>
+      <div class="muted" id="analysisLabel"></div>
+      <div class="layer fact"><h5>事实（系统记录）</h5><ul class="tight" id="factList"></ul></div>
+      <div class="layer infer"><h5>推测（需核实）</h5><ul class="tight" id="inferList"></ul></div>
+      <div class="layer sug"><h5>建议（行动）</h5><ul class="tight" id="sugList"></ul></div>
+      <div class="muted" id="gapList" style="margin-top:6px;"></div>
+      <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn ghost" onclick="window.location='/api/export/report'">导出分析报告(MD)</button>
+        <button class="btn ghost" onclick="window.location='/api/export/funnel'">导出漏斗清单(CSV)</button>
+        <button class="btn ghost" onclick="window.location='/api/export/match'">导出匹配建议(CSV)</button>
+        <button class="btn ghost" onclick="window.location='/api/export/actions'">导出行动清单(MD)</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="overlay" id="overlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <div class="head"><span id="drawerTitle">商机详情</span><button class="btn ghost small" onclick="closeDrawer()">关闭</button></div>
+  <div class="body" id="drawerBody"></div>
+  <div class="foot"><button class="btn ghost" onclick="closeDrawer()">取消</button><button class="btn" id="saveBtn" onclick="saveOpp()">保存修改</button></div>
+</div>
+
+<script>
+const $ = (s)=>document.querySelector(s);
+const $$ = (s)=>document.querySelectorAll(s);
+const ENUMS = {
+  type:['政府端','大企业','中小企业'],
+  status:['待分配','已分配','已拜访','已成交','已流失','无效'],
+  region:['南昌','赣州','九江','上饶','宜春','吉安','抚州','萍乡'],
+  source:['政府推介','转介绍','名单营销','渠道推荐','自主开发']
+};
+let currentOppId = null;
+
+function toast(el, text, ok){ const m=$(el); m.textContent=text; m.className='msg show '+(ok?'ok':'err'); setTimeout(()=>{m.className='msg';},6000); }
+async function api(path, opts){
+  let r;
+  try{ r = await fetch(path, opts); }
+  catch(e){ return {error:'网络请求失败，请检查网络后重试（'+e.message+'）'}; }
+  const ct = r.headers.get('content-type')||'';
+  if(ct.includes('application/json')){
+    let d;
+    try{ d = await r.json(); }catch(e){ return {error:'服务返回内容无法解析（HTTP '+r.status+'）'}; }
+    if(!r.ok && d && typeof d==='object' && !d.error) d.error = '请求失败（HTTP '+r.status+'）';
+    return d;
+  }
+  const t = await r.text();
+  return {error:'服务返回了非预期内容（HTTP '+r.status+'），请稍后重试'};
+}
+
+function switchView(name){
+  $$('nav button').forEach(b=>b.classList.toggle('active', b.dataset.view===name));
+  $$('.view').forEach(v=>v.classList.toggle('active', v.id==='view-'+name));
+  if(name==='overview') loadOverview();
+  if(name==='opps') { loadOpps(); }
+  if(name==='analysis') loadAnalysis();
+}
+$$('nav button').forEach(b=>b.onclick=()=>switchView(b.dataset.view));
+
+function fmtPct(v){ return (v===null||v===undefined)?'暂无可计算数据':v.toFixed(2)+'%'; }
+function esc(s){ return (s??'').toString().replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+async function loadHeader(){
+  const h = await api('/api/health');
+  const c = h.counts || {opp:0,visit:0,staff:0};
+  const o = h.data_origin || 'empty';
+  $('#dbBadge').textContent = '资料库：'+(h.db_status||'未知');
+  const tot = c.opp || 0;
+  if(o === 'empty'){
+    $('#dataBadge').textContent = '数据：空库，请先导入台账';
+    $('#dataBadge').className = 'badge warn';
+  } else if(o === 'demo'){
+    $('#dataBadge').textContent = '数据：课堂模拟样本（虚构，'+tot+' 条商机）';
+    $('#dataBadge').className = 'badge warn';
+  } else {
+    $('#dataBadge').textContent = '数据：商机 '+tot+' / 拜访 '+c.visit+' / 业务员 '+c.staff;
+    $('#dataBadge').className = 'badge ok';
+  }
+}
+
+async function loadOverview(){
+  const d = await api('/api/overview');
+  const s = d.stats;
+  const kpis = [
+    ['有效商机', s.upload, '状态≠无效'],
+    ['分配率', fmtPct(s.assign_rate), s.assigned+' / '+s.upload],
+    ['拜访率', fmtPct(s.visit_rate), s.visit+' / '+s.assigned],
+    ['成交率', fmtPct(s.deal_rate), s.deal+' / '+s.visit],
+    ['总转化率', fmtPct(s.total_rate), s.deal+' / '+s.upload],
+    ['成交保费(万元)', s.premium.toFixed(1), '预计规模 '+s.scale_sum.toFixed(1)]
+  ];
+  $('#kpis').innerHTML = kpis.map(k=>`<div class="kpi"><div class="lbl">${k[0]}</div><div class="val">${k[1]}</div><div class="sub">${k[2]}</div></div>`).join('');
+  const empty = (s.upload||0) === 0;
+  $('#emptyHint').innerHTML = empty ? `
+    <div class="empty-hint">
+      <b>当前库为空，页面上的所有数字都是「无数据」状态，不是真实的 0%。</b><br>
+      要看到你自己的转化漏斗，请到「导入与复核」上传三份文件：① 商机台账 Excel（必需）② 拜访记录 Word ③ 业务员资源表 Excel。
+      解析后会先给出预览和分类（可导入 / 待确认 / 重复 / 无效 / 排除），确认后才写入数据库。
+      <br><button class="go" onclick="switchView('import')">去导入台账 →</button>
+    </div>` : '';
+  $('#todoList').innerHTML = `
+    <div class="stat-inline">
+      <div>待分配 <b>${s.unassigned}</b></div>
+      <div>已分配未拜访 <b>${s.assigned_unvisited}</b></div>
+      <div>已拜访未成交 <b>${s.visited_undealt}</b></div>
+      <div>状态与记录不一致 <b style="color:var(--red)">${d.inconsistent_count}</b></div>
+    </div>
+    <div class="muted">统计期间 ${s.period}，基准日 ${s.basedate}；资料库状态：${d.db_status}</div>`;
+  $('#batchBody').innerHTML = (d.batches||[]).map(b=>`<tr><td>#${b.batch_id}</td><td>${b.kind}</td><td title="${esc(b.file_name)}">${esc((b.file_name||'').slice(0,18))}</td><td>${b.imported}</td><td>${b.skipped}</td><td>${esc((b.created_at||'').slice(5,16))}</td></tr>`).join('') || '<tr><td colspan="6" class="muted">暂无批次</td></tr>';
+  loadHeader();
+}
+
+function fillFilters(){
+  const fill=(id,arr)=>{ const el=$(id); if(el.options.length>1) return; arr.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;el.appendChild(o);}); };
+  fill('#ftype',ENUMS.type); fill('#fregion',ENUMS.region); fill('#fstatus',ENUMS.status); fill('#fsource',ENUMS.source);
+}
+function resetFilters(){ $('#fq').value=''; ['#ftype','#fregion','#fstatus','#fsource'].forEach(s=>$(s).value=''); loadOpps(); }
+
+async function loadOpps(){
+  fillFilters();
+  const p = new URLSearchParams({q:$('#fq').value, type:$('#ftype').value, region:$('#fregion').value, status:$('#fstatus').value, source:$('#fsource').value});
+  const d = await api('/api/opps?'+p.toString());
+  $('#oppBody').innerHTML = d.rows.map(r=>`<tr>
+    <td>${esc(r.opportunity_id)}</td><td>${esc(r.customer_code)}</td><td>${esc(r.customer_type)}</td>
+    <td>${esc(r.industry)}</td><td>${esc(r.region)}</td><td>${esc(r.est_premium)}</td>
+    <td>${esc(r.source)}</td><td><span class="tag t-status">${esc(r.status)}</span></td>
+    <td>${esc(r.assignee||'—')}</td>
+    <td><button class="btn small ghost" onclick="openOpp('${r.opportunity_id}')">详情</button></td></tr>`).join('');
+  $('#oppCount').textContent = '共 '+d.total+' 条';
+}
+
+async function openOpp(oid){
+  currentOppId = oid;
+  const d = await api('/api/opps/'+encodeURIComponent(oid));
+  const o = d.opp;
+  $('#drawerTitle').textContent = '商机 '+o.opportunity_id;
+  const opt=(arr,v)=>arr.map(x=>`<option value="${x}" ${x===v?'selected':''}>${x}</option>`).join('');
+  $('#drawerBody').innerHTML = `
+    <div class="formgrid">
+      <label>商机编号<input id="e_opportunity_id" value="${esc(o.opportunity_id)}" disabled></label>
+      <label>客户代号<input id="e_customer_code" value="${esc(o.customer_code)}"></label>
+      <label>客户类型<select id="e_customer_type">${opt(ENUMS.type,o.customer_type)}</select></label>
+      <label>行业<input id="e_industry" value="${esc(o.industry)}"></label>
+      <label>区域<select id="e_region">${opt(ENUMS.region,o.region)}</select></label>
+      <label>预计保费规模(万元)<input id="e_est_premium" value="${esc(o.est_premium)}"></label>
+      <label>商机来源<select id="e_source">${opt(ENUMS.source,o.source)}</select></label>
+      <label>上传日期<input id="e_upload_date" value="${esc(o.upload_date)}" placeholder="YYYY-MM-DD"></label>
+      <label>分配业务员<input id="e_assignee" value="${esc(o.assignee)}"></label>
+      <label>分配日期<input id="e_assign_date" value="${esc(o.assign_date)}" placeholder="YYYY-MM-DD"></label>
+      <label>当前状态<select id="e_status">${opt(ENUMS.status,o.status)}</select></label>
+      <label>成交日期<input id="e_deal_date" value="${esc(o.deal_date)}" placeholder="YYYY-MM-DD"></label>
+      <label>成交保费(万元)<input id="e_deal_premium" value="${esc(o.deal_premium)}"></label>
+      <label>关键联系人已确认<select id="e_contact_ready"><option value="">—</option><option ${o.contact_ready==='是'?'selected':''}>是</option><option ${o.contact_ready==='否'?'selected':''}>否</option></select></label>
+      <label>预算已确认<select id="e_budget_ready"><option value="">—</option><option ${o.budget_ready==='是'?'selected':''}>是</option><option ${o.budget_ready==='否'?'selected':''}>否</option></select></label>
+    </div>
+    <label style="display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted);margin-top:10px;">流失/关闭原因<textarea id="e_lose_reason" rows="2" style="padding:7px 9px;border:1px solid var(--line);border-radius:7px;font-family:inherit;">${esc(o.lose_reason)}</textarea></label>
+    <div class="sec-title">关联拜访记录（${d.visits.length}）</div>
+    ${d.visits.length?`<div class="scroll" style="max-height:180px;"><table><thead><tr><th>日期</th><th>方式</th><th>结果</th><th>职务</th><th>反馈</th></tr></thead><tbody>${d.visits.map(v=>`<tr><td>${esc(v.visit_date)}</td><td>${esc(v.method)}</td><td>${esc(v.result)}</td><td>${esc(v.role)}</td><td>${esc(v.feedback)}</td></tr>`).join('')}</tbody></table></div>`:'<div class="muted">无拜访记录</div>'}
+    <div class="sec-title">变化记录</div>
+    ${d.history.length?`<div class="scroll" style="max-height:160px;"><table><thead><tr><th>时间</th><th>字段</th><th>原值</th><th>新值</th></tr></thead><tbody>${d.history.map(h=>`<tr><td>${esc((h.changed_at||'').slice(5,16))}</td><td>${esc(h.field)}</td><td>${esc(h.old_value)}</td><td>${esc(h.new_value)}</td></tr>`).join('')}</tbody></table></div>`:'<div class="muted">暂无</div>'}
+    <div class="note" style="margin-top:12px;">标记成交需填成交日期+成交保费；标记已拜访需存在「已完成」拜访记录；标记流失/无效需填原因（服务端强制校验）。</div>`;
+  $('#overlay').classList.add('show'); $('#drawer').classList.add('show');
+}
+function closeDrawer(){ $('#overlay').classList.remove('show'); $('#drawer').classList.remove('show'); currentOppId=null; }
+
+async function saveOpp(){
+  if(!currentOppId) return;
+  const g=id=>$('#e_'+id)?$('#e_'+id).value:'';
+  const payload={customer_code:g('customer_code'),customer_type:g('customer_type'),industry:g('industry'),
+    region:g('region'),est_premium:g('est_premium'),source:g('source'),upload_date:g('upload_date'),
+    assignee:g('assignee'),assign_date:g('assign_date'),status:g('status'),deal_date:g('deal_date'),
+    deal_premium:g('deal_premium'),lose_reason:g('lose_reason'),contact_ready:g('contact_ready'),budget_ready:g('budget_ready')};
+  const r = await fetch('/api/opps/'+encodeURIComponent(currentOppId),{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+  const d = await r.json();
+  if(!r.ok){ alert('保存失败：'+d.error); return; }
+  alert('已保存并读回一致');
+  closeDrawer(); loadOpps();
+}
+
+/* ---------- 导入 ---------- */
+const files = {opps:null, visits:null, staff:null};
+async function parseFile(kind){
+  const input = $('#file'+kind[0].toUpperCase()+kind.slice(1));
+  const box = kind==='opps'?'#prevOpps':(kind==='visits'?'#prevVisits':'#prevStaff');
+  if(!input.files[0]){ alert('请先选择文件'); return; }
+  files[kind]=input.files[0];
+  $(box).innerHTML='<div class="muted">解析中…</div>';
+  const fd=new FormData(); fd.append('file', files[kind]); fd.append('kind', kind);
+  const d = await api('/api/parse',{method:'POST',body:fd});
+  if(!d || d.error){
+    $(box).innerHTML='';
+    toast('#importMsg','解析失败：'+((d&&d.error)||'未知错误'),false);
+    files[kind]=null; input.value='';
+    return;
+  }
+  if(kind==='opps') renderOppPreview(d);
+  if(kind==='visits') renderVisitPreview(d);
+  if(kind==='staff') renderStaffPreview(d);
+}
+function renderOppPreview(d){
+  const c=d.counts;
+  const cls={'可导入':'t-ok','待确认':'t-pending','重复':'t-dup','无效':'t-invalid','排除':'t-exclude'};
+  let html=`<div class="stat-inline"><div>总行 <b>${d.total}</b></div><div>可导入 <b>${c['可导入']||0}</b></div><div>待确认 <b>${c['待确认']||0}</b></div><div>无效 <b style="color:var(--red)">${c['无效']||0}</b></div><div>排除 <b>${c['排除']||0}</b></div></div>`;
+  html+='<div class="scroll" style="max-height:300px;"><table><thead><tr><th>行</th><th>商机编号</th><th>客户代号</th><th>类型</th><th>区域</th><th>规模</th><th>状态</th><th>分类</th><th>原因</th></tr></thead><tbody>';
+  html+=d.rows.map(r=>`<tr><td>${r.row_no}</td><td>${esc(r.opportunity_id)}</td><td>${esc(r.customer_code)}</td><td>${esc(r.customer_type)}</td><td>${esc(r.region)}</td><td>${esc(r.est_premium)}</td><td>${esc(r.status)}</td><td><span class="tag ${cls[r.classification]||''}">${r.classification}</span></td><td class="muted">${esc((r.reasons||[]).join('；'))}</td></tr>`).join('');
+  html+='</tbody></table></div>';
+  html+=`<div class="file-row" style="margin-top:10px;">
+    <select id="oppMode"><option value="skip">重复：跳过</option><option value="update">重复：按业务键更新</option></select>
+    <label class="muted"><input type="checkbox" id="acceptPending" /> 同时导入「待确认」行</label>
+    <button class="btn" onclick="confirmImport('opps')">确认导入</button></div>`;
+  $('#prevOpps').innerHTML=html;
+}
+function renderVisitPreview(d){
+  let html=`<div class="stat-inline"><div>总记录 <b>${d.total}</b></div><div>已完成 <b>${d.completed}</b></div><div>去重商机 <b>${d.distinct_completed}</b></div></div>`;
+  html+='<div class="scroll" style="max-height:260px;"><table><thead><tr><th>商机</th><th>日期</th><th>方式</th><th>结果</th><th>职务</th><th>反馈</th></tr></thead><tbody>';
+  html+=d.rows.map(v=>`<tr><td>${esc(v.opportunity_id)}</td><td>${esc(v.visit_date)}</td><td>${esc(v.method)}</td><td>${esc(v.result)}</td><td>${esc(v.role)}</td><td class="muted">${esc(v.feedback)}</td></tr>`).join('');
+  html+='</tbody></table></div>';
+  html+=`<div class="file-row" style="margin-top:10px;"><button class="btn" onclick="confirmImport('visits')">确认导入</button></div>`;
+  $('#prevVisits').innerHTML=html;
+}
+function renderStaffPreview(d){
+  let html=`<div class="stat-inline"><div>业务员 <b>${d.total}</b></div></div>`;
+  html+='<div class="scroll" style="max-height:260px;"><table><thead><tr><th>代号</th><th>团队</th><th>主攻</th><th>行业</th><th>区域</th><th>案例</th><th>单笔最大</th></tr></thead><tbody>';
+  html+=d.rows.map(r=>`<tr><td>${esc(r.staff_id)}</td><td>${esc(r.team)}</td><td>${esc(r.focus_type)}</td><td>${esc(r.focus_industry)}</td><td>${esc(r.coverage)}</td><td>${esc(r.cases)}</td><td>${esc(r.max_deal)}</td></tr>`).join('');
+  html+='</tbody></table></div>';
+  html+=`<div class="file-row" style="margin-top:10px;"><button class="btn" onclick="confirmImport('staff')">确认导入</button></div>`;
+  $('#prevStaff').innerHTML=html;
+}
+async function confirmImport(kind){
+  if(!files[kind]){ alert('请先解析文件'); return; }
+  const fd=new FormData(); fd.append('file',files[kind]); fd.append('kind',kind);
+  if(kind==='opps'){ fd.append('mode',$('#oppMode').value); fd.append('accept_pending',$('#acceptPending').checked?'true':'false'); }
+  const d=await api('/api/import',{method:'POST',body:fd});
+  if(d.error){ toast('#importMsg','导入失败：'+d.error,false); return; }
+  toast('#importMsg', `导入完成：批次#${d.batch_id}，总 ${d.total} 行，导入 ${d.imported}，跳过 ${d.skipped}，失败 ${d.failed}`, true);
+  loadHeader();
+  if(kind==='opps'){ $('#prevOpps').innerHTML=''; $('#fileOpps').value=''; files.opps=null; }
+  if(kind==='visits'){ $('#prevVisits').innerHTML=''; $('#fileVisits').value=''; files.visits=null; }
+  if(kind==='staff'){ $('#prevStaff').innerHTML=''; $('#fileStaff').value=''; files.staff=null; }
+}
+
+/* ---------- 演示样本（明确标注为虚构数据） ---------- */
+async function loadDemo(){
+  if(!confirm('即将载入「课堂模拟样本」：30 行虚构商机台账、21 条虚构拜访记录、6 个虚构业务员。\n\n这些数据是编造的测试数据，仅用于熟悉流程，不能当作业务结论。\n载入后会真实写入数据库（同一业务键重复导入会自动跳过）。\n\n继续？')) return;
+  toast('#importMsg','正在载入课堂模拟样本…',true);
+  const d=await api('/api/seed_demo',{method:'POST'});
+  if(d.error){ toast('#importMsg','载入失败：'+d.error,false); return; }
+  const r=d.results||{};
+  const fmt=k=>`${k}:导入${(r[k]&&r[k].imported)||0}/跳过${(r[k]&&r[k].skipped)||0}`;
+  toast('#importMsg','已载入课堂模拟数据（虚构）｜'+[fmt('opps'),fmt('visits'),fmt('staff')].join('，'),true);
+  loadHeader(); switchView('overview');
+}
+
+/* ---------- 清空数据 ---------- */
+async function resetAll(){
+  if(!confirm('⚠️ 将删除数据库中的全部商机、拜访、业务员、匹配建议与导入批次记录。\n\n此操作不可撤销，且不会删除样本文件。确认清空？')) return;
+  const t=prompt('请输入 RESET 两个字母以最终确认：');
+  if(t!=='RESET'){ toast('#importMsg','已取消清空（未输入 RESET）',false); return; }
+  const d=await api('/api/reset',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({confirm:'RESET'})});
+  if(d.error){ toast('#importMsg','清空失败：'+d.error,false); return; }
+  toast('#importMsg','已清空全部数据：'+JSON.stringify(d.cleared),true);
+  loadHeader(); switchView('overview');
+}
+
+/* ---------- 分析 ---------- */
+async function loadAnalysis(){
+  const d = await api('/api/analysis');
+  const s=d.stats, m=d.match;
+  const steps=[['上传',s.upload,100,'-'],['分配',s.assigned,null,fmtPct(s.assign_rate)],['拜访',s.visit,null,fmtPct(s.visit_rate)],['成交',s.deal,null,fmtPct(s.deal_rate)]];
+  const maxN=Math.max(s.upload,1);
+  $('#funnel').innerHTML = steps.map(st=>{
+    const w=Math.max(8, st[1]/maxN*100);
+    return `<div class="fstep"><div class="name">${st[0]}</div><div class="fbar" style="width:${w}%">${st[1]}</div><div class="rate">${st[3]}</div></div>`;
+  }).join('');
+  const losses=[['上传→分配',s.upload-s.assigned],['已分配→拜访',s.assigned-s.visit],['已拜访→成交',s.visit-s.deal]];
+  const worst=losses.reduce((a,b)=>b[1]>a[1]?b:a);
+  $('#funnelNote').innerHTML=`总转化率 ${fmtPct(s.total_rate)}；最大流失环节 <span class="loss">${worst[0]}（流失 ${worst[1]} 条）</span>；成交保费合计 ${s.premium.toFixed(1)} 万元。`;
+
+  $('#typeBody').innerHTML=Object.entries(s.by_type).map(([k,v])=>{
+    const r=v.upload? (v.deal*100/v.upload).toFixed(2)+'%':'暂无可计算数据';
+    return `<tr><td>${esc(k)}</td><td>${v.upload}</td><td>${v.assigned}</td><td>${v.visit}</td><td>${v.deal}</td><td>${r}</td></tr>`;
+  }).join('');
+  $('#srcBody').innerHTML=Object.entries(s.by_src).map(([k,v])=>{
+    const r=v.upload? (v.deal*100/v.upload).toFixed(2)+'%':'暂无可计算数据';
+    return `<tr><td>${esc(k)}</td><td>${v.upload}</td><td>${v.deal}</td><td>${r}</td></tr>`;
+  }).join('');
+
+  $('#matchMeta').textContent=`范围 ${m.match_n} 条，建议调整 ${m.mis_n} 条，错位率 ${fmtPct(m.mis_rate)}`;
+  const gcls={'优先匹配':'t-ok','可尝试':'t-pending','不建议':'t-invalid'};
+  $('#matchBody').innerHTML = (m.suggestions||[]).map(x=>`<tr>
+    <td>${esc(x.opportunity_id)}</td><td>${esc(x.customer_type)}</td><td>${esc(x.industry)}/${esc(x.region)}</td>
+    <td>${esc(x.current_assignee)}</td><td><b>${esc(x.suggested_staff)}</b></td><td>${x.score}</td>
+    <td><span class="tag ${gcls[x.grade]||''}">${x.grade}</span></td>
+    <td>${esc(x.match_result)}</td><td class="muted">${esc((x.breakdown||[]).map(b=>b[0]+'+'+b[1]).join('；'))}</td></tr>`).join('') || '<tr><td colspan="9" class="muted">未导入业务员关系资源或无可匹配商机</td></tr>';
+
+  $('#analysisLabel').textContent=d.label;
+  $('#factList').innerHTML=(d.facts||[]).map(x=>`<li>${esc(x)}</li>`).join('');
+  $('#inferList').innerHTML=(d.inferences||[]).map(x=>`<li>${esc(x)}</li>`).join('');
+  $('#sugList').innerHTML=(d.actions||[]).map(x=>`<li>${esc(x.action)}（责任：${esc(x.owner)}；验证：${esc(x.verify)}）</li>`).join('');
+  $('#gapList').textContent='待确认：'+(d.gaps||[]).join('；');
+}
+
+loadHeader(); loadOverview();
+</script>
+<script>
+// 快照模式：拦截失效的相对资源请求，避免报错
+(function(){
+  try { document.body.style.paddingTop = '44px'; } catch(e) {}
+  var origFetch = window.fetch;
+  window.fetch = function(u){
+    if (typeof u === 'string' && (u.startsWith('/') || (!u.startsWith('http') && !u.startsWith('data:') && !u.startsWith('#')))) {
+      return Promise.resolve(new Response(JSON.stringify({items:[],error:'snapshot-mode'}), {status:200, headers:{'Content-Type':'application/json'}}));
+    }
+    return origFetch.apply(this, arguments);
+  };
+  // 阻止相对资源加载报错
+  document.addEventListener('error', function(e){
+    var t = e.target;
+    if (t && (t.tagName === 'SCRIPT' || t.tagName === 'LINK')) e.preventDefault();
+  }, true);
+})();
+</script>
+</body>
+</html>

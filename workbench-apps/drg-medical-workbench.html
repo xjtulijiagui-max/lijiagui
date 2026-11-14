@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>百万医疗 DRG 推动工作台</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div id="gh-snapshot-banner" style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#FFF7E6;border-bottom:1px solid #E8C87A;color:#8A5A00;padding:8px 16px;font:13px/1.5 'PingFang SC','Microsoft YaHei',sans-serif;text-align:center;">
+📜 这是原内网工作台的<strong>静态快照</strong>（仅供存档预览）。完整交互版本需在 WorkBuddy 内网环境打开原链接。
+<button onclick="this.parentNode.remove();document.body.style.paddingTop='0'" style="margin-left:10px;background:#8A5A00;color:#fff;border:0;border-radius:4px;padding:2px 10px;cursor:pointer;font-size:12px;">知道了</button>
+</div>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="logo">DRG</div>
+    <div>
+      <h1>百万医疗 DRG 推动工作台</h1>
+      <p class="sub">社保 DRG 改革 · 保障缺口 · 三层保障对照 · 30–45 岁客群</p>
+    </div>
+  </div>
+  <div class="status" id="dbStatus">连接中…</div>
+</header>
+
+<nav class="tabs">
+  <button class="tab active" data-tab="overview">概览</button>
+  <button class="tab" data-tab="materials">资料库</button>
+  <button class="tab" data-tab="report">生成与复核</button>
+  <button class="tab" data-tab="settings">设置 · 帮助</button>
+</nav>
+
+<main>
+  <!-- 概览 -->
+  <section id="tab-overview" class="panel active">
+    <div class="cards" id="overviewCards"></div>
+    <div class="two-col">
+      <div class="card">
+        <div class="card-head"><h2>待处理</h2><button class="ghost" onclick="loadOverview()">刷新</button></div>
+        <div id="pendingList" class="list">加载中…</div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>最近导入</h2></div>
+        <div id="batchList" class="list">加载中…</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head"><h2>合规提示</h2></div>
+      <p class="muted">导出物在“已发布”前均标注「分析初稿，未审核」；命中禁用词会阻断导出。对外使用前须经本人复核与合规确认。</p>
+      <div id="forbiddenInline" class="chips"></div>
+    </div>
+  </section>
+
+  <!-- 资料库 -->
+  <section id="tab-materials" class="panel">
+    <div class="toolbar">
+      <input id="mSearch" placeholder="搜索标题 / 原文 / 文号" oninput="loadMaterials()">
+      <select id="fType" onchange="loadMaterials()">
+        <option value="">全部类型</option>
+        <option value="I-2">I-2 国家政策</option>
+        <option value="I-3">I-3 本地执行</option>
+        <option value="I-4">I-4 公开证据</option>
+        <option value="I-6">I-6 同层产品</option>
+        <option value="I-7">I-7 一线疑问</option>
+        <option value="I-8">I-8 本人判断</option>
+        <option value="I-9">I-9 其他</option>
+      </select>
+      <select id="fTendency" onchange="loadMaterials()">
+        <option value="">全部倾向</option>
+        <option value="正面">正面</option>
+        <option value="负面">负面</option>
+        <option value="机制">机制</option>
+        <option value="一线">一线</option>
+        <option value="判断">判断</option>
+      </select>
+      <select id="fStatus" onchange="loadMaterials()">
+        <option value="">未归档</option>
+        <option value="草稿">草稿</option>
+        <option value="待核实">待核实</option>
+        <option value="已确认">已确认</option>
+        <option value="all">含已归档</option>
+      </select>
+      <div class="spacer"></div>
+      <label class="btn primary file-btn">上传资料<input type="file" id="fileInput" accept=".csv,.xlsx,.docx,.md,.txt,.pdf" hidden></label>
+      <button class="btn" onclick="openMaterialModal()">新增素材</button>
+      <button class="btn" onclick="exportMaterials()">导出素材</button>
+    </div>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>类型</th><th>标题</th><th>倾向</th><th>置信</th><th>状态</th><th>关键内容</th><th>操作</th></tr></thead>
+        <tbody id="materialsBody"><tr><td colspan="7" class="muted">加载中…</td></tr></tbody>
+      </table>
+    </div>
+    <p class="hint">上传支持 Excel(.xlsx) / Word(.docx) / CSV / Markdown / TXT。旧版 .xls/.doc 请先另存为 .xlsx/.docx；PDF 需解析库，当前离线环境不可用。</p>
+  </section>
+
+  <!-- 生成与复核 -->
+  <section id="tab-report" class="panel">
+    <div class="two-col wide-left">
+      <div class="card">
+        <div class="card-head"><h2>1) 选择素材并生成</h2><span class="muted" id="selCount">已选 0 条</span></div>
+        <div class="toolbar tight">
+          <input id="pickSearch" placeholder="筛选素材" oninput="renderPickList()">
+          <button class="btn small" onclick="selectAll(true)">全选</button>
+          <button class="btn small" onclick="selectAll(false)">清空</button>
+        </div>
+        <div id="pickList" class="pick-list">加载中…</div>
+        <div class="toolbar tight">
+          <input id="reportName" placeholder="报告名称（可留空自动命名）">
+          <button class="btn primary" onclick="generateReport()">生成报告</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>2) 报告与复核</h2><button class="ghost" onclick="loadReports()">刷新列表</button></div>
+        <div id="reportHistory" class="chips small"></div>
+        <div id="reportView" class="muted">尚未生成报告。请先在左侧选择素材并生成。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 设置 -->
+  <section id="tab-settings" class="panel">
+    <div class="card">
+      <div class="card-head"><h2>持久化状态</h2></div>
+      <p>数据库：<code id="dbPath">—</code></p>
+      <p class="muted">数据真实写入后端 SQLite 文件（data/app.db），并通过接口读回校验；不使用 localStorage 或假数据。备份：复制该文件即可。</p>
+    </div>
+    <div class="card">
+      <div class="card-head"><h2>禁用词清单（命中即阻断导出）</h2></div>
+      <div id="forbiddenList" class="chips"></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><h2>使用说明</h2></div>
+      <ol class="steps">
+        <li>资料库 → 上传政策摘录/本地进度/队伍疑问/本人判断（Excel/Word/CSV），预览确认后入库。</li>
+        <li>生成与复核 → 选择素材 → 生成报告（正面/负面/五类缺口/三层对照/客群建议 + 禁用词扫描）。</li>
+        <li>按“本人复核 → 审核人确认 → 待合规 → 已发布”推进状态。</li>
+        <li>导出 Word / Excel / Markdown / HTML / 台账 CSV，对外前须合规确认。</li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<!-- 导入预览弹窗 -->
+<div class="modal" id="importModal">
+  <div class="modal-box wide">
+    <div class="modal-head"><h2>导入预览与确认</h2><button class="x" onclick="closeModal('importModal')">×</button></div>
+    <p class="muted" id="importInfo"></p>
+    <div class="table-wrap"><table class="data-table"><thead id="importHead"></thead><tbody id="importBody"></tbody></table></div>
+    <div class="modal-foot">
+      <span class="muted" id="importErrors"></span>
+      <div class="spacer"></div>
+      <button class="btn" onclick="closeModal('importModal')">取消</button>
+      <button class="btn primary" onclick="commitImport()">确认导入</button>
+    </div>
+  </div>
+</div>
+
+<!-- 素材编辑弹窗 -->
+<div class="modal" id="materialModal">
+  <div class="modal-box">
+    <div class="modal-head"><h2 id="materialModalTitle">新增素材</h2><button class="x" onclick="closeModal('materialModal')">×</button></div>
+    <div class="form-grid">
+      <label>类型<select id="eType"><option>I-2</option><option>I-3</option><option>I-4</option><option>I-6</option><option>I-7</option><option>I-8</option><option>I-9</option></select></label>
+      <label>倾向<select id="eTendency"><option>机制</option><option>正面</option><option>负面</option><option>一线</option><option>判断</option></select></label>
+      <label>标题<input id="eTitle"></label>
+      <label>文号<input id="eDocNo"></label>
+      <label>发文单位<input id="eIssuer"></label>
+      <label>生效时间<input id="eEff" placeholder="YYYY-MM-DD"></label>
+      <label>适用范围<input id="eScope" placeholder="国家 / 陕西省级 / 某市"></label>
+      <label>置信<select id="eConf"><option>已确认</option><option>待核实</option><option>机制说明</option></select></label>
+      <label>状态<select id="eStatus"><option>草稿</option><option>待核实</option><option>已确认</option></select></label>
+      <label>来源链接<input id="eUrl"></label>
+      <label class="full">关键内容<textarea id="eKey" rows="4"></textarea></label>
+    </div>
+    <div class="modal-foot">
+      <div class="spacer"></div>
+      <button class="btn" onclick="closeModal('materialModal')">取消</button>
+      <button class="btn primary" onclick="saveMaterial()">保存</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+<script src="/static/app.js"></script>
+<script>
+// 快照模式：拦截失效的相对资源请求，避免报错
+(function(){
+  try { document.body.style.paddingTop = '44px'; } catch(e) {}
+  var origFetch = window.fetch;
+  window.fetch = function(u){
+    if (typeof u === 'string' && (u.startsWith('/') || (!u.startsWith('http') && !u.startsWith('data:') && !u.startsWith('#')))) {
+      return Promise.resolve(new Response(JSON.stringify({items:[],error:'snapshot-mode'}), {status:200, headers:{'Content-Type':'application/json'}}));
+    }
+    return origFetch.apply(this, arguments);
+  };
+  // 阻止相对资源加载报错
+  document.addEventListener('error', function(e){
+    var t = e.target;
+    if (t && (t.tagName === 'SCRIPT' || t.tagName === 'LINK')) e.preventDefault();
+  }, true);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>投研工作台｜研究材料整理与报告初稿</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230C3B66'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='%23fff' font-family='PingFang SC,Microsoft YaHei,sans-serif'%3E研%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div id="gh-snapshot-banner" style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#FFF7E6;border-bottom:1px solid #E8C87A;color:#8A5A00;padding:8px 16px;font:13px/1.5 'PingFang SC','Microsoft YaHei',sans-serif;text-align:center;">
+📜 这是原内网工作台的<strong>静态快照</strong>（仅供存档预览）。完整交互版本需在 WorkBuddy 内网环境打开原链接。
+<button onclick="this.parentNode.remove();document.body.style.paddingTop='0'" style="margin-left:10px;background:#8A5A00;color:#fff;border:0;border-radius:4px;padding:2px 10px;cursor:pointer;font-size:12px;">知道了</button>
+</div>
+
+
+<!-- 登录 -->
+<div id="login-view" class="login-wrap">
+  <div class="login-card">
+    <div class="brand big"><span class="logo">研</span><span>投研工作台</span></div>
+    <p class="muted">研究材料整理 · 证据核验 · 报告初稿</p>
+    <div class="tabs" id="otp-tabs">
+      <button type="button" class="active" data-mode="email">邮箱验证码</button>
+      <button type="button" data-mode="phone">手机号验证码</button>
+    </div>
+    <form id="login-form" class="login-form">
+      <input id="otp-id" class="input" autocomplete="username" placeholder="name@example.com">
+      <div class="row gap">
+        <input id="otp-code" class="input" inputmode="numeric" autocomplete="one-time-code" placeholder="验证码">
+        <button type="button" id="btn-send" class="btn nowrap">获取验证码</button>
+      </div>
+      <button type="submit" id="btn-login" class="btn primary wide">登录 / 注册</button>
+    </form>
+    <div id="login-error" class="err-box" style="display:none"></div>
+    <div class="or"><span>或</span></div>
+    <button id="btn-workbuddy" class="btn wide">使用 WorkBuddy 登录</button>
+    <p class="tiny muted">首次登录自动创建账号。数据按账号隔离，仅本人可见。</p>
+  </div>
+</div>
+
+<!-- 应用 -->
+<div id="app-view" style="display:none">
+  <header class="topbar">
+    <div class="brand"><span class="logo">研</span><span id="app-name">投研工作台</span></div>
+    <div class="top-right">
+      <span id="save-state" class="save-state">—</span>
+      <span id="who" class="who"></span>
+    </div>
+  </header>
+  <div class="layout">
+    <nav id="nav" class="side"></nav>
+    <main id="main" class="main"></main>
+  </div>
+</div>
+
+<div id="toasts"></div>
+
+<script src="vendor/xlsx.full.min.js"></script>
+<script src="vendor/mammoth.browser.min.js"></script>
+<script src="vendor/jszip.min.js"></script>
+<script src="vendor/workbuddy-cloud-sdk.global.js"></script>
+<script src="js/config.js"></script>
+<script src="js/util.js"></script>
+<script src="js/parse.js"></script>
+<script src="js/cloud.js"></script>
+<script src="js/db.js"></script>
+<script src="js/report.js"></script>
+<script src="js/app.js"></script>
+<script src="js/views.js"></script>
+<script src="js/views2.js"></script>
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    App.init().catch(function (e) {
+      console.error(e);
+      document.getElementById('login-view').style.display = 'flex';
+      var box = document.getElementById('login-error');
+      if (box) { box.textContent = '初始化失败：' + e.message; box.style.display = 'block'; }
+    });
+  });
+</script>
+<script>
+// 快照模式：拦截失效的相对资源请求，避免报错
+(function(){
+  try { document.body.style.paddingTop = '44px'; } catch(e) {}
+  var origFetch = window.fetch;
+  window.fetch = function(u){
+    if (typeof u === 'string' && (u.startsWith('/') || (!u.startsWith('http') && !u.startsWith('data:') && !u.startsWith('#')))) {
+      return Promise.resolve(new Response(JSON.stringify({items:[],error:'snapshot-mode'}), {status:200, headers:{'Content-Type':'application/json'}}));
+    }
+    return origFetch.apply(this, arguments);
+  };
+  // 阻止相对资源加载报错
+  document.addEventListener('error', function(e){
+    var t = e.target;
+    if (t && (t.tagName === 'SCRIPT' || t.tagName === 'LINK')) e.preventDefault();
+  }, true);
+})();
+</script>
+</body>
+</html>

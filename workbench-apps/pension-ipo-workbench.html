@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN" data-page-node-id="SK3HgzOLbKLQQGYoajNujo">
+
+<head data-page-node-id="mJ6yMDEkgKtQ1yT3k02zpg">
+
+<meta charset="UTF-8" data-page-node-id="6TzYAI6FaovDLP2Una9iwH">
+
+<meta name="viewport" content="width=device-width, initial-scale=1" data-page-node-id="99r7iwHpRlnlUEEBFuAifN">
+
+<title>年金受托资管分析平台</title>
+
+<meta name="description" content="年金受托资管分析平台：材料登记与授权核查、证据归集与分类、市场分析与下步预测、配置策略报告起草、人工审核与受控导出。">
+
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23123A5F'/%3E%3Ctext x='16' y='23' font-size='19' text-anchor='middle' fill='%23ffffff' font-family='Microsoft YaHei,PingFang SC,sans-serif'%3E台%3C/text%3E%3C/svg%3E">
+
+<link rel="stylesheet" href="styles.css" data-page-node-id="ber7Zl3JFpJWu5qk6b0nls">
+
+</head>
+
+<body data-page-node-id="TiGWv1kg5psT6XuAZ9vPLb">
+<div id="gh-snapshot-banner" style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#FFF7E6;border-bottom:1px solid #E8C87A;color:#8A5A00;padding:8px 16px;font:13px/1.5 'PingFang SC','Microsoft YaHei',sans-serif;text-align:center;">
+📜 这是原内网工作台的<strong>静态快照</strong>（仅供存档预览）。完整交互版本需在 WorkBuddy 内网环境打开原链接。
+<button onclick="this.parentNode.remove();document.body.style.paddingTop='0'" style="margin-left:10px;background:#8A5A00;color:#fff;border:0;border-radius:4px;padding:2px 10px;cursor:pointer;font-size:12px;">知道了</button>
+</div>
+
+
+
+
+<!-- 登录页 -->
+
+<section id="view-login" class="view" data-page-node-id="MPPJT3fPLm6Obz04aWZ3AD">
+
+  <div class="login-box" data-page-node-id="4odJkre8cZs6zznxfAO5St">
+
+    <h1 data-page-node-id="kbV4alwFuiHusu5VeRg7Sm">年金受托资管分析平台</h1>
+
+    <p class="login-sub" data-page-node-id="lp1wRm8pdyJ46H05MjxHqP">只处理获准使用的材料 · 不编造数据与结论 · 未经审核确认不得对外提供</p>
+
+    <button id="btn-wb-login" class="btn btn-primary block" type="button" data-page-node-id="ivUcY6xjwrH88NiAGR1hPr">使用 WorkBuddy 登录</button>
+
+    <p id="login-msg" class="msg" data-page-node-id="njFGBP99KNEJCEjkRAZcg2"></p>
+
+
+
+    <div id="otp-box" class="hidden" style="margin-top:14px;border-top:1px solid var(--line);padding-top:12px" data-page-node-id="kBELspkWFjw3VzOqCWCjkE">
+
+      <div class="form-row" data-page-node-id="SLsNEWa79iBAERs9KYXBrT">
+
+        <label data-page-node-id="5B7aeXNPV8AsbEocs3HMMc">工作邮箱</label>
+
+        <input id="login-email" type="email" placeholder="请输入邮箱" autocomplete="email" data-page-node-id="MTPpzGaprWvEvR8rjDPOqE">
+
+      </div>
+
+      <div class="form-row" data-page-node-id="gF7yvdaxfurDcBqjYLh2eR">
+
+        <label data-page-node-id="BZoNIl1y8xTTxoAxlwuvaL">验证码</label>
+
+        <div class="inline" data-page-node-id="6KIF2wg1KeTkgFnuXo3YbT">
+
+          <input id="login-code" type="text" placeholder="邮箱收到的验证码" data-page-node-id="8AOyDaWmMbGwz19Yeyhnnj">
+
+          <button id="btn-send-code" class="btn btn-ghost" type="button" data-page-node-id="ma1w5X2dD13Gq4PQ8GzQyV">获取验证码</button>
+
+        </div>
+
+      </div>
+
+      <button id="btn-login" class="btn btn-primary block" type="button" data-page-node-id="O3TcZYtKeGF8hH1qpi0oDE">用邮箱验证码登录</button>
+
+    </div>
+
+
+
+    <p class="tip" style="margin-top:12px" data-page-node-id="NlISY5zZDWFXAaiP6HaN98">
+
+      <a href="javascript:void(0)" id="toggle-otp" data-page-node-id="vpSREMoiitUGjVmk0oZWsJ">使用邮箱验证码登录（备用）</a>
+
+    </p>
+
+    <p class="tip" data-page-node-id="pdiXWjBg8TzPzFmUO3guhT">所有数据仅本人可见；未经审核确认的报告不得对外提供。</p>
+
+  </div>
+
+</section>
+
+
+
+<!-- 主应用 -->
+
+<section id="view-app" class="view hidden" data-page-node-id="rYVCemsRfIjBmslCZeOqbb">
+
+  <header class="topbar" data-page-node-id="85r2MOQb4358nBuxaeDN8a">
+
+    <div class="brand" data-page-node-id="SFtCKr3IiVdCrAFe7Wp84o">年金受托资管分析平台</div>
+
+    <nav class="nav" data-page-node-id="a0eUaRWk5m2r8w5fd6OvLq">
+
+      <a href="#/dashboard" data-nav="dashboard" data-page-node-id="p1rMHrgACUSfkTjmByfHob">看板</a>
+
+      <a href="#/tasks" data-nav="tasks" data-page-node-id="6SNCNG4b7LwonxWGoP4DXN">沟通任务</a>
+
+    </nav>
+
+    <div class="user" data-page-node-id="CZ4S753Vm5szfNQxw1FGT9">
+
+      <span id="user-name" data-page-node-id="5PKWtuKQHpRpAuaX6K8hBw">—</span>
+
+      <button id="btn-selftest" class="btn btn-ghost btn-sm" data-page-node-id="y9V9I5ht8f3jh7hzSurxvJ">数据保存自检</button>
+
+      <button id="btn-logout" class="btn btn-ghost btn-sm" data-page-node-id="AOnr4WGDZCoO3wx8z0ZoNh">退出</button>
+
+    </div>
+
+  </header>
+
+  <main id="main" data-page-node-id="Wq3FKSNCXlR2J3ZzFwdHh8"></main>
+
+  <footer class="footbar" data-page-node-id="c1wyIJ9YfuncgSKDJEQf2n">
+
+    红线：只处理获准材料 · 不编造数据与结论 · AI 不替代投资判断 · 未经审核确认不得对外提供
+
+    <span style="margin-left:8px;opacity:.75">年金受托资管分析平台 v1.0 · 2026-10-23</span>
+
+  </footer>
+
+</section>
+
+
+
+<!-- 通用弹窗 -->
+
+<div id="modal" class="modal hidden" data-page-node-id="Dkd905G48MZFjIKO9F3dqy">
+
+  <div class="modal-box" data-page-node-id="YPPJDlXOAIbEDdNGWCBDTR">
+
+    <div class="modal-head" data-page-node-id="7GFHDXvHJXVtlQa24bVEQe"><span id="modal-title" data-page-node-id="mKKLyW3pm1brTjNoksNGC0">标题</span><button id="modal-close" class="x" data-page-node-id="GSwz9rOS5YhiLBKVx7DxxP">×</button></div>
+
+    <div id="modal-body" class="modal-body" data-page-node-id="jagP4SuRjQ6mRXTE5fcBMe"></div>
+
+    <div class="modal-foot" data-page-node-id="jh18h4LPmWtY9y3NGE8cqb">
+
+      <button id="modal-cancel" class="btn btn-ghost" data-page-node-id="QPjRiFlDuFerlDijUYVDjU">取消</button>
+
+      <button id="modal-ok" class="btn btn-primary" data-page-node-id="qDxT9PjwY1kSDxPA6SzetM">保存</button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<div id="toast" class="toast hidden" data-page-node-id="W7Le7nQanABHldSw7d3Xoh"></div>
+
+
+
+<script src="vendor/workbuddy-cloud-sdk.global.js"></script>
+
+<script>
+
+  if (!window.WorkBuddyCloud) {
+
+    document.write('<script src="https://cdn.jsdelivr.net/npm/@tencent-ai/workbuddy-cloud-sdk@dev/lib/index.global.js"><\/script>');
+
+  }
+
+</script>
+
+<script src="file-reader.js"></script>
+
+<script src="app.js"></script>
+
+<script>
+// 快照模式：拦截失效的相对资源请求，避免报错
+(function(){
+  try { document.body.style.paddingTop = '44px'; } catch(e) {}
+  var origFetch = window.fetch;
+  window.fetch = function(u){
+    if (typeof u === 'string' && (u.startsWith('/') || (!u.startsWith('http') && !u.startsWith('data:') && !u.startsWith('#')))) {
+      return Promise.resolve(new Response(JSON.stringify({items:[],error:'snapshot-mode'}), {status:200, headers:{'Content-Type':'application/json'}}));
+    }
+    return origFetch.apply(this, arguments);
+  };
+  // 阻止相对资源加载报错
+  document.addEventListener('error', function(e){
+    var t = e.target;
+    if (t && (t.tagName === 'SCRIPT' || t.tagName === 'LINK')) e.preventDefault();
+  }, true);
+})();
+</script>
+</body>
+
+</html>
+

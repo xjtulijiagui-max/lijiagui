@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>惯性质量问题改善绩效评价工作台</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div id="gh-snapshot-banner" style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#FFF7E6;border-bottom:1px solid #E8C87A;color:#8A5A00;padding:8px 16px;font:13px/1.5 'PingFang SC','Microsoft YaHei',sans-serif;text-align:center;">
+📜 这是原内网工作台的<strong>静态快照</strong>（仅供存档预览）。完整交互版本需在 WorkBuddy 内网环境打开原链接。
+<button onclick="this.parentNode.remove();document.body.style.paddingTop='0'" style="margin-left:10px;background:#8A5A00;color:#fff;border:0;border-radius:4px;padding:2px 10px;cursor:pointer;font-size:12px;">知道了</button>
+</div>
+
+<div class="app">
+  <aside class="side">
+    <div class="brand">
+      <div class="brand-mark">惯</div>
+      <div>
+        <div class="brand-title">改善绩效评价</div>
+        <div class="brand-sub">风电叶片 · 工作台</div>
+      </div>
+    </div>
+    <nav id="nav">
+      <button class="nav-item active" data-view="overview"><span>01</span>总览看板</button>
+      <button class="nav-item" data-view="evaluation"><span>02</span>评价与签核</button>
+      <button class="nav-item" data-view="metrics"><span>03</span>指标与权重</button>
+      <button class="nav-item" data-view="import"><span>04</span>资料导入</button>
+      <button class="nav-item" data-view="rules"><span>05</span>规则与审计</button>
+    </nav>
+    <div class="side-foot">
+      <div class="chip chip-draft">BASELINE_DRAFT</div>
+      <p>Q-001 绩效制度版本、Q-002 数据授权未关闭，仅限演示数据。</p>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <h1 id="page-title">总览看板</h1>
+        <p class="sub" id="page-sub">加载中…</p>
+      </div>
+      <div class="topbar-actions">
+        <span class="period" id="period-label"></span>
+        <button class="btn ghost" id="btn-reseed">重置演示数据</button>
+      </div>
+    </header>
+
+    <section class="view" id="view-overview">
+      <div class="kpis" id="kpis"></div>
+      <div class="panel">
+        <div class="panel-head">
+          <h2>评价对象与本期结论</h2>
+          <span class="hint">点击行进入评价与签核</span>
+        </div>
+        <div class="table-wrap">
+          <table class="grid" id="subject-table">
+            <thead><tr><th>对象</th><th>工段</th><th>问题数</th><th>综合得分</th><th>建议等级</th><th>状态</th><th>签核</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="panel notice">
+        <h2>数据与边界</h2>
+        <p id="data-note"></p>
+        <ul class="gaps" id="gap-list"></ul>
+      </div>
+    </section>
+
+    <section class="view hidden" id="view-evaluation">
+      <div class="flex-row">
+        <div class="tabs" id="subject-tabs"></div>
+        <div class="flex-spacer"></div>
+        <span class="hint" id="snapshot-hint"></span>
+      </div>
+      <div class="result-card" id="result-card"></div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2>指标明细与取证</h2>
+          <span class="hint">折分由确定性规则计算，模型不参与</span>
+        </div>
+        <div id="metric-cards" class="metric-list"></div>
+      </div>
+
+      <div class="two-col">
+        <div class="panel">
+          <div class="panel-head"><h2>加减分与否决项</h2></div>
+          <div class="btn-row" id="adj-buttons"></div>
+          <ul class="adj-list" id="adj-list"></ul>
+          <div class="veto-row" id="veto-row"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h2>人工确认栏</h2><span class="hint">4 项全签才可导出定稿</span></div>
+          <div id="confirm-box" class="confirm-box"></div>
+          <div class="btn-row">
+            <button class="btn primary" id="btn-confirm">签核全部 4 项</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><h2>一致性检查（五类必查）</h2><span class="hint" id="check-summary"></span></div>
+        <div class="table-wrap">
+          <table class="grid" id="check-table">
+            <thead><tr><th>编号</th><th>类别</th><th>描述</th><th>影响</th><th>建议</th><th>状态</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel export">
+        <div class="panel-head"><h2>交付物导出</h2><span class="hint">O-1 Word / O-2 指标明细 / O-3 风险清单</span></div>
+        <div class="btn-row">
+          <button class="btn" data-export="o1">导出 O-1 报告</button>
+          <button class="btn" data-export="o2">导出 O-2 指标明细</button>
+          <button class="btn" data-export="o3">导出 O-3 风险清单</button>
+        </div>
+        <p class="hint" id="export-hint">未完成签核时，文件名会标注「建议稿-未确认」。</p>
+      </div>
+    </section>
+
+    <section class="view hidden" id="view-metrics">
+      <div class="panel">
+        <div class="panel-head">
+          <h2>指标与权重</h2>
+          <span class="hint">合计须为 100%（BR-001）；单指标默认 5%–40%（BR-020，待制度确认）</span>
+        </div>
+        <div class="table-wrap">
+          <table class="grid" id="weight-table">
+            <thead><tr><th>编号</th><th>指标</th><th>定义</th><th>周期</th><th class="num">权重 %</th></tr></thead>
+            <tbody></tbody>
+            <tfoot><tr><td colspan="4" class="right">合计</td><td class="num" id="weight-total">—</td></tr></tfoot>
+          </table>
+        </div>
+        <div class="btn-row">
+          <button class="btn primary" id="btn-save-weights">保存权重</button>
+          <span id="weight-msg" class="hint"></span>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h2>五级评价标准（锚点）</h2></div>
+        <div id="anchor-list"></div>
+      </div>
+    </section>
+
+    <section class="view hidden" id="view-import">
+      <div class="panel">
+        <div class="panel-head">
+          <h2>问题清单导入（IN-1 候选映射）</h2>
+          <span class="hint">先校验预览，再确认写入；同编号重复导入不翻倍</span>
+        </div>
+        <div class="drop" id="drop">
+          <p>把 .xlsx 拖到这里，或</p>
+          <input type="file" id="file" accept=".xlsx">
+          <p class="hint">需包含列：问题编号 / 问题名称 / 缺陷类型 / 识别阶段 / 责任工程师 / 识别时间 / 响应时间（别名可识别）</p>
+        </div>
+        <div id="import-result"></div>
+      </div>
+    </section>
+
+    <section class="view hidden" id="view-rules">
+      <div class="panel">
+        <div class="panel-head"><h2>业务规则摘要</h2><span class="hint">完整 25 条见 spec/rules.json</span></div>
+        <div class="table-wrap">
+          <table class="grid" id="rule-table">
+            <thead><tr><th>编号</th><th>规则</th><th>来源</th><th>状态</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h2>审计流水</h2><span class="hint">状态迁移与关键动作留痕</span></div>
+        <ul class="audit" id="audit-list"></ul>
+      </div>
+    </section>
+  </main>
+</div>
+<div class="toast" id="toast"></div>
+<script src="/static/app.js"></script>
+<script>
+// 快照模式：拦截失效的相对资源请求，避免报错
+(function(){
+  try { document.body.style.paddingTop = '44px'; } catch(e) {}
+  var origFetch = window.fetch;
+  window.fetch = function(u){
+    if (typeof u === 'string' && (u.startsWith('/') || (!u.startsWith('http') && !u.startsWith('data:') && !u.startsWith('#')))) {
+      return Promise.resolve(new Response(JSON.stringify({items:[],error:'snapshot-mode'}), {status:200, headers:{'Content-Type':'application/json'}}));
+    }
+    return origFetch.apply(this, arguments);
+  };
+  // 阻止相对资源加载报错
+  document.addEventListener('error', function(e){
+    var t = e.target;
+    if (t && (t.tagName === 'SCRIPT' || t.tagName === 'LINK')) e.preventDefault();
+  }, true);
+})();
+</script>
+</body>
+</html>

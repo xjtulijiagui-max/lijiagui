@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>员工补充医疗福利运营工作台</title>
+<style>
+  body { margin: 0; font-family: "Microsoft YaHei", sans-serif; background: #0D47A1; color: #fff;
+         display: flex; align-items: center; justify-content: center; height: 100vh; text-align: center; }
+  a { color: #fff; }
+  .box { max-width: 460px; padding: 0 20px; }
+  h1 { font-size: 18px; margin: 0 0 10px; }
+  p { font-size: 13px; color: rgba(255,255,255,.8); line-height: 1.8; }
+</style>
+<script>
+  // 必须把 sharecode 与登录回调参数（code / state / provider）原样带到应用入口：
+  // 访问网关会拒绝不带 sharecode 的请求，OAuth 回调一旦丢参数，登录就当场失败。
+  (function () {
+    location.replace('app/index.html' + (location.search || '') + (location.hash || ''));
+  })();
+</script>
+</head>
+<body>
+<div id="gh-snapshot-banner" style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#FFF7E6;border-bottom:1px solid #E8C87A;color:#8A5A00;padding:8px 16px;font:13px/1.5 'PingFang SC','Microsoft YaHei',sans-serif;text-align:center;">
+📜 这是原内网工作台的<strong>静态快照</strong>（仅供存档预览）。完整交互版本需在 WorkBuddy 内网环境打开原链接。
+<button onclick="this.parentNode.remove();document.body.style.paddingTop='0'" style="margin-left:10px;background:#8A5A00;color:#fff;border:0;border-radius:4px;padding:2px 10px;cursor:pointer;font-size:12px;">知道了</button>
+</div>
+
+<div class="box">
+  <h1>员工补充医疗福利运营工作台</h1>
+  <p>正在进入… 如果没有自动跳转，请点击 <a id="fallback" href="app/index.html">打开工作台</a>。</p>
+</div>
+<script>
+  (function () {
+    var link = document.getElementById('fallback');
+    if (link) link.href = 'app/index.html' + (location.search || '') + (location.hash || '');
+  })();
+</script>
+<script>
+// 快照模式：拦截失效的相对资源请求，避免报错
+(function(){
+  try { document.body.style.paddingTop = '44px'; } catch(e) {}
+  var origFetch = window.fetch;
+  window.fetch = function(u){
+    if (typeof u === 'string' && (u.startsWith('/') || (!u.startsWith('http') && !u.startsWith('data:') && !u.startsWith('#')))) {
+      return Promise.resolve(new Response(JSON.stringify({items:[],error:'snapshot-mode'}), {status:200, headers:{'Content-Type':'application/json'}}));
+    }
+    return origFetch.apply(this, arguments);
+  };
+  // 阻止相对资源加载报错
+  document.addEventListener('error', function(e){
+    var t = e.target;
+    if (t && (t.tagName === 'SCRIPT' || t.tagName === 'LINK')) e.preventDefault();
+  }, true);
+})();
+</script>
+</body>
+</html>

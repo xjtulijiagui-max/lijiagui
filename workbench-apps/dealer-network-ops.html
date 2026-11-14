@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>车商渠道网点经营分析工作台</title>
+<script>
+/* 分享链接靠 ?sharecode= 授权。部分浏览器/嵌入预览会拦第三方 Cookie，
+   导致 HTML 能打开、子资源却 403。这里把访问参数带到所有子资源上，避免白屏。 */
+window.__QS__ = location.search || '';
+(function () {
+  var l = document.createElement('link');
+  l.rel = 'stylesheet';
+  l.href = '/styles.css' + window.__QS__;
+  document.head.appendChild(l);
+})();
+</script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="row1">
+    <div class="brand">车商渠道网点经营分析<small>平安产险湖南 · 销售管理</small></div>
+    <div class="spacer"></div>
+    <select class="period" id="periodSelect" title="统计期间"></select>
+    <span class="pill" id="configPill">口径 —</span>
+    <span class="pill" id="dataPill">—</span>
+    <span class="pill" id="verPill">—</span>
+  </div>
+  <nav class="tabs" id="tabs">
+    <button data-view="overview" class="active">① 今日概览</button>
+    <button data-view="shops">② 网点总表</button>
+    <button data-view="profile">③ 单店画像</button>
+    <button data-view="issues">④ 异常与待办</button>
+    <button data-view="import">⑤ 数据导入</button>
+  </nav>
+</header>
+
+<main id="app"></main>
+<div id="toast"></div>
+
+<script>
+(function () {
+  var s = document.createElement('script');
+  s.src = '/app.js' + window.__QS__;
+  document.body.appendChild(s);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>消保评价文件树工作台</title>
+
+<link rel="stylesheet" href="/style.css">
+
+</head>
+
+<body>
+<div id="gh-snapshot-banner" style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#FFF7E6;border-bottom:1px solid #E8C87A;color:#8A5A00;padding:8px 16px;font:13px/1.5 'PingFang SC','Microsoft YaHei',sans-serif;text-align:center;">
+📜 这是原内网工作台的<strong>静态快照</strong>（仅供存档预览）。完整交互版本需在 WorkBuddy 内网环境打开原链接。
+<button onclick="this.parentNode.remove();document.body.style.paddingTop='0'" style="margin-left:10px;background:#8A5A00;color:#fff;border:0;border-radius:4px;padding:2px 10px;cursor:pointer;font-size:12px;">知道了</button>
+</div>
+
+
+<div class="layout">
+
+  <aside class="side" id="side">
+
+    <div class="brand">
+
+      <b>消保评价文件树</b>
+
+      <span>下年度准备材料 · 工作台</span>
+
+    </div>
+
+    <div class="nav-item" data-view="overview">概览<span class="nav-badge" id="nb-gap" style="display:none">0</span></div>
+
+    <div class="nav-item" data-view="score">评分表与指标</div>
+
+    <div class="nav-item" data-view="nodes">节点清单</div>
+
+    <div class="nav-item" data-view="gaps">缺口与分工</div>
+
+    <div class="nav-item" data-view="run">运行与校验</div>
+
+    <div class="nav-item" data-view="export">导出中心</div>
+
+    <div class="side-foot">本机运行 · 数据存于本地数据库<br>材料不上传云端</div>
+
+  </aside>
+
+
+
+  <div class="main">
+
+    <div class="topbar">
+
+      <button class="menu-btn" onclick="document.getElementById('side').classList.toggle('open')">☰</button>
+
+      <div>
+
+        <h1 id="page-title">概览</h1>
+
+        <div class="crumb" id="page-sub">年度配置与进度</div>
+
+      </div>
+
+      <div class="src-badge" id="year-badge">—</div>
+
+      <div class="src-badge" id="src-badge">数据源：—</div>
+
+    </div>
+
+
+
+    <div class="content">
+
+      <div id="cloud-banner" style="display:none;margin-bottom:12px"></div>
+
+      <!-- 概览 -->
+
+      <section id="view-overview"></section>
+
+
+
+      <!-- 评分表 -->
+
+      <section id="view-score" style="display:none">
+
+        <div class="steps">
+
+          <div class="step active" data-step="1">1 上传评分表</div>
+
+          <div class="step" data-step="2">2 选择工作表与表头</div>
+
+          <div class="step" data-step="3">3 列映射与导入</div>
+
+          <div class="step" data-step="4">4 处理待映射</div>
+
+        </div>
+
+        <div id="score-body"></div>
+
+      </section>
+
+
+
+      <!-- 节点 -->
+
+      <section id="view-nodes" style="display:none">
+
+        <div class="panel">
+
+          <div class="toolbar" id="node-filters">
+
+            <div class="field"><label>一级要素</label>
+
+              <select id="f-element">
+
+                <option value="">全部要素</option>
+
+                <option value="1">一、体制机制</option><option value="2">二、适当性匹配</option>
+
+                <option value="3">三、营销行为管理</option><option value="4">四、纠纷化解</option>
+
+                <option value="5">五、金融教育</option><option value="6">六、消费者服务</option>
+
+                <option value="7">七、个人信息保护</option>
+
+              </select></div>
+
+            <div class="field"><label>缺口</label>
+
+              <select id="f-gap">
+
+                <option value="">全部</option><option value="has">仅看有缺口</option>
+
+                <option value="空节点">空节点</option><option value="份数不足">份数不足</option>
+
+                <option value="仅说明">仅说明</option><option value="正常">正常</option>
+
+              </select></div>
+
+            <div class="field"><label>状态</label>
+
+              <select id="f-status"><option value="">全部</option>
+
+                <option>未开始</option><option>进行中</option><option>已齐备</option><option>已复核</option><option>待补材料</option>
+
+              </select></div>
+
+            <div class="field wide"><label>关键词（节点名 / 路径）</label>
+
+              <input id="f-q" placeholder="如：会议、培训、5.1"></div>
+
+            <button class="primary" id="btn-node-search">查询</button>
+
+            <button class="ghost" id="btn-node-reset">重置</button>
+
+          </div>
+
+          <div id="node-table"></div>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- 缺口 -->
+
+      <section id="view-gaps" style="display:none">
+
+        <div class="notice">口径说明：缺口由「应备份数 − 旧年实际文件数」判定；「仅说明」表示该节点只有情况说明、缺实质材料。可挽回分值需人工按评分细则填写，系统不推算。</div>
+
+        <div class="tabs" id="gap-tabs">
+
+          <div class="tab active" data-p="">全部</div>
+
+          <div class="tab" data-p="P0">P0 紧急</div>
+
+          <div class="tab" data-p="P1">P1 重要</div>
+
+          <div class="tab" data-p="P2">P2 一般</div>
+
+        </div>
+
+        <div class="panel" id="gap-list"></div>
+
+      </section>
+
+
+
+      <!-- 运行 -->
+
+      <section id="view-run" style="display:none">
+
+        <div class="panel">
+
+          <h3>① 年度与目录参数 <span class="sub">参数改完先保存，再试跑</span></h3>
+
+          <div class="grid2">
+
+            <div class="field"><label>旧年度</label><input id="c-year-old" placeholder="2025"></div>
+
+            <div class="field"><label>新年度</label><input id="c-year-new" placeholder="2026"></div>
+
+            <div class="field"><label>源目录（旧年材料底稿，只读）</label><input id="c-src" placeholder="D:\公司\2025年..."></div>
+
+            <div class="field"><label>目标目录（新年度文件树）</label><input id="c-dst" placeholder="D:\公司\2026年..."></div>
+
+          </div>
+
+          <div class="field" style="margin-top:12px">
+
+            <label>本次接入哪些要素（不勾 = 全部扫描；分要素补充时只勾要补的）</label>
+
+            <div class="row" style="flex-wrap:wrap;gap:12px;margin-top:6px">
+
+              <label class="chk"><input type="checkbox" data-el value="1">一、体制机制</label>
+
+              <label class="chk"><input type="checkbox" data-el value="2">二、适当性匹配</label>
+
+              <label class="chk"><input type="checkbox" data-el value="3">三、营销行为管理</label>
+
+              <label class="chk"><input type="checkbox" data-el value="4">四、纠纷化解</label>
+
+              <label class="chk"><input type="checkbox" data-el value="5">五、金融教育</label>
+
+              <label class="chk"><input type="checkbox" data-el value="6">六、消费者服务</label>
+
+              <label class="chk"><input type="checkbox" data-el value="7">七、个人信息保护</label>
+
+            </div>
+
+          </div>
+
+          <div class="row" style="margin-top:12px">
+
+            <button id="btn-save-config">保存参数</button>
+
+            <button id="btn-scan" class="primary">扫描旧年树生成节点</button>
+
+            <span class="hint" id="config-hint"></span>
+
+          </div>
+
+        </div>
+
+
+
+        <div class="panel">
+
+          <h3>② 试跑预览 <span class="sub">只计算不写盘</span></h3>
+
+          <div class="row">
+
+            <div class="field" style="min-width:220px"><label>模式</label>
+
+              <select id="run-mode">
+
+                <option value="mirror">镜像：建目录 + 复制材料（推荐）</option>
+
+                <option value="skeleton">仅骨架：只建目录与清单，不复制材料</option>
+
+              </select></div>
+
+            <button id="btn-plan">试跑预览</button>
+
+            <button id="btn-execute" class="primary">正式执行</button>
+
+          </div>
+
+          <div id="plan-result" style="margin-top:14px"></div>
+
+        </div>
+
+
+
+        <div class="panel">
+
+          <h3>③ 校验报告 <span class="sub">门禁不全绿不得签收</span></h3>
+
+          <div id="validate-result"></div>
+
+        </div>
+
+
+
+        <div class="panel">
+
+          <h3>④ 批次记录</h3>
+
+          <div id="run-history"></div>
+
+        </div>
+
+
+
+        <div class="panel">
+
+          <h3>⑤ 导入本机运行结果（可选） <span class="sub">若在建树机上单独执行了脚本，可把三件套导回</span></h3>
+
+          <div class="grid2">
+
+            <div class="field"><label>run_report.json</label><input type="file" id="imp-report" accept=".json"></div>
+
+            <div class="field"><label>nodes.csv</label><input type="file" id="imp-nodes" accept=".csv"></div>
+
+            <div class="field"><label>files.csv</label><input type="file" id="imp-files" accept=".csv"></div>
+
+            <div class="field"><label>&nbsp;</label><button id="btn-import-run">导入并写库</button></div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- 导出 -->
+
+      <section id="view-export" style="display:none">
+
+        <div class="panel">
+
+          <h3>导出文件 <span class="sub">全部来自当前数据库，同一数据源</span></h3>
+
+          <table>
+
+            <thead><tr><th style="width:280px">文件</th><th>内容</th><th style="width:120px">操作</th></tr></thead>
+
+            <tbody>
+
+              <tr><td>材料准备总表.xlsx</td><td>节点级清单（应备/已匹配/缺口/责任部门）+ 要素汇总 + 生成说明</td>
+
+                <td><a class="badge b-navy" href="/api/export/table.xlsx">下载</a></td></tr>
+
+              <tr><td>缺口与补材料清单.xlsx</td><td>按优先级排列的缺口、应补材料、责任人、可挽回分值（待填）</td>
+
+                <td><a class="badge b-navy" href="/api/export/gaps.xlsx">下载</a></td></tr>
+
+              <tr><td>会议/培训标准包核对表.xlsx</td><td>会议包 7 份、培训包 5 份逐类核对，标出缺哪一类</td>
+
+                <td><a class="badge b-navy" href="/api/export/package.xlsx">下载</a></td></tr>
+
+              <tr><td>节点清单.csv</td><td>UTF-8 BOM，可直接用 Excel 打开</td>
+
+                <td><a class="badge b-navy" href="/api/export/nodes.csv">下载</a></td></tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+        <div class="panel">
+
+          <h3>导出前自检</h3>
+
+          <div id="export-check"></div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<div class="drawer-mask" id="mask"></div>
+
+<div class="drawer" id="drawer">
+
+  <div class="drawer-head"><h2 id="drawer-title">节点详情</h2><button class="x" id="drawer-close">×</button></div>
+
+  <div class="drawer-body" id="drawer-body"></div>
+
+  <div class="drawer-foot" id="drawer-foot"></div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="/app.js"></script>
+
+<script>
+// 快照模式：拦截失效的相对资源请求，避免报错
+(function(){
+  try { document.body.style.paddingTop = '44px'; } catch(e) {}
+  var origFetch = window.fetch;
+  window.fetch = function(u){
+    if (typeof u === 'string' && (u.startsWith('/') || (!u.startsWith('http') && !u.startsWith('data:') && !u.startsWith('#')))) {
+      return Promise.resolve(new Response(JSON.stringify({items:[],error:'snapshot-mode'}), {status:200, headers:{'Content-Type':'application/json'}}));
+    }
+    return origFetch.apply(this, arguments);
+  };
+  // 阻止相对资源加载报错
+  document.addEventListener('error', function(e){
+    var t = e.target;
+    if (t && (t.tagName === 'SCRIPT' || t.tagName === 'LINK')) e.preventDefault();
+  }, true);
+})();
+</script>
+</body>
+
+</html>
+

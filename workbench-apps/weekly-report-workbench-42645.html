@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>周月报价值提炼与向上汇报工作台</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div id="gh-snapshot-banner" style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#FFF7E6;border-bottom:1px solid #E8C87A;color:#8A5A00;padding:8px 16px;font:13px/1.5 'PingFang SC','Microsoft YaHei',sans-serif;text-align:center;">
+📜 这是原内网工作台的<strong>静态快照</strong>（仅供存档预览）。完整交互版本需在 WorkBuddy 内网环境打开原链接。
+<button onclick="this.parentNode.remove();document.body.style.paddingTop='0'" style="margin-left:10px;background:#8A5A00;color:#fff;border:0;border-radius:4px;padding:2px 10px;cursor:pointer;font-size:12px;">知道了</button>
+</div>
+
+<div class="app">
+  <aside class="side">
+    <div class="brand">
+      <h1>周月报价值提炼</h1>
+      <p>法律合规部 · 向上汇报工作台</p>
+    </div>
+    <nav class="nav" id="nav">
+      <button data-view="overview" class="on">本期概览</button>
+      <button data-view="import">导入中心</button>
+      <button data-view="items">事项库 <span class="dot" id="dotItems" hidden>0</span></button>
+      <button data-view="confirm">待确认跟进 <span class="dot" id="dotConfirm" hidden>0</span></button>
+      <button data-view="report">汇报清单</button>
+      <button data-view="settings">设置</button>
+    </nav>
+    <div class="side-foot">
+      <div id="sideMode">课堂模拟数据</div>
+      <div id="sideConn">云服务连接中…</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <span class="ttl" id="topTitle">本期概览</span>
+      <span class="badge b-brand" id="topPeriod">—</span>
+      <span class="spacer"></span>
+      <span class="small" id="topMeta"></span>
+      <button class="btn sm" id="btnReload">刷新</button>
+    </div>
+    <div class="content" id="content">
+      <div class="loading"><span class="spin"></span>正在连接云服务并读取数据…</div>
+    </div>
+  </main>
+</div>
+
+<div class="drawer-mask" id="mask"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-h">
+    <h3 id="drawerTitle">详情</h3>
+    <button class="btn sm" id="drawerClose">关闭</button>
+  </div>
+  <div class="drawer-b" id="drawerBody"></div>
+  <div class="drawer-f" id="drawerFoot"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<input type="file" id="fileInput" accept=".xlsx,.xls,.csv" multiple hidden>
+
+<script src="https://cdn.jsdelivr.net/npm/@tencent-ai/workbuddy-cloud-sdk@dev/lib/index.global.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="assets/cloud-config.js"></script>
+<script src="assets/cloud.js"></script>
+<script src="assets/parse.js"></script>
+<script src="assets/export.js"></script>
+<script src="assets/app.js"></script>
+<script>
+// 快照模式：拦截失效的相对资源请求，避免报错
+(function(){
+  try { document.body.style.paddingTop = '44px'; } catch(e) {}
+  var origFetch = window.fetch;
+  window.fetch = function(u){
+    if (typeof u === 'string' && (u.startsWith('/') || (!u.startsWith('http') && !u.startsWith('data:') && !u.startsWith('#')))) {
+      return Promise.resolve(new Response(JSON.stringify({items:[],error:'snapshot-mode'}), {status:200, headers:{'Content-Type':'application/json'}}));
+    }
+    return origFetch.apply(this, arguments);
+  };
+  // 阻止相对资源加载报错
+  document.addEventListener('error', function(e){
+    var t = e.target;
+    if (t && (t.tagName === 'SCRIPT' || t.tagName === 'LINK')) e.preventDefault();
+  }, true);
+})();
+</script>
+</body>
+</html>

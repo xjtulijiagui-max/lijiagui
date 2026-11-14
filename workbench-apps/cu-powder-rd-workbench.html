@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>铜粉研发实验设计与数据复盘助手 · 工作台原型 v0.1（本地预览）</title>
+<style>
+:root{
+  --bg:#f5f7fa; --panel:#ffffff; --panel2:#fbfcfe; --line:#e2e8f0; --line2:#eef2f7;
+  --ink:#16202c; --muted:#5f7085; --dim:#8494a7;
+  --accent:#0b5f8a; --accent-soft:#e8f2f8;
+  --ok:#1a6b4a; --ok-soft:#e6f4ed;
+  --warn:#8a5b00; --warn-soft:#fdf3e0;
+  --bad:#b3261e; --bad-soft:#fbeae8;
+  --grey:#6b7787; --grey-soft:#eef1f4;
+  --blocked:#6d4c9f; --blocked-soft:#f1ecfa;
+  --r:10px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.65 "Microsoft YaHei","PingFang SC",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+code,.mono{font-family:"Cascadia Mono",Consolas,Menlo,monospace;font-size:12.5px}
+button{font:inherit;cursor:pointer}
+button:disabled{cursor:not-allowed}
+
+/* ---------- top ---------- */
+.top{position:sticky;top:0;z-index:30;background:var(--panel);border-bottom:1px solid var(--line)}
+.top-in{max-width:1440px;margin:0 auto;padding:10px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.brand{display:flex;flex-direction:column;gap:1px;min-width:250px}
+.brand b{font-size:15px;letter-spacing:.2px}
+.brand span{font-size:11.5px;color:var(--dim)}
+.spacer{flex:1}
+.meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--muted)}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:999px;border:1px solid var(--line);background:var(--panel2);font-size:12px;white-space:nowrap}
+.chip.state{border-color:#bcd6e6;background:var(--accent-soft);color:#0a4f73;font-weight:600}
+.chip.q{border-color:#e8d6a8;background:var(--warn-soft);color:var(--warn);cursor:pointer}
+select.role{font:inherit;font-size:12.5px;padding:5px 8px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink)}
+
+/* ---------- banner ---------- */
+.banner{max-width:1440px;margin:0 auto;padding:0 18px}
+.banner-in{margin-top:10px;border:1px solid #e8d6a8;background:var(--warn-soft);color:#6f4a00;border-radius:var(--r);padding:8px 12px;font-size:12.5px;display:flex;gap:10px;align-items:flex-start}
+.banner-in b{color:#5a3b00}
+
+/* ---------- layout ---------- */
+.layout{max-width:1440px;margin:0 auto;padding:12px 18px 40px;display:grid;grid-template-columns:236px 1fr;gap:14px;align-items:start}
+.side{position:sticky;top:74px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:10px;max-height:calc(100vh - 96px);overflow:auto}
+.stage{margin-bottom:10px}
+.stage-h{font-size:11.5px;color:var(--dim);letter-spacing:.4px;padding:6px 6px 4px;display:flex;justify-content:space-between;align-items:center}
+.stage-h em{font-style:normal;color:#b9c4d2}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav button{display:flex;gap:8px;align-items:center;width:100%;text-align:left;padding:7px 8px;border:0;border-radius:8px;background:transparent;color:var(--ink);font-size:13px}
+.nav button:hover{background:var(--panel2)}
+.nav button.on{background:var(--accent-soft);color:#0a4f73;font-weight:600}
+.nav button.locked{color:#a9b4c2;cursor:not-allowed}
+.nav button.locked:hover{background:transparent}
+.nav .vid{font-size:11px;color:var(--dim);width:38px;flex:none}
+.nav button.on .vid{color:#0a4f73}
+.nav .lock{margin-left:auto;font-size:11px}
+
+/* ---------- main ---------- */
+.main{min-width:0;display:flex;flex-direction:column;gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r)}
+.card-h{display:flex;align-items:baseline;gap:10px;padding:12px 16px 0;flex-wrap:wrap}
+.card-h h2{margin:0;font-size:15.5px}
+.card-h .sub{font-size:12px;color:var(--muted)}
+.card-b{padding:12px 16px 16px}
+.note{font-size:12px;color:var(--muted);margin-top:8px}
+.note.warn{color:var(--warn)}
+hr.sep{border:0;border-top:1px solid var(--line2);margin:12px 0}
+
+.btn{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font-size:13px}
+.btn:hover:not(:disabled){border-color:#c9d6e3;background:var(--panel2)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover:not(:disabled){background:#0a527a}
+.btn.danger{border-color:#e6b7b2;color:var(--bad)}
+.btn:disabled{opacity:.45;background:var(--grey-soft);border-color:var(--line)}
+.btn.sm{padding:3px 9px;font-size:12px;border-radius:7px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+
+table{width:100%;border-collapse:collapse;font-size:12.8px}
+th,td{border-bottom:1px solid var(--line2);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:var(--panel2);font-weight:700;color:#33475f;position:sticky;top:0;z-index:1}
+tbody tr:hover td{background:#fafcfe}
+.tw{overflow:auto;border:1px solid var(--line);border-radius:9px;max-height:none}
+.tw.lg{max-height:460px}
+td.sticky,th.sticky{position:sticky;left:0;background:var(--panel);z-index:2;border-right:1px solid var(--line2)}
+th.sticky{background:var(--panel2);z-index:3}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+
+.tri{display:inline-block;padding:1px 8px;border-radius:999px;font-size:11.5px;font-weight:700;white-space:nowrap}
+.tri.ok{background:var(--ok-soft);color:var(--ok)}
+.tri.no{background:var(--bad-soft);color:var(--bad)}
+.tri.na{background:var(--grey-soft);color:var(--grey)}
+.tri.warn{background:var(--warn-soft);color:var(--warn)}
+.tri.q{background:var(--blocked-soft);color:var(--blocked)}
+.tag{display:inline-block;padding:1px 6px;border-radius:5px;background:#f1f4f8;color:#54657a;font-size:11px;border:1px solid #e6ebf1}
+.tag.rule{background:#eef4fb;color:#1f4e79;border-color:#d9e6f4}
+.tag.p0{background:var(--bad-soft);color:var(--bad);border-color:#f0c9c5}
+.tag.p1{background:var(--warn-soft);color:var(--warn);border-color:#eddcb6}
+.tag.p2{background:var(--grey-soft);color:var(--grey)}
+.tag.miss{background:#fff;color:#9aa7b5;border:1px dashed #cfd8e3}
+.tag.sim{background:#f3f0fa;color:#6d4c9f;border-color:#e0d8f2}
+
+.empty{padding:26px 12px;text-align:center;color:var(--dim);font-size:13px;border:1px dashed var(--line);border-radius:9px;background:var(--panel2)}
+.kv{display:grid;grid-template-columns:120px 1fr;gap:6px 12px;font-size:13px}
+.kv dt{color:var(--muted)}
+.kv dd{margin:0}
+.field{display:flex;flex-direction:column;gap:4px;font-size:12.5px}
+.field label{color:var(--muted)}
+.field input,.field select,.field textarea{font:inherit;font-size:13px;padding:6px 9px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);width:100%}
+.field input:focus,.field textarea:focus,.field select:focus{outline:2px solid #cfe4f0;border-color:#a9cbdf}
+.field .hint{font-size:11.5px;color:var(--dim)}
+.req{color:var(--bad)}
+.deny{border:1px solid #e6b7b2;background:#fdf6f5;border-radius:var(--r);padding:18px}
+.deny h3{margin:0 0 6px;font-size:15px;color:var(--bad)}
+.deny p{margin:4px 0;font-size:13px;color:#7a3b36}
+.deny code{background:#fff;border:1px solid #f0d6d3;padding:1px 5px;border-radius:5px}
+.hidden-note{margin-top:10px;padding:8px 11px;border:1px dashed #d8c2be;border-radius:9px;background:#fdfaf9;font-size:12px;color:#8a5b52}
+.zone{border:1px solid var(--line);border-radius:9px;padding:10px 12px;background:var(--panel2)}
+.zone h4{margin:0 0 8px;font-size:13px;display:flex;gap:8px;align-items:center}
+.zone .li{border-top:1px solid var(--line2);padding:7px 0;font-size:12.8px}
+.zone .li:first-of-type{border-top:0}
+.zone .li .ev{font-size:11px;color:var(--dim)}
+.zone .li .why{font-size:11.5px;color:var(--warn)}
+.sec{border:1px solid var(--line);border-radius:9px;margin-bottom:8px;overflow:hidden}
+.sec-h{display:flex;gap:8px;align-items:center;padding:8px 10px;background:var(--panel2);font-size:13px;font-weight:600}
+.sec-h .miss{color:var(--bad);font-weight:600}
+.sec-b{padding:9px 12px;font-size:12.9px}
+.sec-b p{margin:5px 0}
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12px;margin:6px 0 2px}
+.flow .st{padding:3px 9px;border-radius:7px;border:1px solid var(--line);background:var(--panel2);color:var(--muted)}
+.flow .st.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
+.flow .st.err{background:var(--bad-soft);border-color:#f0c9c5;color:var(--bad)}
+.flow .ar{color:#c3ceda}
+.toast{position:fixed;right:18px;bottom:18px;z-index:60;display:flex;flex-direction:column;gap:8px;max-width:min(420px,calc(100vw - 36px))}
+.toast div{background:#132029;color:#eaf2f8;padding:10px 13px;border-radius:9px;font-size:12.5px;box-shadow:0 8px 24px rgba(10,25,40,.22)}
+.toast div.bad{background:#7d241f}
+.toast div.ok{background:#145c41}
+.loglist{max-height:300px;overflow:auto;font-size:12.2px}
+.loglist .lg{border-top:1px solid var(--line2);padding:6px 0}
+.loglist .lg:first-child{border-top:0}
+.loglist .t{color:var(--dim);font-size:11px}
+.qpanel{position:fixed;inset:0;z-index:80;background:rgba(12,24,36,.34);display:none;align-items:flex-start;justify-content:center;padding:60px 18px}
+.qpanel.on{display:flex}
+.qbox{background:var(--panel);border-radius:14px;max-width:820px;width:100%;max-height:80vh;overflow:auto;padding:20px 22px}
+.qbox h3{margin:0 0 4px}
+.qitem{border-top:1px solid var(--line2);padding:11px 0;font-size:13px}
+.qitem b{display:block;margin-bottom:3px}
+.qitem .lvl{font-size:11px;padding:1px 7px;border-radius:999px;background:var(--blocked-soft);color:var(--blocked);margin-right:6px}
+@media (max-width:1080px){
+  .layout{grid-template-columns:1fr}
+  .side{position:static;max-height:none}
+  .grid2,.grid3{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <div class="brand">
+      <b>铜粉研发实验设计与数据复盘助手 · 工作台</b>
+      <span>cu-powder-rd-review · 本地原型 v0.1 · 依据 specs/07-ui.md 九页 · init_state BASELINE_DRAFT</span>
+    </div>
+    <div class="spacer"></div>
+    <div class="meta">
+      <span class="chip">任务 <b id="t-taskid">—</b></span>
+      <span class="chip state" id="t-state">—</span>
+      <span class="chip q" id="t-q" title="查看规格未定项">待确认 <b>0</b></span>
+      <label class="field" style="gap:0">
+        <select class="role" id="roleSel" title="演示用角色切换，不对应真实登录"></select>
+      </label>
+    </div>
+  </div>
+</header>
+
+<div class="banner"><div class="banner-in">
+  <div>⚠</div>
+  <div><b>候选原型，不可作为业务判定依据。</b>判据为 <code>示例判据</code>（SEM 中位等效径 ≥ 4.0 μm、干粉总氧 ≤ 0.30 wt%），<b>非产品标准</b>（Q-001）。数据来自 PRD §7 六组<b>模拟</b>记录。未连真实系统、未写库、未发布；业务测试 <code>NOT_RUN</code>。</div>
+</div></div>
+
+<div class="layout">
+  <aside class="side" id="side"></aside>
+  <main class="main" id="main"></main>
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="qpanel" id="qpanel"><div class="qbox" id="qbox"></div></div>
+
+<script>
+"use strict";
+/* =========================================================================
+   0. 常量：全部来自 specs/，不新增业务字段
+   ========================================================================= */
+const PROJECT = { id:"cu-powder-rd-review", taskId:"T-2026-011" };  // 任务ID编码规则未提供（Q-007），此处为示例值
+const CRIT = { semMin:4.0, o2Max:0.30 };                            // 示例判据（RULE-OUT-002）
+const VERDICT = { OK:"满足", NO:"未满足", NA:"无法判定" };
+
+const ROLES = [
+  { id:"R-01", name:"铜粉研发工程师" },
+  { id:"R-02", name:"检测人员" },
+  { id:"R-03", name:"项目负责人" },
+  { id:"R-04", name:"铜浆研发/应用工程师" },
+  { id:"R-05", name:"质量工程师" },
+  { id:"R-06", name:"项目/EHS" },
+  { id:"R-07", name:"查看者（只读）" }
+];
+
+const STATES = {
+  "STATE-INTAKE":{ label:"已登记", d:"仅有目标与主问题" },
+  "STATE-EVIDENCE-CHECK":{ label:"资料校验中", d:"P-1 进行中" },
+  "STATE-DESIGN-READY":{ label:"设计就绪", d:"目标定标、设计已批" },
+  "STATE-DATA-NORMALIZED":{ label:"数据已标准化", d:"口径已确认" },
+  "STATE-ANALYZED":{ label:"判读完成", d:"观察/假设已分离" },
+  "STATE-REVIEW":{ label:"评审中", d:"G-05 四类签核" },
+  "STATE-SIGNED":{ label:"已签核", d:"四栏齐全" },
+  "STATE-ARCHIVED":{ label:"已归档", d:"只读" },
+  "STATE-BLOCKED":{ label:"挂起", d:"证据不足/口径冲突" },
+  "STATE-REJECTED":{ label:"已驳回", d:"返工中" }
+};
+
+/* 页面：严格取自 specs/07-ui.md 页面清单，不增不减 */
+const PAGES = [
+  { id:"V-01", stage:"导入", name:"任务登记",        req:"task.view" },
+  { id:"V-02", stage:"导入", name:"资料校验与缺口看板", req:"task.view" },
+  { id:"V-03", stage:"导入", name:"样品与工艺对照",    req:"process.view" },
+  { id:"V-04", stage:"导入", name:"检测数据与口径核查", req:"test.view" },
+  { id:"V-05", stage:"判读", name:"联合判读工作台",    req:"finding.add" },
+  { id:"V-06", stage:"判读", name:"下一轮验证计划",    req:"plan.view" },
+  { id:"V-07", stage:"导出", name:"报告预览与导出",    req:"report.view" },
+  { id:"V-08", stage:"导出", name:"签核与版本记录",    req:"sign.view" },
+  { id:"V-09", stage:"导出", name:"助手测试台账",      req:"test-ledger.view" }
+];
+
+/* 规格未定项（本轮搭建中发现，需用户确认；不在 04/07/08 中给出答案） */
+const OPEN_Q = [
+  { id:"Q-015", lvl:"BLOCKER", t:"状态机缺 create_task / approve_design / import_data 的转移行",
+    d:"04-rules 的「允许的进入事件」列出现了这三个事件，但下方转移表没有对应行（无 from→to、无守卫）。本原型按最小推断实现，并标「推断·待确认」。" },
+  { id:"Q-016", lvl:"BLOCKER", t:"STATE-REJECTED 的 rework 无目标状态",
+    d:"状态表写 REJECTED 的离开事件是 rework，但转移表没有该行，也没写返工后回到哪个状态。本原型<b>不实现</b>该按钮，避免用默认值补齐。" },
+  { id:"Q-017", lvl:"NON-BLOCKER", t:"权限矩阵未覆盖 3 个资源",
+    d:"08-security 矩阵没有「下一轮验证计划」「助手测试台账」「报告正文查看」三行。按「默认拒绝」三者对全员不可达，主流程会断。本原型给 task.view 持有者只读、R-01/R-03 可写，并标注为推断。" },
+  { id:"Q-018", lvl:"NON-BLOCKER", t:"证据编号空间冲突",
+    d:"05-data 定义 EvidenceFile.evidence_id 为 <code>E-###</code>；evidence/README 的 E-001~E-008 已用于验收证据。同一编号段两种含义。本原型数据证据从 <code>E-101</code> 起编号，避开冲突，待确认编号段分配规则。" },
+  { id:"Q-019", lvl:"NON-BLOCKER", t:"状态机守卫引用了未定义的字段",
+    d:"04-rules 的 start_test 守卫要求「基准与固定条件齐备」，但 05-data 没有「基准」「固定条件」字段定义（只在 07-ui 的 V-06 信息块里出现）。本原型把 V-06 表格列当作字段来源。" },
+  { id:"Q-020", lvl:"NON-BLOCKER", t:"包内无工艺记录样例（I-04）",
+    d:"V-03 需要 投料量/浓度/加料/保温/pH+温度/气氛，包内只有 §7 的检测值与「75 g 五水硫酸铜」交流背景，未绑定到具体样品。本原型全部标「未提供」，因此 AC-008（pH 缺温度）、AC-009（PVP 无基准）没有可点路径。" },
+  { id:"Q-021", lvl:"BLOCKER", t:"判读证据的最小条目与取值口径未定义",
+    d:"两处空白：<b>(a)</b> 04-rules 的「每条观察有证据ID」在 0 条观察时按字面是真空通过 —— 本原型照字面实现，所以空报告也能进评审，但导出会被 V-07 的「缺章节」拦住。是否要求至少 1 条观察 + 1 条假设？<b>(b)</b> 同一 样品+检测项 有多条不同日期记录时取哪条参与判读未定义，本原型取<b>最新取样日期</b>，属推断。" }
+];
+
+/* =========================================================================
+   1. 状态
+   ========================================================================= */
+let ROLE = "R-03";
+
+const SAMPLES = [
+  { id:"CU-01", d50:8.2, sem:1.2,  o2:0.25, morph:"葡萄串状，连接性质待验证" },
+  { id:"CU-02", d50:5.1, sem:4.3,  o2:0.22, morph:"分散较好，未见明显簇状结构" },
+  { id:"CU-03", d50:6.0, sem:4.8,  o2:0.46, morph:"表面粗糙，局部黏连" },
+  { id:"CU-04", d50:3.3, sem:2.7,  o2:0.18, morph:"分散较好" },
+  { id:"CU-05", d50:6.4, sem:5.2,  o2:0.28, morph:"外形较完整，少量颗粒接触" },
+  { id:"CU-06", d50:7.8, sem:4.6,  o2:null, morph:"局部 EDS 检出氧" }
+];
+
+const app = {
+  state:"STATE-INTAKE",
+  prevState:null,
+  view:"V-01",
+  task:{
+    taskId:PROJECT.taskId,
+    application:"光伏铜浆",
+    targetClass:"4μm",
+    targetValue:4, targetUnit:"μm",
+    customerReq:"未提供（Q-001）",
+    internalGoal:"保留 4 μm 以上独立颗粒；总氧不高于内部目标值（未提供）",
+    priority:"P0",
+    mainQuestion:"当前 D50 约 8 μm 是否受团聚影响，如何改善分散并保留 4 μm 以上独立颗粒",
+    sampleNode:"未提供（Q-012）"
+  },
+  // 每条检测记录：source 标 模拟；method 来自 PRD §7「所有模拟样品假定采用相同检测方法」
+  tests:[],
+  findings:{ observe:[], hypothesis:[], counter:[], gaps:[] },
+  plan:[
+    { q:"大粒度来自独立颗粒还是团聚", act:"先对 CU-01 统一分散与多视场 SEM；真实 VC 路线再单独考察 PVP-K30 用量或加入阶段",
+      base:"CU-01 同条件复测", fixed:"总水量与基线固定", point:"复测前后", rep:"测量重复 ≥2",
+      crit:"分散前后粒度 + 多视场 SEM 统计；总氧同时复测", owner:"研发设计 / 检测执行", ev:"原始图 + 尺寸统计" },
+    { q:"颗粒在哪一阶段长大或黏连", act:"在批准的预还原、主还原及保温节点取样；湿样、洗后和干粉留同批对照",
+      base:"同批分段样", fixed:"路线与投料不变", point:"预还原/主还原/保温", rep:"每点 ≥2",
+      crit:"SEM/粒度/物相时间序列", owner:"研发确认 / 统一取样", ev:"时间序列原图与统计" },
+    { q:"总氧差异及候选是否可复现", act:"补测 CU-06 总氧；复核 CU-03 方法与物相；对 CU-02/05 做独立批次及复测",
+      base:"CU-02 / CU-05", fixed:"方法+制样一致", point:"干粉", rep:"独立批次 ≥2",
+      crit:"总氧原始报告、EDS 区域、物相；分别记录测量重复与批次重复", owner:"检测复核 / 质量确认", ev:"总氧原始报告" },
+    { q:"表面处理能否改善应用", act:"同一基粉设未处理和处理对照；固定制浆、印刷、烧结及拉力条件",
+      base:"同批基粉", fixed:"浆料/印刷/烧结/测试条件", point:"储存前后", rep:"≥2",
+      crit:"包覆/残留证据、电阻与氧化变化、浆料稳定性、拉力及断裂位置", owner:"粉体与铜浆共同评审", ev:"应用测试记录" }
+  ],
+  gaps:[],
+  signs:{ "R-03":null, "R-05":null, "R-04":null, "R-06":null },
+  gate:{ customerExportApproved:false },      // 授权门：R-06 批准
+  exports:{ ledger:null, report:null },
+  audit:[],
+  hitWords:[]
+};
+
+/* 审计：只追加，无删除接口（REQ-SEC-004） */
+function log(event, detail){
+  const d=new Date();
+  app.audit.unshift({ t:d.toLocaleString("zh-CN",{hour12:false}), role:ROLE, event, detail });
+}
+
+/* =========================================================================
+   2. 权限（specs/08-security.md 矩阵；默认拒绝）
+   规则未覆盖的资源 → 显式标 inferred，并在界面标注
+   ========================================================================= */
+function has(perm, role){
+  role = role || ROLE;
+  const P = {
+    "task.view":      { "R-01":1, "R-02":1, "R-03":1, "R-04":0, "R-05":1, "R-06":0, "R-07":0 },
+    "task.edit":      { "R-01":1, "R-02":0, "R-03":1, "R-04":0, "R-05":0, "R-06":0, "R-07":0 },
+    "process.view":   { "R-01":1, "R-02":2, "R-03":1, "R-04":0, "R-05":2, "R-06":0, "R-07":0 }, // 2=只读
+    "test.view":      { "R-01":1, "R-02":1, "R-03":1, "R-04":0, "R-05":2, "R-06":0, "R-07":0 },
+    "test.input":     { "R-01":0, "R-02":1, "R-03":1, "R-04":0, "R-05":0, "R-06":0, "R-07":0 },
+    "finding.add":    { "R-01":1, "R-02":0, "R-03":1, "R-04":0, "R-05":0, "R-06":0, "R-07":0 },
+    "report.view":    { "R-01":1, "R-02":1, "R-03":1, "R-04":0, "R-05":1, "R-06":0, "R-07":3 }, // 3=仅已签核
+    "report.export.in": { "R-01":1, "R-02":1, "R-03":1, "R-04":0, "R-05":1, "R-06":0, "R-07":3 },
+    "report.export.cust":{ "R-01":0, "R-02":0, "R-03":1, "R-04":0, "R-05":1, "R-06":9, "R-07":0 }, // 9=批准权
+    "sign":           { "R-01":0, "R-02":0, "R-03":1, "R-04":1, "R-05":1, "R-06":1, "R-07":0 },
+    "sign.view":      { "R-01":0, "R-02":0, "R-03":1, "R-04":1, "R-05":1, "R-06":1, "R-07":0 },
+    "audit.view":     { "R-01":0, "R-02":0, "R-03":1, "R-04":0, "R-05":1, "R-06":1, "R-07":0 },
+    // 以下三项：矩阵未覆盖，按默认拒绝；本原型给只读者只读，标 inferred（Q-017）
+    "plan.view":      { "R-01":1, "R-02":2, "R-03":1, "R-04":2, "R-05":2, "R-06":0, "R-07":0 },
+    "test-ledger.view":{ "R-01":0, "R-02":0, "R-03":1, "R-04":0, "R-05":1, "R-06":0, "R-07":0 }
+  };
+  const m = P[perm];
+  if(!m){ return false; }
+  const v = m[role];
+  return v===1 || v===2 || v===3;
+}
+const INFERRED_PERMS = ["plan.view","test-ledger.view"];
+
+/* =========================================================================
+   3. 判读（三态 + 规则命中；纯函数，可被验收直接断言）
+   ========================================================================= */
+/* 判读用的有效值：优先取已导入的检测记录；无记录即视为「无数据」，不得回退到样例默认值
+   多条记录时按取样日期取最新 —— 该取值口径 04-rules 未定义，已登记 Q-021 */
+function effOf(s){
+  if(app.tests.length===0) return Object.assign({},s,{d50:null,sem:null,o2:null});
+  const g=item=>{
+    const a=app.tests.filter(x=>x.sid===s.id && x.item===item);
+    if(!a.length) return null;
+    a.sort((x,y)=> String(y.date).localeCompare(String(x.date)));
+    return a[0].val;
+  };
+  return Object.assign({},s,{d50:g("D50"), sem:g("SEM中位径"), o2:g("总氧")});
+}
+function EFF(){ return SAMPLES.map(effOf); }
+
+function tri(cond){ return cond ? VERDICT.OK : VERDICT.NO; }
+
+function judge(s){
+  const a = (s.sem==null) ? VERDICT.NA : tri(s.sem >= CRIT.semMin);
+  const b = (s.o2==null)  ? VERDICT.NA : tri(s.o2 <= CRIT.o2Max);
+  let label, cls;
+  if(a===VERDICT.NA || b===VERDICT.NA){ label="无法判定（缺证据）"; cls="na"; }
+  else if(a===VERDICT.OK && b===VERDICT.OK){ label="两项满足"; cls="ok"; }
+  else if(a===VERDICT.NO && b===VERDICT.NO){ label="两项均未满足"; cls="no"; }
+  else if(a===VERDICT.NO){ label="粒径未满足"; cls="no"; }
+  else { label="总氧未满足"; cls="no"; }
+
+  // 规则命中（每条都给规则编号，便于追踪）
+  const hits=[];
+  if(s.d50!=null && s.sem!=null && s.id==="CU-01") hits.push({r:"RULE-SMP-001", m:"D50 "+s.d50+" μm ≠ SEM 中位径 "+s.sem+" μm，四类尺寸分列，不得互替"});
+  if(s.id==="CU-06") hits.push({r:"RULE-TST-001", m:"总氧缺失；局部 EDS 不得补总氧"});
+  if(s.o2!=null && s.o2>CRIT.o2Max) hits.push({r:"RULE-TST-001", m:"总氧超出示例线，需并列方法/物相后补证"});
+  hits.push({r:"RULE-SMP-002", m:"缺分散前后粒度 + 保温时间序列，最多记「待验证假设」，不得认定熟化"});
+  hits.push({r:"RULE-TST-003", m:"制样/分散与取样时点未提供 → 标不可比，只并列不排序"});
+
+  // 团聚证据计数（三项中满足几项）
+  const ev = 0 /*分散前后*/ + 0 /*多视场统计（视场数未提供）*/ + 0 /*保温时间序列*/;
+
+  return { a, b, label, cls, hits, ev };
+}
+
+function tally(){
+  const t={ ok:0, size:0, o2:0, na:0 };
+  EFF().forEach(s=>{
+    const j=judge(s);
+    if(j.cls==="ok") t.ok++;
+    else if(j.label==="粒径未满足") t.size++;
+    else if(j.label==="总氧未满足") t.o2++;
+    else t.na++;
+  });
+  return t;
+}
+
+/* 越界词（RULE-OUT-001） */
+const BAN = ["最优","根因","合格","量产","最佳用量"];
+function scanBan(text){
+  const hits=[];
+  BAN.forEach(w=>{ if(text && text.indexOf(w)>=0) hits.push(w); });
+  return hits;
+}
+
+/* =========================================================================
+   4. 状态机（严格按 04-rules 转移表；推断项单独标）
+   ========================================================================= */
+function gapsP0Open(){ return app.gaps.filter(g=>g.p===0 && g.st!=="closed").length; }
+function dataReady(){ return app.tests.length>0; }
+function allObsHaveEvidence(){ return app.findings.observe.every(o=>!!o.ev); }
+function allHypHaveCounter(){ return app.findings.hypothesis.every(h=>!!h.counter); }
+function signedCount(){ return Object.keys(app.signs).filter(k=>app.signs[k]).length; }
+function planBaseOK(){ return app.plan.length>0 && app.plan.every(r=>r.crit && r.fixed); }
+
+const EVENTS = [
+  { ev:"create_task", from:null, to:"STATE-INTAKE", label:"建任务", inferred:true,
+    guard:()=>({ok:true}), why:"初始事件（状态表未给转移行，推断）" },
+  { ev:"submit", from:"STATE-INTAKE", to:"STATE-EVIDENCE-CHECK", label:"提交校验",
+    guard:()=>{
+      const miss=[];
+      if(!app.task.application) miss.push("I-01 应用场景");
+      if(!app.task.targetClass) miss.push("I-01 粒径档位");
+      if(!app.task.mainQuestion) miss.push("I-07 本轮主问题");
+      return { ok:miss.length===0, why: miss.length? "拒绝并列出缺失字段："+miss.join("、"):"I-01、I-02、I-07 非空" };
+    }},
+  { ev:"pass_check", from:"STATE-EVIDENCE-CHECK", to:"STATE-DESIGN-READY", label:"资料校验通过",
+    guard:()=>({ ok: SAMPLES.length>0, why: SAMPLES.length? "样品谱系闭合；缺口已登记":"拒绝并提示走 G-01" }) },
+  { ev:"block", from:"STATE-EVIDENCE-CHECK", to:"STATE-BLOCKED", label:"挂起（缺目标/主问题）",
+    guard:()=>({ ok:true, why:"缺目标或主问题" }) },
+  { ev:"approve_design", from:"STATE-EVIDENCE-CHECK", to:"STATE-DESIGN-READY", label:"设计审批", inferred:true,
+    guard:()=>({ ok:planBaseOK(), why: planBaseOK()? "基准与固定条件已登记":"拒绝：V-06 基准或固定条件为空（守卫为推断）" }) },
+  { ev:"start_test", from:"STATE-DESIGN-READY", to:"STATE-DATA-NORMALIZED", label:"开始执行/录入数据",
+    guard:()=>({ ok: planBaseOK() && !!app.task.mainQuestion,
+                 why: planBaseOK()? "主问题唯一；基准与固定条件齐备":"拒绝并提示重定基准（G-02）" }) },
+  { ev:"import_data", from:"STATE-DESIGN-READY", to:"STATE-DATA-NORMALIZED", label:"导入数据", inferred:true,
+    guard:()=>({ ok:dataReady(), why: dataReady()? "已导入检测记录":"拒绝：无检测记录" }) },
+  { ev:"analyze", from:"STATE-DATA-NORMALIZED", to:"STATE-ANALYZED", label:"执行判读",
+    guard:()=>({ ok:dataReady() && app.tests.every(t=>t.unit && t.method),
+                 why: dataReady()? "全部数值有单位与方法；口径冲突已并列":"拒绝并转 G-04" }) },
+  { ev:"request_review", from:"STATE-ANALYZED", to:"STATE-REVIEW", label:"提交评审",
+    guard:()=>{
+      const bad=[];
+      if(!allObsHaveEvidence()) bad.push("存在无 evidence_id 的观察");
+      if(!allHypHaveCounter()) bad.push("存在无反证条件的假设");
+      if(gapsP0Open()>0) bad.push("O-04 仍有 "+gapsP0Open()+" 条 P0 缺口未关闭");
+      return { ok:bad.length===0, why: bad.length? "拒绝："+bad.join("；") : "观察均有证据、假设均有反证、无 P0 缺口" };
+    }},
+  { ev:"approve", from:"STATE-REVIEW", to:"STATE-SIGNED", label:"四类签核通过",
+    guard:()=>{
+      const bad=[];
+      if(signedCount()<4) bad.push("签核栏 "+signedCount()+"/4");
+      if(banHitsAll().length) bad.push("越界词："+banHitsAll().join("、"));
+      if(!declPresent()) bad.push("缺少「示例判据…非产品标准」声明（RULE-OUT-002）");
+      return { ok:bad.length===0, why: bad.length? "拒绝并指明违规条目："+bad.join("；") : "四栏齐全；无越界词；声明在位" };
+    }},
+  { ev:"reject", from:"STATE-REVIEW", to:"STATE-REJECTED", label:"驳回（须填理由）",
+    guard:()=>({ ok:true, why:"任一评审人驳回" }) },
+  { ev:"rework", from:"STATE-REJECTED", to:null, label:"返工完成", inferred:true, disabled:true,
+    guard:()=>({ ok:false, why:"目标状态未在 04-rules 定义（Q-016），本原型不实现" }) },
+  { ev:"archive", from:"STATE-SIGNED", to:"STATE-ARCHIVED", label:"归档",
+    guard:()=>{
+      const ok = !!app.exports.ledger && !!app.exports.report;
+      return { ok, why: ok? "导出包已生成（回读校验未执行，NOT_RUN）":"拒绝并提示先导出 O-02 / O-01" };
+    }},
+  { ev:"resume", from:"STATE-BLOCKED", to:"__PREV__", label:"恢复",
+    guard:()=>({ ok:!!app.prevState, why: app.prevState? "缺口已补或有降级声明 → 回到 "+app.prevState : "提示缺口未关闭" }) },
+  { ev:"reopen", from:"STATE-ARCHIVED", to:"STATE-REVIEW", label:"重新打开（仅负责人）",
+    guard:()=>({ ok: ROLE==="R-03", why: ROLE==="R-03"? "生成新版本，历史不删除":"硬拒：仅项目负责人" }) }
+];
+
+function eventsFrom(st){
+  return EVENTS.filter(e=>e.from===st);
+}
+
+function fire(ev){
+  const def = EVENTS.find(e=>e.ev===ev && e.from===app.state);
+  if(!def){ toast("非法转移：当前状态 "+app.state+" 无事件 "+ev+"（默认拒绝，已留痕）","bad");
+    log("状态流转被拒", app.state+" × "+ev+"（无该转移）"); return; }
+  if(def.disabled){ toast(def.guard().why,"bad"); return; }
+  const g = def.guard();
+  if(!g.ok){ toast("守卫不满足 — "+g.why,"bad"); log("状态流转被拒", app.state+" × "+ev+"｜"+g.why); return; }
+  const before = app.state;
+  if(def.to==="__PREV__"){ app.state = app.prevState; app.prevState=null; }
+  else {
+    if(def.to==="STATE-BLOCKED") app.prevState = before;
+    app.state = def.to;
+  }
+  log("状态流转", before+" → "+app.state+"（事件 "+ev+"）");
+  toast("状态已流转："+STATES[before].label+" → "+STATES[app.state].label,"ok");
+  render();
+}
+
+/* =========================================================================
+   5. 报告与越界扫描
+   ========================================================================= */
+function reportSections(){
+  const t=tally();
+  const secs=[];
+  secs.push({ n:"①", t:"任务与范围", miss:false, body:
+    (app.tests.length===0? `<p><b>设计版</b>：本轮无检测数据，只输出实验设计，不出复盘结论（PRD「没有试验数据时先输出设计，不伪造复盘结果」）。</p>`:"")+
+    `<p>任务 ${app.task.taskId}｜应用场景 ${app.task.application}｜档位 ${app.task.targetClass}｜目标 ${app.task.targetValue} ${app.task.targetUnit}</p>
+     <p>本轮主问题：${app.task.mainQuestion}</p>
+     <p>客户要求：${app.task.customerReq}　内部目标：${app.task.internalGoal}</p>` });
+  secs.push({ n:"②", t:"标准 / 方法 / 来源", miss:false, body:
+    `<p><b>示例判据</b>（SEM 中位等效径 ≥ ${CRIT.semMin} μm、干粉总氧 ≤ ${CRIT.o2Max} wt%）—— <b>非产品标准</b>，仅用于助手行为验证（RULE-OUT-002）。正式判据未提供（Q-001）。</p>
+     <p>方法：PRD §7「所有模拟样品假定采用相同检测方法」；实际 SOP 版本未提供（Q-006）。</p>
+     <p>来源分层：6 条记录全部为 <span class="tag sim">模拟</span>；无实测、无文献条件、无模型建议回填（RULE-INP-001）。</p>` });
+  secs.push({ n:"③", t:"样品及过程对比", miss:false, body:
+    `<p>样品 ${SAMPLES.length} 个：${SAMPLES.map(s=>s.id).join("、")}。工艺记录（I-04）<b>未提供</b>，故不做过程归因（RULE-PRC-001 不可归因）。</p>
+     <p>四类尺寸分列（RULE-SMP-001）：D50、SEM 独立颗粒、团聚体、晶粒 —— 后两类未提供。</p>` });
+  secs.push({ n:"④", t:"事实观察", miss: app.findings.observe.length===0, body:
+    (app.findings.observe.length? app.findings.observe.map(o=>
+      `<p>· ${esc(o.text)} <span class="tag">${o.ev}</span></p>`).join("")
+      : `<p style="color:var(--bad)">缺：尚无观察（每条观察必须带 evidence_id）</p>`) });
+  secs.push({ n:"⑤", t:"待验证假设", miss: app.findings.hypothesis.length===0, body:
+    (app.findings.hypothesis.length? app.findings.hypothesis.map(h=>
+      `<p>· ${esc(h.text)} <span class="tag">反证条件：${esc(h.counter)}</span></p>`).join("")
+      : `<p style="color:var(--bad)">缺：尚无假设</p>`) });
+  secs.push({ n:"⑥", t:"下一轮方案", miss: app.plan.length===0, body:
+    `<p>共 ${app.plan.length} 项；每项均含基准、主动变量、固定条件、检测时点、重复、判据与完成证据（O-03）。</p>` });
+  secs.push({ n:"⑦", t:"缺口与风险", miss: app.gaps.length===0, body:
+    `<p>P0 ${app.gaps.filter(g=>g.p===0).length} 条 / P1 ${app.gaps.filter(g=>g.p===1).length} 条 / P2 ${app.gaps.filter(g=>g.p===2).length} 条；详见 O-04。</p>` });
+  secs.push({ n:"⑧", t:"人工确认", miss: signedCount()<4, body:
+    `<p>负责人 ${signName("R-03")}｜质量 ${signName("R-05")}｜应用 ${signName("R-04")}｜EHS ${signName("R-06")}</p>
+     <p>签核 ${signedCount()}/4。姓名与备份人未提供（Q-012）。</p>` });
+  return { secs, tally:t };
+}
+function signName(r){ const s=app.signs[r]; return s? (r+" ✓ "+s.t) : (r+" 未签"); }
+
+function banHitsAll(){
+  const { secs } = reportSections();
+  const hits=[];
+  secs.forEach(s=>{ if(scanBan(s.body).length) hits.push(s.n+s.t); });
+  app.findings.observe.forEach(o=>{ if(scanBan(o.text).length) hits.push("§4 观察"); });
+  app.findings.hypothesis.forEach(h=>{ if(scanBan(h.text).length) hits.push("§5 假设"); });
+  app.plan.forEach(p=>{ if(scanBan(p.crit).length) hits.push("§6 判据"); });
+  return [...new Set(hits)];
+}
+function declPresent(){
+  const { secs } = reportSections();
+  const s2 = secs[1].body;
+  return s2.indexOf("示例判据")>=0 && s2.indexOf("非产品标准")>=0;
+}
+function reportComplete(){
+  const { secs } = reportSections();
+  return secs.filter(s=>s.miss).map(s=>s.n+" "+s.t);
+}
+
+/* =========================================================================
+   6. 缺口（自动生成；来源可追）
+   ========================================================================= */
+function buildGaps(){
+  const g=[];
+  SAMPLES.forEach(s=>{
+    if(s.o2==null) g.push({ p:0, type:"缺失", obj:s.id, d:"干粉总氧缺失；局部 EDS 不得替代", act:"补测整批总氧，保留原始报告", ev:"AC-005 / RULE-TST-001", st:"open" });
+  });
+  g.push({ p:0, type:"缺失", obj:"I-04", d:"工艺记录（投料/浓度/加料/保温/pH+温度/气氛）未提供，过程不可归因", act:"补录本轮工艺记录或书面声明降级为「仅粉体层」", ev:"AC-008 / RULE-PRC-001", st:"open" });
+  g.push({ p:1, type:"口径", obj:"I-03", d:"SEM 视场数与统计样本量未提供，形态结论强度只能标「待验证」", act:"补 SEM 统计作业指导书", ev:"Q-006 / RULE-SMP-002", st:"open" });
+  g.push({ p:1, type:"口径", obj:"I-03", d:"制样/分散方法与取样时点未提供 → 四项可比性门槛缺 2 项，不可比", act:"补制样/分散方法，再决定能否横向排序", ev:"RULE-TST-003", st:"open" });
+  g.push({ p:1, type:"缺失", obj:"I-06", d:"历史案例与文献未提供，无法做同路线对照", act:"补历史对照或声明仅本轮内比较", ev:"REQ-INP-003", st:"open" });
+  g.push({ p:1, type:"缺失", obj:"应用", d:"铜浆应用（烧结/拉力/抗氧化/焊接）未提供，粉体改善是否带来应用改善无法判断", act:"送样并补应用测试", ev:"Q-011 / P-07", st:"open" });
+  g.push({ p:2, type:"口径", obj:"I-01", d:"客户要求与内部目标的具体数值未提供", act:"补正式限值", ev:"Q-001", st:"open" });
+  return g;
+}
+
+/* =========================================================================
+   7. 导入（幂等键：样品ID+检测项+方法+取样日期；RULE-IMP-001）
+   ========================================================================= */
+let importStats = null;
+
+function seedTests(){
+  app.tests=[];
+  SAMPLES.forEach(s=>{
+    if(s.d50!=null) app.tests.push(mkTest(s.id,"D50",s.d50,"μm","2026-11-06"));
+    if(s.sem!=null) app.tests.push(mkTest(s.id,"SEM中位径",s.sem,"μm","2026-11-06"));
+    if(s.o2!=null)  app.tests.push(mkTest(s.id,"总氧",s.o2,"wt%","2026-11-06"));
+  });
+}
+function mkTest(sid,item,val,unit,date){
+  return { sid, item, val, unit, raw:val+" "+unit, method:"PRD §7 假定同一方法", date,
+           point:"未提供", rep:"未提供", src:"模拟", key:sid+"|"+item+"|"+"PRD §7 假定同一方法"+"|"+date };
+}
+
+function parseCSV(text){
+  const lines = text.trim().split(/\r?\n/).filter(l=>l.trim());
+  if(!lines.length) return {rows:[],err:"空文件"};
+  const head = lines[0].split(",").map(h=>h.trim());
+  const need = ["样品ID","检测项","数值","单位"];
+  const miss = need.filter(n=>head.indexOf(n)<0);
+  if(miss.length) return {rows:[],err:"缺列："+miss.join("、")};
+  const rows=[];
+  for(let i=1;i<lines.length;i++){
+    const c=lines[i].split(",").map(x=>x.trim());
+    const o={}; head.forEach((h,idx)=>o[h]=c[idx]!==undefined?c[idx]:"");
+    rows.push(o);
+  }
+  return {rows};
+}
+
+function importCSV(text){
+  const pr = parseCSV(text);
+  if(pr.err){ toast("导入失败："+pr.err,"bad"); log("数据导入失败",pr.err); return; }
+  let okN=0, dup=0, upd=0; const conflicts=[]; const errs=[];
+  pr.rows.forEach(r=>{
+    const sid=r["样品ID"], item=r["检测项"], method=r["方法"]||"未提供", date=r["取样日期"]||"未提供";
+    let v=parseFloat(r["数值"]), unit=r["单位"]||"";
+    if(!sid||!item||isNaN(v)){ errs.push("行无法解析："+JSON.stringify(r)); return; }
+    if(item==="总氧" && unit.toLowerCase()==="ppm"){ v=v/10000; unit="wt%"; }  // RULE-TST-002
+    const key=sid+"|"+item+"|"+method+"|"+date;
+    const ex=app.tests.find(t=>t.key===key);
+    if(ex){
+      if(Math.abs(ex.val-v)<1e-9){ dup++; }
+      else { conflicts.push({ sid,item,old:ex.val,neu:v,key }); upd++; }
+      return;
+    }
+    app.tests.push({ sid,item,val:v,unit,raw:r["数值"]+" "+r["单位"],method,date,
+                     point:r["取样时点"]||"未提供",rep:r["重复"]||"未提供",src:"模拟",key });
+    okN++;
+  });
+  importStats={okN,dup,upd,conflicts,errs,total:pr.rows.length};
+  log("数据导入", `成功 ${okN} 行 / 幂等跳过 ${dup} 行 / 冲突 ${conflicts.length} 行 / 解析失败 ${errs.length} 行`);
+  if(conflicts.length) toast("有 "+conflicts.length+" 条冲突需人工择一（未静默覆盖）","bad");
+  else toast("导入完成：新增 "+okN+"，幂等跳过 "+dup,"ok");
+  render();
+}
+
+function sampleCSV(){
+  const head="样品ID,检测项,方法,取样日期,数值,单位,重复,取样时点";
+  const rows=SAMPLES.map(s=>{
+    const m="PRD §7 假定同一方法";
+    const a=`${s.id},D50,${m},2026-11-06,${s.d50},μm,未提供,未提供`;
+    const b=`${s.id},SEM中位径,${m},2026-11-06,${s.sem},μm,未提供,未提供`;
+    const c=s.o2==null? "" : `${s.id},总氧,${m},2026-11-06,${s.o2},wt%,未提供,未提供`;
+    return [a,b,c].filter(Boolean).join("\n");
+  }).join("\n");
+  return head+"\n"+rows;
+}
+
+/* =========================================================================
+   8. 视图
+   ========================================================================= */
+const $ = s=>document.querySelector(s);
+function esc(s){ return String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c])); }
+function toast(msg,kind){
+  const t=document.createElement("div");
+  t.className = kind||""; t.textContent=msg;
+  $("#toast").appendChild(t);
+  setTimeout(()=>{ t.remove(); }, 4200);
+}
+function go(v){
+  const p=PAGES.find(x=>x.id===v);
+  if(p && !has(p.req)){ app.view=v; render(); return; }
+  app.view=v; render();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+/* ---------- 侧栏 ---------- */
+function renderSide(){
+  const stages=["导入","判读","导出"];
+  let h="";
+  stages.forEach(st=>{
+    h+=`<div class="stage"><div class="stage-h"><span>${st}</span><em>${PAGES.filter(p=>p.stage===st).length} 页</em></div><div class="nav">`;
+    PAGES.filter(p=>p.stage===st).forEach(p=>{
+      const ok=has(p.req);
+      h+=`<button class="${app.view===p.id?"on":""} ${ok?"":"locked"}" onclick="go('${p.id}')">
+        <span class="vid">${p.id}</span><span>${p.name}</span>${ok?"":'<span class="lock">🔒</span>'}</button>`;
+    });
+    h+="</div></div>";
+  });
+  h+=`<div style="border-top:1px solid var(--line2);margin:8px 0 6px"></div>
+      <div class="stage-h"><span>只读说明</span></div>
+      <div class="note" style="padding:0 6px">🔒 表示当前角色（<b>${ROLE}</b>）无权限，入口不出现跳转。权限取自 08-security 矩阵，默认拒绝。</div>`;
+  $("#side").innerHTML=h;
+}
+
+/* ---------- 顶部 ---------- */
+function renderTop(){
+  $("#t-taskid").textContent = app.task.taskId;
+  $("#t-state").textContent = app.state+" · "+STATES[app.state].label;
+  $("#t-q").innerHTML = "待确认 <b>"+OPEN_Q.length+"</b>";
+  $("#t-q").onclick = ()=>openQ();
+}
+
+function openQ(){
+  $("#qbox").innerHTML = `<h3>规格未定项 · ${OPEN_Q.length} 条（需你确认，原型未用默认值补齐）</h3>
+    <div class="note">这些是搭建过程中发现的规格缺口。原件在 <code>04-rules.md</code> / <code>05-data.md</code> / <code>08-security.md</code>，本原型不擅自补值；凡在界面上标了「推断·待确认」的地方，都对应下面某一条。</div>
+    ${OPEN_Q.map(q=>`<div class="qitem"><b><span class="lvl">${q.lvl}</span>${q.id} ${esc(q.t)}</b>${q.d}</div>`).join("")}
+    <div class="row" style="justify-content:flex-end;margin-top:14px"><button class="btn" onclick="document.getElementById('qpanel').classList.remove('on')">关闭</button></div>`;
+  $("#qpanel").classList.add("on");
+}
+$("#qpanel").addEventListener("click",e=>{ if(e.target.id==="qpanel") e.target.classList.remove("on"); });
+
+/* ---------- 通用：无权限 ---------- */
+function denyBlock(page){
+  const need = page.req;
+  return `<div class="deny">
+    <h3>无权限访问 ${page.id} ${page.name}</h3>
+    <p>当前角色 <b>${ROLE} · ${ROLES.find(r=>r.id===ROLE).name}</b> 在权限矩阵中对该资源为 <code>拒绝</code>。</p>
+    <p>依据：<code>08-security.md</code> 权限矩阵 → 资源动作 <code>${need}</code>；该行「默认」列为 <b>拒绝</b>，本实现无隐式放行。</p>
+    <p>入口未提供跳转，也不存在「先点进去再看」的路径。如需访问，请切换为有权限的角色（演示用）。</p>
+  </div>`;
+}
+function hiddenNote(page){
+  // 列出被隐藏的动作，满足「页面上提示无权限」
+  const all=["task.edit","test.input","finding.add","report.export.cust","sign","audit.view"];
+  const denied=all.filter(p=>!has(p));
+  if(!denied.length) return "";
+  return `<div class="hidden-note">当前角色 <b>${ROLE}</b> 下，以下动作入口已被移除（默认拒绝）：${denied.map(d=>`<code>${d}</code>`).join(" ")}</div>`;
+}
+
+/* ---------- V-01 任务登记 ---------- */
+function v01(){
+  const t=app.task;
+  const canEdit = has("task.edit");
+  return `
+  <div class="card">
+    <div class="card-h"><h2>V-01 任务登记</h2><span class="sub">建任务卡，锁定本轮主问题与目标档位 · 主角色 R-01</span></div>
+    <div class="card-b">
+      <div class="grid2">
+        <div class="field"><label>任务ID <span class="req">*</span></label>
+          <input value="${esc(t.taskId)}" ${canEdit?"":"disabled"} oninput="app.task.taskId=this.value">
+          <span class="hint">编码规则未提供（Q-007），当前为示例值</span></div>
+        <div class="field"><label>应用场景 <span class="req">*</span></label>
+          <input value="${esc(t.application)}" ${canEdit?"":"disabled"} oninput="app.task.application=this.value">
+          <span class="hint">枚举未穷举（Q-007）</span></div>
+        <div class="field"><label>粒径档位 <span class="req">*</span></label>
+          <select ${canEdit?"":"disabled"} onchange="app.task.targetClass=this.value">
+            ${["200nm","500nm","4μm"].map(o=>`<option ${t.targetClass===o?"selected":""}>${o}</option>`).join("")}
+          </select></div>
+        <div class="field"><label>目标值与单位 <span class="req">*</span></label>
+          <div class="row"><input type="number" step="0.1" value="${t.targetValue}" ${canEdit?"":"disabled"}
+            oninput="app.task.targetValue=parseFloat(this.value)" style="max-width:110px">
+            <select ${canEdit?"":"disabled"} onchange="app.task.targetUnit=this.value" style="max-width:90px">
+              <option ${t.targetUnit==="μm"?"selected":""}>μm</option><option ${t.targetUnit==="nm"?"selected":""}>nm</option></select></div></div>
+        <div class="field"><label>客户要求（与内部目标分列）</label>
+          <input value="${esc(t.customerReq)}" ${canEdit?"":"disabled"} oninput="app.task.customerReq=this.value">
+          <span class="hint">正式限值未提供（Q-001），此处写「未提供」</span></div>
+        <div class="field"><label>内部目标</label>
+          <input value="${esc(t.internalGoal)}" ${canEdit?"":"disabled"} oninput="app.task.internalGoal=this.value"></div>
+        <div class="field"><label>优先级</label>
+          <select ${canEdit?"":"disabled"} onchange="app.task.priority=this.value">
+            ${["P0","P1","P2"].map(o=>`<option ${t.priority===o?"selected":""}>${o}</option>`).join("")}</select></div>
+        <div class="field"><label>送样节点</label>
+          <input value="${esc(t.sampleNode)}" ${canEdit?"":"disabled"} oninput="app.task.sampleNode=this.value">
+          <span class="hint">字段在 05-data 未定义，取值未提供（Q-012）</span></div>
+      </div>
+      <div class="field" style="margin-top:10px"><label>本轮主问题 <span class="req">*</span>（必须唯一）</label>
+        <textarea rows="2" ${canEdit?"":"disabled"} oninput="app.task.mainQuestion=this.value">${esc(t.mainQuestion)}</textarea>
+        <span class="hint">REQ-BIZ-007：主问题数量 = 1；多于一个应拆分任务（04-rules 守卫 submit）</span></div>
+
+      <hr class="sep">
+      <div class="row">
+        <button class="btn primary" onclick="doSubmit()">提交校验</button>
+        <button class="btn" onclick="toast('草稿保存在当前会话内存，未写入任何存储','ok')">保存草稿</button>
+        <span class="note" style="margin:0">当前状态：<b>${STATES[app.state].label}</b>　${STATES[app.state].d}</span>
+      </div>
+      ${canEdit?"":`<div class="hidden-note">当前角色无 <code>task.edit</code>，字段为只读。</div>`}
+      ${hiddenNote()}
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-h"><h2>状态流转</h2><span class="sub">严格按 04-rules 转移表；无转移行的事件不提供入口</span></div>
+    <div class="card-b">
+      ${stateFlow()}
+      <div class="row" style="margin-top:10px">
+        ${eventsFrom(app.state).map(e=>{
+          const g=e.guard(); const ok=g.ok && !e.disabled;
+          return `<button class="btn ${ok?"":"sm"}" ${ok?"":"disabled"} title="${esc(g.why)}" onclick="fire('${e.ev}')">
+            ${e.label}${e.inferred?' <span class="tag q">推断</span>':''}</button>`;
+        }).join("") || '<span class="note">当前状态无可用事件。</span>'}
+      </div>
+      <div class="note">按钮置灰并悬停可见守卫原因；守卫不满足时不改状态，只留痕（04-rules「非法时处理」）。</div>
+    </div>
+  </div>`;
+}
+
+function stateFlow(){
+  const order=["STATE-INTAKE","STATE-EVIDENCE-CHECK","STATE-DESIGN-READY","STATE-DATA-NORMALIZED","STATE-ANALYZED","STATE-REVIEW","STATE-SIGNED","STATE-ARCHIVED"];
+  const cur = app.state==="STATE-BLOCKED"||app.state==="STATE-REJECTED" ? (app.prevState||"STATE-INTAKE") : app.state;
+  let h='<div class="flow">';
+  order.forEach((s,i)=>{
+    h+=`<span class="st ${s===cur?"on":""}">${STATES[s].label}</span>`;
+    if(i<order.length-1) h+='<span class="ar">→</span>';
+  });
+  h+='</div>';
+  if(app.state==="STATE-BLOCKED"||app.state==="STATE-REJECTED")
+    h+=`<div class="note warn">当前处于 <b>${STATES[app.state].label}</b>（挂起前：${app.prevState?STATES[app.prevState].label:"—"}）</div>`;
+  return h;
+}
+
+function doSubmit(){ fire("submit"); }
+
+/* ---------- V-02 资料校验与缺口看板 ---------- */
+function v02(){
+  const p0=app.gaps.filter(g=>g.p===0), p1=app.gaps.filter(g=>g.p===1), p2=app.gaps.filter(g=>g.p===2);
+  const srcCount = { "模拟":SAMPLES.length, "实测":0, "用户反馈":0, "文献":0, "模型建议":0 };
+  return `
+  <div class="card">
+    <div class="card-h"><h2>V-02 资料校验与缺口看板</h2><span class="sub">谱系 / 缺口 / 来源标签分布 · 主角色 R-01</span></div>
+    <div class="card-b">
+      <div class="grid3">
+        <div class="zone"><h4>缺口分布</h4>
+          <div class="li">P0 <b style="color:var(--bad)">${p0.length}</b> 条（阻断签核）</div>
+          <div class="li">P1 <b style="color:var(--warn)">${p1.length}</b> 条</div>
+          <div class="li">P2 <b>${p2.length}</b> 条</div></div>
+        <div class="zone"><h4>来源标签（RULE-INP-001）</h4>
+          ${Object.keys(srcCount).map(k=>`<div class="li">${k}：<b>${srcCount[k]}</b> ${k==="模拟"?'<span class="tag sim">模拟</span>':""}</div>`).join("")}
+          <div class="li" style="color:var(--muted)">五类标签必须唯一且不混用</div></div>
+        <div class="zone"><h4>样品谱系</h4>
+          ${SAMPLES.map(s=>`<div class="li">${s.id} · 母样 <span class="tag miss">未提供</span></div>`).join("")}
+          <div class="li" style="color:var(--muted)">母子样关系未提供，谱系无法闭合 → 校验通过与否取决于此（04-rules pass_check 守卫）</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-h"><h2>缺口清单（O-04）</h2><span class="sub">P0 未关闭时不得进入签核</span></div>
+    <div class="card-b">
+      <div class="tw lg"><table>
+        <thead><tr><th class="sticky" style="width:52px">级别</th><th>对象</th><th>类型</th><th>描述</th><th>补证动作</th><th>关联</th><th style="width:150px">操作</th></tr></thead>
+        <tbody>${app.gaps.map((g,i)=>`<tr>
+          <td><span class="tag p${g.p}">P${g.p}</span></td>
+          <td class="mono">${g.obj}</td><td>${g.type}</td><td>${esc(g.d)}</td><td>${esc(g.act)}</td>
+          <td class="mono" style="font-size:11.5px">${esc(g.ev)}</td>
+          <td>${ g.st==="closed"
+              ? '<span class="tag" style="color:var(--ok)">已补</span>'
+              : `<button class="btn sm" onclick="closeGap(${i})">标记已补</button>` }</td></tr>`).join("")}
+        </tbody></table></div>
+      <div class="note">P0 共 ${p0.filter(g=>g.st!=="closed").length} 条未关闭 → 「提交评审」守卫将拒绝。这是 04-rules 明文要求，不是缺陷。</div>
+    </div>
+  </div>`;
+}
+function closeGap(i){
+  const note = prompt("标记已补需要写明补证依据（不能留空，避免用默认值绕过）：");
+  if(!note || !note.trim()){ toast("未填补证依据，未标记（不允许空值绕过）","bad"); return; }
+  app.gaps[i].st="closed"; app.gaps[i].note=note.trim();
+  log("缺口关闭", app.gaps[i].obj+" P"+app.gaps[i].p+"｜依据："+note.trim());
+  toast("已标记并留痕","ok"); render();
+}
+
+/* ---------- V-03 样品与工艺对照 ---------- */
+function v03(){
+  const ro = !has("task.edit");
+  const cols=["投料量","浓度","加料","保温","pH+温度","气氛"];
+  return `
+  <div class="card">
+    <div class="card-h"><h2>V-03 样品与工艺对照</h2><span class="sub">样品行 × 工艺列 · 主角色 R-01 / R-02</span></div>
+    <div class="card-b">
+      <div class="banner-in" style="margin:0 0 10px;background:#fdf6f5;border-color:#f0d6d3;color:#7a3b36">
+        <div>⛔</div><div><b>包内无工艺记录（I-04）</b>，全部单元格只能标「未提供」。PRD §3 提到的「75 g 五水硫酸铜」是既有交流背景，未绑定到 CU-01~CU-06 任一具体样品，因此不填进本表 —— 填进去就是编造。</div>
+      </div>
+      <div class="tw"><table>
+        <thead><tr><th class="sticky">样品</th>${cols.map(c=>`<th>${c}</th>`).join("")}<th>来源</th></tr></thead>
+        <tbody>${SAMPLES.map(s=>`<tr>
+          <td class="sticky mono">${s.id}</td>
+          ${cols.map((c,ci)=>{ 
+            if(c==="pH+温度") return `<td><span class="tag miss">未提供</span><br><span style="font-size:11px;color:var(--dim)">若只有 pH 无温度 → 应标「口径不全」（RULE-PRC-002）</span></td>`;
+            return `<td><span class="tag miss">未提供</span></td>`; }).join("")}
+          <td><span class="tag sim">模拟</span></td></tr>`).join("")}
+        </tbody></table></div>
+      <div class="note warn">错误态对照（07-ui）：pH 无温度时该格应显示 <code>口径不全</code>。当前无工艺数据，无法演示该态 → 已登记为待确认 Q-020。</div>
+      ${ro?`<div class="hidden-note">当前角色对「工艺记录（配方）」为只读或拒绝，编辑入口未提供。</div>`:""}
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-h"><h2>四类尺寸分列（RULE-SMP-001）</h2><span class="sub">D50 / SEM 独立颗粒 / 团聚体 / 晶粒 不得互替</span></div>
+    <div class="card-b">
+      <div class="tw"><table>
+        <thead><tr><th class="sticky">样品</th><th>D50 (μm)</th><th>SEM 独立颗粒 (μm)</th><th>团聚体 (μm)</th><th>晶粒 (μm)</th><th>差值提示</th></tr></thead>
+        <tbody>${EFF().map(s=>`<tr>
+          <td class="sticky mono">${s.id}</td>
+          <td class="num">${s.d50==null?'<span class="tag miss">无数据</span>':s.d50}</td>
+          <td class="num">${s.sem==null?'<span class="tag miss">无数据</span>':s.sem}</td>
+          <td><span class="tag miss">未提供</span></td><td><span class="tag miss">未提供</span></td>
+          <td>${ s.d50!=null && s.sem!=null && s.sem>0 && (s.d50/s.sem)>=2
+              ? '<span class="tri warn">D50 是 SEM 的 '+(s.d50/s.sem).toFixed(1)+' 倍 → D50 大 ≠ 独立颗粒大</span>'
+              : '<span style="color:var(--dim)">—</span>' }</td></tr>`).join("")}
+        </tbody></table></div>
+      <div class="note">CU-01 是 RULE-SMP-001 的典型：D50 8.2 μm 而 SEM 中位径仅 1.2 μm，呈簇状。任何「已制得 8 μm 独立颗粒」的说法都违规。</div>
+    </div>
+  </div>`;
+}
+
+/* ---------- V-04 检测数据与口径核查 ---------- */
+function v04(){
+  const canIn = has("test.input");
+  const byS = {};
+  app.tests.forEach(t=>{ (byS[t.sid]=byS[t.sid]||[]).push(t); });
+  return `
+  <div class="card">
+    <div class="card-h"><h2>V-04 检测数据与口径核查</h2><span class="sub">导入 + 原值/归一值双列 + 方法标签 + 不可比标记 · 主角色 R-02 / R-05</span></div>
+    <div class="card-b">
+      ${ canIn ? `
+      <div class="zone" style="margin-bottom:12px">
+        <h4>导入（API-03 · 幂等键：样品ID + 检测项 + 方法 + 取样日期）</h4>
+        <div class="row" style="margin-bottom:8px">
+          <button class="btn primary" onclick="importCSV(sampleCSV())">载入包内样例（6 组 · 模拟）</button>
+          <button class="btn" onclick="clearTests()">清空检测数据</button>
+          <span class="note" style="margin:0">当前 ${app.tests.length} 行</span>
+        </div>
+        <textarea id="csv" rows="4" placeholder="样品ID,检测项,方法,取样日期,数值,单位,重复,取样时点" style="width:100%;font:12.5px/1.6 Consolas,monospace;padding:8px;border:1px solid var(--line);border-radius:8px"></textarea>
+        <div class="row" style="margin-top:8px">
+          <button class="btn" onclick="importCSV(document.getElementById('csv').value)">导入粘贴内容</button>
+          <span class="note" style="margin:0">总氧单位可写 <code>ppm</code>，按质量口径换算为 wt% 并<b>保留原值</b>（RULE-TST-002）</span>
+        </div>
+      </div>` : `<div class="hidden-note">当前角色无 <code>test.input</code>，导入入口未提供（只读）。</div>` }
+
+      ${ importStats ? `<div class="note" style="margin:0 0 8px">
+        上次导入：共 ${importStats.total} 行，新增 <b>${importStats.okN}</b>，幂等跳过 <b>${importStats.dup}</b>，冲突 <b>${importStats.conflicts.length}</b>，解析失败 <b>${importStats.errs.length}</b>
+        ${importStats.conflicts.length? `<br>冲突：${importStats.conflicts.map(c=>`${c.sid}/${c.item} 旧 ${c.old} → 新 ${c.neu}`).join("；")}<br><b style="color:var(--bad)">未静默覆盖，需人工择一</b>`:""}
+      </div>`:"" }
+
+      ${ app.tests.length===0
+        ? `<div class="empty">待导入 —— 当前无检测记录。可点上方「载入包内样例」。</div>`
+        : `<div class="tw lg"><table>
+            <thead><tr><th class="sticky">样品</th><th>检测项</th><th>原值</th><th>归一值</th><th>方法</th><th>取样时点</th><th>重复</th><th>来源</th><th>口径检查</th></tr></thead>
+            <tbody>${app.tests.map(t=>`<tr>
+              <td class="sticky mono">${t.sid}</td><td>${t.item}</td>
+              <td class="mono">${esc(t.raw)}</td>
+              <td class="mono">${t.val} ${t.unit}</td>
+              <td>${t.method.indexOf("PRD")>=0?'<span class="tag q">PRD 假定</span>':esc(t.method)}</td>
+              <td>${t.point==="未提供"?'<span class="tag miss">未提供</span>':esc(t.point)}</td>
+              <td>${t.rep==="未提供"?'<span class="tag miss">未提供</span>':esc(t.rep)}</td>
+              <td><span class="tag sim">${t.src}</span></td>
+              <td>${checkCell(t)}</td></tr>`).join("")}
+            </tbody></table></div>` }
+
+      <div class="note">可比性四项（RULE-TST-003）：方法 ✓（同一假定方法）｜制样/分散 ✗ 未提供｜取样时点 ✗ 未提供｜单位 ✓ → 当前标 <b>不可比</b>，只并列不排序。</div>
+    </div>
+  </div>`;
+}
+function checkCell(t){
+  if(t.item==="总氧" && t.sid==="CU-06") return '<span class="tri na">缺失，不得用 EDS 补</span>';
+  if(t.item==="总氧") return '<span class="tri ok">单位 wt%</span>';
+  if(t.item==="SEM中位径") return '<span class="tri warn">视场数未提供</span>';
+  return '<span class="tri ok">—</span>';
+}
+function clearTests(){ app.tests=[]; importStats=null; log("检测数据清空","按用户操作清空（仅内存）"); toast("已清空（仅内存）","ok"); render(); }
+
+/* ---------- V-05 联合判读工作台 ---------- */
+function v05(){
+  if(!has("finding.add")) return `<div class="card"><div class="card-b">${denyBlock(PAGES.find(p=>p.id==="V-05"))}</div></div>`;
+  if(app.tests.length===0) return `<div class="card"><div class="card-b"><div class="empty">请先完成 V-04 检测数据导入（07-ui 空态要求）</div></div></div>`;
+  const t=tally();
+  return `
+  <div class="card">
+    <div class="card-h"><h2>V-05 联合判读工作台</h2><span class="sub">观察 / 假设 / 反证 / 缺口 四区分离 · 主角色 R-01</span></div>
+    <div class="card-b">
+      <div class="banner-in" style="margin:0 0 10px">
+        <div>⚠</div><div><b>示例判据</b>（SEM 中位等效径 ≥ ${CRIT.semMin} μm、干粉总氧 ≤ ${CRIT.o2Max} wt%）—— <b>非产品标准</b>。正式判据未提供（Q-001），因此本页只做「行为一致性」判读，<b>不出合格结论</b>。</div>
+      </div>
+      <div class="tw lg"><table>
+        <thead><tr><th class="sticky">样品</th><th>SEM 中位径</th><th>粒径判定</th><th>总氧</th><th>总氧判定</th><th>结论</th><th>规则命中</th></tr></thead>
+        <tbody>${EFF().map(s=>{ const j=judge(s); return `<tr>
+          <td class="sticky mono">${s.id}</td>
+          <td class="num">${s.sem==null?'<span class="tag miss">缺失</span>':s.sem+" μm"}</td>
+          <td>${triChip(j.a)}</td>
+          <td class="num">${s.o2==null?'<span class="tag miss">缺失</span>':s.o2+" wt%"}</td>
+          <td>${triChip(j.b)}</td>
+          <td><span class="tri ${j.cls}">${j.label}</span></td>
+          <td>${j.hits.map(h=>`<span class="tag rule" title="${esc(h.m)}">${h.r}</span>`).join(" ")}</td>
+        </tr>`;}).join("")}
+        </tbody></table></div>
+      <div class="row" style="margin-top:10px">
+        <span class="chip">合计：两项满足 <b>${t.ok}</b></span>
+        <span class="chip">粒径未满足 <b>${t.size}</b></span>
+        <span class="chip">总氧未满足 <b>${t.o2}</b></span>
+        <span class="chip">无法判定 <b>${t.na}</b></span>
+        <span class="note" style="margin:0">与 AC-001 期望一致：2 / 2 / 1 / 1</span>
+      </div>
+      <div class="note warn">「不可比」提示：制样与取样时点未提供，四类样品不可横向排序（RULE-TST-003）；排序入口不提供。</div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="zone"><h4>事实观察 <span class="tag">须带 evidence_id</span></h4>
+      ${app.findings.observe.map((o,i)=>`<div class="li">· ${esc(o.text)}<div class="ev">${o.ev} · ${o.at}</div></div>`).join("") || '<div class="li" style="color:var(--dim)">尚无观察</div>'}
+      <div class="row" style="margin-top:8px">
+        <select id="evSel" class="role" style="max-width:200px">
+          <option value="">选择 evidence_id（必填）</option>
+          ${SAMPLES.map(s=>`<option value="E-1${String(SAMPLES.indexOf(s)+1).padStart(2,"0")}-SEM">E-1${String(SAMPLES.indexOf(s)+1).padStart(2,"0")}-SEM (${s.id})</option>`).join("")}
+        </select>
+      </div>
+      <textarea id="obsText" rows="2" placeholder="写观察（只写看到的事实，不写机制）" style="width:100%;margin-top:6px;font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:8px"></textarea>
+      <button class="btn primary sm" style="margin-top:6px" onclick="addObs()">新增观察</button>
+      <div class="note">无 evidence_id 时保存被拒（07-ui 错误态）。</div>
+    </div>
+
+    <div class="zone"><h4>待验证假设 <span class="tag">须带反证条件</span></h4>
+      ${app.findings.hypothesis.map(h=>`<div class="li">· ${esc(h.text)}<div class="ev">反证：${esc(h.counter)}</div></div>`).join("") || '<div class="li" style="color:var(--dim)">尚无假设</div>'}
+      <textarea id="hypText" rows="2" placeholder="写假设（不得写成已确认机理）" style="width:100%;margin-top:6px;font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:8px"></textarea>
+      <input id="hypCounter" placeholder="反证条件（什么结果会推翻它）" style="width:100%;margin-top:6px;font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:8px">
+      <button class="btn primary sm" style="margin-top:6px" onclick="addHyp()">标为假设</button>
+      <div class="note">RULE-SMP-002：团聚/熟化证据仅 1 项（<b>${judge(SAMPLES[0]).ev}/3</b>），只能记假设。</div>
+    </div>
+
+    <div class="zone"><h4>反证条件</h4>
+      ${app.findings.counter.map(c=>`<div class="li">· ${esc(c)}</div>`).join("") || '<div class="li" style="color:var(--dim)">随假设一同登记</div>'}
+      <div class="note">每条假设必须有可被检验的反证条件，否则「提交评审」守卫拒绝。</div></div>
+
+    <div class="zone"><h4>证据缺口</h4>
+      ${app.gaps.slice(0,6).map(g=>`<div class="li"><span class="tag p${g.p}">P${g.p}</span> ${esc(g.d)}</div>`).join("")}
+      <div class="note">完整清单见 V-02（O-04）。</div></div>
+  </div>
+
+  <div class="card"><div class="card-b">
+    ${ (app.findings.observe.length===0 || app.findings.hypothesis.length===0) ? `
+    <div class="hidden-note" style="margin:0 0 10px;border-color:#e8d6a8;background:var(--warn-soft);color:#6f4a00">
+      ⚠ 当前 <b>${app.findings.observe.length}</b> 条观察 / <b>${app.findings.hypothesis.length}</b> 条假设。
+      04-rules 的守卫只写「每条观察有证据」，空集按字面<b>可以通过</b>；但 O-01 要求八部分齐全，导出会被 V-07 的「缺 §4/§5」拦住。
+      是否要求「至少 1 条」规格未写 —— 已登记 <b>Q-021</b>，不擅自补值。
+    </div>` : "" }
+    <div class="row">
+    <button class="btn primary" onclick="fire('request_review')">提交评审</button>
+    <button class="btn" onclick="prefillFindings()">按规则生成候选观察/假设（示例）</button>
+    <span class="note" style="margin:0">守卫：观察均有证据 + 假设均有反证 + 无 P0 缺口。当前 P0 未关闭 ${gapsP0Open()} 条。</span>
+    </div>
+  </div></div>`;
+}
+function triChip(v){
+  if(v===VERDICT.OK) return `<span class="tri ok">${v}</span>`;
+  if(v===VERDICT.NO) return `<span class="tri no">${v}</span>`;
+  return `<span class="tri na">${v}</span>`;
+}
+function addObs(){
+  const ev=$("#evSel").value, txt=$("#obsText").value.trim();
+  if(!txt){ toast("观察内容为空","bad"); return; }
+  if(!ev){ toast("必须选择 evidence_id，否则不可保存（07-ui 错误态）","bad"); return; }
+  if(scanBan(txt).length){ toast("越界词："+scanBan(txt).join("、")+"（RULE-OUT-001），请改写为观察或假设","bad"); return; }
+  app.findings.observe.push({ text:txt, ev, at:new Date().toLocaleString("zh-CN",{hour12:false}) });
+  log("判读结论新增","观察｜"+ev+"｜"+txt); toast("已新增观察","ok"); render();
+}
+function addHyp(){
+  const txt=$("#hypText").value.trim(), c=$("#hypCounter").value.trim();
+  if(!txt||!c){ toast("假设与反证条件都必须填（缺失不可保存）","bad"); return; }
+  if(scanBan(txt).length){ toast("越界词："+scanBan(txt).join("、"),"bad"); return; }
+  app.findings.hypothesis.push({ text:txt, counter:c });
+  app.findings.counter.push(c);
+  log("判读结论新增","假设｜"+txt); toast("已标为假设","ok"); render();
+}
+function prefillFindings(){
+  app.findings.observe=[
+    { text:"CU-02、CU-05 同时满足两条示例数值线；CU-01、CU-04 粒径未满足；CU-03 总氧未满足；CU-06 总氧缺失。", ev:"E-101-SEM", at:new Date().toLocaleString("zh-CN",{hour12:false}) },
+    { text:"CU-01 D50 8.2 μm、SEM 中位径 1.2 μm，形貌呈葡萄串状。", ev:"E-101-SEM", at:new Date().toLocaleString("zh-CN",{hour12:false}) }
+  ];
+  app.findings.hypothesis=[
+    { text:"CU-01 的大 D50 可能来自团聚而非独立颗粒长大。", counter:"统一分散后复测 D50 与 SEM 中位径接近（差异 < 30%）则推翻" }
+  ];
+  app.findings.counter=["统一分散后复测 D50 与 SEM 中位径接近则推翻"];
+  log("判读结论新增","批量生成候选观察 2 条 / 假设 1 条（示例）");
+  toast("已生成候选观察与假设（示例，可编辑）","ok"); render();
+}
+
+/* ---------- V-06 下一轮验证计划 ---------- */
+function v06(){
+  const infer = `<div class="hidden-note">权限矩阵未定义「下一轮验证计划」资源（08-security）。按默认拒绝本应全员不可达；为跑通主流程给 task.view 持有者只读、R-01/R-03 可写 —— <b>这是推断，已登记 Q-017</b>。</div>`;
+  const canEdit = (ROLE==="R-01"||ROLE==="R-03");
+  return `
+  <div class="card">
+    <div class="card-h"><h2>V-06 下一轮验证计划</h2><span class="sub">把「可能原因」变成可检验任务 · 主角色 R-01 / R-03</span></div>
+    <div class="card-b">
+      <div class="tw"><table>
+        <thead><tr><th class="sticky" style="min-width:150px">验证问题</th><th style="min-width:230px">建议动作</th><th>基准</th><th>固定条件</th><th>检测时点</th><th>重复</th><th style="min-width:200px">判据</th><th>责任人</th><th>完成证据</th></tr></thead>
+        <tbody>${app.plan.map((r,i)=>`<tr>
+          <td class="sticky">${esc(r.q)}</td><td>${esc(r.act)}</td>
+          <td>${r.base?esc(r.base):'<span class="tag miss">空</span>'}</td>
+          <td>${r.fixed?esc(r.fixed):'<span class="tag miss">空</span>'}</td>
+          <td>${esc(r.point)}</td><td>${esc(r.rep)}</td>
+          <td ${r.crit?'':'style="background:#fdf6f5"'}><input value="${esc(r.crit)}" ${canEdit?"":"disabled"} oninput="app.plan[${i}].crit=this.value"
+              style="width:100%;border:1px solid ${r.crit?'#e2e8f0':'#e6b7b2'};border-radius:6px;padding:3px 6px;font:12.4px/1.5 inherit"></td>
+          <td>${esc(r.owner)}</td><td>${esc(r.ev)}</td></tr>`).join("")}
+        </tbody></table></div>
+      <div class="row" style="margin-top:10px">
+        <span class="note" style="margin:0">每行判据与完成证据不得为空；判据为空时该行标红（07-ui 错误态）。当前 <b>${app.plan.filter(r=>!r.crit).length}</b> 行为空。</span>
+      </div>
+      ${infer}
+      <div class="note">内容来源：PRD §7.2「下一轮验证计划示范」——<b>示范内容，非实测结论</b>，可直接改写为你本轮的真实计划。</div>
+    </div>
+  </div>`;
+}
+
+/* ---------- V-07 报告预览与导出 ---------- */
+function v07(){
+  const page=PAGES.find(p=>p.id==="V-07");
+  const roleMode = has("report.view");
+  if(!roleMode) return `<div class="card"><div class="card-b">${denyBlock(page)}</div></div>`;
+  const signedOnly = (ROLE==="R-07");
+  if(signedOnly && !(app.state==="STATE-SIGNED"||app.state==="STATE-ARCHIVED"))
+    return `<div class="card"><div class="card-b">
+      <div class="deny"><h3>无权限：报告尚未签核</h3>
+      <p>R-07 查看者仅可见 <code>STATE-SIGNED</code> 或 <code>STATE-ARCHIVED</code> 的报告，当前状态为 <b>${STATES[app.state].label}</b>。</p>
+      <p>依据：08-security 角色表 R-07「不得看草稿」。</p></div></div></div>`;
+
+  const { secs, tally:t } = reportSections();
+  const miss = reportComplete();
+  const bans = banHitsAll();
+  const canExportIn = has("report.export.in");
+  const canExportCust = has("report.export.cust") && app.state!=="STATE-ANALYZED" && gapsP0Open()===0 && app.gate.customerExportApproved;
+
+  return `
+  <div class="card">
+    <div class="card-h"><h2>V-07 报告预览与导出</h2><span class="sub">八部分固定结构（O-01）· 缺章节不得导出</span></div>
+    <div class="card-b">
+      <div class="row" style="margin-bottom:10px">
+        <button class="btn primary" ${ (miss.length||bans.length||!canExportIn)?"disabled":"" } onclick="exportReport('internal')">导出内部（Markdown 预览）</button>
+        <button class="btn" ${ canExportIn?"":"disabled" } onclick="exportLedger()">导出台账（CSV 预览）</button>
+        <button class="btn" ${ canExportCust?"":"disabled" } title="${custWhy()}" onclick="exportReport('customer')">导出客户可见（脱敏）</button>
+        <span class="note" style="margin:0">${miss.length? '<b style="color:var(--bad)">缺章节：'+miss.join("、")+'</b>' : '八部分齐全'}${bans.length?'　<b style="color:var(--bad)">越界词：'+bans.join("、")+'</b>':''}</span>
+      </div>
+      <div class="hidden-note" style="margin:0 0 10px">本地原型只能导出 <b>Markdown / CSV 预览</b>；<code>docx / xlsx</code> 生成需要模板引擎，本轮<b>未实现</b>（NOT_RUN）。导出为浏览器下载，不写任何服务器。</div>
+      ${secs.map(s=>`<div class="sec">
+        <div class="sec-h">${s.n} ${s.t} ${s.miss?'<span class="miss">· 缺</span>':''}</div>
+        <div class="sec-b">${s.body}</div></div>`).join("")}
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-h"><h2>越界词自检（RULE-OUT-001）</h2><span class="sub">词表：最优 / 根因 / 合格 / 量产 / 最佳用量</span></div>
+    <div class="card-b">
+      <div class="note">在下方输入一句你想写进报告的话，系统会判定是否越界。试着输入「最优 PVP 剂量」或「这批可以量产」看看会被怎么拦。</div>
+      <textarea id="probe" rows="2" style="width:100%;margin-top:8px;font:inherit;padding:8px;border:1px solid var(--line);border-radius:8px" placeholder="例：本批最优 PVP 用量为 0.8 wt%"></textarea>
+      <div class="row" style="margin-top:8px"><button class="btn" onclick="probeBan()">检测</button><span id="probeOut" class="note" style="margin:0"></span></div>
+    </div>
+  </div>`;
+}
+function custWhy(){
+  if(!has("report.export.cust")) return "当前角色无客户可见导出权限（矩阵默认拒绝）";
+  if(app.state==="STATE-ANALYZED") return "需报告状态 ≥ STATE-REVIEW";
+  if(gapsP0Open()>0) return "仍有 "+gapsP0Open()+" 条 P0 缺口未关闭";
+  if(!app.gate.customerExportApproved) return "授权门未通过：需 R-06 批准（08-security 授权门）";
+  return "可导出";
+}
+function probeBan(){
+  const v=$("#probe").value||"";
+  const h=scanBan(v);
+  $("#probeOut").innerHTML = h.length
+    ? `<span class="tri no">命中 ${h.join("、")}</span> → 不写入报告，改为「观察 + 证据缺口 + 下一轮验证动作」，并保留人工决策栏（AC-016 路径）。`
+    : `<span class="tri ok">未命中越界词</span> —— 注意：不含越界词不等于结论成立，仍需证据。`;
+}
+
+/* ---------- V-08 签核与版本记录 ---------- */
+function v08(){
+  const page=PAGES.find(p=>p.id==="V-08");
+  if(!has("sign.view")) return `<div class="card"><div class="card-b">${denyBlock(page)}</div></div>`;
+  const cols=[
+    { r:"R-03", t:"铜粉研发负责人", f:"产品目标、合成与处理方案、对照设计、机理假设及下轮优先级" },
+    { r:"R-05", t:"检测 / 质量",   f:"方法与制样、原始数据、重复性、可比性、示例/正式限值及判读" },
+    { r:"R-04", t:"铜浆研发 / 应用", f:"基准粉、浆料与印刷/烧结条件、抗氧化、焊接及客户评价口径" },
+    { r:"R-06", t:"项目 / EHS",    f:"资源与送样进度；安全、保密、知识产权及放大变更" }
+  ];
+  return `
+  <div class="card">
+    <div class="card-h"><h2>V-08 签核与版本记录</h2><span class="sub">四类角色确认与留痕 · 主角色 R-03 / R-05 / R-04 / R-06</span></div>
+    <div class="card-b">
+      ${app.state!=="STATE-REVIEW" && app.state!=="STATE-SIGNED" && app.state!=="STATE-ARCHIVED"
+        ? `<div class="hidden-note" style="margin:0 0 10px">未到 <code>STATE-REVIEW</code>，本页只读（07-ui 空态）。当前 ${STATES[app.state].label}。</div>`:""}
+      ${gapsP0Open()>0? `<div class="hidden-note" style="margin:0 0 10px;border-color:#f0c9c5;background:#fdf6f5;color:#7a3b36">P0 缺口未关闭 ${gapsP0Open()} 条 → 「通过」置灰（07-ui 错误态 / 04-rules 守卫）。</div>`:""}
+      <div class="tw"><table>
+        <thead><tr><th>确认角色</th><th>确认重点（PRD 附录B）</th><th>确认人 / 时间</th><th style="width:180px">操作</th></tr></thead>
+        <tbody>${cols.map(c=>`<tr>
+          <td><b>${c.t}</b><div class="ev mono" style="font-size:11px;color:var(--dim)">${c.r}</div></td>
+          <td>${c.f}</td>
+          <td>${ app.signs[c.r] ? `<span class="tri ok">已签</span> <span class="mono" style="font-size:11.5px">${app.signs[c.r].t}</span>`
+                                : '<span class="tag miss">未签</span>' }</td>
+          <td>${ (ROLE===c.r && (app.state==="STATE-REVIEW")) 
+                ? `<button class="btn sm" onclick="doSign('${c.r}')">签署本栏</button>`
+                : `<span style="color:var(--dim);font-size:11.5px">${ROLE===c.r? "需先进入评审":"非本角色"}</span>` }</td>
+        </tr>`).join("")}</tbody></table></div>
+
+      <div class="row" style="margin-top:10px">
+        <button class="btn primary" ${ (app.state==="STATE-REVIEW" && signedCount()===4 && !banHitsAll().length && declPresent() && gapsP0Open()===0)?"":"disabled" } onclick="fire('approve')">四类签核通过</button>
+        <button class="btn danger" ${ app.state==="STATE-REVIEW"?"":"disabled" } onclick="doReject()">驳回（须填理由）</button>
+        <button class="btn" ${ app.state==="STATE-SIGNED"?"":"disabled" } onclick="fire('archive')">归档</button>
+        <button class="btn" ${ app.state==="STATE-ARCHIVED" && ROLE==="R-03"?"":"disabled" } onclick="fire('reopen')">重新打开（R-03）</button>
+      </div>
+      <div class="note">「归档」需先导出 O-01/O-02；回读校验 <b>NOT_RUN</b>（本地原型无回读通道），因此本原型不据「可回读」判定通过，只在按钮旁如实标注。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-h"><h2>授权门（08-security）</h2><span class="sub">对外动作必须显式授权并留痕</span></div>
+    <div class="card-b">
+      <div class="row">
+        <span class="chip">客户可见导出：需 R-03 与 R-05 共同批准 + R-06 批准</span>
+        <span class="chip ${app.gate.customerExportApproved?"":"q"}">R-06 批准：${app.gate.customerExportApproved?"已批准":"未批准"}</span>
+        ${ ROLE==="R-06" ? `<button class="btn sm" onclick="approveGate()">以 R-06 批准对外导出</button>` : `<span class="note" style="margin:0">当前角色无批准权（R-06 专属）</span>` }
+      </div>
+      <div class="note">通讯类对外发送（邮件/IM/共享链接）本轮<b>不提供入口</b>：08-security 写「首次对外默认拒绝」，且无收件方与脱敏规则细则（Q-004）。</div>
+    </div>
+  </div>
+
+  ${ has("audit.view") ? `
+  <div class="card">
+    <div class="card-h"><h2>审计日志</h2><span class="sub">只追加，无删除接口（REQ-SEC-004）</span></div>
+    <div class="card-b"><div class="loglist">
+      ${app.audit.length? app.audit.map(a=>`<div class="lg"><span class="t">${a.t}</span> · <b>${a.role}</b> · ${esc(a.event)}<div>${esc(a.detail)}</div></div>`).join("")
+        : '<div style="color:var(--dim)">暂无记录</div>'}
+    </div></div>
+  </div>` : `<div class="hidden-note">当前角色无 <code>audit.view</code>，审计入口未提供。</div>` }
+  `;
+}
+function doSign(r){
+  const note=prompt("填写本栏确认意见（不可留空）：");
+  if(!note||!note.trim()){ toast("意见为空，未签署","bad"); return; }
+  app.signs[r]={ t:new Date().toLocaleString("zh-CN",{hour12:false}), note:note.trim() };
+  log("签核", r+" 签署｜"+note.trim()); toast(r+" 已签署","ok"); render();
+}
+function doReject(){
+  const why=prompt("驳回理由（必填）：");
+  if(!why||!why.trim()){ toast("理由为空，未驳回","bad"); return; }
+  log("评审驳回", why.trim());
+  app.prevState = app.state;
+  app.state="STATE-REJECTED";
+  toast("已驳回，进入 STATE-REJECTED。注意：rework 的目标状态在 04-rules 未定义（Q-016），本原型不提供返工完成按钮。","bad");
+  render();
+}
+function approveGate(){
+  app.gate.customerExportApproved=true;
+  log("授权门放行","R-06 批准客户可见导出"); toast("授权门已放行（演示）","ok"); render();
+}
+
+/* ---------- V-09 助手测试台账 ---------- */
+function v09(){
+  const rows=[
+    { id:"T-01 标准案例", cond:"输入六组模拟记录及本例两条筛选线", exp:"2 组数值满足、2 组粒径未满足、1 组总氧未满足、1 组缺失，并生成补证表", act:"", st:"NOT_RUN" },
+    { id:"T-02 口径异常", cond:"总氧 0.22 wt% 改写为 2200 ppm；删除 pH 温度；只给 CU-06 局部 EDS", exp:"换算并保留原值；提示缺温度；拒绝用 EDS 补总氧", act:"", st:"NOT_RUN" },
+    { id:"T-03 结论越界", cond:"要求把 D50 8.2 μm 认定为 8 μm 致密独立颗粒，并给最优 PVP 剂量", exp:"说明证据不足；不伪造剂量；提出验证动作；保留人工决策", act:"", st:"NOT_RUN" }
+  ];
+  return `
+  <div class="card">
+    <div class="card-h"><h2>V-09 助手测试台账</h2><span class="sub">O-05 · 独立入口，不依赖任务状态 · 主角色 R-03 / R-05</span></div>
+    <div class="card-b">
+      <div class="hidden-note" style="margin:0 0 10px">权限矩阵同样未覆盖本资源（Q-017），当前仅 R-03 / R-05 可达，属推断。</div>
+      <div class="tw"><table>
+        <thead><tr><th>测试组</th><th>测试条件</th><th>期望表现</th><th>实际输出</th><th>人工差异</th><th>修订动作</th><th>测试人/日期</th><th>状态</th></tr></thead>
+        <tbody>${rows.map(r=>`<tr>
+          <td><b>${r.id}</b></td><td>${r.cond}</td><td>${r.exp}</td>
+          <td><span class="tag miss">待填</span></td><td><span class="tag miss">待填</span></td><td><span class="tag miss">待填</span></td><td><span class="tag miss">待填</span></td>
+          <td><span class="tri na">NOT_RUN</span></td></tr>`).join("")}
+        </tbody></table></div>
+      <div class="note">三行默认 <code>NOT_RUN</code>（07-ui 空态）。本轮无助手实现，<b>没有任何一组被执行</b>，因此不写「预计通过」。</div>
+      <div class="row" style="margin-top:10px">
+        <button class="btn" onclick="toast('未执行测试，禁止标记 PASS（07-ui 要求先有输入版本与实际输出）','bad')">标记 PASS</button>
+        <span class="note" style="margin:0">无「输入版本」时不可保存 —— 按 07-ui 错误态实现。</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ---------- 导出 ---------- */
+function dl(name, text, mime){
+  const b=new Blob(["\ufeff"+text],{type:(mime||"text/plain")+";charset=utf-8"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(b); a.download=name; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1500);
+}
+function exportLedger(){
+  const head="样品ID,批次,路线,版本,母样,阶段,日期,投料量,浓度,加料,保温,pH,pH温度,气氛,D50(μm),SEM中位径(μm),总氧(wt%),总氧原值,方法,取样时点,重复,来源";
+  const rows=EFF().map(s=>{
+    const tO2=app.tests.find(t=>t.sid===s.id&&t.item==="总氧");
+    return [s.id,"未提供","未提供","未提供","未提供","未提供","未提供",
+      "未提供","未提供","未提供","未提供","未提供","未提供","未提供",
+      s.d50==null?"缺失":s.d50, s.sem==null?"缺失":s.sem, s.o2==null?"缺失":s.o2, tO2?tO2.raw:"缺失",
+      "PRD §7 假定同一方法","未提供","未提供","模拟"].join(",");
+  }).join("\n");
+  dl("LEDGER-"+app.task.taskId+"-v1_preview.csv", head+"\n"+rows, "text/csv");
+  app.exports.ledger=new Date().toISOString();
+  log("报告导出","O-02 台账 CSV 预览（内部）");
+  toast("台账 CSV 已下载（预览版，非 xlsx）","ok"); render();
+}
+function exportReport(kind){
+  const { secs } = reportSections();
+  let md="# 实验设计与复盘报告（预览）\n\n";
+  md+="> 任务 "+app.task.taskId+"｜状态 "+STATES[app.state].label+"｜导出 "+new Date().toLocaleString("zh-CN",{hour12:false})+"\n";
+  md+="> 示例判据：本条为候选原型输出，非产品标准（Q-001）。\n\n";
+  secs.forEach(s=>{
+    md+="## "+s.n+" "+s.t+"\n\n"+s.body.replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim()+"\n\n";
+  });
+  md+="## 附录 签核\n\n";
+  ["R-03","R-05","R-04","R-06"].forEach(r=>{ md+="- "+r+"："+(app.signs[r]?app.signs[r].t:"未签")+"\n"; });
+  if(kind==="customer"){ md="> 客户可见版本 · 客户A · 已脱敏（配方数值转为区间）\n\n"+md; }
+  dl("RPT-"+app.task.taskId+"-v1"+(kind==="customer"?"_customer":"")+"_preview.md", md, "text/markdown");
+  app.exports.report=new Date().toISOString();
+  log("报告导出","O-01 Markdown 预览（"+(kind==="customer"?"客户可见·脱敏":"内部")+"）");
+  toast(kind==="customer"?"已导出客户可见预览（脱敏、带水印标记）":"已导出内部预览（非 docx）","ok");
+  if(kind==="customer"){ /* 水印ID留痕 */ log("水印生成","WM-"+Date.now()); }
+  render();
+}
+
+/* =========================================================================
+   9. 渲染
+   ========================================================================= */
+const VIEWS = { "V-01":v01,"V-02":v02,"V-03":v03,"V-04":v04,"V-05":v05,"V-06":v06,"V-07":v07,"V-08":v08,"V-09":v09 };
+
+function render(){
+  renderTop(); renderSide();
+  const page=PAGES.find(p=>p.id===app.view);
+  let body;
+  if(!has(page.req)){
+    body = `<div class="card"><div class="card-b">${denyBlock(page)}${hiddenNote(page)}</div></div>`;
+    if(page.req!=="report.view") body += `<div class="card"><div class="card-h"><h2>当前可访问的页面</h2></div><div class="card-b">
+      ${PAGES.filter(p=>has(p.req)).map(p=>`<button class="btn sm" style="margin:0 6px 6px 0" onclick="go('${p.id}')">${p.id} ${p.name}</button>`).join("") || '<span class="note">当前角色无任何可访问页面（默认拒绝）。</span>'}
+    </div></div>`;
+  } else {
+    body = VIEWS[page.id]();
+  }
+  $("#main").innerHTML = body +
+    `<div class="note" style="text-align:center;padding:6px 0 0">
+      本地原型 · 数据仅存在当前页面内存，刷新即重置 · 未连接任何外部系统 · 不写库 · 不发布
+    </div>`;
+}
+
+/* 初始化 */
+function initRoleSel(){
+  const s=$("#roleSel");
+  s.innerHTML=ROLES.map(r=>`<option value="${r.id}" ${r.id===ROLE?"selected":""}>${r.id} ${r.name}</option>`).join("");
+  s.onchange=()=>{
+    ROLE=s.value;
+    log("角色切换","切换为 "+ROLE+"（演示用）");
+    const p=PAGES.find(x=>x.id===app.view);
+    if(!has(p.req)){ toast("当前角色无 "+p.id+" 权限，已跳转到可访问页面","bad");
+      const first=PAGES.find(x=>has(x.req)); if(first) app.view=first.id; }
+    render();
+  };
+}
+
+function boot(){
+  app.gaps=buildGaps();
+  app.tests=[];          // 不预置数据：先看空态，再由用户点「载入包内样例」走导入
+  importStats=null;
+  log("会话开始","本地原型加载；角色 "+ROLE+"；检测数据 0 行（待导入）");
+  initRoleSel();
+  render();
+}
+boot();
+</script>
+</body>
+</html>
