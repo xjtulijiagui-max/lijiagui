@@ -1,0 +1,30 @@
+{
+  "id": "workbench-list",
+  "title": "Workbench List｜企业 AI 培训工作台成果库（32 个）",
+  "shortTitle": "工作台成果库",
+  "category": "培训与组织",
+  "description": "从四批次培训作业中提取的 32 个 WorkBuddy 工作台成果：覆盖研发与供应链、质量与合规、绩效与考核、营销与获客、培训与教学、规划与项目管理、知识库管理、综合业务 8 大类。每条含来源批次、小组与打开入口，按分类导航、全文搜索，一键直达工作台。",
+  "url": "https://xjtulijiagui-max.github.io/lijiagui/workbench-list/",
+  "path": "workbench-list/",
+  "tags": [
+    "工作台",
+    "Workbench",
+    "WorkBuddy",
+    "培训成果",
+    "作业链接",
+    "学员作品",
+    "中车时代新材",
+    "聚和材料",
+    "日丰",
+    "内训师",
+    "分类导航",
+    "企业AI培训"
+  ],
+  "type": "教学资料",
+  "client": "多客户",
+  "status": "正常",
+  "featured": false,
+  "updated": "2026-11-14",
+  "source": "用户 2026-11-14 提供的资料库发布页（企业 AI 培训作业案例与链接总览，295 条作业、34 条工作台链接，去重后 32 条）",
+  "order": 281
+}
