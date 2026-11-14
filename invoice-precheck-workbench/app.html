@@ -1,0 +1,2612 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>开票需求预检工作台 · 原型 v0.1</title>
+
+<style>
+
+:root{
+
+  --bg:#f4f5f7;--panel:#fff;--ink:#1b1f26;--ink2:#5b6572;--ink3:#8a929e;--line:#e2e5ea;
+
+  --brand:#2f5bd7;--brand-bg:#eef2fd;
+
+  --ok:#16794a;--ok-bg:#e7f4ec;
+
+  --warn:#8a5a00;--warn-bg:#fdf3e0;
+
+  --bad:#b3261e;--bad-bg:#fdeceb;
+
+  --info:#3355c4;--info-bg:#eaf0ff;
+
+  --purple:#5b3fa8;--purple-bg:#f1ecfb;
+
+}
+
+*{box-sizing:border-box}
+
+html,body{margin:0}
+
+body{background:var(--bg);color:var(--ink);font:14px/1.62 -apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+
+a{color:var(--brand);text-decoration:none}
+
+.top{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:18px;padding:0 20px;height:56px;flex-wrap:wrap}
+
+.brand{font-weight:650;font-size:15px;letter-spacing:.2px;display:flex;align-items:center;gap:8px}
+
+.brand .ver{font-weight:500;font-size:11px;color:var(--ink2);border:1px solid var(--line);border-radius:999px;padding:1px 7px;background:#fafbfc}
+
+nav{display:flex;gap:2px;margin-left:6px}
+
+nav button{border:0;background:transparent;color:var(--ink2);font:inherit;font-size:13.5px;padding:7px 12px;border-radius:7px;cursor:pointer}
+
+nav button:hover{background:#f2f4f7;color:var(--ink)}
+
+nav button.on{background:var(--brand-bg);color:var(--brand);font-weight:600}
+
+.topright{margin-left:auto;display:flex;align-items:center;gap:8px}
+
+.pill{font-size:12px;color:var(--ink2);background:#f6f7f9;border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+
+main{max-width:1180px;margin:0 auto;padding:22px 20px 60px}
+
+h1{font-size:20px;margin:0 0 4px;font-weight:650;letter-spacing:.2px}
+
+h2{font-size:15px;margin:0;font-weight:650}
+
+h3{font-size:13.5px;margin:0 0 8px;font-weight:650;color:var(--ink)}
+
+.sub{color:var(--ink2);font-size:13px;margin:0 0 18px}
+
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+
+.card.tight{padding:0;overflow:hidden}
+
+.hd{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+
+.hd .sp{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+
+.btn{border:1px solid var(--line);background:#fff;color:var(--ink);font:inherit;font-size:13px;padding:6px 12px;border-radius:8px;cursor:pointer;white-space:nowrap}
+
+.btn:hover{background:#f7f8fa}
+
+.btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+
+.btn.primary:hover{filter:brightness(.95)}
+
+.btn.ok{background:var(--ok);border-color:var(--ok);color:#fff}
+
+.btn.warn{background:var(--warn-bg);border-color:#eadfc4;color:var(--warn)}
+
+.btn.ghost{color:var(--ink2)}
+
+.btn:disabled{opacity:.45;cursor:not-allowed}
+
+.btn.sm{padding:4px 9px;font-size:12px}
+
+.bd{display:inline-block;padding:1px 8px;border-radius:999px;font-size:12px;line-height:1.7;white-space:nowrap;border:1px solid transparent}
+
+.bd.ok{background:var(--ok-bg);color:var(--ok);border-color:#cfe7da}
+
+.bd.warn{background:var(--warn-bg);color:var(--warn);border-color:#efe1c6}
+
+.bd.bad{background:var(--bad-bg);color:var(--bad);border-color:#f3d3d0}
+
+.bd.info{background:var(--info-bg);color:var(--info);border-color:#d5dffb}
+
+.bd.purple{background:var(--purple-bg);color:var(--purple);border-color:#ddd2f2}
+
+.bd.muted{background:#f4f5f7;color:var(--ink2);border-color:var(--line)}
+
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+
+.tbl th{text-align:left;font-weight:600;color:var(--ink2);background:#fafbfc;border-bottom:1px solid var(--line);padding:9px 10px;white-space:nowrap;font-size:12.5px}
+
+.tbl td{border-bottom:1px solid #f0f1f4;padding:9px 10px;vertical-align:top}
+
+.tbl tr:last-child td{border-bottom:0}
+
+.tbl tbody tr:hover{background:#fcfcfd}
+
+.tbl .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.tbl .rig{text-align:right;white-space:nowrap}
+
+.tbl.compact td,.tbl.compact th{padding:8px 9px}
+
+.tbl .nw{white-space:nowrap}
+
+.tbl .small{font-size:12px}
+
+.tbl .clip{max-width:230px}
+
+.wrapx{overflow-x:auto}
+
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px 18px}
+
+.kv .it{border:1px solid var(--line);border-radius:9px;padding:9px 11px;background:#fcfcfd}
+
+.kv .k{font-size:12px;color:var(--ink3);margin-bottom:2px}
+
+.kv .v{font-size:14px;font-weight:600;font-variant-numeric:tabular-nums}
+
+.kv .v.small{font-size:13px;font-weight:500}
+
+.empty{border:1px dashed #d5d9e0;border-radius:10px;padding:34px 18px;text-align:center;color:var(--ink2);background:#fbfbfc}
+
+.empty b{display:block;color:var(--ink);margin-bottom:4px;font-weight:600}
+
+.banner{border-radius:9px;padding:10px 13px;font-size:13px;margin:10px 0;display:flex;gap:9px;align-items:flex-start}
+
+.banner.warn{background:var(--warn-bg);border:1px solid #efe1c6;color:#6d4900}
+
+.banner.bad{background:var(--bad-bg);border:1px solid #f3d3d0;color:#8c1d17}
+
+.banner.info{background:var(--info-bg);border:1px solid #d5dffb;color:#273f8f}
+
+.banner.purple{background:var(--purple-bg);border:1px solid #ddd2f2;color:#4a3190}
+
+.banner b{font-weight:650}
+
+.field{display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--ink2)}
+
+.field input,.field select,.field textarea{font:inherit;font-size:13px;color:var(--ink);border:1px solid #d7dbe2;border-radius:7px;padding:6px 9px;background:#fff;width:100%}
+
+.field textarea{min-height:60px;resize:vertical;line-height:1.55}
+
+.field input:focus,.field select:focus,.field textarea:focus{outline:2px solid var(--brand-bg);border-color:var(--brand)}
+
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+
+.grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+
+.block{border:1px solid var(--line);border-radius:10px;margin-bottom:12px;overflow:hidden}
+
+.block>.bh{display:flex;align-items:center;gap:9px;padding:9px 13px;background:#fafbfc;border-bottom:1px solid var(--line);font-size:13px;font-weight:650}
+
+.block>.bh .no{font-size:11.5px;color:var(--ink3);border:1px solid var(--line);border-radius:6px;padding:0 6px;background:#fff;font-weight:600}
+
+.block>.bb{padding:12px 13px}
+
+.block>.bb.flush{padding:0}
+
+.guard{display:flex;gap:8px;align-items:flex-start;font-size:13px;padding:4px 0}
+
+.guard .m{width:16px;flex:none;font-weight:700}
+
+.guard.pass .m{color:var(--ok)}
+
+.guard.fail{color:var(--bad)}
+
+.guard.fail .m{color:var(--bad)}
+
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.5px}
+
+.hint{font-size:12px;color:var(--ink3)}
+
+.loglist{font-size:12.5px;color:var(--ink2);margin:0;padding-left:16px}
+
+.loglist li{margin:2px 0}
+
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:#20242b;color:#fff;font-size:13px;padding:9px 16px;border-radius:9px;opacity:0;pointer-events:none;transition:.22s;z-index:60;max-width:80vw}
+
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.steps{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--ink3)}
+
+.steps .s{padding:2px 8px;border-radius:6px;border:1px solid var(--line);background:#fff}
+
+.steps .s.done{color:var(--ok);border-color:#cfe7da;background:var(--ok-bg)}
+
+.steps .s.now{color:var(--brand);border-color:#cfdafb;background:var(--brand-bg);font-weight:600}
+
+.stat{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:14px}
+
+.stat .s{background:#fff;border:1px solid var(--line);border-radius:11px;padding:13px 15px}
+
+.stat .s .n{font-size:23px;font-weight:680;font-variant-numeric:tabular-nums;letter-spacing:-.3px}
+
+.stat .s .l{font-size:12px;color:var(--ink2);margin-top:2px}
+
+.stat .s .u{font-size:12px;color:var(--ink3);font-weight:500}
+
+.fb{white-space:pre-wrap;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.5px;line-height:1.75;background:#fbfbfc;border:1px solid var(--line);border-radius:9px;padding:14px}
+
+.print-only{display:none}
+
+@media print{
+
+  @page{size:A4 portrait;margin:10mm}
+
+  .top,nav,.noprint,.toast,.steps{display:none!important}
+
+  input,select,textarea,button{display:none!important}
+
+  body{background:#fff;font-size:9.5px;line-height:1.35}
+
+  main{max-width:none;padding:0}
+
+  h1{font-size:13px;margin:0 0 1px}
+
+  h2{font-size:11.5px}
+
+  .sub{font-size:8.5px;margin:0 0 4px;color:#333}
+
+  .card{border:0;padding:0;margin:0 0 4px;border-radius:0}
+
+  .print-only{display:block}
+
+  .block{margin-bottom:3px;border-color:#bbb;border-radius:0}
+
+  .block>.bh{padding:2px 7px;font-size:10px;background:#f2f2f2}
+
+  .block>.bb{padding:4px 7px}
+
+  .block>.bb.flush{padding:0}
+
+  .tbl{font-size:8.5px}
+
+  .tbl th{padding:2px 4px;font-size:8.5px;background:#fdfdfd;border-color:#ccc}
+
+  .tbl td{padding:2px 4px;border-color:#e0e0e0}
+
+  .kv{grid-template-columns:repeat(4,1fr);gap:1px 8px}
+
+  .kv .it{border:0;background:none;padding:1px 0}
+
+  .kv .k{font-size:8px;color:#666;margin:0}
+
+  .kv .v{font-size:10px;font-weight:600}
+
+  .kv .v.small{font-size:9.5px}
+
+  .banner{padding:3px 7px;margin:3px 0;font-size:8.5px;border-radius:0}
+
+  .hint{font-size:8.5px}
+
+  .bd{border-color:#999;font-size:8.5px;padding:0 5px}
+
+  .guard{font-size:8.5px;padding:0;display:inline-block;margin-right:9px}
+
+  .grid2,.grid4{display:none}
+
+  .fb{font-size:9px;padding:4px}
+
+  a{color:#000;text-decoration:none}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header class="top">
+
+  <div class="brand">开票需求预检工作台 <span class="ver">v0.1 原型</span></div>
+
+  <nav id="nav">
+
+    <button data-nav="queue">① 待预检队列</button>
+
+    <button data-nav="ledger">② 客户开票需求台账</button>
+
+    <button data-nav="summary">③ 异常卡点汇总</button>
+
+    <button data-nav="about">说明与边界</button>
+
+  </nav>
+
+  <div class="topright">
+
+    <span class="pill" id="dataPill">本地示例数据 · 未连 SAP</span>
+
+    <button class="btn sm ghost" data-act="reset">重置示例数据</button>
+
+  </div>
+
+</header>
+
+<main id="app"></main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+
+/* ============================================================
+
+   开票需求预检工作台 · 单文件原型
+
+   规格依据：workspace/ff-invoice-precheck/specs/01-10
+
+   所有数据为演示数据，存于本机 localStorage，不上传、不外发
+
+   ============================================================ */
+
+
+
+var KEY = 'ff-invoice-wb-v1';
+
+var state = null;
+
+var route = { view: 'queue', id: '' };
+
+var ui = { q: '', status: 'ALL', ledgerQ: '', period: 'month', showAdd: false, showLog: false };
+
+
+
+/* ---------- 工具 ---------- */
+
+function ymd(d) { d = d || new Date(); var p = function (n) { return String(n).padStart(2, '0'); }; return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()); }
+
+function stamp() { var d = new Date(); var p = function (n) { return String(n).padStart(2, '0'); }; return ymd(d) + ' ' + p(d.getHours()) + ':' + p(d.getMinutes()) + ':' + p(d.getSeconds()); }
+
+function money(n) { return Number(n || 0).toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+
+function cents(n) { return Math.round(Number(n || 0) * 100); }
+
+function diffOf(a, b) { return (cents(a) - cents(b)) / 100; }
+
+function maskTax(t) { t = String(t || ''); if (t.length <= 8) return t || '—'; return t.slice(0, 4) + '****' + t.slice(-4); }
+
+function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+
+function uid(p) { return p + '-' + Math.random().toString(36).slice(2, 7); }
+
+
+
+/* ---------- 演示数据 ---------- */
+
+function seed() {
+
+  var t = ymd();
+
+  var customers = [
+
+    { code: 'C001', name: '示例客户甲（演示）', tax_no: '91370200MA0000001X', address_phone: '示例地址 1 号 0532-00000001', bank_account: '6222000000000001' },
+
+    { code: 'C002', name: '示例客户乙（演示）', tax_no: '91370200MA0000002X', address_phone: '示例地址 2 号 0532-00000002', bank_account: '6222000000000002' }
+
+  ];
+
+  var subjects = [
+
+    { code: 'S01', name: '示例开票主体（一厂）', tax_no: '' },
+
+    { code: 'S02', name: '示例开票主体（二厂）', tax_no: '' }
+
+  ];
+
+  var materials = [
+
+    { code: 'M001', name: '示例物料·淀粉', spec: '25kg/袋', tax_class: '13%', maintained: true },
+
+    { code: 'M002', name: '示例物料·氨基酸', spec: '25kg/袋', tax_class: '13%', maintained: false },
+
+    { code: 'M003', name: '示例物料·副产品', spec: '散装', tax_class: '9%', maintained: true }
+
+  ];
+
+  var applications = [
+
+    { sap_doc_no: '4500001001', customer_code: 'C001', subject_code: 'S01', amount: 100000, tax_rate: 0.13, currency: 'CNY', buyer_title: '示例客户甲（演示）', buyer_tax_no: '91370200MA0000001X', material_code: 'M001', quantity: 10, apply_date: t, remark: '按合同备注“货款”' },
+
+    { sap_doc_no: '4500001002', customer_code: 'C002', subject_code: 'S01', amount: 52000, tax_rate: 0.13, currency: 'CNY', buyer_title: '示例客户乙（演示）', buyer_tax_no: '913702000002', material_code: 'M002', quantity: 6, apply_date: t, remark: '按合同' },
+
+    { sap_doc_no: '4500001003', customer_code: 'C003', subject_code: 'S02', amount: 30000, tax_rate: 0.13, currency: 'CNY', buyer_title: '示例客户丙（演示）', buyer_tax_no: '91370200MA0000003X', material_code: 'M001', quantity: 4, apply_date: t, remark: '按合同' },
+
+    { sap_doc_no: '4500001004', customer_code: 'C001', subject_code: 'S02', amount: 66000, tax_rate: 0.09, currency: 'CNY', buyer_title: '示例客户甲（演示）', buyer_tax_no: '91370200MA0000001X', material_code: 'M003', quantity: 12, apply_date: t, remark: '' },
+
+    { sap_doc_no: '4500001005', customer_code: 'C002', subject_code: 'S02', amount: 100000, tax_rate: 0.13, currency: 'CNY', buyer_title: '示例客户乙（演示）', buyer_tax_no: '91370200MA0000002X', material_code: 'M003', quantity: 20, apply_date: t, remark: '按合同' },
+
+    { sap_doc_no: '4500001006', customer_code: 'C003', subject_code: 'S01', amount: 20000, tax_rate: 0.06, currency: 'CNY', buyer_title: '示例客户丙（演示）', buyer_tax_no: '91370200MA0000003X', material_code: 'M001', quantity: 3, apply_date: t, remark: '按合同' },
+
+    { sap_doc_no: '4500001007', customer_code: 'C001', subject_code: 'S01', amount: 12800, tax_rate: 0.13, currency: 'CNY', buyer_title: '示例客户甲（演示）', buyer_tax_no: '91370200MA0000001X', material_code: 'M001', quantity: 2, apply_date: t, remark: '按合同' },
+
+    { sap_doc_no: '4500001008', customer_code: 'C002', subject_code: 'S01', amount: 9800, tax_rate: 0.09, currency: 'CNY', buyer_title: '示例客户乙（演示）', buyer_tax_no: '91370200MA0000002X', material_code: 'M003', quantity: 1, apply_date: t, remark: '按合同' }
+
+  ];
+
+  var quotas = [
+
+    { subject_code: 'S01', queried_at: t + ' 10:20', remaining_amount: 500000, queried_by: '示例审核岗', source: '人工查询' },
+
+    { subject_code: 'S02', queried_at: t + ' 10:22', remaining_amount: 80000, queried_by: '示例审核岗', source: '人工查询' }
+
+  ];
+
+  var requirements = [
+
+    { req_id: 'TZ-202601-0001', customer_code: 'C001', customer_name: '示例客户甲（演示）', subject_code: 'S01', invoice_mode: '合并开票', remark_requirement: '按合同号合并开具（旧版要求）', need_after_receipt: '未提供', need_after_confirm: '未提供', effective_from: '2026-01-01', effective_to: '2026-06-30', source_mail_no: 'MAIL-2026-0105-01', source_mail_date: '2026-01-05', entered_by: '示例录入岗', verified_by: '示例复核岗', verified_at: '2026-01-06 09:10:00', status: 'STATE-EXPIRED', supersedes_req_id: '' },
+
+    { req_id: 'TZ-202607-0002', customer_code: 'C001', customer_name: '示例客户甲（演示）', subject_code: 'S01', invoice_mode: '合并开票', remark_requirement: '按合同号合并开具，备注合同编号', need_after_receipt: '否', need_after_confirm: '未提供', effective_from: '2026-07-01', effective_to: '', source_mail_no: 'MAIL-2026-0702-03', source_mail_date: '2026-07-02', entered_by: '示例录入岗', verified_by: '示例复核岗', verified_at: '2026-07-03 08:40:00', status: 'STATE-ACTIVE', supersedes_req_id: 'TZ-202601-0001' },
+
+    { req_id: 'TZ-202607-0003', customer_code: 'C001', customer_name: '示例客户甲（演示）', subject_code: 'S02', invoice_mode: '合并开票', remark_requirement: '含运费一票开具', need_after_receipt: '未提供', need_after_confirm: '否', effective_from: '2026-07-01', effective_to: '', source_mail_no: 'MAIL-2026-0702-04', source_mail_date: '2026-07-02', entered_by: '示例录入岗', verified_by: '示例复核岗', verified_at: '2026-07-03 08:41:00', status: 'STATE-ACTIVE', supersedes_req_id: '' },
+
+    { req_id: 'TZ-202608-0004', customer_code: 'C002', customer_name: '示例客户乙（演示）', subject_code: 'S01', invoice_mode: '拆分开票', remark_requirement: '按品名分两张开具', need_after_receipt: '是', need_after_confirm: '未提供', effective_from: '2026-08-01', effective_to: '', source_mail_no: 'MAIL-2026-0803-02', source_mail_date: '2026-08-03', entered_by: '示例录入岗', verified_by: '示例复核岗', verified_at: '2026-08-04 09:00:00', status: 'STATE-ACTIVE', supersedes_req_id: '' },
+
+    { req_id: 'TZ-202609-0005', customer_code: 'C002', customer_name: '示例客户乙（演示）', subject_code: 'S02', invoice_mode: '统一开票', remark_requirement: '月底统一开具一次', need_after_receipt: '未提供', need_after_confirm: '是', effective_from: '2026-09-01', effective_to: '', source_mail_no: 'MAIL-2026-0901-07', source_mail_date: '2026-09-01', entered_by: '示例录入岗', verified_by: '示例复核岗', verified_at: '2026-09-02 09:30:00', status: 'STATE-ACTIVE', supersedes_req_id: '' },
+
+    { req_id: 'TZ-202611-0006', customer_code: 'C003', customer_name: '示例客户丙（演示）', subject_code: 'S01', invoice_mode: '合并开票', remark_requirement: '按合同号合并开具（待复核）', need_after_receipt: '未提供', need_after_confirm: '未提供', effective_from: '2026-11-01', effective_to: '', source_mail_no: 'MAIL-2026-1110-05', source_mail_date: '2026-11-10', entered_by: '示例录入岗', verified_by: '', verified_at: '', status: 'STATE-PENDING-VERIFY', supersedes_req_id: '' }
+
+  ];
+
+  var sheets = [];
+
+  for (var i = 0; i < 6; i++) {
+
+    sheets.push({
+
+      sheet_no: 'YJ-' + String(i + 1).padStart(4, '0'),
+
+      sap_doc_no: applications[i].sap_doc_no,
+
+      status: 'STATE-QUEUED',
+
+      amount_basis: '',
+
+      email_mode: i === 3 ? '拆分开票' : '',
+
+      email_remark: '',
+
+      reviewer: '', reviewed_at: '', override_reason_code: '', override_note: '',
+
+      checked_at: '', created_at: t + ' 09:0' + i + ':00',
+
+      log: [{ ts: t + ' 09:0' + i + ':00', actor: '系统', action: '取单', detail: '从 SAP 待开票队列建单（演示）' }]
+
+    });
+
+  }
+
+  return {
+
+    meta: { version: 'v0.1', seeded_at: stamp(), today: t },
+
+    customers: customers, subjects: subjects, materials: materials,
+
+    applications: applications, quotas: quotas, requirements: requirements, sheets: sheets,
+
+    audit: [{ ts: stamp(), actor: '系统', action: '初始化演示数据', target: '工作台', detail: '6 张待预检单 / 6 条台账 / 2 个主体额度快照' }]
+
+  };
+
+}
+
+
+
+/* ---------- 存取 ---------- */
+
+function load() {
+
+  try {
+
+    var raw = localStorage.getItem(KEY);
+
+    if (!raw) return null;
+
+    var o = JSON.parse(raw);
+
+    if (!o || !o.sheets) return null;
+
+    return o;
+
+  } catch (e) { return null; }
+
+}
+
+function save() {
+
+  try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* 隐私模式下降级为内存态 */ }
+
+}
+
+function toast(msg) {
+
+  var el = document.getElementById('toast');
+
+  if (!el) return;
+
+  el.textContent = msg; el.className = 'toast on';
+
+  clearTimeout(toast._t);
+
+  toast._t = setTimeout(function () { el.className = 'toast'; }, 2600);
+
+}
+
+
+
+/* ---------- 基础查询 ---------- */
+
+function appOf(sh) { return state.applications.filter(function (a) { return a.sap_doc_no === sh.sap_doc_no; })[0] || {}; }
+
+function subjOf(code) { return state.subjects.filter(function (s) { return s.code === code; })[0] || null; }
+
+function custOf(code) { return state.customers.filter(function (c) { return c.code === code; })[0] || null; }
+
+function matOf(code) { return state.materials.filter(function (m) { return m.code === code; })[0] || null; }
+
+function subjName(code) { var s = subjOf(code); return s ? s.name : (code || '—'); }
+
+
+
+var STATUS = {
+
+  'STATE-QUEUED': { label: '待校验', cls: 'muted' },
+
+  'STATE-CHECKING': { label: '校验中', cls: 'info' },
+
+  'STATE-CHECKED': { label: '待复核', cls: 'warn' },
+
+  'STATE-RELEASED': { label: '已放行', cls: 'ok' },
+
+  'STATE-RETURNED': { label: '已退回', cls: 'bad' },
+
+  'STATE-ON-HOLD': { label: '暂缓', cls: 'warn' },
+
+  'STATE-VOID': { label: '作废', cls: 'muted' }
+
+};
+
+function stBadge(s) { var m = STATUS[s] || { label: s, cls: 'muted' }; return '<span class="bd ' + m.cls + '">' + esc(m.label) + '</span>'; }
+
+function resBadge(it) {
+
+  var map = { PASS: ['ok', '通过'], MISSING: ['bad', '缺项'], FORMAT_ERR: ['bad', '格式错'], CONFLICT: ['purple', '冲突'], NOT_REGISTERED: ['warn', '未登记'], NOT_AVAILABLE: ['muted', '未取得'] };
+
+  var m = map[it.result] || ['muted', it.result];
+
+  if (it.soft) return '<span class="bd warn">提示</span>';
+
+  return '<span class="bd ' + m[0] + '">' + m[1] + '</span>';
+
+}
+
+function reqStatusBadge(s) {
+
+  var map = { 'STATE-PENDING-VERIFY': ['warn', '待复核'], 'STATE-ACTIVE': ['ok', '有效'], 'STATE-SUPERSEDED': ['muted', '已被替代'], 'STATE-EXPIRED': ['muted', '已失效'], 'STATE-REJECTED': ['bad', '录入作废'] };
+
+  var m = map[s] || ['muted', s];
+
+  return '<span class="bd ' + m[0] + '">' + m[1] + '</span>';
+
+}
+
+
+
+/* ---------- 核心：一次预检的判定 ---------- */
+
+function evaluate(sh) {
+
+  var app = appOf(sh);
+
+  var cust = custOf(app.customer_code);
+
+  var mat = matOf(app.material_code);
+
+  var today = ymd();
+
+  var items = [];
+
+  function add(block, code, name, result, detail, rule, opt) {
+
+    var o = { block: block, code: code, name: name, result: result, detail: detail, rule: rule };
+
+    if (opt) { if (opt.soft) o.soft = true; if (opt.flag) o.flag = opt.flag; }
+
+    items.push(o);
+
+  }
+
+
+
+  /* ① 填报项（RULE-VAL-001 / 002） */
+
+  add('B1', 'BUYER_TITLE', '购买方名称（抬头）', app.buyer_title ? 'PASS' : 'MISSING',
+
+    app.buyer_title ? '已填：' + app.buyer_title : '缺项：抬头为空', 'RULE-VAL-001');
+
+
+
+  var rawTax = String(app.buyer_tax_no || '').replace(/\s/g, '');
+
+  var tRes = 'PASS', tDetail = '已填：' + maskTax(rawTax);
+
+  if (!rawTax) { tRes = 'MISSING'; tDetail = '缺项：纳税人识别号为空'; }
+
+  else if (!(rawTax.length === 15 || rawTax.length === 18) || !/^[0-9A-Z]+$/.test(rawTax)) {
+
+    tRes = 'FORMAT_ERR';
+
+    tDetail = '格式错：当前 ' + rawTax.length + ' 位（应为 15 或 18 位）；依据规范版本待确认（Q-005），按例外仅提示、不阻断';
+
+  }
+
+  add('B1', 'BUYER_TAX_NO', '纳税人识别号', tRes, tDetail, 'RULE-VAL-002', { soft: tRes === 'FORMAT_ERR' });
+
+
+
+  var amt = Number(app.amount || 0);
+
+  add('B1', 'AMOUNT', '金额', amt > 0 ? 'PASS' : 'FORMAT_ERR',
+
+    amt > 0 ? '已填：' + money(amt) + ' 元；口径：' + (sh.amount_basis || '未标注（不合格）') : '金额为 0 或负数，转人工处理', 'RULE-VAL-001');
+
+
+
+  var rate = Number(app.tax_rate);
+
+  var rateOk = !isNaN(rate) && rate >= 0 && rate <= 1;
+
+  add('B1', 'TAX_RATE', '税率', rateOk ? 'PASS' : 'FORMAT_ERR',
+
+    rateOk ? '已填：' + (Math.round(rate * 10000) / 100) + '%' : '格式错：税率须为 0—1 之间的小数', 'RULE-VAL-001');
+
+
+
+  add('B1', 'GOODS_NAME', '品名', mat ? (mat.name ? 'PASS' : 'MISSING') : 'MISSING',
+
+    mat ? (mat.name ? '已填：' + mat.name : '缺项：物料名称未维护') : '缺项：物料编码 ' + (app.material_code || '（空）') + ' 在主数据中不存在，品名无法取得', 'RULE-VAL-003');
+
+
+
+  add('B1', 'REMARK', '备注', app.remark ? 'PASS' : 'MISSING',
+
+    app.remark ? '已填：' + app.remark : '缺项：备注为空。按 RULE-VAL-001，即使该客户台账无备注要求也判缺项，是否退回由审核岗决定', 'RULE-VAL-001');
+
+
+
+  /* ② 主数据（RULE-VAL-003） */
+
+  add('B2', 'CUSTOMER_EXISTS', '客户是否维护', cust ? 'PASS' : 'MISSING',
+
+    cust ? '已维护：' + cust.code + ' ' + cust.name : '客户未维护：编码 ' + (app.customer_code || '（空）') + ' 在主数据中不存在', 'RULE-VAL-003');
+
+  add('B2', 'CUSTOMER_TAX_MATCH', '税号与主数据一致性', (cust && cust.tax_no && rawTax && cust.tax_no !== rawTax) ? 'CONFLICT' : (cust ? 'PASS' : 'NOT_AVAILABLE'),
+
+    cust ? (cust.tax_no ? (cust.tax_no === rawTax ? '与主数据一致' : '主数据税号 ' + maskTax(cust.tax_no) + ' 与申请单税号不一致，需人工核对（不自动选取）') : '主数据无税号，无法比对') : '客户未维护，无法比对', 'RULE-VAL-004', { soft: true });
+
+  add('B2', 'MATERIAL_MAINTAINED', '物料是否维护完成', !mat ? 'MISSING' : (mat.maintained ? 'PASS' : 'MISSING'),
+
+    !mat ? '物料未维护：编码 ' + (app.material_code || '（空）') + ' 不存在' : (mat.maintained ? '已维护：' + mat.code + ' ' + mat.name : '物料未维护完成：' + mat.code + ' ' + mat.name), 'RULE-VAL-003');
+
+
+
+  /* ③ 额度（RULE-QUO-001/002/003） */
+
+  var qs = state.quotas.filter(function (q) { return q.subject_code === app.subject_code; })
+
+    .sort(function (a, b) { return String(b.queried_at).localeCompare(String(a.queried_at)); });
+
+  var q = qs[0] || null;
+
+  var qToday = !!(q && String(q.queried_at).slice(0, 10) === today);
+
+  var diff = qToday ? diffOf(q.remaining_amount, amt) : null;
+
+
+
+  add('B3', 'QUOTA_SNAPSHOT', '额度查询时点', qToday ? 'PASS' : 'NOT_AVAILABLE',
+
+    qToday ? '查询于 ' + q.queried_at + '（查询人：' + q.queried_by + '，来源：' + q.source + '）' : '额度未取得：该主体当日无查询记录，不计算差额', 'RULE-QUO-002');
+
+
+
+  if (qToday) {
+
+    var low = diff < 0;
+
+    add('B3', 'QUOTA_DIFF', '额度差额', 'PASS',
+
+      '剩余额度 ' + money(q.remaining_amount) + ' − 本次 ' + money(amt) + ' = ' + (diff < 0 ? '−' : '+') + money(Math.abs(diff)) +
+
+      ' → ' + (low ? '额度可能不足，需人工确认（未含在途占用）' : '额度未发现不足（未含在途占用）'),
+
+      'RULE-QUO-001', { flag: low ? 'quota_low' : 'quota_ok' });
+
+  } else {
+
+    add('B3', 'QUOTA_DIFF', '额度差额', 'NOT_AVAILABLE', '额度未取得，不计算差额', 'RULE-QUO-001');
+
+  }
+
+
+
+  var inFlight = state.sheets.filter(function (o) {
+
+    if (o.sheet_no === sh.sheet_no || o.status === 'STATE-VOID') return false;
+
+    var a2 = appOf(o);
+
+    return a2.subject_code === app.subject_code && a2.apply_date === app.apply_date;
+
+  }).length;
+
+  add('B3', 'QUOTA_INFLIGHT', '同日多单叠加', 'PASS',
+
+    inFlight >= 1 ? '同日该主体另有 ' + inFlight + ' 张在途单，单张预检不判定叠加，请联系人工累计判断' : '同日该主体无其他在途单',
+
+    'RULE-QUO-003', { flag: inFlight >= 1 ? 'inflight' : '' });
+
+
+
+  /* ④ 开票需求（RULE-TBL-002/004/005） */
+
+  var reqs = state.requirements.filter(function (r) {
+
+    return r.customer_code === app.customer_code && r.subject_code === app.subject_code;
+
+  });
+
+  function covering(r) {
+
+    return (!r.effective_from || r.effective_from <= app.apply_date) && (!r.effective_to || r.effective_to >= app.apply_date);
+
+  }
+
+  var active = reqs.filter(function (r) { return r.status === 'STATE-ACTIVE' && covering(r); })[0] || null;
+
+  var pending = reqs.filter(function (r) { return r.status === 'STATE-PENDING-VERIFY' && covering(r); })[0] || null;
+
+  var dead = reqs.filter(function (r) { return r.status === 'STATE-EXPIRED' || r.status === 'STATE-SUPERSEDED'; })[0] || null;
+
+  var conflict = false;
+
+
+
+  if (active) {
+
+    conflict = !!(sh.email_mode && sh.email_mode !== active.invoice_mode);
+
+    add('B4', 'REQ_MODE', '开票方式', 'PASS', '照录台账：' + active.invoice_mode + '（行号 ' + active.req_id + '）', 'RULE-TBL-002');
+
+    add('B4', 'REQ_REMARK', '备注要求', active.remark_requirement ? 'PASS' : 'NOT_AVAILABLE',
+
+      active.remark_requirement ? '照录台账：' + active.remark_requirement : '台账该行未登记备注要求，按无特殊要求处理并提示审核岗', 'RULE-TBL-002');
+
+    add('B4', 'REQ_SOURCE', '来源邮件', 'PASS', '邮件编号 ' + active.source_mail_no + '（' + active.source_mail_date + '）；复核人 ' + (active.verified_by || '—'), 'RULE-TBL-002');
+
+    if (conflict) {
+
+      add('B4', 'REQ_CONFLICT', '台账与本次邮件一致性', 'CONFLICT',
+
+        '需求冲突：台账＝' + active.invoice_mode + '；本次邮件＝' + sh.email_mode + '。两方并列，不自动裁决', 'RULE-VAL-005');
+
+    }
+
+    if (sh.email_remark && active.remark_requirement && sh.email_remark.trim() !== active.remark_requirement.trim()) {
+
+      add('B4', 'REQ_REMARK_DIFF', '备注措辞差异', 'PASS', '本次邮件备注与台账措辞不同，是否属实质变更由人工判定（仅措辞差异不判冲突）', 'RULE-VAL-005', { flag: 'remark_diff' });
+
+    }
+
+  } else if (pending) {
+
+    add('B4', 'REQ_MODE', '开票方式', 'PASS', '引用待复核行：' + pending.invoice_mode + '（' + pending.req_id + '，STATE-PENDING-VERIFY）', 'RULE-TBL-002', { flag: 'pending_verify' });
+
+    add('B4', 'REQ_REMARK', '备注要求', 'PASS', '引用待复核行：' + (pending.remark_requirement || '—'), 'RULE-TBL-002', { flag: 'pending_verify' });
+
+    add('B4', 'REQ_SOURCE', '来源邮件', 'PASS', '邮件编号 ' + pending.source_mail_no + '；复核人：未复核', 'RULE-TBL-002');
+
+  } else if (dead) {
+
+    add('B4', 'REQ_MODE', '开票方式', 'NOT_REGISTERED', '历史记录已失效（' + dead.req_id + '，' + (dead.effective_to || '—') + '），视为未命中；需求未登记，需向业务确认', 'RULE-TBL-002');
+
+    add('B4', 'REQ_REMARK', '备注要求', 'NOT_REGISTERED', '历史记录已失效，不照录', 'RULE-TBL-002');
+
+    add('B4', 'REQ_SOURCE', '来源邮件', 'NOT_AVAILABLE', '无有效来源邮件', 'RULE-TBL-002');
+
+  } else {
+
+    add('B4', 'REQ_MODE', '开票方式', 'NOT_REGISTERED', '需求未登记，需向业务确认', 'RULE-TBL-004');
+
+    add('B4', 'REQ_REMARK', '备注要求', 'NOT_REGISTERED', '需求未登记，需向业务确认', 'RULE-TBL-004');
+
+    add('B4', 'REQ_SOURCE', '来源邮件', 'NOT_AVAILABLE', '无台账记录，取不到来源邮件', 'RULE-TBL-004');
+
+  }
+
+
+
+  /* ⑤⑥ 卡点与结论 */
+
+  var hardBad = items.some(function (i) { return i.block !== 'B3' && i.result !== 'PASS' && !i.soft && (i.result === 'MISSING' || i.result === 'FORMAT_ERR'); });
+
+  var notReg = items.some(function (i) { return i.result === 'NOT_REGISTERED'; });
+
+  var conflictHit = items.some(function (i) { return i.block === 'B4' && i.result === 'CONFLICT'; });
+
+  var pendingVerify = items.some(function (i) { return i.flag === 'pending_verify'; });
+
+  var quotaLow = diff !== null && diff < 0;
+
+
+
+  var advice = [], pendingNotes = [];
+
+  if (conflictHit) {
+
+    pendingNotes.push('存在需求冲突：台账与本次邮件不一致，需业务书面确认口径后再判（RULE-VAL-005）');
+
+  }
+
+  if (notReg) {
+
+    pendingNotes.push('需求未登记：四栏不得留白，须向业务确认后在台账登记并重跑（RULE-TBL-004）');
+
+  }
+
+  if (conflictHit || notReg) {
+
+    advice = [];
+
+  } else if (hardBad) {
+
+    advice = ['需业务补资料'];
+
+  } else if (!qToday || quotaLow) {
+
+    advice = ['额度受限暂缓'];
+
+  } else {
+
+    advice = ['可流转'];
+
+  }
+
+  if (pendingVerify) pendingNotes.push('所引用的台账行尚未复核（STATE-PENDING-VERIFY），只能作为参考，不得作为放行依据');
+
+
+
+  var guards = [
+
+    { ok: !!sh.amount_basis, text: '③栏已标注金额口径（含税／不含税）' },
+
+    { ok: qToday, text: '③栏有当日额度查询时点' },
+
+    { ok: !conflictHit, text: '无未解决的需求冲突' },
+
+    { ok: !notReg, text: '④栏无“需求未登记”' },
+
+    { ok: !pendingVerify, text: '所引用台账行已复核' },
+
+    { ok: String(sh.reviewer || '').trim().length > 0, text: '⑦栏已填复核人签字' }
+
+  ];
+
+
+
+  var blocks = { B1: [], B2: [], B3: [], B4: [] };
+
+  items.forEach(function (i) { blocks[i.block].push(i); });
+
+
+
+  return {
+
+    app: app, cust: cust, mat: mat, items: items, blocks: blocks,
+
+    quota: { q: q, qToday: qToday, diff: diff, inFlight: inFlight },
+
+    req: { active: active, pending: pending, dead: dead },
+
+    conflict: { hit: conflictHit, ledger: active ? active.invoice_mode : '', email: sh.email_mode || '' },
+
+    hardBad: hardBad, notReg: notReg, quotaLow: quotaLow, pendingVerify: pendingVerify,
+
+    advice: advice, pendingNotes: pendingNotes, guards: guards,
+
+    canRelease: guards.every(function (g) { return g.ok; })
+
+  };
+
+}
+
+
+
+/* ---------- 渲染：骨架 ---------- */
+
+function render() {
+
+  var host = document.getElementById('app');
+
+  if (!host) return;
+
+  var html = '';
+
+  if (route.view === 'sheet') html = viewSheet(route.id);
+
+  else if (route.view === 'feedback') html = viewFeedback(route.id);
+
+  else if (route.view === 'ledger') html = viewLedger();
+
+  else if (route.view === 'summary') html = viewSummary();
+
+  else if (route.view === 'about') html = viewAbout();
+
+  else html = viewQueue();
+
+  host.innerHTML = html;
+
+  var nav = document.getElementById('nav');
+
+  if (nav) {
+
+    Array.prototype.forEach.call(nav.querySelectorAll('button'), function (b) {
+
+      var v = b.getAttribute('data-nav');
+
+      var on = (v === route.view) || ((route.view === 'sheet' || route.view === 'feedback') && v === 'queue');
+
+      b.className = on ? 'on' : '';
+
+    });
+
+  }
+
+  var pill = document.getElementById('dataPill');
+
+  if (pill) pill.textContent = '本地演示数据 ' + state.meta.today + ' · 未连 SAP';
+
+}
+
+
+
+/* ---------- 视图 V-01 队列 ---------- */
+
+function viewQueue() {
+
+  var kw = ui.q.trim();
+
+  var list = state.sheets.filter(function (sh) {
+
+    var a = appOf(sh);
+
+    if (ui.status !== 'ALL' && sh.status !== ui.status) return false;
+
+    if (!kw) return true;
+
+    var s = [sh.sheet_no, sh.sap_doc_no, a.customer_code, a.buyer_title, subjName(a.subject_code)].join(' ');
+
+    return s.toLowerCase().indexOf(kw.toLowerCase()) >= 0;
+
+  });
+
+  var pool = state.applications.filter(function (a) {
+
+    return !state.sheets.some(function (s) { return s.sap_doc_no === a.sap_doc_no; });
+
+  }).length;
+
+
+
+  var rows = list.map(function (sh) {
+
+    var a = appOf(sh);
+
+    var ev = evaluate(sh);
+
+    var concl = ev.advice.length ? '<span class="bd info">建议 · ' + esc(ev.advice.join('／')) + '</span>'
+
+      : '<span class="bd warn">待确认</span>';
+
+    return '<tr>' +
+
+      '<td class="mono"><a href="#/sheet/' + sh.sheet_no + '">' + sh.sheet_no + '</a></td>' +
+
+      '<td class="mono">' + esc(sh.sap_doc_no) + '</td>' +
+
+      '<td>' + esc(a.buyer_title || '—') + '<div class="hint">' + esc(a.customer_code || '—') + '</div></td>' +
+
+      '<td>' + esc(subjName(a.subject_code)) + '</td>' +
+
+      '<td class="num">' + money(a.amount) + '</td>' +
+
+      '<td class="hint">' + esc(sh.created_at) + '</td>' +
+
+      '<td>' + stBadge(sh.status) + '</td>' +
+
+      '<td>' + concl + '</td>' +
+
+      '<td class="rig"><a class="btn sm" href="#/sheet/' + sh.sheet_no + '">打开</a></td>' +
+
+      '</tr>';
+
+  }).join('');
+
+
+
+  return '<h1>V-01 待预检队列</h1>' +
+
+    '<p class="sub">演示流程：① 取单建单 → ② 运行校验 → ③ 审核岗签字（放行／退回／暂缓）。当前队列 ' + state.sheets.length + ' 张，其中 ' +
+
+    state.sheets.filter(function (s) { return s.status === 'STATE-QUEUED'; }).length + ' 张待校验。</p>' +
+
+
+
+    '<div class="card">' +
+
+    '<div class="hd"><h2>当日队列</h2><div class="sp">' +
+
+    '<input id="q" class="btn" style="width:190px;text-align:left" placeholder="搜单号／客户／主体" value="' + esc(ui.q) + '">' +
+
+    '<select id="f" class="btn"><option value="ALL">全部状态</option>' +
+
+    Object.keys(STATUS).map(function (k) { return '<option value="' + k + '"' + (ui.status === k ? ' selected' : '') + '>' + STATUS[k].label + '</option>'; }).join('') +
+
+    '</select>' +
+
+    '<button class="btn primary" data-act="ingest">取单（' + pool + ' 张可拉取）</button>' +
+
+    '<button class="btn" data-act="checkall">一键校验全部</button>' +
+
+    '<button class="btn ghost" data-act="exportQueue">导出队列 CSV</button>' +
+
+    '</div></div>' +
+
+    (list.length ? '<div class="wrapx"><table class="tbl"><thead><tr><th>预检单号</th><th>SAP 单号</th><th>客户</th><th>开票主体</th><th class="rig">申请金额</th><th>取单时间</th><th>状态</th><th>结论</th><th></th></tr></thead><tbody>' + rows + '</tbody></table></div>'
+
+      : '<div class="empty"><b>当日无待开票单，请确认取单范围</b>取单范围＝SAP 当日待开票记录；若 SAP 未导出，可转人工建单（原型未实现人工建单，见说明与边界）。</div>') +
+
+    '</div>' +
+
+
+
+    '<div class="card"><div class="hd"><h2>日期与口径</h2></div>' +
+
+    '<div class="k-v kv">' +
+
+    '<div class="it"><div class="k">当前业务日</div><div class="v">' + ymd() + '</div></div>' +
+
+    '<div class="it"><div class="k">额度快照</div><div class="v small">' + state.quotas.length + ' 条（' + state.quotas.map(function (q) { return q.subject_code + ' ' + money(q.remaining_amount); }).join('；') + '）</div></div>' +
+
+    '<div class="it"><div class="k">口径说明</div><div class="v small">金额口径未确认（Q-010），同一张单内必须统一并在③栏标注</div></div>' +
+
+    '</div>' +
+
+    '<div class="banner info" style="margin-top:12px"><span>i</span><div>本页数据全部为<b>演示数据</b>，存在本机浏览器，不上传、不写回 SAP、不对外发送。SAP 取单与主数据接口尚未接入（Q-001 / Q-002）。</div></div>' +
+
+    '</div>';
+
+}
+
+
+
+/* ---------- 视图 V-02 预检单 ---------- */
+
+function viewSheet(no) {
+
+  var sh = state.sheets.filter(function (s) { return s.sheet_no === no; })[0];
+
+  if (!sh) return '<div class="empty"><b>未找到该预检单</b>请返回队列重新选择。</div>';
+
+  var ev = evaluate(sh);
+
+  var a = ev.app;
+
+
+
+  function blockTable(items) {
+
+    return '<div class="wrapx"><table class="tbl"><thead><tr><th style="width:26%">项目</th><th style="width:90px">结论</th><th>说明</th><th style="width:120px">规则</th></tr></thead><tbody>' +
+
+      items.map(function (i) {
+
+        return '<tr><td>' + esc(i.name) + '</td><td>' + resBadge(i) + '</td><td>' + esc(i.detail) + '</td><td class="hint mono">' + esc(i.rule) + '</td></tr>';
+
+      }).join('') + '</tbody></table></div>';
+
+  }
+
+
+
+  /* ③ 额度 */
+
+  var q = ev.quota.q;
+
+  var quotaKv = '<div class="kv">' +
+
+    '<div class="it"><div class="k">开票主体</div><div class="v small">' + esc(subjName(a.subject_code)) + '</div></div>' +
+
+    '<div class="it"><div class="k">当日剩余额度</div><div class="v">' + (ev.quota.qToday ? money(q.remaining_amount) : '—') + '</div></div>' +
+
+    '<div class="it"><div class="k">本次申请金额</div><div class="v">' + money(a.amount) + '</div></div>' +
+
+    '<div class="it"><div class="k">差额（剩余 − 本次）</div><div class="v">' + (ev.quota.qToday ? ((ev.quota.diff < 0 ? '−' : '+') + money(Math.abs(ev.quota.diff))) : '额度未取得，不计算') + '</div></div>' +
+
+    '<div class="it"><div class="k">查询时点</div><div class="v small">' + (ev.quota.qToday ? esc(q.queried_at) + '（' + esc(q.queried_by) + '）' : '未取得') + '</div></div>' +
+
+    '<div class="it"><div class="k">金额口径</div><div class="v small">' + (sh.amount_basis ? esc(sh.amount_basis) : '<span style="color:#b3261e">未标注（不合格）</span>') + '</div></div>' +
+
+    '</div>' +
+
+    '<div class="hint" style="margin-top:8px">局限说明：余额为人工查询快照，未含在途占用与同日其他单据，不作为能否开票的终局判断（RULE-QUO-002 / RULE-QUO-003）。</div>' +
+
+    (ev.quota.inFlight >= 1 ? '<div class="banner warn"><span>!</span><div>同日该主体另有 <b>' + ev.quota.inFlight + '</b> 张在途单，单张预检不做叠加判定，请联系人工累计判断。</div></div>' : '') +
+
+    '<div class="grid2" style="margin-top:12px">' +
+
+    '<label class="field">标注本单金额口径（必填，否则不可放行）<select id="basis">' +
+
+    '<option value="">— 未标注 —</option>' +
+
+    '<option value="含税"' + (sh.amount_basis === '含税' ? ' selected' : '') + '>含税</option>' +
+
+    '<option value="不含税"' + (sh.amount_basis === '不含税' ? ' selected' : '') + '>不含税</option>' +
+
+    '</select></label>' +
+
+    '<label class="field">重新查询当日额度（演示：写入当日快照）<button class="btn" data-act="requota" style="margin-top:2px">刷新 ' + esc(subjName(a.subject_code)) + ' 额度</button></label>' +
+
+    '</div>';
+
+
+
+  /* ④ 开票需求 */
+
+  var r = ev.req;
+
+  var reqHead = '';
+
+  if (r.active) {
+
+    reqHead = '<div class="kv">' +
+
+      '<div class="it"><div class="k">开票方式（照录）</div><div class="v small">' + esc(r.active.invoice_mode) + '</div></div>' +
+
+      '<div class="it"><div class="k">备注要求（照录）</div><div class="v small">' + esc(r.active.remark_requirement || '—') + '</div></div>' +
+
+      '<div class="it"><div class="k">收货后开票／确认后开票</div><div class="v small">' + esc(r.active.need_after_receipt || '未提供') + ' ／ ' + esc(r.active.need_after_confirm || '未提供') + '</div></div>' +
+
+      '<div class="it"><div class="k">来源邮件</div><div class="v small">' + esc(r.active.source_mail_no) + '（' + esc(r.active.source_mail_date) + '）</div></div>' +
+
+      '<div class="it"><div class="k">台账行状态</div><div class="v small">' + reqStatusBadge(r.active.status) + ' 行号 ' + esc(r.active.req_id) + '</div></div>' +
+
+      '<div class="it"><div class="k">复核</div><div class="v small">' + esc(r.active.verified_by || '未复核') + ' ' + esc(r.active.verified_at || '') + '</div></div>' +
+
+      '</div>';
+
+  } else if (r.pending) {
+
+    reqHead = '<div class="banner warn"><span>!</span><div><b>该要求待复核</b>：台账行 ' + esc(r.pending.req_id) + ' 处于 STATE-PENDING-VERIFY，内容可引用，但不得作为放行依据。来源邮件 ' + esc(r.pending.source_mail_no) + '（' + esc(r.pending.source_mail_date) + '）。</div></div>';
+
+  } else if (r.dead) {
+
+    reqHead = '<div class="banner warn"><span>!</span><div><b>需求未登记</b>：命中历史行 ' + esc(r.dead.req_id) + ' 但已失效（' + esc(r.dead.effective_to || '—') + '），视为未命中。需求未登记，需向业务确认。</div></div>';
+
+  } else {
+
+    reqHead = '<div class="banner warn"><span>!</span><div><b>需求未登记，需向业务确认</b>（④栏不得留白，RULE-TBL-004）。请向业务取得书面要求后，在台账登记并重跑校验。</div></div>';
+
+  }
+
+
+
+  if (ev.conflict.hit) {
+
+    reqHead += '<div class="banner purple"><span>≠</span><div><b>需求冲突：台账＝' + esc(ev.conflict.ledger) + '；本次邮件＝' + esc(ev.conflict.email) + '</b><br>两方并列，系统不自动裁决、不给结论建议（RULE-VAL-005）。</div></div>';
+
+  }
+
+
+
+  var reqEdit = '<div class="grid2" style="margin-top:12px">' +
+
+    '<label class="field">本次邮件要求的开票方式（人工录入，用于比对）<select id="emailMode">' +
+
+    '<option value="">— 未录入 —</option>' +
+
+    ['合并开票', '拆分开票', '统一开票'].map(function (m) { return '<option value="' + m + '"' + (sh.email_mode === m ? ' selected' : '') + '>' + m + '</option>'; }).join('') +
+
+    '</select></label>' +
+
+    '<label class="field">本次邮件备注要求（原文照录，可留空）<input id="emailRemark" value="' + esc(sh.email_remark) + '" placeholder="照录邮件原文，不做摘要"></label>' +
+
+    '</div>';
+
+
+
+  /* ⑤ 卡点 */
+
+  var flags = ev.items.filter(function (i) { return i.result !== 'PASS'; });
+
+  var flagRows = flags.length ? flags.map(function (i) {
+
+    var sev = i.soft ? 'warn' : (i.result === 'CONFLICT' ? 'purple' : 'bad');
+
+    return '<tr><td>' + '<span class="bd ' + sev + '">' + (i.soft ? '提示' : (i.result === 'CONFLICT' ? '冲突' : (i.result === 'NOT_REGISTERED' ? '未登记' : (i.result === 'NOT_AVAILABLE' ? '未取得' : '缺项')))) + '</span></td><td>' + esc(i.name) + '</td><td>' + esc(i.detail) + '</td><td class="hint mono">' + esc(i.rule) + '</td></tr>';
+
+  }).join('') : '';
+
+  var extraFlags = [];
+
+  if (!ev.quota.qToday) extraFlags.push(['额度', '额度未取得', '当日无额度查询记录，不计算差额，且不可放行', 'RULE-QUO-002']);
+
+  if (ev.quota.qToday && ev.quota.diff < 0) extraFlags.push(['额度', '额度差额为负', '差额 ' + (ev.quota.diff < 0 ? '−' : '+') + money(Math.abs(ev.quota.diff)) + ' → 额度可能不足，需人工确认（未含在途占用）', 'RULE-QUO-001']);
+
+  if (ev.quota.inFlight >= 1) extraFlags.push(['额度', '同日多单', '该主体同日另有 ' + ev.quota.inFlight + ' 张在途单，需人工累计判断', 'RULE-QUO-003']);
+
+  if (!sh.amount_basis) extraFlags.push(['口径', '金额口径未标注', '同一张单内金额须同一口径并在③栏标注，未标注视为不合格预检单', 'RULE-QUO-002']);
+
+  if (ev.pendingVerify) extraFlags.push(['台账', '引用行待复核', '所引用台账行未复核，只能参考，不得作为放行依据', 'RULE-TBL-002']);
+
+
+
+  var block5 = (!flagRows && !extraFlags.length) ? '<div class="bb"><div class="hint">无卡点</div></div>'
+
+    : '<div class="wrapx"><table class="tbl"><thead><tr><th style="width:80px">类别</th><th style="width:22%">项目</th><th>说明</th><th style="width:120px">规则</th></tr></thead><tbody>' +
+
+      flagRows +
+
+      extraFlags.map(function (f) {
+
+        var sev = f[0] === '额度' ? 'warn' : (f[0] === '台账' ? 'warn' : 'muted');
+
+        return '<tr><td><span class="bd ' + sev + '">' + f[0] + '</span></td><td>' + esc(f[1]) + '</td><td>' + esc(f[2]) + '</td><td class="hint mono">' + f[3] + '</td></tr>';
+
+      }).join('') +
+
+      '</tbody></table></div>';
+
+
+
+  /* ⑥ 结论 */
+
+  var conclBlock;
+
+  if (ev.advice.length) {
+
+    conclBlock = '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">' +
+
+      ev.advice.map(function (x) { return '<span class="bd info" style="font-size:13px;padding:3px 11px">建议 · ' + esc(x) + '</span>'; }).join('') +
+
+      '</div><div class="hint" style="margin-top:8px">系统建议由规则自动生成，与人工结论在视觉上区分；最终以⑦栏复核结论为准（RULE-OUT-001）。</div>';
+
+  } else {
+
+    conclBlock = '<div class="banner warn" style="margin:0"><span>!</span><div><b>不出具结论建议</b>：存在待确认项，只列问题不做倾向判断（RULE-OUT-001 例外）。</div></div>';
+
+  }
+
+  if (ev.pendingNotes.length) {
+
+    conclBlock += '<ul style="margin:10px 0 0;padding-left:18px;font-size:13px;color:#5b6572">' +
+
+      ev.pendingNotes.map(function (n) { return '<li>' + esc(n) + '</li>'; }).join('') + '</ul>';
+
+  }
+
+
+
+  /* ⑦ 签字 */
+
+  var guardHtml = ev.guards.map(function (g) {
+
+    return '<div class="guard ' + (g.ok ? 'pass' : 'fail') + '"><span class="m">' + (g.ok ? '✓' : '✗') + '</span><span>' + esc(g.text) + '</span></div>';
+
+  }).join('');
+
+
+
+  var signed = ['STATE-RELEASED', 'STATE-RETURNED', 'STATE-ON-HOLD'].indexOf(sh.status) >= 0;
+
+  var signArea;
+
+  if (signed) {
+
+    var word = { 'STATE-RELEASED': '已放行', 'STATE-RETURNED': '已退回补资料', 'STATE-ON-HOLD': '已暂缓' }[sh.status];
+
+    signArea = '<div class="banner info" style="margin:0"><span>✓</span><div><b>' + word + '</b>　复核人：' + esc(sh.reviewer) + '　时间：' + esc(sh.reviewed_at) +
+
+      (sh.override_reason_code ? '　改判原因：' + esc(sh.override_reason_code) + (sh.override_note ? '（' + esc(sh.override_note) + '）' : '') : '') +
+
+      '</div></div>' +
+
+      (sh.status === 'STATE-RELEASED' ? '<div class="hint" style="margin-top:8px">已放行单不提供作废与修改；更正流程待确认（Q-018）。</div>'
+
+        : '<div style="margin-top:10px"><button class="btn" data-act="recheck" data-id="' + sh.sheet_no + '">资料／额度已更新，重新校验</button></div>');
+
+  } else if (sh.status === 'STATE-CHECKED') {
+
+    signArea = '<div style="margin-bottom:12px">' + guardHtml + '</div>' +
+
+      '<div class="grid4">' +
+
+      '<label class="field">复核人（必填）<input id="reviewer" value="' + esc(sh.reviewer) + '" placeholder="审核岗姓名"></label>' +
+
+      '<label class="field">改判原因（与建议不一致时必填）<select id="ovr"><option value="">— 未改判 —</option>' +
+
+      ['OVR-01 字段判断错误', 'OVR-02 台账记录过时', 'OVR-03 额度口径调整', 'OVR-04 业务已线下确认', 'OVR-05 其他（必填说明）'].map(function (o) {
+
+        var code = o.slice(0, 6);
+
+        return '<option value="' + code + '"' + (sh.override_reason_code === code ? ' selected' : '') + '>' + o + '</option>';
+
+      }).join('') +
+
+      '</select></label>' +
+
+      '<label class="field" style="grid-column:1/-1">改判说明（选 OVR-05 时必填）<input id="ovrNote" value="' + esc(sh.override_note) + '"></label>' +
+
+      '</div>' +
+
+      '<div class="print-only" style="margin-top:8px;font-size:10px">复核结论：□ 放行　□ 退回补资料　□ 暂缓　　复核人签字：________________　　日期：________________　　改判原因：______________________</div>' +
+
+      '<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">' +
+
+      '<button class="btn ok" data-act="sign" data-id="' + sh.sheet_no + '" data-mode="release"' + (ev.canRelease ? '' : ' disabled') + '>签字 · 放行</button>' +
+
+      '<button class="btn warn" data-act="sign" data-id="' + sh.sheet_no + '" data-mode="return">签字 · 退回补资料</button>' +
+
+      '<button class="btn warn" data-act="sign" data-id="' + sh.sheet_no + '" data-mode="hold">签字 · 暂缓</button>' +
+
+      '<button class="btn ghost" data-act="print">打印／另存 PDF</button>' +
+
+      '<a class="btn ghost noprint" data-act="feedback" data-id="' + sh.sheet_no + '" href="#/feedback/' + sh.sheet_no + '">生成反馈文本</a>' +
+
+      '</div>' +
+
+      (ev.canRelease ? '' : '<div class="hint" style="margin-top:8px">放行按钮已禁用：请先满足上方全部放行条件（缺一不可，RULE-OUT-002）。</div>');
+
+  } else if (sh.status === 'STATE-QUEUED' || sh.status === 'STATE-CHECKING') {
+
+    signArea = '<div class="hint" style="margin-bottom:10px">尚未校验，⑦栏在 STATE-CHECKED 后开放签字。</div>' +
+
+      '<button class="btn primary" data-act="checkone" data-id="' + sh.sheet_no + '">运行校验（①②③④）</button>';
+
+  } else {
+
+    signArea = '<div class="hint">该单已作废，不可签字。</div>';
+
+  }
+
+
+
+  var logHtml = sh.log.slice().reverse().map(function (l) {
+
+    return '<li>' + esc(l.ts) + '　' + esc(l.action) + '　' + esc(l.detail) + '</li>';
+
+  }).join('');
+
+
+
+  return '<div class="print-only">开票需求预检单　' + esc(sh.sheet_no) + '　打印时间：' + stamp() + '</div>' +
+
+    '<h1>V-02 预检单 ' + esc(sh.sheet_no) + ' ' + stBadge(sh.status) + '</h1>' +
+
+    '<p class="sub">SAP 单号 ' + esc(sh.sap_doc_no) + '　·　' + esc(a.buyer_title || '—') + '　·　' + esc(subjName(a.subject_code)) + '　·　申请金额 ' + money(a.amount) + ' 元</p>' +
+
+
+
+    '<div class="card">' +
+
+    '<div class="hd"><h2>单据信息</h2><div class="sp">' +
+
+    '<a class="btn ghost noprint" href="#/queue">← 返回队列</a>' +
+
+    '<button class="btn noprint" data-act="checkone" data-id="' + sh.sheet_no + '">重跑校验</button>' +
+
+    '</div></div>' +
+
+    '<div class="kv">' +
+
+    '<div class="it"><div class="k">SAP 单据号</div><div class="v mono">' + esc(sh.sap_doc_no) + '</div></div>' +
+
+    '<div class="it"><div class="k">客户编码／名称</div><div class="v small">' + esc(a.customer_code || '—') + '　' + esc(a.buyer_title || '—') + '</div></div>' +
+
+    '<div class="it"><div class="k">开票主体</div><div class="v small">' + esc(subjName(a.subject_code)) + '</div></div>' +
+
+    '<div class="it"><div class="k">申请金额／税率</div><div class="v small">' + money(a.amount) + ' 元　' + (Math.round(Number(a.tax_rate || 0) * 10000) / 100) + '%</div></div>' +
+
+    '<div class="it"><div class="k">物料／数量</div><div class="v small">' + esc(a.material_code || '—') + '　' + esc(a.quantity) + ' 件</div></div>' +
+
+    '<div class="it"><div class="k">申请日期</div><div class="v small">' + esc(a.apply_date || '—') + '</div></div>' +
+
+    '</div>' +
+
+    '<div class="steps" style="margin-top:12px">' +
+
+    '<span class="s done">取单</span><span class="s"></span>' +
+
+    '<span class="s ' + (sh.status === 'STATE-QUEUED' ? 'now' : 'done') + '">校验</span><span class="s"></span>' +
+
+    '<span class="s ' + (sh.status === 'STATE-CHECKED' ? 'now' : (signed ? 'done' : '')) + '">人工复核</span><span class="s"></span>' +
+
+    '<span class="s ' + (signed ? 'done' : '') + '">签发</span>' +
+
+    '</div>' +
+
+    '</div>' +
+
+
+
+    '<div class="block"><div class="bh"><span class="no">①</span>填报项校验（六项逐项）</div><div class="bb flush">' + blockTable(ev.blocks.B1) + '</div></div>' +
+
+    '<div class="block"><div class="bh"><span class="no">②</span>主数据校验</div><div class="bb flush">' + blockTable(ev.blocks.B2) + '</div></div>' +
+
+    '<div class="block"><div class="bh"><span class="no">③</span>额度比对<span class="hint" style="font-weight:400">（只提示，不判定能否开票）</span></div><div class="bb">' + quotaKv + '</div></div>' +
+
+    '<div class="block"><div class="bh"><span class="no">④</span>开票方式与备注要求</div><div class="bb">' + reqHead + reqEdit +
+
+    '<div style="margin-top:10px"><a class="btn sm ghost noprint" href="#/ledger">去台账登记／查看</a></div></div></div>' +
+
+    '<div class="block"><div class="bh"><span class="no">⑤</span>异常卡点清单</div>' + (block5.indexOf('<div class="bb"') === 0 ? block5 : '<div class="bb flush">' + block5 + '</div>') + '</div>' +
+
+    '<div class="block"><div class="bh"><span class="no">⑥</span>结论建议</div><div class="bb">' + conclBlock + '</div></div>' +
+
+    '<div class="block"><div class="bh"><span class="no">⑦</span>复核签字与改判</div><div class="bb">' + signArea + '</div></div>' +
+
+
+
+    '<div class="card noprint"><div class="hd"><h2>留痕</h2><div class="sp"><button class="btn sm ghost" data-act="togglelog">展开／收起</button></div></div>' +
+
+    (ui.showLog ? '<ul class="loglist">' + (logHtml || '<li>无记录</li>') + '</ul>' : '<div class="hint">已记录 ' + sh.log.length + ' 条操作留痕，点“展开”查看。</div>') +
+
+    '</div>';
+
+}
+
+
+
+/* ---------- 视图 V-03 台账 ---------- */
+
+function viewLedger() {
+
+  var kw = ui.ledgerQ.trim().toLowerCase();
+
+  var list = state.requirements.filter(function (r) {
+
+    if (!kw) return true;
+
+    return (r.customer_code + ' ' + r.customer_name + ' ' + r.req_id + ' ' + r.source_mail_no).toLowerCase().indexOf(kw) >= 0;
+
+  }).sort(function (a, b) { return String(b.effective_from).localeCompare(String(a.effective_from)); });
+
+
+
+  var rows = list.map(function (r) {
+
+    var act = [];
+
+    if (r.status === 'STATE-PENDING-VERIFY') {
+
+      act.push('<button class="btn sm" data-act="verify" data-id="' + r.req_id + '">复核</button>');
+
+      act.push('<button class="btn sm ghost" data-act="reject" data-id="' + r.req_id + '">驳回</button>');
+
+    }
+
+    if (r.status === 'STATE-ACTIVE') act.push('<button class="btn sm ghost" data-act="expire" data-id="' + r.req_id + '">置失效</button>');
+
+    return '<tr>' +
+
+      '<td class="mono nw">' + esc(r.req_id) + '</td>' +
+
+      '<td class="clip">' + esc(r.customer_name) + '<div class="hint">' + esc(r.customer_code || '编码待补') + '</div></td>' +
+
+      '<td class="nw small">' + esc(subjName(r.subject_code)) + '</td>' +
+
+      '<td class="nw">' + esc(r.invoice_mode) + '</td>' +
+
+      '<td class="clip" style="max-width:240px">' + esc(r.remark_requirement || '—') + '</td>' +
+
+      '<td class="hint nw small">' + esc(r.effective_from) + ' → ' + esc(r.effective_to || '长期') + '</td>' +
+
+      '<td class="hint nw small">' + esc(r.source_mail_no) + '<div>' + esc(r.source_mail_date) + '</div></td>' +
+
+      '<td class="hint nw small">' + esc(r.entered_by) + '<div>' + esc(r.verified_by || '未复核') + '</div></td>' +
+
+      '<td>' + reqStatusBadge(r.status) + '</td>' +
+
+      '<td class="rig">' + (act.join(' ') || '<span class="hint">—</span>') + '</td>' +
+
+      '</tr>';
+
+  }).join('');
+
+
+
+  var addForm = ui.showAdd ? '<div class="card"><div class="hd"><h2>新增台账行</h2><div class="sp"><button class="btn ghost sm" data-act="toggleadd">收起</button></div></div>' +
+
+    '<div class="grid4">' +
+
+    '<label class="field">客户编码<input id="lCustCode" placeholder="如 C004"></label>' +
+
+    '<label class="field">客户名称<input id="lCustName" placeholder="照录邮件"></label>' +
+
+    '<label class="field">开票主体<select id="lSubject">' + state.subjects.map(function (s) { return '<option value="' + s.code + '">' + esc(s.name) + '</option>'; }).join('') + '</select></label>' +
+
+    '<label class="field">开票方式<select id="lMode"><option value="">— 选择 —</option><option>合并开票</option><option>拆分开票</option><option>统一开票</option></select></label>' +
+
+    '<label class="field">需收货后开票<select id="lReceipt"><option>未提供</option><option>是</option><option>否</option></select></label>' +
+
+    '<label class="field">需确认后开票<select id="lConfirm"><option>未提供</option><option>是</option><option>否</option></select></label>' +
+
+    '<label class="field">生效日期<input id="lFrom" type="date" value="' + ymd() + '"></label>' +
+
+    '<label class="field">失效日期（空＝长期）<input id="lTo" type="date"></label>' +
+
+    '<label class="field">来源邮件编号（必填）<input id="lMail" placeholder="MAIL-2026-1114-01"></label>' +
+
+    '<label class="field">来源邮件日期（必填）<input id="lMailDate" type="date" value="' + ymd() + '"></label>' +
+
+    '<label class="field">录入人<input id="lEnter" value="示例角色·录入岗"></label>' +
+
+    '<label class="field" style="grid-column:1/-1">备注要求（照录原文，不做摘要）<textarea id="lRemark" placeholder="原样保留邮件要求"></textarea></label>' +
+
+    '</div>' +
+
+    '<div style="margin-top:12px"><button class="btn primary" data-act="addreq">保存（进入待复核）</button> <span class="hint">保存后状态为 STATE-PENDING-VERIFY，须由他人复核才生效。</span></div>' +
+
+    '</div>' : '';
+
+
+
+  return '<h1>V-03 客户开票需求台账</h1>' +
+
+    '<p class="sub">唯一粒度：1 客户 × 1 开票主体 × 1 生效区间 ＝ 1 行。要求变化走“置旧行失效 + 新增行”，不覆盖、不删除（RULE-TBL-003）。</p>' +
+
+
+
+    '<div class="card"><div class="hd"><h2>台账（' + state.requirements.length + ' 行）</h2><div class="sp">' +
+
+    '<input id="lq" class="btn" style="width:200px;text-align:left" placeholder="搜客户／行号／邮件号" value="' + esc(ui.ledgerQ) + '">' +
+
+    '<button class="btn primary" data-act="toggleadd">' + (ui.showAdd ? '收起新增' : '新增一行') + '</button>' +
+
+    '<button class="btn ghost" data-act="exportLedger">导出台账 CSV</button>' +
+
+    '</div></div>' +
+
+    (list.length ? '<div class="wrapx"><table class="tbl compact"><thead><tr><th>行号</th><th>客户</th><th>开票主体</th><th>开票方式</th><th>备注要求</th><th>生效区间</th><th>来源邮件</th><th>录入／复核</th><th>状态</th><th></th></tr></thead><tbody>' + rows + '</tbody></table></div>'
+
+      : '<div class="empty"><b>暂无台账记录，首版需回溯历史邮件</b>台账可从空库启动；未登记时预检单④栏固定显示“需求未登记，需向业务确认”。</div>') +
+
+    '</div>' +
+
+    addForm +
+
+
+
+    '<div class="card"><div class="hd"><h2>维护规则提示</h2></div>' +
+
+    '<ul style="margin:0;padding-left:18px;font-size:13px;color:#5b6572">' +
+
+    '<li>来源邮件编号或日期为空 → 拒绝录入（RULE-TBL-001），不允许无出处的台账行。</li>' +
+
+    '<li>复核人必须与录入人不同（候选口径，Q-003）；未复核行不参与放行判据。</li>' +
+
+    '<li>同（客户、主体、生效日）已存在 → 拒绝新增，请先对旧行“置失效”再新增。</li>' +
+
+    '<li>已失效行永久保留，可查但不再命中；历史行不会被物理删除。</li>' +
+
+    '</ul></div>';
+
+}
+
+
+
+/* ---------- 视图 V-04 汇总 ---------- */
+
+function periodRange() {
+
+  var d = new Date();
+
+  if (ui.period === 'month') {
+
+    var s = new Date(d.getFullYear(), d.getMonth(), 1);
+
+    var e = new Date(d.getFullYear(), d.getMonth() + 1, 0);
+
+    return { from: ymd(s), to: ymd(e), label: d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') };
+
+  }
+
+  var day = (d.getDay() + 6) % 7;
+
+  var s2 = new Date(d); s2.setDate(d.getDate() - day);
+
+  var e2 = new Date(s2); e2.setDate(s2.getDate() + 6);
+
+  return { from: ymd(s2), to: ymd(e2), label: '本周（' + ymd(s2) + ' 起）' };
+
+}
+
+
+
+function viewSummary() {
+
+  var pr = periodRange();
+
+  var inScope = state.sheets.filter(function (sh) {
+
+    var d = String(sh.created_at).slice(0, 10);
+
+    return d >= pr.from && d <= pr.to && sh.status !== 'STATE-VOID';
+
+  });
+
+  var dist = { '可流转': 0, '需业务补资料': 0, '额度受限暂缓': 0, '未签发': 0 };
+
+  var quotaLimited = [], subjectsLimited = {}, masterTodo = {}, overridden = 0, signed = 0, quotaSubject = {}, queueSubject = {};
+
+
+
+  inScope.forEach(function (sh) {
+
+    var ev = evaluate(sh);
+
+    var a = ev.app;
+
+    queueSubject[a.subject_code] = 1;
+
+    if (ev.quota.qToday) quotaSubject[a.subject_code] = 1;
+
+    if (sh.status === 'STATE-RELEASED') dist['可流转']++;
+
+    else if (sh.status === 'STATE-RETURNED') dist['需业务补资料']++;
+
+    else if (sh.status === 'STATE-ON-HOLD') dist['额度受限暂缓']++;
+
+    else dist['未签发']++;
+
+    if (ev.quota.diff !== null && ev.quota.diff < 0) { quotaLimited.push(sh); subjectsLimited[subjName(a.subject_code)] = 1; }
+
+    if (!ev.quota.qToday) { quotaLimited.push(sh); subjectsLimited[subjName(a.subject_code)] = 1; }
+
+    ev.items.forEach(function (i) {
+
+      if (i.block === 'B2' && i.result === 'MISSING') masterTodo[i.name + '｜' + i.detail] = 1;
+
+    });
+
+    if (['STATE-RELEASED', 'STATE-RETURNED', 'STATE-ON-HOLD'].indexOf(sh.status) >= 0) {
+
+      signed++;
+
+      if (sh.override_reason_code) overridden++;
+
+    }
+
+  });
+
+
+
+  var qSubs = Object.keys(quotaSubject).length, aSubs = Object.keys(queueSubject).length;
+
+  var coverage = aSubs ? (qSubs / aSubs * 100).toFixed(1) : null;
+
+  var overrideRate = signed ? (overridden / signed * 100).toFixed(1) : null;
+
+
+
+  var todoList = Object.keys(masterTodo);
+
+  var limitedSubjects = Object.keys(subjectsLimited);
+
+
+
+  return '<h1>V-04 异常卡点汇总</h1>' +
+
+    '<p class="sub">期间：' + esc(pr.label) + '（' + esc(pr.from) + ' 至 ' + esc(pr.to) + '）　·　分母＝期间内非作废预检单　·　覆盖率按已查主体数÷应查主体数</p>' +
+
+
+
+    '<div class="card"><div class="hd"><h2>指标</h2><div class="sp">' +
+
+    '<select id="period" class="btn"><option value="month"' + (ui.period === 'month' ? ' selected' : '') + '>本月</option><option value="week"' + (ui.period === 'week' ? ' selected' : '') + '>本周</option></select>' +
+
+    '<button class="btn ghost" data-act="exportSummary">导出汇总 CSV</button>' +
+
+    '</div></div>' +
+
+    (coverage !== null && qSubs < aSubs ? '<div class="banner warn" style="margin-top:0"><span>!</span><div><b>本期仅覆盖 ' + qSubs + '/' + aSubs + ' 个主体</b>：未查询额度的主体计入缺口，不计入覆盖率分母。</div></div>' : '') +
+
+    '<div class="stat">' +
+
+    '<div class="s"><div class="n">' + inScope.length + '</div><div class="l">预检单量（不含作废）</div></div>' +
+
+    '<div class="s"><div class="n">' + (dist['可流转'] + dist['需业务补资料'] + dist['额度受限暂缓']) + '</div><div class="l">已签发</div></div>' +
+
+    '<div class="s"><div class="n">' + quotaLimited.length + '</div><div class="l">额度受限／未取得单量</div></div>' +
+
+    '<div class="s"><div class="n">' + (coverage === null ? '无数据' : coverage + '<span class="u">%</span>') + '</div><div class="l">额度覆盖主体占比</div></div>' +
+
+    '<div class="s"><div class="n">' + (overrideRate === null ? '无数据' : overrideRate + '<span class="u">%</span>') + '</div><div class="l">改判率</div></div>' +
+
+    '</div>' +
+
+    '<div class="wrapx"><table class="tbl"><thead><tr><th>结论分布</th><th class="rig">单量</th><th class="rig">占比</th></tr></thead><tbody>' +
+
+    Object.keys(dist).map(function (k) {
+
+      var pct = inScope.length ? (dist[k] / inScope.length * 100).toFixed(1) + '%' : '—';
+
+      return '<tr><td>' + esc(k) + '</td><td class="num">' + dist[k] + '</td><td class="num">' + pct + '</td></tr>';
+
+    }).join('') +
+
+    '</tbody></table></div>' +
+
+    '</div>' +
+
+
+
+    '<div class="card"><div class="hd"><h2>缺口清单</h2></div>' +
+
+    '<h3>额度受限／未取得涉及主体</h3>' +
+
+    (limitedSubjects.length ? '<div style="display:flex;gap:6px;flex-wrap:wrap">' + limitedSubjects.map(function (s) { return '<span class="bd warn">' + esc(s) + '</span>'; }).join('') + '</div>' : '<div class="hint">本期无额度受限单</div>') +
+
+    '<h3 style="margin-top:16px">主数据待维护清单</h3>' +
+
+    (todoList.length ? '<ul style="margin:0;padding-left:18px;font-size:13px">' + todoList.slice(0, 12).map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul>' : '<div class="hint">本期无主数据待维护项</div>') +
+
+    '<div class="hint" style="margin-top:14px">说明：额度覆盖率分母＝期间内出现过的开票主体；某主体当日未查询则计入缺口。金额口径未确认（Q-010）时，汇总只做单量统计，不做金额汇总。</div>' +
+
+    '</div>' +
+
+
+
+    '<div class="card"><div class="hd"><h2>下钻</h2></div>' +
+
+    '<div class="wrapx"><table class="tbl"><thead><tr><th>预检单</th><th>客户</th><th>主体</th><th>状态</th><th>结论</th></tr></thead><tbody>' +
+
+    (inScope.length ? inScope.map(function (sh) {
+
+      var ev = evaluate(sh); var a = ev.app;
+
+      return '<tr><td class="mono"><a href="#/sheet/' + sh.sheet_no + '">' + sh.sheet_no + '</a></td><td>' + esc(a.buyer_title || '—') + '</td><td>' + esc(subjName(a.subject_code)) + '</td><td>' + stBadge(sh.status) + '</td><td>' + (ev.advice.length ? '<span class="bd info">建议 · ' + esc(ev.advice.join('／')) + '</span>' : '<span class="bd warn">待确认</span>') + '</td></tr>';
+
+    }).join('') : '<tr><td colspan="5" class="hint">本期无预检单</td></tr>') +
+
+    '</tbody></table></div></div>';
+
+}
+
+
+
+/* ---------- 视图 V-05 反馈文本 ---------- */
+
+function viewFeedback(no) {
+
+  var sh = state.sheets.filter(function (s) { return s.sheet_no === no; })[0];
+
+  if (!sh) return '<div class="empty"><b>未找到该预检单</b></div>';
+
+  var ev = evaluate(sh);
+
+  var a = ev.app;
+
+  var txt = feedbackText(sh, ev);
+
+
+
+  return '<h1>V-05 反馈文本预览</h1>' +
+
+    '<p class="sub">单号 ' + esc(sh.sheet_no) + '　·　' + esc(a.buyer_title || '—') + '　·　用于随单退回，<b>系统不自动发送</b>，复制后由审核岗人工发出。</p>' +
+
+    '<div class="card"><div class="hd"><h2>结构化文本</h2><div class="sp">' +
+
+    '<a class="btn ghost" href="#/sheet/' + sh.sheet_no + '">← 返回预检单</a>' +
+
+    '<button class="btn primary" data-act="copyfb" data-id="' + sh.sheet_no + '">复制文本</button>' +
+
+    '</div></div>' +
+
+    '<div class="fb" id="fbText">' + esc(txt) + '</div>' +
+
+    '<div class="hint" style="margin-top:10px">文案约束：不含内部状态名、规则编号与代码；缺项逐条对应，不对额度是否足够下终局判断。</div>' +
+
+    '</div>';
+
+}
+
+
+
+function plainDetail(d) {
+
+  var t = String(d || '');
+
+  for (var i = 0; i < 2; i++) t = t.replace(/^[^：]{0,14}：/, '');
+
+  return t;
+
+}
+
+
+
+function feedbackText(sh, ev) {
+
+  var a = ev.app;
+
+  var lines = [];
+
+  lines.push('【开票需求预检反馈】');
+
+  lines.push('预检单号：' + sh.sheet_no + '　SAP 单号：' + sh.sap_doc_no);
+
+  lines.push('客户：' + (a.buyer_title || '—') + '　开票主体：' + subjName(a.subject_code) + '　金额：' + money(a.amount) + ' 元');
+
+  lines.push('');
+
+
+
+  var gap = ev.items.filter(function (i) { return i.result === 'MISSING' || (i.result === 'FORMAT_ERR' && !i.soft); });
+
+  lines.push('一、需要补充或更正的资料（' + gap.length + ' 项）');
+
+  if (gap.length) {
+
+    gap.forEach(function (i, idx) { lines.push('  ' + (idx + 1) + '. ' + i.name + '：' + plainDetail(i.detail)); });
+
+  } else {
+
+    lines.push('  无');
+
+  }
+
+  lines.push('');
+
+
+
+  var asks = [];
+
+  if (ev.conflict.hit) asks.push('开票方式：我们记录的要求是「' + ev.conflict.ledger + '」，本次来件写的是「' + ev.conflict.email + '」，请确认以哪一个为准。');
+
+  if (ev.notReg) asks.push('我们尚未登记贵司的开票要求（含合并／拆分、备注写法等），请提供一份书面确认，以便后续按同一口径执行。');
+
+  if (!ev.quota.qToday) asks.push('本次未取得额度查询结果，暂无法比对，请待额度查询后再行确认。');
+
+  if (ev.quota.diff !== null && ev.quota.diff < 0) asks.push('本次申请金额 ' + money(a.amount) + ' 元，已超出当日可查询余额，需人工确认后再安排开具。');
+
+  lines.push('二、需要确认的问题（' + asks.length + ' 项）');
+
+  if (asks.length) asks.forEach(function (t, i) { lines.push('  ' + (i + 1) + '. ' + t); });
+
+  else lines.push('  无');
+
+  lines.push('');
+
+
+
+  lines.push('三、当前处理状态');
+
+  lines.push('  ' + (sh.status === 'STATE-RETURNED' ? '已退回，待资料补齐后重新预检。' : (sh.status === 'STATE-ON-HOLD' ? '暂缓开具，待额度确认后重新预检。' : '待复核，尚未放行。')));
+
+  lines.push('');
+
+  lines.push('（本反馈由开票需求预检工作台生成，不构成开票承诺；如有疑问请联系应收审核岗。）');
+
+  return lines.join('\n');
+
+}
+
+
+
+/* ---------- 视图：说明与边界 ---------- */
+
+function viewAbout() {
+
+  return '<h1>说明与边界</h1>' +
+
+    '<p class="sub">这份原型只做一件事的口径固化：把“客户开票要求”和“本次单据”逐项对齐，把判断留给审核岗。</p>' +
+
+
+
+    '<div class="card"><div class="hd"><h2>怎么用（3 分钟跑通）</h2></div>' +
+
+    '<ol style="margin:0;padding-left:20px;font-size:13.5px;line-height:1.9">' +
+
+    '<li>队列页点「一键校验全部」，6 张演示单进入待复核。</li>' +
+
+    '<li>打开 YJ-0001（全项通过）：③栏标注金额口径 → 填复核人 → 放行。</li>' +
+
+    '<li>打开 YJ-0002（物料未维护 + 税号位数异常）：看①栏“提示”与“缺项”的区别，再走退回，生成反馈文本。</li>' +
+
+    '<li>打开 YJ-0003（客户未维护 + 需求未登记）：观察放行按钮被禁用，以及“不出具结论建议”。</li>' +
+
+    '<li>打开 YJ-0004（台账合并开票 vs 本次邮件拆分开票）：观察冲突并列、无倾向建议。</li>' +
+
+    '<li>打开 YJ-0005（余额 80,000 − 申请 100,000）：观察“额度可能不足”措辞与暂缓路径。</li>' +
+
+    '<li>打开 YJ-0006（台账行待复核）：观察“不得作为放行依据”的守卫。</li>' +
+
+    '</ol></div>' +
+
+
+
+    '<div class="card"><div class="hd"><h2>本原型已实现 / 未实现</h2></div>' +
+
+    '<div class="wrapx"><table class="tbl"><thead><tr><th style="width:46%">能力</th><th>状态</th><th>说明</th></tr></thead><tbody>' +
+
+    [
+
+      ['预检单七栏与三态校验', '已实现', '①②④逐项结论带规则编号，⑤⑥自动汇总'],
+
+      ['额度差额与局限说明', '已实现', '只提示不判定；未取得时不计算差额'],
+
+      ['台账唯一粒度与置失效', '已实现', '联合键去重、待复核行、历史行保留'],
+
+      ['状态机与放行守卫', '已实现', '7 状态、6 条守卫、改判原因强制'],
+
+      ['留痕', '已实现', '取单／校验／签字／台账变更逐条记录'],
+
+      ['打印一单一页', '已实现', '浏览器打印另存 PDF'],
+
+      ['SAP 取单接口', '未实现', 'Q-001 未确认；现为演示数据'],
+
+      ['客户／物料主数据接口', '未实现', 'Q-002 未确认；现为本地主数据表'],
+
+      ['额度批量查询', '未实现', 'Q-004 未确认；现为人工录入快照'],
+
+      ['登录与角色鉴权', '未实现', '权限矩阵未落地，本机单人使用'],
+
+      ['自动发送／写回', '不实现', '越界动作，按边界不做（OOS）']
+
+    ].map(function (r) { return '<tr><td>' + esc(r[0]) + '</td><td>' + (r[1] === '已实现' ? '<span class="bd ok">已实现</span>' : (r[1] === '不实现' ? '<span class="bd muted">不实现</span>' : '<span class="bd warn">未实现</span>')) + '</td><td>' + esc(r[2]) + '</td></tr>'; }).join('') +
+
+    '</tbody></table></div></div>' +
+
+
+
+    '<div class="card"><div class="hd"><h2>数据与安全</h2></div>' +
+
+    '<ul style="margin:0;padding-left:18px;font-size:13px;color:#5b6572;line-height:1.9">' +
+
+    '<li>全部为演示数据，存于本机 localStorage（键 <span class="mono">' + KEY + '</span>），不上传、不联网、无第三方脚本。</li>' +
+
+    '<li>税号在列表与反馈文本中脱敏为前 4 后 4；导出 CSV 同样脱敏。</li>' +
+
+    '<li>无密钥、无 Token、无外部接口调用；因此也没有密钥配置项。</li>' +
+
+    '<li>“重置示例数据”会清空本机记录并重建演示数据，不可恢复。</li>' +
+
+    '</ul></div>' +
+
+
+
+    '<div class="card"><div class="hd"><h2>待确认（会影响口径，不影响本原型运行）</h2></div>' +
+
+    '<div class="wrapx"><table class="tbl"><thead><tr><th>编号</th><th>问题</th><th>本原型的临时处理</th></tr></thead><tbody>' +
+
+    [
+
+      ['Q-001', 'SAP 开票信息能否导出、字段清单', '演示数据替代，取单为模拟'],
+
+      ['Q-002', '客户／物料只读权限', '本地主数据表替代'],
+
+      ['Q-003', '台账录入后谁复核', '默认复核人≠录入人，可改'],
+
+      ['Q-004', '额度能否批量／接口查询', '人工录入快照'],
+
+      ['Q-005', '数电票填报规范版本', '税号位数异常仅提示、不阻断'],
+
+      ['Q-006', '审核岗与开票执行是否同一人', '未建模为角色，仅记录姓名'],
+
+      ['Q-007', '税号／账号可见范围与保留期', '一律脱敏，不导出账号'],
+
+      ['Q-010', '金额含税／不含税', '要求单内统一并在③栏标注']
+
+    ].map(function (r) { return '<tr><td class="mono">' + r[0] + '</td><td>' + esc(r[1]) + '</td><td>' + esc(r[2]) + '</td></tr>'; }).join('') +
+
+    '</tbody></table></div>' +
+
+    '<div class="hint" style="margin-top:10px">以上 8 项中，Q-001～Q-004 不解决则无法接入真实数据；Q-005～Q-007 影响结论能否称为“合规”。</div>' +
+
+    '</div>';
+
+}
+
+
+
+/* ---------- 动作 ---------- */
+
+function addLog(sh, action, detail) { sh.log.push({ ts: stamp(), actor: (sh.reviewer || '示例审核岗'), action: action, detail: detail }); }
+
+function audit(action, target, detail) { state.audit.push({ ts: stamp(), actor: '示例审核岗', action: action, target: target, detail: detail }); }
+
+
+
+function doIngest() {
+
+  var pool = state.applications.filter(function (a) {
+
+    return !state.sheets.some(function (s) { return s.sap_doc_no === a.sap_doc_no; });
+
+  });
+
+  if (!pool.length) { toast('没有新的待开票单；已存在的单不会重复建单（幂等）'); return; }
+
+  var seq = state.sheets.length;
+
+  pool.forEach(function (a) {
+
+    seq++;
+
+    state.sheets.push({
+
+      sheet_no: 'YJ-' + String(seq).padStart(4, '0'),
+
+      sap_doc_no: a.sap_doc_no, status: 'STATE-QUEUED',
+
+      amount_basis: '', email_mode: '', email_remark: '',
+
+      reviewer: '', reviewed_at: '', override_reason_code: '', override_note: '',
+
+      checked_at: '', created_at: stamp(),
+
+      log: [{ ts: stamp(), actor: '示例审核岗', action: '取单', detail: '从 SAP 待开票队列建单（演示）' }]
+
+    });
+
+  });
+
+  audit('取单', '队列', '新增 ' + pool.length + ' 张，重复单未新建');
+
+  save(); render(); toast('已取单 ' + pool.length + ' 张；重复单未重复建单');
+
+}
+
+
+
+function doCheck(no) {
+
+  var sh = state.sheets.filter(function (s) { return s.sheet_no === no; })[0];
+
+  if (!sh) return;
+
+  if (sh.status === 'STATE-QUEUED') sh.status = 'STATE-CHECKING';
+
+  sh.checked_at = stamp();
+
+  sh.status = 'STATE-CHECKED';
+
+  addLog(sh, '运行校验', '①②③④四栏生成结论');
+
+  save(); render();
+
+}
+
+
+
+function doCheckAll() {
+
+  var n = 0;
+
+  state.sheets.forEach(function (sh) {
+
+    if (sh.status === 'STATE-QUEUED') {
+
+      sh.status = 'STATE-CHECKED'; sh.checked_at = stamp();
+
+      addLog(sh, '运行校验', '批量校验（演示）'); n++;
+
+    }
+
+  });
+
+  save(); render();
+
+  toast(n ? '已校验 ' + n + ' 张' : '没有待校验的单');
+
+}
+
+
+
+function doSign(no, mode) {
+
+  var sh = state.sheets.filter(function (s) { return s.sheet_no === no; })[0];
+
+  if (!sh) return;
+
+  var ev = evaluate(sh);
+
+  var reviewer = (document.getElementById('reviewer') || {}).value || '';
+
+  var ovr = (document.getElementById('ovr') || {}).value || '';
+
+  var note = (document.getElementById('ovrNote') || {}).value || '';
+
+  if (!reviewer.trim()) { toast('⑦栏必须填写复核人'); return; }
+
+
+
+  var implied = { release: '可流转', return: '需业务补资料', hold: '额度受限暂缓' }[mode];
+
+  var needReason = false;
+
+  if (mode === 'release') {
+
+    if (!ev.canRelease) { toast('放行条件未全部满足，已阻止'); return; }
+
+    if (ev.advice[0] !== '可流转') needReason = true;
+
+  }
+
+  if (mode === 'return' && ev.advice[0] === '可流转') needReason = true;
+
+  if (mode === 'hold' && ev.advice[0] !== '额度受限暂缓') needReason = true;
+
+
+
+  if (needReason && !ovr) { toast('与系统建议不一致，必须选择改判原因（RULE-OUT-003）'); return; }
+
+  if (ovr === 'OVR-05' && !note.trim()) { toast('选择 OVR-05 时必须填写说明'); return; }
+
+
+
+  sh.reviewer = reviewer.trim();
+
+  sh.reviewed_at = stamp();
+
+  sh.override_reason_code = ovr;
+
+  sh.override_note = note.trim();
+
+  sh.status = mode === 'release' ? 'STATE-RELEASED' : (mode === 'return' ? 'STATE-RETURNED' : 'STATE-ON-HOLD');
+
+  var label = { release: '签字放行', return: '签字退回', hold: '签字暂缓' }[mode];
+
+  addLog(sh, label, '复核人 ' + sh.reviewer + (ovr ? '；改判 ' + ovr + (note ? '：' + note : '') : '') + '；建议 ' + (ev.advice[0] || '待确认'));
+
+  audit(label, sh.sheet_no, '复核人 ' + sh.reviewer + (ovr ? '；改判 ' + ovr : ''));
+
+  save();
+
+  if (mode === 'return') { location.hash = '#/feedback/' + no; }
+
+  render();
+
+  toast(label + '完成');
+
+}
+
+
+
+/* ---------- 导出 ---------- */
+
+function csvCell(v) { var s = String(v == null ? '' : v); return '"' + s.replace(/"/g, '""') + '"'; }
+
+function download(name, text) {
+
+  try {
+
+    var blob = new Blob(['\ufeff' + text], { type: 'text/csv;charset=utf-8' });
+
+    var a = document.createElement('a');
+
+    a.href = URL.createObjectURL(blob);
+
+    a.download = name;
+
+    document.body.appendChild(a); a.click();
+
+    setTimeout(function () { document.body.removeChild(a); URL.revokeObjectURL(a.href); }, 300);
+
+    toast('已导出 ' + name);
+
+  } catch (e) { toast('导出失败：' + e.message); }
+
+}
+
+
+
+function exportQueue() {
+
+  var head = ['预检单号', 'SAP单号', '客户编码', '客户名称', '开票主体', '申请金额', '税率', '状态', '建议'];
+
+  var rows = state.sheets.map(function (sh) {
+
+    var a = appOf(sh); var ev = evaluate(sh);
+
+    return [sh.sheet_no, sh.sap_doc_no, a.customer_code, a.buyer_title, subjName(a.subject_code), money(a.amount), a.tax_rate, (STATUS[sh.status] || {}).label, ev.advice.join('／') || '待确认'];
+
+  });
+
+  download('预检队列_' + ymd().replace(/-/g, '') + '.csv', [head].concat(rows).map(function (r) { return r.map(csvCell).join(','); }).join('\n'));
+
+}
+
+
+
+function exportLedger() {
+
+  var head = ['行号', '客户编码', '客户名称', '开票主体', '开票方式', '备注要求', '需收货后开票', '需确认后开票', '生效日期', '失效日期', '来源邮件编号', '来源邮件日期', '录入人', '复核人', '状态'];
+
+  var rows = state.requirements.map(function (r) {
+
+    return [r.req_id, r.customer_code, r.customer_name, subjName(r.subject_code), r.invoice_mode, r.remark_requirement, r.need_after_receipt, r.need_after_confirm, r.effective_from, r.effective_to || '长期', r.source_mail_no, r.source_mail_date, r.entered_by, r.verified_by, reqStatusBadge(r.status).replace(/<[^>]+>/g, '')];
+
+  });
+
+  download('客户开票需求台账_' + ymd().replace(/-/g, '') + '.csv', [head].concat(rows).map(function (r) { return r.map(csvCell).join(','); }).join('\n'));
+
+}
+
+
+
+function exportSummary() {
+
+  var pr = periodRange();
+
+  var inScope = state.sheets.filter(function (sh) { var d = String(sh.created_at).slice(0, 10); return d >= pr.from && d <= pr.to && sh.status !== 'STATE-VOID'; });
+
+  var rows = [['期间', pr.label], ['起', pr.from], ['止', pr.to], ['预检单量', inScope.length], []];
+
+  rows.push(['预检单', '客户', '主体', '状态', '建议', '差额']);
+
+  inScope.forEach(function (sh) {
+
+    var ev = evaluate(sh); var a = ev.app;
+
+    rows.push([sh.sheet_no, a.buyer_title, subjName(a.subject_code), (STATUS[sh.status] || {}).label, ev.advice.join('／') || '待确认', ev.quota.diff === null ? '额度未取得' : money(ev.quota.diff)]);
+
+  });
+
+  download('异常卡点汇总_' + pr.label.replace(/[^\w\-]/g, '') + '.csv', rows.map(function (r) { return r.map(csvCell).join(','); }).join('\n'));
+
+}
+
+
+
+/* ---------- 台账动作 ---------- */
+
+function findReq(id) { return state.requirements.filter(function (r) { return r.req_id === id; })[0]; }
+
+
+
+function addRequirement() {
+
+  function v(id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; }
+
+  var o = {
+
+    customer_code: v('lCustCode'), customer_name: v('lCustName'), subject_code: v('lSubject'),
+
+    invoice_mode: v('lMode'), remark_requirement: v('lRemark'),
+
+    need_after_receipt: v('lReceipt'), need_after_confirm: v('lConfirm'),
+
+    effective_from: v('lFrom'), effective_to: v('lTo'),
+
+    source_mail_no: v('lMail'), source_mail_date: v('lMailDate'), entered_by: v('lEnter') || '示例角色·录入岗'
+
+  };
+
+  if (!o.source_mail_no || !o.source_mail_date) { toast('来源邮件编号与日期必填（RULE-TBL-001）'); return; }
+
+  if (!o.customer_code && !o.customer_name) { toast('客户编码或名称至少填一项'); return; }
+
+  if (!o.invoice_mode) { toast('开票方式必选'); return; }
+
+  if (!o.effective_from) o.effective_from = ymd();
+
+  if (o.effective_to && o.effective_to < o.effective_from) { toast('失效日期不得早于生效日期'); return; }
+
+  var dup = state.requirements.filter(function (r) {
+
+    return r.customer_code === o.customer_code && r.subject_code === o.subject_code && r.effective_from === o.effective_from;
+
+  })[0];
+
+  if (dup) { toast('同（客户、主体、生效日）已存在行 ' + dup.req_id + '；请先置失效再新增（RULE-TBL-003）'); return; }
+
+
+
+  var ym = ymd().slice(0, 7).replace('-', '');
+
+  var seq = state.requirements.length + 1;
+
+  o.req_id = 'TZ-' + ym + '-' + String(seq).padStart(4, '0');
+
+  o.verified_by = ''; o.verified_at = ''; o.status = 'STATE-PENDING-VERIFY'; o.supersedes_req_id = '';
+
+  state.requirements.push(o);
+
+  audit('新增台账行', o.req_id, o.customer_name + '／' + subjName(o.subject_code) + '／' + o.invoice_mode);
+
+  save(); ui.showAdd = false; render(); toast('已保存，状态：待复核');
+
+}
+
+
+
+function verifyReq(id) {
+
+  var r = findReq(id); if (!r) return;
+
+  var who = window.prompt('复核人（须与录入人不同）：', '示例复核岗');
+
+  if (who === null) return;
+
+  who = String(who).trim();
+
+  if (!who) { toast('复核人不能为空'); return; }
+
+  if (who === r.entered_by) { toast('复核人不得与录入人相同（Q-003 候选口径）'); return; }
+
+  r.verified_by = who; r.verified_at = stamp(); r.status = 'STATE-ACTIVE';
+
+  audit('台账复核', r.req_id, who + ' 复核通过');
+
+  save(); render(); toast('已复核，行状态：有效');
+
+}
+
+
+
+function rejectReq(id) {
+
+  var r = findReq(id); if (!r) return;
+
+  var why = window.prompt('驳回原因（必填）：', '');
+
+  if (!why || !why.trim()) { toast('驳回必须填写原因'); return; }
+
+  r.status = 'STATE-REJECTED'; r.verified_by = '驳回：' + why.trim(); r.verified_at = stamp();
+
+  audit('台账驳回', r.req_id, why.trim());
+
+  save(); render(); toast('已驳回');
+
+}
+
+
+
+function expireReq(id) {
+
+  var r = findReq(id); if (!r) return;
+
+  var d = window.prompt('失效日期（yyyy-mm-dd）：', ymd());
+
+  if (d === null) return;
+
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(d)) { toast('日期格式应为 yyyy-mm-dd'); return; }
+
+  if (r.effective_from && d < r.effective_from) { toast('失效日期不得早于生效日期'); return; }
+
+  r.effective_to = d; r.status = 'STATE-EXPIRED';
+
+  audit('台账置失效', r.req_id, '失效日期 ' + d);
+
+  save(); render(); toast('已置失效（历史行保留）');
+
+}
+
+
+
+function requota() {
+
+  var no = route.id;
+
+  var sh = state.sheets.filter(function (s) { return s.sheet_no === no; })[0];
+
+  if (!sh) return;
+
+  var a = appOf(sh);
+
+  var amt = Number(window.prompt('本次查询到的剩余额度（元）：', '500000'));
+
+  if (isNaN(amt)) return;
+
+  state.quotas.push({ subject_code: a.subject_code, queried_at: stamp().slice(0, 16), remaining_amount: amt, queried_by: '示例审核岗', source: '人工查询' });
+
+  audit('额度录入', subjName(a.subject_code), money(amt));
+
+  save(); render(); toast('已写入当日额度快照');
+
+}
+
+
+
+/* ---------- 路由与事件 ---------- */
+
+function parseHash() {
+
+  var h = (location.hash || '#/queue').replace(/^#\/?/, '');
+
+  var parts = h.split('/');
+
+  var v = parts[0] || 'queue';
+
+  if (v === 'sheet' || v === 'feedback') return { view: v, id: parts[1] || '' };
+
+  return { view: ['queue', 'ledger', 'summary', 'about'].indexOf(v) >= 0 ? v : 'queue', id: '' };
+
+}
+
+function go(hash) { location.hash = hash; }
+
+
+
+function onNav(v) {
+
+  if (v === 'queue') location.hash = '#/queue';
+
+  else location.hash = '#/' + v;
+
+}
+
+
+
+function bind() {
+
+  window.addEventListener('hashchange', function () {
+
+    route = parseHash();
+
+    ui.showLog = false;
+
+    render();
+
+  });
+
+  document.addEventListener('click', function (e) {
+
+    var navBtn = e.target.closest('[data-nav]');
+
+    if (navBtn) { onNav(navBtn.getAttribute('data-nav')); return; }
+
+    var el = e.target.closest('[data-act]');
+
+    if (!el) return;
+
+    var act = el.getAttribute('data-act'), id = el.getAttribute('data-id') || '';
+
+    if (el.tagName === 'A') e.preventDefault();
+
+    if (act === 'ingest') doIngest();
+
+    else if (act === 'checkall') doCheckAll();
+
+    else if (act === 'checkone') doCheck(id || route.id);
+
+    else if (act === 'sign') doSign(id, el.getAttribute('data-mode'));
+
+    else if (act === 'recheck') {
+
+      var sh = state.sheets.filter(function (s) { return s.sheet_no === id; })[0];
+
+      if (sh) { sh.status = 'STATE-CHECKING'; addLog(sh, '重新校验', '资料／额度更新后重跑'); }
+
+      save(); render(); toast('已回到校验中，请重新运行校验');
+
+    }
+
+    else if (act === 'print') window.print();
+
+    else if (act === 'togglelog') { ui.showLog = !ui.showLog; render(); }
+
+    else if (act === 'toggleadd') { ui.showAdd = !ui.showAdd; render(); }
+
+    else if (act === 'addreq') addRequirement();
+
+    else if (act === 'verify') verifyReq(id);
+
+    else if (act === 'reject') rejectReq(id);
+
+    else if (act === 'expire') expireReq(id);
+
+    else if (act === 'requota') requota();
+
+    else if (act === 'exportQueue') exportQueue();
+
+    else if (act === 'exportLedger') exportLedger();
+
+    else if (act === 'exportSummary') exportSummary();
+
+    else if (act === 'copyfb') {
+
+      var t = (document.getElementById('fbText') || {}).textContent || '';
+
+      try {
+
+        navigator.clipboard.writeText(t).then(function () { toast('已复制反馈文本'); }, function () { fallbackCopy(t); });
+
+      } catch (err) { fallbackCopy(t); }
+
+    }
+
+    else if (act === 'reset') {
+
+      if (window.confirm('将清空本机记录并重建演示数据，不可恢复。继续？')) {
+
+        state = seed(); save(); ui.showAdd = false; location.hash = '#/queue'; render(); toast('已重置演示数据');
+
+      }
+
+    }
+
+    else if (act === 'feedback') { location.hash = '#/feedback/' + id; }
+
+  });
+
+  document.addEventListener('change', function (e) {
+
+    var t = e.target;
+
+    if (!t.id) return;
+
+    var sh = state.sheets.filter(function (s) { return s.sheet_no === route.id; })[0];
+
+    if (t.id === 'q') { ui.q = t.value; render(); return; }
+
+    if (t.id === 'f') { ui.status = t.value; render(); return; }
+
+    if (t.id === 'lq') { ui.ledgerQ = t.value; render(); return; }
+
+    if (t.id === 'period') { ui.period = t.value; render(); return; }
+
+    if (t.id === 'basis' && sh) { sh.amount_basis = t.value; audit('标注金额口径', sh.sheet_no, t.value || '未标注'); save(); render(); return; }
+
+    if (t.id === 'emailMode' && sh) { sh.email_mode = t.value; addLog(sh, '录入本次邮件要求', '开票方式 ' + (t.value || '空')); save(); render(); return; }
+
+    if (t.id === 'emailRemark' && sh) { sh.email_remark = t.value; save(); render(); return; }
+
+  });
+
+  document.addEventListener('input', function (e) {
+
+    if (e.target.id === 'q') { ui.q = e.target.value; render(); }
+
+    if (e.target.id === 'lq') { ui.ledgerQ = e.target.value; render(); }
+
+  });
+
+}
+
+
+
+function fallbackCopy(t) {
+
+  try {
+
+    var ta = document.createElement('textarea');
+
+    ta.value = t; document.body.appendChild(ta); ta.select();
+
+    document.execCommand('copy'); document.body.removeChild(ta);
+
+    toast('已复制反馈文本');
+
+  } catch (e) { toast('复制失败，请手动选中文本'); }
+
+}
+
+
+
+function init() {
+
+  state = load();
+
+  if (!state) { state = seed(); save(); }
+
+  route = parseHash();
+
+  bind();
+
+  render();
+
+}
+
+
+
+if (typeof document !== 'undefined' && typeof window !== 'undefined') init();
+
+</script>
+
+</body>
+
+</html>
+
