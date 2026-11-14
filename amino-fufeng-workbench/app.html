@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html data-page-node-id="lBdjlcarnSQoQmQcR031e6" lang="zh-CN">
+<head data-page-node-id="shU1DoY3E8Fp7FM7Mji2Yy">
+<script data-page-node-id="t90ocs2HP7c5Lj6WzA18fX" src="/page/page_comm/inject.js"></script>
+<meta data-page-node-id="RUT5RBbLtlH27NfNT2wra2" charset="utf-8">
+<meta data-page-node-id="BdtumOrN7OoNwZeDqbxEHI" content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport">
+<meta data-page-node-id="UdCn2y0ZqTALelvLSCvWIP" content="#0f6b45" name="theme-color">
+<title data-page-node-id="w7E20oecDaDlv2dlZN0GjZ" data-pnid-children="LR1sce07WpKnuksY44qeek">氨基酸经营工作台 · 阜丰大客户部</title>
+<style data-page-node-id="SvWorWvkOm9RKG0pc9OO2q" data-pnid-children="xTyYcRONjwYuyejESLNfox">
+:root{
+  --ink:#141e2a; --ink2:#3c4f63; --muted:#6d7f92;
+  --line:#e4eaf1; --line2:#eef2f7;
+  --bg:#f4f6f9; --card:#fff;
+  --green:#0f6b45; --green-l:#e8f3ee; --green-d:#0a4d31;
+  --blue:#1b5f9e; --blue-l:#e9f1f9;
+  --red:#c0392b; --red-l:#fdecea;
+  --amber:#a86a12; --amber-l:#fdf4e3;
+  --radius:14px;
+  --sh:0 1px 2px rgba(17,35,58,.05), 0 8px 24px -18px rgba(17,35,58,.22);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.65 -apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+h1,h2,h3,p{margin:0}
+button{font-family:inherit}
+svg{display:block}
+
+/* ---------- top ---------- */
+.top{
+  position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;
+  padding:11px 20px;background:rgba(255,255,255,.94);
+  backdrop-filter:saturate(180%) blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.brand{display:flex;align-items:center;gap:11px;min-width:0}
+.logo{
+  flex:0 0 34px;width:34px;height:34px;border-radius:9px;
+  background:linear-gradient(150deg,#0f6b45,#15895a);color:#fff;
+  display:grid;place-items:center;font-size:17px;font-weight:700;letter-spacing:0;
+  box-shadow:0 3px 10px -4px rgba(15,107,69,.6);
+}
+.bt{display:flex;flex-direction:column;line-height:1.3;min-width:0}
+.bt b{font-size:15.5px;letter-spacing:.1px;white-space:nowrap}
+.bt span{font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top-r{margin-left:auto;display:flex;align-items:center;gap:8px}
+.chip{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:11.5px;color:var(--ink2);background:#f6f8fb;
+  border:1px solid var(--line);border-radius:20px;padding:4px 10px;white-space:nowrap;
+}
+.chip .dot{width:6px;height:6px;border-radius:50%;background:#25a06b;display:inline-block}
+.icon-btn{
+  display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 12px;
+  border:1px solid var(--line);background:#fff;border-radius:9px;color:var(--ink2);
+  font-size:12.5px;cursor:pointer;transition:.15s;
+}
+.icon-btn svg{width:15px;height:15px;stroke:currentColor}
+.icon-btn:hover{border-color:#c9d7e4;color:var(--green);background:#fbfdfc}
+
+/* ---------- tabs ---------- */
+.tabs{
+  position:sticky;top:57px;z-index:29;display:flex;gap:4px;padding:0 16px;
+  background:rgba(255,255,255,.94);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none;
+}
+.tabs::-webkit-scrollbar{display:none}
+.tab{
+  position:relative;border:0;background:none;padding:11px 15px 12px;cursor:pointer;
+  font-size:14px;color:var(--ink2);white-space:nowrap;transition:.15s;
+}
+.tab:hover{color:var(--green)}
+.tab.on{color:var(--green);font-weight:600}
+.tab.on::after{
+  content:"";position:absolute;left:12px;right:12px;bottom:-1px;height:2px;
+  background:var(--green);border-radius:2px 2px 0 0;
+}
+.tab em{
+  font-style:normal;font-size:11px;background:var(--red);color:#fff;border-radius:9px;
+  padding:0 5px;margin-left:4px;vertical-align:1px;display:none;
+}
+.tab em.on{display:inline-block}
+
+/* ---------- layout ---------- */
+.wrap{max-width:1160px;margin:0 auto;padding:22px 18px 80px}
+.view{display:none;animation:fade .18s ease}
+.view.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* ---------- today ---------- */
+.hero{
+  display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;
+  padding:0 2px 6px;
+}
+.hero-d{font-size:12.5px;color:var(--muted);letter-spacing:.4px;margin-bottom:3px}
+.hero h1{font-size:23px;letter-spacing:-.3px;display:flex;align-items:baseline;gap:8px}
+.hero h1 em{font-style:normal;color:var(--green);font-size:27px;font-variant-numeric:tabular-nums}
+.hero-sub{font-size:12.5px;color:var(--muted);margin-top:3px}
+.hero .btn{margin-left:auto}
+
+.zone{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--sh);overflow:hidden}
+.zone.red{border-color:#f3cfca;background:linear-gradient(180deg,#fffbfa,#fff)}
+.zone-h{display:flex;align-items:center;gap:9px;padding:11px 15px;border-bottom:1px solid var(--line2)}
+.zone-h b{font-size:15px;font-variant-numeric:tabular-nums}
+.zc{font-size:11px;font-weight:700;letter-spacing:.4px;border-radius:5px;padding:2px 7px}
+.zc.red{background:var(--red-l);color:var(--red)}
+.zc.green{background:var(--green-l);color:var(--green-d)}
+.zc.blue{background:var(--blue-l);color:var(--blue)}
+.zc.gray{background:#f1f4f8;color:#5c6f83}
+.zone-sub{font-size:12px;color:var(--muted)}
+.list{display:flex;flex-direction:column}
+.row{
+  display:flex;align-items:flex-start;gap:11px;padding:12px 15px;
+  border-bottom:1px solid var(--line2);transition:background .12s;
+}
+.row:last-child{border-bottom:none}
+.row:hover{background:#fbfdfc}
+.row.done{opacity:.5}
+.row.done .t-title{text-decoration:line-through}
+.check{
+  flex:0 0 20px;width:20px;height:20px;margin-top:2px;border-radius:6px;
+  border:1.6px solid #c4d2df;background:#fff;cursor:pointer;display:grid;place-items:center;
+  transition:.15s;
+}
+.check:hover{border-color:var(--green);background:var(--green-l)}
+.check svg{width:12px;height:12px;stroke:#fff;stroke-width:3;opacity:0;transition:.15s}
+.row.done .check{background:var(--green);border-color:var(--green)}
+.row.done .check svg{opacity:1}
+.row-b{flex:1;min-width:0}
+.t-title{font-size:14px;color:var(--ink);word-break:break-word}
+.t-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px;font-size:11.5px;color:var(--muted)}
+.pill{border-radius:5px;padding:1px 6px;font-size:11px;font-weight:600}
+.pill.p1{background:var(--red-l);color:var(--red)}
+.pill.p2{background:var(--amber-l);color:var(--amber)}
+.pill.p3{background:#f1f4f8;color:#5c6f83}
+.pill.over{background:var(--red);color:#fff}
+.pill.client{background:var(--blue-l);color:var(--blue)}
+.row-act{display:flex;gap:4px;margin-left:auto;flex-shrink:0}
+.mini{
+  border:1px solid var(--line);background:#fff;border-radius:7px;height:28px;padding:0 9px;
+  font-size:11.5px;color:var(--ink2);cursor:pointer;white-space:nowrap;
+}
+.mini:hover{border-color:#c9d7e4;color:var(--green)}
+.mini.danger:hover{border-color:#eec4bf;color:var(--red);background:var(--red-l)}
+.empty{padding:18px 15px;color:var(--muted);font-size:13px}
+
+/* ---------- section head ---------- */
+.sec-h{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-bottom:14px;padding:0 2px}
+.sec-h h2{font-size:19px;letter-spacing:-.2px}
+.sec-h p{font-size:12.5px;color:var(--muted);margin-top:2px}
+.sec-tools{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+
+/* ---------- inputs ---------- */
+.input{
+  height:36px;border:1px solid var(--line);background:#fff;border-radius:9px;
+  padding:0 11px;font-size:14px;color:var(--ink);outline:none;transition:.15s;min-width:0;
+}
+.input:focus{border-color:#8fb8a4;box-shadow:0 0 0 3px rgba(15,107,69,.09)}
+.sel{appearance:none;padding-right:28px;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236d7f92' stroke-width='2.4' stroke-linecap='round'><path d='M6 9l6 6 6-6'/></svg>");
+  background-repeat:no-repeat;background-position:right 9px center;cursor:pointer}
+.btn{
+  display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;
+  border:1px solid var(--line);background:#fff;border-radius:9px;color:var(--ink2);
+  font-size:13px;cursor:pointer;transition:.15s;white-space:nowrap;
+}
+.btn svg{width:14px;height:14px;stroke:currentColor}
+.btn:hover{border-color:#c9d7e4;background:#fbfdfc}
+.btn.primary{background:var(--green);border-color:var(--green);color:#fff;font-weight:600}
+.btn.primary:hover{background:var(--green-d);border-color:var(--green-d)}
+.form{display:flex;gap:9px;padding:13px;flex-wrap:wrap;align-items:center}
+.form .grow{flex:1;min-width:220px}
+.filters{display:flex;gap:6px;margin:14px 0 10px;flex-wrap:wrap}
+.f{border:1px solid var(--line);background:#fff;border-radius:20px;padding:5px 13px;font-size:12.5px;color:var(--ink2);cursor:pointer}
+.f.on{background:var(--green);border-color:var(--green);color:#fff;font-weight:600}
+
+/* ---------- clients ---------- */
+.clients{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:12px}
+.cl{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 15px;box-shadow:var(--sh);position:relative;transition:.16s}
+.cl:hover{transform:translateY(-1px);box-shadow:0 2px 4px rgba(17,35,58,.05),0 12px 26px -18px rgba(17,35,58,.3)}
+.cl-h{display:flex;align-items:flex-start;gap:8px}
+.cl-h b{font-size:15px;letter-spacing:-.1px}
+.cl-tag{font-size:10.5px;font-weight:700;border-radius:5px;padding:1px 6px;margin-left:auto;white-space:nowrap}
+.cl-tag.up{background:var(--red-l);color:var(--red)}
+.cl-tag.flat{background:#f1f4f8;color:#5c6f83}
+.cl-tag.down{background:var(--green-l);color:var(--green-d)}
+.cl-tag.zero{background:var(--amber-l);color:var(--amber)}
+.cl-num{display:flex;align-items:baseline;gap:5px;margin:9px 0 2px}
+.cl-num b{font-size:23px;letter-spacing:-.5px;font-variant-numeric:tabular-nums;color:var(--ink)}
+.cl-num span{font-size:11.5px;color:var(--muted)}
+.bar-mini{height:5px;border-radius:3px;background:#eef2f6;overflow:hidden;margin:8px 0 10px}
+.bar-mini i{display:block;height:100%;border-radius:3px;background:linear-gradient(90deg,#1a7d55,#2fa273)}
+.cl-kv{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:12.2px;color:var(--ink2)}
+.cl-kv dt{color:var(--muted)}
+.cl-kv dd{margin:0;text-align:right;font-variant-numeric:tabular-nums}
+.cl-next{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);font-size:12.2px;color:var(--ink2);display:flex;gap:6px;align-items:flex-start}
+.cl-next.over{color:var(--red)}
+.cl-next svg{width:13px;height:13px;stroke:currentColor;flex-shrink:0;margin-top:2px}
+.cl-note{width:100%;border:0;border-top:1px dashed var(--line);margin-top:9px;padding-top:8px;
+  font:12.5px/1.6 inherit;color:var(--ink2);background:none;resize:vertical;min-height:22px;outline:none}
+.cl-note::placeholder{color:#a7b5c4}
+
+/* ---------- data ---------- */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:11px;margin-bottom:14px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:13px 15px;box-shadow:var(--sh)}
+.kpi b{display:block;font-size:24px;letter-spacing:-.6px;font-variant-numeric:tabular-nums;line-height:1.2}
+.kpi b i{font-style:normal;font-size:12.5px;font-weight:600;color:var(--muted);margin-left:3px;letter-spacing:0}
+.kpi span{display:block;font-size:11.5px;color:var(--muted);margin-top:3px}
+.kpi.hl{border-color:#cfe6da;background:linear-gradient(180deg,#fcfefd,#fff)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--sh);overflow:hidden}
+.chart-card{margin-bottom:12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.chart-h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;padding:13px 16px 0}
+.chart-h b{font-size:14px}
+.muted{font-size:11.5px;color:var(--muted)}
+.muted b{color:var(--ink2)}
+.chart{padding:8px 12px 4px}
+.chart svg{width:100%;height:auto;overflow:visible}
+.legend{display:flex;gap:14px;flex-wrap:wrap;padding:0 16px 13px;font-size:11.5px;color:var(--ink2)}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.bars{padding:10px 16px 16px}
+.brow{display:grid;grid-template-columns:96px 1fr 54px;align-items:center;gap:9px;margin:7px 0;font-size:12.2px}
+.brow .nm{color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.btrack{height:14px;border-radius:4px;background:#f2f5f9;overflow:hidden}
+.btrack i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,#1a7d55,#379e6d)}
+.brow .vl{text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}
+.facts{margin:0;padding:8px 16px 16px 30px;font-size:12.8px;color:var(--ink2);line-height:1.8}
+.facts li{margin:5px 0}
+.facts b{color:var(--ink);font-variant-numeric:tabular-nums}
+.foot-note{font-size:11.5px;color:#8394a6;line-height:1.75;margin-top:14px;padding:0 2px}
+
+/* ---------- tasks ---------- */
+#taskList{overflow:hidden}
+
+/* ---------- toast ---------- */
+.toast{
+  position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);
+  background:#16232f;color:#fff;font-size:13px;padding:9px 16px;border-radius:10px;
+  opacity:0;pointer-events:none;transition:.22s;z-index:60;box-shadow:0 10px 30px -12px rgba(0,0,0,.5);
+}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* ---------- responsive ---------- */
+@media (max-width:860px){
+  .grid2{grid-template-columns:1fr}
+  .wrap{padding:16px 12px 72px}
+  .top{padding:10px 13px}
+  .bt b{font-size:14.5px}
+  .bt span{font-size:11px}
+  .hero h1{font-size:20px}
+  .hero .btn{margin-left:0;width:100%;justify-content:center}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .clients{grid-template-columns:1fr}
+  .form .input,.form .grow,.form .btn{width:100%}
+  .sec-tools{width:100%;margin-left:0}
+  .sec-tools .input{flex:1}
+  .brow{grid-template-columns:84px 1fr 46px;font-size:11.8px}
+  .input{font-size:16px} /* 避免 iOS 聚焦放大 */
+  .row-act{flex-direction:column}
+}
+@media (max-width:420px){
+  .chip{display:none}
+  .kpi b{font-size:21px}
+}
+@media print{
+  .top,.tabs,.hero .btn,.sec-tools,.toast{display:none!important}
+  body{background:#fff}
+  .view{display:block!important}
+}
+
+/* ---------- 数据更新弹层 ---------- */
+.modal{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:20px}
+.modal[hidden]{display:none}
+.modal .mask{position:absolute;inset:0;background:rgba(17,29,43,.42);backdrop-filter:blur(2px)}
+.mbox{
+  position:relative;width:100%;max-width:760px;max-height:calc(100vh - 40px);
+  display:flex;flex-direction:column;background:#fff;border-radius:16px;
+  box-shadow:0 24px 70px -24px rgba(12,24,40,.5);overflow:hidden;
+}
+.mhead{display:flex;align-items:center;justify-content:space-between;padding:15px 18px;border-bottom:1px solid var(--line)}
+.mhead b{font-size:15.5px}
+.mx{border:0;background:transparent;font-size:22px;line-height:1;color:#8b9aab;cursor:pointer;padding:0 2px}
+.mx:hover{color:var(--ink)}
+.mbody{padding:16px 18px;overflow:auto}
+.mtip{font-size:13px;color:var(--ink2);line-height:1.7}
+.mtip strong{color:var(--ink)}
+.mtip2{font-size:12px;color:var(--muted);margin-top:8px}
+.mtabs{display:flex;gap:6px;margin:14px 0 10px}
+.mt{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 13px;font-size:12.5px;color:var(--ink2);cursor:pointer}
+.mt.on{background:var(--green-l);border-color:#bcdccd;color:var(--green-d);font-weight:600}
+.mtext{
+  width:100%;height:150px;resize:vertical;padding:11px 12px;border:1px solid var(--line);
+  border-radius:10px;font:12.5px/1.6 ui-monospace,Menlo,Consolas,monospace;color:var(--ink);
+  background:#fbfcfd;outline:none;
+}
+.mtext:focus{border-color:#b8d2c2;background:#fff;box-shadow:0 0 0 3px rgba(15,107,69,.08)}
+.mfile{display:inline-flex;align-items:center;gap:8px;border:1px dashed #c7d4e0;border-radius:10px;
+  padding:16px 18px;background:#fbfcfd;cursor:pointer;font-size:13px;color:var(--ink2);width:100%;justify-content:center}
+.mfile:hover{border-color:var(--green);color:var(--green);background:#fbfdfc}
+.mfile input{display:none}
+.mres{margin-top:12px}
+.mres:empty{display:none}
+.mbox-ok{border:1px solid #cfe6da;background:#f6fbf8;border-radius:10px;padding:12px 14px;font-size:13px;line-height:1.75}
+.mbox-ok b{color:var(--green-d)}
+.mbox-bad{border:1px solid #f3d3cf;background:#fdf7f6;border-radius:10px;padding:12px 14px;font-size:13px;line-height:1.75;color:#8f2f24}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin:10px 0 4px}
+.mgrid div{background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+.mgrid b{display:block;font-size:16px;color:var(--ink)}
+.mgrid span{font-size:11.5px;color:var(--muted)}
+.mdiff{font-size:12.5px;margin-top:8px;color:var(--ink2)}
+.mdiff i{font-style:normal;font-weight:700}
+.up{color:#1a7d55}.down{color:#a8231a}
+.mfoot{display:flex;align-items:center;gap:8px;padding:12px 18px;border-top:1px solid var(--line);background:#fcfdfe;flex-wrap:wrap}
+.mfoot .sp{flex:1}
+@media (max-width:620px){
+  .modal{padding:0;align-items:flex-end}
+  .mbox{max-width:none;max-height:92vh;border-radius:16px 16px 0 0}
+  .mfoot .sp{display:none}
+  .mfoot{justify-content:flex-end}
+}
+.empty{padding:18px 4px;color:#8b9aab;font-size:13px;text-align:center}
+
+</style>
+</head>
+<body data-page-node-id="jFuw11FNmnj3YXQeu7Bonp">
+
+<header data-page-node-id="FrxwiekHXAchUj92scd8xP" class="top">
+  <div data-page-node-id="ehluRpOHcYT3GlQR046ztb" class="brand">
+    <div data-page-node-id="ZKh1KqrGxTPt6HnXGS4bdp" class="logo"><!--pnid:MKLJccaTOr1dtf0tvc7evt-->阜</div>
+    <div data-page-node-id="lMfXhMuoZ4sY7ClYrBOaGc" class="bt">
+      <b data-page-node-id="phIn0xvZb202Xvrow4efJ0"><!--pnid:FStD2mBenqinFd6Gttm27K-->氨基酸经营工作台</b>
+      <span data-page-node-id="BnFUArLiJEUzJakYvkE5Ve"><!--pnid:7FN6ItIAIL2OuUbg6MfX7Q-->阜丰集团 · 大客户部 · 数据截至 <i data-page-node-id="YRs2uLO7lnGS1YQIYjZ9TO" id="periodTop" style="font-style:normal"><!--pnid:ZZALeRPai5ik14MABDnscY-->2026-10-31</i></span>
+    </div>
+  </div>
+  <div data-page-node-id="LRvJSIpWaU0n4QPi8gZMWH" class="top-r">
+    <div data-page-node-id="P1IhFgUvfBumJvHV0alwPi" class="chip" id="syncChip"><i data-page-node-id="bJIPzXNyZOEO6OjVatmyHH" class="dot"></i><!--pnid:fE7My4hKZpGYYLZffAHmX1-->本地已保存</div>
+    <button data-page-node-id="yFkamEMtNqb5kVSR0VEfWW" class="icon-btn" id="btnData" title="粘贴或导入新一期发货数据">
+      <svg data-page-node-id="fi2aVRIJFnHplq5mfC0fqE" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24"><path data-page-node-id="wV2ZFUioqeMXNgA1RdPv62" d="M12 3v11"/><path data-page-node-id="BVSBEZgYyeCRCj2HMNnwAg" d="M8.5 10.5L12 14l3.5-3.5"/><path data-page-node-id="TMb0QijneUultxwDCzDdzv" d="M4 18.5h16"/></svg>
+      <span data-page-node-id="XyFohnRQBr3ibuioxZGZ88"><!--pnid:3GptcL5Gq9WtL2gJssyYKO-->更新数据</span>
+    </button>
+    <button data-page-node-id="nXDHdZf6qkddbRbL7WGyyN" class="icon-btn" id="btnBackup" title="导出数据备份">
+      <svg data-page-node-id="N55233jJHM7A0sPXl0YxPa" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24"><path data-page-node-id="hCF1VqF4vhFVk2A9gAxgwA" d="M12 3v11m0 0l-3.5-3.5M12 14l3.5-3.5"/><path data-page-node-id="abOLBsZAcfuET2tjlTNGoA" d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
+      <span data-page-node-id="ikCvAt6Dz23JTAzmxNf2KR"><!--pnid:8jnLTKLhkX8fwjtq8El3Q5-->备份</span>
+    </button>
+  </div>
+</header>
+
+<nav data-page-node-id="lzrpDPnIYmp6UNRRPw72Ss" class="tabs" id="tabs">
+  <button data-page-node-id="HyXQBA6ktaKmNfT4VmViB9" class="tab on" data-view="today"><!--pnid:PH6AObFu3zlpmdmHl1MOnE-->今日 <em data-page-node-id="DgCHRuFXhzLmkIevjbIVlT" id="badgeToday"></em></button>
+  <button data-page-node-id="g4Hsas6bILAul4MmKU0oMl" class="tab" data-view="clients"><!--pnid:TKjKglQwHqNaJciRWHngym-->客户</button>
+  <button data-page-node-id="YzoHza00I5oq0NfDd2Q06l" class="tab" data-view="data"><!--pnid:7I0maSVRvIcvnRBO4pNuEO-->数据</button>
+  <button data-page-node-id="mAKQfXP0Ahr6S4gBuF6tgE" class="tab" data-view="tasks"><!--pnid:z3uyMmOtY3M1dKXeEh5mpD-->任务</button>
+</nav>
+
+<main data-page-node-id="hkgyJFysv6g370C5SS9INt" class="wrap">
+
+  <!--pnid:DjfaoA7EfkuE9isJRAgb15--><!-- ============ 今日 ============ -->
+  <section data-page-node-id="veMQFVPfrmdTlSGT4IUi1O" class="view on" id="view-today">
+    <div data-page-node-id="Jpt0SvLdj8xrY2x0dYKB7R" class="hero">
+      <div data-page-node-id="5ET0L7oyF8TMaKofeyFdaV">
+        <div data-page-node-id="eblx1YbT4nusu7C5Lv4k0s" class="hero-d" id="todayDate"><!--pnid:LaB0vk4tCmlnM1FBSibCem-->—</div>
+        <h1 data-page-node-id="Jwvm7hrgAVF6uMKLgKUr4m"><!--pnid:F7wvjAx1i3zweIXQen7Pn0-->今天要处理 <em data-page-node-id="icFUe1BF9H99wgylBU2k2G" id="todayCount"><!--pnid:0pbSWqKtfDRNl2EA4KpFnd-->0</em><!--pnid:xqTLbSNt3wYg7xqhqk8xp6--> 项</h1>
+        <p data-page-node-id="ska7Heau97LVTozZxFNpG1" class="hero-sub" id="todaySub"><!--pnid:hMzCZ1A9ojpv9oyA9gBpud-->按截止时间排序，逾期项标红</p>
+      </div>
+      <button data-page-node-id="7vQwEdt33mZJCnwH9scJwC" class="btn primary" id="btnQuickAdd">
+        <svg data-page-node-id="bHQYGAT6YIsI8iCVvqzsPb" fill="none" stroke-linecap="round" stroke-width="2" viewBox="0 0 24 24"><path data-page-node-id="TQe3hretsEyN4z8CN7WZsZ" d="M12 5v14M5 12h14"/></svg><!--pnid:Uq8ca5Hn8OCdx5RziFRmGe-->
+        新建任务
+      </button>
+    </div>
+
+    <div data-page-node-id="oXkdUuLVaNDzBYaUgC1lzy" class="zone red" hidden id="overdueBox">
+      <div data-page-node-id="GTBT9puLTS7K4hCMYBzxCJ" class="zone-h">
+        <span data-page-node-id="WA5LHkOeIiesDpo6AnewhL" class="zc"><!--pnid:JD7J1EqQy37Q3RR8SZa3s6-->逾期</span>
+        <b data-page-node-id="3PlJRD1CP9SSt8LEPCMrB2" id="overdueN"><!--pnid:xhbd7AaTpQjAAlrdSchMuf-->0</b>
+        <span data-page-node-id="jZdHvNAyXcxzFqVOGRlfAG" class="zone-sub"><!--pnid:7oCqVf1IUCENEgDx8WAAt7-->已过期，需今天补掉或改期</span>
+      </div>
+      <div data-page-node-id="TnSa0P3JGQpblkbBVAmOTu" class="list" id="overdueList"></div>
+    </div>
+
+    <div data-page-node-id="SrA1TZhFPftnniti8wk7ce" class="zone">
+      <div data-page-node-id="4E2uJATIBx51OFzTpbJVIq" class="zone-h"><span data-page-node-id="mu4UbNvke9VTGnzdF158sj" class="zc green"><!--pnid:JFXzpKJhaIP8XYO33dzfAA-->今天</span><b data-page-node-id="1ZtB0vH2U4KSoAVCrXFb4x" id="dueN"><!--pnid:UDqmN12myj1eysWYPLelM3-->0</b><span data-page-node-id="Q9iheRIId12HJu7iegWVnZ" class="zone-sub"><!--pnid:emeentjEc2JbNt1tarkQWT-->截止今天</span></div>
+      <div data-page-node-id="Kv4AnI4CkfFkBzLWo4FFKE" class="list" id="dueList"></div>
+    </div>
+
+    <div data-page-node-id="hPi2lriU1K5pr8hIIEsNej" class="zone">
+      <div data-page-node-id="Sl57EbZyiQpdo3n5e4ZFaZ" class="zone-h"><span data-page-node-id="303aZXtuHJ7eHfaTnVSbEf" class="zc blue"><!--pnid:DJMYmYsKMJynhWVYUFHbpa-->客户跟进</span><b data-page-node-id="fHxAAopI0VtekBMdoLzIo1" id="followN"><!--pnid:jMyyEwJM8e5QvQIfCteHXr-->0</b><span data-page-node-id="LuqBQjJYVa1ostiK6X0i8M" class="zone-sub"><!--pnid:il6A2p1LAgG3nTbEICcjWv-->下次动作已到期或临近</span></div>
+      <div data-page-node-id="HUVRgbAkLXEXXjr5nrNWOY" class="list" id="followList"></div>
+    </div>
+
+    <div data-page-node-id="lrFTIUmL0UMqaNMHsjxxDZ" class="zone">
+      <div data-page-node-id="hKEHEF3s1IXdRoOQYQSBcF" class="zone-h"><span data-page-node-id="b15vkBVB49WtPnDyEbWklk" class="zc gray"><!--pnid:T296Jp92eraUysbD7oJtBm-->本周待办</span><b data-page-node-id="TBfezU0FFwl4eWvYK27lbk" id="weekN"><!--pnid:2AVbvWKyt1lRsYJiOuUj61-->0</b><span data-page-node-id="RcGMCe92mmoyYDbH35YGQh" class="zone-sub"><!--pnid:GC2XE1fYtqO1c7aAspc3jy-->未到截止日</span></div>
+      <div data-page-node-id="ROJFdoh7hLsuhi0GFpyabY" class="list" id="weekList"></div>
+    </div>
+  </section>
+
+  <!--pnid:gH4mqjWbWiaK1VjJd6pcw5--><!-- ============ 客户 ============ -->
+  <section data-page-node-id="21wWJ4L2OPZEP9ZI9yTmUi" class="view" id="view-clients">
+    <div data-page-node-id="VUMd3JO6uy6G2XzAPD7AC8" class="sec-h">
+      <div data-page-node-id="njyrs0zlGskuAyGp0XTuaD">
+        <h2 data-page-node-id="stGLtFUooHAQKehQ2QnyOw"><!--pnid:1YnUKAz8Snzwb8AETcawht-->重点客户</h2>
+        <p data-page-node-id="mdrUcwHiSFyKI4RCJkfgnw" id="clientSub"><!--pnid:vrXCVNcsu1LxjQ5ZIGdPk4-->折合吨重 · 含退货冲销净额 · 合计 <b data-page-node-id="VQsXk4l6MBeiLsHpHML0ox" id="clientTotal"><!--pnid:b8fmyjQtPhKbzOtTX8vynG-->108,167 吨</b></p>
+      </div>
+      <div data-page-node-id="2mBD5nrdsFjLAC6Fqc3NGZ" class="sec-tools">
+        <input data-page-node-id="EEv17qrAXbEuYxf3QxuKXu" class="input" id="clientSearch" placeholder="搜索客户 / 业务员" type="search">
+        <select data-page-node-id="EMYVWf5givHKLMgS5DLwOd" class="input sel" id="clientSort">
+          <option data-page-node-id="JppPwHq3HHYDkX9ddPYAUv" value="tons"><!--pnid:ThW3TIJ1T4mLEb7AjG627o-->按吨位</option>
+          <option data-page-node-id="IKVZwNjDIyuI7F7tTEApWg" value="next"><!--pnid:bYMuknrIuON2ODOnH491aN-->按下次动作</option>
+          <option data-page-node-id="2gRn4Rkv3Ymi0VVUDjwYar" value="gap"><!--pnid:QhEu5o2R8vQcoeRzs0jzVi-->按缺口</option>
+        </select>
+      </div>
+    </div>
+    <div data-page-node-id="J8uMxHqmuo2uJyUPoPB8pt" class="clients" id="clientGrid"></div>
+  </section>
+
+  <!--pnid:Mpvh5uuc0EsRdoHkgFQbWH--><!-- ============ 数据 ============ -->
+  <section data-page-node-id="pehqvNRExONxMiHgUFplv7" class="view" id="view-data">
+    <div data-page-node-id="735VKymyi7SrMzExKdpnSH" class="sec-h">
+      <div data-page-node-id="sn8CTyEtfRTpzwpGcODHtA">
+        <h2 data-page-node-id="c9LbgUVb9S7dZqsDlW6bPW"><!--pnid:mOpiVReZRfwjbpYysDlue7-->经营数据</h2>
+        <p data-page-node-id="Un3dzfQxqBVcXuJplcJYJ2" id="dataSub"><!--pnid:rJc2X9LCfx4aZSS4Jk07RK-->2026 年 1–10 月 · 按发货日期归月 · 单位：吨 / 元·吨</p>
+      </div>
+    </div>
+
+    <div data-page-node-id="A8w8BW6FICfHoBD5E094yo" class="kpis" id="kpis"></div>
+
+    <div data-page-node-id="sOHpI2Lw0DCtYNDL7DriJW" class="card chart-card">
+      <div data-page-node-id="ZRVrEJp9s4kMAEmwjvuRBw" class="chart-h">
+        <b data-page-node-id="Iaio3tqg4BHzTruXADVdtf"><!--pnid:dYRszvkGZqrw4J5FFlYxB3-->月度发货量走势 · 按业务员</b>
+        <span data-page-node-id="XoT4e8Ups5gVZbCq90hOJg" class="muted" id="lineHint"><!--pnid:KFwkM94b0MOzZxbIyebJLc-->10 月合计 <b data-page-node-id="7NlIk3tsAw78j11CygHfMk"><!--pnid:dcaMcGvgSd0xLQhr5CmC7y-->12,794 吨</b><!--pnid:24gredNAdZUJh7vrO8sAtz-->，为年内最高月</span>
+      </div>
+      <div data-page-node-id="b6wyxEOHUAX68qh6R42rDe" class="chart" id="chartLine"></div>
+      <div data-page-node-id="AFFyn4yNr7jUIZcAOlZLAf" class="legend" id="legendLine"></div>
+    </div>
+
+    <div data-page-node-id="NKBzDkdCXJ6cgN25aa4PwC" class="grid2">
+      <div data-page-node-id="28BeAlPuJjUGKfMrfFKAEX" class="card chart-card">
+        <div data-page-node-id="bOHyGGfdcMAdDvRcDO2A9A" class="chart-h"><b data-page-node-id="d9xFuv9kuaiYWvBo98JjKh"><!--pnid:cH94UoydX1NLWSs0sg097h-->客户吨位 TOP</b><span data-page-node-id="t8qocdCvpxQoE4SJEPvkLY" class="muted" id="clientHint"><!--pnid:PxM9Zdf9StS4N39Pyv8JCj-->前五家占 76%</span></div>
+        <div data-page-node-id="wEH5RhsaB7GGZPWgUSSAPU" class="chart bars" id="chartClient"></div>
+      </div>
+      <div data-page-node-id="2tfQZySsrTFAOmeUEDjjux" class="card chart-card">
+        <div data-page-node-id="VG2ivMGvIiL3PGVeYaEFyT" class="chart-h"><b data-page-node-id="gboVs6NbRKsY7DP5kicOVE"><!--pnid:8B5OF86nwYMIsqtKyCkodK-->产品结构</b><span data-page-node-id="Dr4dMHILB0gHFPlSYGqEJn" class="muted" id="productHint"><!--pnid:t10J2LZSF4Tn1Umq2WRcQg-->硫酸盐占 40%</span></div>
+        <div data-page-node-id="jVn9cvBqw8DZ4O1aRHh4DG" class="chart bars" id="chartProduct"></div>
+      </div>
+    </div>
+
+    <div data-page-node-id="pfUWpPtcEG9bmfhRjrYfMb" class="grid2">
+      <div data-page-node-id="Pd36Qdwreg6q8CfhCW1T9d" class="card chart-card">
+        <div data-page-node-id="34ZYMmkberue1aENvylbHl" class="chart-h"><b data-page-node-id="9MS7FbQFMGMF8iWA6bBoSq"><!--pnid:W4ikiZam2RFdbxzZdf6xXp-->直供 / 分销结构</b><span data-page-node-id="Rl3souIpfUFD8HMlcvVzlK" class="muted"><!--pnid:BYZvvdI8XM78ttLAQrsWYS-->按业务员</span></div>
+        <div data-page-node-id="K5706GPclewNTqJ65hGrfk" class="chart" id="chartChannel"></div>
+        <div data-page-node-id="AdkURxyBdKDpL8rMjKVEfE" class="legend" id="legendChannel"></div>
+      </div>
+      <div data-page-node-id="9WkGyIpCPipZ0p5nSpphOq" class="card">
+        <div data-page-node-id="t4m0xGwQNfKDSge4wMvsS6" class="chart-h"><b data-page-node-id="HDUKNoIbpmwxNwn2rqJlaH"><!--pnid:GaCD9zrgTtI9L74G5XARFa-->关键读数</b><span data-page-node-id="LupgBLqHhLrRbi3IC5aZW0" class="muted"><!--pnid:TnkxsJJxdpNZbvLzJYLSia-->可直接引用</span></div>
+        <ul data-page-node-id="sFFKBCbkRQ1YOTkO0P7JxA" class="facts" id="facts"></ul>
+      </div>
+    </div>
+
+    <p data-page-node-id="dzzI4LNDvJbNu2kkNDqPhx" class="foot-note" id="footNote"><!--pnid:MCTMw0Uo8dtMQZXuONVseT-->口径：折合吨重 = 交货数量(KG) ÷ 1000；金额为含税合同金额，含退货冲销行（本期 14 行）取净额；客户名按集团多法人并列（正大三家不归并）；直供/分销按客户分类字段，不按金额推断。数据来源：发货数据 2026 年 1–10 月导出。</p>
+  </section>
+
+  <!--pnid:Oni0CQzCuyFPLxCZRSDuOK--><!-- ============ 任务 ============ -->
+  <section data-page-node-id="KUUa1LiP6i1Ep9nkaBiipk" class="view" id="view-tasks">
+    <div data-page-node-id="OSN6dCQaEufv7mU8XDDSwn" class="sec-h">
+      <div data-page-node-id="gEQ0BUXvnDVSj7ZU7FF5mP"><h2 data-page-node-id="jzkpxmw7CQLXNDIA2nPseR"><!--pnid:oiKkBwu9eQbE9dg8DHnuhD-->任务与记录</h2><p data-page-node-id="DgBcGRiHAueH7iddostfEX"><!--pnid:l4iXABesvPrJcTHqX0U9Tb-->新建、完成、改期；数据保存在本机浏览器</p></div>
+      <div data-page-node-id="GZ7wjh4kmIiIEcxBBsW2cQ" class="sec-tools">
+        <button data-page-node-id="W0REhRNaYk9jgmOWdenRE3" class="btn" id="btnImport"><!--pnid:aTh2Rws6GoSZ9z2vQ94lzu-->导入备份</button>
+        <button data-page-node-id="c8dAHfKE9JnBiOCn1gFauE" class="btn" id="btnExport"><!--pnid:coBQR42vMVS5tcjT5w37Ji-->导出备份</button>
+      </div>
+    </div>
+
+    <form data-page-node-id="TBRXiL2Lb8FdO09SK09YMf" class="card form" id="taskForm">
+      <input data-page-node-id="5bCj7UXzq3Z9DaFrMLzyzg" class="input grow" id="fTitle" placeholder="要做什么？例如：温氏年框第二次报价回访" required>
+      <select data-page-node-id="Q6vhAopUK1ouNuo9naHZsl" class="input sel" id="fClient"></select>
+      <select data-page-node-id="Tox94UTMCCq80qKpA6c2qU" class="input sel" id="fPrio">
+        <option data-page-node-id="WVq4Y21r3IKnD1ws1Snr6C" value="P1"><!--pnid:2lbMML4t8Y7y5K485sN7qI-->P1 重要且紧急</option>
+        <option data-page-node-id="MglU9VVV30CECqt3FST81B" selected value="P2"><!--pnid:zVIpFXnRutHmToj9ZPBqGY-->P2 重要</option>
+        <option data-page-node-id="7wTQ2kTQjauaBvTz2aYWXV" value="P3"><!--pnid:uryHmJk8inVASNY4amIIBi-->P3 常规</option>
+      </select>
+      <input data-page-node-id="mfPw28q16vcDY1I1UO5NiN" class="input" id="fDue" type="date">
+      <button data-page-node-id="iXLtb15TBUfzzd3Y7HqGAy" class="btn primary" type="submit"><!--pnid:TY0lwNUL89hXS1rT0ZzS2m-->添加</button>
+    </form>
+
+    <div data-page-node-id="cOwSGyy4BIY14iJ0m1RguP" class="filters" id="taskFilters">
+      <button data-page-node-id="TBGzDitKjyHDwDHTXl5Gcg" class="f on" data-f="open"><!--pnid:bGoIlYvJzjvWMHkCEiLQS2-->未完成</button>
+      <button data-page-node-id="E0ZnJ2uNPsJRYPbzTncYJA" class="f" data-f="overdue"><!--pnid:QNmZ5sNrC9MyxHgZpRSssp-->逾期</button>
+      <button data-page-node-id="FhC0AbYJNKSmbaYM7zMRe4" class="f" data-f="done"><!--pnid:jetojF8wf2PHGN0HOgI9tb-->已完成</button>
+      <button data-page-node-id="ITO3zhe6TuFvapljCJlJ7w" class="f" data-f="all"><!--pnid:3jwZEIPPRP16BeQ0nVqqLR-->全部</button>
+    </div>
+
+    <div data-page-node-id="NRnRnEFL8dIkiiDK9juXE8" class="card" id="taskList"></div>
+    <p data-page-node-id="gcPlDsQeAkMTqe9Y823mbv" class="foot-note"><!--pnid:n8T9lsBcRaUHTDWIthqlig-->清空数据会二次确认。建议每周导出一次备份（本页顶部「备份」同样可用）。</p>
+  </section>
+
+</main>
+
+<!--pnid:DoAcwO0qm4lKC99cevrsvB--><!-- ============ 数据更新 ============ -->
+<div data-page-node-id="bRjlOrhx4cN2ti5iu5YAlj" class="modal" hidden id="dataModal">
+  <div data-page-node-id="8pr3AATVEzYHwgEl8be7nM" class="mask" id="dmMask"></div>
+  <div data-page-node-id="siGsnpJNc7RDfJfv0Zv4s2" aria-label="更新经营数据" aria-modal="true" class="mbox" role="dialog">
+    <div data-page-node-id="NdnUf5Pc53hdmRERZRs7J8" class="mhead">
+      <b data-page-node-id="x5YUR2sw6xHyzXUqcAlKHz"><!--pnid:DP0lTpkNSxziPofYcIY2T2-->更新经营数据</b>
+      <button data-page-node-id="EXMVz7gKO3NedAgK8RQZjU" aria-label="关闭" class="mx" id="dmClose"><!--pnid:G7lxQMSaaHs0gkVlvtjhuJ-->&times;</button>
+    </div>
+    <div data-page-node-id="dyTlW4iA44y76Ki4cBoDT0" class="mbody">
+      <p data-page-node-id="pPJpLDzpflmG6vFYVbkqH0" class="mtip"><!--pnid:DnAaJiqKHPaMHY5ZMzsQ7t-->
+        把新一期的<strong data-page-node-id="tlmZ4TNkyIIA2tUtBOG1eX"><!--pnid:37lqbc1MOtxDrdap4mfBsG-->发货明细</strong><!--pnid:3aUndHepvo05MhwqcefWRQ-->放进来，页面会自动按业务员、客户、产品、月度重算全部数字。
+        首行必须是表头，至少包含<strong data-page-node-id="8dZhdgONsEF0b1Fmr6MzS1"><!--pnid:fK5MiUgvX2W7VoKEvwVeSw-->发货日期、一级客户、折合吨重</strong><!--pnid:4S69szuuTjJll6y0w6YmXa-->三列。
+      </p>
+
+      <div data-page-node-id="PuEdHlVx1DanXEPir8RxgI" class="mtabs">
+        <button data-page-node-id="kyVF5GXFChBdOj1S1xhwyo" class="mt on" data-m="paste"><!--pnid:pst6BxJD8oaUKzGJhpEvKl-->从 Excel 粘贴</button>
+        <button data-page-node-id="Fm1pBTTssQ9zyGF87SVCym" class="mt" data-m="file"><!--pnid:UZULHjuLXQiYMOKZx6kIqI-->选择文件</button>
+      </div>
+
+      <div data-page-node-id="UlAyhHuNrk9i9QZMnfi8m6" id="panePaste">
+        <textarea data-page-node-id="n4DG27mWq1upk3MZapeL6R" class="mtext" id="dmText" placeholder="在 Excel 里选中整个数据区域（含表头）→ Ctrl+C → 在这里 Ctrl+V&#10;&#10;例：&#10;发货日期&#9;一级客户&#9;折合吨重&#9;实际金额&#9;业务员&#9;客户等级产品组名称&#10;2026/11/3 10:20&#9;新希望六和&#9;820.5&#9;5832100&#9;孙文杰&#9;L-苏氨酸" spellcheck="false"></textarea>
+      </div>
+
+      <div data-page-node-id="Gz5UXesossXA48ddNgxscc" hidden id="paneFile">
+        <label data-page-node-id="l25hR9njmwKjHsV3LdRrS8" class="mfile">
+          <input data-page-node-id="YFvhyDZHTeCgVFTlw5Thex" accept=".csv,.tsv,.txt" id="dmFile" type="file">
+          <span data-page-node-id="b2wmhCbwWj6hr7j6bKSzph"><!--pnid:yGJwK4OVuSyVhYqhi51nwn-->选择 CSV / TSV 文件</span>
+        </label>
+        <p data-page-node-id="k92H1r87jL7lieAafDnGqa" class="mtip2"><!--pnid:25CF4or5P2zgzF8ShsQHX3-->Excel 另存为「CSV UTF-8（逗号分隔）」最稳；GBK 编码也能自动识别。</p>
+      </div>
+
+      <div data-page-node-id="mGnFyHhUXTfuJTjunjkbAu" class="mres" id="dmResult"></div>
+    </div>
+    <div data-page-node-id="9XMf5yZQT9VxRlOYCPI2ZZ" class="mfoot">
+      <button data-page-node-id="WVSN6sbgNIZMMsUHnVs1vt" class="btn" id="dmExport"><!--pnid:577FdiRlpkl6Y9fl4U6Gol-->导出当前数据包</button>
+      <span data-page-node-id="hjbkffH9PDguK9NI9eNLrq" class="sp"></span>
+      <button data-page-node-id="2xJKkzBdj2l9O04i6psgq6" class="btn" id="dmReset"><!--pnid:ARkZmAjfQUMyz7LBqFhJcT-->恢复内置基线</button>
+      <button data-page-node-id="JIYzdrOBZZ2FgNVVJkpX0l" class="btn" id="dmCancel"><!--pnid:pI4zPGAeGnfOEIui4bWkDd-->取消</button>
+      <button data-page-node-id="TYSkt8UdSn9rfNzniQt1BO" class="btn primary" disabled id="dmApply"><!--pnid:al18mnJPSOJAmtg4cjc2Ig-->应用并更新</button>
+    </div>
+  </div>
+</div>
+
+<div data-page-node-id="I9SuQinVuvDfRibe0Nchwl" class="toast" id="toast"></div>
+
+<script data-page-node-id="1gXGiqwgkR8fDpRJbY6wul" data-pnid-children="Rhc3KRi5Yp04sGDhwHDpO3">
+/* 氨基酸经营工作台 · 前端逻辑
+   数据口径：2026 年 1–10 月发货明细（折合吨重，含退货冲销净额）
+   存储：localStorage（key 前缀 wb_fufeng_ws_）                                     */
+
+'use strict';
+
+/* ========== 1. 数据层 ========== */
+
+const DATA = {
+  period: '2026 年 1–10 月',
+  totalTons: 108167.08,
+  totalAmount: 8.66,          // 亿元
+  avgPrice: 8004,             // 元/吨
+  returnRows: 14,
+  months: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月'],
+
+  sales: [
+    { name:'孙文杰', tons:46570.16, amount:3.27, price:7031,
+      monthly:[3420.40,2821.00,4585.60,3590.03,3572.00,5365.40,5461.95,5914.88,5915.90,5923.00] },
+    { name:'常鹤飞', tons:31435.10, amount:3.05, price:9708,
+      monthly:[4066.07,3535.62,3507.50,3212.22,2299.80,984.52,3033.95,4381.40,3050.57,3363.45] },
+    { name:'韩同凯', tons:30161.80, amount:2.33, price:7732,
+      monthly:[2555.50,889.20,3335.43,4212.91,1868.00,4060.93,3738.45,2805.50,3187.91,3507.97] }
+  ],
+
+  // 客户吨位取自同口径汇总，合计等于 totalTons
+  clients: [
+    { name:'新希望六和',        tons:19479.72, owner:'孙杰',   next:'2026-11-16', action:'华南区配方调整后回访，确认 12 月用量' },
+    { name:'双胞胎',            tons:16848.33, owner:'常飞',   next:'2026-11-20', action:'12 月订单预排，锁苏氨酸增量' },
+    { name:'成都绿科商贸',      tons:16110.92, owner:'—',      next:'2026-11-28', action:'年末冲量政策协商' },
+    { name:'海大集团',          tons:15565.01, owner:'韩同凯', next:'2026-11-18', action:'11 月排产确认 + 色氨酸试用量反馈' },
+    { name:'温氏饲料',          tons:14596.80, owner:'韩同凯', next:'2026-11-10', action:'年框续签二次报价，客户未回' },
+    { name:'大北农',            tons:10979.50, owner:'孙杰',   next:'2026-11-25', action:'季度对账资料准备' },
+    { name:'牧原粮食贸易',      tons:7949.40,  owner:'常飞',   next:'2026-11-22', action:'盐酸盐新包装试单' },
+    { name:'正大投资',          tons:4292.60,  owner:'—',      next:'2026-12-02', action:'年度框架谈判启动' },
+    { name:'正大贸易（中国）',  tons:847.00,   owner:'—',      next:'2026-12-15', action:'与正大三家归并报价' },
+    { name:'正大生物科技（北京）',tons:803.80, owner:'—',      next:'2026-12-15', action:'与正大三家归并报价' },
+    { name:'正邦科技',          tons:694.00,   owner:'—',      next:'2026-12-10', action:'回款确认' },
+    { name:'德康',              tons:0,        owner:'—',      next:'2026-11-15', action:'重点客户零发货：首单试料方案与样品' }
+  ],
+
+  products: [
+    { name:'L-赖氨酸硫酸盐', tons:43582.72 },
+    { name:'L-苏氨酸',       tons:40994.20 },
+    { name:'L-赖氨酸盐酸盐', tons:13652.83 },
+    { name:'色氨酸',         tons:7056.34 },
+    { name:'异亮氨酸',       tons:2881.00 }
+  ],
+
+  channel: [
+    { name:'孙文杰', direct:9123.50,  indirect:37446.65 },
+    { name:'常鹤飞', direct:30249.33, indirect:1185.80 },
+    { name:'韩同凯', direct:14596.80, indirect:15565.01 }
+  ],
+
+  facts: [
+    '10 月单月 <b>12,794 吨</b>，为 1–10 月最高月，比 1 月 <b>10,042 吨</b>增长 <b>27%</b>',
+    '前五家客户合计 <b>82,601 吨</b>，占总发货 <b>76.4%</b>；第一大客户新希望六和 19,480 吨占 18.0%',
+    '常鹤飞吨位比孙文杰少 <b>32.5%</b>，收入只低 <b>6.7%</b>；均价 9,708 元比 7,031 元高 <b>38%</b>',
+    '硫酸盐 <b>43,583 吨</b>占 40.3%，苏氨酸 <b>40,994 吨</b>占 37.9%，两者合计近八成',
+    '孙文杰 <b>80%</b> 走二级客户，常鹤飞 <b>96%</b> 为一级直供；韩同凯直供/分销近乎对半'
+  ]
+};
+
+const KEY = 'wb_fufeng_ws_v1';
+const PRIO = { P1:'重要且紧急', P2:'重要', P3:'常规' };
+
+/* ========== 2. 存储与状态 ========== */
+
+function toISO(d){
+  const p = n => String(n).padStart(2, '0');
+  return d.getFullYear() + '-' + p(d.getMonth()+1) + '-' + p(d.getDate());
+}
+function shiftDays(n){
+  const d = new Date(); d.setHours(0,0,0,0); d.setDate(d.getDate()+n); return toISO(d);
+}
+function today(){ return shiftDays(0); }
+function daysBetween(a, b){           // b - a，单位天
+  const A = new Date(a + 'T00:00:00'), B = new Date(b + 'T00:00:00');
+  return Math.round((B - A) / 86400000);
+}
+function fmtTons(n){
+  return Number(n).toLocaleString('zh-CN', { maximumFractionDigits: 0 });
+}
+function fmtDate(iso){
+  if(!iso) return '未设日期';
+  const [y,m,d] = iso.split('-');
+  return m + '月' + d + '日';
+}
+
+function seedTasks(){
+  return [
+    { id:'t1', title:'温氏年框续签二次报价，客户未回需再推', client:'温氏饲料', prio:'P1', due:shiftDays(-2), done:false, created:shiftDays(-6) },
+    { id:'t2', title:'双胞胎 12 月订单预排表发出',           client:'双胞胎',   prio:'P2', due:shiftDays(-1), done:false, created:shiftDays(-4) },
+    { id:'t3', title:'海大 11 月排产确认 + 色氨酸试用量反馈', client:'海大集团', prio:'P1', due:today(),       done:false, created:shiftDays(-3) },
+    { id:'t4', title:'新希望六和华南区配方调整后回访',        client:'新希望六和',prio:'P2', due:today(),      done:false, created:shiftDays(-2) },
+    { id:'t5', title:'大北农季度对账资料准备',                client:'大北农',   prio:'P3', due:shiftDays(3),  done:false, created:shiftDays(-1) },
+    { id:'t6', title:'德康首单试料方案与样品寄送',            client:'德康',     prio:'P1', due:shiftDays(1),  done:false, created:today() }
+  ];
+}
+
+let state = { tasks: [], notes: {}, filter: 'open', clientSort: 'tons', clientQuery: '' };
+
+function load(){
+  let raw = null;
+  try { raw = localStorage.getItem(KEY); } catch(e){ raw = null; }
+  if(raw){
+    try {
+      const o = JSON.parse(raw);
+      state.tasks = Array.isArray(o.tasks) ? o.tasks : seedTasks();
+      state.notes = o.notes && typeof o.notes === 'object' ? o.notes : {};
+    } catch(e){ state.tasks = seedTasks(); state.notes = {}; }
+  } else {
+    state.tasks = seedTasks();
+    state.notes = {};
+  }
+}
+function save(){
+  try {
+    localStorage.setItem(KEY, JSON.stringify({ tasks: state.tasks, notes: state.notes, v: 1 }));
+    flashSync('已保存');
+  } catch(e){ flashSync('未保存'); }
+}
+let syncTimer = null;
+function flashSync(text){
+  const el = document.getElementById('syncChip');
+  el.innerHTML = '<i class="dot"></i>' + text;
+  clearTimeout(syncTimer);
+  syncTimer = setTimeout(() => { el.innerHTML = '<i class="dot"></i>本地已保存'; }, 1200);
+}
+
+/* ========== 3. 计算层 ========== */
+
+function clientByName(n){ return DATA.clients.find(c => c.name === n) || null; }
+
+function taskBuckets(){
+  const t = today();
+  const open = state.tasks.filter(x => !x.done);
+  return {
+    overdue: open.filter(x => x.due && x.due < t).sort((a,b) => a.due < b.due ? -1 : 1),
+    due:     open.filter(x => x.due === t),
+    week:    open.filter(x => !x.due || x.due > t).sort((a,b) => (a.due||'9999') < (b.due||'9999') ? -1 : 1),
+    done:    state.tasks.filter(x => x.done)
+  };
+}
+
+function followUps(){
+  const t = today();
+  return DATA.clients
+    .filter(c => c.next && daysBetween(t, c.next) <= 3)     // 3 天内到期或已逾期
+    .sort((a,b) => a.next < b.next ? -1 : 1);
+}
+
+function clientTier(tons){
+  if(tons <= 0) return { cls:'zero', label:'待开发' };
+  if(tons >= 15000) return { cls:'up', label:'核心' };
+  if(tons >= 5000) return { cls:'flat', label:'重点' };
+  return { cls:'down', label:'长尾' };
+}
+
+/* ========== 4. 渲染层 ========== */
+
+/* 4.1 今日 */
+function renderToday(){
+  const b = taskBuckets();
+  const f = followUps();
+  const t = today();
+
+  const d = new Date();
+  const wk = ['周日','周一','周二','周三','周四','周五','周六'][d.getDay()];
+  document.getElementById('todayDate').textContent =
+    d.getFullYear() + ' 年 ' + (d.getMonth()+1) + ' 月 ' + d.getDate() + ' 日 · ' + wk;
+
+  document.getElementById('todayCount').textContent = b.overdue.length + b.due.length + f.length;
+  document.getElementById('todaySub').textContent =
+    b.overdue.length ? ('其中 ' + b.overdue.length + ' 项已逾期，先处理红色项') : '暂无逾期，按截止时间推进';
+
+  document.getElementById('overdueBox').hidden = b.overdue.length === 0;
+  document.getElementById('overdueN').textContent = b.overdue.length;
+  document.getElementById('dueN').textContent = b.due.length;
+  document.getElementById('followN').textContent = f.length;
+  document.getElementById('weekN').textContent = b.week.length;
+
+  document.getElementById('overdueList').innerHTML = b.overdue.length
+    ? b.overdue.map(x => rowHTML(x, true)).join('')
+    : '<div class="empty">没有逾期项</div>';
+  document.getElementById('dueList').innerHTML = b.due.length
+    ? b.due.map(x => rowHTML(x)).join('')
+    : '<div class="empty">今天没有截止任务，可用右上角「新建任务」</div>';
+  document.getElementById('followList').innerHTML = f.length
+    ? f.map(c => followHTML(c, t)).join('')
+    : '<div class="empty">近期没有到期的客户跟进</div>';
+  document.getElementById('weekList').innerHTML = b.week.length
+    ? b.week.map(x => rowHTML(x)).join('')
+    : '<div class="empty">本周暂无排期</div>';
+
+  const badge = document.getElementById('badgeToday');
+  const n = b.overdue.length + b.due.length + f.length;
+  badge.textContent = n || '';
+  badge.classList.toggle('on', n > 0);
+
+  bindRowActions();
+}
+
+function rowHTML(x, isOverdue){
+  const over = isOverdue || (x.due && x.due < today());
+  const rel = x.due ? daysBetween(today(), x.due) : null;
+  let dueText = x.due ? fmtDate(x.due) : '未设日期';
+  if(over) dueText = '逾期 ' + Math.abs(rel) + ' 天';
+  else if(rel === 0) dueText = '今天';
+  else if(rel === 1) dueText = '明天';
+  else if(rel > 1) dueText = rel + ' 天后';
+
+  return '<div class="row' + (x.done ? ' done' : '') + '" data-id="' + x.id + '">'
+    + '<button class="check" data-act="toggle" data-id="' + x.id + '" aria-label="完成">'
+    +   '<svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg>'
+    + '</button>'
+    + '<div class="row-b"><div class="t-title">' + esc(x.title) + '</div>'
+    +   '<div class="t-meta">'
+    +     '<span class="pill ' + x.prio.toLowerCase() + '">' + x.prio + '</span>'
+    +     (x.client ? '<span class="pill client">' + esc(x.client) + '</span>' : '')
+    +     '<span class="' + (over ? 'pill over' : '') + '">' + dueText + '</span>'
+    +   '</div></div>'
+    + '<div class="row-act">'
+    +   (x.done
+        ? '<button class="mini" data-act="reopen" data-id="' + x.id + '">恢复</button>'
+        : '<button class="mini" data-act="postpone" data-id="' + x.id + '">改到明天</button>')
+    +   '<button class="mini danger" data-act="del" data-id="' + x.id + '">删除</button>'
+    + '</div></div>';
+}
+
+function followHTML(c, t){
+  const rel = daysBetween(t, c.next);
+  const over = rel < 0;
+  const txt = over ? ('客户跟进已逾期 ' + Math.abs(rel) + ' 天') : (rel === 0 ? '客户跟今日到期' : (rel + ' 天后到期'));
+  return '<div class="row"><div class="row-b">'
+    + '<div class="t-title">' + esc(c.name) + ' · ' + esc(c.action) + '</div>'
+    + '<div class="t-meta"><span class="pill ' + (over ? 'over' : 'client') + '">' + txt + '</span>'
+    + '<span>' + fmtDate(c.next) + '</span>'
+    + (c.owner !== '—' ? '<span>跟进人 ' + esc(c.owner) + '</span>' : '') + '</div>'
+    + '</div>'
+    + '<div class="row-act"><button class="mini" data-goto="clients">看客户</button></div></div>';
+}
+
+function bindRowActions(){
+  document.querySelectorAll('[data-act]').forEach(btn => {
+    btn.onclick = e => {
+      e.stopPropagation();
+      const id = btn.dataset.id, act = btn.dataset.act;
+      const task = state.tasks.find(x => x.id === id);
+      if(!task) return;
+      if(act === 'toggle'){ task.done = true; toast('已完成：' + task.title); }
+      if(act === 'reopen'){ task.done = false; }
+      if(act === 'postpone'){ task.due = shiftDays(1); toast('已改到明天'); }
+      if(act === 'del'){ state.tasks = state.tasks.filter(x => x.id !== id); toast('已删除'); }
+      save(); renderToday(); renderTasks();
+    };
+  });
+  document.querySelectorAll('[data-goto]').forEach(b => {
+    b.onclick = () => switchView(b.dataset.goto);
+  });
+}
+
+/* 4.2 客户 */
+function renderClients(){
+  const q = state.clientQuery.trim().toLowerCase();
+  let rows = DATA.clients.slice();
+  if(q) rows = rows.filter(c => (c.name + c.owner + c.action).toLowerCase().includes(q));
+
+  if(state.clientSort === 'next') rows.sort((a,b) => (a.next||'9999') < (b.next||'9999') ? -1 : 1);
+  else if(state.clientSort === 'gap') rows.sort((a,b) => a.tons - b.tons);
+  else rows.sort((a,b) => b.tons - a.tons);
+
+  const max = Math.max(...rows.map(c => c.tons), 1);
+
+  document.getElementById('clientGrid').innerHTML = rows.map(c => {
+    const tier = clientTier(c.tons);
+    const share = c.tons / DATA.totalTons * 100;
+    const rel = daysBetween(today(), c.next);
+    const over = rel < 0;
+    const note = state.notes[c.name] || '';
+    return '<article class="cl">'
+      + '<div class="cl-h"><b>' + esc(c.name) + '</b><span class="cl-tag ' + tier.cls + '">' + tier.label + '</span></div>'
+      + '<div class="cl-num"><b>' + fmtTons(c.tons) + '</b><span>吨 · 占 ' + share.toFixed(1) + '%</span></div>'
+      + '<div class="bar-mini"><i style="width:' + Math.max(2, c.tons / max * 100) + '%"></i></div>'
+      + '<dl class="cl-kv">'
+      +   '<dt>跟进人</dt><dd>' + esc(c.owner) + '</dd>'
+      +   '<dt>' + esc(DATA.months[DATA.months.length - 1] || '本期') + '状态</dt><dd>'
+      +     (c.tons > 0 ? '正常发货' : '<span style="color:#a86a12">零发货</span>') + '</dd>'
+      + '</dl>'
+      + '<div class="cl-next' + (over ? ' over' : '') + '">'
+      +   '<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/></svg>'
+      +   '<span>' + fmtDate(c.next) + (over ? '（已逾期）' : '') + ' · ' + esc(c.action) + '</span>'
+      + '</div>'
+      + '<textarea class="cl-note" data-note="' + esc(c.name) + '" placeholder="记一句跟进结论…" rows="1">' + esc(note) + '</textarea>'
+      + '</article>';
+  }).join('');
+
+  document.querySelectorAll('[data-note]').forEach(ta => {
+    ta.oninput = () => {
+      state.notes[ta.dataset.note] = ta.value;
+      clearTimeout(ta._t);
+      ta._t = setTimeout(save, 500);
+    };
+  });
+}
+
+/* 4.3 数据 */
+function renderData(){
+  const k = DATA;
+  const nActive = k.clients.filter(c => c.tons > 0).length;
+  const nZero   = k.clients.length - nActive;
+
+  const kpiRows = [
+    ['累计发货', fmtTons(k.totalTons), '吨', '含退货冲销净额', true]
+  ];
+  if(hasAmount()){
+    kpiRows.push(['累计金额', (k.totalAmount || 0).toFixed(2), '亿元', '含税合同金额', false]);
+    kpiRows.push(['综合均价', Math.round(k.avgPrice || 0).toLocaleString('zh-CN'), '元/吨', '金额 ÷ 吨重', false]);
+  }
+  kpiRows.push(['有量客户', String(nActive), '家', nZero > 0 ? ('另有 ' + nZero + ' 家零发货') : '本期全部有量', false]);
+  if(k.returnRows != null){
+    kpiRows.push(['退货冲销', String(k.returnRows), '行', '已计入净额，未剔除', false]);
+  }
+  document.getElementById('kpis').innerHTML = kpiRows.map(r => '<div class="kpi' + (r[4] ? ' hl' : '') + '">'
+      + '<b>' + r[1] + '<i>' + r[2] + '</i></b><span>' + r[0] + ' · ' + r[3] + '</span></div>').join('');
+
+  /* 折线图 */
+  document.getElementById('chartLine').innerHTML = lineChart();
+  document.getElementById('legendLine').innerHTML = DATA.sales.map((s, i) =>
+    '<span><i style="background:' + SERIES_COLORS[i % SERIES_COLORS.length] + '"></i>' + esc(s.name) + '</span>').join('');
+  const monthTot = DATA.months.map((_, i) => DATA.sales.reduce((a, s) => a + (s.monthly[i] || 0), 0));
+  const lastM = monthTot[monthTot.length - 1] || 0;
+  const maxM = Math.max.apply(null, monthTot);
+  document.getElementById('lineHint').innerHTML = DATA.months[DATA.months.length - 1]
+    + ' 合计 <b>' + fmtTons(lastM) + ' 吨</b>' + (lastM >= maxM ? '，为期间最高月' : '');
+
+  /* 客户 TOP */
+  const cSorted = DATA.clients.filter(c => c.tons > 0).slice().sort((a, b) => b.tons - a.tons);
+  const cMax = Math.max.apply(null, cSorted.map(c => c.tons).concat([1]));
+  document.getElementById('chartClient').innerHTML = barsHTML(cSorted.slice(0, 8), cMax);
+  const top5 = cSorted.slice(0, 5).reduce((a, c) => a + c.tons, 0);
+  document.getElementById('clientHint').innerHTML = cSorted.length
+    ? ('前五家占 ' + (top5 / DATA.totalTons * 100).toFixed(0) + '%')
+    : '本期无发货客户';
+
+  /* 产品结构 */
+  const prod = DATA.products.slice().sort((a, b) => b.tons - a.tons);
+  const pBox = document.getElementById('chartProduct');
+  if(prod.length){
+    pBox.innerHTML = barsHTML(prod, prod[0].tons || 1);
+    document.getElementById('productHint').innerHTML = esc(prod[0].name) + ' 占 ' + (prod[0].tons / DATA.totalTons * 100).toFixed(0) + '%';
+  } else {
+    pBox.innerHTML = '<div class="empty">本期数据未提供产品列</div>';
+    document.getElementById('productHint').textContent = '未提供';
+  }
+
+  /* 直供 / 分销 */
+  const cBox = document.getElementById('chartChannel');
+  if(DATA.channel && DATA.channel.length){
+    cBox.innerHTML = channelChart();
+    document.getElementById('legendChannel').innerHTML =
+        '<span><i style="background:#1a7d55"></i>一级客户直供</span>'
+      + '<span><i style="background:#9dc4ae"></i>二级客户分销</span>';
+  } else {
+    cBox.innerHTML = '<div class="empty">本期数据未提供客户分类列</div>';
+    document.getElementById('legendChannel').innerHTML = '';
+  }
+
+  document.getElementById('facts').innerHTML = (DATA.facts || []).map(f => '<li>' + f + '</li>').join('');
+
+  /* 页面文案随数据走 */
+  const prodTop = prod.slice(0, 2).reduce((a, p) => a + p.tons, 0);
+  document.getElementById('dataSub').textContent =
+    DATA.period + ' · 按发货日期归月 · 单位：吨' + (hasAmount() ? ' / 元·吨' : '');
+  document.getElementById('footNote').textContent =
+    '口径：折合吨重 = 交货数量(KG) ÷ 1000；'
+    + (hasAmount() ? ('金额为含税合同金额，含退货冲销行（本期 ' + (DATA.returnRows || 0) + ' 行）取净额；') : '本期未提供金额列，金额与均价不展示；')
+    + '客户名按集团多法人并列（正大三家不归并）；直供/分销按客户分类字段，不按金额推断。'
+    + '数据来源：' + (DATA._source === 'import' ? ('手工导入，' + (DATA._importedAt || '')) : '发货数据 2026 年 1–10 月导出')
+    + (prod.length >= 2 ? ('；前两产品合计占 ' + (prodTop / DATA.totalTons * 100).toFixed(0) + '%') : '') + '。';
+}
+
+function hasAmount(){
+  return DATA.totalAmount != null && DATA.totalAmount > 0;
+}
+
+const SERIES_COLORS = ['#1a7d55', '#c0762a', '#2a6fa8'];
+
+function barsHTML(rows, max){
+  return rows.map(r => {
+    const w = Math.max(2, r.tons / max * 100);
+    return '<div class="brow"><span class="nm" title="' + esc(r.name) + '">' + esc(r.name) + '</span>'
+      + '<span class="btrack"><i style="width:' + w + '%"></i></span>'
+      + '<span class="vl">' + fmtTons(r.tons) + '</span></div>';
+  }).join('');
+}
+
+function niceMax(v){
+  if(!(v > 0)) return 1000;
+  const mag = Math.pow(10, Math.floor(Math.log10(v)));
+  const n = v / mag;
+  const step = n <= 1 ? 1 : n <= 2 ? 2 : n <= 2.5 ? 2.5 : n <= 5 ? 5 : 10;
+  return step * mag;
+}
+
+function lineChart(){
+  const W = 720, H = 250, L = 46, R = 14, T = 14, B = 26;
+  const iw = W - L - R, ih = H - T - B;
+  const n = DATA.months.length;
+  const all = [];
+  DATA.sales.forEach(s => s.monthly.forEach(v => all.push(v || 0)));
+  const maxY = niceMax(Math.max.apply(null, all.concat([1])));
+  const stepY = maxY / 4;
+
+  const X = i => L + (n <= 1 ? iw / 2 : iw * i / (n - 1));
+  const Y = v => T + ih - ih * Math.max(0, v) / maxY;
+
+  let grid = '';
+  for(let v = 0; v <= maxY + 0.001; v += stepY){
+    const y = Y(v);
+    grid += '<line x1="' + L + '" y1="' + y + '" x2="' + (W-R) + '" y2="' + y + '" stroke="#eef2f7" stroke-width="1"/>'
+         +  '<text x="' + (L-8) + '" y="' + (y+4) + '" text-anchor="end" font-size="10.5" fill="#8b9aab">'
+         +  fmtAxis(v) + '</text>';
+  }
+  let xlab = '';
+  DATA.months.forEach((m, i) => {
+    xlab += '<text x="' + X(i) + '" y="' + (H-6) + '" text-anchor="middle" font-size="10.5" fill="#8b9aab">' + esc(m) + '</text>';
+  });
+
+  const lastIdx = n - 1;
+  let paths = '';
+  DATA.sales.forEach((s, si) => {
+    const c = SERIES_COLORS[si % SERIES_COLORS.length];
+    const pts = s.monthly.map((v, i) => X(i) + ',' + Y(v || 0));
+    paths += '<polyline points="' + pts.join(' ') + '" fill="none" stroke="' + c + '" stroke-width="2.2" '
+          +  'stroke-linejoin="round" stroke-linecap="round"/>';
+    s.monthly.forEach((v, i) => {
+      paths += '<circle cx="' + X(i) + '" cy="' + Y(v || 0) + '" r="3" fill="#fff" stroke="' + c + '" stroke-width="2">'
+            +  '<title>' + esc(s.name) + ' · ' + esc(DATA.months[i]) + '：' + fmtTons(v || 0) + ' 吨</title></circle>';
+    });
+    paths += '<text x="' + (X(lastIdx)) + '" y="' + (Y(s.monthly[lastIdx] || 0) - 9) + '" font-size="10.5" fill="' + c + '" text-anchor="middle">'
+          +  fmtTons(s.monthly[lastIdx] || 0) + '</text>';
+  });
+
+  return '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="月度发货量走势">'
+    + grid + xlab + paths + '</svg>';
+}
+
+function fmtAxis(v){
+  if(v === 0) return '0';
+  if(v >= 10000) return (v/10000).toFixed(v % 10000 === 0 ? 0 : 1) + '万';
+  if(v >= 1000)  return (v/1000).toFixed(v % 1000 === 0 ? 0 : 1) + 'k';
+  return String(Math.round(v));
+}
+
+function channelChart(){
+  const W = 720, H = 230, L = 46, R = 14, T = 16, B = 34;
+  const iw = W - L - R, ih = H - T - B;
+  const groups = DATA.channel;
+  let peak = 1;
+  groups.forEach(g => { peak = Math.max(peak, g.direct || 0, g.indirect || 0); });
+  const maxY = niceMax(peak);
+  const stepY = maxY / 3;
+
+  const gw = iw / groups.length;
+  const bw = Math.min(46, gw / 3.2);
+  const Y = v => T + ih - ih * v / maxY;
+
+  let grid = '';
+  for(let v = 0; v <= maxY + 0.001; v += stepY){
+    const y = Y(v);
+    grid += '<line x1="' + L + '" y1="' + y + '" x2="' + (W-R) + '" y2="' + y + '" stroke="#eef2f7"/>'
+         +  '<text x="' + (L-8) + '" y="' + (y+4) + '" text-anchor="end" font-size="10.5" fill="#8b9aab">'
+         +  fmtAxis(v) + '</text>';
+  }
+
+  let bars = '';
+  groups.forEach((g, i) => {
+    const cx = L + gw * i + gw / 2;
+    const h1 = ih * (g.direct || 0) / maxY, h2 = ih * (g.indirect || 0) / maxY;
+    bars += '<rect x="' + (cx - bw - 2) + '" y="' + (T + ih - h1) + '" width="' + bw + '" height="' + Math.max(0, h1) + '" rx="3" fill="#1a7d55">'
+         +  '<title>' + esc(g.name) + ' 一级：' + fmtTons(g.direct || 0) + ' 吨</title></rect>'
+         +  '<rect x="' + (cx + 2) + '" y="' + (T + ih - h2) + '" width="' + bw + '" height="' + Math.max(0, h2) + '" rx="3" fill="#9dc4ae">'
+         +  '<title>' + esc(g.name) + ' 二级：' + fmtTons(g.indirect || 0) + ' 吨</title></rect>'
+         +  '<text x="' + cx + '" y="' + (H - 10) + '" text-anchor="middle" font-size="11" fill="#5c6f83">' + esc(g.name) + '</text>';
+  });
+
+  return '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="直供分销结构">' + grid + bars + '</svg>';
+}
+
+/* 4.4 任务 */
+function renderTasks(){
+  const f = state.filter;
+  let rows = state.tasks.slice();
+  if(f === 'open') rows = rows.filter(x => !x.done);
+  else if(f === 'done') rows = rows.filter(x => x.done);
+  else if(f === 'overdue') rows = rows.filter(x => !x.done && x.due && x.due < today());
+
+  rows.sort((a, b) => {
+    if(a.done !== b.done) return a.done ? 1 : -1;
+    const pa = a.prio, pb = b.prio;
+    if(pa !== pb) return pa < pb ? -1 : 1;
+    return (a.due || '9999') < (b.due || '9999') ? -1 : 1;
+  });
+
+  document.getElementById('taskList').innerHTML = rows.length
+    ? rows.map(x => rowHTML(x)).join('')
+    : '<div class="empty">这个筛选下没有任务</div>';
+
+  bindRowActions();
+}
+
+/* ========== 5. 交互 ========== */
+
+function switchView(v){
+  document.querySelectorAll('.view').forEach(s => s.classList.toggle('on', s.id === 'view-' + v));
+  document.querySelectorAll('.tab').forEach(b => b.classList.toggle('on', b.dataset.view === v));
+  if(v === 'data' && !switchView._dataDone){ renderData(); switchView._dataDone = true; }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+let toastTimer = null;
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('on');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('on'), 1800);
+}
+
+function esc(s){
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+function addTask(title, client, prio, due){
+  state.tasks.unshift({
+    id: 't' + Date.now(),
+    title: title, client: client || '', prio: prio || 'P2',
+    due: due || '', done: false, created: today()
+  });
+  save(); renderAll(); toast('已添加');
+}
+
+function renderAll(){
+  renderToday();
+  renderClients();
+  renderTasks();
+  if(switchView._dataDone) renderData();
+}
+
+function exportBackup(){
+  const blob = new Blob([JSON.stringify({ exported: new Date().toISOString(), tasks: state.tasks, notes: state.notes, data: DATA }, null, 2)],
+    { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = '工作台备份_' + today() + '.json';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 3000);
+  toast('已导出备份');
+}
+
+function importBackup(){
+  const inp = document.createElement('input');
+  inp.type = 'file'; inp.accept = '.json,application/json';
+  inp.onchange = () => {
+    const file = inp.files && inp.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const o = JSON.parse(String(reader.result));
+        if(!o || !Array.isArray(o.tasks)) throw new Error('格式不对');
+        const n = o.tasks.length;
+        if(!confirm('将用备份里的 ' + n + ' 条任务覆盖当前任务（备注会合并），继续吗？')) return;
+        state.tasks = o.tasks.map(x => ({
+          id: x.id || ('t' + Math.random().toString(36).slice(2)),
+          title: x.title || '（无标题）', client: x.client || '', prio: x.prio || 'P2',
+          due: x.due || '', done: !!x.done, created: x.created || today()
+        }));
+        if(o.notes && typeof o.notes === 'object') state.notes = Object.assign({}, state.notes, o.notes);
+        let withData = false;
+        if(o.data && Array.isArray(o.data.sales) && Array.isArray(o.data.clients)){
+          withData = confirm('备份里带经营数据（' + (o.data.period || '未知期间') + '，' + fmtTons(o.data.totalTons) + ' 吨）。\n\n点「确定」连数据一起更新；点「取消」只恢复任务和备注。');
+        }
+        save();
+        if(withData) applyDataPack(o.data, true); else renderAll();
+        toast('已恢复 ' + n + ' 条任务' + (withData ? '，并更新数据' : ''));
+      } catch(e){ alert('备份文件读不出来：' + e.message); }
+    };
+    reader.readAsText(file);
+  };
+  inp.click();
+}
+
+/* ========== 5.5 数据导入与重算 ========== */
+
+const DATA_KEY = 'wb_fufeng_ws_data_v1';
+
+/* 发布版可注入 window.__SEED__，把某一期数据烘焙成内置基线 */
+if(typeof window !== 'undefined' && window.__SEED__ && Array.isArray(window.__SEED__.sales)){
+  Object.assign(DATA, window.__SEED__);
+}
+const BASE_DATA = JSON.parse(JSON.stringify(DATA));   // 内置基线，可随时恢复
+
+function saveData(){
+  try { localStorage.setItem(DATA_KEY, JSON.stringify(DATA)); } catch(e){}
+}
+function loadData(){
+  let raw = null;
+  try { raw = localStorage.getItem(DATA_KEY); } catch(e){ raw = null; }
+  if(!raw) return false;
+  try {
+    const o = JSON.parse(raw);
+    if(!o || !Array.isArray(o.sales) || !Array.isArray(o.clients)) return false;
+    Object.assign(DATA, o);
+    return true;
+  } catch(e){ return false; }
+}
+
+/* --- 表格解析 --- */
+function splitRow(line, delim){
+  const out = []; let cur = ''; let q = false;
+  for(let i = 0; i < line.length; i++){
+    const ch = line[i];
+    if(q){
+      if(ch === '"'){ if(line[i+1] === '"'){ cur += '"'; i++; } else { q = false; } }
+      else cur += ch;
+    } else {
+      if(ch === '"') q = true;
+      else if(ch === delim){ out.push(cur); cur = ''; }
+      else cur += ch;
+    }
+  }
+  out.push(cur);
+  return out;
+}
+
+function findCol(head, keys){
+  const H = head.map(h => String(h).replace(/\s+/g, ''));
+  for(const k of keys){ const i = H.indexOf(k); if(i >= 0) return i; }
+  for(const k of keys){ const i = H.findIndex(h => h.indexOf(k) >= 0); if(i >= 0) return i; }
+  return -1;
+}
+
+function num(s){
+  if(s == null) return 0;
+  let t = String(s).replace(/[,\s，¥￥]/g, '');
+  t = t.replace(/^\((.*)\)$/, '-$1');
+  const v = parseFloat(t);
+  return isFinite(v) ? v : 0;
+}
+
+function parseDateCell(s){
+  const t = String(s == null ? '' : s).trim();
+  if(!t) return null;
+  if(/^\d{5}$/.test(t)){                       // Excel 日期序列号
+    const ms = Date.UTC(1899, 11, 30) + (+t) * 86400000;
+    const d = new Date(ms); return { y:d.getUTCFullYear(), m:d.getUTCMonth()+1 };
+  }
+  let m = t.match(/(\d{4})\D{1,2}(\d{1,2})\D{1,2}(\d{1,2})/);
+  if(m) return { y:+m[1], m:+m[2] };
+  m = t.match(/^(\d{4})(\d{2})(\d{2})$/);
+  if(m) return { y:+m[1], m:+m[2] };
+  m = t.match(/(\d{4})\D{1,2}(\d{1,2})/);
+  if(m) return { y:+m[1], m:+m[2] };
+  return null;
+}
+
+const COLMAP = {
+  date: ['发货日期','出库日期','送货日期','单据日期','日期'],
+  tons: ['折合吨重','折合吨','吨重'],
+  qty:  ['交货数量','数量','重量'],
+  amt:  ['实际金额','含税金额','价税合计','金额'],
+  cli:  ['一级客户','客户名称','客户简称','客户'],
+  sal:  ['业务员','负责人','销售员','业务'],
+  prd:  ['客户等级产品组名称','产品组','产品名称','产品'],
+  cls:  ['客户分类','客户类型','直供'],
+  kind: ['类别','交货类型','单据类型']
+};
+
+function aggregateTable(text){
+  const raw = String(text || '').replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n').trim();
+  if(!raw) return { ok:false, msg:'还没有内容。请在 Excel 里选中数据区域复制后粘贴到这里，或改用「选择文件」。' };
+  const lines = raw.split('\n').filter(l => l.trim() !== '');
+  if(lines.length < 2) return { ok:false, msg:'只识别到 1 行。需要第一行表头、第二行起是数据。' };
+
+  const first = lines[0];
+  const tally = [
+    ['\t', (first.match(/\t/g) || []).length],
+    [',',  (first.match(/,/g)  || []).length],
+    [';',  (first.match(/;/g)  || []).length]
+  ].sort((a, b) => b[1] - a[1]);
+  const delim = tally[0][1] > 0 ? tally[0][0] : '\t';
+
+  const head = splitRow(first, delim).map(s => s.trim());
+  const col = {};
+  Object.keys(COLMAP).forEach(k => { col[k] = findCol(head, COLMAP[k]); });
+
+  const miss = [];
+  if(col.date < 0) miss.push('发货日期');
+  if(col.tons < 0 && col.qty < 0) miss.push('折合吨重（或交货数量）');
+  if(col.cli < 0) miss.push('一级客户');
+  if(miss.length){
+    return { ok:false, msg:'缺少必要列：<b>' + miss.join('、') + '</b>。<br>识别到的表头前 6 列是：'
+      + head.slice(0, 6).map(esc).join(' / ') + ' …<br>请确认复制时带上了表头行，且列名与源表一致。' };
+  }
+
+  const hasAmt = col.amt >= 0;
+  const hasPrd = col.prd >= 0;
+  const hasCls = col.cls >= 0;
+
+  let rows = 0, skipped = 0, returnRows = 0, badDate = 0;
+  let totalTons = 0, totalAmt = 0;
+  const monthMap = new Map();
+  const salesMap = new Map();
+  const clientMap = new Map();
+  const prodMap = new Map();
+  const clsMap = new Map();
+
+  for(let li = 1; li < lines.length; li++){
+    const c = splitRow(lines[li], delim);
+    const cli = (c[col.cli] || '').trim();
+    if(!cli){ skipped++; continue; }
+    const dt = parseDateCell(c[col.date]);
+    if(!dt || !(dt.m > 0 && dt.m <= 12)){ badDate++; continue; }
+
+    const tons = col.tons >= 0 ? num(c[col.tons]) : num(c[col.qty]) / 1000;
+    const amt  = hasAmt ? num(c[col.amt]) : 0;
+    const sal  = ((col.sal >= 0 ? c[col.sal] : '') || '未分配').trim();
+    const prd  = hasPrd ? ((c[col.prd] || '').trim() || '其他') : '';
+    const cls  = hasCls ? ((c[col.cls] || '').trim()) : '';
+    const kind = col.kind >= 0 ? ((c[col.kind] || '').trim()) : '';
+
+    rows++;
+    totalTons += tons;
+    totalAmt  += amt;
+    if(kind.indexOf('退') >= 0 || (hasAmt && amt < 0)) returnRows++;
+
+    const mk = dt.y + '-' + dt.m;
+    if(!monthMap.has(mk)) monthMap.set(mk, { y:dt.y, m:dt.m, tons:0 });
+    monthMap.get(mk).tons += tons;
+
+    if(!salesMap.has(sal)) salesMap.set(sal, { tons:0, amt:0, mon:new Map() });
+    const S = salesMap.get(sal);
+    S.tons += tons; S.amt += amt;
+    S.mon.set(mk, (S.mon.get(mk) || 0) + tons);
+
+    clientMap.set(cli, (clientMap.get(cli) || 0) + tons);
+    if(prd) prodMap.set(prd, (prodMap.get(prd) || 0) + tons);
+
+    if(hasCls){
+      if(!clsMap.has(sal)) clsMap.set(sal, { direct:0, indirect:0 });
+      const G = clsMap.get(sal);
+      if(cls.indexOf('二级') >= 0) G.indirect += tons; else G.direct += tons;
+    }
+  }
+
+  if(!rows){
+    return { ok:false, msg:'表头能认出，但没有任何一行被读成有效数据。'
+      + (badDate ? ('其中 ' + badDate + ' 行日期解析失败。') : '请检查「日期」列格式。') };
+  }
+
+  const months = Array.from(monthMap.values()).sort((a, b) => (a.y*100+a.m) - (b.y*100+b.m));
+  const multiYear = new Set(months.map(x => x.y)).size > 1;
+  months.forEach(x => { x.label = multiYear ? (String(x.y).slice(2) + '/' + x.m) : (x.m + '月'); x.key = x.y + '-' + x.m; });
+
+  const meta = new Map(DATA.clients.map(c => [c.name, c]));
+
+  const sales = Array.from(salesMap.entries())
+    .map(([name, v]) => ({
+      name, tons: +v.tons.toFixed(2), amount: +(v.amt / 1e8).toFixed(2),
+      price: v.tons > 0 ? Math.round(v.amt / v.tons) : 0,
+      monthly: months.map(x => +(v.mon.get(x.key) || 0).toFixed(2))
+    }))
+    .sort((a, b) => b.tons - a.tons);
+
+  const clients = Array.from(clientMap.entries())
+    .map(([name, tons]) => {
+      const m = meta.get(name);
+      return {
+        name, tons: +tons.toFixed(2),
+        owner: m ? m.owner : '—',
+        next:  m ? m.next  : '',
+        action: m ? m.action : '新客户，需补跟进计划'
+      };
+    });
+  // 已建档、有跟进计划的重点客户即使本期零发货也保留，避免「看不到就忘了」
+  DATA.clients.forEach(c => {
+    if(clientMap.has(c.name)) return;
+    if(!c.next) return;
+    clients.push({ name: c.name, tons: 0, owner: c.owner, next: c.next, action: c.action });
+  });
+  clients.sort((a, b) => b.tons - a.tons);
+
+  const products = Array.from(prodMap.entries())
+    .map(([name, tons]) => ({ name, tons: +tons.toFixed(2) }))
+    .sort((a, b) => b.tons - a.tons);
+
+  const channel = Array.from(clsMap.entries())
+    .map(([name, v]) => ({ name, direct: +v.direct.toFixed(2), indirect: +v.indirect.toFixed(2) }))
+    .sort((a, b) => (b.direct + b.indirect) - (a.direct + a.indirect));
+
+  const y0 = months[0].y, m0 = months[0].m;
+  const y1 = months[months.length - 1].y, m1 = months[months.length - 1].m;
+  const period = (y0 === y1)
+    ? (m0 === m1 ? (y0 + ' 年 ' + m0 + ' 月') : (y0 + ' 年 ' + m0 + '–' + m1 + ' 月'))
+    : (y0 + ' 年 ' + m0 + ' 月 – ' + y1 + ' 年 ' + m1 + ' 月');
+
+  const lastDay = new Date(y1, m1, 0);
+  const p = n => String(n).padStart(2, '0');
+  const periodEnd = y1 + '-' + p(m1) + '-' + p(lastDay.getDate());
+
+  const data = {
+    period, periodEnd, months: months.map(x => x.label),
+    totalTons: +totalTons.toFixed(2),
+    totalAmount: hasAmt ? +(totalAmt / 1e8).toFixed(2) : null,
+    avgPrice: hasAmt && totalTons > 0 ? Math.round(totalAmt / totalTons) : null,
+    returnRows: hasAmt || col.kind >= 0 ? returnRows : null,
+    sales, clients, products, channel,
+    _source: 'import',
+    _importedAt: new Date().toLocaleString('zh-CN', { hour12: false })
+  };
+  data.facts = buildFacts(data);
+
+  return {
+    ok: true, data,
+    stats: { rows, skipped, badDate, returnRows, hasAmt, hasPrd, hasCls, multiYear }
+  };
+}
+
+function buildFacts(d){
+  const f = [];
+  const mo = d.months;
+  const monTot = mo.map((_, i) => d.sales.reduce((a, s) => a + (s.monthly[i] || 0), 0));
+  const last = monTot[monTot.length - 1] || 0;
+  const first = monTot[0] || 0;
+  const maxV = Math.max.apply(null, monTot.concat([0]));
+
+  if(mo.length >= 2 && first > 0 && last > 0){
+    const pct = (last / first - 1) * 100;
+    f.push(mo[mo.length - 1] + ' 单月 <b>' + fmtTons(last) + ' 吨</b>'
+      + (last >= maxV && mo.length > 1 ? '，为期间最高月' : '')
+      + '，比 ' + mo[0] + ' <b>' + fmtTons(first) + ' 吨</b>'
+      + (pct >= 0 ? '增长' : '下降') + ' <b>' + Math.abs(pct).toFixed(0) + '%</b>');
+  }
+
+  const cs = d.clients.filter(c => c.tons > 0).slice().sort((a, b) => b.tons - a.tons);
+  if(cs.length >= 2){
+    const top5 = cs.slice(0, 5).reduce((a, c) => a + c.tons, 0);
+    f.push('前五家客户合计 <b>' + fmtTons(top5) + ' 吨</b>，占总发货 <b>'
+      + (top5 / d.totalTons * 100).toFixed(1) + '%</b>；第一大客户 ' + esc(cs[0].name)
+      + ' ' + fmtTons(cs[0].tons) + ' 吨占 ' + (cs[0].tons / d.totalTons * 100).toFixed(1) + '%');
+  }
+
+  const withPrice = d.sales.filter(s => s.price > 0 && s.tons > 0);
+  if(withPrice.length >= 2){
+    const hi = withPrice.slice().sort((a, b) => b.price - a.price)[0];
+    const lo = withPrice.slice().sort((a, b) => a.price - b.price)[0];
+    f.push(esc(hi.name) + ' 均价 <b>' + hi.price.toLocaleString('zh-CN') + ' 元/吨</b>，比 '
+      + esc(lo.name) + ' 的 ' + lo.price.toLocaleString('zh-CN') + ' 元高 '
+      + '<b>' + ((hi.price / lo.price - 1) * 100).toFixed(0) + '%</b>；吨位分别为 '
+      + fmtTons(hi.tons) + ' 吨与 ' + fmtTons(lo.tons) + ' 吨');
+  }
+
+  if(d.products.length >= 2){
+    const ps = d.products;
+    f.push(esc(ps[0].name) + ' <b>' + fmtTons(ps[0].tons) + ' 吨</b>占 '
+      + (ps[0].tons / d.totalTons * 100).toFixed(1) + '%，' + esc(ps[1].name) + ' '
+      + fmtTons(ps[1].tons) + ' 吨占 ' + (ps[1].tons / d.totalTons * 100).toFixed(1)
+      + '%，两者合计 <b>' + ((ps[0].tons + ps[1].tons) / d.totalTons * 100).toFixed(0) + '%</b>');
+  }
+
+  if(d.channel.length >= 1){
+    const parts = d.channel.map(g => {
+      const t = (g.direct || 0) + (g.indirect || 0);
+      const p = t > 0 ? (g.direct / t * 100) : 0;
+      return esc(g.name) + ' 直供 <b>' + p.toFixed(0) + '%</b>';
+    });
+    f.push(parts.join('，'));
+  }
+  return f;
+}
+
+/* --- 应用与文案同步 --- */
+function applyDataPack(d, quiet){
+  Object.assign(DATA, d);
+  saveData();
+  switchView._dataDone = false;
+  fillClientOptions();
+  renderPeriodBits();
+  renderToday(); renderClients(); renderTasks();
+  if(document.getElementById('view-data').classList.contains('on')){
+    renderData(); switchView._dataDone = true;
+  }
+  if(!quiet) toast('数据已更新：' + DATA.period);
+}
+
+function renderPeriodBits(){
+  document.getElementById('periodTop').textContent = DATA.periodEnd || '—';
+  const p = document.getElementById('clientSub');
+  if(p) p.innerHTML = esc(DATA.period) + ' 折合吨重 · 含退货冲销净额 · 合计 <b id="clientTotal">'
+    + fmtTons(DATA.totalTons) + ' 吨</b>';
+}
+
+function fillClientOptions(){
+  const sel = document.getElementById('fClient');
+  if(!sel) return;
+  sel.innerHTML = '<option value="">不关联客户</option>'
+    + DATA.clients.map(c => '<option>' + esc(c.name) + '</option>').join('');
+}
+
+/* --- 弹层交互 --- */
+let dmPending = null;
+
+function openDataModal(){
+  document.getElementById('dataModal').hidden = false;
+  document.getElementById('dmText').focus();
+}
+function closeDataModal(){
+  document.getElementById('dataModal').hidden = true;
+  document.getElementById('dmResult').innerHTML = '';
+  document.getElementById('dmApply').disabled = true;
+  dmPending = null;
+}
+
+function readFileSmart(file, cb){
+  const fr = new FileReader();
+  fr.onload = () => {
+    const buf = fr.result;
+    let txt = '';
+    try { txt = new TextDecoder('utf-8').decode(buf); } catch(e){ txt = ''; }
+    if(txt.indexOf('\uFFFD') >= 0){
+      try { txt = new TextDecoder('gbk').decode(buf); } catch(e){}
+    }
+    cb(txt);
+  };
+  fr.readAsArrayBuffer(file);
+}
+
+function previewTable(text){
+  const box = document.getElementById('dmResult');
+  const btn = document.getElementById('dmApply');
+  const res = aggregateTable(text);
+  dmPending = res.ok ? res.data : null;
+  btn.disabled = !res.ok;
+
+  if(!res.ok){
+    box.innerHTML = '<div class="mbox-bad">' + res.msg + '</div>';
+    return;
+  }
+  const d = res.data, s = res.stats;
+  const diff = d.totalTons - DATA.totalTons;
+  const diffCls = diff >= 0 ? 'up' : 'down';
+  const sign = diff >= 0 ? '+' : '';
+
+  const missTip = [];
+  if(!s.hasAmt) missTip.push('金额（金额与均价不更新，仍显示原值）');
+  if(!s.hasPrd) missTip.push('产品（产品结构图不更新）');
+  if(!s.hasCls) missTip.push('客户分类（直供分销图不更新）');
+  if(s.badDate) missTip.push(s.badDate + ' 行日期无法识别，已跳过');
+  if(s.skipped) missTip.push(s.skipped + ' 行客户为空，已跳过');
+
+  box.innerHTML = '<div class="mbox-ok"><b>解析成功</b>，共 <b>' + s.rows + '</b> 行有效明细，'
+    + '期间 <b>' + esc(d.period) + '</b>。'
+    + '<div class="mgrid">'
+    +   '<div><b>' + fmtTons(d.totalTons) + '</b><span>吨（合计）</span></div>'
+    +   (s.hasAmt ? '<div><b>' + d.totalAmount.toFixed(2) + '</b><span>亿元</span></div>'
+                 + '<div><b>' + d.avgPrice.toLocaleString('zh-CN') + '</b><span>元/吨</span></div>' : '')
+    +   '<div><b>' + d.sales.length + '</b><span>业务员</span></div>'
+    +   '<div><b>' + d.clients.length + '</b><span>客户</span></div>'
+    +   '<div><b>' + d.products.length + '</b><span>产品</span></div>'
+    + '</div>'
+    + '<div class="mdiff">与当前（' + esc(DATA.period) + '，' + fmtTons(DATA.totalTons) + ' 吨）相比：'
+    + '<i class="' + diffCls + '">' + sign + fmtTons(diff) + ' 吨</i>'
+    + (DATA.totalTons > 0 ? '（' + sign + (diff / DATA.totalTons * 100).toFixed(1) + '%）' : '')
+    + (d.returnRows != null ? '，退货冲销 ' + d.returnRows + ' 行' : '') + '</div>'
+    + (missTip.length ? '<div class="mdiff" style="color:#8a5b00">注意：' + missTip.join('；') + '。</div>' : '')
+    + '<div class="mdiff" style="color:#6d7f92">点「应用并更新」才会生效；当前只是预览。</div>'
+    + '</div>';
+}
+
+function exportDataPack(){
+  const blob = new Blob([JSON.stringify({ exported: new Date().toISOString(), tasks: state.tasks, notes: state.notes, data: DATA }, null, 2)],
+    { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = '工作台数据包_' + (DATA.periodEnd || today()) + '.json';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 3000);
+  toast('已导出数据包');
+}
+
+function bindDataModal(){
+  document.getElementById('btnData').onclick = openDataModal;
+  document.getElementById('dmClose').onclick = closeDataModal;
+  document.getElementById('dmCancel').onclick = closeDataModal;
+  document.getElementById('dmMask').onclick = closeDataModal;
+  document.getElementById('dmExport').onclick = exportDataPack;
+
+  document.getElementById('dmReset').onclick = () => {
+    if(!confirm('恢复到内置基线（2026 年 1–10 月，108,167 吨）？你导入的数据会被清除。')) return;
+    try { localStorage.removeItem(DATA_KEY); } catch(e){}
+    applyDataPack(JSON.parse(JSON.stringify(BASE_DATA)));
+    closeDataModal();
+  };
+
+  document.querySelectorAll('.mt').forEach(b => {
+    b.onclick = () => {
+      document.querySelectorAll('.mt').forEach(x => x.classList.remove('on'));
+      b.classList.add('on');
+      const paste = b.dataset.m === 'paste';
+      document.getElementById('panePaste').hidden = !paste;
+      document.getElementById('paneFile').hidden = paste;
+    };
+  });
+
+  let t = null;
+  document.getElementById('dmText').oninput = e => {
+    clearTimeout(t);
+    const v = e.target.value;
+    if(!v.trim()){ document.getElementById('dmResult').innerHTML = ''; document.getElementById('dmApply').disabled = true; dmPending = null; return; }
+    t = setTimeout(() => previewTable(v), 320);
+  };
+
+  document.getElementById('dmFile').onchange = e => {
+    const file = e.target.files && e.target.files[0];
+    if(!file) return;
+    readFileSmart(file, txt => {
+      if(txt.length < 200000) document.getElementById('dmText').value = txt;
+      previewTable(txt);
+    });
+  };
+
+  document.getElementById('dmApply').onclick = () => {
+    if(!dmPending){ toast('还没有可应用的数据'); return; }
+    applyDataPack(JSON.parse(JSON.stringify(dmPending)));
+    closeDataModal();
+  };
+
+  document.addEventListener('keydown', e => {
+    if(e.key === 'Escape' && !document.getElementById('dataModal').hidden) closeDataModal();
+  });
+}
+
+/* ========== 6. 初始化 ========== */
+
+function init(){
+  load();
+  const restored = loadData();          // 上次导入的数据优先于内置基线
+
+  fillClientOptions();
+  renderPeriodBits();
+  bindDataModal();
+
+  document.querySelectorAll('.tab').forEach(b => { b.onclick = () => switchView(b.dataset.view); });
+
+  document.getElementById('btnQuickAdd').onclick = () => {
+    switchView('tasks');
+    setTimeout(() => document.getElementById('fTitle').focus(), 120);
+  };
+  document.getElementById('btnBackup').onclick = exportBackup;
+  document.getElementById('btnExport').onclick = exportBackup;
+  document.getElementById('btnImport').onclick = importBackup;
+
+  document.getElementById('taskForm').onsubmit = e => {
+    e.preventDefault();
+    const title = document.getElementById('fTitle').value.trim();
+    if(!title){ toast('先写一句要做什么'); return; }
+    addTask(title, document.getElementById('fClient').value,
+            document.getElementById('fPrio').value, document.getElementById('fDue').value);
+    e.target.reset();
+    document.getElementById('fPrio').value = 'P2';
+  };
+
+  document.querySelectorAll('#taskFilters .f').forEach(b => {
+    b.onclick = () => {
+      document.querySelectorAll('#taskFilters .f').forEach(x => x.classList.remove('on'));
+      b.classList.add('on');
+      state.filter = b.dataset.f;
+      renderTasks();
+    };
+  });
+
+  document.getElementById('clientSearch').oninput = e => {
+    state.clientQuery = e.target.value;
+    renderClients();
+  };
+  document.getElementById('clientSort').onchange = e => {
+    state.clientSort = e.target.value;
+    renderClients();
+  };
+
+  renderAll();
+  if(restored) setTimeout(() => toast('已载入上次导入的数据：' + DATA.period), 400);
+}
+
+init();
+
+</script>
+</body>
+</html>
