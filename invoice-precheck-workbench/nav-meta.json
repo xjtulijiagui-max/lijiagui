@@ -1,0 +1,23 @@
+{
+  "id": "invoice-precheck-workbench",
+  "title": "开票需求预检工作台 · 原型 v0.1",
+  "shortTitle": "开票预检台",
+  "category": "WorkBuddy 工作台",
+  "description": "开票需求预检工作台：客户订单、开票预检单、开票信息与客户开票管理台原型。",
+  "url": "https://xjtulijiagui-max.github.io/lijiagui/invoice-precheck-workbench/",
+  "tags": [
+    "工作台",
+    "开票",
+    "需求预检",
+    "财务",
+    "原型",
+    "WorkBuddy"
+  ],
+  "type": "工作台",
+  "client": "",
+  "order": 320,
+  "status": "正常",
+  "featured": false,
+  "updated": "2026-11-15",
+  "source": "https://wbapp-1ye2bqrrd6z4goum5fcata.app.workbuddy.host/?sharecode=2KNZXLMP4E"
+}
