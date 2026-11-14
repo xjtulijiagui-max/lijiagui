@@ -1,0 +1,18 @@
+{
+ "id": "capacity-attribution",
+ "title": "产能归因工作台",
+ "shortTitle": "产能归因工作台",
+ "category": "工作台案例",
+ "description": "产能归因工作台：内训师四期 4组 工作台静态镜像入口。",
+ "path": "capacity-attribution/",
+ "tags": [
+  "工作台",
+  "WorkBuddy",
+  "内训师四期"
+ ],
+ "type": "客户项目",
+ "client": "内训师四期",
+ "featured": false,
+ "order": 420,
+ "updated": "2026-11-14"
+}

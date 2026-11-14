@@ -1,0 +1,18 @@
+{
+ "id": "invoice-precheck",
+ "title": "开票需求预检工作台",
+ "shortTitle": "开票需求预检工作台",
+ "category": "工作台案例",
+ "description": "开票需求预检工作台：新增 工作台静态镜像入口。",
+ "path": "invoice-precheck/",
+ "tags": [
+  "工作台",
+  "WorkBuddy",
+  "新增"
+ ],
+ "type": "客户项目",
+ "client": "新增",
+ "featured": false,
+ "order": 420,
+ "updated": "2026-11-14"
+}

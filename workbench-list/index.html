@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Workbench List｜李家贵</title><style>body{margin:0;font-family:"Microsoft YaHei","PingFang SC",Arial,sans-serif;background:#f5f8fd;color:#15223a}header{background:#061b46;color:#fff;padding:28px 26px}h1{margin:0;font-size:28px}p.sub{margin:8px 0 0;color:#c8d7f2}.wrap{max-width:1180px;margin:26px auto;padding:0 26px}input{width:100%;padding:12px;border:1px solid #d8e4f7;border-radius:10px;margin-bottom:20px;font-size:14px}table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #dbe6f7;border-radius:12px;overflow:hidden}th,td{padding:12px;border-bottom:1px solid #e8eef8;text-align:left;font-size:13px}th{background:#eef4ff;color:#28406a}a{color:#155eef;text-decoration:none}a:hover{text-decoration:underline}.tag{background:#f2f5f9;border-radius:5px;padding:3px 6px;font-size:11px;color:#64748b}</style></head><body>
+<header><h1>Workbench List</h1><p class="sub">WorkBuddy AI 工作台案例清单 · GitHub Pages 版</p></header>
+<div class="wrap"><input id="q" placeholder="搜索客户、工作台、小组……"><table><thead><tr><th>工作台</th><th>客户/批次</th><th>小组</th><th>链接</th></tr></thead><tbody id="rows"></tbody></table></div>
+<script>
+const DATA=[
+ {
+  "id": "amino-operations",
+  "title": "氨基酸经营工作台",
+  "src": "阜丰集团",
+  "group": "大客户部",
+  "original": "https://workbuddy.link/p/LggxvadlkZxhWwLKrrBDfC",
+  "page": "https://xjtulijiagui-max.github.io/lijiagui/amino-operations/",
+  "github": "https://github.com/xjtulijiagui-max/lijiagui/tree/master/amino-operations"
+ },
+ {
+  "id": "deliju-energy-workbench",
+  "title": "eliju-energy-workbench.ap…",
+  "src": "聚和材料",
+  "group": "第二组",
+  "original": "https://deliju-energy-workbench.app.workbuddy.host/?sharecode=63DBMWYY7F",
+  "page": "https://xjtulijiagui-max.github.io/lijiagui/deliju-energy-workbench/",
+  "github": "https://github.com/deliju-energy-workbench/deliju-energy-workbench"
+ },
+ {
+  "id": "jh-doc-governance",
+  "title": "h-doc-governance.app.work…",
+  "src": "聚和材料",
+  "group": "第一组",
+  "original": "https://jh-doc-governance.app.workbuddy.host/?sharecode=3MRCBWQLTP",
+  "page": "https://xjtulijiagui-max.github.io/lijiagui/jh-doc-governance/",
+  "github": "https://github.com/jh-doc-governance/jh-doc-governance"
+ },
+ {
+  "id": "silver-paste-team-workbench",
+  "title": "ilver-paste-team-workbenc…",
+  "src": "聚和材料",
+  "group": "第三组",
+  "original": "https://silver-paste-team-workbench.app.workbuddy.host/?sharecode=K2KP67LLTX",
+  "page": "https://xjtulijiagui-max.github.io/lijiagui/silver-paste-team-workbench/",
+  "github": "https://github.com/silver-paste-team-workbench/silver-paste-team-workbench"
+ },
+ {
+  "id": "juhe-sourcing",
+  "title": "ilver-powder-import.app.w…",
+  "src": "聚和材料",
+  "group": "第八组",
+  "original": "https://juhe-sourcing.app.workbuddy.host/#/dashboard",
+  "page": "https://xjtulijiagui-max.github.io/lijiagui/juhe-sourcing/",
+  "github": "https://github.com/juhe-sourcing/juhe-sourcing"
+ },
+ {
+  "id": "silver-powder-import",
+  "title": "ilver-powder-import.app.w…",
+  "src": "聚和材料",
+  "group": "第八组",
+  "original": "https://silver-powder-import.app.workbuddy.host/?sharecode=OA75XZ2P5P#/import",
+  "page": "https://xjtulijiagui-max.github.io/lijiagui/silver-powder-import/",
+  "github": "https://github.com/silver-powder-import/silver-powder-import"
+ },
+ {
+  "id": "riskloop-workbench-demo",
+  "title": "iskloop-workbench-demo.ap…",
+  "src": "聚和材料",
+  "group": "第四组",
+  "original": "https://riskloop-workbench-demo.app.workbuddy.host/?sharecode=VWY5ABTFGK",
+  "page": "https://xjtulijiagui-max.github.io/lijiagui/riskloop-workbench-demo/",
+  "github": "https://github.com/riskloop-workbench-demo/riskloop-workbench-demo"
+ },
+ {
+  "id": "arf-resist-review",
+  "title": "rf-resist-review.app.work…",
+  "src": "聚和材料",
+  "group": "第七组",
+  "original": "https://arf-resist-review.app.workbuddy.host/?sharecode=ZWAY56OTC3",
+  "page": "https://xjtulijiagui-max.github.io/lijiagui/arf-resist-review/",
+  "github": "https://github.com/arf-resist-review/arf-resist-review"
+ },
+ {
+  "id": "cu-powder-rd-workbench",
+  "title": "u-powder-rd-workbench.app…",
+  "src": "聚和材料",
+  "group": "第六组",
+  "original": "https://cu-powder-rd-workbench.app.workbuddy.host/?sharecode=QEKLHYRZRW",
+  "page": "https://xjtulijiagui-max.github.io/lijiagui/cu-powder-rd-workbench/",
+  "github": "https://github.com/cu-powder-rd-workbench/cu-powder-rd-workbench"
+ },
+ {
+  "id": "drg-medical-workbench",
+  "title": "百万医疗险获取年轻客群思路",
+  "src": "内训师四期",
+  "group": "5组",
+  "original": "https://drg-medical-workbench.app.workbuddy.host/?sharecode=D45HAGRHTG",
+  "page": "https://xjtulijiagui-max.github.io/lijiagui/drg-medical-workbench/",
+  "github": "https://github.com/drg-medical-workbench/drg-medical-workbench"
+ },
+ {
+  "id": "capacity-attribution",
+  "title": "产能归因工作台",
+  "src": "内训师四期",
+  "group": "4组",
+  "original": "https://capacity-attribution.app.workbuddy.host/?sharecode=CW52GF2LGR",
+  "page": "https://xjtulijiagui-max.github.io/lijiagui/capacity-attribution/",
+  "github": "https://github.com/capacity-attribution/capacity-attribution"
+ },
+ {
+  "id": "dealer-network-ops",
+  "title": "车商渠道网点经营",
+  "src": "内训师四期",
+  "group": "2组",
+  "original": "https://dealer-network-ops.app.workbuddy.host/?sharecode=D34E4XAWPB",
+  "page": "https://xjtulijiagui-max.github.io/lijiagui/dealer-network-ops/",
+  "github": "https://github.com/dealer-network-ops/dealer-network-ops"
+ },
+ {
+  "id": "cp-material-dashboard",
+  "title": "消保评价文件树",
+  "src": "内训师四期",
+  "group": "6组",
+  "original": "https://cp-material-dashboard.app.workbuddy.host/?sharecode=NT22HMBTUQ&shareId=13bae60dcea24c55a3846c46934c805c",
+  "page": "https://xjtulijiagui-max.github.io/lijiagui/cp-material-dashboard/",
+  "github": "https://github.com/cp-material-dashboard/cp-material-dashboard"
+ },
+ {
+  "id": "kpi-alert-workbench",
+  "title": "综合金融考核预警工作台",
+  "src": "内训师四期",
+  "group": "2组",
+  "original": "https://kpi-alert-workbench.app.workbuddy.host/?sharecode=PQNRKA5IGW",
+  "page": "https://xjtulijiagui-max.github.io/lijiagui/kpi-alert-workbench/",
+  "github": "https://github.com/kpi-alert-workbench/kpi-alert-workbench"
+ },
+ {
+  "id": "biz-opportunity-funnel",
+  "title": "biz-opportunity-funnel",
+  "src": "内训师四期",
+  "group": "2组",
+  "original": "https://biz-opportunity-funnel.app.workbuddy.host/?sharecode=IKKJ5ERWVD",
+  "page": "https://xjtulijiagui-max.github.io/lijiagui/biz-opportunity-funnel/",
+  "github": "https://github.com/biz-opportunity-funnel/biz-opportunity-funnel"
+ },
+ {
+  "id": "compliance-broadcast",
+  "title": "compliance-broadcast",
+  "src": "内训师四期",
+  "group": "1组",
+  "original": "https://compliance-broadcast.app.workbuddy.host/?sharecode=OTJ3ALKJIL",
+  "page": "https://xjtulijiagui-max.github.io/lijiagui/compliance-broadcast/",
+  "github": "https://github.com/compliance-broadcast/compliance-broadcast"
+ },
+ {
+  "id": "cx-knowledge-library",
+  "title": "cx-knowledge-library",
+  "src": "内训师四期",
+  "group": "4组",
+  "original": "https://cx-knowledge-library.app.workbuddy.host/?sharecode=FUXYWXPGFZ",
+  "page": "https://xjtulijiagui-max.github.io/lijiagui/cx-knowledge-library/",
+  "github": "https://github.com/cx-knowledge-library/cx-knowledge-library"
+ },
+ {
+  "id": "med-benefits-05815",
+  "title": "med-benefits-05815",
+  "src": "内训师四期",
+  "group": "6组",
+  "original": "https://med-benefits-05815.app.workbuddy.host/?sharecode=N2IZVU2AM4",
+  "page": "https://xjtulijiagui-max.github.io/lijiagui/med-benefits-05815/",
+  "github": "https://github.com/med-benefits-05815/med-benefits-05815"
+ },
+ {
+  "id": "nuomi-island",
+  "title": "nuomi-island",
+  "src": "内训师四期",
+  "group": "1组",
+  "original": "https://nuomi-island.app.workbuddy.host/?sharecode=VZFBC64EC6",
+  "page": "https://xjtulijiagui-max.github.io/lijiagui/nuomi-island/",
+  "github": "https://github.com/nuomi-island/nuomi-island"
+ },
+ {
+  "id": "payroll-commission",
+  "title": "payroll-commission",
+  "src": "内训师四期",
+  "group": "5组",
+  "original": "https://payroll-commission.app.workbuddy.host/?sharecode=XPZJUUCYZW",
+  "page": "https://xjtulijiagui-max.github.io/lijiagui/payroll-commission/",
+  "github": "https://github.com/payroll-commission/payroll-commission"
+ },
+ {
+  "id": "pension-ipo-workbench",
+  "title": "pension-ipo-workbench",
+  "src": "内训师四期",
+  "group": "2组",
+  "original": "https://pension-ipo-workbench.app.workbuddy.host/?sharecode=OHO7ZLYMBT#/dashboard",
+  "page": "https://xjtulijiagui-max.github.io/lijiagui/pension-ipo-workbench/",
+  "github": "https://github.com/pension-ipo-workbench/pension-ipo-workbench"
+ },
+ {
+  "id": "research-workbench-39283",
+  "title": "research-workbench-39283",
+  "src": "内训师四期",
+  "group": "3组",
+  "original": "https://research-workbench-39283.app.workbuddy.host/?sharecode=YVBCRL7R4Y#/overview",
+  "page": "https://xjtulijiagui-max.github.io/lijiagui/research-workbench-39283/",
+  "github": "https://github.com/research-workbench-39283/research-workbench-39283"
+ },
+ {
+  "id": "sales-lead-tracker-88499",
+  "title": "sales-lead-tracker-88499",
+  "src": "内训师四期",
+  "group": "5组",
+  "original": "https://sales-lead-tracker-88499.app.workbuddy.host/?sharecode",
+  "page": "https://xjtulijiagui-max.github.io/lijiagui/sales-lead-tracker-88499/",
+  "github": "https://github.com/sales-lead-tracker-88499/sales-lead-tracker-88499"
+ },
+ {
+  "id": "training-planning-workbench",
+  "title": "training-planning-workbench",
+  "src": "内训师四期",
+  "group": "3组",
+  "original": "https://training-planning-workbench.app.workbuddy.host/web/?sharecode=P7K5CDORL4",
+  "page": "https://xjtulijiagui-max.github.io/lijiagui/training-planning-workbench/",
+  "github": "https://github.com/training-planning-workbench/training-planning-workbench"
+ },
+ {
+  "id": "training-workbench-69142",
+  "title": "training-workbench-69142",
+  "src": "内训师四期",
+  "group": "4组",
+  "original": "https://training-workbench-69142.app.workbuddy.host/?sharecode=D54XTDXIZN&v=3",
+  "page": "https://xjtulijiagui-max.github.io/lijiagui/training-workbench-69142/",
+  "github": "https://github.com/training-workbench-69142/training-workbench-69142"
+ },
+ {
+  "id": "weekly-report-workbench-42645",
+  "title": "weekly-report-workbench-42645",
+  "src": "内训师四期",
+  "group": "1组",
+  "original": "https://weekly-report-workbench-42645.app.workbuddy.host/?sharecode=VH5AFLAF6E",
+  "page": "https://xjtulijiagui-max.github.io/lijiagui/weekly-report-workbench-42645/",
+  "github": "https://github.com/weekly-report-workbench-42645/weekly-report-workbench-42645"
+ },
+ {
+  "id": "yangkang-pm-workbench",
+  "title": "yangkang-pm-workbench",
+  "src": "内训师四期",
+  "group": "1组",
+  "original": "https://yangkang-pm-workbench.app.workbuddy.host/?sharecode=TDNDWUEEKI",
+  "page": "https://xjtulijiagui-max.github.io/lijiagui/yangkang-pm-workbench/",
+  "github": "https://github.com/yangkang-pm-workbench/yangkang-pm-workbench"
+ },
+ {
+  "id": "tio2-procurement-kb",
+  "title": "io2-procurement-kb.app.wo…",
+  "src": "日丰",
+  "group": "第六组",
+  "original": "https://tio2-procurement-kb.app.workbuddy.host/",
+  "page": "https://xjtulijiagui-max.github.io/lijiagui/tio2-procurement-kb/",
+  "github": "https://github.com/tio2-procurement-kb/tio2-procurement-kb"
+ },
+ {
+  "id": "spare-parts-management",
+  "title": "备件管理工作台",
+  "src": "新增",
+  "group": "",
+  "original": "https://wbapp-ohvcjfj8j339capaerzuzr.app.workbuddy.host/?sharecode=4PTE7OA6W7",
+  "page": "https://xjtulijiagui-max.github.io/lijiagui/spare-parts-management/",
+  "github": "https://github.com/xjtulijiagui-max/lijiagui/tree/master/spare-parts-management"
+ },
+ {
+  "id": "invoice-precheck",
+  "title": "开票需求预检工作台",
+  "src": "新增",
+  "group": "",
+  "original": "https://wbapp-1ye2bqrrd6z4goum5fcata.app.workbuddy.host/?sharecode=2KNZXLMP4E",
+  "page": "https://xjtulijiagui-max.github.io/lijiagui/invoice-precheck/",
+  "github": "https://github.com/xjtulijiagui-max/lijiagui/tree/master/invoice-precheck"
+ },
+ {
+  "id": "blade-quality-eval",
+  "title": "lade-quality-eval.app.wor…",
+  "src": "中车时代新材",
+  "group": "第二组",
+  "original": "https://blade-quality-eval.app.workbuddy.host/?sharecode=XOMZX3MBYF",
+  "page": "https://xjtulijiagui-max.github.io/lijiagui/blade-quality-eval/",
+  "github": "https://github.com/blade-quality-eval/blade-quality-eval"
+ },
+ {
+  "id": "quiz-scoreboard-06599",
+  "title": "uiz-scoreboard-06599.app.…",
+  "src": "中车时代新材",
+  "group": "第四组",
+  "original": "https://quiz-scoreboard-06599.app.workbuddy.host/?sharecode=6AIMNM4YC3",
+  "page": "https://xjtulijiagui-max.github.io/lijiagui/quiz-scoreboard-06599/",
+  "github": "https://github.com/quiz-scoreboard-06599/quiz-scoreboard-06599"
+ }
+];
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function render(){const q=document.getElementById('q').value.trim().toLowerCase();const rows=DATA.filter(r=>!q||JSON.stringify(r).toLowerCase().includes(q));document.getElementById('rows').innerHTML=rows.map(r=>'<tr><td>'+esc(r.title)+'</td><td>'+esc(r.src)+'</td><td>'+esc(r.group||'-')+'</td><td><a href="'+esc(r.page)+'" target="_blank" rel="noopener noreferrer">'+esc(r.id)+'/</a> <a href="'+esc(r.original)+'" target="_blank" rel="noopener noreferrer">原始</a></td></tr>').join('');}
+document.getElementById('q').addEventListener('input',render);render();
+</script></body></html>

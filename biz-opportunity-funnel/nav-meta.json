@@ -1,0 +1,18 @@
+{
+ "id": "biz-opportunity-funnel",
+ "title": "biz-opportunity-funnel",
+ "shortTitle": "biz-opportun",
+ "category": "工作台案例",
+ "description": "biz-opportunity-funnel：内训师四期 2组 工作台静态镜像入口。",
+ "path": "biz-opportunity-funnel/",
+ "tags": [
+  "工作台",
+  "WorkBuddy",
+  "内训师四期"
+ ],
+ "type": "客户项目",
+ "client": "内训师四期",
+ "featured": false,
+ "order": 420,
+ "updated": "2026-11-14"
+}
