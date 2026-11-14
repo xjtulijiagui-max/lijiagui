@@ -1,0 +1,22 @@
+{
+  "id": "spare-parts-workbench",
+  "title": "备件管理工作台",
+  "shortTitle": "备件管理台",
+  "category": "WorkBuddy 工作台",
+  "description": "备件管理工作台：缺件清单、库存状态分布、登记与 EAM 库存联动。",
+  "url": "https://xjtulijiagui-max.github.io/lijiagui/spare-parts-workbench/",
+  "tags": [
+    "工作台",
+    "备件管理",
+    "库存",
+    "EAM",
+    "WorkBuddy"
+  ],
+  "type": "工作台",
+  "client": "",
+  "order": 310,
+  "status": "正常",
+  "featured": false,
+  "updated": "2026-11-15",
+  "source": "https://wbapp-ohvcjfj8j339capaerzuzr.app.workbuddy.host/?sharecode=4PTE7OA6W7"
+}
