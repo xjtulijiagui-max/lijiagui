@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>GitHub 中文资源发布面板 · 使用说明</title>
+<meta name="description" content="本地网页发布工具：粘贴链接或文件，自动生成中文资源页并一键发布到主站、自动收录导航。"/>
+<style>:root{--ink:#15223a;--sub:#5b6b86;--bg:#f5f8fd;--card:#fff;--line:#d8e4f7;
+--brand:#061b46;--accent:#0a43c8;--accent-soft:#eef4ff;--ok:#0a7d3c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);
+font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",system-ui,sans-serif;line-height:1.7}
+.hero{background:linear-gradient(132deg,#061b46,#082f78 58%,#0a43c8);color:#fff;padding:44px 20px 34px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.hero .wrap{padding:0}
+.eyebrow{letter-spacing:.16em;text-transform:uppercase;font-size:.8rem;opacity:.8;font-weight:700}
+h1.title{font-size:clamp(1.6rem,3.4vw,2.2rem);margin:10px 0 10px;font-weight:800}
+.lede{max-width:780px;opacity:.92;font-size:1rem}
+.meta{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;font-size:.8rem}
+.meta span{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);
+padding:5px 10px;border-radius:8px}
+.layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:26px;align-items:start;
+padding:26px 0 64px}
+.side{position:sticky;top:18px;background:var(--card);border:1px solid var(--line);
+border-radius:14px;padding:16px;max-height:calc(100vh - 40px);overflow:auto}
+.side h2{font-size:.78rem;letter-spacing:.05em;color:var(--sub);margin:0 0 10px;text-transform:uppercase}
+.side a{display:block;padding:7px 10px;border-radius:8px;color:var(--ink);text-decoration:none;font-size:.9rem}
+.side a:hover{background:var(--accent-soft);color:var(--accent)}
+.main{min-width:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;
+box-shadow:0 10px 30px rgba(17,57,122,.06);padding:22px 24px;margin-bottom:20px}
+.toolbar{display:flex;gap:10px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
+.toolbar input{flex:1;min-width:200px;border:1px solid var(--line);border-radius:10px;
+padding:10px 14px;font-size:.9rem;outline:none}
+.toolbar input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.copied{color:var(--ok);font-size:.85rem;font-weight:700}
+pre.prompt{background:#0e1b33;color:#e8eefb;border-radius:12px;padding:18px;
+overflow:auto;white-space:pre-wrap;word-break:break-word;font-size:.86rem;line-height:1.65;
+font-family:"JetBrains Mono","Consolas",monospace;margin:0}
+.btn{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--accent);
+border-radius:9px;padding:8px 14px;font-size:.85rem;font-weight:700}
+.btn:hover{background:var(--accent-soft)}
+.footer{color:var(--sub);font-size:.8rem;padding:24px 0;text-align:center}
+@media(max-width:820px){.layout{grid-template-columns:1fr}.side{position:static;max-height:none}}</style></head>
+<body>
+<header class="hero"><div class="wrap">
+<div class="eyebrow">GitHub 中文资源</div>
+<h1 class="title">GitHub 中文资源发布面板 · 使用说明</h1>
+<p class="lede">本地网页发布工具：粘贴链接或文件，自动生成中文资源页并一键发布到主站、自动收录导航。</p>
+<div class="meta"><span>类型：提示词库</span>
+<span>来源：内部工具</span>
+<span>发布工具</span><span>GitHub Pages</span><span>提示词</span><span>自动化</span>
+</div></div></header>
+<div class="wrap"><div class="layout">
+<aside class="side"><h2>目录</h2><a href='#content'>正文内容</a>
+<a href="" target="_blank" rel="noopener">来源链接</a></aside>
+<main class="main">
+<section class="card" id="content">
+<div class="toolbar">
+<input placeholder="筛选正文关键词…" oninput="filterText(this.value)"/>
+<button class="btn" onclick="copyBody()">复制正文</button>
+<span class="copied" id="copied"></span>
+</div>
+<div id="bodyBox"><pre class='prompt'># GitHub 中文资源发布面板 · 使用说明
+
+这是一个把「GitHub Publisher」Skill 封装成的本地网页发布工具。
+
+## 功能
+1. 粘贴 GitHub 仓库 / 网页链接，或选择本地 HTML/Markdown 文件，或直接粘贴文本。
+2. 自动抓取来源内容，生成符合主站风格的简体中文资源页（含目录、搜索、复制正文）。
+3. 编辑标题、slug、分类、标签等元数据。
+4. 一键发布：页面 + nav-meta.json + 自动收录到 /list/ 导航。
+5. 全部通过 GitHub Contents API 完成，无需 clone 仓库。
+
+## 启动方式
+双击 run-panel.bat，或运行 python server/app.py
+浏览器自动打开 http://127.0.0.1:8730/
+
+## 发布目标
+- 主站：https://xjtulijiagui-max.github.io/lijiagui/
+- 仓库：xjtulijiagui-max/lijiagui（main 分支根目录）
+- 凭据：复用本机 Git Credential Manager 的 GitHub token
+
+本页即由该面板自身发布生成，用于验证端到端发布链路。</pre></div>
+</section>
+<section class="card"><h3 style="margin-top:0">来源与说明</h3>
+<p>来源：本地素材</p>
+<p>本页由「GitHub 中文资源发布」工具整理生成，内容以来源原文为准。</p></section>
+</main></div>
+<div class="footer">李家贵 · AI 实战训练资源 · 静态 GitHub Pages</div></div>
+<script>
+function copyBody(){var t=document.getElementById('bodyBox').innerText;
+navigator.clipboard.writeText(t).then(function(){
+document.getElementById('copied').textContent='已复制';
+setTimeout(function(){document.getElementById('copied').textContent='';},1500);
+},function(){document.getElementById('copied').textContent='复制失败，请手动选择';});}
+function filterText(q){q=(q||'').trim().toLowerCase();var pre=document.querySelector('#bodyBox pre');
+if(!pre)return;var full=pre.getAttribute('data-full');if(full===null){full=pre.textContent;pre.setAttribute('data-full',full);}
+if(!q){pre.textContent=full;return;}
+var lines=full.split('\n').filter(function(l){return l.toLowerCase().indexOf(q)>=0;});
+pre.textContent=lines.length?lines.join('\n'):'（无匹配行）';}
+</script>
+</body></html>
