@@ -1,0 +1,18 @@
+{
+ "id": "amino-operations",
+ "title": "氨基酸经营工作台",
+ "shortTitle": "氨基酸经营工作台",
+ "category": "工作台案例",
+ "description": "氨基酸经营工作台：阜丰集团 大客户部 工作台静态镜像入口。",
+ "path": "amino-operations/",
+ "tags": [
+  "工作台",
+  "WorkBuddy",
+  "阜丰集团"
+ ],
+ "type": "客户项目",
+ "client": "阜丰集团",
+ "featured": false,
+ "order": 420,
+ "updated": "2026-11-14"
+}

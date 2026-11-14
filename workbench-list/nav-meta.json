@@ -1,0 +1,18 @@
+{
+ "id": "workbench-list",
+ "title": "Workbench List",
+ "shortTitle": "工作台清单",
+ "category": "工作台案例",
+ "description": "WorkBuddy AI 工作台案例清单，GitHub Pages 静态版。",
+ "path": "workbench-list/",
+ "tags": [
+  "工作台",
+  "WorkBuddy",
+  "GitHub Pages"
+ ],
+ "type": "客户项目",
+ "client": "通用",
+ "featured": true,
+ "order": 430,
+ "updated": "2026-11-14"
+}

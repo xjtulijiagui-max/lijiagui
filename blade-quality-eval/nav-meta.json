@@ -1,0 +1,18 @@
+{
+ "id": "blade-quality-eval",
+ "title": "lade-quality-eval.app.wor…",
+ "shortTitle": "lade-quality",
+ "category": "工作台案例",
+ "description": "lade-quality-eval.app.wor…：中车时代新材 第二组 工作台静态镜像入口。",
+ "path": "blade-quality-eval/",
+ "tags": [
+  "工作台",
+  "WorkBuddy",
+  "中车时代新材"
+ ],
+ "type": "客户项目",
+ "client": "中车时代新材",
+ "featured": false,
+ "order": 420,
+ "updated": "2026-11-14"
+}

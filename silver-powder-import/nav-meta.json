@@ -1,0 +1,18 @@
+{
+ "id": "silver-powder-import",
+ "title": "ilver-powder-import.app.w…",
+ "shortTitle": "ilver-powder",
+ "category": "工作台案例",
+ "description": "ilver-powder-import.app.w…：聚和材料 第八组 工作台静态镜像入口。",
+ "path": "silver-powder-import/",
+ "tags": [
+  "工作台",
+  "WorkBuddy",
+  "聚和材料"
+ ],
+ "type": "客户项目",
+ "client": "聚和材料",
+ "featured": false,
+ "order": 420,
+ "updated": "2026-11-14"
+}

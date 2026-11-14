@@ -1,0 +1,18 @@
+{
+ "id": "tio2-procurement-kb",
+ "title": "io2-procurement-kb.app.wo…",
+ "shortTitle": "io2-procurem",
+ "category": "工作台案例",
+ "description": "io2-procurement-kb.app.wo…：日丰 第六组 工作台静态镜像入口。",
+ "path": "tio2-procurement-kb/",
+ "tags": [
+  "工作台",
+  "WorkBuddy",
+  "日丰"
+ ],
+ "type": "客户项目",
+ "client": "日丰",
+ "featured": false,
+ "order": 420,
+ "updated": "2026-11-14"
+}
