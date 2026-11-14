@@ -1,0 +1,23 @@
+{
+  "id": "amino-fufeng-workbench",
+  "title": "氨基酸经营工作台 · 阜丰大客户部",
+  "shortTitle": "氨基酸经营台",
+  "category": "WorkBuddy 工作台",
+  "description": "阜丰大客户部氨基酸经营工作台：重点客户、经营分析、拜访记录与关键指标看板。",
+  "url": "https://xjtulijiagui-max.github.io/lijiagui/amino-fufeng-workbench/",
+  "tags": [
+    "工作台",
+    "氨基酸",
+    "阜丰",
+    "大客户",
+    "经营分析",
+    "WorkBuddy"
+  ],
+  "type": "工作台",
+  "client": "阜丰大客户部",
+  "order": 300,
+  "status": "正常",
+  "featured": false,
+  "updated": "2026-11-15",
+  "source": "https://workbuddy.link/p/LggxvadlkZxhWwLKrrBDfC"
+}
