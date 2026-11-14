@@ -1,0 +1,2632 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>备件管理工作台</title>
+
+<style>
+
+:root{
+
+  --bg:#f4f6f9;--panel:#fff;--line:#e4e8ef;--line2:#eef1f6;
+
+  --ink:#131a26;--ink2:#54637a;--ink3:#8b98ab;
+
+  --pri:#2563eb;--pri-d:#1d4ed8;--pri-bg:#eef4ff;
+
+  --ok:#0f7a4a;--okbg:#e7f6ee;--warn:#a45f08;--warnbg:#fdf3e4;
+
+  --dan:#b3261e;--danbg:#fdeceb;--gray:#68737f;--graybg:#f0f2f6;
+
+  --rail:#101a2b;--rail2:#1b2940;
+
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+
+  --sans:system-ui,-apple-system,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;
+
+}
+
+*{box-sizing:border-box}
+
+html,body{margin:0;height:100%}
+
+body{background:var(--bg);color:var(--ink);font:14px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+
+button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
+
+.app{display:grid;grid-template-columns:230px 1fr;height:100vh;overflow:hidden}
+
+
+
+/* rail */
+
+.rail{background:var(--rail);color:#c5d0e2;display:flex;flex-direction:column;padding:18px 14px;overflow:auto}
+
+.brand{display:flex;gap:9px;align-items:center;margin-bottom:18px}
+
+.brand .logo{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#3b82f6,#0ea5a4);display:grid;place-items:center;color:#fff;font-weight:700;font-size:12px;letter-spacing:.5px}
+
+.brand b{font-size:13.5px;color:#fff;display:block;line-height:1.3}
+
+.brand span{font-size:10.5px;color:#7b8ba6}
+
+nav{display:flex;flex-direction:column;gap:2px}
+
+.nav-item{display:flex;gap:9px;align-items:center;border:1px solid transparent;background:none;color:#c5d0e2;padding:9px 10px;border-radius:9px;cursor:pointer;font-size:13px;text-align:left}
+
+.nav-item .ic{width:18px;text-align:center;font-size:13px;color:#6d7f9b}
+
+.nav-item:hover{background:#16233a}
+
+.nav-item.on{background:var(--rail2);border-color:#2c4266;color:#fff}
+
+.nav-item.on .ic{color:#7fb0ff}
+
+.nav-item .badge{margin-left:auto;font-size:10.5px;background:#b3261e;color:#fff;border-radius:99px;padding:0 6px;min-width:18px;text-align:center;line-height:16px}
+
+.railfoot{margin-top:auto;padding-top:14px;border-top:1px solid #24344d;font-size:11px;color:#6d7f9b;line-height:1.8}
+
+.railfoot b{color:#9fb0c9;font-weight:500}
+
+
+
+/* main */
+
+main{overflow:auto;display:flex;flex-direction:column}
+
+.topbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);padding:12px 24px;display:flex;align-items:center;gap:14px}
+
+.topbar h2{font-size:15.5px;margin:0;font-weight:600}
+
+.topbar .sub{font-size:12px;color:var(--ink3);margin-top:1px}
+
+.spacer{flex:1}
+
+.wrap{padding:20px 24px 60px;max-width:1400px;width:100%}
+
+.view{display:none}
+
+.view.on{display:block}
+
+
+
+/* bits */
+
+.btn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 13px;cursor:pointer;font-size:13px;transition:.15s;white-space:nowrap}
+
+.btn:hover{border-color:#c9d3e3;background:#fafbfd}
+
+.btn.pri{background:var(--pri);border-color:var(--pri);color:#fff}
+
+.btn.pri:hover{background:var(--pri-d)}
+
+.btn.sm{padding:4px 9px;font-size:12px;border-radius:7px}
+
+.btn.ghost{background:transparent;border-color:transparent;color:var(--ink2)}
+
+.btn.ghost:hover{background:#eef1f6}
+
+.btn.dan{color:var(--dan);border-color:#f0c9c6}
+
+.btn.dan:hover{background:var(--danbg)}
+
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:16px}
+
+.card h3{margin:0 0 2px;font-size:13.5px;font-weight:600}
+
+.card .hint{margin:0 0 12px;font-size:12px;color:var(--ink2)}
+
+.grid{display:grid;gap:14px}
+
+.g4{grid-template-columns:repeat(4,1fr)}
+
+.g2{grid-template-columns:1fr 1fr}
+
+.g21{grid-template-columns:1.6fr 1fr}
+
+@media(max-width:1150px){.g4{grid-template-columns:repeat(2,1fr)}.g2,.g21{grid-template-columns:1fr}}
+
+@media(max-width:820px){.app{grid-template-columns:1fr}.rail{display:none}}
+
+.kpi{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+
+.kpi .l{font-size:11.5px;color:var(--ink3);margin-bottom:4px}
+
+.kpi .v{font-size:26px;font-weight:600;letter-spacing:-.02em;line-height:1.1;font-family:var(--mono)}
+
+.kpi .v small{font-size:11px;font-weight:400;color:var(--ink3);font-family:var(--sans);margin-left:4px}
+
+.kpi .m{font-size:11.5px;color:var(--ink3);margin-top:6px}
+
+.kpi.warn .v{color:var(--warn)} .kpi.dan .v{color:var(--dan)} .kpi.ok .v{color:var(--ok)} .kpi.gray .v{color:var(--gray)}
+
+.toolbar{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+
+input[type=text],input[type=number],input[type=date],select,textarea{border:1px solid var(--line);border-radius:8px;padding:7px 10px;background:#fff;width:100%}
+
+input:focus,select:focus,textarea:focus{outline:2px solid #cfe0ff;border-color:var(--pri)}
+
+.search{width:250px}
+
+label.fl{display:block;font-size:12px;color:var(--ink2);margin-bottom:4px;font-weight:500}
+
+table{width:100%;border-collapse:collapse;font-size:13px}
+
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line2);vertical-align:middle}
+
+th{background:#f7f9fc;color:var(--ink2);font-weight:600;font-size:11.5px;white-space:nowrap;position:sticky;top:0;z-index:2}
+
+tbody tr:hover{background:#fafcff}
+
+td.num,th.num{text-align:right;font-family:var(--mono);font-size:12.5px}
+
+.mono{font-family:var(--mono);font-size:12px}
+
+.tbl-wrap{border:1px solid var(--line);border-radius:10px;overflow:auto;max-height:620px}
+
+.tag{display:inline-block;border-radius:5px;padding:1px 7px;font-size:11.5px;white-space:nowrap}
+
+.t-ok{background:var(--okbg);color:var(--ok)}
+
+.t-warn{background:var(--warnbg);color:var(--warn)}
+
+.t-dan{background:var(--danbg);color:var(--dan)}
+
+.t-gray{background:var(--graybg);color:var(--gray)}
+
+.t-blue{background:var(--pri-bg);color:var(--pri-d)}
+
+.t-none{color:var(--ink3)}
+
+.chips{display:flex;gap:7px;flex-wrap:wrap}
+
+.chip{border:1px solid var(--line);background:#fff;border-radius:99px;padding:4px 11px;font-size:12px;cursor:pointer;color:var(--ink2)}
+
+.chip.on{background:var(--pri);border-color:var(--pri);color:#fff}
+
+.empty{text-align:center;color:var(--ink3);padding:30px 10px;font-size:13px}
+
+.empty .ico{display:block;font-size:22px;opacity:.4;margin-bottom:6px}
+
+.pager{display:flex;gap:6px;align-items:center;justify-content:flex-end;margin-top:10px;font-size:12px;color:var(--ink2)}
+
+.bars{display:flex;flex-direction:column;gap:9px;margin-top:4px}
+
+.bar-row{display:grid;grid-template-columns:96px 1fr 44px;gap:10px;align-items:center;font-size:12px}
+
+.bar{height:8px;background:#eef1f6;border-radius:99px;overflow:hidden}
+
+.bar i{display:block;height:100%;border-radius:99px}
+
+.bar-row .n{text-align:right;font-family:var(--mono);color:var(--ink2)}
+
+.banner{border-radius:10px;padding:10px 13px;font-size:12.5px;margin-bottom:14px;border:1px solid}
+
+.banner.info{background:var(--pri-bg);border-color:#cfdffd;color:#1c3f8f}
+
+.banner.warn{background:var(--warnbg);border-color:#f0dab5;color:#7a4706}
+
+.banner.err{background:var(--danbg);border-color:#f4c7c3;color:#8c1d18}
+
+.banner.ok{background:var(--okbg);border-color:#c6e8d5;color:#0b5c38}
+
+.modal-bg{position:fixed;inset:0;background:rgba(15,23,38,.45);display:none;z-index:100;align-items:flex-start;justify-content:center;padding:56px 16px;overflow:auto}
+
+.modal-bg.on{display:flex}
+
+.modal{background:#fff;border-radius:14px;width:100%;max-width:620px;box-shadow:0 20px 60px rgba(10,20,40,.25)}
+
+.modal .hd{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center}
+
+.modal .hd b{font-size:14px}
+
+.modal .bd{padding:18px 20px}
+
+.modal .ft{padding:14px 20px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:9px}
+
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+.f2 .full{grid-column:1/-1}
+
+.toasts{position:fixed;right:20px;bottom:20px;z-index:200;display:flex;flex-direction:column;gap:8px}
+
+.toast{background:#101a2b;color:#fff;border-radius:9px;padding:10px 14px;font-size:12.5px;box-shadow:0 8px 24px rgba(0,0,0,.2);animation:in .2s ease}
+
+.toast.ok{background:#0f5b39} .toast.err{background:#8c1d18}
+
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.tip{font-size:11.5px;color:var(--ink3);line-height:1.7;margin-top:8px}
+
+.sep{height:1px;background:var(--line2);margin:14px 0}
+
+.dl{display:grid;grid-template-columns:150px 1fr;font-size:12.5px;gap:0}
+
+.dl .k{padding:6px 0;color:var(--ink2);border-bottom:1px dashed var(--line2)}
+
+.dl .v{padding:6px 0;border-bottom:1px dashed var(--line2)}
+
+textarea.ta{min-height:120px;font:12.5px/1.6 var(--mono);resize:vertical;background:#fcfdff}
+
+.filebtn{position:relative;overflow:hidden;display:inline-block}
+
+.filebtn input{position:absolute;inset:0;opacity:0;cursor:pointer}
+
+@media print{
+
+  .rail,.topbar,.toolbar,.chips,.pager,.btn{display:none!important}
+
+  .app{display:block;height:auto}main{overflow:visible}
+
+  .wrap{padding:0;max-width:none}.tbl-wrap{max-height:none;border:none}
+
+  body{background:#fff}th{position:static}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="app">
+
+  <aside class="rail">
+
+    <div class="brand">
+
+      <div class="logo">SP</div>
+
+      <div><b>备件管理工作台</b><span>台账 · 库存 · 预警 · 批量核对</span></div>
+
+    </div>
+
+    <nav id="nav">
+
+      <button class="nav-item on" data-view="dash"><span class="ic">▤</span>总览</button>
+
+      <button class="nav-item" data-view="ledger"><span class="ic">▦</span>备件台账</button>
+
+      <button class="nav-item" data-view="moves"><span class="ic">⇄</span>出入库</button>
+
+      <button class="nav-item" data-view="alert"><span class="ic">▲</span>库存预警<span class="badge" id="navAlert">0</span></button>
+
+      <button class="nav-item" data-view="query"><span class="ic">⌕</span>批量核对</button>
+
+      <button class="nav-item" data-view="data"><span class="ic">⚙</span>数据与备份</button>
+
+    </nav>
+
+    <div class="railfoot">
+
+      备件 <b id="footCount">0</b> 项 · 流水 <b id="footMoves">0</b> 条<br>
+
+      数据保存在本机浏览器<br>
+
+      <span id="footTime">—</span>
+
+    </div>
+
+  </aside>
+
+
+
+  <main>
+
+    <div class="topbar">
+
+      <div><h2 id="pageTitle">总览</h2><div class="sub" id="pageSub">库存健康度与今日待处理</div></div>
+
+      <span class="spacer"></span>
+
+      <span class="tag t-blue" id="topNature">本机数据</span>
+
+      <button class="btn" id="btnQuickOut">快速领料</button>
+
+      <button class="btn pri" id="btnQuickIn">新增备件</button>
+
+    </div>
+
+
+
+    <div class="wrap">
+
+
+
+      <!-- ================= 总览 ================= -->
+
+      <section class="view on" id="view-dash">
+
+        <div class="grid g4" id="kpis" style="margin-bottom:16px"></div>
+
+        <div class="grid g21">
+
+          <div class="card">
+
+            <h3>缺料清单</h3>
+
+            <p class="hint">按缺口比例排序，先处理最可能停机的那几项。</p>
+
+            <div class="tbl-wrap" id="dashShort"></div>
+
+          </div>
+
+          <div class="card">
+
+            <h3>库存状态分布</h3>
+
+            <p class="hint">判定口径：0 → 无库存；安全库存空或 0 → 标准缺失；低于 → 低于安全库存。</p>
+
+            <div class="bars" id="dashBars"></div>
+
+            <div class="sep"></div>
+
+            <h3>最近出入库</h3>
+
+            <div id="dashMoves" style="margin-top:8px"></div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- ================= 台账 ================= -->
+
+      <section class="view" id="view-ledger">
+
+        <div class="card">
+
+          <div class="toolbar">
+
+            <input type="text" class="search" id="ledgerSearch" placeholder="搜索编码 / 名称 / 规格 / 库位">
+
+            <select id="ledgerStatus" style="width:150px">
+
+              <option value="all">全部状态</option>
+
+              <option value="低于安全库存">低于安全库存</option>
+
+              <option value="无库存">无库存</option>
+
+              <option value="标准缺失">标准缺失</option>
+
+              <option value="正常">正常</option>
+
+              <option value="停用">已停用</option>
+
+            </select>
+
+            <span class="spacer"></span>
+
+            <button class="btn" id="btnTemplate">下载导入模板</button>
+
+            <span class="filebtn btn">导入 CSV<input type="file" id="ledgerFile" accept=".csv,.txt"></span>
+
+            <button class="btn" id="btnExportLedger">导出台账</button>
+
+            <button class="btn pri" id="btnAddSpare">+ 新增备件</button>
+
+          </div>
+
+          <div class="tbl-wrap"><table id="ledgerTable"></table></div>
+
+          <div class="pager" id="ledgerPager"></div>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- ================= 出入库 ================= -->
+
+      <section class="view" id="view-moves">
+
+        <div class="grid g2">
+
+          <div class="card">
+
+            <h3>登记出入库</h3>
+
+            <p class="hint">出库不能超过现存量；每次登记都会生成一条不可修改的流水。</p>
+
+            <div class="f2">
+
+              <div><label class="fl">类型</label><select id="mvType"><option>出库</option><option>入库</option><option>调整</option></select></div>
+
+              <div><label class="fl">备件</label><input type="text" id="mvCode" list="spareList" placeholder="输入编码或名称"><datalist id="spareList"></datalist></div>
+
+              <div><label class="fl">数量</label><input type="number" id="mvQty" min="0" step="1" placeholder="0"></div>
+
+              <div><label class="fl">经手人</label><input type="text" id="mvPerson" placeholder="可选"></div>
+
+              <div class="full"><label class="fl">备注 / 用途</label><input type="text" id="mvNote" placeholder="例：3号线减速机更换"></div>
+
+            </div>
+
+            <div class="toolbar" style="margin:14px 0 0">
+
+              <button class="btn pri" id="btnSubmitMove">提交</button>
+
+              <button class="btn ghost" id="btnClearMove">清空</button>
+
+              <span class="tip" id="mvHint"></span>
+
+            </div>
+
+          </div>
+
+          <div class="card">
+
+            <h3>当前选择</h3>
+
+            <div id="mvPreview" class="dl"><div class="k">未选择</div><div class="v">—</div></div>
+
+          </div>
+
+        </div>
+
+        <div class="card">
+
+          <div class="toolbar">
+
+            <div class="chips" id="moveFilters">
+
+              <button class="chip on" data-f="all">全部</button>
+
+              <button class="chip" data-f="出库">出库</button>
+
+              <button class="chip" data-f="入库">入库</button>
+
+              <button class="chip" data-f="调整">调整</button>
+
+            </div>
+
+            <span class="spacer"></span>
+
+            <button class="btn" id="btnExportMoves">导出流水</button>
+
+          </div>
+
+          <div class="tbl-wrap"><table id="movesTable"></table></div>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- ================= 预警 ================= -->
+
+      <section class="view" id="view-alert">
+
+        <div class="card">
+
+          <div class="toolbar">
+
+            <div class="chips" id="alertChips"></div>
+
+            <span class="spacer"></span>
+
+            <button class="btn" id="btnPrintAlert">打印</button>
+
+            <button class="btn pri" id="btnExportAlert">导出报缺清单</button>
+
+          </div>
+
+          <div class="tbl-wrap"><table id="alertTable"></table></div>
+
+          <div class="tip">缺口 = 安全库存 − 现存量。安全库存缺失的条目不给缺口估算，标「标准缺失」提请补维护。</div>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- ================= 批量核对 ================= -->
+
+      <section class="view" id="view-query">
+
+        <div class="banner info">
+
+          <b>用途</b>拿一张报警单编码清单，去核对 EAM 导出的现存量：一次性告诉你哪些能领、哪些要报缺、哪些编码有问题。两段内容都只在本机解析，不上传。
+
+        </div>
+
+        <div class="grid g2">
+
+          <div class="card">
+
+            <h3>① 待查编码清单</h3>
+
+            <p class="hint">一列编码（可带名称）。从 Excel 直接复制整列粘贴即可。</p>
+
+            <textarea class="ta" id="qList" placeholder="物料编码&#9;物料名称&#10;A1001&#9;深沟球轴承 6205"></textarea>
+
+            <div class="toolbar" style="margin:10px 0 0">
+
+              <label style="font-size:12px;color:var(--ink2)"><input type="checkbox" id="qListHeader" checked> 首行是表头</label>
+
+              <button class="btn sm ghost" id="qDemo">填入示例</button>
+
+            </div>
+
+          </div>
+
+          <div class="card">
+
+            <h3>② EAM 现存量导出</h3>
+
+            <p class="hint">一行一库位。列名不用管，下面会自动识别，也可以手动改。</p>
+
+            <textarea class="ta" id="qExport" placeholder="物料编码&#9;物料名称&#9;现存量&#9;库位&#9;安全库存"></textarea>
+
+            <div class="toolbar" style="margin:10px 0 0">
+
+              <label style="font-size:12px;color:var(--ink2)"><input type="checkbox" id="qExportHeader" checked> 首行是表头</label>
+
+              <button class="btn sm ghost" id="qClear">清空</button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="card">
+
+          <div class="toolbar">
+
+            <span style="font-size:12px;color:var(--ink2)">列对应：</span>
+
+            <select id="qMapCode" style="width:150px"></select>
+
+            <select id="qMapQty" style="width:150px"></select>
+
+            <select id="qMapSafety" style="width:150px"></select>
+
+            <select id="qMapName" style="width:150px"></select>
+
+            <select id="qMapLoc" style="width:150px"></select>
+
+            <span class="spacer"></span>
+
+            <button class="btn pri" id="btnRunQuery">开始核对</button>
+
+          </div>
+
+          <div id="qResult"></div>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- ================= 数据 ================= -->
+
+      <section class="view" id="view-data">
+
+        <div class="grid g2">
+
+          <div class="card">
+
+            <h3>数据概况</h3>
+
+            <div class="dl" id="dataStats"></div>
+
+          </div>
+
+          <div class="card">
+
+            <h3>备份与恢复</h3>
+
+            <p class="hint">数据只存在本机浏览器（localStorage）。换电脑或清缓存前，先导出备份。</p>
+
+            <div class="toolbar">
+
+              <button class="btn pri" id="btnExportJson">导出全量备份</button>
+
+              <span class="filebtn btn">导入备份<input type="file" id="jsonFile" accept=".json"></span>
+
+            </div>
+
+            <div class="sep"></div>
+
+            <h3>重置</h3>
+
+            <div class="toolbar" style="margin-top:10px">
+
+              <button class="btn" id="btnSeed">载入演示数据</button>
+
+              <button class="btn dan" id="btnWipe">清空全部数据</button>
+
+            </div>
+
+            <div class="tip">清空不可撤销，请先导出备份。演示数据用于试跑，正式使用前请清空后录入真实台账。</div>
+
+          </div>
+
+        </div>
+
+        <div class="card">
+
+          <h3>口径说明</h3>
+
+          <div class="dl">
+
+            <div class="k">库存状态</div><div class="v">现存量 = 0 → 无库存；安全库存为空或 0 → 标准缺失；现存量 &lt; 安全库存 → 低于安全库存；否则正常（等值算正常）</div>
+
+            <div class="k">现存量</div><div class="v">本工作台按编码汇总一个数；多库位明细在「批量核对」里按库位合并计算</div>
+
+            <div class="k">出库</div><div class="v">不允许超过现存量；不足会直接拒绝，需要先入库或调整</div>
+
+            <div class="k">停用</div><div class="v">停用备件不计入预警统计，但仍可在台账查询与出库</div>
+
+            <div class="k">金额</div><div class="v">本版不含单价与金额（避免用错价格口径），需要时可加</div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+
+    </div>
+
+  </main>
+
+</div>
+
+
+
+<div class="modal-bg" id="modalBg">
+
+  <div class="modal">
+
+    <div class="hd"><b id="modalTitle">新增备件</b><span class="spacer"></span><button class="btn ghost sm" id="modalX">✕</button></div>
+
+    <div class="bd">
+
+      <div class="f2">
+
+        <div><label class="fl">物料编码 *</label><input type="text" id="fCode" placeholder="A1001"></div>
+
+        <div><label class="fl">物料名称 *</label><input type="text" id="fName" placeholder="深沟球轴承"></div>
+
+        <div><label class="fl">规格型号</label><input type="text" id="fSpec" placeholder="6205-2RS"></div>
+
+        <div><label class="fl">单位</label><input type="text" id="fUnit" placeholder="个 / 套 / 米"></div>
+
+        <div><label class="fl">库位</label><input type="text" id="fLoc" placeholder="C01-01"></div>
+
+        <div><label class="fl">现存量</label><input type="number" id="fQty" min="0" step="1" value="0"></div>
+
+        <div><label class="fl">安全库存（留空 = 标准缺失）</label><input type="number" id="fSafety" min="0" step="1" placeholder="留空"></div>
+
+        <div><label class="fl">状态</label><select id="fEnabled"><option value="1">启用</option><option value="0">停用</option></select></div>
+
+        <div class="full"><label class="fl">备注</label><input type="text" id="fNote" placeholder="可选"></div>
+
+      </div>
+
+    </div>
+
+    <div class="ft"><button class="btn" id="modalCancel">取消</button><button class="btn pri" id="modalSave">保存</button></div>
+
+  </div>
+
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+
+
+<script>
+
+/* ==========================================================
+
+   备件管理工作台 · 单文件版
+
+   数据：localStorage；无网络请求；双击即用
+
+   ========================================================== */
+
+
+
+/* ---------- 基础工具 ---------- */
+
+function $(id){ return document.getElementById(id); }
+
+function esc(s){
+
+  return String(s==null?'':s).replace(/[&<>"']/g,function(c){
+
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+
+  });
+
+}
+
+function pad(n){ return n<10?'0'+n:''+n; }
+
+function nowStr(){
+
+  var d=new Date();
+
+  return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+' '+pad(d.getHours())+':'+pad(d.getMinutes());
+
+}
+
+function num(v){ var n=Number(v); return isFinite(n)?n:0; }
+
+function toast(msg, kind){
+
+  var t=document.createElement('div');
+
+  t.className='toast'+(kind?' '+kind:'');
+
+  t.textContent=msg;
+
+  $('toasts').appendChild(t);
+
+  setTimeout(function(){ t.style.opacity='0'; t.style.transition='.3s'; setTimeout(function(){ t.remove(); },320); },2400);
+
+}
+
+function download(name, text, type){
+
+  var blob=new Blob([text],{type:type||'text/csv;charset=utf-8'});
+
+  var a=document.createElement('a');
+
+  a.href=URL.createObjectURL(blob); a.download=name;
+
+  document.body.appendChild(a); a.click();
+
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); },400);
+
+}
+
+function toCSV(rows){
+
+  return rows.map(function(r){
+
+    return r.map(function(c){
+
+      var s=String(c==null?'':c);
+
+      return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;
+
+    }).join(',');
+
+  }).join('\r\n');
+
+}
+
+function stamp(){
+
+  var d=new Date();
+
+  return ''+d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate())+'_'+pad(d.getHours())+pad(d.getMinutes());
+
+}
+
+
+
+/* @@DATA-START */
+
+function statusOf(qty, safety){
+
+  var q = Number(qty)||0;
+
+  if(q === 0) return '无库存';
+
+  if(safety === null || safety === undefined || safety === '' || Number(safety) === 0) return '标准缺失';
+
+  if(q < Number(safety)) return '低于安全库存';
+
+  return '正常';
+
+}
+
+function severityOf(st){
+
+  return st==='无库存'?0:st==='低于安全库存'?1:st==='标准缺失'?2:3;
+
+}
+
+function computeStats(spares){
+
+  var s={total:spares.length, qty:0, normal:0, below:0, zero:0, missing:0, disabled:0};
+
+  spares.forEach(function(p){
+
+    s.qty += num(p.qty);
+
+    if(p.enabled === false){ s.disabled++; return; }
+
+    var st=statusOf(p.qty, p.safety);
+
+    if(st==='正常') s.normal++;
+
+    else if(st==='低于安全库存') s.below++;
+
+    else if(st==='无库存') s.zero++;
+
+    else s.missing++;
+
+  });
+
+  return s;
+
+}
+
+function findSpare(spares, code){
+
+  var c=String(code||'').trim().toUpperCase();
+
+  for(var i=0;i<spares.length;i++){
+
+    if(String(spares[i].code).toUpperCase()===c) return spares[i];
+
+  }
+
+  return null;
+
+}
+
+function nextMoveId(moves){
+
+  var max=0;
+
+  moves.forEach(function(m){
+
+    var n=parseInt(String(m.id||'').replace(/\D/g,''),10);
+
+    if(isFinite(n) && n>max) max=n;
+
+  });
+
+  return 'M'+(max+1);
+
+}
+
+function applyMove(spares, moves, input){
+
+  var p=findSpare(spares, input.code);
+
+  if(!p) return {ok:false, err:'台账里没有这个编码：'+input.code};
+
+  var q=Number(input.qty);
+
+  if(!isFinite(q) || q<=0) return {ok:false, err:'数量必须是大于 0 的数字'};
+
+  var before=num(p.qty), after;
+
+  if(input.type==='入库') after=before+q;
+
+  else if(input.type==='出库'){
+
+    if(q>before) return {ok:false, err:'出库 '+q+' 超过现存量 '+before};
+
+    after=before-q;
+
+  } else after=q;
+
+  var move={id:nextMoveId(moves), ts:input.ts||nowStr(), type:input.type, code:p.code, name:p.name,
+
+            qty:q, before:before, after:after, person:input.person||'', note:input.note||''};
+
+  var newSpares=spares.map(function(x){
+
+    if(x.code!==p.code) return x;
+
+    var c={}; for(var k in x) c[k]=x[k];
+
+    c.qty=after; c.updatedAt=move.ts;
+
+    return c;
+
+  });
+
+  return {ok:true, spares:newSpares, moves:[move].concat(moves), move:move};
+
+}
+
+function mergeImport(spares, rows){
+
+  var arr=spares.slice(), added=0, updated=0, skipped=0;
+
+  rows.forEach(function(r){
+
+    var code=String(r.code||'').trim();
+
+    if(!code || !String(r.name||'').trim()){ skipped++; return; }
+
+    var hit=null;
+
+    for(var i=0;i<arr.length;i++){ if(String(arr[i].code).toUpperCase()===code.toUpperCase()){ hit=i; break; } }
+
+    var safety=(r.safety===''||r.safety==null||r.safety===undefined)?null:Number(r.safety);
+
+    if(hit===null){
+
+      arr.push({code:code, name:String(r.name).trim(), spec:String(r.spec||''), unit:String(r.unit||'个'),
+
+                location:String(r.location||''), qty:num(r.qty), safety:safety,
+
+                enabled:true, note:String(r.note||''), updatedAt:nowStr()});
+
+      added++;
+
+    } else {
+
+      var o=arr[hit];
+
+      arr[hit]={code:o.code, name:String(r.name).trim()||o.name, spec:String(r.spec||'')||o.spec,
+
+                unit:String(r.unit||'')||o.unit, location:String(r.location||'')||o.location,
+
+                qty:(r.qty===''||r.qty==null)?o.qty:num(r.qty),
+
+                safety:safety, enabled:o.enabled, note:String(r.note||'')||o.note, updatedAt:nowStr()};
+
+      updated++;
+
+    }
+
+  });
+
+  return {spares:arr, added:added, updated:updated, skipped:skipped};
+
+}
+
+function shortList(spares, limit){
+
+  var arr=spares.filter(function(p){
+
+    if(p.enabled===false) return false;
+
+    var st=statusOf(p.qty,p.safety);
+
+    return st!=='正常';
+
+  }).map(function(p){
+
+    var q=num(p.qty), sf=(p.safety==null||p.safety==='')?null:num(p.safety);
+
+    var gap = sf==null ? null : sf-q;
+
+    var ratio = (sf==null||sf===0) ? 0 : (sf-q)/sf;
+
+    return {p:p, st:statusOf(p.qty,p.safety), gap:gap, ratio:ratio};
+
+  });
+
+  arr.sort(function(a,b){
+
+    var d=severityOf(a.st)-severityOf(b.st);
+
+    if(d!==0) return d;
+
+    return b.ratio-a.ratio;
+
+  });
+
+  return limit?arr.slice(0,limit):arr;
+
+}
+
+/* @@DATA-END */
+
+
+
+/* ---------- 规则引擎（批量核对用） ---------- */
+
+/* @@ENGINE-START */
+
+function stripInvisible(s){ return String(s==null?'':s).replace(/[\u200B-\u200F\u202A-\u202E\u2060\uFEFF]/g,''); }
+
+function toHalfWidth(s){
+
+  return String(s).replace(/[\uFF01-\uFF5E]/g,function(c){ return String.fromCharCode(c.charCodeAt(0)-0xFEE0); })
+
+                  .replace(/\u3000/g,' ');
+
+}
+
+function normalizeCode(raw){
+
+  var s=stripInvisible(raw); s=toHalfWidth(s);
+
+  s=s.replace(/^[\s\u00A0]+/,'').replace(/[\s\u00A0]+$/,'');
+
+  return s.toUpperCase();
+
+}
+
+function isCodeLike(code){
+
+  if(!code) return false;
+
+  if(!/^[A-Z0-9][A-Z0-9._-]{2,19}$/.test(code)) return false;
+
+  if(!/[0-9]/.test(code)) return false;
+
+  return true;
+
+}
+
+function normalizeName(s){
+
+  var t=toHalfWidth(stripInvisible(s)).replace(/\s+/g,'');
+
+  t=t.replace(/[（(][^（()）]*[)）]$/,'');
+
+  return t.toUpperCase();
+
+}
+
+function parseQty(raw){
+
+  var s=toHalfWidth(stripInvisible(raw)).replace(/^\s+|\s+$/g,'');
+
+  if(s==='') return {empty:true, value:null, bad:false};
+
+  var t=s.replace(/,/g,'').replace(/\s/g,'');
+
+  if(/^[+]?[0-9]+(\.[0-9]+)?$/.test(t)) return {empty:false, value:Number(t), bad:false};
+
+  if(/^-[0-9]+(\.[0-9]+)?$/.test(t)) return {empty:false, value:Number(t), bad:false, negative:true};
+
+  return {empty:false, value:null, bad:true};
+
+}
+
+function judgeStatus(total, safety){
+
+  if(total===0) return '无库存';
+
+  if(safety===null||safety===undefined||safety===0) return '标准缺失';
+
+  if(total<safety) return '低于安全库存';
+
+  return '正常';
+
+}
+
+function runEngine(input){
+
+  var listRows=input.listRows||[], exportRows=input.exportRows||[];
+
+  var rows=[], exceptions=[], notes=[];
+
+  var idx={}, exportDup=0, seenPair={};
+
+  exportRows.forEach(function(e){
+
+    var norm=normalizeCode(e.rawCode);
+
+    if(!norm) return;
+
+    if(!idx[norm]) idx[norm]=[];
+
+    idx[norm].push(e);
+
+    var key=norm+'||'+String(e.location==null?'':e.location).replace(/\s/g,'');
+
+    if(seenPair[key]) exportDup++; else seenPair[key]=1;
+
+  });
+
+  if(exportDup>0) notes.push('导出中存在 '+exportDup+' 行「同编码+同库位」疑似重复，已全部计入合计');
+
+  var groups={}, order=[], nonEmpty=0;
+
+  listRows.forEach(function(r){
+
+    var raw=String(r.raw==null?'':r.raw);
+
+    if(!raw.replace(/\s/g,'')) return;
+
+    nonEmpty++;
+
+    var norm=normalizeCode(raw), ok=isCodeLike(norm);
+
+    var key=ok?norm:'RAW:'+raw.replace(/^\s+|\s+$/g,'');
+
+    if(!groups[key]){
+
+      groups[key]={norm:ok?norm:'', isCode:ok, raw:raw.replace(/^\s+|\s+$/g,''),
+
+                   name:String(r.name==null?'':r.name).replace(/^\s+|\s+$/g,''), count:0, rowNos:[]};
+
+      order.push(key);
+
+    }
+
+    var g=groups[key]; g.count++; g.rowNos.push(r.rowNo);
+
+    if(!g.name && r.name) g.name=String(r.name).replace(/^\s+|\s+$/g,'');
+
+  });
+
+  var matchedCount=0;
+
+  order.forEach(function(key){
+
+    var g=groups[key], note=[];
+
+    if(g.count>1) note.push('清单重复 '+g.count+' 次（行 '+g.rowNos.join('、')+'）');
+
+    var row={rawCode:g.raw, code:g.isCode?g.norm:g.raw, name:'', qty:null, locations:'—',
+
+             safety:null, status:'—', flag:'—', note:''};
+
+    if(!g.isCode){
+
+      row.flag='非编码行'; row.name=g.name||'—'; row.note=note.join('；');
+
+      exceptions.push({rawCode:g.raw, normCode:'', name:row.name, type:'非编码行', note:row.note});
+
+      rows.push(row); return;
+
+    }
+
+    var hits=idx[g.norm]||[];
+
+    if(!hits.length){
+
+      row.flag='查不到'; row.name=g.name||'—'; row.note=note.join('；');
+
+      exceptions.push({rawCode:g.raw, normCode:g.norm, name:row.name, type:'查不到', note:row.note});
+
+      rows.push(row); return;
+
+    }
+
+    matchedCount++;
+
+    var stopped=hits.some(function(h){ return String(h.statusRaw==null?'':h.statusRaw).indexOf('停用')>=0; });
+
+    if(stopped){
+
+      row.flag='停用';
+
+      row.name=(hits.map(function(h){ return String(h.name==null?'':h.name).trim(); }).filter(Boolean)[0])||g.name||'—';
+
+      note.push('导出标记停用，现存量未采用'); row.note=note.join('；');
+
+      exceptions.push({rawCode:g.raw, normCode:g.norm, name:row.name, type:'停用', note:row.note});
+
+      rows.push(row); return;
+
+    }
+
+    var sum=0, emptyHit=0, negHit=0, bad=false;
+
+    hits.forEach(function(h){
+
+      var p=parseQty(h.qtyRaw);
+
+      if(p.bad){ bad=true; return; }
+
+      if(p.empty){ emptyHit++; return; }
+
+      sum+=p.value; if(p.value<0) negHit++;
+
+    });
+
+    var safety=null, safetyBad=false, safetySeen=false, conflict=false;
+
+    hits.forEach(function(h){
+
+      var p=parseQty(h.safetyRaw);
+
+      if(p.bad){ safetyBad=true; return; }
+
+      if(p.empty) return;
+
+      if(!safetySeen){ safety=p.value; safetySeen=true; }
+
+      else if(p.value!==safety) conflict=true;
+
+    });
+
+    var expName=hits.map(function(h){ return String(h.name==null?'':h.name).replace(/^\s+|\s+$/g,''); }).filter(Boolean)[0]||'';
+
+    row.name=expName||g.name||'—';
+
+    var set={}, locs=[];
+
+    hits.forEach(function(h){
+
+      var v=String(h.location==null?'':h.location).replace(/^\s+|\s+$/g,'');
+
+      if(!v) return;
+
+      if(!set[v]){ set[v]=1; locs.push(v); }
+
+    });
+
+    locs.sort(function(a,b){ return a<b?-1:a>b?1:0; });
+
+    row.locations=locs.length?locs.join('、'):'—';
+
+    if(bad||safetyBad){
+
+      row.flag='数据异常'; note.push(bad?'现存量含非数值单元格':'安全库存含非数值单元格');
+
+      row.note=note.join('；');
+
+      exceptions.push({rawCode:g.raw, normCode:g.norm, name:row.name, type:'数据异常', note:row.note});
+
+      rows.push(row); return;
+
+    }
+
+    row.qty=sum; row.safety=safetySeen?safety:null;
+
+    row.status=judgeStatus(sum,row.safety);
+
+    var mismatch=false;
+
+    if(expName && g.name) mismatch=normalizeName(expName)!==normalizeName(g.name);
+
+    if(mismatch){
+
+      row.flag='名称不符';
+
+      note.push('清单名「'+g.name+'」≠ 导出名「'+expName+'」');
+
+      exceptions.push({rawCode:g.raw, normCode:g.norm, name:g.name, type:'名称不符', note:note.join('；')});
+
+    }
+
+    if(emptyHit>0) note.push('含 '+emptyHit+' 个空值按 0 计');
+
+    if(negHit>0) note.push('含负数 '+negHit+' 行');
+
+    if(conflict) note.push('多行安全库存不一致，取首个非空值');
+
+    row.note=note.join('；');
+
+    rows.push(row);
+
+  });
+
+  var dist={'正常':0,'低于安全库存':0,'无库存':0,'标准缺失':0,'—':0}, byType={};
+
+  rows.forEach(function(r){ dist[r.status]=(dist[r.status]||0)+1; });
+
+  exceptions.forEach(function(e){ byType[e.type]=(byType[e.type]||0)+1; });
+
+  var expected=order.length;
+
+  var coverage=expected?Math.round(rows.length/expected*1000)/10:0;
+
+  return {rows:rows, exceptions:exceptions, notes:notes,
+
+    stats:{listRawRows:nonEmpty, listDistinct:expected, dupRows:nonEmpty-order.length,
+
+           outputRows:rows.length, matched:matchedCount, coverage:coverage,
+
+           conservation:rows.length===expected, dist:dist, excTotal:exceptions.length, excByType:byType}};
+
+}
+
+/* @@ENGINE-END */
+
+
+
+/* ---------- 存储 ---------- */
+
+var DB_KEY='spare_workbench_v1';
+
+var DB={spares:[], moves:[], meta:{createdAt:'', updatedAt:''}};
+
+
+
+function seedSpares(){
+
+  var raw=[
+
+    ['A1001','深沟球轴承','6205-2RS','套','C01-01',12,10],
+
+    ['A1002','骨架油封','45x62x8','个','D02-04',2,5],
+
+    ['A1003','气缸密封圈','SC63','个','B01-07',0,4],
+
+    ['A1004','接近开关','M12 PNP','个','A03-02',6,null],
+
+    ['A1006','链条','08B-1 单排','条','C02-01',8,5],
+
+    ['A1007','减速机输出轴','ZQ350','根','E01-01',3,2],
+
+    ['A1009','电磁阀','4V210-08','个','D01-05',5,2],
+
+    ['A1010','同步带','HTD-8M-1200','条','A04-01',12,12],
+
+    ['A1011','变频器风扇','12038','个','B02-03',9,4],
+
+    ['A1012','联轴器缓冲垫','Φ95','个','C03-08',6,2],
+
+    ['A1013','直线导轨滑块','HGH20','个','D04-02',5,3],
+
+    ['A1014','光电开关','E3Z-D61','个','A01-05',7,5],
+
+    ['A1015','气动快插接头','Φ8','个','B03-11',1,6],
+
+    ['A1016','三角带','B型 1200','条','D01-12',4,6],
+
+    ['A1017','耐油胶管','DN20','米','F01-02',35,20],
+
+    ['A1018','液压油滤芯','HF6510','个','F02-01',4,4],
+
+    ['A1019','轴承座','UCP205','个','C01-05',7,3],
+
+    ['A1020','平键','8x7x40','个','G01-01',12,30],
+
+    ['A1021','梅花弹性块','Φ95','个','C03-09',8,8],
+
+    ['A1022','编码器线缆','3m 伺服','根','E02-03',0,2],
+
+    ['A1023','空气滤芯','AF30P','个','D02-01',3,6],
+
+    ['A1024','黄油嘴','M10 直角','个','G02-02',120,50],
+
+    ['A1025','气缸','SC63x100','支','B01-03',1,2],
+
+    ['A1026','交流接触器','CJX2-2510','个','A02-01',4,4]
+
+  ];
+
+  return raw.map(function(r){
+
+    return {code:r[0], name:r[1], spec:r[2], unit:r[3], location:r[4], qty:r[5], safety:r[6],
+
+            enabled:true, note:'', updatedAt:nowStr()};
+
+  });
+
+}
+
+function seedMoves(){
+
+  var d=new Date();
+
+  function ts(back, hh, mm){
+
+    var x=new Date(d.getTime()-back*86400000);
+
+    return x.getFullYear()+'-'+pad(x.getMonth()+1)+'-'+pad(x.getDate())+' '+pad(hh)+':'+pad(mm);
+
+  }
+
+  return [
+
+    {id:'M1', ts:ts(1,14,20), type:'出库', code:'A1002', name:'骨架油封', qty:3, before:5, after:2, person:'李伟', note:'2号线泵体检修'},
+
+    {id:'M2', ts:ts(1,10,05), type:'入库', code:'A1017', name:'耐油胶管', qty:20, before:15, after:35, person:'库房', note:'采购到货 批次 2026-1113'},
+
+    {id:'M3', ts:ts(2,16,40), type:'出库', code:'A1022', name:'编码器线缆', qty:2, before:2, after:0, person:'张强', note:'3号线伺服报警更换'},
+
+    {id:'M4', ts:ts(3,09,15), type:'调整', code:'A1020', name:'平键', qty:12, before:10, after:12, person:'库房', note:'盘点差异调整'},
+
+    {id:'M5', ts:ts(3,15,30), type:'出库', code:'A1015', name:'气动快插接头', qty:5, before:6, after:1, person:'王刚', note:'包装线气缸改造'}
+
+  ];
+
+}
+
+function save(){
+
+  DB.meta.updatedAt=nowStr();
+
+  try{ localStorage.setItem(DB_KEY, JSON.stringify(DB)); }catch(e){ toast('保存失败：浏览器存储被禁用','err'); }
+
+}
+
+function load(){
+
+  var txt=null;
+
+  try{ txt=localStorage.getItem(DB_KEY); }catch(e){}
+
+  if(txt){
+
+    try{
+
+      var o=JSON.parse(txt);
+
+      DB.spares=o.spares||[]; DB.moves=o.moves||[]; DB.meta=o.meta||{};
+
+      return true;
+
+    }catch(e){}
+
+  }
+
+  return false;
+
+}
+
+function resetDemo(){
+
+  DB.spares=seedSpares();
+
+  DB.moves=seedMoves();
+
+  DB.meta={createdAt:nowStr(), updatedAt:nowStr()};
+
+  save(); renderAll();
+
+}
+
+
+
+/* ---------- 视图路由 ---------- */
+
+var TITLES={
+
+  dash:['总览','库存健康度与待处理项'],
+
+  ledger:['备件台账','全部备件的唯一数据源'],
+
+  moves:['出入库','领料、入库与调整流水'],
+
+  alert:['库存预警','按缺口严重度排序'],
+
+  query:['批量核对','拿报警单清单去核 EAM 现存量'],
+
+  data:['数据与备份','本机存储，可导出可恢复']
+
+};
+
+var cur='dash';
+
+function go(view){
+
+  cur=view;
+
+  document.querySelectorAll('.nav-item').forEach(function(b){ b.className='nav-item'+(b.dataset.view===view?' on':''); });
+
+  document.querySelectorAll('.view').forEach(function(v){ v.className='view'+(v.id==='view-'+view?' on':''); });
+
+  $('pageTitle').textContent=TITLES[view][0];
+
+  $('pageSub').textContent=TITLES[view][1];
+
+  main.scrollTo(0,0);
+
+  renderView(view);
+
+}
+
+
+
+/* ---------- 渲染：总览 ---------- */
+
+function renderDash(){
+
+  var s=computeStats(DB.spares);
+
+  var cards=[
+
+    {l:'备件条目', v:s.total, m:'其中停用 '+s.disabled+' 项', cls:''},
+
+    {l:'库存总量', v:s.qty, m:'按备件单位累加，不做换算', cls:''},
+
+    {l:'需补货条目', v:s.below+s.zero, m:'低于安全库存 '+s.below+' + 无库存 '+s.zero, cls:'warn'},
+
+    {l:'标准缺失', v:s.missing, m:'安全库存未维护，无法判缺', cls:'gray'}
+
+  ];
+
+  $('kpis').innerHTML=cards.map(function(c){
+
+    return '<div class="kpi '+c.cls+'"><div class="l">'+c.l+'</div><div class="v">'+c.v+'</div><div class="m">'+c.m+'</div></div>';
+
+  }).join('');
+
+
+
+  var list=shortList(DB.spares,10);
+
+  var h='<table><thead><tr><th>编码</th><th>名称</th><th>库位</th><th class="num">现存</th><th class="num">安全</th><th class="num">缺口</th><th>状态</th></tr></thead><tbody>';
+
+  if(!list.length) h+='<tr><td colspan="7"><div class="empty"><span class="ico">✓</span>没有缺料项</div></td></tr>';
+
+  list.forEach(function(x){
+
+    h+='<tr><td class="mono">'+esc(x.p.code)+'</td><td>'+esc(x.p.name)+'</td><td>'+esc(x.p.location)+
+
+       '</td><td class="num">'+x.p.qty+'</td><td class="num">'+(x.p.safety==null?'—':x.p.safety)+
+
+       '</td><td class="num">'+(x.gap==null?'—':(x.gap>0?'-'+x.gap:'+'+(-x.gap)))+'</td><td>'+statusTag(x.st)+'</td></tr>';
+
+  });
+
+  $('dashShort').innerHTML=h+'</tbody></table>';
+
+
+
+  var bars=[
+
+    {t:'正常', n:s.normal, c:'#0f7a4a'},
+
+    {t:'低于安全库存', n:s.below, c:'#e8a33d'},
+
+    {t:'无库存', n:s.zero, c:'#b3261e'},
+
+    {t:'标准缺失', n:s.missing, c:'#8b98ab'}
+
+  ];
+
+  var max=Math.max(1,s.normal,s.below,s.zero,s.missing);
+
+  $('dashBars').innerHTML=bars.map(function(b){
+
+    return '<div class="bar-row"><span>'+b.t+'</span><span class="bar"><i style="width:'+(b.n/max*100)+'%;background:'+b.c+'"></i></span><span class="n">'+b.n+'</span></div>';
+
+  }).join('');
+
+
+
+  var ms=DB.moves.slice(0,6);
+
+  var hm='';
+
+  if(!ms.length) hm='<div class="empty">还没有流水</div>';
+
+  ms.forEach(function(m){
+
+    hm+='<div style="display:flex;gap:8px;align-items:center;padding:6px 0;border-bottom:1px dashed var(--line2);font-size:12.5px">'+
+
+      '<span class="tag '+(m.type==='入库'?'t-ok':m.type==='出库'?'t-warn':'t-blue')+'">'+m.type+'</span>'+
+
+      '<span class="mono" style="color:var(--ink2)">'+esc(m.code)+'</span>'+
+
+      '<span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(m.name)+'</span>'+
+
+      '<b class="mono">'+m.qty+'</b>'+
+
+      '<span class="t-none mono" style="color:var(--ink3)">'+esc(String(m.ts).slice(5))+'</span></div>';
+
+  });
+
+  $('dashMoves').innerHTML=hm;
+
+}
+
+function statusTag(st){
+
+  var map={'正常':'t-ok','低于安全库存':'t-warn','无库存':'t-dan','标准缺失':'t-gray'};
+
+  return '<span class="tag '+(map[st]||'t-gray')+'">'+esc(st)+'</span>';
+
+}
+
+
+
+/* ---------- 渲染：台账 ---------- */
+
+var L={q:'', status:'all', page:1, size:15};
+
+function ledgerData(){
+
+  var arr=DB.spares.slice();
+
+  var q=L.q.trim().toLowerCase();
+
+  if(q) arr=arr.filter(function(p){
+
+    return (p.code+' '+p.name+' '+p.spec+' '+p.location).toLowerCase().indexOf(q)>=0;
+
+  });
+
+  if(L.status!=='all'){
+
+    if(L.status==='停用') arr=arr.filter(function(p){ return p.enabled===false; });
+
+    else arr=arr.filter(function(p){ return p.enabled!==false && statusOf(p.qty,p.safety)===L.status; });
+
+  }
+
+  return arr;
+
+}
+
+function renderLedger(){
+
+  var arr=ledgerData();
+
+  var total=arr.length;
+
+  var pages=Math.max(1,Math.ceil(total/L.size));
+
+  if(L.page>pages) L.page=pages;
+
+  var slice=arr.slice((L.page-1)*L.size, L.page*L.size);
+
+  var h='<thead><tr><th>编码</th><th>名称</th><th>规格</th><th>单位</th><th>库位</th><th class="num">现存量</th><th class="num">安全库存</th><th>库存状态</th><th style="width:190px">操作</th></tr></thead><tbody>';
+
+  if(!slice.length) h+='<tr><td colspan="9"><div class="empty"><span class="ico">∅</span>没有匹配的备件</div></td></tr>';
+
+  slice.forEach(function(p, i){
+
+    var st=statusOf(p.qty,p.safety);
+
+    var dis=p.enabled===false;
+
+    h+='<tr'+(dis?' style="opacity:.62"':'')+'>'+
+
+      '<td class="mono">'+esc(p.code)+'</td><td>'+esc(p.name)+(dis?' <span class="tag t-gray">停用</span>':'')+'</td>'+
+
+      '<td style="color:var(--ink2)">'+esc(p.spec||'—')+'</td><td>'+esc(p.unit||'—')+'</td><td class="mono">'+esc(p.location||'—')+'</td>'+
+
+      '<td class="num">'+num(p.qty)+'</td><td class="num">'+(p.safety==null?'—':num(p.safety))+'</td>'+
+
+      '<td>'+(dis?'<span class="tag t-gray">停用</span>':statusTag(st))+'</td>'+
+
+      '<td><button class="btn sm" data-act="in" data-code="'+esc(p.code)+'">入库</button> '+
+
+      '<button class="btn sm" data-act="out" data-code="'+esc(p.code)+'">出库</button> '+
+
+      '<button class="btn sm ghost" data-act="edit" data-code="'+esc(p.code)+'">编辑</button> '+
+
+      '<button class="btn sm ghost" data-act="del" data-code="'+esc(p.code)+'" style="color:var(--dan)">删</button></td></tr>';
+
+  });
+
+  $('ledgerTable').innerHTML=h+'</tbody>';
+
+  $('ledgerPager').innerHTML='<span>共 '+total+' 条 · 第 '+L.page+'/'+pages+' 页</span>'+
+
+    '<button class="btn sm" id="pgPrev" '+(L.page<=1?'disabled':'')+'>上一页</button>'+
+
+    '<button class="btn sm" id="pgNext" '+(L.page>=pages?'disabled':'')+'>下一页</button>';
+
+  if($('pgPrev')) $('pgPrev').onclick=function(){ if(L.page>1){ L.page--; renderLedger(); } };
+
+  if($('pgNext')) $('pgNext').onclick=function(){ if(L.page<pages){ L.page++; renderLedger(); } };
+
+  document.querySelectorAll('#ledgerTable button[data-act]').forEach(function(b){
+
+    b.onclick=function(){ ledgerAction(b.dataset.act, b.dataset.code); };
+
+  });
+
+  // datalist 同步
+
+  $('spareList').innerHTML=DB.spares.map(function(p){
+
+    return '<option value="'+esc(p.code)+'">'+esc(p.name)+' · 现存 '+num(p.qty)+'</option>';
+
+  }).join('');
+
+}
+
+
+
+/* ---------- 渲染：出入库 ---------- */
+
+var mvFilter='all';
+
+function renderMoves(){
+
+  var arr=DB.moves.filter(function(m){ return mvFilter==='all'||m.type===mvFilter; });
+
+  var h='<thead><tr><th>时间</th><th>类型</th><th>编码</th><th>名称</th><th class="num">数量</th><th class="num">变动前</th><th class="num">变动后</th><th>经手人</th><th>备注</th></tr></thead><tbody>';
+
+  if(!arr.length) h+='<tr><td colspan="9"><div class="empty"><span class="ico">∅</span>还没有流水</div></td></tr>';
+
+  arr.forEach(function(m){
+
+    var cls=m.type==='入库'?'t-ok':m.type==='出库'?'t-warn':'t-blue';
+
+    h+='<tr><td class="mono" style="white-space:nowrap">'+esc(m.ts)+'</td>'+
+
+      '<td><span class="tag '+cls+'">'+esc(m.type)+'</span></td>'+
+
+      '<td class="mono">'+esc(m.code)+'</td><td>'+esc(m.name)+'</td>'+
+
+      '<td class="num">'+num(m.qty)+'</td><td class="num" style="color:var(--ink3)">'+num(m.before)+'</td>'+
+
+      '<td class="num"><b>'+num(m.after)+'</b></td><td>'+esc(m.person||'—')+'</td><td style="color:var(--ink2)">'+esc(m.note||'—')+'</td></tr>';
+
+  });
+
+  $('movesTable').innerHTML=h+'</tbody>';
+
+  renderMovePreview();
+
+}
+
+function renderMovePreview(){
+
+  var code=$('mvCode').value.trim();
+
+  var p=findSpare(DB.spares, code);
+
+  if(!p){
+
+    $('mvPreview').innerHTML='<div class="k">未选择</div><div class="v">在左侧输入编码或从下拉里选一个备件</div>';
+
+    return;
+
+  }
+
+  var st=statusOf(p.qty,p.safety);
+
+  $('mvPreview').innerHTML=
+
+    '<div class="k">编码</div><div class="v mono">'+esc(p.code)+'</div>'+
+
+    '<div class="k">名称 / 规格</div><div class="v">'+esc(p.name)+' <span style="color:var(--ink3)">'+esc(p.spec||'')+'</span></div>'+
+
+    '<div class="k">库位</div><div class="v">'+esc(p.location||'—')+'</div>'+
+
+    '<div class="k">现存量</div><div class="v"><b class="mono">'+num(p.qty)+'</b> '+esc(p.unit||'')+'</div>'+
+
+    '<div class="k">安全库存</div><div class="v">'+(p.safety==null?'<span class="tag t-gray">未维护</span>':num(p.safety))+'</div>'+
+
+    '<div class="k">当前状态</div><div class="v">'+statusTag(st)+'</div>';
+
+}
+
+
+
+/* ---------- 渲染：预警 ---------- */
+
+var alertFilter='all';
+
+function renderAlert(){
+
+  var all=shortList(DB.spares);
+
+  var counts={all:all.length};
+
+  all.forEach(function(x){ counts[x.st]=(counts[x.st]||0)+1; });
+
+  var defs=[['all','全部'],['无库存','无库存'],['低于安全库存','低于安全库存'],['标准缺失','标准缺失']];
+
+  $('alertChips').innerHTML=defs.map(function(d){
+
+    return '<button class="chip'+(alertFilter===d[0]?' on':'')+'" data-f="'+d[0]+'">'+d[1]+' '+(counts[d[0]]||0)+'</button>';
+
+  }).join('');
+
+  document.querySelectorAll('#alertChips .chip').forEach(function(c){
+
+    c.onclick=function(){ alertFilter=c.dataset.f; renderAlert(); };
+
+  });
+
+  var arr=alertFilter==='all'?all:all.filter(function(x){ return x.st===alertFilter; });
+
+  var h='<thead><tr><th>编码</th><th>名称</th><th>规格</th><th>库位</th><th class="num">现存量</th><th class="num">安全库存</th><th class="num">缺口</th><th>状态</th><th>建议</th></tr></thead><tbody>';
+
+  if(!arr.length) h+='<tr><td colspan="9"><div class="empty"><span class="ico">✓</span>该分类下没有条目</div></td></tr>';
+
+  arr.forEach(function(x){
+
+    var advice = x.st==='无库存' ? '立即补货或确认替代件'
+
+      : x.st==='低于安全库存' ? '按缺口补货'
+
+      : '补维护安全库存';
+
+    h+='<tr><td class="mono">'+esc(x.p.code)+'</td><td>'+esc(x.p.name)+'</td><td style="color:var(--ink2)">'+esc(x.p.spec||'—')+
+
+      '</td><td class="mono">'+esc(x.p.location||'—')+'</td><td class="num">'+num(x.p.qty)+'</td>'+
+
+      '<td class="num">'+(x.p.safety==null?'—':num(x.p.safety))+'</td>'+
+
+      '<td class="num">'+(x.gap==null?'—':x.gap)+'</td><td>'+statusTag(x.st)+
+
+      '</td><td style="color:var(--ink2)">'+advice+'</td></tr>';
+
+  });
+
+  $('alertTable').innerHTML=h+'</tbody>';
+
+}
+
+
+
+/* ---------- 批量核对 ---------- */
+
+var Q={result:null};
+
+function parseDelimited(text){
+
+  var t=String(text||'').replace(/\r\n/g,'\n').replace(/\r/g,'\n');
+
+  var lines=t.split('\n').filter(function(l){ return l.trim()!==''; });
+
+  if(!lines.length) return {rows:[], delim:'\t'};
+
+  var sample=lines[0], delim='\t';
+
+  if(sample.indexOf('\t')<0){
+
+    if(sample.indexOf(',')>=0) delim=',';
+
+    else if(sample.indexOf(';')>=0) delim=';';
+
+  }
+
+  var out=[];
+
+  lines.forEach(function(line){
+
+    if(delim!==','){ out.push(line.split(delim)); return; }
+
+    var cells=[], cur='', q=false;
+
+    for(var i=0;i<line.length;i++){
+
+      var ch=line[i];
+
+      if(q){ if(ch==='"'&&line[i+1]==='"'){ cur+='"'; i++; } else if(ch==='"'){ q=false; } else cur+=ch; }
+
+      else { if(ch==='"') q=true; else if(ch===','){ cells.push(cur); cur=''; } else cur+=ch; }
+
+    }
+
+    cells.push(cur); out.push(cells);
+
+  });
+
+  return {rows:out, delim:delim};
+
+}
+
+function toTable(text, hasHeader){
+
+  var p=parseDelimited(text), rows=p.rows;
+
+  if(!rows.length) return null;
+
+  var w=0; rows.forEach(function(r){ if(r.length>w) w=r.length; });
+
+  var header, body;
+
+  if(hasHeader){
+
+    header=rows[0].map(function(h,i){ var v=String(h==null?'':h).trim(); return v||('列'+(i+1)); });
+
+    body=rows.slice(1);
+
+  } else {
+
+    header=[]; for(var i=0;i<w;i++) header.push('列'+(i+1)); body=rows;
+
+  }
+
+  body=body.map(function(r){ var a=r.slice(); while(a.length<w) a.push(''); return a; });
+
+  return {header:header, body:body, width:w};
+
+}
+
+function guessCol(header, keys, exclude){
+
+  exclude=exclude||[];
+
+  for(var k=0;k<keys.length;k++) for(var i=0;i<header.length;i++){
+
+    if(exclude.indexOf(i)>=0) continue;
+
+    if(String(header[i]).replace(/\s/g,'')===keys[k]) return i;
+
+  }
+
+  for(var k2=0;k2<keys.length;k2++) for(var j=0;j<header.length;j++){
+
+    if(exclude.indexOf(j)>=0) continue;
+
+    if(String(header[j]).indexOf(keys[k2])>=0) return j;
+
+  }
+
+  return -1;
+
+}
+
+var QKW={
+
+  code:['物料编码','物料编号','备件编码','编码','料号'],
+
+  qty:['现存量','库存量','结存','数量','库存'],
+
+  safety:['安全库存','安全存量','最低库存','下限'],
+
+  name:['物料名称','备件名称','名称','品名'],
+
+  loc:['库位','储位','货位','仓库']
+
+};
+
+function refreshQueryMap(){
+
+  var e=toTable($('qExport').value,$('qExportHeader').checked);
+
+  var sel={code:'qMapCode', qty:'qMapQty', safety:'qMapSafety', name:'qMapName', loc:'qMapLoc'};
+
+  if(!e){ Object.keys(sel).forEach(function(k){ $(sel[k]).innerHTML='<option value="-1">（先粘贴导出数据）</option>'; }); return; }
+
+  var used=[];
+
+  Object.keys(sel).forEach(function(k){
+
+    var cur=parseInt($(sel[k]).value,10);
+
+    var pick=(isFinite(cur)&&cur>=0&&cur<e.header.length)?cur:guessCol(e.header,QKW[k],used);
+
+    if(pick>=0) used.push(pick);
+
+    var h='<option value="-1">— 未指定 —</option>';
+
+    e.header.forEach(function(n,i){ h+='<option value="'+i+'"'+(i===pick?' selected':'')+'>'+esc(n)+'</option>'; });
+
+    $(sel[k]).innerHTML=h;
+
+  });
+
+}
+
+function runQuery(){
+
+  var l=toTable($('qList').value,$('qListHeader').checked);
+
+  var e=toTable($('qExport').value,$('qExportHeader').checked);
+
+  if(!l||!l.body.length){ toast('先粘贴编码清单','err'); return; }
+
+  if(!e||!e.body.length){ toast('先粘贴 EAM 导出','err'); return; }
+
+  var cI=parseInt($('qMapCode').value,10), qI=parseInt($('qMapQty').value,10);
+
+  if(cI<0||qI<0){ toast('至少要指定导出里的「编码」和「现存量」两列','err'); return; }
+
+  var nI=parseInt($('qMapName').value,10), sI=parseInt($('qMapSafety').value,10), lI=parseInt($('qMapLoc').value,10);
+
+  var lc=guessCol(l.header,QKW.code);
+
+  var ln=guessCol(l.header,QKW.name,[lc]);
+
+  var input={
+
+    listRows:l.body.map(function(r,i){ return {raw:r[lc<0?0:lc], name:ln>=0?r[ln]:'', rowNo:i+1}; }),
+
+    exportRows:e.body.map(function(r){
+
+      return {rawCode:r[cI], name:nI>=0?r[nI]:'', qtyRaw:r[qI],
+
+              location:lI>=0?r[lI]:'', safetyRaw:sI>=0?r[sI]:'', statusRaw:''};
+
+    })
+
+  };
+
+  var res=runEngine(input);
+
+  Q.result=res;
+
+  var st=res.stats, d=st.dist;
+
+  var h='';
+
+  h+='<div class="grid g4" style="margin-bottom:14px">'+
+
+     '<div class="kpi"><div class="l">清单编码（去重）</div><div class="v">'+st.listDistinct+'</div><div class="m">原始 '+st.listRawRows+' 行 · 重复 '+st.dupRows+' 条</div></div>'+
+
+     '<div class="kpi dan"><div class="l">无库存</div><div class="v">'+d['无库存']+'</div><div class="m">必须报缺</div></div>'+
+
+     '<div class="kpi warn"><div class="l">低于安全库存</div><div class="v">'+d['低于安全库存']+'</div><div class="m">可领但需补货</div></div>'+
+
+     '<div class="kpi gray"><div class="l">异常</div><div class="v">'+st.excTotal+'</div><div class="m">查不到/停用/名称不符/非编码/数据异常</div></div>'+
+
+     '</div>';
+
+  if(st.conservation) h+='<div class="banner ok">行数守恒通过：输出 '+st.outputRows+' 行 = 清单去重 '+st.listDistinct+' 编码，覆盖率 '+st.coverage.toFixed(1)+'%。</div>';
+
+  else h+='<div class="banner err">行数不守恒：输出 '+st.outputRows+' 行 ≠ 清单去重 '+st.listDistinct+' 编码，结果不可用。</div>';
+
+  if(res.notes.length) h+='<div class="banner warn">'+res.notes.map(esc).join('<br>')+'</div>';
+
+
+
+  h+='<div class="tabs" style="display:flex;gap:2px;border-bottom:1px solid var(--line);margin:14px 0 12px">'+
+
+     '<b style="font-size:13px">核对结果</b></div>';
+
+  h+='<div class="tbl-wrap" style="max-height:460px"><table><thead><tr><th>物料编码</th><th>物料名称</th><th class="num">现存量合计</th><th>库位</th><th class="num">安全库存</th><th>是否低于安全库存</th><th>异常标记</th></tr></thead><tbody>';
+
+  res.rows.forEach(function(r){
+
+    h+='<tr><td class="mono">'+esc(r.code)+'</td><td>'+esc(r.name)+'</td>'+
+
+       '<td class="num">'+(r.qty==null?'—':r.qty)+'</td><td>'+esc(r.locations)+'</td>'+
+
+       '<td class="num">'+(r.safety==null?'—':r.safety)+'</td>'+
+
+       '<td>'+(r.status==='—'?'<span class="t-none">—</span>':statusTag(r.status))+'</td>'+
+
+       '<td>'+(r.flag==='—'?'<span class="t-none">—</span>':'<span class="tag t-dan">'+esc(r.flag)+'</span>')+'</td></tr>';
+
+  });
+
+  h+='</tbody></table></div>';
+
+
+
+  if(res.exceptions.length){
+
+    h+='<div style="margin:16px 0 8px"><b style="font-size:13px">异常明细（'+res.exceptions.length+'）</b></div>';
+
+    h+='<div class="tbl-wrap" style="max-height:260px"><table><thead><tr><th>原始编码</th><th>规范化编码</th><th>名称</th><th>异常类型</th></tr></thead><tbody>';
+
+    res.exceptions.forEach(function(x){
+
+      h+='<tr><td class="mono">'+esc(x.rawCode)+'</td><td class="mono">'+esc(x.normCode||'—')+'</td><td>'+esc(x.name)+
+
+         '</td><td><span class="tag t-dan">'+esc(x.type)+'</span></td></tr>';
+
+    });
+
+    h+='</tbody></table></div>';
+
+  }
+
+  h+='<div class="toolbar" style="margin-top:14px"><button class="btn" id="qExportSum">导出核对结果</button><button class="btn ghost" id="qPrint">打印</button></div>';
+
+  $('qResult').innerHTML=h;
+
+  $('qExportSum').onclick=function(){
+
+    var head=['物料编码','物料名称','现存量合计','库位','安全库存','是否低于安全库存','异常标记'];
+
+    var body=res.rows.map(function(r){ return [r.code,r.name,r.qty==null?'—':r.qty,r.locations,r.safety==null?'—':r.safety,r.status,r.flag]; });
+
+    download('备件核对结果_'+stamp()+'.csv','\ufeff'+toCSV([head].concat(body)));
+
+  };
+
+  $('qPrint').onclick=function(){ window.print(); };
+
+  toast('核对完成：'+st.outputRows+' 行，异常 '+st.excTotal+' 条','ok');
+
+}
+
+
+
+/* ---------- 渲染：数据 ---------- */
+
+function renderData(){
+
+  var s=computeStats(DB.spares);
+
+  var bytes=0;
+
+  try{ bytes=(localStorage.getItem(DB_KEY)||'').length; }catch(e){}
+
+  var rows=[
+
+    ['备件条目', s.total+' 项（停用 '+s.disabled+'）'],
+
+    ['库存总量', s.qty],
+
+    ['出入库流水', DB.moves.length+' 条'],
+
+    ['需补货 / 无库存 / 标准缺失', (s.below+s.zero)+' / '+s.zero+' / '+s.missing],
+
+    ['最后更新', DB.meta.updatedAt||'—'],
+
+    ['占用存储', (bytes/1024).toFixed(1)+' KB'],
+
+    ['存储位置', '浏览器 localStorage（本机，不上传）']
+
+  ];
+
+  $('dataStats').innerHTML=rows.map(function(r){
+
+    return '<div class="k">'+esc(r[0])+'</div><div class="v">'+esc(r[1])+'</div>';
+
+  }).join('');
+
+}
+
+
+
+/* ---------- 汇总渲染 ---------- */
+
+function renderAll(){
+
+  var s=computeStats(DB.spares);
+
+  $('footCount').textContent=s.total;
+
+  $('footMoves').textContent=DB.moves.length;
+
+  $('footTime').textContent='最后更新 '+(DB.meta.updatedAt||'—');
+
+  $('navAlert').textContent=s.below+s.zero+s.missing;
+
+  $('navAlert').style.display=(s.below+s.zero+s.missing)?'inline-block':'none';
+
+  renderView(cur);
+
+}
+
+function renderView(v){
+
+  if(v==='dash') renderDash();
+
+  else if(v==='ledger') renderLedger();
+
+  else if(v==='moves') renderMoves();
+
+  else if(v==='alert') renderAlert();
+
+  else if(v==='data') renderData();
+
+  else if(v==='query'){ refreshQueryMap(); if(!Q.result) $('qResult').innerHTML='<div class="empty"><span class="ico">⌕</span>粘贴两段数据后点「开始核对」</div>'; }
+
+}
+
+
+
+/* ---------- 台账操作 ---------- */
+
+function ledgerAction(act, code){
+
+  var p=findSpare(DB.spares, code);
+
+  if(!p) return;
+
+  if(act==='in'||act==='out'){ go('moves'); $('mvType').value=act==='in'?'入库':'出库'; $('mvCode').value=p.code; renderMovePreview(); $('mvQty').focus(); return; }
+
+  if(act==='edit'){ openModal(p); return; }
+
+  if(act==='del'){
+
+    if(!confirm('删除备件 '+p.code+' '+p.name+'？\n历史流水会保留，但台账记录会消失。')) return;
+
+    DB.spares=DB.spares.filter(function(x){ return x.code!==p.code; });
+
+    save(); renderAll(); toast('已删除 '+p.code,'ok');
+
+  }
+
+}
+
+
+
+/* ---------- 弹窗 ---------- */
+
+var editing=null;
+
+function openModal(p){
+
+  editing=p||null;
+
+  $('modalTitle').textContent=p?'编辑备件 · '+p.code:'新增备件';
+
+  $('fCode').value=p?p.code:''; $('fCode').disabled=!!p;
+
+  $('fName').value=p?p.name:'';
+
+  $('fSpec').value=p?(p.spec||''):'';
+
+  $('fUnit').value=p?(p.unit||'个'):'个';
+
+  $('fLoc').value=p?(p.location||''):'';
+
+  $('fQty').value=p?num(p.qty):0;
+
+  $('fSafety').value=(p&&p.safety!=null)?p.safety:'';
+
+  $('fEnabled').value=(p&&p.enabled===false)?'0':'1';
+
+  $('fNote').value=p?(p.note||''):'';
+
+  $('modalBg').classList.add('on');
+
+  setTimeout(function(){ $('fCode').focus(); },50);
+
+}
+
+function closeModal(){ $('modalBg').classList.remove('on'); editing=null; }
+
+function saveModal(){
+
+  var code=$('fCode').value.trim().toUpperCase();
+
+  var name=$('fName').value.trim();
+
+  if(!code){ toast('编码必填','err'); return; }
+
+  if(!name){ toast('名称必填','err'); return; }
+
+  if(!editing && findSpare(DB.spares, code)){ toast('编码已存在：'+code,'err'); return; }
+
+  var safetyRaw=$('fSafety').value.trim();
+
+  var obj={
+
+    code:code, name:name, spec:$('fSpec').value.trim(), unit:$('fUnit').value.trim()||'个',
+
+    location:$('fLoc').value.trim(), qty:Math.max(0,num($('fQty').value)),
+
+    safety:safetyRaw===''?null:Math.max(0,num(safetyRaw)),
+
+    enabled:$('fEnabled').value==='1', note:$('fNote').value.trim(), updatedAt:nowStr()
+
+  };
+
+  var wasEdit=!!editing;
+
+  if(wasEdit){
+
+    DB.spares=DB.spares.map(function(x){ return x.code===editing.code?obj:x; });
+
+  } else {
+
+    DB.spares=DB.spares.concat([obj]);
+
+  }
+
+  save(); closeModal(); renderAll();
+
+  toast(wasEdit?'已保存 '+code:'已新增 '+code,'ok');
+
+}
+
+
+
+/* ---------- 事件 ---------- */
+
+var main=null;
+
+function init(){
+
+  main=document.querySelector('main');
+
+  if(!load()) resetDemo(); else renderAll();
+
+
+
+  document.querySelectorAll('.nav-item').forEach(function(b){
+
+    b.onclick=function(){ go(b.dataset.view); };
+
+  });
+
+  $('btnQuickIn').onclick=function(){ openModal(null); };
+
+  $('btnQuickOut').onclick=function(){ go('moves'); $('mvType').value='出库'; $('mvCode').focus(); };
+
+  $('btnAddSpare').onclick=function(){ openModal(null); };
+
+
+
+  $('ledgerSearch').oninput=function(){ L.q=this.value; L.page=1; renderLedger(); };
+
+  $('ledgerStatus').onchange=function(){ L.status=this.value; L.page=1; renderLedger(); };
+
+  $('btnExportLedger').onclick=function(){
+
+    var head=['物料编码','物料名称','规格','单位','库位','现存量','安全库存','库存状态','是否停用','备注'];
+
+    var body=DB.spares.map(function(p){
+
+      return [p.code,p.name,p.spec,p.unit,p.location,num(p.qty),p.safety==null?'':num(p.safety),
+
+              statusOf(p.qty,p.safety), p.enabled===false?'停用':'', p.note||''];
+
+    });
+
+    download('备件台账_'+stamp()+'.csv','\ufeff'+toCSV([head].concat(body)));
+
+    toast('台账已导出','ok');
+
+  };
+
+  $('btnTemplate').onclick=function(){
+
+    var head=['物料编码','物料名称','规格','单位','库位','现存量','安全库存','备注'];
+
+    var demo=[['A2001','示例备件','规格型号','个','C01-01','10','5','示例行，可删除']];
+
+    download('备件导入模板.csv','\ufeff'+toCSV([head].concat(demo)));
+
+  };
+
+  $('ledgerFile').onchange=function(){
+
+    var f=this.files[0]; if(!f) return;
+
+    var fr=new FileReader();
+
+    fr.onload=function(){
+
+      var t=toTable(fr.result,true);
+
+      if(!t||!t.body.length){ toast('文件里没有数据行','err'); return; }
+
+      var idx={};
+
+      ['code','name','spec','unit','location','qty','safety','note'].forEach(function(k){
+
+        var alias={code:['物料编码','编码'],name:['物料名称','名称'],spec:['规格','规格型号'],unit:['单位'],
+
+                   location:['库位','储位'],qty:['现存量','库存量'],safety:['安全库存'],note:['备注']}[k];
+
+        idx[k]=guessCol(t.header, alias);
+
+      });
+
+      if(idx.code<0||idx.name<0){ toast('缺「物料编码」或「物料名称」列，导入中止','err'); return; }
+
+      var rows=t.body.map(function(r){
+
+        return {code:r[idx.code], name:r[idx.name],
+
+          spec:idx.spec>=0?r[idx.spec]:'', unit:idx.unit>=0?r[idx.unit]:'',
+
+          location:idx.location>=0?r[idx.location]:'',
+
+          qty:idx.qty>=0?r[idx.qty]:0,
+
+          safety:idx.safety>=0?r[idx.safety]:'',
+
+          note:idx.note>=0?r[idx.note]:''};
+
+      });
+
+      var res=mergeImport(DB.spares, rows);
+
+      DB.spares=res.spares; save(); renderAll();
+
+      toast('导入完成：新增 '+res.added+'，更新 '+res.updated+'，跳过 '+res.skipped, res.skipped?'err':'ok');
+
+    };
+
+    fr.readAsText(f,'utf-8');
+
+    this.value='';
+
+  };
+
+
+
+  $('mvCode').oninput=renderMovePreview;
+
+  $('mvCode').onchange=function(){
+
+    var p=findSpare(DB.spares,this.value);
+
+    if(p) this.value=p.code;
+
+    renderMovePreview();
+
+  };
+
+  $('btnSubmitMove').onclick=function(){
+
+    var code=$('mvCode').value.trim();
+
+    var r=applyMove(DB.spares, DB.moves, {
+
+      code:code, type:$('mvType').value, qty:$('mvQty').value,
+
+      person:$('mvPerson').value.trim(), note:$('mvNote').value.trim()
+
+    });
+
+    if(!r.ok){ toast(r.err,'err'); return; }
+
+    DB.spares=r.spares; DB.moves=r.moves; save(); renderAll();
+
+    toast(r.move.type+'成功：'+r.move.code+' '+r.move.before+' → '+r.move.after,'ok');
+
+    $('mvQty').value=''; $('mvNote').value='';
+
+    renderMovePreview();
+
+  };
+
+  $('btnClearMove').onclick=function(){
+
+    $('mvCode').value=''; $('mvQty').value=''; $('mvNote').value=''; $('mvPerson').value='';
+
+    renderMovePreview();
+
+  };
+
+  document.querySelectorAll('#moveFilters .chip').forEach(function(c){
+
+    c.onclick=function(){
+
+      mvFilter=c.dataset.f;
+
+      document.querySelectorAll('#moveFilters .chip').forEach(function(x){ x.className='chip'; });
+
+      c.className='chip on';
+
+      renderMoves();
+
+    };
+
+  });
+
+  $('btnExportMoves').onclick=function(){
+
+    var head=['时间','类型','编码','名称','数量','变动前','变动后','经手人','备注'];
+
+    var body=DB.moves.map(function(m){ return [m.ts,m.type,m.code,m.name,m.qty,m.before,m.after,m.person,m.note]; });
+
+    download('出入库流水_'+stamp()+'.csv','\ufeff'+toCSV([head].concat(body)));
+
+    toast('流水已导出','ok');
+
+  };
+
+
+
+  $('btnExportAlert').onclick=function(){
+
+    var arr=shortList(DB.spares);
+
+    if(!arr.length){ toast('没有需要报缺的条目','ok'); return; }
+
+    var head=['物料编码','物料名称','规格','库位','现存量','安全库存','缺口','状态'];
+
+    var body=arr.map(function(x){ return [x.p.code,x.p.name,x.p.spec,x.p.location,num(x.p.qty),x.p.safety==null?'':num(x.p.safety),x.gap==null?'':x.gap,x.st]; });
+
+    download('报缺清单_'+stamp()+'.csv','\ufeff'+toCSV([head].concat(body)));
+
+    toast('报缺清单已导出（'+arr.length+' 条）','ok');
+
+  };
+
+  $('btnPrintAlert').onclick=function(){ window.print(); };
+
+
+
+  $('qExport').oninput=refreshQueryMap;
+
+  $('qExportHeader').onchange=refreshQueryMap;
+
+  $('btnRunQuery').onclick=runQuery;
+
+  $('qClear').onclick=function(){ $('qList').value=''; $('qExport').value=''; $('qResult').innerHTML=''; Q.result=null; refreshQueryMap(); };
+
+  $('qDemo').onclick=function(){
+
+    $('qList').value=['物料编码\t物料名称','A1001\t深沟球轴承 6205','A1002\t骨架油封 45x62x8','A1003\t气缸密封圈 SC63','A1005\t耐油胶管 DN20','A1015\t气动快插接头 Φ8','A9999\t不存在件'].join('\n');
+
+    $('qExport').value=DB.spares.map(function(p){
+
+      return [p.code,p.name,num(p.qty),p.location,(p.safety==null?'':p.safety)].join('\t');
+
+    }).join('\n');
+
+    $('qExport').value='物料编码\t物料名称\t现存量\t库位\t安全库存\n'+$('qExport').value;
+
+    $('qExportHeader').checked=true; $('qListHeader').checked=true;
+
+    refreshQueryMap();
+
+    toast('已填入示例，可点「开始核对」','ok');
+
+  };
+
+
+
+  $('btnExportJson').onclick=function(){
+
+    download('备件管理备份_'+stamp()+'.json', JSON.stringify(DB,null,2), 'application/json');
+
+    toast('备份已导出','ok');
+
+  };
+
+  $('jsonFile').onchange=function(){
+
+    var f=this.files[0]; if(!f) return;
+
+    var fr=new FileReader();
+
+    fr.onload=function(){
+
+      try{
+
+        var o=JSON.parse(fr.result);
+
+        if(!o.spares||!Array.isArray(o.spares)) throw new Error('格式不对');
+
+        if(!confirm('导入备份会覆盖当前 '+DB.spares.length+' 条备件，继续？')) return;
+
+        DB.spares=o.spares; DB.moves=o.moves||[]; DB.meta=o.meta||{};
+
+        save(); renderAll(); go('dash');
+
+        toast('备份已恢复：'+DB.spares.length+' 条','ok');
+
+      }catch(e){ toast('备份文件无法解析','err'); }
+
+    };
+
+    fr.readAsText(f,'utf-8');
+
+    this.value='';
+
+  };
+
+  $('btnSeed').onclick=function(){
+
+    if(!confirm('载入演示数据会覆盖当前全部备件与流水，继续？')) return;
+
+    resetDemo(); go('dash'); toast('已载入演示数据（24 项）','ok');
+
+  };
+
+  $('btnWipe').onclick=function(){
+
+    if(!confirm('清空全部数据且不可恢复，确定？')) return;
+
+    if(!confirm('再确认一次：所有备件与流水都会被删除。')) return;
+
+    DB.spares=[]; DB.moves=[]; DB.meta={createdAt:nowStr(),updatedAt:nowStr()};
+
+    save(); renderAll(); go('dash'); toast('已清空','ok');
+
+  };
+
+
+
+  $('modalX').onclick=closeModal;
+
+  $('modalCancel').onclick=closeModal;
+
+  $('modalSave').onclick=saveModal;
+
+  $('modalBg').onclick=function(e){ if(e.target===$('modalBg')) closeModal(); };
+
+  document.addEventListener('keydown',function(e){
+
+    if(e.key==='Escape' && $('modalBg').classList.contains('on')) closeModal();
+
+    if(e.key==='Enter' && $('modalBg').classList.contains('on') && e.target.tagName==='INPUT') saveModal();
+
+  });
+
+  refreshQueryMap();
+
+}
+
+if(typeof document!=='undefined') init();
+
+</script>
+
+</body>
+
+</html>
+
