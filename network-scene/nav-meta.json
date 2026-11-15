@@ -1,0 +1,27 @@
+{
+  "id": "network-scene",
+  "title": "网络运营 AI 场景训练操作台｜中国移动网络事业部",
+  "shortTitle": "网络运营场景",
+  "category": "通信与网络运营",
+  "description": "面向中国移动网络事业部网络监控室、家庭业务响应室、云平台维护室与运营管理处。围绕监控告警、故障处置、家宽装维、云平台维护、运营管理与割接保障，四步完成流程生成、AI 介入、场景湖与高 ROI 评分，含四个可编辑提示词与三份 Excel 模板。",
+  "url": "https://xjtulijiagui-max.github.io/lijiagui/network-scene/",
+  "tags": [
+    "中国移动",
+    "网络运营",
+    "网络监控",
+    "告警处置",
+    "家宽装维",
+    "云平台维护",
+    "运营管理",
+    "割接保障",
+    "场景创新",
+    "Mermaid",
+    "ROI"
+  ],
+  "type": "实战练习",
+  "client": "中国移动集团网络事业部",
+  "status": "正常",
+  "featured": false,
+  "updated": "2026-11-15",
+  "source": "复刻 insurance-broker-scene 页面结构与模板，业务内容改为中国移动网络事业部网络运营场景"
+}
