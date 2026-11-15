@@ -1,3 +1,807 @@
+<!doctype html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+
+
+  <meta charset="utf-8" />
+
+
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23061b46'/%3E%3Cpath d='M16 45 28 17h8l12 28h-8l-2-6H26l-2 6h-8Zm13-13h6l-3-8-3 8Z' fill='white'/%3E%3C/svg%3E" />
+
+
+  <meta name="description" content="李家贵 AI 实战训练导航：课程、案例、提示词、数据集与工具平台统一入口。" />
+
+
+  <title>AI 实战训练导航｜李家贵</title>
+
+
+  <style>
+
+
+    :root{
+
+
+      --color-brand-deep:#061b46;
+
+
+      --color-brand-navy:#082f78;
+
+
+      --color-accent:#0a43c8;
+
+
+      --color-accent-bright:#155eef;
+
+
+      --color-accent-hover:#083baf;
+
+
+      --color-accent-soft:#eef4ff;
+
+
+      --color-surface-page:#f5f8fd;
+
+
+      --color-surface-card:#ffffff;
+
+
+      --color-surface-subtle:#f6f8fc;
+
+
+      --color-text-primary:#15223a;
+
+
+      --color-text-secondary:#60708a;
+
+
+      --color-text-muted:#526178;
+
+
+      --color-border:#d8e4f7;
+
+
+      --color-border-strong:#b9cdf2;
+
+
+      --color-focus-ring:#e4edff;
+
+
+      --color-status-warning:#9a6700;
+
+
+      --space-1:4px;
+
+
+      --space-2:8px;
+
+
+      --space-3:12px;
+
+
+      --space-4:16px;
+
+
+      --space-5:20px;
+
+
+      --space-6:24px;
+
+
+      --space-8:32px;
+
+
+      --space-10:40px;
+
+
+      --space-16:64px;
+
+
+      --radius-xs:6px;
+
+
+      --radius-sm:8px;
+
+
+      --radius-md:12px;
+
+
+      --radius-lg:16px;
+
+
+      --radius-xl:18px;
+
+
+      --shadow-subtle:0 4px 14px rgba(23,54,99,.035);
+
+
+      --shadow-default:0 12px 34px rgba(17,57,122,.09);
+
+
+      --shadow-sticky:0 8px 24px rgba(17,57,122,.07);
+
+
+    }
+
+
+    *{box-sizing:border-box}
+
+
+    [hidden]{display:none!important}
+
+
+    html{scroll-behavior:smooth}
+
+
+    body{margin:0;font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",system-ui,sans-serif;color:var(--color-text-primary);background:var(--color-surface-page);line-height:1.6}
+
+
+    a{color:inherit;text-decoration:none}
+
+
+    button,input,select{font:inherit}
+
+
+    button{color:inherit}
+
+
+    button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid var(--color-focus-ring);outline-offset:2px}
+
+
+    .hero{background:linear-gradient(132deg,var(--color-brand-deep),var(--color-brand-navy) 58%,var(--color-accent));color:var(--color-surface-card);position:relative;overflow:hidden}
+
+
+    .hero:before,.hero:after{content:"";position:absolute;border:1px solid color-mix(in srgb,var(--color-surface-card) 14%,transparent);border-radius:50%;width:520px;height:520px;right:-180px;top:-260px}
+
+
+    .hero:after{width:320px;height:320px;right:120px;top:80px;opacity:.55}
+
+
+    .wrap{max-width:1240px;margin:0 auto;padding-inline:26px}
+
+
+    .wrap.hero-inner{padding-block:52px 34px;position:relative;z-index:2}
+
+
+    .eyebrow{font-size:.8125rem;letter-spacing:.18em;text-transform:uppercase;opacity:.78;font-weight:700}
+
+
+    .title{font-size:clamp(1.8125rem,4vw,2.5rem);line-height:1.15;margin:11px 0 var(--space-3);font-weight:800;letter-spacing:.01em;text-wrap:balance}
+
+
+    .subtitle{max-width:760px;line-height:1.85;font-size:1rem;color:color-mix(in srgb,var(--color-surface-card) 84%,transparent);text-wrap:pretty}
+
+
+    .quick{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+
+
+    .quick a{background:color-mix(in srgb,var(--color-surface-card) 12%,transparent);border:1px solid color-mix(in srgb,var(--color-surface-card) 22%,transparent);padding:10px 14px;border-radius:11px;font-size:.875rem;backdrop-filter:blur(4px);transition:background-color 150ms ease-out,transform 150ms ease-out}
+
+
+    .quick a:hover{background:color-mix(in srgb,var(--color-surface-card) 20%,transparent);transform:translateY(-1px)}
+
+
+    .quick a:active{transform:translateY(0)}
+
+
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-3);margin-top:28px;max-width:760px}
+
+
+    .stat{padding:var(--space-3) 14px;border-left:2px solid color-mix(in srgb,var(--color-surface-card) 55%,transparent);background:color-mix(in srgb,var(--color-surface-card) 7%,transparent)}
+
+
+    .stat b{font-size:1.5625rem;display:block;font-variant-numeric:tabular-nums}
+
+
+    .stat span{font-size:.75rem;opacity:.76}
+
+
+    .toolbar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--color-surface-page) 94%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--color-border);box-shadow:var(--shadow-sticky)}
+
+
+    .wrap.toolbar-inner{padding-block:var(--space-4) var(--space-3)}
+
+
+    .search-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--space-3);align-items:end}
+
+
+    .search-block{min-width:0}
+
+
+    .search-label{display:block;font-size:.75rem;font-weight:700;color:var(--color-text-secondary);margin-bottom:var(--space-1)}
+
+
+    .search{position:relative}
+
+
+    .search svg{position:absolute;left:var(--space-3);top:50%;transform:translateY(-50%);width:20px;height:20px;color:var(--color-text-muted);pointer-events:none}
+
+
+    .search input{width:100%;border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-surface-card);color:var(--color-text-primary);padding:var(--space-3) 46px var(--space-3) var(--space-10);outline:none;min-height:48px}
+
+
+    .search input::placeholder{color:var(--color-text-muted)}
+
+
+    .search input:focus{border-color:var(--color-accent-bright);box-shadow:0 0 0 3px var(--color-focus-ring)}
+
+
+    .search kbd{position:absolute;right:var(--space-3);top:50%;transform:translateY(-50%);font-size:.75rem;line-height:1;color:var(--color-text-muted);background:var(--color-surface-subtle);border:1px solid var(--color-border);border-radius:var(--radius-xs);padding:5px 7px}
+
+
+    .search-hint{margin-top:var(--space-1);font-size:.75rem;color:var(--color-text-muted)}
+
+
+    .ghost{border:1px solid var(--color-border);background:var(--color-surface-card);padding:0 var(--space-4);border-radius:var(--radius-md);color:var(--color-text-secondary);min-height:48px;cursor:pointer;transition:border-color 150ms ease-out,background-color 150ms ease-out,transform 150ms ease-out}
+
+
+    .ghost:hover{border-color:var(--color-border-strong);background:var(--color-accent-soft)}
+
+
+    .ghost:active{transform:translateY(1px)}
+
+
+    .query-examples{display:flex;align-items:center;gap:var(--space-2);overflow:auto;padding-top:var(--space-2);scrollbar-width:none}
+
+
+    .query-examples>span{font-size:.75rem;color:var(--color-text-muted);white-space:nowrap}
+
+
+    .query-button{white-space:nowrap;border:0;background:transparent;color:var(--color-accent);padding:var(--space-1) var(--space-2);border-radius:var(--radius-xs);cursor:pointer;font-size:.8125rem}
+
+
+    .query-button:hover{background:var(--color-accent-soft)}
+
+
+    main{padding-block:var(--space-8) 58px}
+
+
+    .catalog-layout{display:grid;grid-template-columns:260px minmax(0,1fr);gap:var(--space-6);align-items:start}
+
+
+    .filters{position:sticky;top:112px}
+
+
+    .filter-panel{background:var(--color-surface-card);border:1px solid var(--color-border);border-radius:var(--radius-lg);box-shadow:var(--shadow-subtle);overflow:hidden}
+
+
+    .filter-panel summary{display:none;list-style:none;cursor:pointer;padding:var(--space-4);font-weight:700}
+
+
+    .filter-panel summary::-webkit-details-marker{display:none}
+
+
+    .filter-panel-body{padding:var(--space-5)}
+
+
+    .filter-intro{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);padding-bottom:var(--space-4);border-bottom:1px solid var(--color-border)}
+
+
+    .filter-intro strong{font-size:1rem}
+
+
+    .filter-summary{font-size:.75rem;color:var(--color-text-muted);font-variant-numeric:tabular-nums}
+
+
+    .filter-group{border:0;margin:var(--space-5) 0 0;padding:0;min-width:0}
+
+
+    .filter-group legend{font-size:.75rem;font-weight:700;color:var(--color-text-muted);letter-spacing:.04em;margin-bottom:var(--space-2)}
+
+
+    .filter-group select{width:100%;border:1px solid var(--color-border);border-radius:var(--radius-sm);background:var(--color-surface-card);color:var(--color-text-primary);padding:10px var(--space-3);outline:none}
+
+
+    .filter-group select:focus{border-color:var(--color-accent-bright);box-shadow:0 0 0 3px var(--color-focus-ring)}
+
+
+    .filter-list{display:grid;gap:2px}
+
+
+    .filter-option{display:grid;grid-template-columns:18px minmax(0,1fr) auto;align-items:start;gap:var(--space-2);padding:7px var(--space-2);margin-inline:-8px;border-radius:var(--radius-sm);font-size:.8125rem;cursor:pointer;transition:background-color 150ms ease-out,color 150ms ease-out}
+
+
+    .filter-option:hover{background:var(--color-surface-subtle)}
+
+
+    .filter-option input{width:16px;height:16px;margin:2px 0 0;accent-color:var(--color-accent)}
+
+
+    .filter-option span{line-height:1.45}
+
+
+    .filter-option small{font-size:.6875rem;color:var(--color-text-muted);font-variant-numeric:tabular-nums}
+
+
+    .filter-option:has(input:checked){background:var(--color-accent-soft);color:var(--color-accent);font-weight:700}
+
+
+    .tag-filters{display:flex;gap:var(--space-2);flex-wrap:wrap}
+
+
+    .tag-filter,.tag-button{border:1px solid transparent;background:var(--color-surface-subtle);color:var(--color-text-secondary);border-radius:var(--radius-sm);cursor:pointer;transition:background-color 150ms ease-out,border-color 150ms ease-out,color 150ms ease-out,transform 150ms ease-out}
+
+
+    .tag-filter{padding:6px var(--space-2);font-size:.75rem}
+
+
+    .tag-filter:hover,.tag-button:hover{border-color:var(--color-border-strong);color:var(--color-accent)}
+
+
+    .tag-filter[aria-pressed="true"],.tag-button[aria-pressed="true"]{background:var(--color-accent);border-color:var(--color-accent);color:var(--color-surface-card)}
+
+
+    .tag-filter:active,.tag-button:active{transform:translateY(1px)}
+
+
+    .show-tags{margin-top:var(--space-2);border:0;background:transparent;color:var(--color-accent);font-size:.75rem;cursor:pointer;padding:var(--space-1) 0}
+
+
+    .results-column{min-width:0}
+
+
+    .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--space-5);margin-bottom:var(--space-3)}
+
+
+    .section-head h2{font-size:1.5rem;line-height:1.3;margin:0 0 var(--space-1);text-wrap:balance}
+
+
+    .section-head p{margin:0;color:var(--color-text-muted);font-size:.875rem;text-wrap:pretty}
+
+
+    .result-count{color:var(--color-text-muted);font-size:.8125rem;white-space:nowrap;font-variant-numeric:tabular-nums}
+
+
+    .active-filters{display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap;min-height:36px;margin-bottom:var(--space-3)}
+
+
+    .active-filter{display:inline-flex;align-items:center;gap:var(--space-1);border:1px solid var(--color-border);background:var(--color-surface-card);color:var(--color-text-secondary);padding:6px var(--space-2);border-radius:var(--radius-sm);font-size:.75rem;cursor:pointer}
+
+
+    .active-filter:hover{border-color:var(--color-border-strong);color:var(--color-accent)}
+
+
+    .active-filter b{font-size:.875rem;line-height:1}
+
+
+    .grid{min-height:60vh;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-4)}
+
+
+    .card{min-width:0;background:var(--color-surface-card);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:var(--space-5);box-shadow:var(--shadow-subtle);transition:transform 200ms ease-in-out,box-shadow 200ms ease-in-out,border-color 200ms ease-in-out;display:flex;flex-direction:column;min-height:270px;contain:layout paint style}
+
+
+    .card:hover,.card:focus-within{transform:translateY(-3px);box-shadow:var(--shadow-default);border-color:var(--color-border-strong)}
+
+
+    .card-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+
+
+    .category{font-size:.75rem;color:var(--color-accent);background:var(--color-accent-soft);padding:5px var(--space-2);border-radius:7px;font-weight:700}
+
+
+    .status{font-size:.6875rem;color:var(--color-text-secondary);border:1px solid var(--color-border);border-radius:999px;padding:var(--space-1) 7px}
+
+
+    .status.pending{color:var(--color-status-warning);background:var(--color-surface-subtle)}
+
+
+    .card h3{font-size:1.125rem;line-height:1.45;margin:var(--space-3) 0 var(--space-2);text-wrap:balance}
+
+
+    .card p{font-size:.8125rem;line-height:1.75;color:var(--color-text-secondary);margin:0 0 var(--space-3);flex:1;text-wrap:pretty}
+
+
+    .keep-phrase{white-space:nowrap}
+
+
+    .meta{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}
+
+
+    .tag-button{font-size:.6875rem;padding:var(--space-1) 7px}
+
+
+    .client{font-size:.75rem;color:var(--color-text-secondary);margin-bottom:var(--space-2)}
+
+
+    .client b{color:var(--color-text-primary)}
+
+
+    .resource-path{display:block;font-size:.6875rem;color:var(--color-text-muted);font-family:ui-monospace,"SFMono-Regular",Consolas,monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:var(--space-3)}
+
+
+    .actions{display:grid;grid-template-columns:1fr auto;gap:var(--space-2)}
+
+
+    .open-btn,.copy-btn{border-radius:10px;padding:10px 11px;font-size:.8125rem;font-weight:700;cursor:pointer;min-height:44px;transition:background-color 150ms ease-out,border-color 150ms ease-out,transform 150ms ease-out}
+
+
+    .open-btn{border:0;background:var(--color-accent);color:var(--color-surface-card);text-align:center}
+
+
+    .open-btn:hover{background:var(--color-accent-hover)}
+
+
+    .copy-btn{border:1px solid var(--color-border);background:var(--color-surface-card);color:var(--color-text-secondary)}
+
+
+    .copy-btn:hover{background:var(--color-accent-soft);border-color:var(--color-border-strong)}
+
+
+    .open-btn:active,.copy-btn:active{transform:translateY(1px)}
+
+
+    .featured{outline:2px solid color-mix(in srgb,var(--color-accent-bright) 8%,transparent)}
+
+
+    .empty{grid-column:1/-1;text-align:center;padding:var(--space-16) var(--space-5);background:var(--color-surface-card);border:1px dashed var(--color-border-strong);border-radius:var(--radius-lg);color:var(--color-text-secondary)}
+
+
+    .empty h3{margin:0 0 var(--space-2);color:var(--color-text-primary)}
+
+
+    .empty p{margin:0 0 var(--space-4)}
+
+
+    .empty button{border:0;background:var(--color-accent);color:var(--color-surface-card);border-radius:var(--radius-sm);padding:10px var(--space-4);cursor:pointer;font-weight:700}
+
+
+    .admin{margin-top:34px;background:var(--color-brand-deep);color:var(--color-surface-card);border-radius:var(--radius-xl);padding:22px var(--space-6)}
+
+
+    .admin summary{cursor:pointer;font-weight:700}
+
+
+    .admin p{color:color-mix(in srgb,var(--color-surface-card) 84%,transparent);font-size:.8125rem;line-height:1.8}
+
+
+    .admin code{background:color-mix(in srgb,var(--color-surface-card) 10%,transparent);padding:2px 5px;border-radius:5px}
+
+
+    .admin pre{overflow:auto;background:color-mix(in srgb,var(--color-brand-deep) 82%,black);padding:14px;border-radius:10px;color:var(--color-accent-soft);font-size:.75rem;line-height:1.65}
+
+
+    .footer{padding:0 0 38px;text-align:center;color:var(--color-text-muted);font-size:.75rem}
+
+
+    .toast{position:fixed;right:22px;bottom:22px;background:var(--color-brand-deep);color:var(--color-surface-card);padding:11px 15px;border-radius:10px;box-shadow:var(--shadow-default);opacity:0;transform:translateY(12px);transition:opacity 200ms ease-in-out,transform 200ms ease-in-out;pointer-events:none;z-index:99}
+
+
+    .toast.show{opacity:1;transform:none}
+
+
+    @media(max-width:1100px){.catalog-layout{grid-template-columns:232px minmax(0,1fr)}.wrap{padding-inline:var(--space-5)}}
+
+
+    @media(max-width:959px){.catalog-layout{grid-template-columns:minmax(0,1fr)}.filters{position:static}.filter-panel summary{display:flex;align-items:center;justify-content:space-between}.filter-panel-body{border-top:1px solid var(--color-border)}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.toolbar{position:static}.stats{grid-template-columns:repeat(2,1fr)}}
+
+
+    @media(max-width:640px){.wrap{padding-inline:var(--space-4)}.wrap.hero-inner{padding-block:38px 34px}.search-row{grid-template-columns:1fr}.ghost{min-height:42px}.search kbd{display:none}.query-examples{flex-wrap:wrap;overflow:visible}.stats{gap:var(--space-2)}.section-head{align-items:flex-start;flex-direction:column;gap:var(--space-2)}.result-count{white-space:normal}.grid{grid-template-columns:minmax(0,1fr)}.card{min-height:0}.admin{padding:var(--space-5)}}
+
+
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}.card:hover,.card:focus-within,.quick a:hover{transform:none}}
+
+
+  </style>
+
+
+</head>
+
+
+<body>
+
+
+  <header class="hero">
+
+
+    <div class="wrap hero-inner">
+
+
+      <div class="eyebrow">AI PRACTICE HUB · 2026</div>
+
+
+      <h1 class="title">AI 实战训练导航</h1>
+
+
+      <div class="subtitle">把课程案例、场景练习、提示词库、模&#8288;拟&#8288;数&#8288;据&#8288;与&#8288;工&#8288;具&#8288;平&#8288;台收进一个入口。既可按<span class="keep-phrase">行业</span>进入，也可按训练能力检索，让每一个网页都成为课程体系中的一块“可复用积木”。</div>
+
+
+      <nav class="quick" aria-label="快捷入口">
+
+
+        <a href="https://xjtulijiagui-max.github.io/lijiagui/mba/" target="_blank" rel="noopener">AI 总裁班</a>
+
+
+        <a href="https://xjtulijiagui-max.github.io/lijiagui/scene/" target="_blank" rel="noopener">场景创新</a>
+
+
+        <a href="https://xjtulijiagui-max.github.io/lijiagui/tob/" target="_blank" rel="noopener">AI 练习</a>
+
+
+        <a href="https://xjtulijiagui-max.github.io/lijiagui/presales.html" target="_blank" rel="noopener">销售资料</a>
+
+
+        <a href="https://xjtulijiagui-max.github.io/lijiagui/delivery.html" target="_blank" rel="noopener">教务资料</a>
+
+
+      </nav>
+
+
+      <div class="stats">
+
+
+        <div class="stat"><b id="statPages">—</b><span>已收录页面</span></div>
+
+
+        <div class="stat"><b id="statCats">—</b><span>内容分类</span></div>
+
+
+        <div class="stat"><b id="statClients">—</b><span>客户 / 专题</span></div>
+
+
+        <div class="stat"><b id="statPractice">—</b><span>练习与案例</span></div>
+
+
+      </div>
+
+
+    </div>
+
+
+  </header>
+
+
+
+
+
+  <nav class="toolbar" aria-label="资源搜索">
+
+
+    <div class="wrap toolbar-inner">
+
+
+      <div class="search-row">
+
+
+        <div class="search-block">
+
+
+          <label class="search-label" for="search">搜索资源</label>
+
+
+          <div class="search">
+
+
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+
+
+            <input id="search" type="search" placeholder="搜名称、地址、标签、行业" autocomplete="off" spellcheck="false">
+
+
+            <kbd aria-hidden="true">/</kbd>
+
+
+          </div>
+
+
+          <div class="search-hint">支持完整网址和多个关键词；用空格组合搜索会更准确。</div>
+
+
+        </div>
+
+
+        <button class="ghost" id="resetBtn" type="button">清除全部</button>
+
+
+      </div>
+
+
+      <div class="query-examples" aria-label="搜索示例">
+
+
+        <span>试试：</span>
+
+
+        <button class="query-button" type="button" data-query="3min">3min</button>
+
+
+        <button class="query-button" type="button" data-query="keylogic">keylogic</button>
+
+
+        <button class="query-button" type="button" data-query="WorkBuddy 智能体">WorkBuddy 智能体</button>
+
+
+        <button class="query-button" type="button" data-query="医疗 提示词">医疗 提示词</button>
+
+
+      </div>
+
+
+    </div>
+
+
+  </nav>
+
+
+
+
+
+  <main class="wrap" id="catalog">
+
+
+    <div class="catalog-layout">
+
+
+      <aside class="filters" aria-label="资源筛选">
+
+
+        <details class="filter-panel" id="filterPanel" open>
+
+
+          <summary>筛选资源 <span class="filter-summary" id="mobileFilterSummary"></span></summary>
+
+
+          <div class="filter-panel-body">
+
+
+            <div class="filter-intro"><strong>筛选资源</strong><span class="filter-summary" id="filterSummary"></span></div>
+
+
+            <fieldset class="filter-group">
+
+
+              <legend>内容类型</legend>
+
+
+              <select id="typeFilter" aria-label="按内容类型筛选"><option value="all">全部内容类型</option></select>
+
+
+            </fieldset>
+
+
+            <fieldset class="filter-group">
+
+
+              <legend>行业 / 分类</legend>
+
+
+              <div class="filter-list" id="categoryFilters"></div>
+
+
+            </fieldset>
+
+
+            <fieldset class="filter-group">
+
+
+              <legend>热门标签</legend>
+
+
+              <div class="tag-filters" id="tagFilters"></div>
+
+
+              <button class="show-tags" id="showTagsBtn" type="button">显示全部标签</button>
+
+
+            </fieldset>
+
+
+          </div>
+
+
+        </details>
+
+
+      </aside>
+
+
+
+
+
+      <div class="results-column">
+
+
+        <div class="section-head">
+
+
+          <div><h2 id="sectionTitle">全部资源</h2><p>点击标签可以继续缩小范围；路径也会参与搜索。</p></div>
+
+
+          <div class="result-count" id="resultCount"></div>
+
+
+        </div>
+
+
+        <div class="active-filters" id="activeFilters" aria-label="当前筛选条件"></div>
+
+
+        <section class="grid" id="grid" aria-live="polite" aria-busy="false"></section>
+
+
+      </div>
+
+
+    </div>
+
+
+
+
+
+    <details class="admin">
+
+
+      <summary>维护说明：以后新增网页如何自动进入导航</summary>
+
+
+      <p>新网页目录中同时放一个 <code>nav-meta.json</code>。推送到 GitHub 后，仓库里的 GitHub Action 会扫描这些元数据，并自动重建 <code>navigation/nav-data.js</code>。如果不希望某个页面进入导航，就不要放这个文件。</p>
+
+
+      <pre>{
+
+
+  "id": "project-key",
+
+
+  "title": "客户 / 项目名称",
+
+
+  "shortTitle": "菜单短名称",
+
+
+  "category": "制造能源与工业",
+
+
+  "description": "一句话说明这个练习解决什么问题",
+
+
+  "path": "new-project/",
+
+
+  "tags": ["知识库", "工作流", "智能体"],
+
+
+  "type": "客户项目",
+
+
+  "client": "客户名称",
+
+
+  "featured": true,
+
+
+  "order": 350
+
+
+}</pre>
+
+
+      <p>推荐以后给网页生成工具统一追加一句：<b>“同时生成 nav-meta.json，并加入 AI 实战训练导航。”</b> 这样网页和导航会像火车与时刻表一样同步更新。</p>
+
+
+    </details>
+
+
+    <div class="toast" id="toast" role="status" aria-live="polite">链接已复制</div>
+
+
+  </main>
+
+
+
+
+
+  <footer class="footer">李家贵 · AI 实战训练导航 · 静态 GitHub Pages 架构</footer>
+
+
+  <script>
+
+
 window.NAV_ITEMS = [
   {
     "id": "home",
@@ -2977,8 +3781,970 @@ window.NAV_ITEMS = [
     "updated": "2026-11-15",
     "order": 240
   }
-]
-
+];
 
 
 </script>
+
+
+  <script>
+
+
+  (() => {
+
+
+    const items = Array.isArray(window.NAV_ITEMS) ? window.NAV_ITEMS : [];
+
+
+    const dom = {
+
+
+      activeFilters: document.querySelector('#activeFilters'),
+
+
+      categoryFilters: document.querySelector('#categoryFilters'),
+
+
+      filterPanel: document.querySelector('#filterPanel'),
+
+
+      filterSummary: document.querySelector('#filterSummary'),
+
+
+      grid: document.querySelector('#grid'),
+
+
+      mobileFilterSummary: document.querySelector('#mobileFilterSummary'),
+
+
+      resetBtn: document.querySelector('#resetBtn'),
+
+
+      resultCount: document.querySelector('#resultCount'),
+
+
+      search: document.querySelector('#search'),
+
+
+      sectionTitle: document.querySelector('#sectionTitle'),
+
+
+      showTagsBtn: document.querySelector('#showTagsBtn'),
+
+
+      tagFilters: document.querySelector('#tagFilters'),
+
+
+      toast: document.querySelector('#toast'),
+
+
+      typeFilter: document.querySelector('#typeFilter')
+
+
+    };
+
+
+    const selectedCategories = new Set();
+
+
+    const selectedTags = new Set();
+
+
+    const tagLimit = 14;
+
+
+    let showAllTags = false;
+
+
+    let toastTimer;
+
+
+    let renderVersion = 0;
+
+
+
+
+
+    const esc = value => String(value ?? '').replace(/[&<>'"]/g, character => ({
+
+
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+
+
+    }[character]));
+
+
+    const formatDescription = value => esc(value).replace(/Claude Code|Git 配置/g, phrase => `<span class="keep-phrase">${phrase}</span>`);
+
+
+    const normalize = value => String(value ?? '').normalize('NFKC').trim().toLocaleLowerCase('zh-CN');
+
+
+    const countValues = values => values.reduce((counts, value) => {
+
+
+      if (value) counts.set(value, (counts.get(value) || 0) + 1);
+
+
+      return counts;
+
+
+    }, new Map());
+
+
+    const categoryCounts = countValues(items.map(item => item.category));
+
+
+    const tagCounts = countValues(items.flatMap(item => item.tags || []));
+
+
+    const categories = [...categoryCounts.keys()].sort((a, b) => a.localeCompare(b, 'zh-CN'));
+
+
+    const types = [...new Set(items.map(item => item.type).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'zh-CN'));
+
+
+    const tags = [...tagCounts.keys()].sort((a, b) => (tagCounts.get(b) - tagCounts.get(a)) || a.localeCompare(b, 'zh-CN'));
+
+
+
+
+
+    function pathFor(url) {
+
+
+      try {
+
+
+        return new URL(url).pathname;
+
+
+      } catch {
+
+
+        return String(url || '');
+
+
+      }
+
+
+    }
+
+
+
+
+
+    const searchIndex = new Map(items.map(item => [item, normalize([
+
+
+      item.id,
+
+
+      item.title,
+
+
+      item.shortTitle,
+
+
+      item.category,
+
+
+      item.description,
+
+
+      item.type,
+
+
+      item.client,
+
+
+      item.url,
+
+
+      pathFor(item.url),
+
+
+      ...(item.tags || [])
+
+
+    ].join(' '))]));
+
+
+
+
+
+    function initializeStats() {
+
+
+      document.querySelector('#statPages').textContent = items.length;
+
+
+      document.querySelector('#statCats').textContent = categories.length;
+
+
+      document.querySelector('#statClients').textContent = new Set(items.map(item => item.client).filter(client => client && client !== '通用' && client !== '内部')).size;
+
+
+      document.querySelector('#statPractice').textContent = items.filter(item => /(练习|项目|沙盘|专题)/.test(item.type || '')).length;
+
+
+    }
+
+
+
+
+
+    function initializeTypeFilter() {
+
+
+      dom.typeFilter.insertAdjacentHTML('beforeend', types.map(type => `<option value="${esc(type)}">${esc(type)}</option>`).join(''));
+
+
+    }
+
+
+
+
+
+    function restoreState() {
+
+
+      const params = new URLSearchParams(location.search);
+
+
+      dom.search.value = params.get('q') || '';
+
+
+      const type = params.get('type');
+
+
+      if (type && types.includes(type)) dom.typeFilter.value = type;
+
+
+      params.getAll('category').filter(category => categories.includes(category)).forEach(category => selectedCategories.add(category));
+
+
+      params.getAll('tag').filter(tag => tags.includes(tag)).forEach(tag => selectedTags.add(tag));
+
+
+    }
+
+
+
+
+
+    function renderCategoryFilters() {
+
+
+      dom.categoryFilters.innerHTML = categories.map((category, index) => `
+
+
+        <label class="filter-option" for="category-${index}">
+
+
+          <input id="category-${index}" type="checkbox" value="${esc(category)}" ${selectedCategories.has(category) ? 'checked' : ''}>
+
+
+          <span>${esc(category)}</span>
+
+
+          <small>${categoryCounts.get(category)}</small>
+
+
+        </label>`).join('');
+
+
+    }
+
+
+
+
+
+    function renderTagFilters() {
+
+
+      const visibleTags = showAllTags ? tags : tags.slice(0, tagLimit);
+
+
+      dom.tagFilters.innerHTML = visibleTags.map(tag => `<button class="tag-filter" type="button" data-tag="${esc(tag)}" aria-pressed="${selectedTags.has(tag)}" aria-label="${esc(tag)}，${tagCounts.get(tag)} 个页面">${esc(tag)} · ${tagCounts.get(tag)}</button>`).join('');
+
+
+      dom.showTagsBtn.hidden = tags.length <= tagLimit;
+
+
+      dom.showTagsBtn.textContent = showAllTags ? '收起标签' : `显示全部 ${tags.length} 个标签`;
+
+
+    }
+
+
+
+
+
+    function currentFilterCount() {
+
+
+      return (dom.search.value.trim() ? 1 : 0) + (dom.typeFilter.value === 'all' ? 0 : 1) + selectedCategories.size + selectedTags.size;
+
+
+    }
+
+
+
+
+
+    function updateMobileFilterSummary() {
+
+
+      const activeCount = currentFilterCount();
+
+
+      if (activeCount) {
+
+
+        dom.mobileFilterSummary.textContent = dom.filterPanel.open ? `${activeCount} 项已选 · 收起` : `${activeCount} 项已选`;
+
+
+        return;
+
+
+      }
+
+
+      dom.mobileFilterSummary.textContent = dom.filterPanel.open ? '收起' : '展开';
+
+
+    }
+
+
+
+
+
+    function syncFilterControls() {
+
+
+      dom.categoryFilters.querySelectorAll('input').forEach(input => {
+
+
+        input.checked = selectedCategories.has(input.value);
+
+
+      });
+
+
+      dom.tagFilters.querySelectorAll('.tag-filter').forEach(button => {
+
+
+        button.setAttribute('aria-pressed', String(selectedTags.has(button.dataset.tag)));
+
+
+      });
+
+
+    }
+
+
+
+
+
+    function renderActiveFilters() {
+
+
+      const filters = [];
+
+
+      if (dom.search.value.trim()) filters.push({ kind: 'query', value: '', label: `关键词：${dom.search.value.trim()}` });
+
+
+      if (dom.typeFilter.value !== 'all') filters.push({ kind: 'type', value: '', label: `类型：${dom.typeFilter.value}` });
+
+
+      selectedCategories.forEach(category => filters.push({ kind: 'category', value: category, label: `行业：${category}` }));
+
+
+      selectedTags.forEach(tag => filters.push({ kind: 'tag', value: tag, label: `标签：${tag}` }));
+
+
+      dom.activeFilters.innerHTML = filters.map(filter => `<button class="active-filter" type="button" data-kind="${filter.kind}" data-value="${esc(filter.value)}" aria-label="移除${esc(filter.label)}">${esc(filter.label)} <b aria-hidden="true">×</b></button>`).join('');
+
+
+      dom.activeFilters.hidden = filters.length === 0;
+
+
+    }
+
+
+
+
+
+    function syncUrl() {
+
+
+      const params = new URLSearchParams();
+
+
+      if (dom.search.value.trim()) params.set('q', dom.search.value.trim());
+
+
+      if (dom.typeFilter.value !== 'all') params.set('type', dom.typeFilter.value);
+
+
+      selectedCategories.forEach(category => params.append('category', category));
+
+
+      selectedTags.forEach(tag => params.append('tag', tag));
+
+
+      const query = params.toString();
+
+
+      history.replaceState(null, '', `${location.pathname}${query ? `?${query}` : ''}${location.hash}`);
+
+
+    }
+
+
+
+
+
+    function matchesItem(item, terms) {
+
+
+      const matchesQuery = terms.every(term => searchIndex.get(item).includes(term));
+
+
+      const matchesType = dom.typeFilter.value === 'all' || item.type === dom.typeFilter.value;
+
+
+      const matchesCategory = selectedCategories.size === 0 || selectedCategories.has(item.category);
+
+
+      const matchesTag = selectedTags.size === 0 || (item.tags || []).some(tag => selectedTags.has(tag));
+
+
+      return matchesQuery && matchesType && matchesCategory && matchesTag;
+
+
+    }
+
+
+
+
+
+    function renderCard(item) {
+
+
+      const itemTags = (item.tags || []).slice(0, 5).map(tag => `<button class="tag-button" type="button" data-tag="${esc(tag)}" aria-pressed="${selectedTags.has(tag)}">${esc(tag)}</button>`).join('');
+
+
+      let status = '';
+
+
+      if (item.status && item.status !== '正常') {
+
+
+        status = `<span class="status pending">${esc(item.status)}</span>`;
+
+
+      } else if (item.featured) {
+
+
+        status = '<span class="status">推荐</span>';
+
+
+      }
+
+
+      return `<article class="card ${item.featured ? 'featured' : ''}">
+
+
+        <div class="card-top"><span class="category">${esc(item.category)}</span>${status}</div>
+
+
+        <h3>${esc(item.shortTitle || item.title)}</h3>
+
+
+        <p>${formatDescription(item.description)}</p>
+
+
+        <div class="meta">${itemTags}</div>
+
+
+        <div class="client"><b>${esc(item.client || '通用')}</b> · ${esc(item.type || '练习页面')}</div>
+
+
+        <span class="resource-path" title="${esc(item.url)}">${esc(pathFor(item.url))}</span>
+
+
+        <div class="actions"><a class="open-btn" href="${esc(item.url)}" target="_blank" rel="noopener">打开页面 ↗</a><button class="copy-btn" type="button" data-url="${esc(item.url)}">复制链接</button></div>
+
+
+      </article>`;
+
+
+    }
+
+
+
+
+
+    function renderCards(filtered, version) {
+
+
+      const batchSize = 4;
+
+
+      let index = 0;
+
+
+      dom.grid.innerHTML = '';
+
+
+      dom.grid.setAttribute('aria-busy', 'true');
+
+
+
+
+
+      function appendBatch() {
+
+
+        if (version !== renderVersion) return;
+
+
+        dom.grid.insertAdjacentHTML('beforeend', filtered.slice(index, index + batchSize).map(renderCard).join(''));
+
+
+        index += batchSize;
+
+
+        if (index < filtered.length) {
+
+
+          setTimeout(appendBatch, 0);
+
+
+          return;
+
+
+        }
+
+
+        dom.grid.setAttribute('aria-busy', 'false');
+
+
+      }
+
+
+
+
+
+      appendBatch();
+
+
+    }
+
+
+
+
+
+    function render() {
+
+
+      const version = ++renderVersion;
+
+
+      const terms = normalize(dom.search.value).split(/\s+/).filter(Boolean);
+
+
+      const filtered = items.filter(item => matchesItem(item, terms));
+
+
+      const activeCount = currentFilterCount();
+
+
+      dom.sectionTitle.textContent = activeCount ? '筛选结果' : '全部资源';
+
+
+      dom.resultCount.textContent = `找到 ${filtered.length} 个，共 ${items.length} 个页面`;
+
+
+      dom.filterSummary.textContent = activeCount ? `${activeCount} 项已选` : '可组合选择';
+
+
+      updateMobileFilterSummary();
+
+
+      renderActiveFilters();
+
+
+      syncFilterControls();
+
+
+      syncUrl();
+
+
+      if (!filtered.length) {
+
+
+        dom.grid.setAttribute('aria-busy', 'false');
+
+
+        dom.grid.innerHTML = `<div class="empty"><h3>没有找到匹配页面</h3><p>可以减少关键词，或清除部分行业和标签后再试。</p><button type="button" data-clear-all>清除全部筛选</button></div>`;
+
+
+        return;
+
+
+      }
+
+
+      renderCards(filtered, version);
+
+
+    }
+
+
+
+
+
+    function clearAll() {
+
+
+      dom.search.value = '';
+
+
+      dom.typeFilter.value = 'all';
+
+
+      selectedCategories.clear();
+
+
+      selectedTags.clear();
+
+
+      render();
+
+
+    }
+
+
+
+
+
+    function showToast(message) {
+
+
+      clearTimeout(toastTimer);
+
+
+      dom.toast.textContent = message;
+
+
+      dom.toast.classList.add('show');
+
+
+      toastTimer = setTimeout(() => dom.toast.classList.remove('show'), 1300);
+
+
+    }
+
+
+
+
+
+    async function copyLink(url) {
+
+
+      try {
+
+
+        await navigator.clipboard.writeText(url);
+
+
+      } catch {
+
+
+        const textarea = document.createElement('textarea');
+
+
+        textarea.value = url;
+
+
+        document.body.appendChild(textarea);
+
+
+        textarea.select();
+
+
+        document.execCommand('copy');
+
+
+        textarea.remove();
+
+
+      }
+
+
+      showToast('链接已复制');
+
+
+    }
+
+
+
+
+
+    dom.search.addEventListener('input', render);
+
+
+    dom.typeFilter.addEventListener('change', render);
+
+
+    dom.resetBtn.addEventListener('click', clearAll);
+
+
+    dom.filterPanel.addEventListener('toggle', updateMobileFilterSummary);
+
+
+    dom.categoryFilters.addEventListener('change', event => {
+
+
+      const input = event.target.closest('input[type="checkbox"]');
+
+
+      if (!input) return;
+
+
+      if (input.checked) selectedCategories.add(input.value);
+
+
+      else selectedCategories.delete(input.value);
+
+
+      render();
+
+
+    });
+
+
+    dom.tagFilters.addEventListener('click', event => {
+
+
+      const button = event.target.closest('.tag-filter');
+
+
+      if (!button) return;
+
+
+      if (selectedTags.has(button.dataset.tag)) selectedTags.delete(button.dataset.tag);
+
+
+      else selectedTags.add(button.dataset.tag);
+
+
+      render();
+
+
+    });
+
+
+    dom.activeFilters.addEventListener('click', event => {
+
+
+      const button = event.target.closest('.active-filter');
+
+
+      if (!button) return;
+
+
+      if (button.dataset.kind === 'query') dom.search.value = '';
+
+
+      if (button.dataset.kind === 'type') dom.typeFilter.value = 'all';
+
+
+      if (button.dataset.kind === 'category') selectedCategories.delete(button.dataset.value);
+
+
+      if (button.dataset.kind === 'tag') selectedTags.delete(button.dataset.value);
+
+
+      render();
+
+
+    });
+
+
+    dom.showTagsBtn.addEventListener('click', () => {
+
+
+      showAllTags = !showAllTags;
+
+
+      renderTagFilters();
+
+
+      syncFilterControls();
+
+
+    });
+
+
+    dom.grid.addEventListener('click', event => {
+
+
+      const clearButton = event.target.closest('[data-clear-all]');
+
+
+      if (clearButton) {
+
+
+        clearAll();
+
+
+        return;
+
+
+      }
+
+
+      const tagButton = event.target.closest('.tag-button');
+
+
+      if (tagButton) {
+
+
+        if (selectedTags.has(tagButton.dataset.tag)) selectedTags.delete(tagButton.dataset.tag);
+
+
+        else selectedTags.add(tagButton.dataset.tag);
+
+
+        render();
+
+
+        return;
+
+
+      }
+
+
+      const copyButton = event.target.closest('.copy-btn');
+
+
+      if (copyButton) copyLink(copyButton.dataset.url);
+
+
+    });
+
+
+    document.querySelectorAll('.query-button').forEach(button => button.addEventListener('click', () => {
+
+
+      dom.search.value = button.dataset.query;
+
+
+      dom.search.focus();
+
+
+      render();
+
+
+    }));
+
+
+    document.addEventListener('keydown', event => {
+
+
+      const isTyping = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName);
+
+
+      if (event.key === '/' && !isTyping) {
+
+
+        event.preventDefault();
+
+
+        dom.search.focus();
+
+
+      }
+
+
+      if (event.key === 'Escape' && document.activeElement === dom.search && dom.search.value) {
+
+
+        dom.search.value = '';
+
+
+        render();
+
+
+      }
+
+
+    });
+
+
+
+
+
+    const narrowViewport = matchMedia('(max-width: 959px)');
+
+
+    if (narrowViewport.matches) dom.filterPanel.open = false;
+
+
+    narrowViewport.addEventListener('change', event => {
+
+
+      if (!event.matches) dom.filterPanel.open = true;
+
+
+    });
+
+
+
+
+
+    initializeStats();
+
+
+    initializeTypeFilter();
+
+
+    restoreState();
+
+
+    renderCategoryFilters();
+
+
+    renderTagFilters();
+
+
+    render();
+
+
+  })();
+
+
+  </script>
+
+
+</body>
+
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
