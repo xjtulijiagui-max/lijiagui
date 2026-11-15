@@ -1,0 +1,29 @@
+{
+  "id": "financial-spec",
+  "title": "企业财务部门｜PRD + Spec 标准 → Workspace → 工作台 · 两步练习",
+  "shortTitle": "财务部门 Workspace 两步练习",
+  "category": "财务与经营管理",
+  "description": "企业财务部门费用报销场景的两步练习：第一步把费用报销审核 IPO 定义书与《Spec Workspace 初始化标准 v2.0》一起交给 AI，生成候选 Workspace 输入包；第二步选专家「工作台搭建师」把规格变成可点的工作台。附费用报销分析 IPO Word、通用标准包 ZIP 与两段可复制提示词。",
+  "url": "https://xjtulijiagui-max.github.io/lijiagui/financial-spec/",
+  "path": "financial-spec/",
+  "tags": [
+    "财务部门",
+    "费用报销",
+    "异常分析",
+    "IPO",
+    "PRD",
+    "Spec",
+    "Workspace",
+    "规格驱动",
+    "工作台搭建师",
+    "提示词",
+    "课堂练习"
+  ],
+  "type": "课堂练习",
+  "client": "企业财务部门",
+  "status": "正常",
+  "featured": false,
+  "updated": "2026-11-15",
+  "source": "基于本站 network-spec 页面框架改造，IPO 样例重写为费用报销异常分析场景；Spec Workspace 初始化标准 v2.0 为通用标准包，原样复用",
+  "order": 118
+}
