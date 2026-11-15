@@ -1,0 +1,25 @@
+{
+  "id": "insurance-broker-scene",
+  "title": "保险经纪销售 · AI 场景训练操作台",
+  "shortTitle": "保险经纪场景",
+  "category": "金融保险与支付",
+  "description": "围绕保险经纪销售全链路：线索开拓、需求访谈与保障缺口测算、多产品条款对比与建议书、投保核保与双录、保单服务与续期经营、理赔协赔与转介绍，完成流程生成、AI 介入、场景湖沉淀和高 ROI 评分，含四个可编辑提示词与三份 Excel 模板。",
+  "url": "https://xjtulijiagui-max.github.io/lijiagui/insurance-broker-scene/",
+  "tags": [
+    "保险经纪",
+    "保险销售",
+    "需求分析",
+    "条款对比",
+    "核保双录",
+    "续期经营",
+    "场景创新",
+    "Mermaid",
+    "ROI"
+  ],
+  "type": "实战练习",
+  "client": "保险经纪公司/团队",
+  "status": "正常",
+  "featured": false,
+  "updated": "2026-11-15",
+  "source": "复刻 /scene/ 页面结构与模板，业务内容改为保险经纪销售场景"
+}
