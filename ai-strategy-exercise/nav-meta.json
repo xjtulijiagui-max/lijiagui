@@ -1,0 +1,25 @@
+{
+  "id": "ai-strategy-exercise",
+  "title": "AI 战略落地 · 练习中心｜从选场景到项目立项",
+  "shortTitle": "AI战略落地练习",
+  "category": "通用方法与沙盘",
+  "description": "《AI 战略落地》课程全流程练习中枢：第二章接入保险经纪销售 AI 场景训练操作台（流程生成→AI介入→场景湖→高ROI评分），配 SWOT、设计思维、商业模式画布、SCAMPER 四份辅助资料；第三章对接 Workbench List 工作台成果库演示；第四章附保险代理人管理 AI 落地方案八步框架示例 PPT（29页）与三个 AI 协作提示词；课后作业用立项提示词产出 AI 项目立项书。共四个可复制提示词。",
+  "url": "https://xjtulijiagui-max.github.io/lijiagui/ai-strategy-exercise/",
+  "tags": [
+    "AI战略落地",
+    "八步落地框架",
+    "场景评分",
+    "ROI",
+    "保险代理人管理",
+    "项目立项",
+    "课堂练习",
+    "提示词"
+  ],
+  "type": "实战练习",
+  "client": "通用课程",
+  "status": "正常",
+  "featured": false,
+  "order": 106,
+  "updated": "2026-11-15",
+  "source": "课程练习链接 + 附件 Baoxian_Dailiren_Guanli_AI_Luodi_20261115.pptx（29页八步框架示范），复刻 insurance-broker-scene 页面结构与暗色设计体系"
+}

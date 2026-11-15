@@ -1,0 +1,1113 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AI战略落地练习：第二章场景训练、四份辅助资料、第三章工作台成果库演示、第四章八步落地框架任务与课后 AI 项目立项作业。">
+  <title>AI 战略落地 · 练习中心</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --surface-primary: #08090a;
+      --surface-secondary: #0f1011;
+      --surface-elevated: #191a1b;
+      --surface-inset: #111316;
+      --text-primary: #f7f8f8;
+      --text-secondary: #d0d6e0;
+      --text-muted: #8a8f98;
+      --border-subtle: rgba(255,255,255,0.06);
+      --border-standard: rgba(255,255,255,0.10);
+      --accent-primary: #7170ff;
+      --accent-hover: #8585ff;
+      --accent-green: #2dd4bf;
+      --accent-amber: #f7b955;
+      --status-error: #ff7979;
+      --radius-card: 8px;
+      --radius-control: 6px;
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+      --space-16: 64px;
+      --font-sans: Arial, "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+      --font-mono: "Cascadia Mono", "Microsoft YaHei Mono", Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        linear-gradient(180deg, rgba(113,112,255,0.08), transparent 360px),
+        var(--surface-primary);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.65;
+      letter-spacing: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      overflow-wrap: anywhere;
+    }
+
+    button,
+    textarea,
+    input {
+      font: inherit;
+      letter-spacing: 0;
+    }
+
+    button,
+    .button-link {
+      border: 1px solid var(--border-standard);
+      border-radius: var(--radius-control);
+      background: rgba(255,255,255,0.04);
+      color: var(--text-primary);
+      min-height: 40px;
+      padding: 0 var(--space-4);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      cursor: pointer;
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease, color 160ms ease;
+      white-space: nowrap;
+    }
+
+    button:hover,
+    .button-link:hover {
+      transform: translateY(-1px);
+      border-color: rgba(113,112,255,0.65);
+      background: rgba(113,112,255,0.14);
+    }
+
+    button:active,
+    .button-link:active { transform: translateY(0); }
+
+    button:focus-visible,
+    a:focus-visible,
+    textarea:focus-visible {
+      outline: 2px solid var(--accent-hover);
+      outline-offset: 3px;
+    }
+
+    button.primary {
+      border-color: transparent;
+      background: var(--accent-primary);
+      color: #0b0b10;
+      font-weight: 650;
+    }
+
+    button.primary:hover { background: var(--accent-hover); }
+
+    .shell {
+      width: min(100%, 1480px);
+      margin: 0 auto;
+      padding: var(--space-6);
+      display: grid;
+      grid-template-columns: 284px minmax(0, 1fr);
+      gap: var(--space-6);
+    }
+
+    .rail {
+      position: sticky;
+      top: var(--space-6);
+      align-self: start;
+      min-height: calc(100dvh - 48px);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-card);
+      background: rgba(15,16,17,0.92);
+      padding: var(--space-4);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.22);
+    }
+
+    .rail-title {
+      padding: var(--space-2) var(--space-2) var(--space-3);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .rail-title strong {
+      display: block;
+      font-size: 15px;
+      line-height: 1.4;
+      font-weight: 650;
+    }
+
+    .rail-title span {
+      color: var(--text-muted);
+      display: block;
+      margin-top: var(--space-1);
+      font-size: 12px;
+    }
+
+    .nav-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: var(--space-1);
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-control);
+      color: var(--text-secondary);
+      font-size: 14px;
+      min-height: 40px;
+      transition: background 140ms ease, color 140ms ease;
+    }
+
+    .nav-item:hover {
+      background: rgba(113,112,255,0.12);
+      color: var(--text-primary);
+    }
+
+    .nav-index {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent-hover);
+      min-width: 20px;
+    }
+
+    .note-card {
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-card);
+      background: var(--surface-inset);
+      padding: var(--space-4);
+    }
+
+    .note-card h3 {
+      margin: var(--space-2) 0 var(--space-2);
+      font-size: 14px;
+      font-weight: 650;
+    }
+
+    .note-card p {
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px var(--space-2);
+      border: 1px solid rgba(113,112,255,0.45);
+      border-radius: 999px;
+      color: var(--accent-hover);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+
+    .badge.greenish {
+      border-color: rgba(45,212,191,0.45);
+      color: var(--accent-green);
+    }
+
+    .badge.amberish {
+      border-color: rgba(247,185,85,0.45);
+      color: var(--accent-amber);
+    }
+
+    main { display: grid; gap: var(--space-6); min-width: 0; }
+
+    .hero {
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-card);
+      background:
+        radial-gradient(1200px 320px at 85% -10%, rgba(113,112,255,0.16), transparent),
+        var(--surface-secondary);
+      padding: var(--space-10);
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      gap: var(--space-8);
+      align-items: start;
+    }
+
+    .kicker {
+      color: var(--accent-hover);
+      font-size: 13px;
+      font-weight: 650;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      margin: var(--space-3) 0 var(--space-4);
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1.18;
+      letter-spacing: -0.01em;
+    }
+
+    .title-line {
+      background: linear-gradient(92deg, #a3a2ff, #7170ff 55%, #2dd4bf);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .lead {
+      color: var(--text-secondary);
+      font-size: 15px;
+      max-width: 60ch;
+      margin: 0 0 var(--space-5);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      align-items: center;
+    }
+
+    .copy-status {
+      min-height: 20px;
+      color: var(--accent-green);
+      font-size: 13px;
+    }
+
+    .workflow-visual {
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-card);
+      background: var(--surface-inset);
+      padding: var(--space-5);
+      display: grid;
+      gap: var(--space-3);
+    }
+
+    .workflow-visual .visual-caption {
+      color: var(--text-muted);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      margin-bottom: var(--space-1);
+    }
+
+    .flow-node {
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-control);
+      background: var(--surface-elevated);
+      padding: var(--space-3) var(--space-4);
+      display: grid;
+      grid-template-columns: 38px 1fr auto;
+      gap: var(--space-3);
+      align-items: start;
+    }
+
+    .node-number {
+      font-family: var(--font-mono);
+      color: var(--accent-hover);
+      font-size: 15px;
+      font-weight: 700;
+      padding-top: 2px;
+    }
+
+    .node-title {
+      display: block;
+      font-weight: 650;
+      font-size: 14px;
+    }
+
+    .node-meta {
+      display: block;
+      color: var(--text-muted);
+      font-size: 12.5px;
+      margin-top: 2px;
+    }
+
+    .node-tool {
+      border: 1px solid var(--border-subtle);
+      border-radius: 999px;
+      padding: 2px var(--space-2);
+      color: var(--text-muted);
+      font-size: 11.5px;
+      white-space: nowrap;
+    }
+
+    .section {
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-card);
+      background: var(--surface-secondary);
+      padding: var(--space-8);
+      display: grid;
+      gap: var(--space-6);
+    }
+
+    .section-head { display: grid; gap: var(--space-3); }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(20px, 2.4vw, 26px);
+      line-height: 1.3;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 14.5px;
+      max-width: 88ch;
+    }
+
+    .tool-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      align-items: center;
+    }
+
+    .tool-tag {
+      border: 1px solid var(--border-standard);
+      border-radius: 999px;
+      padding: 4px var(--space-3);
+      color: var(--text-secondary);
+      font-size: 12.5px;
+      background: rgba(255,255,255,0.03);
+    }
+
+    a.tool-tag:hover {
+      border-color: rgba(113,112,255,0.65);
+      color: var(--text-primary);
+    }
+
+    .grid-two {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+      gap: var(--space-5);
+      align-items: start;
+    }
+
+    .grid-three {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-4);
+    }
+
+    .prompt-card {
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-card);
+      background: var(--surface-inset);
+      padding: var(--space-5);
+      display: grid;
+      gap: var(--space-3);
+    }
+
+    .prompt-card h3 {
+      margin: var(--space-1) 0 0;
+      font-size: 16px;
+    }
+
+    .prompt-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+
+    .prompt-box {
+      width: 100%;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-control);
+      background: #0b0d10;
+      color: var(--text-secondary);
+      padding: var(--space-4);
+      font-family: var(--font-sans);
+      font-size: 13.5px;
+      line-height: 1.75;
+      resize: vertical;
+      min-height: 160px;
+    }
+
+    .prompt-box.tall { min-height: 320px; }
+    .prompt-box.short { min-height: 200px; }
+
+    .prompt-box:focus {
+      border-color: rgba(113,112,255,0.55);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(113,112,255,0.14);
+    }
+
+    .hint-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: var(--space-2);
+    }
+
+    .hint-list li {
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      gap: var(--space-2);
+      color: var(--text-secondary);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .mark { color: var(--accent-green); font-weight: 700; }
+
+    .resource-card {
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-card);
+      background: var(--surface-inset);
+      padding: var(--space-5);
+      display: grid;
+      gap: var(--space-2);
+      align-content: start;
+      transition: border-color 160ms ease, transform 160ms ease;
+    }
+
+    .resource-card:hover {
+      border-color: rgba(113,112,255,0.55);
+      transform: translateY(-2px);
+    }
+
+    .resource-card h3 {
+      margin: var(--space-1) 0 0;
+      font-size: 15.5px;
+      line-height: 1.45;
+    }
+
+    .resource-card p {
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 13.5px;
+      line-height: 1.7;
+    }
+
+    .resource-link {
+      margin-top: var(--space-2);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      color: var(--accent-hover);
+      font-size: 13.5px;
+      font-weight: 600;
+    }
+
+    .resource-link::after { content: "↗"; }
+
+    .step-downloads {
+      display: grid;
+      gap: var(--space-3);
+      margin-top: var(--space-2);
+    }
+
+    .step-download {
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-control);
+      background: var(--surface-elevated);
+      padding: var(--space-3) var(--space-4);
+      display: grid;
+      gap: var(--space-1);
+    }
+
+    .download-title {
+      color: var(--accent-green);
+      font-size: 13.5px;
+      font-weight: 650;
+    }
+
+    .file-purpose {
+      color: var(--text-muted);
+      font-size: 12.5px;
+    }
+
+    .steps-track {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-3);
+    }
+
+    .step-chip {
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-control);
+      background: var(--surface-inset);
+      padding: var(--space-3) var(--space-4);
+      display: grid;
+      gap: 2px;
+    }
+
+    .step-chip strong {
+      font-size: 13.5px;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .step-chip span {
+      color: var(--text-muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .step-chip .chip-no {
+      font-family: var(--font-mono);
+      color: var(--accent-hover);
+      font-size: 12px;
+    }
+
+    .artifact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-4);
+    }
+
+    .artifact-card {
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-card);
+      background: var(--surface-inset);
+      padding: var(--space-5);
+      display: grid;
+      gap: var(--space-2);
+      align-content: start;
+    }
+
+    .artifact-card h3 {
+      margin: var(--space-1) 0 0;
+      font-size: 15px;
+    }
+
+    .artifact-card p {
+      color: var(--text-secondary);
+      margin-bottom: 0;
+      font-size: 13.5px;
+    }
+
+    .mini-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: var(--space-4);
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .mini-table th,
+    .mini-table td {
+      border-bottom: 1px solid var(--border-subtle);
+      padding: var(--space-3);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .mini-table th:first-child,
+    .mini-table td:first-child {
+      white-space: nowrap;
+      width: 1%;
+    }
+
+    .mini-table th {
+      color: var(--text-primary);
+      font-weight: 650;
+      background: rgba(255,255,255,0.025);
+    }
+
+    .warning {
+      border-color: rgba(247,185,85,0.34);
+      background: rgba(247,185,85,0.08);
+      color: #ffe1a7;
+    }
+
+    .warning ul {
+      margin: var(--space-2) 0 0;
+      padding-left: var(--space-5);
+      display: grid;
+      gap: var(--space-2);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .warning p {
+      margin-bottom: 0;
+      font-size: 14px;
+    }
+
+    .warning h3 {
+      color: #ffe1a7;
+    }
+
+    .footer-note {
+      color: var(--text-muted);
+      font-size: 13px;
+      text-align: center;
+      padding-bottom: var(--space-6);
+    }
+
+    @media (max-width: 1100px) {
+      .shell {
+        grid-template-columns: 1fr;
+        padding: var(--space-4);
+      }
+
+      .rail {
+        position: relative;
+        top: auto;
+        min-height: auto;
+      }
+
+      .nav-list {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .hero,
+      .grid-two {
+        grid-template-columns: 1fr;
+      }
+
+      .workflow-visual { order: -1; }
+
+      .grid-three,
+      .artifact-grid,
+      .steps-track {
+        grid-template-columns: 1fr;
+      }
+
+      .download-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 720px) {
+      .shell { padding: var(--space-3); }
+
+      .nav-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+      .hero,
+      .section { padding: var(--space-5); }
+
+      .hero-actions,
+      .card-actions,
+      .file-actions { align-items: stretch; }
+
+      .hero-actions > *,
+      .card-actions > *,
+      .file-actions > * { width: 100%; }
+
+      .prompt-top { display: grid; }
+
+      .flow-node {
+        grid-template-columns: 38px 1fr;
+      }
+
+      .node-tool {
+        grid-column: 2;
+        width: fit-content;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *,
+      *::before,
+      *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="rail" aria-label="页面导航">
+      <div class="rail-title">
+        <strong>AI 战略落地 · 练习中心</strong>
+        <span>第二章选场景 → 第三章搭工作台 → 第四章八步落地 → 课后立项。</span>
+      </div>
+      <nav aria-label="页面步骤">
+        <ol class="nav-list">
+          <li><a class="nav-item" href="#ch2"><span class="nav-index">02</span><span>第二章 场景练习</span></a></li>
+          <li><a class="nav-item" href="#ch2-support"><span class="nav-index">附</span><span>第二章 辅助资料</span></a></li>
+          <li><a class="nav-item" href="#ch3"><span class="nav-index">03</span><span>第三章 演示</span></a></li>
+          <li><a class="nav-item" href="#ch4"><span class="nav-index">04</span><span>第四章 八步落地</span></a></li>
+          <li><a class="nav-item" href="#homework"><span class="nav-index">课</span><span>课后作业 · AI 立项</span></a></li>
+        </ol>
+      </nav>
+      <div class="note-card warning">
+        <h3>使用提醒</h3>
+        <p class="file-purpose">所有提示词中的 {变量} 先替换为本团队实际资料再使用。示例评分、指标与演示数据均为教学模拟，需以实际经营基线核验；AI 产出只作建议，涉及人事、合规与对客承诺的决策由人负责。</p>
+      </div>
+      <div class="note-card">
+        <h3>建议节奏</h3>
+        <p class="file-purpose">课上完成第二、三章；第四章结合附件八步框架示例与 AI 协作完成论证；课后作业在论证完毕后提交立项。</p>
+      </div>
+    </aside>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div>
+          <span class="kicker">AI 战略落地 · 全流程练习</span>
+          <h1 id="page-title">从选场景到 AI 项目立项<br><span class="title-line">一条线练完</span></h1>
+          <p class="lead">本页是《AI 战略落地》课程的练习中枢：第二章用四步操作台选出本团队的高 ROI 场景，配 SWOT、设计思维、商业模式画布、SCAMPER 四份辅助资料打开思路；第三章看历届学员的工作台成果，理解"场景→提示词→验证"的搭建方法；第四章下载八步落地框架示例 PPT，在 AI 协作下把前面选出的 Top 场景论证成完整落地方案；课后作业在此基础上完成 AI 项目立项。</p>
+          <div class="hero-actions">
+            <button class="primary" type="button" data-copy-all>复制四个提示词</button>
+            <a class="button-link" href="#ch4">进入第四章任务</a>
+          </div>
+          <div class="copy-status" aria-live="polite" data-global-status></div>
+        </div>
+        <div class="workflow-visual" aria-label="练习主线概览">
+          <div class="visual-caption">练习主线</div>
+          <div class="flow-node">
+            <span class="node-number">02</span>
+            <span><span class="node-title">第二章 · 选出 Top 场景</span><span class="node-meta">流程生成 → AI 介入 → 场景湖 → 高 ROI 评分</span></span>
+            <span class="node-tool">线上操作台</span>
+          </div>
+          <div class="flow-node">
+            <span class="node-number">附</span>
+            <span><span class="node-title">辅助资料 · 打开思路</span><span class="node-meta">SWOT / 设计思维 / 商业模式画布 / SCAMPER</span></span>
+            <span class="node-tool">四份资料</span>
+          </div>
+          <div class="flow-node">
+            <span class="node-number">03</span>
+            <span><span class="node-title">第三章 · 看成果学搭建</span><span class="node-meta">36 个工作台按 12 类业务归档，含镜像入口</span></span>
+            <span class="node-tool">成果库演示</span>
+          </div>
+          <div class="flow-node">
+            <span class="node-number">04</span>
+            <span><span class="node-title">第四章 · 八步落地论证</span><span class="node-meta">下载示例 PPT，与 AI 协作完成本团队方案</span></span>
+            <span class="node-tool">附件 + AI</span>
+          </div>
+          <div class="flow-node">
+            <span class="node-number">课</span>
+            <span><span class="node-title">课后 · AI 项目立项</span><span class="node-meta">论证完毕后用立项提示词产出立项书</span></span>
+            <span class="node-tool">作业提交</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="ch2" aria-labelledby="ch2-title">
+        <div class="section-head">
+          <h2 id="ch2-title">第二章练习：保险经纪销售 AI 场景训练</h2>
+          <p>进入线上操作台，按顺序完成四步：先补完整保险经纪销售流程（Mermaid），再找 AI 介入节点，然后输出场景湖 Excel 清单，最后做高 ROI 评分选出优先试点的 3 个场景。操作台提供四个可编辑提示词和三份 Excel 模板，{变量} 替换为本团队实际资料后使用。</p>
+          <div class="tool-tags" aria-label="第二章入口">
+            <a class="tool-tag" href="https://xjtulijiagui-max.github.io/lijiagui/insurance-broker-scene/" target="_blank" rel="noopener">进入练习操作台 ↗</a>
+            <span class="tool-tag">产出：Top 场景 + 评分依据</span>
+          </div>
+        </div>
+        <div class="steps-track" aria-label="第二章四步">
+          <div class="step-chip">
+            <strong><span class="chip-no">Step1</span>流程生成</strong>
+            <span>替换团队与险种变量，生成覆盖线索到理赔协赔的完整销售流程 Mermaid 图</span>
+          </div>
+          <div class="step-chip">
+            <strong><span class="chip-no">Step2</span>AI 介入</strong>
+            <span>在同一对话里找 AI 改造点，明确人工复核与合规边界</span>
+          </div>
+          <div class="step-chip">
+            <strong><span class="chip-no">Step3</span>场景湖</strong>
+            <span>上传晨会纪要与改造代码，输出六类场景 Excel 清单</span>
+          </div>
+          <div class="step-chip">
+            <strong><span class="chip-no">Step4</span>ROI 评分</strong>
+            <span>按 5 分制加权打分，选出 3 个优先试点场景，作为第四章输入</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="ch2-support" aria-labelledby="ch2-support-title">
+        <div class="section-head">
+          <h2 id="ch2-support-title">第二章辅助资料：四个视角打开场景思路</h2>
+          <p>做场景练习卡住时，换一个视角再看一遍业务。四份资料与练习共用一套口径：只做定性框架与教学示例，不含具体经营数据。可以先用资料里的方法讨论，再回到操作台继续打分。</p>
+        </div>
+        <div class="grid-two">
+          <div class="grid-three" style="grid-template-columns: repeat(2, minmax(0,1fr));">
+            <article class="resource-card">
+              <span class="badge">战略诊断</span>
+              <h3>SWOT 分析与策略取舍</h3>
+              <p>中小寿险公司如何以"智能核保＋健康管理"为差异化支点。要点：四象限只放事实不放愿望，策略按资源占用从小到大排序推进。</p>
+              <a class="resource-link" href="https://xjtulijiagui-max.github.io/lijiagui/insurance-swot/" target="_blank" rel="noopener">查看 SWOT 资料</a>
+            </article>
+            <article class="resource-card">
+              <span class="badge greenish">用户视角</span>
+              <h3>设计思维 × 保险产品创新</h3>
+              <p>以年轻家庭医疗保险为例走完共情→定义→构思→原型→测试五步。要点：先解决"用户为什么需要"，防把解决方案当用户问题。</p>
+              <a class="resource-link" href="https://xjtulijiagui-max.github.io/lijiagui/design-thinking-insurance/" target="_blank" rel="noopener">查看设计思维案例</a>
+            </article>
+            <article class="resource-card">
+              <span class="badge amberish">模式解构</span>
+              <h3>商业模式画布</h3>
+              <p>九格画布只填"能兑现成动作"的内容，配平收入与成本，盯住继续率、参与率、非标承保率、单位获客成本四个指标。</p>
+              <a class="resource-link" href="https://xjtulijiagui-max.github.io/lijiagui/insurance-business-model/" target="_blank" rel="noopener">查看商业模式资料</a>
+            </article>
+            <article class="resource-card">
+              <span class="badge">创新提问</span>
+              <h3>SCAMPER 七问</h3>
+              <p>同一款重疾险被七个问题各改一次。要点：每问至少 3 个点子先发散再收敛，入围点子必须配套费率重算与服务成本测算。</p>
+              <a class="resource-link" href="https://xjtulijiagui-max.github.io/lijiagui/insurance-scamper/" target="_blank" rel="noopener">查看 SCAMPER 资料</a>
+            </article>
+          </div>
+          <aside class="note-card">
+            <span class="badge">怎么用</span>
+            <h3>四份资料与练习的配合方式</h3>
+            <table class="mini-table">
+              <thead>
+                <tr><th>练习卡点</th><th>切换视角</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>流程画不全</td><td>SCAMPER 七问逐项过一遍，找遗漏环节</td></tr>
+                <tr><td>场景价值说不清</td><td>商业模式画布填该场景的九格，空洞即风险</td></tr>
+                <tr><td>需求不真</td><td>设计思维共情与定义两步，先回到用户问题</td></tr>
+                <tr><td>优先级争论不下</td><td>SWOT 交叉策略按资源占用从小到大排序</td></tr>
+              </tbody>
+            </table>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section" id="ch3" aria-labelledby="ch3-title">
+        <div class="section-head">
+          <h2 id="ch3-title">第三章演示：Workbench List 工作台成果库</h2>
+          <p>历届学员在 AI 培训中搭建的 36 个工作台按 12 类业务归档：研发与供应链、质量与合规、培训与教学、绩效与考核、营销与获客、经营分析等。看同类业务怎么把"场景→提示词→验证"落成一个可用工作台，为你第四章的落地设计找参照。内网失效的成果已抓取 GitHub 镜像存档。</p>
+          <div class="tool-tags" aria-label="第三章入口">
+            <a class="tool-tag" href="https://xjtulijiagui-max.github.io/lijiagui/workbench-list/" target="_blank" rel="noopener">进入成果库演示 ↗</a>
+            <span class="tool-tag">看什么：同类业务的字段、流程与指标设计</span>
+          </div>
+        </div>
+        <div class="artifact-grid">
+          <article class="artifact-card">
+            <span class="badge">看结构</span>
+            <h3>参考同类工作台的字段设计</h3>
+            <p>如"氨基酸经营工作台"的重点客户与拜访记录字段、"商机漏斗工作台"的转化率口径，直接决定你落地页面的信息架构。</p>
+          </article>
+          <article class="artifact-card">
+            <span class="badge greenish">看方法</span>
+            <h3>IPO 方法：场景→提示词→验证</h3>
+            <p>"养老金 IPO 工作台"展示了从场景到验证的完整搭建路径，与本章课堂方法一致。</p>
+          </article>
+          <article class="artifact-card">
+            <span class="badge amberish">看闭环</span>
+            <h3>送样回传、风险循环的闭环设计</h3>
+            <p>"送样回传闭环台""RiskLoop"演示了登记→执行→回填→复盘的任务闭环，第四章的辅导建议回填可直接借鉴。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="ch4" aria-labelledby="ch4-title">
+        <div class="section-head">
+          <h2 id="ch4-title">第四章任务：八步落地框架 · 在 AI 协作下完成论证</h2>
+          <p>下载附件《保险代理人管理 AI 落地方案》示例 PPT（29 页，八步落地框架完整示范），把示范中的"代理人经营诊断与智能辅导"换成你在第二章选出的 Top 场景，与 AI 协作完成八步论证。三个提示词按顺序在同一个对话里使用，每一步产出确认后再进入下一步。</p>
+          <div class="tool-tags" aria-label="第四章工具">
+            <a class="tool-tag" href="https://chat.deepseek.com" target="_blank" rel="noopener">DeepSeek</a>
+            <a class="tool-tag" href="https://www.doubao.com" target="_blank" rel="noopener">豆包</a>
+            <a class="tool-tag" href="https://chatgpt.com" target="_blank" rel="noopener">ChatGPT</a>
+          </div>
+        </div>
+        <div class="step-downloads" aria-label="第四章下载资料">
+          <div class="step-download">
+            <span class="badge greenish">下载资料</span>
+            <p class="file-purpose">八步落地框架完整示例（29 页 PPT）：明确目标 → 场景识别与评分 → 重塑流程 → 组织变革 → 数据知识治理 → IT 落地 → AI 融入业务 → 持续运营。含场景评分维度、最小团队组建表、知识资产清单与经营看板样例。数据均为教学模拟。</p>
+            <a class="download-title" href="assets/保险代理人管理AI落地方案-八步框架示例.pptx" download>保险代理人管理AI落地方案-八步框架示例.pptx</a>
+          </div>
+        </div>
+        <div class="grid-two">
+          <article class="prompt-card">
+            <div class="prompt-top">
+              <div>
+                <span class="badge">提示词 A</span>
+                <h3>八步框架导入（第 1–3 步：目标、识别、流程）</h3>
+              </div>
+              <button type="button" data-copy-target="prompt-ch4-a">复制当前提示词</button>
+            </div>
+            <textarea class="prompt-box tall" id="prompt-ch4-a">你是企业 AI 战略落地顾问。我上传的 PPT《保险代理人管理 AI 落地方案》是"AI 系统落地八步法"的完整示范，示范场景是"代理人经营诊断与智能辅导"。请先通读附件，然后帮我把同一框架迁移到我的场景。
+
+我的信息：
+- 公司/团队：{公司或团队名称、业务条线}
+- 我在第二章选出的 Top 场景：{场景名称，例如"家庭保障缺口测算表初稿""三家公司重疾条款对比摘要"}
+- 该场景的 ROI 评分依据：{粘贴 Step4 评分结果要点}
+- 当前基线数据：{现有指标水平，没有的写"待确认"，不要编造}
+
+请依次完成八步法的前三步，每步单独成节、结论在前：
+1. 明确目标：参照 PPT 第 4–5 页格式，给出业务目标 + 3 个可度量目标指标（现状→目标），标注哪些是教学假设、哪些需要以实际基线核验。
+2. 场景识别：参照 PPT 第 6–8 页格式，按业务价值（V1 价值可度量、V2 ROI 评估）、业务成熟度（B1–B5）、技术成熟度（T1–T4）、持续运营能力（L1–L4）四个维度逐项 5 分制打分，写出每个子项的打分依据，给出综合得分与是否建议进入下一步的判断。
+3. 重塑流程：参照 PPT 第 9–11 页格式，输出"数据接入 → AI 生成 → 人工审核 → 执行回填"的新流程（Mermaid），并列出该场景落地的关键技术难点与对策，格式对照 PPT 第 11 页。
+
+要求：所有建议必须说明触发指标与依据，可解释、可追溯；目标值与评分是待评审假设；不编造数据，缺失字段标"待确认"；涉及客户信息时先脱敏，人事与合规决策由人做出。</textarea>
+            <ul class="hint-list">
+              <li><span class="mark">+</span><span>上传 PPT 附件后，先替换全部 {变量} 再发送；Top 场景直接用第二章 Step4 的结论。</span></li>
+              <li><span class="mark">+</span><span>评分维度与子项严格对照 PPT 第 7 页的表格结构，方便与示范逐项对比。</span></li>
+              <li><span class="mark">+</span><span>流程图不完整时追问："请补充异常分支与人工复核节点，周期性工作单独标成循环。"</span></li>
+            </ul>
+            <div class="copy-status" aria-live="polite"></div>
+          </article>
+          <article class="prompt-card">
+            <div class="prompt-top">
+              <div>
+                <span class="badge">提示词 B</span>
+                <h3>治理与落地（第 4–6 步：组织、数据、IT）</h3>
+              </div>
+              <button type="button" data-copy-target="prompt-ch4-b">复制当前提示词</button>
+            </div>
+            <textarea class="prompt-box tall" id="prompt-ch4-b">继续上面的对话。现在完成八步法的第 4–6 步，同样每步单独成节、结论在前：
+
+4. 组织变革：参照 PPT 第 12–14 页格式，输出最小 AI 落地团队组建表（项目角色 × 职责与岗位示例，覆盖业务 Owner、一线业务专家、数据专家、IT/平台专家、AI 产品/提示词专家、合规及风险专家、培训运营人员），并给出人机协同管理机制四条（跨职能团队、高层治理、培训赋能、管理节奏）。
+5. 数据知识治理：参照 PPT 第 15–18 页格式，给出本场景的数据准备清单、数据治理要求（分级授权、脱敏、留痕），以及知识资产清单（对照 PPT 第 17 页的八类，可按本场景调整）。
+6. IT 产品落地：参照 PPT 第 19–21 页格式，给出三步走（先单场景跑通、再嵌入工作台、最后知识库与闭环），并描述产品 Demo 的界面结构：总览指标区、诊断列表区（编号/异常信号/AI 建议）、AI 建议卡（对象/依据/建议/主管确认）、执行回填区。
+
+要求：建议必须进入主管或负责人的例会与任务闭环，不停留在"生成报告"；模型输出仅作建议，不自动触发人事或处罚决定；权限按最小必要原则设计。</textarea>
+            <ul class="hint-list">
+              <li><span class="mark">+</span><span>同一对话继续，不要新开；AI 已有你场景的上下文。</span></li>
+              <li><span class="mark">+</span><span>岗位名称按本团队实际组织调整；没有的岗位写"待确认"。</span></li>
+              <li><span class="mark">+</span><span>Demo 界面结构可直接借鉴第三章成果库里同类工作台的字段设计。</span></li>
+            </ul>
+            <div class="copy-status" aria-live="polite"></div>
+          </article>
+        </div>
+        <div class="grid-two">
+          <article class="prompt-card">
+            <div class="prompt-top">
+              <div>
+                <span class="badge">提示词 C</span>
+                <h3>融入业务与持续运营（第 7–8 步）</h3>
+              </div>
+              <button type="button" data-copy-target="prompt-ch4-c">复制当前提示词</button>
+            </div>
+            <textarea class="prompt-box short" id="prompt-ch4-c">继续上面的对话，完成八步法最后两步：
+
+7. AI 融入业务：参照 PPT 第 22–25 页格式，给出系统测试与优化要点（功能链路、性能与安全、用户验收）、三阶段上线流程（UAT → 试点灰度 → 逐步推广）以及效果指标与验收门槛（口径一致率、人工复核覆盖率、建议采纳率，标注为试点假设）。
+8. 持续运营：参照 PPT 第 26–28 页格式，给出业务监控看板的核心指标（4–6 个）、数据刷新机制（日同步/周复盘）和知识刷新机制（季度更新/合规变化比对/优秀案例入库）。
+
+最后输出一份"八步完成度自检表"：八步各一行，列为关键产出、是否完成、待确认项，方便我核对论证是否有缺口。缺少依据的项标"待确认"，不编造。</textarea>
+            <ul class="hint-list">
+              <li><span class="mark">+</span><span>验收门槛数值标注"试点假设"，试点后用实际数据修正。</span></li>
+              <li><span class="mark">+</span><span>自检表是课后立项的输入，缺口项补齐再进入立项环节。</span></li>
+            </ul>
+            <div class="copy-status" aria-live="polite"></div>
+          </article>
+          <aside class="note-card">
+            <span class="badge amberish">协作要点</span>
+            <h3>与 AI 协作的三个纪律</h3>
+            <ul class="hint-list" style="margin-top:12px">
+              <li><span class="mark">1</span><span>示例数据都是教学模拟：PPT 里的指标（活动率 55%→70%、留存率 65%→75%）是示范写法，你的目标值必须换成实际基线。</span></li>
+              <li><span class="mark">2</span><span>AI 只出建议、人做决策：辅导建议、风险线索都须经主管或合规专岗确认，不自动执行。</span></li>
+              <li><span class="mark">3</span><span>每步产出先核对再前进：对照 PPT 对应页检查结构完整性，缺项让 AI 补齐后再进入下一步。</span></li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section" id="homework" aria-labelledby="homework-title">
+        <div class="section-head">
+          <h2 id="homework-title">课后作业：完善第四章作业，论证完毕后进行 AI 项目立项</h2>
+          <p>第四章八步论证通过自检表核对无缺口后，用立项提示词把论证结果收敛成一份 AI 项目立项书。立项书回答三个问题：为什么值得做（价值与 ROI）、凭什么能做成（组织、数据、技术可行性）、怎么知道做成了（验收指标与里程碑）。</p>
+          <div class="tool-tags" aria-label="课后作业说明">
+            <span class="tool-tag">前置条件：八步自检表无"待确认"缺口项</span>
+            <span class="tool-tag">产出：AI 项目立项书</span>
+          </div>
+        </div>
+        <div class="grid-two">
+          <article class="prompt-card">
+            <div class="prompt-top">
+              <div>
+                <span class="badge">提示词 D</span>
+                <h3>AI 项目立项书生成</h3>
+              </div>
+              <button type="button" data-copy-target="prompt-homework">复制当前提示词</button>
+            </div>
+            <textarea class="prompt-box tall" id="prompt-homework">继续上面的对话。八步论证已完成且自检表无缺口，现在把全部论证结果收敛成一份《AI 项目立项书》，按以下结构输出：
+
+1. 项目概述：场景名称、业务 Owner、起止周期、一句话价值主张。
+2. 问题与机会：业务痛点（引用八步论证第 1 步）、场景评分结论（引用第 2 步综合得分）。
+3. 方案概述：新流程要点（引用第 3 步）、产品形态与界面结构（引用第 6 步 Demo）。
+4. 组织保障：最小团队组建表（引用第 4 步）、治理机制。
+5. 数据与知识：数据准备与治理要求、知识资产清单（引用第 5 步）。
+6. 实施路径：三阶段上线计划（UAT → 试点灰度 → 推广，引用第 7 步），每阶段里程碑与责任节点。
+7. 投入与回报：AI 总成本构成（平台、数据治理、培训、复核人力），收益口径分"节省工时、质量提升、经营改善"三类分列，不重复计算；没有依据的收益标"暂估"，给出回收期计算公式与需要补采的数据。
+8. 验收标准：效果指标与门槛（引用第 7 步验收门槛）、持续运营指标（引用第 8 步看板）。
+9. 风险与对策：至少覆盖合规风险（客户信息、销售误导）、模型风险（幻觉、误判的复核机制）、组织风险（采纳率不达标的退回机制）。
+10. 立项决策建议：给出"建议立项/建议先试点/建议暂缓"三选一结论及理由。
+
+要求：全部内容来自前面的八步论证，不新增未经论证的承诺；收益数字标注口径与依据，暂估值单独标注；人事、合规决策权限保留给人；输出为可直接提交评审的结构化文档。</textarea>
+            <ul class="hint-list">
+              <li><span class="mark">+</span><span>立项书十章结构对照八步论证逐项引用，评审时可回溯到每一步依据。</span></li>
+              <li><span class="mark">+</span><span>回收期公式：AI 总成本 ÷（年度节省人力成本 + 年度新增贡献利润），收益分列避免重复计算。</span></li>
+              <li><span class="mark">+</span><span>完成后按现场老师通知的方式提交，不要提交到其他项目的表单。</span></li>
+            </ul>
+            <div class="copy-status" aria-live="polite"></div>
+          </article>
+          <aside class="note-card warning">
+            <h3>立项红线</h3>
+            <ul>
+              <li>不自证收益：暂估收益必须标注依据与补采计划，不拿演示效果充当已实现收益。</li>
+              <li>不越权决策：立项书只做建议，是否立项、人事与合规决定由评审组织做出。</li>
+              <li>不放宽合规：涉客户信息、销售误导的场景，合规上线前提不因预期收益高而简化。</li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <p class="footer-note">本页为《AI 战略落地》课程练习中枢：链接指向各章线上资料，附件为八步框架示例。示例评分与指标均为教学模拟，落地前以实际经营基线核验；按现场老师通知的方式提交成果。</p>
+    </main>
+  </div>
+
+  <script>
+    const prompts = ["prompt-ch4-a", "prompt-ch4-b", "prompt-ch4-c", "prompt-homework"];
+
+    // 让提示词框按内容自动撑高，避免关键条款被裁掉
+    function autoGrow() {
+      document.querySelectorAll(".prompt-box").forEach((box) => {
+        box.style.height = "auto";
+        box.style.height = box.scrollHeight + 2 + "px";
+      });
+    }
+
+    window.addEventListener("load", autoGrow);
+    window.addEventListener("resize", autoGrow);
+
+    async function copyText(text, statusTarget) {
+      try {
+        await navigator.clipboard.writeText(text);
+        statusTarget.textContent = "已复制";
+      } catch (error) {
+        const fallback = document.createElement("textarea");
+        fallback.value = text;
+        fallback.setAttribute("readonly", "");
+        fallback.style.position = "fixed";
+        fallback.style.left = "-9999px";
+        document.body.appendChild(fallback);
+        fallback.select();
+        document.execCommand("copy");
+        document.body.removeChild(fallback);
+        statusTarget.textContent = "已复制";
+      }
+      window.setTimeout(() => {
+        statusTarget.textContent = "";
+      }, 1800);
+    }
+
+    document.querySelectorAll("[data-copy-target]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const target = document.getElementById(button.dataset.copyTarget);
+        const card = button.closest(".prompt-card");
+        const status = card.querySelector(".copy-status");
+        copyText(target.value, status);
+      });
+    });
+
+    document.querySelector("[data-copy-all]").addEventListener("click", () => {
+      const labels = {
+        "prompt-ch4-a": "提示词 A · 八步框架导入（第 1-3 步）",
+        "prompt-ch4-b": "提示词 B · 治理与落地（第 4-6 步）",
+        "prompt-ch4-c": "提示词 C · 融入业务与持续运营（第 7-8 步）",
+        "prompt-homework": "提示词 D · AI 项目立项书生成"
+      };
+      const all = prompts
+        .map((id) => `${labels[id]}\n${document.getElementById(id).value}`)
+        .join("\n\n");
+      copyText(all, document.querySelector("[data-global-status]"));
+    });
+  </script>
+</body>
+</html>
