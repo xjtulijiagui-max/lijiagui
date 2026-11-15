@@ -1,0 +1,29 @@
+{
+  "id": "network-spec",
+  "title": "中国移动网络事业部｜PRD + Spec 标准 → Workspace → 工作台 · 两步练习",
+  "shortTitle": "网络事业部 Workspace 两步练习",
+  "category": "通信与网络运营",
+  "description": "中国移动网络事业部网络运营场景的两步练习：第一步把网络告警处置 IPO 定义书与《Spec Workspace 初始化标准 v2.0》一起交给 AI，生成候选 Workspace 输入包；第二步选专家「工作台搭建师」把规格变成可点的工作台。附网络告警分析 IPO Word、通用标准包 ZIP 与两段可复制提示词。",
+  "url": "https://xjtulijiagui-max.github.io/lijiagui/network-spec/",
+  "path": "network-spec/",
+  "tags": [
+    "中国移动",
+    "网络运营",
+    "告警分析",
+    "IPO",
+    "PRD",
+    "Spec",
+    "Workspace",
+    "规格驱动",
+    "工作台搭建师",
+    "提示词",
+    "课堂练习"
+  ],
+  "type": "课堂练习",
+  "client": "中国移动集团网络事业部",
+  "status": "正常",
+  "featured": false,
+  "updated": "2026-11-15",
+  "source": "基于本站 juhe-spec（聚和材料 PRD+Spec 两步练习）页面框架改造，IPO 样例重写为网络告警根因分析场景；Spec Workspace 初始化标准 v2.0 为通用标准包，原样复用",
+  "order": 115
+}
