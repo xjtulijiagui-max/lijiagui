@@ -1,0 +1,28 @@
+{
+  "id": "financial-scene",
+  "title": "财务部门 AI 场景训练操作台",
+  "shortTitle": "财务部门场景",
+  "category": "财务与经营管理",
+  "description": "面向财务会计、费用报销、资金税务与财务管理/共享等岗位。围绕费用报销审核、账务处理与对账、资金计划与税务申报、经营分析与报表编制、财务共享与内控合规，四步完成流程生成、AI 介入、场景湖与高 ROI 评分，含四个可编辑提示词与三份 Excel 模板。",
+  "url": "https://xjtulijiagui-max.github.io/lijiagui/financial-scene/",
+  "path": "financial-scene/",
+  "tags": [
+    "财务部门",
+    "费用报销",
+    "账务对账",
+    "资金税务",
+    "经营分析",
+    "报表编制",
+    "内控合规",
+    "场景创新",
+    "Mermaid",
+    "ROI"
+  ],
+  "type": "实战练习",
+  "client": "企业财务部门",
+  "status": "正常",
+  "featured": false,
+  "updated": "2026-11-15",
+  "source": "基于本站 network-scene（网络运营场景训练操作台）页面框架改造，业务内容重写为财务部门场景；配套 Excel 模板同步改造",
+  "order": 116
+}
