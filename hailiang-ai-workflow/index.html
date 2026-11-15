@@ -206,12 +206,12 @@ footer{margin-top:44px;background:var(--navy);color:rgba(255,255,255,.8);padding
 
       <div class="step-banner" id="step1">
         <span>01</span>
-        <div><b>临时搭建多智能体：一句话 + 两个附件</b><p>把材料喂给 AI，让它自己派人干活。这一步的重点是"看见过程"。</p></div>
+        <div><b>临时搭建多智能体：一句话 + 两个附件</b><p>把材料喂给 AI，让不同角色分工处理同一批工单。这一步的重点，是亲眼看到分工如何提升准确性与连续性。</p></div>
       </div>
 
       <div class="need">
         <div class="need-item"><span class="tag">1 个提示词</span><b>总调度指令</b><span>下面可直接复制</span></div>
-        <div class="need-item"><span class="tag">附件 A</span><b>报修工单数据</b><span>20 条，含故意埋的问题</span></div>
+        <div class="need-item"><span class="tag">附件 A</span><b>报修工单数据</b><span>20 条，真实字段构造</span></div>
         <div class="need-item"><span class="tag">附件 B</span><b>三个岗位职责说明</b><span>子智能体自己会去读</span></div>
       </div>
 
@@ -220,7 +220,7 @@ footer{margin-top:44px;background:var(--navy);color:rgba(255,255,255,.8);padding
         <div class="dl-grid">
           <div class="dl-card">
             <div class="fname"><span class="ftype">CSV</span> tickets-sample.csv</div>
-            <p>今天上午 20 条报修工单，字段按真实工单表构造。里面故意埋了重复单、超时、技能错配、无证作业等问题。</p>
+            <p>今天上午 20 条报修工单，字段按真实工单表构造，可直接用于课堂演练。</p>
             <a class="dl-btn" href="./tickets-sample.csv" download="tickets-sample.csv">下载工单数据</a>
           </div>
           <div class="dl-card">
@@ -234,7 +234,7 @@ footer{margin-top:44px;background:var(--navy);color:rgba(255,255,255,.8);padding
 
       <div class="prompt-card">
         <div class="prompt-head"><span class="prompt-step">第一步 · 复制使用</span><h3>总调度指令（管理 Agent）</h3></div>
-        <p class="prompt-desc">这句话的关键不是描述得很详细，而是<b>明确说清"你是管理者，不许亲手干"</b>。不写这一句，它会自己一口气把所有活干完，你就看不到协作过程了。</p>
+        <p class="prompt-desc">多智能体的目的，是通过角色分工提升任务的<b>准确性</b>和<b>连续性</b>——拆任务、干活、挑错各由一个智能体负责，分段处理、互相校验，比一个模型一口气写完更不容易漏判、出错。所以这里必须明确<b>"你是管理者，只做拆解和台账，不许亲手干"</b>，分工与校验链才能真正发生。</p>
         <div class="prompt-toolbar">
           <button class="copy-btn" type="button" data-label="复制提示词">复制提示词</button>
           <button class="select-btn" type="button">全选文本</button>
@@ -243,7 +243,7 @@ footer{margin-top:44px;background:var(--navy);color:rgba(255,255,255,.8);padding
         <pre>你是园区后勤中心的值班经理，手下有三个执行专员和一名品质稽核。
 
 【材料】
-工单数据见附件 tickets-sample.csv（20 条，含重复单、超时、技能错配等脏数据）。
+工单数据见附件 tickets-sample.csv（20 条报修工单）。
 岗位规范见附件 agent-roles.md。
 
 【你的职责，只有四件】
