@@ -1,0 +1,25 @@
+{
+  "id": "design-thinking-insurance",
+  "title": "设计思维 × 保险产品创新｜交互式教学案例",
+  "shortTitle": "设计思维保险",
+  "category": "金融保险与支付",
+  "description": "以虚构「家医安心保」为例，用设计思维五步法（共情—定义—构思—原型—测试）带学员从用户焦虑出发重新设计年轻家庭医疗保险：可点击阶段导航、模拟用户访谈、保障配置原型与可用性测试，所有金额均为教学演示。",
+  "url": "https://xjtulijiagui-max.github.io/lijiagui/design-thinking-insurance/",
+  "tags": [
+    "设计思维",
+    "保险",
+    "产品创新",
+    "交互式教学",
+    "教学案例",
+    "用户研究",
+    "设计思维五步法",
+    "培训"
+  ],
+  "type": "课堂练习",
+  "client": "保险行业",
+  "status": "正常",
+  "featured": false,
+  "updated": "2026-11-15",
+  "source": "本地 HTML：design_thinking_insurance_demo.html（设计思维 × 保险产品创新交互式教学案例）",
+  "order": 240
+}
