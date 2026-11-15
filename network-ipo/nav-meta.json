@@ -1,0 +1,28 @@
+{
+  "id": "network-ipo",
+  "title": "中国移动网络事业部｜课前 IPO 填写说明 · 三步交回",
+  "shortTitle": "网络事业部 IPO 填写说明",
+  "category": "通信与网络运营",
+  "description": "面向中国移动集团网络事业部网络监控室、家庭业务响应室、云平台维护室与运营管理处的课前业务场景 IPO 填写说明：下载告警处置闭环样例 Word，对着录音讲一遍自己的业务，交给 AI 按模板改写，核对后提交飞书收集表。含网络场景可复制提示词与口述样例。",
+  "url": "https://xjtulijiagui-max.github.io/lijiagui/network-ipo/",
+  "path": "network-ipo/",
+  "tags": [
+    "中国移动",
+    "网络运营",
+    "网络监控",
+    "告警处置",
+    "IPO",
+    "Input Process Output",
+    "课前工具",
+    "提示词",
+    "语音口述",
+    "飞书收集表"
+  ],
+  "type": "课前工具",
+  "client": "中国移动集团网络事业部",
+  "status": "正常",
+  "featured": false,
+  "updated": "2026-11-15",
+  "source": "基于本站 material-ipo（聚和集团课前 IPO 填写说明）页面框架改造，业务内容重写为中国移动网络事业部网络告警处置场景；配套 Word 模板同步改造",
+  "order": 114
+}
