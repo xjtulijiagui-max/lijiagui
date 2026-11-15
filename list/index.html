@@ -1769,7 +1769,8 @@ window.NAV_ITEMS = [{"id":"home","title":"AI 编程环境准备指南","shortTit
     const types = [...new Set(items.map(item => item.type).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'zh-CN'));
 
 
-    const tags = [...tagCounts.keys()].sort((a, b) => (tagCounts.get(b) - tagCounts.get(a)) || a.localeCompare(b, 'zh-CN'));
+    const pinnedTags = ['对话'];
+    const tags = [...pinnedTags.filter(t => tagCounts.has(t)), ...[...tagCounts.keys()].sort((a, b) => (tagCounts.get(b) - tagCounts.get(a)) || a.localeCompare(b, 'zh-CN')).filter(t => !pinnedTags.includes(t))];
 
 
 
