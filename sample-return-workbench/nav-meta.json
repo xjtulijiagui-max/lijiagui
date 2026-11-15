@@ -1,0 +1,23 @@
+{
+  "id": "sample-return-workbench",
+  "title": "送样回传闭环台 · 光伏银浆送样跟踪与归因复盘",
+  "shortTitle": "送样回传台",
+  "category": "WorkBuddy 工作台",
+  "description": "光伏银浆送样跟踪工作台：送样登记、回传闭环、分层归因与复盘追踪看板。",
+  "url": "https://xjtulijiagui-max.github.io/lijiagui/sample-return-workbench/",
+  "tags": [
+    "工作台",
+    "送样跟踪",
+    "光伏银浆",
+    "聚和材料",
+    "归因复盘",
+    "WorkBuddy"
+  ],
+  "type": "工作台",
+  "client": "聚和材料",
+  "order": 330,
+  "status": "正常",
+  "featured": false,
+  "updated": "2026-11-15",
+  "source": "https://workbuddy.link/p/3fZHti5UyjW9CXsYf8kiZ9"
+}
