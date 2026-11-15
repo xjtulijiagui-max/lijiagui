@@ -1,0 +1,26 @@
+{
+  "id": "financial-ipo",
+  "title": "企业财务部门｜课前 IPO 填写说明 · 三步交回",
+  "shortTitle": "财务部门 IPO 填写说明",
+  "category": "财务与经营管理",
+  "description": "面向费用报销、财务会计、资金税务与财务管理/共享岗位的课前业务场景 IPO 填写说明：下载费用报销闭环样例 Word，对着录音讲一遍自己的业务，交给 AI 按模板改写，核对后提交飞书收集表。含财务场景可复制提示词与口述样例。",
+  "url": "https://xjtulijiagui-max.github.io/lijiagui/financial-ipo/",
+  "path": "financial-ipo/",
+  "tags": [
+    "财务部门",
+    "费用报销",
+    "IPO",
+    "Input Process Output",
+    "课前工具",
+    "提示词",
+    "语音口述",
+    "飞书收集表"
+  ],
+  "type": "课前工具",
+  "client": "企业财务部门",
+  "status": "正常",
+  "featured": false,
+  "updated": "2026-11-15",
+  "source": "基于本站 network-ipo 页面框架改造，业务内容重写为财务费用报销场景；配套 Word 模板同步改造",
+  "order": 117
+}
