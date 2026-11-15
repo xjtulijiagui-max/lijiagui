@@ -1,0 +1,3323 @@
+<!DOCTYPE html>
+<html data-page-node-id="dyIPZCk3jpqgNofsd63Avv" lang="zh-CN">
+<head data-page-node-id="V6JZ8m1651BbhjI6qeG5jR">
+<script data-page-node-id="sOeirNsRqLIYj0RGhFhHpO" src="/page/page_comm/inject.js"></script>
+<meta data-page-node-id="SOC0hNi7MT091eorH6htQI" charset="utf-8">
+<meta data-page-node-id="rglgWwwq9uRj8333GlAEND" content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport">
+<title data-page-node-id="vW67KvOxymGHg3Vl1Me2kg" data-pnid-children="BKU1yKJ3FYo1cCgKk7QlZi">送样回传闭环台｜光伏银浆送样跟踪与归因复盘</title>
+<!--pnid:ngkRrf0UWZk1TH1ENHignA--><!-- 本工作台通过 WorkBuddy「资料库」skill 搭建、存储和部署 -->
+<style data-page-node-id="eupFBwcp0QX762Tq5y23HY" data-pnid-children="W7w44ssCCt95vddiNjLFL1">
+:root{
+  --bg:#F4F6F9; --card:#FFFFFF; --ink:#111827; --ink2:#374151; --muted:#6B7280; --line:#E5E7EB;
+  --brand:#1E4E8C; --brand2:#2F6DB8; --brand-soft:#EBF1F9;
+  --ok:#067647; --ok-soft:#ECFDF3; --warn:#B54708; --warn-soft:#FFFAEB;
+  --danger:#B42318; --danger-soft:#FEF3F2; --info:#175CD3; --info-soft:#EFF8FF;
+  --radius:14px; --shadow:0 1px 2px rgba(16,24,40,.05),0 8px 24px -12px rgba(16,24,40,.18);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  font-size:14px; line-height:1.6; padding-bottom:calc(28px + env(safe-area-inset-bottom));
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;height:auto}
+h1,h2,h3,h4{margin:0;font-weight:650;letter-spacing:-.01em}
+button{font-family:inherit;font-size:14px;cursor:pointer}
+input,select,textarea{font-family:inherit;font-size:16px}
+[hidden]{display:none !important}
+
+/* ---------- header ---------- */
+.hdr{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hdr-in{max-width:1200px;margin:0 auto;padding:14px 20px 10px;display:flex;gap:16px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+.hdr-l{display:flex;gap:12px;align-items:center;min-width:0}
+.logo{width:38px;height:38px;border-radius:11px;background:linear-gradient(140deg,var(--brand),#3C7BC9);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.hdr h1{font-size:17px}
+.sub{margin:1px 0 0;color:var(--muted);font-size:12px}
+.hdr-r{display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+.base-wrap{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);flex-wrap:wrap;justify-content:flex-end}
+.base-wrap input[type=date]{font-size:13px;padding:5px 8px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);min-height:32px}
+.tools{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.pill{font-size:11.5px;padding:3px 9px;border-radius:999px;background:var(--info-soft);color:var(--info);border:1px solid #D1E9FF;white-space:nowrap}
+.pill.ok{background:var(--ok-soft);color:var(--ok);border-color:#ABEFC6}
+.pill.off{background:var(--warn-soft);color:var(--warn);border-color:#FEDF89}
+
+.btn{border:1px solid var(--line);background:#fff;color:var(--ink2);padding:7px 12px;border-radius:9px;min-height:34px;display:inline-flex;align-items:center;gap:6px;justify-content:center;transition:.15s}
+.btn:hover{border-color:#C9D2E0;background:#FAFBFD}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+.btn.primary:hover{background:#173F73;border-color:#173F73}
+.btn.ghost{background:transparent;font-size:12.5px;padding:6px 10px;min-height:30px}
+.btn.danger{color:var(--danger);border-color:#FDA29B}
+.btn[disabled]{opacity:.6;cursor:not-allowed}
+.linkbtn{border:0;background:none;color:var(--brand2);font-size:12px;padding:4px 2px;text-decoration:underline;text-underline-offset:2px}
+
+/* ---------- tabs ---------- */
+.tabs{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{border:0;background:none;padding:10px 14px 11px;color:var(--muted);font-size:13.5px;border-bottom:2px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.tab.is-on{color:var(--brand);border-bottom-color:var(--brand);font-weight:600}
+.tab .badge{background:var(--danger);color:#fff;font-size:10.5px;border-radius:999px;padding:1px 6px;font-weight:600}
+.tab .badge[data-zero="1"]{background:#D0D5DD;color:#fff}
+
+/* ---------- layout ---------- */
+.wrap{max-width:1200px;margin:0 auto;padding:18px 20px 40px}
+.sec{display:none}
+.sec.is-on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 18px}
+.card-hd{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.card-hd h3{font-size:14px}
+.card-hd .hint{margin:0}
+
+/* ---------- today ---------- */
+.today-hd{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.today-hd h2{font-size:16px}
+.hint{color:var(--muted);font-size:12px;margin:0}
+.stats4{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;box-shadow:var(--shadow)}
+.stat-l{display:block;font-size:12px;color:var(--muted)}
+.stat b{font-size:23px;font-weight:680;letter-spacing:-.02em;font-variant-numeric:tabular-nums;display:block;line-height:1.25;margin-top:2px}
+.stat-s{display:block;font-size:11px;color:#98A2B3;margin-top:1px}
+.stat.danger b{color:var(--danger)} .stat.warn b{color:var(--warn)} .stat.ok b{color:var(--ok)}
+
+.today-list{display:flex;flex-direction:column;gap:10px}
+.tcard{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:13px 15px;display:flex;gap:14px;align-items:flex-start;border-left:4px solid var(--line)}
+.tcard.lv1{border-left-color:var(--danger)} .tcard.lv2{border-left-color:#DC6803} .tcard.lv3{border-left-color:#EAAA08}
+.tcard-main{flex:1;min-width:0}
+.tcard-t{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:14px;font-weight:600}
+.tcard-t .code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;color:var(--muted);font-weight:500}
+.tcard-m{display:flex;gap:14px;flex-wrap:wrap;margin-top:5px;font-size:12.5px;color:var(--ink2)}
+.tcard-m em{font-style:normal;color:var(--muted);margin-right:4px}
+.tcard-act{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;align-items:center}
+.days{font-variant-numeric:tabular-nums;font-weight:650}
+
+/* ---------- chips ---------- */
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;padding:1.5px 8px;border-radius:999px;border:1px solid transparent;white-space:nowrap;line-height:1.7}
+.c-ok{background:var(--ok-soft);color:var(--ok);border-color:#ABEFC6}
+.c-late{background:var(--warn-soft);color:var(--warn);border-color:#FEDF89}
+.c-win{background:#F2F4F7;color:#475467;border-color:#E4E7EC}
+.c-over{background:#FFFAEB;color:#B54708;border-color:#FEDF89}
+.c-super{background:#FFF4ED;color:#C4320A;border-color:#F9DBAF}
+.c-grave{background:var(--danger-soft);color:var(--danger);border-color:#FECDCA}
+.c-info{background:var(--info-soft);color:var(--info);border-color:#D1E9FF}
+.c-na{background:#F2F4F7;color:#98A2B3;border-color:#E4E7EC}
+
+/* ---------- filters / table ---------- */
+.filters{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.filters select,.filters input{border:1px solid var(--line);border-radius:9px;padding:7px 10px;background:#fff;min-height:36px;font-size:13px;color:var(--ink)}
+.filters input{flex:1;min-width:180px}
+.count{font-size:12px;color:var(--muted);margin-left:auto;white-space:nowrap}
+.tw{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;font-size:13px;min-width:1080px}
+.tbl th{text-align:left;font-weight:600;font-size:11.5px;color:var(--muted);background:#FAFBFC;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap;position:sticky;top:0}
+.tbl td{padding:10px 12px;border-bottom:1px solid #F2F4F7;vertical-align:middle;white-space:nowrap}
+.tbl tbody tr:hover{background:#FBFCFE}
+.tbl td.num{font-variant-numeric:tabular-nums}
+.tbl td.wide{max-width:210px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:var(--ink2)}
+.muted{color:var(--muted)}
+.ops{display:flex;gap:4px}
+.iconbtn{border:1px solid var(--line);background:#fff;border-radius:7px;padding:3px 8px;font-size:12px;color:var(--ink2);min-height:26px}
+.iconbtn:hover{border-color:#C9D2E0;background:#FAFBFD}
+.iconbtn.red{color:var(--danger);border-color:#FDA29B}
+
+/* ---------- board ---------- */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:14px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:15px 16px;display:flex;gap:14px;align-items:center;justify-content:space-between}
+.kpi-body{min-width:0}
+.kpi-l{font-size:12px;color:var(--muted)}
+.kpi-v{display:flex;align-items:baseline;gap:6px;margin-top:3px}
+.kpi-v b{font-size:27px;font-weight:680;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.15}
+.kpi-s{font-size:11.5px;color:#98A2B3;font-variant-numeric:tabular-nums}
+.kpi-note{font-size:11px;color:var(--muted);margin-top:4px}
+.ring{flex:0 0 auto}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.mini{width:100%;border-collapse:collapse;font-size:12.5px}
+.mini th{text-align:right;font-weight:600;font-size:11px;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+.mini th:first-child{text-align:left}
+.mini td{text-align:right;padding:6px 8px;border-bottom:1px solid #F5F6F8;font-variant-numeric:tabular-nums;white-space:nowrap}
+.mini td:first-child{text-align:left;font-variant-numeric:normal}
+.mini tbody tr:last-child td{border-bottom:0}
+.catbars{display:flex;flex-direction:column;gap:10px}
+.catrow{display:grid;grid-template-columns:120px 1fr 72px;gap:10px;align-items:center;font-size:12.5px}
+.catrow .bar{height:12px;border-radius:6px;background:#F2F4F7;overflow:hidden}
+.catrow .bar i{display:block;height:100%;border-radius:6px}
+.catrow .v{text-align:right;color:var(--ink2);font-variant-numeric:tabular-nums}
+.rank{display:flex;flex-direction:column;gap:6px}
+.rankrow{display:grid;grid-template-columns:150px 1fr 96px;gap:10px;align-items:center;font-size:12.5px;padding:4px 0}
+.rankrow .track{height:9px;border-radius:5px;background:#F2F4F7;overflow:hidden}
+.rankrow .track i{display:block;height:100%;border-radius:5px;background:var(--brand2)}
+.rankrow.is-b3 .track i{background:var(--danger)}
+.rankrow .rv{text-align:right;font-variant-numeric:tabular-nums;color:var(--ink2)}
+.tag-b3{font-size:10px;color:var(--danger);border:1px solid #FECDCA;background:var(--danger-soft);border-radius:4px;padding:0 4px;margin-left:6px}
+
+/* ---------- report ---------- */
+.report{background:#FBFCFD;border:1px solid var(--line);border-radius:12px;padding:16px 18px;font-family:ui-monospace,SFMono-Regular,Menlo,"PingFang SC",monospace;font-size:12.5px;line-height:1.85;white-space:pre-wrap;word-break:break-word;color:var(--ink2);margin:0;min-height:200px}
+
+/* ---------- states ---------- */
+.loading,.empty,.err{padding:28px 16px;text-align:center;font-size:13px;color:var(--muted);background:var(--card);border:1px dashed var(--line);border-radius:12px;margin:8px 0}
+.err{color:var(--danger);border-color:#FECDCA;background:var(--danger-soft)}
+.empty b{display:block;color:var(--ink);font-size:14px;margin-bottom:4px}
+
+/* ---------- drawer ---------- */
+.mask{position:fixed;inset:0;background:rgba(16,24,40,.42);z-index:60;backdrop-filter:blur(2px)}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(560px,100%);background:#fff;z-index:61;display:flex;flex-direction:column;box-shadow:-12px 0 40px rgba(16,24,40,.18);animation:sl .22s ease}
+@keyframes sl{from{transform:translateX(24px);opacity:.6}to{transform:none;opacity:1}}
+.dh{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.dh h3{font-size:15px}
+.dbody{flex:1;overflow-y:auto;padding:18px 20px;display:flex;flex-direction:column;gap:14px}
+.df{padding:14px 20px calc(14px + env(safe-area-inset-bottom));border-top:1px solid var(--line);display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;background:#fff}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{display:flex;flex-direction:column;gap:5px}
+.field.full{grid-column:1/-1}
+.field label{font-size:12px;color:var(--muted)}
+.field input,.field select,.field textarea{border:1px solid var(--line);border-radius:9px;padding:9px 11px;font-size:16px;background:#fff;color:var(--ink);min-height:40px;width:100%}
+.field textarea{min-height:66px;resize:vertical;font-size:14px;line-height:1.5}
+.field input:focus,.field select:focus,.field textarea:focus{outline:2px solid #BFD4F0;outline-offset:1px;border-color:var(--brand2)}
+.field .tip{font-size:11px;color:#98A2B3}
+.split{border-top:1px dashed var(--line);padding-top:12px;margin-top:2px}
+.split-t{font-size:11.5px;color:var(--muted);letter-spacing:.04em;margin-bottom:8px}
+
+/* ---------- toast ---------- */
+.toast{position:fixed;left:50%;bottom:32px;transform:translateX(-50%);background:#101828;color:#fff;padding:10px 18px;border-radius:10px;font-size:13px;z-index:80;box-shadow:0 8px 28px rgba(16,24,40,.28);max-width:calc(100vw - 40px);text-align:center}
+.toast.err{background:var(--danger)}
+
+/* ---------- mobile ---------- */
+@media (max-width:820px){
+  .hdr-in{padding:12px 14px 8px}
+  .hdr-r{width:100%;align-items:stretch}
+  .base-wrap{justify-content:flex-start}
+  .tools{justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;padding-bottom:2px}
+  .tabs{padding:0 10px}
+  .wrap{padding:14px 12px 32px}
+  .grid2{grid-template-columns:1fr}
+  .fg{grid-template-columns:1fr}
+  .kpi{padding:13px 14px}
+  .kpi-v b{font-size:24px}
+  .today-list .tcard{flex-direction:column;gap:10px}
+  .tcard-act{justify-content:flex-start;width:100%}
+  .catrow{grid-template-columns:96px 1fr 60px}
+  .rankrow{grid-template-columns:110px 1fr 84px}
+  .btn{min-height:40px;padding:9px 13px}
+  .btn.ghost{min-height:36px}
+  .iconbtn{min-height:36px;min-width:44px;padding:5px 10px}
+  .tab{padding:12px 12px 13px}
+
+  /* 表格转卡片 */
+  .tw{overflow-x:visible;border:0;background:none;box-shadow:none}
+  .tbl{min-width:0;display:block}
+  .tbl thead{display:none}
+  .tbl tbody{display:block}
+  .tbl tbody tr{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:10px 12px;margin-bottom:10px}
+  .tbl td{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:5px 0;border:0;white-space:normal;text-align:right}
+  .tbl td::before{content:attr(data-label);color:var(--muted);font-size:12px;flex:0 0 auto;text-align:left}
+  .tbl td.wide{max-width:none}
+  .tbl td.ops-td{justify-content:flex-end;border-top:1px dashed var(--line);margin-top:6px;padding-top:9px}
+  .tbl td.ops-td::before{content:""}
+}
+
+/* ---------- Excel 导入 ---------- */
+.imp-step{border:1px solid var(--line);border-radius:12px;padding:13px 14px;background:#fff;display:flex;flex-direction:column;gap:8px}
+.imp-hd{display:flex;align-items:center;gap:8px}
+.imp-hd b{font-size:13.5px}
+.imp-n{width:20px;height:20px;border-radius:6px;background:var(--brand-soft);color:var(--brand);font-size:11.5px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
+.imp-btns{display:flex;gap:8px;flex-wrap:wrap}
+.dropzone{display:flex;flex-direction:column;align-items:center;gap:5px;padding:20px 12px;border:1.5px dashed #C9D2E0;border-radius:12px;background:#FAFBFD;cursor:pointer;text-align:center;transition:.15s}
+.dropzone:hover,.dropzone.on{border-color:var(--brand2);background:var(--brand-soft)}
+.dropzone b{font-size:13px;font-weight:600}
+.dropzone span{font-size:11.5px;color:var(--muted)}
+.imp-sum{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.imp-s{border:1px solid var(--line);border-radius:10px;padding:8px 9px;background:#fff}
+.imp-s u{display:block;text-decoration:none;font-size:11px;color:var(--muted);margin-bottom:1px}
+.imp-s b{font-size:19px;font-weight:680;font-variant-numeric:tabular-nums;line-height:1.2}
+.imp-s.ok b{color:var(--ok)}.imp-s.up b{color:var(--info)}.imp-s.sk b{color:#98A2B3}.imp-s.er b{color:var(--danger)}
+.imp-mode{display:flex;flex-direction:column;gap:6px}
+.imp-mode label{display:flex;gap:8px;align-items:flex-start;padding:8px 10px;border:1px solid var(--line);border-radius:9px;cursor:pointer;font-size:12.5px;line-height:1.5}
+.imp-mode label.on{border-color:var(--brand2);background:var(--brand-soft)}
+.imp-mode input{margin:2px 0 0;flex:0 0 auto}
+.imp-mode em{display:block;color:var(--muted);font-style:normal;font-size:11.5px;margin-top:1px}
+.imp-list{display:flex;flex-direction:column;gap:5px;max-height:320px;overflow-y:auto}
+.imp-row{display:flex;gap:7px;align-items:flex-start;flex-wrap:wrap;padding:7px 9px;border:1px solid var(--line);border-left-width:3px;border-radius:8px;background:#fff;font-size:12.5px}
+.imp-row.is-error{border-color:#FDA29B;background:var(--danger-soft)}
+.imp-row.is-update{border-color:#B2DDFF;background:var(--info-soft)}
+.imp-row.is-skip{background:#FAFBFD;color:var(--muted)}
+.imp-row.is-create{border-left-color:#ABEFC6}
+.imp-rn{flex:0 0 46px;color:var(--muted);font-size:11.5px;font-variant-numeric:tabular-nums;padding-top:1px}
+.imp-sub{flex:1 1 150px;min-width:0;word-break:break-word}
+.imp-sub b{font-weight:600}
+.imp-chg{display:block;font-style:normal;color:var(--muted);font-size:11.5px;margin-top:1px}
+.imp-tag{flex:0 0 auto;font-size:11px;padding:1px 7px;border-radius:999px;border:1px solid transparent;line-height:1.6}
+.imp-tag.t-ok{background:var(--ok-soft);color:var(--ok);border-color:#ABEFC6}
+.imp-tag.t-info{background:var(--info-soft);color:var(--info);border-color:#B2DDFF}
+.imp-tag.t-mute{background:#F2F4F7;color:var(--muted);border-color:var(--line)}
+.imp-tag.t-bad{background:var(--danger-soft);color:var(--danger);border-color:#FDA29B}
+.imp-note{flex:1 1 100%;color:var(--danger);font-size:11.5px;line-height:1.5}
+.imp-row.is-skip .imp-note{color:var(--muted)}
+@media (max-width:520px){.imp-sum{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body data-page-node-id="6wmY4vhjpoWAnMp58PQRT8">
+
+<header data-page-node-id="2B1FVBPed24QV8CyDW7456" class="hdr">
+  <div data-page-node-id="0m6S5MIW9tJaeV8WB3fSjO" class="hdr-in">
+    <div data-page-node-id="AysLMet7PR2knkrdKI0kDY" class="hdr-l">
+      <div data-page-node-id="eBx2jjHjOOCUGg0kQwTp6c" aria-hidden="true" class="logo">
+        <svg data-page-node-id="zOOkL7KEDRwF9Wvhw3u251" fill="none" height="20" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" viewBox="0 0 24 24" width="20">
+          <path data-page-node-id="zEAFdKswaFpbnuqt1DyLCu" d="M3 17l5-6 4 4 4-7 5 6"/><path data-page-node-id="HNyGvIr3dsfat9fUAoIPHp" d="M3 21h18"/>
+        </svg>
+      </div>
+      <div data-page-node-id="M0gPCA91JpfA00RbEadxxP">
+        <h1 data-page-node-id="sKKCjsZ7ZwyaHTmrBkOrDT"><!--pnid:VBpWq0FaHhm0YL3KPqSZNe-->送样回传闭环台</h1>
+        <p data-page-node-id="NHOXFrIe2j0TvsLaOLBWir" class="sub"><!--pnid:L0onFz6FSx9q4b0dGVPHM6-->光伏银浆送样 · 回传跟踪与归因复盘 · 示例记录均为虚拟</p>
+      </div>
+    </div>
+    <div data-page-node-id="evdkWP7RbIFH9YHj5gxD51" class="hdr-r">
+      <div data-page-node-id="U23KyKsiEg7zDRFPOJvAGl" class="base-wrap">
+        <span data-page-node-id="hI8D9ZNV5XUBP7hKW5zfPH" class="pill" id="syncPill"><!--pnid:Cw0lK3LVTO9eTjvFVjTVFP-->连接中…</span>
+        <label data-page-node-id="ZLnPyBNJhPw5uh1UAJxfKG" for="baseDate"><!--pnid:y7g75XV6YSkPN32UXiowPw-->统计基准日</label>
+        <input data-page-node-id="FrdCIn36TZHvCUgY6aL8H6" id="baseDate" type="date">
+        <button data-page-node-id="ZuDlWlUYSueqU0M8Y7XyGC" class="linkbtn" id="btnBaseExample" title="把基准日设为最近一条送样所在月的月末" type="button"><!--pnid:lgAkUWU3hd6fZ2cQFidDbK-->按最新月</button>
+      </div>
+      <div data-page-node-id="xIROD9lJRrNFJ9juK4CHUX" class="tools">
+        <button data-page-node-id="4y2cQIShNV5YXGa5REWs6G" class="btn ghost" id="btnExportCsv" type="button"><!--pnid:S3OBUF98rCL16WPlFzfhes-->导出CSV</button>
+        <button data-page-node-id="HeOXRbFH93bOVYSDsBls3g" class="btn ghost" id="btnExportJson" type="button"><!--pnid:Xjk0ofT1jB23pR46Nnob7d-->备份JSON</button>
+        <label data-page-node-id="pe7OdMm9Y7TcIIcUtVA592" class="btn ghost" for="fileImportJson" role="button" tabindex="0"><!--pnid:bFAfKnKt0o03phZnb4bz2I-->恢复</label>
+        <input data-page-node-id="xQcaLphgrEfQpb6GV7LBob" accept=".json,application/json" hidden id="fileImportJson" type="file">
+        <button data-page-node-id="iQPDWJ2Wk3pffyWVwMtlv5" class="btn ghost" id="btnConfig" type="button"><!--pnid:wFeERPMRwI2Z75plVvDYfc-->口径</button>
+        <button data-page-node-id="j5javkrYmuYeq272CNWcZj" class="btn" id="btnImportXlsx" title="批量导入 Excel，可先下载模板发给填报人" type="button"><!--pnid:iwxbOE8bmxtwFdVnMux5xD-->导入Excel</button>
+        <button data-page-node-id="iaUtqM5qagP0pD9JfPHqLZ" class="btn primary" id="btnAdd" type="button"><!--pnid:ACB2P5UqWUYAgrtE1EiA8K-->+ 新增送样</button>
+      </div>
+    </div>
+  </div>
+  <nav data-page-node-id="YUCCrOjNKaTRH75TgqnhUU" aria-label="模块切换" class="tabs" id="tabs">
+    <button data-page-node-id="xcUHyGU8WLIvdvLAMorNZX" class="tab is-on" data-tab="today" type="button"><!--pnid:FmHMJ7gj55JHkkAVTlDIpd-->今天要处理<span data-page-node-id="VUU286QaAJL6VFtxcu8zpV" class="badge" data-zero="1" id="tabBadgeToday"><!--pnid:AZES7KMHl2lSSZ5gPkOlZP-->0</span></button>
+    <button data-page-node-id="Lt4c5HfzR1jM37sKruiUrt" class="tab" data-tab="ledger" type="button"><!--pnid:mNquDsjX80VTyUOeyjqrJu-->送样台账</button>
+    <button data-page-node-id="PvIY4t4OXjdx42RAc6N1DK" class="tab" data-tab="board" type="button"><!--pnid:Xi6W8qpvF0458iMGaHjqGe-->指标看板</button>
+    <button data-page-node-id="Ys6npZNjg6Qo2LrLQxGsYW" class="tab" data-tab="report" type="button"><!--pnid:duyLicAKYRpuF0CJryC2Kv-->周报</button>
+  </nav>
+</header>
+
+<main data-page-node-id="T31TVpfqpJ03PdmUYXAZ4V" class="wrap">
+
+  <!--pnid:l0mVjl0sG2T90vuyG0WUi0--><!-- ============ 模块一：今天要处理 ============ -->
+  <section data-page-node-id="gQht8d1lRKVvXDBK4lBAdQ" class="sec is-on" id="sec-today">
+    <div data-page-node-id="CjA5YbN8hXjSiGhSexXHdN" class="today-hd">
+      <h2 data-page-node-id="5LmKz38ctqS7M7E5ixpAE1"><!--pnid:LKjaNJzkyFsJzsquUj4vfo-->今天要处理</h2>
+      <p data-page-node-id="Dcf4pmGeZZic7OWlg4DgUB" class="hint"><!--pnid:prK5PW2CV9rsG6kek1zAqh-->按「严重超期 → 超期 → 逾期」排序；未回传不等于未测试，缺证据保留待认定。</p>
+    </div>
+    <div data-page-node-id="TJrIB1YcfT3aRwAcZplxTM" class="stats4">
+      <div data-page-node-id="M2K5hjMwCd30e3ws0A3SNG" class="stat danger">
+        <span data-page-node-id="AtHVyFKcxubNi2MPS4uHav" class="stat-l"><!--pnid:rlVTpj7XBlvGBvPlo2TBEg-->需处理合计</span>
+        <b data-page-node-id="1VLgLtqzkWKSEePpZ6BtUH" data-sp-bindable="database" data-sp-database-id="2WxgG763V1EUIuoEFvh2iX" data-stat="need"><!--pnid:LrZZ8TPuajlkQu6xPbdqHp-->—</b>
+        <span data-page-node-id="ArheXwoipuasja6rpl8lgP" class="stat-s"><!--pnid:oaviqu6T4E1UcNoWPhZ6mU-->未回传且已越逾期阈值</span>
+      </div>
+      <div data-page-node-id="epWFJZWbWVL5xaXIAXNytO" class="stat danger">
+        <span data-page-node-id="A66jINY3mEdMqMRmzPcq8e" class="stat-l"><!--pnid:lae4Bk8XMweORQQ96VLKkV-->严重超期 &gt;45 天</span>
+        <b data-page-node-id="HRV2quBVEDVZ6lW4JygCDT" data-sp-bindable="database" data-sp-database-id="2WxgG763V1EUIuoEFvh2iX" data-stat="grave"><!--pnid:eMc6A00FI37UlxcAepwAyb-->—</b>
+        <span data-page-node-id="9SXIR8XZw0cyiN8z6enInr" class="stat-s"><!--pnid:1bGYm3f3rn4uFulA280Urb-->最高优先级，先定责任</span>
+      </div>
+      <div data-page-node-id="BquZQxQApKdgdPHVWgvlQa" class="stat warn">
+        <span data-page-node-id="o7721vCaTNuPthAo2m5WeK" class="stat-l"><!--pnid:mNsipBa0R9itkadNqJGYPK-->超期 30–45 天</span>
+        <b data-page-node-id="vndOFmkRWKRQ71YtQgkHms" data-sp-bindable="database" data-sp-database-id="2WxgG763V1EUIuoEFvh2iX" data-stat="super"><!--pnid:yidEOi86UfIqYUR753Ssso-->—</b>
+        <span data-page-node-id="Mll76Vmv466GzZsWlBx2bA" class="stat-s"><!--pnid:IICwFK3F01YrHYXfixpgjM-->需本周书面推进</span>
+      </div>
+      <div data-page-node-id="Z5hD87Mhtb1ZTTlr7ftuX8" class="stat warn">
+        <span data-page-node-id="hP76fH6xXsWjlLC800P475" class="stat-l"><!--pnid:kFlWc4cgJUVZTy5mUIj2ox-->逾期 10–30 天</span>
+        <b data-page-node-id="4oSnnCMpVyxL9SCjmdfcNW" data-sp-bindable="database" data-sp-database-id="2WxgG763V1EUIuoEFvh2iX" data-stat="over"><!--pnid:k60em4mmd1BDpr4oUqIBbU-->—</b>
+        <span data-page-node-id="g3VC8kl3h3IuYYtWOORXpn" class="stat-s"><!--pnid:DgO3GJyTa6rDNPgC0rchtB-->先确认客户是否已测</span>
+      </div>
+      <div data-page-node-id="cTDhkuLQwhiIGym24kdVWp" class="stat ok">
+        <span data-page-node-id="3odrs4VgtqyKt4rY5pS6mg" class="stat-l"><!--pnid:LubVEi3SNVXkyWrBeqiBXj-->窗口内待回传</span>
+        <b data-page-node-id="tjYml0lDpE9cHyMcYtgCor" data-sp-bindable="database" data-sp-database-id="2WxgG763V1EUIuoEFvh2iX" data-stat="window"><!--pnid:OItNlo8ygmJmR2HnHqmsQy-->—</b>
+        <span data-page-node-id="rJcUpdfq5xwcJTs7cMI39z" class="stat-s"><!--pnid:cVGFzi7ok3ZYyjZ7kLu9L1-->未越阈值，正常跟进</span>
+      </div>
+    </div>
+    <div data-page-node-id="5QIUHBRcoaL3GyoNQlZXyE" class="loading" id="loadToday"><!--pnid:u0ypnwiYTW2gHKVu5QGa6F-->正在读取台账…</div>
+    <div data-page-node-id="RqjkS1vuDaTgfQl1IcIJVs" class="empty" hidden id="emptyToday"><b data-page-node-id="WKHDHaIurBTtyL8u3kx8A9"><!--pnid:fU0aMIvjD0M9b2FXrqK0ww-->暂时没有需要处理的记录</b><!--pnid:ho22uc94xiQ6ZPQZrgaxR8-->所有送样都在窗口内或已回传。</div>
+    <div data-page-node-id="xa6OvLg5Xx4KqCdbbzI3qt" class="err" hidden id="errToday"></div>
+    <div data-page-node-id="vF7aoiJQYP4lge7WzWojEE" class="today-list" id="todayList"></div>
+  </section>
+
+  <!--pnid:TSmS5wKyWk2aPHYiZVJ6Ra--><!-- ============ 模块二：送样台账 ============ -->
+  <section data-page-node-id="PCAojZOI21jt9jJVc6HaSr" class="sec" id="sec-ledger">
+    <div data-page-node-id="3yuPoJKM33AMF8tPyRulgO" class="filters">
+      <select data-page-node-id="OzVKrzAhLv7m6zMz9WpNyp" aria-label="按区域筛选" id="fltRegion">
+        <option data-page-node-id="gQPxcvrzrMULzD1UyIPeN9" value><!--pnid:IVId8Hk9ftQ4OOGpqkGTG0-->全部区域</option><option data-page-node-id="6xHavBVEnbz1j2eXzcF0Um" value="国内"><!--pnid:VPEf94qKXrwBZOLw8rQ5vf-->国内</option><option data-page-node-id="39pjYwBER8axzXNJzeKnMI" value="海外"><!--pnid:6Jtt1tH6eGPUhEMf0Fcmgt-->海外</option>
+      </select>
+      <select data-page-node-id="inC3mgj0vsbKwt4uibZ5WD" aria-label="按阶段筛选" id="fltStage">
+        <option data-page-node-id="oXJenv12Hgnn8lPX3SiTb2" value><!--pnid:BPkllhf1cmVHo4XMBYGnAl-->全部阶段</option>
+      </select>
+      <select data-page-node-id="YxwfzSJCaSuujoVF4iTpyP" aria-label="按状态筛选" id="fltStatus">
+        <option data-page-node-id="KNB4UU6OLnM004yjcK5ZiH" value><!--pnid:HUPksEzd53yWEfXJnDZgnW-->全部状态</option>
+        <option data-page-node-id="jQCnOqJum8Uj9ywdFfiySr" value="returned"><!--pnid:0BWG0ZfhsyWZ0ADhyi9cHt-->已回传</option>
+        <option data-page-node-id="zvlwh1670EsiX5ppu6Ngak" value="overdue"><!--pnid:jovXoH2SgR3c1Q3DvOn5nD-->未回传且已逾期</option>
+        <option data-page-node-id="huZDI4ynErEln0xMvtPXdq" value="window"><!--pnid:5GL86BZcs2XxejSD9vs2cx-->窗口内</option>
+      </select>
+      <input data-page-node-id="CfF9bALgv9M53M7YraK9wb" aria-label="关键词搜索" id="fltKw" placeholder="搜 集团 / 基地 / 型号 / 编号 / 责任人" type="search">
+      <button data-page-node-id="XtvKq1hZ3oAlbYfw2Dwzlc" class="linkbtn" id="btnClearFlt" type="button"><!--pnid:qVOxT9j1olJeps4c1BkHMi-->清空</button>
+      <span data-page-node-id="4nHbNapmYmhcnsYfO7moaz" class="count" id="rowCount"><!--pnid:Sg3siJT8JwqlKvzQT1lnxR-->—</span>
+    </div>
+    <div data-page-node-id="9yJlCNDi02QZoMI7szq1lq" class="tw">
+      <table data-page-node-id="AnyKceJjMJUIKQXIrYbFGj" class="tbl" id="tbl">
+        <thead data-page-node-id="Gie3OFRcGIzHgjFSsDcBBK">
+          <tr data-page-node-id="Gtgdb8RjBmUVf0hBoZhG8y">
+            <th data-page-node-id="0tOy0uhmWD0QalqnTJOdHs"><!--pnid:ZEMI5HbC1yKWQGMzSQs74Q-->记录编号</th><th data-page-node-id="U7AlJlEtyRT18qUufpzx3F"><!--pnid:GmCSPAwb76JDwpiLmizisb-->客户集团</th><th data-page-node-id="4yW4pFzNoh7Gnzc0vzUAqH"><!--pnid:J7QbZKbr5UVYbIYJfZH8pt-->客户基地</th><th data-page-node-id="eA4GJUjtPJsgaC7E3KIUre"><!--pnid:OBwgfrqT7mc23jEz9nVRPW-->产品型号</th><th data-page-node-id="HLBrOLMUzQyJvFgFwP4Xkc"><!--pnid:b8RhNxXxD3qyDTCw3IMNtI-->送样阶段</th><th data-page-node-id="w51sRs649HJatP7hRP1VkE"><!--pnid:vcqlmZ6znVACv8zbQkMZqU-->区域</th>
+            <th data-page-node-id="TwYKhgLNNF1Amx6l7IaCBi"><!--pnid:qxuj7i67uDn97pziu7cUv2-->送样日</th><th data-page-node-id="8XiMCrDLHgqJfHaz3pCMuO"><!--pnid:c8wzocCZx9HeV3Kq4IHFpP-->回传日</th><th data-page-node-id="dqjVwryuuOm5Gw488D4lTS"><!--pnid:SCswJmr7gJMXvCEGWrQ7O6-->天数</th><th data-page-node-id="IEE7aqND5HGhM2pFlWMvWS"><!--pnid:Opzq0mW2xPYhtFcLFy4anm-->状态</th><th data-page-node-id="Bk7Uk8rj91mqKhSs5qdyiB"><!--pnid:eJcLX5CeL4QiNqCcnpzxdw-->未回传分类</th><th data-page-node-id="cSJfMPC5zw1xjxjQLssVwl"><!--pnid:pPamE3HE4EYWlkFWZfC7xr-->责任销售</th><th data-page-node-id="jATDS6kYJOzz59sGgdR904"><!--pnid:wtCp7a2ZGluuTe0Tt5ifrm-->下一步</th><th data-page-node-id="Lje7FoI7FfqbiIkRldjtkw"><!--pnid:VizdNAttNPJKf5iE9imXv6-->操作</th>
+          </tr>
+        </thead>
+        <tbody data-page-node-id="Jtvl7Megx1Ew1Y7O5OyggZ" id="tblBody"></tbody>
+      </table>
+      <div data-page-node-id="KjMfIFXfvRaoRdTBZsdVPi" class="loading" id="loadLedger"><!--pnid:7BQH7am0eUAsULCfOsYK6A-->正在读取台账…</div>
+      <div data-page-node-id="jiWTwlWLY5NhgblcbzNWZD" class="empty" hidden id="emptyLedger"><b data-page-node-id="Mm4ylyxuhY8u4RHh8LghTM"><!--pnid:uO2DEUZeDMWWelk7dDVhlC-->没有匹配的记录</b><!--pnid:CaX9optdMZEFSW8QlkqPAr-->调整筛选或新增一条送样记录。</div>
+      <div data-page-node-id="EIXCNHSeDPgLRVSpWaAgST" class="err" hidden id="errLedger"></div>
+    </div>
+  </section>
+
+  <!--pnid:gJ9uMOG38jBYjler8NnV4s--><!-- ============ 模块三：指标看板 ============ -->
+  <section data-page-node-id="khZr9jM9gb4iTyhR4OBGRG" class="sec" id="sec-board">
+    <div data-page-node-id="DkRnUEknC455IbhwNyInAL" class="kpis">
+      <div data-page-node-id="4ig9Amkw91gEaFBAW3qSbm" class="kpi">
+        <div data-page-node-id="tDE9CsC3svjtFAt34aqX48" class="kpi-body">
+          <div data-page-node-id="KkBFvPllR8ii7ZC8UIUaN5" class="kpi-l"><!--pnid:JM5xi5JFitjKxSV9PHLSKJ-->回传完成率</div>
+          <div data-page-node-id="lqv4L5Jt8ODlXpTNcaJY8c" class="kpi-v"><b data-page-node-id="ZFY2oWpOtdpUy183eJkldz" data-sp-bindable="database" data-sp-database-id="2WxgG763V1EUIuoEFvh2iX" id="kpiRate"><!--pnid:HRHFIgxHp1BG12q53WZhq0-->—</b><span data-page-node-id="0Ye30K8D5koY4nMspNJiJS" class="kpi-s" id="kpiRateSub"><!--pnid:MVItYYaf9Gu8WnhStbmBWD-->—</span></div>
+          <div data-page-node-id="lbZ8dQOWzsjOPCaD7fgONv" class="kpi-note" id="kpiRateNote"><!--pnid:0TawoWn9sRJCawpzM0ew7i-->已回传 ÷ 应回传</div>
+        </div>
+        <svg data-page-node-id="JoV3IiV8ErthQq5Nm9A2wk" aria-hidden="true" class="ring" height="62" viewBox="0 0 62 62" width="62">
+          <circle data-page-node-id="flxBy2GC7c0J3ZNYK1NyT0" cx="31" cy="31" fill="none" r="25" stroke="#EEF1F5" stroke-width="7"/>
+          <circle data-page-node-id="Q96huKOUMDSoVVz3kDNImi" cx="31" cy="31" fill="none" id="ringRate" r="25" stroke="#1E4E8C" stroke-dasharray="157.1" stroke-dashoffset="157.1" stroke-linecap="round" stroke-width="7" transform="rotate(-90 31 31)"/>
+        </svg>
+      </div>
+      <div data-page-node-id="yIsh9yBaZNtyn309p2JP2Z" class="kpi">
+        <div data-page-node-id="lOSzjeeTVXLtziDrO77rKi" class="kpi-body">
+          <div data-page-node-id="iuDooxK5Av0feBMUlPlYIZ" class="kpi-l"><!--pnid:OxI5p0Lwch7n3GeRr13gxc-->回传及时率</div>
+          <div data-page-node-id="vJqddsnZVFlpm1wnnQmILP" class="kpi-v"><b data-page-node-id="0SI9VUf91qZJfmLLenQmAb" data-sp-bindable="database" data-sp-database-id="2WxgG763V1EUIuoEFvh2iX" id="kpiTimely"><!--pnid:CEPXWhiiQuIupdA3HBb0iN-->—</b><span data-page-node-id="xBUs8taEeQeKubwA6kAaS8" class="kpi-s" id="kpiTimelySub"><!--pnid:8diyGKN84dL0g5qPcOhMSV-->—</span></div>
+          <div data-page-node-id="gYL9pZyQ7MoDjRNHi2J4QD" class="kpi-note" id="kpiTimelyNote"><!--pnid:2rne341naE57zbwHu7yJ7t-->及时回传 ÷ 已回传（分母与完成率不同）</div>
+        </div>
+        <svg data-page-node-id="GlrVpvr7g7d2x1R3klDyIS" aria-hidden="true" class="ring" height="62" viewBox="0 0 62 62" width="62">
+          <circle data-page-node-id="SrMkd65SUxVRy06pGRveuG" cx="31" cy="31" fill="none" r="25" stroke="#EEF1F5" stroke-width="7"/>
+          <circle data-page-node-id="XaqkDjyhQKhvYjFDASOWjf" cx="31" cy="31" fill="none" id="ringTimely" r="25" stroke="#067647" stroke-dasharray="157.1" stroke-dashoffset="157.1" stroke-linecap="round" stroke-width="7" transform="rotate(-90 31 31)"/>
+        </svg>
+      </div>
+      <div data-page-node-id="GL24Qx88Poo81hOIxz8dU0" class="kpi">
+        <div data-page-node-id="76B5I0DOm9lArxNPVGIg5z" class="kpi-body">
+          <div data-page-node-id="yzlgdD6R9d4GGXkBwZN695" class="kpi-l"><!--pnid:Pgisi6yVfi0FMIlRcFcPwD-->逾期未回传</div>
+          <div data-page-node-id="tqaQjstw7RCS01mo08xhJ8" class="kpi-v"><b data-page-node-id="zxM4H6qZIPX6Q3JKn8D0gE" data-sp-bindable="database" data-sp-database-id="2WxgG763V1EUIuoEFvh2iX" id="kpiOver"><!--pnid:yI8a3mbmvdcQYdweaCQdw0-->—</b><span data-page-node-id="XnYvHLQrJfVWJirPmrrSgd" class="kpi-s" id="kpiOverSub"><!--pnid:TI7cPdgCbhHdD9EJ2N0b6c-->—</span></div>
+          <div data-page-node-id="pc1j9PazmEF8qt6CTf8WUw" class="kpi-note" id="kpiOverNote"><!--pnid:nKBqzIwD7MksyIIVC7qcEa-->占应回传比例，与完成率同分母</div>
+        </div>
+      </div>
+      <div data-page-node-id="vIQgVCeBT0fWohwISl8PHB" class="kpi">
+        <div data-page-node-id="g4Lq1QGSHpUwRS5duVErEj" class="kpi-body">
+          <div data-page-node-id="h5W05nNYQBDqD2IlXeWNDB" class="kpi-l"><!--pnid:EFrIWepjYW5xuYFhQ095g7-->平均回传天数</div>
+          <div data-page-node-id="y8MxZ7O77Bj46ksmywZas1" class="kpi-v"><b data-page-node-id="7vuC1EeuZLJEoPCnBdiMej" data-sp-bindable="database" data-sp-database-id="2WxgG763V1EUIuoEFvh2iX" id="kpiAvg"><!--pnid:KnDQcfyuMatSh53vq7iI3c-->—</b><span data-page-node-id="nICKqg19M9KUGaUZchrFRL" class="kpi-s"><!--pnid:3Gikrzl5A6SG7i5STJ8HBE-->天</span></div>
+          <div data-page-node-id="puJixlSRpMGf9XgWPfVkKr" class="kpi-note" id="kpiAvgNote"><!--pnid:YvxiE7AoHhvvNeVhPrB0Ie-->国内 / 海外分列</div>
+        </div>
+      </div>
+    </div>
+
+    <div data-page-node-id="bExQxsqgVFMqClQirsYPNk" class="grid2">
+      <div data-page-node-id="330bFu2adsV2nYruRBNGrM" class="card">
+        <div data-page-node-id="jNcShN6h61FXX7ZlHoPP7Z" class="card-hd"><h3 data-page-node-id="SUmuXpj7ZYFUojhG8aLlPT"><!--pnid:YJ3OuFV4vY98ytn4x1V6Tc-->分层：按区域</h3><span data-page-node-id="BwIWenRWchX9Wowqi3ADee" class="hint"><!--pnid:54p74O7UUhHO3VtTcQdeUv-->各层从明细重算，不做比率平均</span></div>
+        <table data-page-node-id="5BERiGyeJwGaIQBlI21Sp6" class="mini">
+          <thead data-page-node-id="hdHnyEIzMfakf1ghAtQfa2"><tr data-page-node-id="M2unMsgn6r95NUEThybBg7"><th data-page-node-id="Mfwu4VkqD7uLkKeTM49sDs"><!--pnid:13k1sEhamNSwIwMp3o8VOX-->区域</th><th data-page-node-id="NFm5ZjeDZ8adcXmgdh68C1"><!--pnid:PGx0Ac68aqGfuspSnl3q1A-->应回传</th><th data-page-node-id="3JXuoUabd0NgqSYUXWwulL"><!--pnid:KKctTtojZAtyQl6TTOnIq4-->已回传</th><th data-page-node-id="lfgpYvT4LegU8LuR5r2OfS"><!--pnid:upyiXuRCoBsNi70fiynCcM-->完成率</th><th data-page-node-id="q1cKx59vipeSJMsGXO0B78"><!--pnid:dadwoGrk3ufWDOVVjaJKO4-->及时率</th><th data-page-node-id="f3bqhfTfxD1L3nwqKTodTO"><!--pnid:CGm0HPpJlAAgVLDmbCDUri-->平均天数</th></tr></thead>
+          <tbody data-page-node-id="Osi253KDrrOiwafOFnEcbm" id="tblRegion"></tbody>
+        </table>
+      </div>
+      <div data-page-node-id="djMaZzSsRKPyRTp549U9Wp" class="card">
+        <div data-page-node-id="nRx8nZQ88XrKE5K1NptObM" class="card-hd"><h3 data-page-node-id="poqUcHpySbT5DkdCJ9F3SI"><!--pnid:Vf0LCSiBkACzklQoMZcpYc-->分层：按送样阶段</h3><span data-page-node-id="lRA6HqTBM360JQW7XqFASD" class="hint"><!--pnid:IAQa8u1YpUj0ylSgCHF3Ag-->免费样是否计入分母待确认</span></div>
+        <table data-page-node-id="a1MvnIqP5U4totdfwDWo95" class="mini">
+          <thead data-page-node-id="GfK08W7jyKU4NuGCR2IHkF"><tr data-page-node-id="CU9yWrYauZqy8QnWyxF3u2"><th data-page-node-id="5iLtpUA09Hy73a6sQtCN8s"><!--pnid:CJhNcAGWeXUVEwbk1S3Dux-->阶段</th><th data-page-node-id="tmhxNoyeWZsroAESvRTSzj"><!--pnid:cKkRiCeQgDKKrksfoEHSVN-->应回传</th><th data-page-node-id="KPguWlm9BQNJWErC23qH0M"><!--pnid:L5SJlikrUPTNRiJsQVNt7e-->已回传</th><th data-page-node-id="2WCFUvTQ72cTghlJicKtKd"><!--pnid:fyQ8At9FTlWF0hCaYTgNZw-->完成率</th><th data-page-node-id="2C6W3KRs1zqSffvgXZLXKM"><!--pnid:0L8eoMnv7jUO0DQUhBZACp-->及时率</th><th data-page-node-id="wodLfbYXZGkhps3tJ1fbaj"><!--pnid:NyIWuJgD2qJIzhmFDr7mbr-->平均天数</th></tr></thead>
+          <tbody data-page-node-id="yJbL0N0zhGrhBR5GUT1UkI" id="tblStage"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div data-page-node-id="zbS4RZAbeKFEeWtGyjtO6F" class="card" style="margin-bottom:12px">
+      <div data-page-node-id="K6tU19k7smXcTERnuTlKBo" class="card-hd"><h3 data-page-node-id="nWMhqBk1eR5SesJUKxzDcU"><!--pnid:FlMhE8kVkfJHEn8umNIpud-->分层：按客户集团</h3><span data-page-node-id="FAb59eIiTpj8apJvt4QzX1" class="hint"><!--pnid:G2qXRfuB1K3KRtDWJ7Qq81-->完成率无法计算的主体单列，不参与排名</span></div>
+      <table data-page-node-id="tQ03R58rwUEb51XTlXwpOA" class="mini">
+        <thead data-page-node-id="7TEZXaq4oH2Ipt8SVMKcoX"><tr data-page-node-id="T4IsiT9zY7lw0ovzsOikAK"><th data-page-node-id="nRHYDEggI4cw1Z2GK0aiiV"><!--pnid:j2WPp3d26JU5lgOZcVwpka-->客户集团</th><th data-page-node-id="xjVP0fvgPtkGBa4HVlyhPg"><!--pnid:p3W9lWa1N6406oJW26980c-->应回传</th><th data-page-node-id="qQvLIViHs01myVhDk4O2fg"><!--pnid:O8IbPsCFHDniUTvHFZAnyk-->已回传</th><th data-page-node-id="355QLxG7uhXZtEylDqTXvu"><!--pnid:1zI199yt1avhKPVe3rJwy6-->完成率</th><th data-page-node-id="XMpVgLKFDZaNVcOfhazzQf"><!--pnid:CTn98jbwisUF0aQyMhL02j-->及时率</th><th data-page-node-id="kbRaBIckIxLVdDcImV1PBY"><!--pnid:HryKLw13FT9oV7VXM5z2EI-->平均天数</th><th data-page-node-id="IG4uq6biJzkAwirHufR67k"><!--pnid:TTt0YyK2ZaHWjONGmtujBx-->逾期</th></tr></thead>
+        <tbody data-page-node-id="cy41DrnuKRnfHR0ywDzx1M" id="tblGroup"></tbody>
+      </table>
+    </div>
+
+    <div data-page-node-id="3BISy0ISlj0gKdSafXZcbb" class="grid2">
+      <div data-page-node-id="Ml8AHzzHuUGbFr37bjuvAq" class="card">
+        <div data-page-node-id="g1NpwUhwndcXM6jiEQd5uF" class="card-hd"><h3 data-page-node-id="IBiPr31Rxuu2ElnugV4A0u"><!--pnid:2DOvijSfRWZX84lokOoYwy-->逾期三分类</h3><span data-page-node-id="TNuJAmwpi2WTNuwlF3Hm2i" class="hint"><!--pnid:wYGyjAmlfQRYgAvfQp0sHi-->三分类之和 = 逾期条数</span></div>
+        <div data-page-node-id="uVTYHKGZsKlA6KKHr7Z39n" class="catbars" id="catBars"></div>
+        <p data-page-node-id="o6SGaXSuI2O0v3ohD3yfOo" class="hint" id="catNote" style="margin-top:10px"></p>
+      </div>
+      <div data-page-node-id="XkrVVBobANhT0ykD8IoIqD" class="card">
+        <div data-page-node-id="t4RohbdURJqgzYcKHHvFbg" class="card-hd"><h3 data-page-node-id="xYCT6NGRXmucLnLDNrCDq6"><!--pnid:2sc0BuYURbSaOCM1hNmQL8-->完成率排名（升序）</h3><span data-page-node-id="4W0uEIJPJhKo0qu4TIC44p" class="hint"><!--pnid:aYhVn7JG6BGGBAhn6UQmVx-->完成率最低的三位标 BOTTOM3</span></div>
+        <div data-page-node-id="L30JOLMn47b8Rbu0lwTJVo" class="rank" id="rankList"></div>
+      </div>
+    </div>
+  </section>
+
+  <!--pnid:8ZxrYAwWscbWOewsV1gze8--><!-- ============ 模块四：周报 ============ -->
+  <section data-page-node-id="HiYZMOPnV1Q5NJteDcUkr2" class="sec" id="sec-report">
+    <div data-page-node-id="IaUukzotxgTXTNWTNsy0Jg" class="card">
+      <div data-page-node-id="zOFbv1ZjWAtO4k7f6H7wJB" class="card-hd">
+        <h3 data-page-node-id="qOalfGbdzeVCLIG8rGycJK"><!--pnid:tcBwH5CUR7FAGFKJ7UrNMW-->周报初稿（五段式）</h3>
+        <div data-page-node-id="j0diMbAHM7QNzRg2M1bct8" style="display:flex; gap:6px; flex-wrap:wrap">
+          <button data-page-node-id="LhwtwcaeiCMXkmg0lZO3lK" class="btn ghost" id="btnGenReport" type="button"><!--pnid:2eMSjCDWQfwpNrVwh4MSgc-->重新生成</button>
+          <button data-page-node-id="wUuuooz7U76uHYmFDjjbdL" class="btn ghost" id="btnCopyReport" type="button"><!--pnid:b3iV1waaXiYyk4BjR8Rxlo-->复制全文</button>
+          <button data-page-node-id="Kk250Y6co8hwNbEW2yRiIs" class="btn ghost" id="btnDownloadReport" type="button"><!--pnid:nMzWDRJmPQpY9y24oa8k6z-->下载 .md</button>
+        </div>
+      </div>
+      <p data-page-node-id="8K6NO1KLnhpKRkfUAgg46r" class="hint" style="margin:0 0 12px"><!--pnid:nAYCi9sKxZ8c6NgC5QTFlb-->每个数字都带分子 / 分母 / 口径版本与计算时间；事实、判读、假设、建议、决策分栏。未签核前一律为「待复核初稿」。</p>
+      <pre data-page-node-id="MFuZsUFpWmYvI1R9pvYicK" class="report" id="reportText"></pre>
+    </div>
+  </section>
+
+</main>
+
+<!--pnid:VpjX4jPTnINCOoUzZETAxA--><!-- 隐藏模板行：所有 data-cell 选择器在此静态存在，供运行时克隆 -->
+<table data-page-node-id="hUwSCltecXzTO1GGzFhr1G" hidden id="tplTable">
+  <tbody data-page-node-id="4ZubXI3atltFXDeevOEWJW">
+    <tr data-page-node-id="AINRWnPFKqza9xsxCmQoyL" id="tplRow">
+      <td data-page-node-id="f9Buu9y75pbqPl4InGFkg2" data-cell="code" data-label="记录编号"></td>
+      <td data-page-node-id="5Lzq2Ad5mwDn9MoibfFVVt" data-cell="group" data-label="客户集团"></td>
+      <td data-page-node-id="Z7IrUMYXGklVnkCHvO0PpH" data-cell="base" data-label="客户基地"></td>
+      <td data-page-node-id="UycN25QcT5cRzKIDAOjAVO" data-cell="model" data-label="产品型号"></td>
+      <td data-page-node-id="lW7xxA7gJzSU1lHghrHqUX" data-cell="stage" data-label="送样阶段"></td>
+      <td data-page-node-id="yxC6m7i7esw7ZUBTYLmZPA" data-cell="region" data-label="区域"></td>
+      <td data-page-node-id="8pl36TFLy7ybCarTmSyDYV" data-cell="send" data-label="送样日"></td>
+      <td data-page-node-id="qVk5OzZS4xOn3jTOZuOhvA" data-cell="ret" data-label="回传日"></td>
+      <td data-page-node-id="kEi1YDFetHTnHtFvgJnSbi" data-cell="days" data-label="天数"></td>
+      <td data-page-node-id="idTGeDLNBVCDmBHe9nxdWT" data-cell="status" data-label="状态"></td>
+      <td data-page-node-id="TDXowGOWvMWBWUc5qQboR3" data-cell="cat" data-label="未回传分类"></td>
+      <td data-page-node-id="Z0ZRDjAJojKT18x3dkXI5r" data-cell="sales" data-label="责任销售"></td>
+      <td data-page-node-id="Akzz5Io944di84gNxLbg5Z" data-cell="next" data-label="下一步"></td>
+      <td data-page-node-id="zMPDK7Sv7UZ0uIyMeQF1AM" data-cell="ops" data-label="操作"></td>
+    </tr>
+  </tbody>
+</table>
+
+<!--pnid:FwnY1ycPxFZq9Hsf7j7wew--><!-- 隐藏模板行：台账不展开的字段（回传渠道 / 责任产品技术 / 备注）在编辑抽屉中呈现，此处保留显示位 -->
+<table data-page-node-id="gVgoCAPS70BjJHRZWxSWuy" hidden id="tplTableExtra">
+  <tbody data-page-node-id="69OTenAf2iMAGKnNrPOHHN">
+    <tr data-page-node-id="drb3q0EU5ddbsN7t6Z4Bvs">
+      <td data-page-node-id="SnhtJsIcDZZ14R2dxqvEoX" data-cell="channel" data-label="回传渠道"></td>
+      <td data-page-node-id="eE3hlDpAGW6dVkljFwsz8p" data-cell="tech" data-label="责任产品技术"></td>
+      <td data-page-node-id="eEFIp2Gi3ia7BVtPKDq3jF" data-cell="remark" data-label="备注"></td>
+    </tr>
+  </tbody>
+</table>
+
+<!--pnid:zsuNsZmogMpBRENOGjbb7H--><!-- 抽屉：新增 / 编辑 -->
+<div data-page-node-id="vLqlUgJZ8Fw6ib4Uxu4OXN" class="mask" hidden id="mask"></div>
+<aside data-page-node-id="AD9jmHXc0Itdj3dFcVwJ5S" aria-label="送样记录编辑" class="drawer" hidden id="drawerForm">
+  <div data-page-node-id="lGXHw1bBdU6MnUHK2a4efW" class="dh">
+    <h3 data-page-node-id="SpzIMBiGulc6pLgXyGmic8" id="formTitle"><!--pnid:XEkyWOPDlkirlMyPvWGtsM-->新增送样记录</h3>
+    <button data-page-node-id="GcHeqgwoLU7sm0QQ1uF78J" class="iconbtn" id="btnCloseForm" type="button"><!--pnid:eBmbZ3gqg2Ef5scHIiGoHk-->关闭</button>
+  </div>
+  <div data-page-node-id="5GAgj9uudH4aqOgn5KhPLw" class="dbody">
+    <form data-page-node-id="rhFWKirdmALdB9RFcoQanQ" autocomplete="off" id="recForm">
+      <input data-page-node-id="UGmOe2GIpEwmydmZNXcnAd" id="f_id" name="f_id" type="hidden">
+      <div data-page-node-id="bsH2wucUrQCZoxW0Tq7Gsv" class="fg">
+        <div data-page-node-id="pzVhsaOoVdTPLAwCIZLbck" class="field">
+          <label data-page-node-id="HElkzNJvV08FBgWAztssXS" for="f_code"><!--pnid:iwNX9Mn1ofwM2jnm4qNw9Q-->记录编号</label>
+          <input data-page-node-id="Zq3MHLqOFDdV6DgP44EePt" id="f_code" name="f_code" placeholder="如 S-11" type="text">
+        </div>
+        <div data-page-node-id="U044uP3tgvKqUZCAUtQrhy" class="field">
+          <label data-page-node-id="P99ng4Xfa89XUaiOBMNQCT" for="f_group"><!--pnid:kfnVwjHwyL5weTwa4VamkW-->客户集团</label>
+          <input data-page-node-id="ftYh3n7YfVwGansw3PLlCv" id="f_group" name="f_group" placeholder="客户代号，如 客A" type="text">
+        </div>
+        <div data-page-node-id="C6bSOhrlVnG7pEldSXZzaW" class="field">
+          <label data-page-node-id="bfwVBhL81OsNq0Ve4IIXtw" for="f_base"><!--pnid:XVjfo416XFgKFYQvwXXuY2-->客户基地</label>
+          <input data-page-node-id="gWdRyS24Q81tS5IkbactK3" id="f_base" name="f_base" placeholder="如 常州一厂" type="text">
+        </div>
+        <div data-page-node-id="N4OibTS8eUuqDdJH6Uh49m" class="field">
+          <label data-page-node-id="o5nAR9SUvOaoDl8FTkBEgT" for="f_model"><!--pnid:pHUItmKa2jtUYoqdfGDsmv-->产品型号</label>
+          <input data-page-node-id="ztjocDLoRDbmK5PJBLpTMa" id="f_model" name="f_model" placeholder="如 JH-A1" type="text">
+        </div>
+        <div data-page-node-id="h5kuN8oMPPjZhPEa6uqeNs" class="field">
+          <label data-page-node-id="LkAILyAA9vZb606PAeVLdi" for="f_stage"><!--pnid:AZrMJJlVKwbZqt39gWuCuH-->送样阶段</label>
+          <select data-page-node-id="oo6t2slzyz0G3YNFOyf1yg" id="f_stage" name="f_stage"><option data-page-node-id="cYRO1E0UBN5LJFe4sguLrC" value><!--pnid:Mpy8hL1pWejWzIKKGaLBlf-->请选择</option></select>
+        </div>
+        <div data-page-node-id="AKLpUZivIeuDG2VqcrmeEZ" class="field">
+          <label data-page-node-id="WKr4y4sbZVwVZm4jqJPQQR" for="f_region"><!--pnid:yBhVke9KqjzHb8emXcJg4u-->区域</label>
+          <select data-page-node-id="hfYm9DjZHwNCQNMxDOwb3z" id="f_region" name="f_region"><option data-page-node-id="RoS5vmR3HmzBHd91J90OLy" value><!--pnid:rU3kUiWoKEzs6LLFj7pnwB-->请选择</option></select>
+        </div>
+        <div data-page-node-id="vvKbbXAvBHhV5T11CHeKM0" class="field">
+          <label data-page-node-id="Lab79vBUwhvJAAAw5ULvfu" for="f_send"><!--pnid:hu6bNv9EqmGK2CQpdeJQkm-->送样日期</label>
+          <input data-page-node-id="5FDdzbqZWTQ8TziSUyY2LO" id="f_send" name="f_send" type="date">
+        </div>
+        <div data-page-node-id="EnBJFz8vsfTnVM8MxOeWAL" class="field">
+          <label data-page-node-id="x2BdKTY8hV7Wr2Bind8WEB" for="f_return"><!--pnid:r4ePt4Rn3ddRoEMI0A22Tu-->回传日期</label>
+          <input data-page-node-id="rPFsPke5ehIow8z2wTtlTE" id="f_return" name="f_return" type="date">
+          <span data-page-node-id="Cez3qAEbkCXeWUw01uWoMv" class="tip"><!--pnid:9habni6EuScg7p68ayErLP-->留空 = 未回传，系统按滞留天数判定档位，不填 0</span>
+        </div>
+      </div>
+
+      <div data-page-node-id="ScPFwH7nOmkELLvPV3yoNz" class="split" style="margin-top:16px">
+        <div data-page-node-id="6DnvV1XwRMt9s8JFWlXSJL" class="split-t"><!--pnid:zUBaexraP2qSctS8La4vye-->回传与归因（未回传时填写）</div>
+        <div data-page-node-id="HQTOIqHVGbv8UpEEkAEpAd" class="fg">
+          <div data-page-node-id="wc5ZjjFJwCBl478jBVEkQI" class="field">
+            <label data-page-node-id="ISttJi8SybGawfoPANNLEj" for="f_channel"><!--pnid:kxbVpEz2KWx44AtyaxNKTz-->回传渠道</label>
+            <select data-page-node-id="kFKW0nCbdyMzxMIs0FHbrT" id="f_channel" name="f_channel"><option data-page-node-id="xsOgF5wBZmLaRyol1s4O6o" value><!--pnid:Nl7gPHrzQmFDABnNECCX8F-->请选择</option></select>
+          </div>
+          <div data-page-node-id="IOMJkaWN67X1AFhTnHdOwt" class="field">
+            <label data-page-node-id="gvw0nbkQuv18gFE0h7SfUT" for="f_cat"><!--pnid:JvaqtmSZxG7U7n2C2N8D2v-->未回传分类</label>
+            <select data-page-node-id="cR3y55PPW9lq3hVUqbmGHD" id="f_cat" name="f_cat"><option data-page-node-id="7pNoJPkSqzjo61n55r3MdX" value><!--pnid:tuqjEhbDnWq90c0Fa2Jxnx-->请选择</option></select>
+            <span data-page-node-id="Jw49uSzKYJcaGqaOBn7pRu" class="tip"><!--pnid:fNNGUEwlg7Ia5IBmxRjeoY-->仅逾期记录需要；三分类互斥</span>
+          </div>
+          <div data-page-node-id="d4ikMQs9jdeaxLHwNAhNQz" class="field">
+            <label data-page-node-id="bpNpaUn8j4kkxo3dxh0lsY" for="f_sales"><!--pnid:0D7q85XUBXPtgSaaEvLgo7-->责任销售</label>
+            <input data-page-node-id="4lym8NqyCgBWgOvBJT0WKZ" id="f_sales" name="f_sales" placeholder="缺失则留空，不代填" type="text">
+          </div>
+          <div data-page-node-id="MMFFPNYxBkaPh3o4XLVUC0" class="field">
+            <label data-page-node-id="6knFTVbBSEGD4tDgqViEdu" for="f_tech"><!--pnid:ZJvd8lH6Qq5GarMyVYEfsI-->责任产品技术</label>
+            <input data-page-node-id="u7yix0tlIkJaAkv3iPatYP" id="f_tech" name="f_tech" type="text">
+          </div>
+          <div data-page-node-id="MYGN8ScQ2yX6zwQc5AYSZX" class="field full">
+            <label data-page-node-id="c3KUxg5gyvFDMdl9hSDhEN" for="f_next"><!--pnid:IEIaiZ1bCSaoAzgQ3LbUks-->下一步计划</label>
+            <textarea data-page-node-id="az30KQlrzzo2UESGEquZdr" id="f_next" name="f_next" placeholder="谁、做什么、什么时候复查"></textarea>
+          </div>
+          <div data-page-node-id="ukkwJnUKWfNusPFFxWBWh1" class="field full">
+            <label data-page-node-id="EeKLWUFOkqS2EE8rA213ZY" for="f_remark"><!--pnid:aWiFHL8Vp04z7UObhj9xI3-->备注</label>
+            <textarea data-page-node-id="nxdWlaxhhPuKdzSkTtEMM4" id="f_remark" name="f_remark" placeholder="NG 原因、客户反馈等"></textarea>
+          </div>
+        </div>
+      </div>
+      <p data-page-node-id="zHq5rTQmBTKDh08kL5Pll9" class="hint" hidden id="formErr" style="color:#B42318; margin:12px 0 0"></p>
+    </form>
+  </div>
+  <div data-page-node-id="W07wfK12HMQjdbCQWKliAd" class="df">
+    <button data-page-node-id="u1L2re0nQG67WiAnJyGTAv" class="btn danger" hidden id="btnDelete" type="button"><!--pnid:cTaMV0hq1bnyEEucCACmQQ-->删除</button>
+    <button data-page-node-id="2KTM9lmnCyrDswkoKzG1dv" class="btn" id="btnCancelForm" type="button"><!--pnid:8nCCRBnRmbThJcWZ9C3EYD-->取消</button>
+    <button data-page-node-id="Z8wMLMYhVZyM0BJJVaHHfU" class="btn primary" id="btnSave" type="button"><!--pnid:y3mTqIfKMrYyw6B3Tx1m3o-->保存</button>
+  </div>
+</aside>
+
+<!--pnid:SlGDmd1fdiV0e0IOmEldlB--><!-- 抽屉：Excel 批量导入 -->
+<aside data-page-node-id="HtdJK7Vz7G4gU8RGsQUZZQ" aria-label="Excel 批量导入" class="drawer" hidden id="drawerImport">
+  <div data-page-node-id="QeAnws7IrGkJQsKPRwqptw" class="dh">
+    <h3 data-page-node-id="oidlEPkPAELsx3Y2SPKLmB"><!--pnid:pNaZN3QUsG0k4k99piovoe-->Excel 批量导入</h3>
+    <button data-page-node-id="xYRU6o6vfyejV425az2SGY" class="iconbtn" id="btnCloseImport" type="button"><!--pnid:UOZXvv08DTdc8Zlo0oL2oa-->关闭</button>
+  </div>
+  <div data-page-node-id="9aO1f1tktt6YQ0agbsBnsa" class="dbody">
+    <div data-page-node-id="LtfjQCCKlIbNnoWmR7Bq0x" class="imp-step">
+      <div data-page-node-id="NpxM41h0Y4HqvAu26cyExo" class="imp-hd"><span data-page-node-id="8Xp7Uut70hPYNKGubD9JGC" class="imp-n"><!--pnid:TbQzpT2xcuy62VSaEvncF3-->1</span><b data-page-node-id="NIgFbW0S5qoGJpTfzE3OV2"><!--pnid:cfWxwRjacPvBk1VUX95hD4-->下载模板，发给填报人</b></div>
+      <p data-page-node-id="jn8WJrO2HMXwxE4MeI4BhK" class="hint"><!--pnid:IfXbFJVHHxFfmqUhg6HyOd-->模板两页：「送样台账」只填数据，「填写说明」写清每个字段怎么填、系统按什么规则处理。已内置下拉选项，对方用 Excel 或 WPS 填完回传即可。</p>
+      <div data-page-node-id="iXX2QsR1Kg5whEuB7iqXfp" class="imp-btns">
+        <button data-page-node-id="qHvS7vzkLopNbBgQKFrV8b" class="btn primary" id="btnTplDownload" type="button"><!--pnid:2q6ljf9OsX3uYj00XVQAZL-->下载导入模板 (.xlsx)</button>
+        <button data-page-node-id="xlXfVdFkooAlKbPdIPDUgu" class="btn ghost" id="btnTplCsv" type="button"><!--pnid:uUpFumyaFjqW4qIXafmi1h-->CSV 版</button>
+      </div>
+      <p data-page-node-id="FHJTJ3gm6F3rZ9tznZcXu8" class="hint"><!--pnid:mTblVA0eUD8cySLWIFhuCA-->表头顺序不限、多几列也不影响；「客户名称」「样品阶段」「送样日」「报告回传日」这类常见别名都能自动认出来。</p>
+    </div>
+
+    <div data-page-node-id="pevxnzZhpXC0Ky1hE67vkt" class="imp-step">
+      <div data-page-node-id="OXGuywqqdVqKIGJ96cuUj3" class="imp-hd"><span data-page-node-id="pDMyD3TwQfXLTP5rR9GYyG" class="imp-n"><!--pnid:TtVfgDXESSciXtSZDgIO1Y-->2</span><b data-page-node-id="Of8F4LeluqYNPzydoRw4bq"><!--pnid:7ShF1lMelakeGmSoXVBqX3-->上传填好的文件</b></div>
+      <label data-page-node-id="4huxn0RdNtbotoupUmeqRj" class="dropzone" for="fileImportXlsx" id="dropZone">
+        <svg data-page-node-id="AJCGbATZ041SSQMcrxZZcV" fill="none" height="26" stroke="#2F6DB8" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewBox="0 0 24 24" width="26">
+          <path data-page-node-id="aKenPF7SFxrinAS0KEacI2" d="M12 16V4"/><path data-page-node-id="lqyu270mc6m7fWnBZ8Gpzf" d="M7 9l5-5 5 5"/><path data-page-node-id="L2xbmqSabAsGFXesMwFa4M" d="M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/>
+        </svg>
+        <b data-page-node-id="iYX8kfH9Amdy5axjjl0ixV"><!--pnid:BhtXQPxh6LEFbzdR9LpsA9-->点击选择，或把文件拖到这里</b>
+        <span data-page-node-id="K1kfEGy4W7k2sJbZ3rbivv" id="dropHint"><!--pnid:ydowHNf6YLsxP6bR8mXZHx-->支持 .xlsx / .xlsm / .csv，单个文件 8MB 以内</span>
+      </label>
+      <input data-page-node-id="Z7gcHXMKq16LznHdRjOpGU" accept=".xlsx,.xlsm,.csv" hidden id="fileImportXlsx" type="file">
+      <p data-page-node-id="186gTlRxovj4RWLAkegaLr" class="hint" hidden id="impFileInfo"></p>
+      <p data-page-node-id="3LIXGPrOU9zl5XDGCuEIxp" class="hint" hidden id="impErr" style="color:#B42318"></p>
+    </div>
+
+    <div data-page-node-id="dmpo4AIWUmWnW4TG33jb4g" class="imp-step" hidden id="impResult">
+      <div data-page-node-id="teXGaowSIgVWAETjmdJ5eV" class="imp-hd"><span data-page-node-id="EDptgWspHfF7GiUeHh2oGH" class="imp-n"><!--pnid:DI7IQFWNToMZnUCqnTETfW-->3</span><b data-page-node-id="7vkc2JUHbhyBfaX8ZLL5OE"><!--pnid:6pA8XKmODYGro2sLftitJp-->核对后导入</b></div>
+      <div data-page-node-id="0iJ9Adxp5GfJ7fc0kip7YO" class="imp-sum" id="impSum"></div>
+      <div data-page-node-id="7sQ3eQmTpr30HyfG9c0h9P" class="imp-mode" id="impModes"></div>
+      <div data-page-node-id="izH037kjDCBYg7JjR0Tufz" class="imp-list" id="impList"></div>
+    </div>
+  </div>
+  <div data-page-node-id="wRnbu5gycaHR633cJqkNWz" class="df">
+    <button data-page-node-id="ODybKNCU03H0xSBRMRDSq5" class="btn" id="btnImpCancel" type="button"><!--pnid:IuRmvVwzlaTtTPQ31sNQCL-->取消</button>
+    <button data-page-node-id="mAKm6ZB6Sh1VTGuaXXlRwo" class="btn primary" disabled id="btnImpRun" type="button"><!--pnid:HoJlZ77UtZCyiiJQybDkm7-->确认导入</button>
+  </div>
+</aside>
+
+<!--pnid:EioIYLM02C2Fw5penXLuom--><!-- 抽屉：口径设置 -->
+<aside data-page-node-id="7ydTkauyoLHUl7xvARS4N2" aria-label="口径设置" class="drawer" hidden id="drawerConfig">
+  <div data-page-node-id="th6Pmd0ElS8oAJaTnEmYwX" class="dh">
+    <h3 data-page-node-id="5x4FVmHh2acFNZ9aaj4wxW"><!--pnid:I3FdZ5kt9AUBlS5m2He8zp-->判定口径（v1.0）</h3>
+    <button data-page-node-id="CDMt7FtIzRPY7KHzgkEPaX" class="iconbtn" id="btnCloseConfig" type="button"><!--pnid:zq2OPXLtxP0zW6cmIpi1z9-->关闭</button>
+  </div>
+  <div data-page-node-id="kno8if0DwVcH7mBerwCyYk" class="dbody">
+    <p data-page-node-id="edmvEqOwExtDbfptxRG5dA" class="hint" style="margin:0"><!--pnid:i9E22u3HRikRJRrHAfo15Y-->阈值随记录属性分档，不可跨阶段或跨国别套用。修改后立即重算全部指标，并写入本机留痕。</p>
+    <div data-page-node-id="ljoqAj0ZJJwsXfa6oIajwX" class="fg">
+      <div data-page-node-id="ekx3nVZmEPRV1wADzW9BhW" class="field">
+        <label data-page-node-id="g5pzOPI8kVPcvky5iOF4i3" for="cfg_dom"><!--pnid:I9NdnuVevqrxm33P9Ljd7I-->国内·及时阈值（≤天）</label>
+        <input data-page-node-id="6mcrMTwsblxTXYZc0kj8CX" id="cfg_dom" max="120" min="1" step="1" type="number">
+      </div>
+      <div data-page-node-id="5YtqarZbVVYqahXEN0sH4x" class="field">
+        <label data-page-node-id="gNWXxmkwJXbNv6YbDY5cum" for="cfg_ovs"><!--pnid:rGee0kQ5kbADocjkHenV2q-->海外·及时阈值（≤天）</label>
+        <input data-page-node-id="xKt5G3RVwvSU3g8M2RXgIc" id="cfg_ovs" max="180" min="1" step="1" type="number">
+      </div>
+      <div data-page-node-id="WB4nzsvsYuZHKd7gpX1EpK" class="field">
+        <label data-page-node-id="MRWe3Pt9sHWkBEFaaRAwKq" for="cfg_over"><!--pnid:2332Vcv3ZgNeFsehtHrF5k-->逾期阈值（滞留 &gt; 天）</label>
+        <input data-page-node-id="7F1SWPOwetO6vWwh9CUw1T" id="cfg_over" max="120" min="1" step="1" type="number">
+      </div>
+      <div data-page-node-id="Sp89VWrWpEj0LUFKTCGh5E" class="field">
+        <label data-page-node-id="rVy15wgzAQ1lAl53p8RR2e" for="cfg_super"><!--pnid:Op5bvUff211V9mZcTFH2RC-->超期阈值（滞留 &gt; 天）</label>
+        <input data-page-node-id="doBVr6H01Hf6zhcWbjFZCY" id="cfg_super" max="180" min="1" step="1" type="number">
+      </div>
+      <div data-page-node-id="27I7aywBWx2bnAi0NedOqs" class="field">
+        <label data-page-node-id="X4o4YpM2HgI8c3Wm6WAzeX" for="cfg_grave"><!--pnid:7jncmrdD2ztdHXVUGSSoPS-->严重超期阈值（滞留 &gt; 天）</label>
+        <input data-page-node-id="Cr5aap3njy8bMbANK9PZwt" id="cfg_grave" max="365" min="1" step="1" type="number">
+      </div>
+    </div>
+    <p data-page-node-id="ntpaKfMxqLVEJwC9bBpGU2" class="hint" style="margin:0"><!--pnid:4xckSQB9iTsbWeO3g1b7ep-->等于阈值计入及时（比较符为 ≤），实现不得写成严格小于。周报逾期口径沿用「逾期阈值」统一时限。</p>
+  </div>
+  <div data-page-node-id="N2gfqOathKlz0fkbcFvytb" class="df">
+    <button data-page-node-id="GlpETIXQKAMW0rFrI6Ka0D" class="btn" id="btnConfigReset" type="button"><!--pnid:zJhiFa14NsZcvVxK2DR5Wm-->恢复默认</button>
+    <button data-page-node-id="0rRftTy3r9cPb7s9YO5XCz" class="btn primary" id="btnConfigSave" type="button"><!--pnid:g3UKTRfvZN13Z3jOWPPTia-->保存口径</button>
+  </div>
+</aside>
+
+<div data-page-node-id="1cbsrxtElvuWQdQSD6BiDZ" class="toast" hidden id="toast"></div>
+
+<script data-page-node-id="9yaXje2TqPFC4GVaAIhhG5" data-pnid-children="a1JpmfXh1GOF8FBvEOz0rt">
+(function () {
+  'use strict';
+
+  /* ================= 常量 ================= */
+  var DATABASE_ID = '2WxgG763V1EUIuoEFvh2iX';
+  var db = (window.__SMART_PAGE__ && window.__SMART_PAGE__.database) ? window.__SMART_PAGE__.database : null;
+  var LS_CFG = 'wb_sample_loop_cfg_v1';
+  var LS_DRAFT = 'wb_sample_loop_draft_v1';
+  var DEFAULT_CFG = { dom: 10, ovs: 20, over: 10, sup: 30, grave: 45 };
+  var CFG_VERSION = 'v1.0';
+  var CELLS = ['code','group','base','model','stage','region','send','ret','days','status','cat','sales','next','ops'];
+
+  /* ================= 状态 ================= */
+  var state = {
+    rows: [],
+    model: null,
+    cfg: null,
+    baseDate: '',
+    loaded: false,
+    loading: false,
+    sdkReady: !!db,
+    options: {},
+    filters: { region: '', stage: '', status: '', kw: '' },
+    tab: 'today',
+    editingId: null,
+    impMode: 'smart',
+    impCoerced: null,
+    impPlan: null,
+    impFileName: ''
+  };
+
+  /* ================= 基础工具 ================= */
+  function byId(id) { return document.getElementById(id); }
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) { e.className = cls; }
+    if (text !== undefined && text !== null) { e.textContent = String(text); }
+    return e;
+  }
+  function clear(node) { while (node && node.firstChild) { node.removeChild(node.firstChild); } }
+  function show(node, v) { if (node) { node.hidden = !v; } }
+  function bind(n) {
+    if (!n) { return n; }
+    n.setAttribute('data-sp-bindable', 'database');
+    n.setAttribute('data-sp-database-id', DATABASE_ID);
+    return n;
+  }
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function todayStr() {
+    var d = new Date();
+    return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+  }
+  function nowStr() {
+    var d = new Date();
+    return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + ' ' +
+      pad(d.getHours()) + ':' + pad(d.getMinutes());
+  }
+  function toast(msg, isErr) {
+    var t = byId('toast');
+    if (!t) { return; }
+    t.textContent = msg;
+    t.className = isErr ? 'toast err' : 'toast';
+    t.hidden = false;
+    if (toast._t) { clearTimeout(toast._t); }
+    toast._t = setTimeout(function () { t.hidden = true; }, 2600);
+  }
+
+  /* 日期：支持 2026-09-15T00:00:00Z / 2026-09-15 / 2026/9/15，按天比较不涉时区 */
+  function parseYMD(v) {
+    if (v === null || v === undefined || v === '') { return null; }
+    var m = String(v).trim().match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/);
+    if (!m) { return null; }
+    var y = parseInt(m[1], 10), mo = parseInt(m[2], 10), d = parseInt(m[3], 10);
+    if (mo < 1 || mo > 12 || d < 1 || d > 31) { return null; }
+    var t = Date.UTC(y, mo - 1, d);
+    var chk = new Date(t);
+    if (chk.getUTCFullYear() !== y || chk.getUTCMonth() !== mo - 1 || chk.getUTCDate() !== d) { return null; }
+    return t;
+  }
+  function fmtYMD(ms) {
+    if (ms === null || ms === undefined) { return ''; }
+    var d = new Date(ms);
+    return d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate());
+  }
+  function diffDays(a, b) { return Math.round((a - b) / 86400000); }
+  function pct(v) { return v === null || v === undefined ? '无法计算' : (v * 100).toFixed(1) + '%'; }
+  function num1(v) { return v === null || v === undefined ? '—' : v.toFixed(1); }
+
+  function getField(row, name) {
+    var v = row[name];
+    return (v === null || v === undefined) ? '' : String(v);
+  }
+
+/*__XLSX_START__*/
+/* ================= 极简 XLSX 读 / 写（零依赖，仅用浏览器内建 API） =================
+   写：STORE 方式打包 ZIP，inlineStr 存文本，Excel / WPS 均可直接打开
+   读：解析 ZIP 中央目录 + Deflate 解压 + 轻量 XML 扫描，兼容 Excel/WPS/金山导出的 xlsx
+   约束：只处理单文件、非 ZIP64、无加密的常规 xlsx；xls（BIFF）不支持，会明确报错        */
+
+var XLSX_MIME = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+
+var CRC_TABLE = (function () {
+  var t = new Int32Array(256), n, k, c;
+  for (n = 0; n < 256; n++) {
+    c = n;
+    for (k = 0; k < 8; k++) { c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1); }
+    t[n] = c;
+  }
+  return t;
+})();
+
+function crc32(bytes) {
+  var c = -1, i;
+  for (i = 0; i < bytes.length; i++) { c = CRC_TABLE[(c ^ bytes[i]) & 0xFF] ^ (c >>> 8); }
+  return (c ^ -1) >>> 0;
+}
+function strToU8(s) { return new TextEncoder().encode(s); }
+function u8ToStr(b) { return new TextDecoder('utf-8').decode(b); }
+
+/* ---------- ZIP：只写 STORE，够用且不会引入压缩库 ---------- */
+function zipStore(files) {
+  var parts = [], central = [], offset = 0, i;
+  for (i = 0; i < files.length; i++) {
+    var nameBytes = strToU8(files[i].name);
+    var data = files[i].data;
+    var crc = crc32(data);
+
+    var lh = new Uint8Array(30 + nameBytes.length);
+    var d1 = new DataView(lh.buffer);
+    d1.setUint32(0, 0x04034b50, true);
+    d1.setUint16(4, 20, true);
+    d1.setUint16(6, 0x0800, true);
+    d1.setUint16(8, 0, true);
+    d1.setUint16(10, 0, true);
+    d1.setUint16(12, 0x21, true);
+    d1.setUint32(14, crc, true);
+    d1.setUint32(18, data.length, true);
+    d1.setUint32(22, data.length, true);
+    d1.setUint16(26, nameBytes.length, true);
+    d1.setUint16(28, 0, true);
+    lh.set(nameBytes, 30);
+
+    var cd = new Uint8Array(46 + nameBytes.length);
+    var d2 = new DataView(cd.buffer);
+    d2.setUint32(0, 0x02014b50, true);
+    d2.setUint16(4, 20, true);
+    d2.setUint16(6, 20, true);
+    d2.setUint16(8, 0x0800, true);
+    d2.setUint16(10, 0, true);
+    d2.setUint16(12, 0, true);
+    d2.setUint16(14, 0x21, true);
+    d2.setUint32(16, crc, true);
+    d2.setUint32(20, data.length, true);
+    d2.setUint32(24, data.length, true);
+    d2.setUint16(28, nameBytes.length, true);
+    d2.setUint16(30, 0, true);
+    d2.setUint16(32, 0, true);
+    d2.setUint16(34, 0, true);
+    d2.setUint16(36, 0, true);
+    d2.setUint32(38, 0, true);
+    d2.setUint32(42, offset, true);
+    cd.set(nameBytes, 46);
+
+    parts.push(lh, data);
+    central.push(cd);
+    offset += lh.length + data.length;
+  }
+
+  var cdSize = 0;
+  for (i = 0; i < central.length; i++) { cdSize += central[i].length; }
+  var eocd = new Uint8Array(22);
+  var d3 = new DataView(eocd.buffer);
+  d3.setUint32(0, 0x06054b50, true);
+  d3.setUint16(8, files.length, true);
+  d3.setUint16(10, files.length, true);
+  d3.setUint32(12, cdSize, true);
+  d3.setUint32(16, offset, true);
+
+  var total = offset + cdSize + 22, out = new Uint8Array(total), pos = 0;
+  for (i = 0; i < parts.length; i++) { out.set(parts[i], pos); pos += parts[i].length; }
+  for (i = 0; i < central.length; i++) { out.set(central[i], pos); pos += central[i].length; }
+  out.set(eocd, pos);
+  return out;
+}
+
+/* ---------- XLSX 写入 ---------- */
+function xmlEsc(s) {
+  return String(s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+}
+function colName(idx) {
+  var s = '', n = idx + 1, m;
+  while (n > 0) { m = (n - 1) % 26; s = String.fromCharCode(65 + m) + s; n = Math.floor((n - 1) / 26); }
+  return s;
+}
+function xlsxCellXml(ref, val, style) {
+  var st = style ? ' s="' + style + '"' : '';
+  if (val === null || val === undefined || val === '') {
+    return '<c r="' + ref + '"' + st + '/>';
+  }
+  if (typeof val === 'number' && isFinite(val)) {
+    return '<c r="' + ref + '"' + st + '><v>' + val + '</v></c>';
+  }
+  return '<c r="' + ref + '"' + st + ' t="inlineStr"><is><t xml:space="preserve">' +
+    xmlEsc(val) + '</t></is></c>';
+}
+
+/* 命名空间用变量拼出来：源码里不出现连续的斜杠，避免静态检查误判 */
+var XSL = String.fromCharCode(47, 47);
+var NS_SS = 'http:' + XSL + 'schemas.openxmlformats.org/spreadsheetml/2006/main';
+var NS_REL = 'http:' + XSL + 'schemas.openxmlformats.org/package/2006/relationships';
+var NS_CT = 'http:' + XSL + 'schemas.openxmlformats.org/package/2006/content-types';
+var NS_OD = 'http:' + XSL + 'schemas.openxmlformats.org/officeDocument/2006/relationships';
+
+var XLSX_STYLES =
+  '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+  '<styleSheet xmlns="' + NS_SS + '">' +
+  '<fonts count="4">' +
+  '<font><sz val="11"/><color theme="1"/><name val="微软雅黑"/></font>' +
+  '<font><b/><sz val="11"/><color rgb="FFFFFFFF"/><name val="微软雅黑"/></font>' +
+  '<font><b/><sz val="13"/><color rgb="FF1E4E8C"/><name val="微软雅黑"/></font>' +
+  '<font><sz val="10"/><color rgb="FF6B7280"/><name val="微软雅黑"/></font>' +
+  '</fonts>' +
+  '<fills count="4">' +
+  '<fill><patternFill patternType="none"/></fill>' +
+  '<fill><patternFill patternType="gray125"/></fill>' +
+  '<fill><patternFill patternType="solid"><fgColor rgb="FF1E4E8C"/><bgColor indexed="64"/></patternFill></fill>' +
+  '<fill><patternFill patternType="solid"><fgColor rgb="FFEBF1F9"/><bgColor indexed="64"/></patternFill></fill>' +
+  '</fills>' +
+  '<borders count="2">' +
+  '<border><left/><right/><top/><bottom/><diagonal/></border>' +
+  '<border><left style="thin"><color rgb="FFD0D5DD"/></left><right style="thin"><color rgb="FFD0D5DD"/></right>' +
+  '<top style="thin"><color rgb="FFD0D5DD"/></top><bottom style="thin"><color rgb="FFD0D5DD"/></bottom><diagonal/></border>' +
+  '</borders>' +
+  '<cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs>' +
+  '<cellXfs count="6">' +
+  '<xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/>' +
+  '<xf numFmtId="0" fontId="1" fillId="2" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1" applyAlignment="1">' +
+  '<alignment horizontal="center" vertical="center" wrapText="1"/></xf>' +
+  '<xf numFmtId="49" fontId="0" fillId="0" borderId="1" xfId="0" applyNumberFormat="1" applyBorder="1" applyAlignment="1">' +
+  '<alignment vertical="center"/></xf>' +
+  '<xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0" applyFont="1"/>' +
+  '<xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0" applyAlignment="1">' +
+  '<alignment wrapText="1" vertical="top"/></xf>' +
+  '<xf numFmtId="0" fontId="3" fillId="0" borderId="0" xfId="0" applyFont="1" applyAlignment="1">' +
+  '<alignment wrapText="1" vertical="top"/></xf>' +
+  '</cellXfs>' +
+  '<cellStyles count="1"><cellStyle name="常规" xfId="0" builtinId="0"/></cellStyles>' +
+  '</styleSheet>';
+
+/* sheet: { name, rows:[[cell,...]], cols:[{w,style}], freeze:1, validations:[{sqref,list}], merges:['A1:D1'] } */
+function xlsxSheetXml(sheet) {
+  var rows = sheet.rows || [], i, j, maxCol = 0, xml = '';
+
+  for (i = 0; i < rows.length; i++) { if (rows[i].length > maxCol) { maxCol = rows[i].length; } }
+  var dim = 'A1:' + colName(Math.max(maxCol - 1, 0)) + Math.max(rows.length, 1);
+
+  for (i = 0; i < rows.length; i++) {
+    var r = rows[i], cells = '';
+    for (j = 0; j < r.length; j++) {
+      var cell = r[j];
+      if (cell && typeof cell === 'object' && !(cell instanceof Date)) {
+        cells += xlsxCellXml(colName(j) + (i + 1), cell.v, cell.s);
+      } else {
+        cells += xlsxCellXml(colName(j) + (i + 1), cell, 0);
+      }
+    }
+    xml += '<row r="' + (i + 1) + '"' + (i === 0 && sheet.headerRow ? ' ht="30" customHeight="1"' : '') + '>' + cells + '</row>';
+  }
+
+  var colsXml = '';
+  if (sheet.cols && sheet.cols.length) {
+    colsXml = '<cols>';
+    for (i = 0; i < sheet.cols.length; i++) {
+      var c = sheet.cols[i];
+      colsXml += '<col min="' + (i + 1) + '" max="' + (i + 1) + '" width="' + c.w + '"' +
+        (c.style ? ' style="' + c.style + '"' : '') + ' customWidth="1"/>';
+    }
+    colsXml += '</cols>';
+  }
+
+  var paneXml = '';
+  if (sheet.freeze) {
+    paneXml = '<pane ySplit="' + sheet.freeze + '" topLeftCell="A' + (sheet.freeze + 1) +
+      '" activePane="bottomLeft" state="frozen"/>';
+  }
+
+  var mergeXml = '';
+  if (sheet.merges && sheet.merges.length) {
+    mergeXml = '<mergeCells count="' + sheet.merges.length + '">';
+    for (i = 0; i < sheet.merges.length; i++) { mergeXml += '<mergeCell ref="' + sheet.merges[i] + '"/>'; }
+    mergeXml += '</mergeCells>';
+  }
+
+  var dvXml = '';
+  if (sheet.validations && sheet.validations.length) {
+    dvXml = '<dataValidations count="' + sheet.validations.length + '">';
+    for (i = 0; i < sheet.validations.length; i++) {
+      var dv = sheet.validations[i];
+      dvXml += '<dataValidation type="list" allowBlank="1" showInputMessage="1" showErrorMessage="0" sqref="' +
+        dv.sqref + '"><formula1>"' + xmlEsc(dv.list.join(',')) + '"</formula1></dataValidation>';
+    }
+    dvXml += '</dataValidations>';
+  }
+
+  return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+    '<worksheet xmlns="' + NS_SS + '" ' +
+    'xmlns:r="' + NS_OD + '">' +
+    '<dimension ref="' + dim + '"/>' +
+    '<sheetViews><sheetView' + (sheet.tabSelected ? ' tabSelected="1"' : '') + ' workbookViewId="0">' +
+    paneXml + '</sheetView></sheetViews>' +
+    '<sheetFormatPr defaultRowHeight="16"/>' +
+    colsXml +
+    '<sheetData>' + xml + '</sheetData>' +
+    mergeXml +
+    dvXml +
+    '<pageMargins left="0.7" right="0.7" top="0.75" bottom="0.75" header="0.3" footer="0.3"/>' +
+    '</worksheet>';
+}
+
+/* sheets: [{name, ...}] -> Uint8Array */
+function buildXlsx(sheets) {
+  var i, files = [];
+  var ct = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+    '<Types xmlns="' + NS_CT + '">' +
+    '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>' +
+    '<Default Extension="xml" ContentType="application/xml"/>' +
+    '<Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>' +
+    '<Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>';
+  for (i = 0; i < sheets.length; i++) {
+    ct += '<Override PartName="/xl/worksheets/sheet' + (i + 1) + '.xml" ' +
+      'ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>';
+  }
+  ct += '</Types>';
+
+  files.push({ name: '[Content_Types].xml', data: strToU8(ct) });
+  files.push({
+    name: '_rels/.rels', data: strToU8('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<Relationships xmlns="' + NS_REL + '">' +
+      '<Relationship Id="rId1" Type="' + NS_OD + '/officeDocument" Target="xl/workbook.xml"/>' +
+      '</Relationships>')
+  });
+
+  var wbSheets = '', wbRels = '';
+  for (i = 0; i < sheets.length; i++) {
+    wbSheets += '<sheet name="' + xmlEsc(sheets[i].name) + '" sheetId="' + (i + 1) + '" r:id="rId' + (i + 1) + '"/>';
+    wbRels += '<Relationship Id="rId' + (i + 1) + '" Type="' + NS_OD + '/worksheet" ' +
+      'Target="worksheets/sheet' + (i + 1) + '.xml"/>';
+  }
+  wbRels += '<Relationship Id="rId' + (sheets.length + 1) + '" Type="' + NS_OD + '/styles" Target="styles.xml"/>';
+
+  files.push({
+    name: 'xl/workbook.xml', data: strToU8('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<workbook xmlns="' + NS_SS + '" ' +
+      'xmlns:r="' + NS_OD + '">' +
+      '<sheets>' + wbSheets + '</sheets></workbook>')
+  });
+  files.push({
+    name: 'xl/_rels/workbook.xml.rels', data: strToU8('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<Relationships xmlns="' + NS_REL + '">' +
+      wbRels + '</Relationships>')
+  });
+  files.push({ name: 'xl/styles.xml', data: strToU8(XLSX_STYLES) });
+  for (i = 0; i < sheets.length; i++) {
+    files.push({ name: 'xl/worksheets/sheet' + (i + 1) + '.xml', data: strToU8(xlsxSheetXml(sheets[i])) });
+  }
+  return zipStore(files);
+}
+
+/* ---------- XLSX 读取 ---------- */
+function zipIndex(buf) {
+  var u8 = new Uint8Array(buf), dv = new DataView(u8.buffer, u8.byteOffset, u8.byteLength);
+  var eocd = -1, i, floor = Math.max(0, u8.length - 22 - 65535);
+  for (i = u8.length - 22; i >= floor; i--) {
+    if (dv.getUint32(i, true) === 0x06054b50) { eocd = i; break; }
+  }
+  if (eocd < 0) {
+    throw new Error('不是可读的 xlsx（未找到 ZIP 结构）。若文件是 .xls，请用 Excel 另存为 .xlsx 或 .csv 再导入');
+  }
+  var count = dv.getUint16(eocd + 10, true);
+  var cdOff = dv.getUint32(eocd + 16, true);
+  if (cdOff === 0xFFFFFFFF) { throw new Error('暂不支持 ZIP64 格式的大文件，请拆分后再导入'); }
+  var map = {}, p = cdOff, n;
+  for (n = 0; n < count; n++) {
+    if (p + 46 > u8.length || dv.getUint32(p, true) !== 0x02014b50) { break; }
+    var method = dv.getUint16(p + 10, true);
+    var csize = dv.getUint32(p + 20, true);
+    var nlen = dv.getUint16(p + 28, true);
+    var elen = dv.getUint16(p + 30, true);
+    var clen = dv.getUint16(p + 32, true);
+    var lho = dv.getUint32(p + 42, true);
+    var name = u8ToStr(u8.subarray(p + 46, p + 46 + nlen));
+    map[name] = { method: method, csize: csize, offset: lho };
+    p += 46 + nlen + elen + clen;
+  }
+  return { u8: u8, dv: dv, map: map };
+}
+function zipRaw(zip, name) {
+  var e = zip.map[name];
+  if (!e) { return null; }
+  var dv = zip.dv;
+  var nlen = dv.getUint16(e.offset + 26, true);
+  var elen = dv.getUint16(e.offset + 28, true);
+  var start = e.offset + 30 + nlen + elen;
+  return { data: zip.u8.subarray(start, start + e.csize), method: e.method };
+}
+function inflateRaw(bytes) {
+  if (typeof DecompressionStream === 'undefined') {
+    return Promise.reject(new Error('当前浏览器不支持解压（DecompressionStream）。请改用 .csv 文件导入'));
+  }
+  try {
+    var stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
+    return new Response(stream).arrayBuffer().then(function (b) { return new Uint8Array(b); });
+  } catch (e) {
+    return Promise.reject(new Error('解压失败：' + ((e && e.message) || '文件可能已损坏')));
+  }
+}
+function zipReadText(zip, name) {
+  var raw = zipRaw(zip, name);
+  if (!raw) { return Promise.resolve(null); }
+  if (raw.method === 0) { return Promise.resolve(u8ToStr(raw.data)); }
+  if (raw.method !== 8) { return Promise.resolve(null); }
+  return inflateRaw(raw.data).then(function (b) { return u8ToStr(b); });
+}
+
+function xmlUnesc(s) {
+  if (!s) { return ''; }
+  return String(s)
+    .replace(/&#x([0-9a-fA-F]+);/g, function (_, h) { return String.fromCharCode(parseInt(h, 16)); })
+    .replace(/&#(\d+);/g, function (_, d) { return String.fromCharCode(parseInt(d, 10)); })
+    .replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"').replace(/&apos;/g, "'")
+    .replace(/&amp;/g, '&');
+}
+function xmlAllText(inner) {
+  var out = '', re = /<(?:\w+:)?t\b[^>]*>([\s\S]*?)<\/(?:\w+:)?t>/g, m;
+  while ((m = re.exec(inner))) { out += m[1]; }
+  return out;
+}
+function readSharedStrings(xml) {
+  var out = [], re = /<(?:\w+:)?si\b[^>]*>([\s\S]*?)<\/(?:\w+:)?si>/g, m;
+  if (!xml) { return out; }
+  while ((m = re.exec(xml))) { out.push(xmlUnesc(xmlAllText(m[1]))); }
+  return out;
+}
+function colIndexOf(ref) {
+  var m = /^\$?([A-Za-z]+)/.exec(ref || '');
+  if (!m) { return -1; }
+  var s = m[1].toUpperCase(), n = 0, i;
+  for (i = 0; i < s.length; i++) { n = n * 26 + (s.charCodeAt(i) - 64); }
+  return n - 1;
+}
+/* 返回 [{r: 行号, cells: [{v: 文本, n: 是否数值, num: 数值}]}] */
+function readSheetCells(xml, shared) {
+  var rows = [], rre = /<(?:\w+:)?row\b([^>]*)>([\s\S]*?)<\/(?:\w+:)?row>/g, m;
+  while ((m = rre.exec(xml))) {
+    var attr = m[1], body = m[2];
+    var rn = /\br="(\d+)"/.exec(attr);
+    var cells = [];
+    var cre = /<(?:\w+:)?c\b([^>]*?)(?:\/>|>([\s\S]*?)<\/(?:\w+:)?c>)/g, mc;
+    while ((mc = cre.exec(body))) {
+      var ca = mc[1] || '', cb = mc[2] || '';
+      var rr = /\br="([A-Za-z]+\d+)"/.exec(ca);
+      var ci = rr ? colIndexOf(rr[1]) : cells.length;
+      if (ci < 0) { continue; }
+      var tm = /\bt="([^"]+)"/.exec(ca);
+      var type = tm ? tm[1] : 'n';
+      var cell = { v: '', n: false, num: null };
+      if (type === 'inlineStr') {
+        cell.v = xmlUnesc(xmlAllText(cb));
+      } else {
+        var vm = /<(?:\w+:)?v\b[^>]*>([\s\S]*?)<\/(?:\w+:)?v>/.exec(cb);
+        var raw = vm ? vm[1] : '';
+        if (type === 's') {
+          cell.v = shared[parseInt(raw, 10)] || '';
+        } else if (type === 'b') {
+          cell.v = raw === '1' ? 'TRUE' : 'FALSE';
+        } else if (type === 'str' || type === 'd') {
+          cell.v = xmlUnesc(raw);
+        } else if (raw !== '') {
+          cell.v = xmlUnesc(raw);
+          var nv = Number(raw);
+          if (isFinite(nv)) { cell.n = true; cell.num = nv; }
+        }
+      }
+      cells[ci] = cell;
+    }
+    rows.push({ r: rn ? parseInt(rn[1], 10) : rows.length + 1, cells: cells });
+  }
+  return rows;
+}
+
+/* Excel 1900 日期序列号 -> UTC 毫秒（1899-12-30 为基准，含 1900 闰年兼容） */
+function xlsxSerialToMs(num) {
+  if (typeof num !== 'number' || !isFinite(num)) { return null; }
+  var f = Math.floor(num);
+  if (f <= 0 || f > 2958465) { return null; }
+  return Date.UTC(1899, 11, 30) + f * 86400000;
+}
+
+/* 读取第一个工作表 -> {name, rows:[[{v,n,num}...]]} */
+function readXlsxFirstSheet(arrayBuffer) {
+  var zip;
+  try { zip = zipIndex(arrayBuffer); } catch (e) { return Promise.reject(e); }
+
+  var wbName = 'xl/workbook.xml';
+  if (!zip.map[wbName] && zip.map['xl/workbook.bin']) {
+    return Promise.reject(new Error('这是二进制格式的 Excel（.xlsb），请另存为 .xlsx 后重试'));
+  }
+  if (!zip.map[wbName]) { return Promise.reject(new Error('文件结构异常：缺少 workbook.xml，可能不是 Excel 文件')); }
+
+  return Promise.all([
+    zipReadText(zip, 'xl/workbook.xml'),
+    zipReadText(zip, 'xl/_rels/workbook.xml.rels'),
+    zipReadText(zip, 'xl/sharedStrings.xml')
+  ]).then(function (arr) {
+    var wbXml = arr[0] || '', relXml = arr[1] || '', ssXml = arr[2];
+    var sheetName = '', target = '';
+    var sm = /<(?:\w+:)?sheet\b([^>]*)\/?>/.exec(wbXml);
+    if (sm) {
+      var nm = /\bname="([^"]*)"/.exec(sm[1]);
+      var rid = /\br:id="([^"]*)"/.exec(sm[1]);
+      sheetName = nm ? xmlUnesc(nm[1]) : '';
+      if (rid) {
+        var rre = new RegExp('<Relationship[^>]*Id="' + rid[1] + '"[^>]*>');
+        var rm = rre.exec(relXml);
+        if (rm) {
+          var tm = /\bTarget="([^"]*)"/.exec(rm[0]);
+          if (tm) { target = tm[1]; }
+        }
+      }
+    }
+    if (!target) { target = 'worksheets/sheet1.xml'; }
+    target = target.replace(/^\/?xl\//, '').replace(/^\//, '');
+
+    return zipReadText(zip, 'xl/' + target).then(function (sheetXml) {
+      if (!sheetXml) {
+        return zipReadText(zip, 'xl/worksheets/sheet1.xml').then(function (sx) {
+          if (!sx) { throw new Error('文件里没有可读的工作表'); }
+          return { name: sheetName, rows: readSheetCells(sx, readSharedStrings(ssXml)) };
+        });
+      }
+      return { name: sheetName, rows: readSheetCells(sheetXml, readSharedStrings(ssXml)) };
+    });
+  });
+}
+
+/* ---------- CSV 兜底（有人会把模板另存为 CSV） ---------- */
+function parseCsvText(text) {
+  var s = String(text).replace(/^\ufeff/, '');
+  var rows = [], row = [], field = '', i = 0, inQ = false, ch;
+  for (i = 0; i < s.length; i++) {
+    ch = s[i];
+    if (inQ) {
+      if (ch === '"') {
+        if (s[i + 1] === '"') { field += '"'; i++; } else { inQ = false; }
+      } else { field += ch; }
+      continue;
+    }
+    if (ch === '"') { inQ = true; continue; }
+    if (ch === ',') { row.push(field); field = ''; continue; }
+    if (ch === '\r') { continue; }
+    if (ch === '\n') { row.push(field); rows.push(row); row = []; field = ''; continue; }
+    field += ch;
+  }
+  if (field !== '' || row.length) { row.push(field); rows.push(row); }
+  return rows.map(function (r, idx) {
+    return {
+      r: idx + 1,
+      cells: r.map(function (v) { return { v: String(v).trim(), n: false, num: null }; })
+    };
+  });
+}
+/*__XLSX_END__*/
+
+/*__IMPORT_CORE_START__*/
+/* ================= Excel 导入：字段定义 / 模板 / 校验 / 计划 ================= */
+var IMPORT_FIELDS = [
+  { key: '记录编号', req: false, kind: 'text', width: 12, sample: 'S-11',
+    desc: '选填。留空由系统按 S-01、S-02… 自动编号。' },
+  { key: '客户集团', req: true, kind: 'text', width: 14, sample: '客A',
+    desc: '客户代号或集团全称。同一集团写法必须一致，否则会被算成两个集团。' },
+  { key: '客户基地', req: true, kind: 'text', width: 14, sample: '常州一厂',
+    desc: '客户工厂 / 基地名，用于「集团 → 基地」下钻。' },
+  { key: '产品型号', req: true, kind: 'text', width: 14, sample: 'JH-A1',
+    desc: '我方产品料号。与送样日期、集团、基地共同构成唯一主键。' },
+  { key: '送样阶段', req: true, kind: 'select', width: 13, sample: '销售大样',
+    desc: '销售大样 / 研发大样 / 低温免费 / 二次送样（下拉可选）。' },
+  { key: '区域', req: true, kind: 'enum', width: 10, sample: '国内',
+    desc: '只能填「国内」或「海外」。它决定及时阈值：国内 ≤10 天，海外 ≤20 天。' },
+  { key: '送样日期', req: true, kind: 'date', width: 14, sample: '2026-09-08',
+    desc: '必填。可写 2026-09-08、2026/9/8，或直接用日期选择器。不能写「9月初」。' },
+  { key: '回传日期', req: false, kind: 'date', width: 14, sample: '2026-09-15',
+    desc: '报告实际回传日。留空 = 未回传，系统按滞留天数判档；不要填 0 或「未回传」。' },
+  { key: '回传渠道', req: false, kind: 'select', width: 10, sample: '邮件',
+    desc: '邮件 / 钉钉 / 系统。' },
+  { key: '未回传分类', req: false, kind: 'select', width: 16, sample: '已测未上传系统',
+    desc: '只有逾期记录才填：客户真没测 / 已测未上传系统 / 已测NG不推进。三者互斥。' },
+  { key: '责任销售', req: false, kind: 'text', width: 12, sample: '沈其',
+    desc: '缺失就留空，系统列入缺口清单，不会替你编一个名字。' },
+  { key: '责任产品技术', req: false, kind: 'text', width: 14, sample: '韩沐',
+    desc: '技术侧对接人，催办时一并列出。' },
+  { key: '下一步计划', req: false, kind: 'text', width: 28, sample: '9/22 前约客户产线确认验证窗口',
+    desc: '谁、做什么、什么时候复查。催办清单会直接取这句话。' },
+  { key: '备注', req: false, kind: 'text', width: 26, sample: 'NG：附着力不足，等研发给换型方案',
+    desc: 'NG 原因、客户原话、特殊情况。' }
+];
+
+var IMPORT_OPTIONS_FALLBACK = {
+  '送样阶段': ['销售大样', '研发大样', '低温免费', '二次送样'],
+  '回传渠道': ['邮件', '钉钉', '系统'],
+  '未回传分类': ['客户真没测', '已测未上传系统', '已测NG不推进'],
+  '区域': ['国内', '海外']
+};
+
+/* 表头别名：填报人改标题、多写「(必填)」、用英文列名都能认出来 */
+var HEADER_ALIASES = {
+  '记录编号': ['记录编号', '编号', '序号', '记录号', '单号', 'id', 'no'],
+  '客户集团': ['客户集团', '集团', '客户', '客户名称', '客户代号', '客户简称', '客户群', '客户公司'],
+  '客户基地': ['客户基地', '基地', '工厂', '厂区', '客户工厂', '客户厂', '工厂名称'],
+  '产品型号': ['产品型号', '型号', '产品', '料号', '牌号', '产品编号', '产品代码'],
+  '送样阶段': ['送样阶段', '阶段', '样品阶段', '送样类型', '送样类别', '样品类型'],
+  '区域': ['区域', '国内/海外', '国内海外', '境内境外', '内外销', '区域类型', '国别', '销售区域'],
+  '送样日期': ['送样日期', '送样日', '送样时间', '送样', '发货日期'],
+  '回传日期': ['回传日期', '回传日', '回传时间', '报告回传日', '反馈日期', '回传', '客户反馈日期'],
+  '回传渠道': ['回传渠道', '渠道', '回传方式', '反馈渠道', '回传途径'],
+  '未回传分类': ['未回传分类', '分类', '原因分类', '逾期分类', '归因分类', '未回传原因分类', '未回传原因'],
+  '责任销售': ['责任销售', '销售', '销售负责人', '负责销售', '业务员', '销售担当', '销售经理'],
+  '责任产品技术': ['责任产品技术', '产品技术', '技术', '技术支持', '产品工程师', '技术负责人', '技术服务'],
+  '下一步计划': ['下一步计划', '下一步', '计划', '跟进计划', '后续动作', '下一步动作', '行动计划'],
+  '备注': ['备注', '说明', '备注信息', '其他说明', 'ng原因', 'ng/不推进原因', '不推进原因', '原因说明']
+};
+
+var IMPORT_MODES = [
+  { id: 'smart', label: '智能合并（推荐）',
+    desc: '新记录新增；已存在的记录只补空字段和刚回传的日期，不改你已确认过的数据。' },
+  { id: 'add', label: '仅新增',
+    desc: '只导入库里没有的记录；已存在的一律跳过，适合纯增量补录。' },
+  { id: 'overwrite', label: '覆盖已有',
+    desc: '已存在的记录用文件里的非空值整体覆盖，适合对方改过错值后重发。' }
+];
+
+function fldOf(row, key) {
+  var v = row ? row[key] : '';
+  return (v === null || v === undefined) ? '' : String(v);
+}
+
+function impNormHead(s) {
+  return String(s === null || s === undefined ? '' : s)
+    .replace(/[\s\u00a0\u3000]/g, '')
+    .replace(/[（(].*?[）)]/g, '')
+    .replace(/[：:*＊]/g, '')
+    .replace(/[／]/g, '/')
+    .toLowerCase();
+}
+function impNormText(v) {
+  return String(v === null || v === undefined ? '' : v)
+    .replace(/[\u00a0\u3000]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+function impNormKeyPart(v) {
+  return impNormText(v).replace(/[（(]/g, '(').replace(/[）)]/g, ')')
+    .replace(/[Ａ-Ｚａ-ｚ０-９]/g, function (ch) { return String.fromCharCode(ch.charCodeAt(0) - 0xFEE0); })
+    .toLowerCase();
+}
+
+/* 表头行 -> {字段: 列号}，并返回没认出来的表头
+   两轮匹配：先全局精确（避免「客户」把「客户基地」抢走），再按最长别名做包含匹配 */
+function impMapHeader(cells) {
+  var heads = [], i, j, a, map = {}, unknown = [], list, al;
+  for (i = 0; i < cells.length; i++) {
+    var raw = String((cells[i] && cells[i].v) || '').trim();
+    heads.push({ idx: i, raw: raw, norm: impNormHead(raw), used: false });
+  }
+  var keys = [];
+  for (var k in HEADER_ALIASES) {
+    if (Object.prototype.hasOwnProperty.call(HEADER_ALIASES, k)) { keys.push(k); }
+  }
+
+  for (i = 0; i < heads.length; i++) {
+    if (!heads[i].norm) { continue; }
+    for (a = 0; a < keys.length && !heads[i].used; a++) {
+      if (map[keys[a]] !== undefined) { continue; }
+      list = HEADER_ALIASES[keys[a]];
+      for (j = 0; j < list.length; j++) {
+        if (impNormHead(list[j]) === heads[i].norm) {
+          map[keys[a]] = heads[i].idx;
+          heads[i].used = true;
+          break;
+        }
+      }
+    }
+  }
+
+  var cands = [];
+  for (i = 0; i < heads.length; i++) {
+    if (!heads[i].norm || heads[i].used) { continue; }
+    for (a = 0; a < keys.length; a++) {
+      if (map[keys[a]] !== undefined) { continue; }
+      list = HEADER_ALIASES[keys[a]];
+      for (j = 0; j < list.length; j++) {
+        al = impNormHead(list[j]);
+        if (al.length < 3) { continue; }
+        if (heads[i].norm.indexOf(al) !== -1) { cands.push({ h: i, k: keys[a], len: al.length }); }
+      }
+    }
+  }
+  cands.sort(function (x, y) { return y.len - x.len; });
+  for (i = 0; i < cands.length; i++) {
+    var c = cands[i];
+    if (heads[c.h].used || map[c.k] !== undefined) { continue; }
+    map[c.k] = heads[c.h].idx;
+    heads[c.h].used = true;
+  }
+
+  for (i = 0; i < heads.length; i++) {
+    if (heads[i].norm && !heads[i].used) { unknown.push(heads[i].raw); }
+  }
+  return { map: map, unknown: unknown };
+}
+
+/* 在前 8 个非空行里找表头行：能同时认出「客户集团」和「产品型号」即可 */
+function impFindHeader(rows) {
+  var scanned = 0;
+  for (var i = 0; i < rows.length && scanned < 8; i++) {
+    var cells = rows[i].cells || [];
+    var has = false;
+    for (var j = 0; j < cells.length; j++) { if (cells[j] && cells[j].v) { has = true; break; } }
+    if (!has) { continue; }
+    scanned++;
+    var r = impMapHeader(cells);
+    if (r.map['客户集团'] !== undefined && r.map['产品型号'] !== undefined) {
+      return { index: i, rowNo: rows[i].r, map: r.map, unknown: r.unknown };
+    }
+  }
+  return null;
+}
+
+function impYmd(y, m, d) {
+  if (y < 1990 || y > 2100 || m < 1 || m > 12 || d < 1 || d > 31) { return null; }
+  var t = Date.UTC(y, m - 1, d), dt = new Date(t);
+  if (dt.getUTCFullYear() !== y || dt.getUTCMonth() !== m - 1 || dt.getUTCDate() !== d) { return null; }
+  return y + '-' + (m < 10 ? '0' : '') + m + '-' + (d < 10 ? '0' : '') + d;
+}
+
+/* 单元格 -> 'YYYY-MM-DD'；认不出返回 null（不猜年份、不填 0） */
+function impCellToDate(cell) {
+  if (!cell) { return null; }
+  if (cell.n && typeof cell.num === 'number') {
+    var ms = xlsxSerialToMs(cell.num);
+    if (ms === null) { return null; }
+    var d = new Date(ms);
+    return impYmd(d.getUTCFullYear(), d.getUTCMonth() + 1, d.getUTCDate());
+  }
+  var s = impNormText(cell.v).replace(/[／.]/g, '-').replace(/年|月/g, '-').replace(/日/g, '');
+  if (!s) { return null; }
+  var m = /^(\d{4})-(\d{1,2})-(\d{1,2})/.exec(s);
+  if (m) { return impYmd(parseInt(m[1], 10), parseInt(m[2], 10), parseInt(m[3], 10)); }
+  m = /^(\d{4})(\d{2})(\d{2})$/.exec(s);
+  if (m) { return impYmd(parseInt(m[1], 10), parseInt(m[2], 10), parseInt(m[3], 10)); }
+  return null;
+}
+
+function impNormRegion(v) {
+  var s = impNormKeyPart(v).replace(/\s/g, '');
+  if (!s) { return ''; }
+  if (s === '国内' || s === '境内' || s === '内销' || s === '中国大陆' || s === '中国' || s === 'domestic') { return '国内'; }
+  if (s === '海外' || s === '境外' || s === '国外' || s === '外销' || s === '出口' || s === 'overseas') { return '海外'; }
+  return '';
+}
+
+/* 允许的把关：等值优先，其次包含（「销售大样(小试)」能落到「销售大样」） */
+function impMatchOption(v, list) {
+  var s = impNormKeyPart(v);
+  if (!s || !list || !list.length) { return ''; }
+  var i;
+  for (i = 0; i < list.length; i++) { if (impNormKeyPart(list[i]) === s) { return list[i]; } }
+  for (i = 0; i < list.length; i++) {
+    if (s.indexOf(impNormKeyPart(list[i])) !== -1) { return list[i]; }
+  }
+  for (i = 0; i < list.length; i++) {
+    if (impNormKeyPart(list[i]).indexOf(s) !== -1 && s.length >= 2) { return list[i]; }
+  }
+  return '';
+}
+
+function impPrimaryKey(d) {
+  return [d['送样日期'], impNormKeyPart(d['客户集团']), impNormKeyPart(d['客户基地']),
+    impNormKeyPart(d['产品型号'])].join('|');
+}
+
+/* 原始表行 -> 逐行校验归一。opts: {options:{字段:[选项]}, seqStart, existingCount}
+   返回 [{rowNo, present, data, errors:[], warns:[], subject}] */
+function impCoerceRows(rows, header, opts) {
+  var out = [], i, j;
+  var optsMap = opts.options || {};
+  var stageList = (optsMap['送样阶段'] && optsMap['送样阶段'].length) ? optsMap['送样阶段'] : IMPORT_OPTIONS_FALLBACK['送样阶段'];
+  var chanList = (optsMap['回传渠道'] && optsMap['回传渠道'].length) ? optsMap['回传渠道'] : IMPORT_OPTIONS_FALLBACK['回传渠道'];
+  var catList = (optsMap['未回传分类'] && optsMap['未回传分类'].length) ? optsMap['未回传分类'] : IMPORT_OPTIONS_FALLBACK['未回传分类'];
+
+  for (i = header.index + 1; i < rows.length; i++) {
+    var cells = rows[i].cells || [];
+    var data = {}, errors = [], warns = [], any = false;
+
+    for (j = 0; j < IMPORT_FIELDS.length; j++) {
+      var f = IMPORT_FIELDS[j];
+      var ci = header.map[f.key];
+      var cell = (ci === undefined) ? null : cells[ci];
+      var raw = cell ? impNormText(cell.v) : '';
+      if (raw) { any = true; }
+
+      if (f.kind === 'date') {
+        if (!raw && !(cell && cell.n)) { data[f.key] = ''; continue; }
+        var dv = impCellToDate(cell);
+        if (!dv) {
+          errors.push(f.key + '「' + raw + '」无法识别为日期（要写成 2026-09-08 这种）');
+          data[f.key] = '';
+        } else {
+          data[f.key] = dv;
+        }
+        continue;
+      }
+      if (f.key === '区域') {
+        if (!raw) { data[f.key] = ''; continue; }
+        var rg = impNormRegion(raw);
+        if (!rg) { errors.push('区域「' + raw + '」只能是 国内 或 海外'); }
+        data[f.key] = rg;
+        continue;
+      }
+      if (f.kind === 'select') {
+        if (!raw) { data[f.key] = ''; continue; }
+        var list = f.key === '送样阶段' ? stageList : (f.key === '回传渠道' ? chanList : catList);
+        var hit = impMatchOption(raw, list);
+        if (!hit) {
+          if (f.key === '送样阶段') {
+            errors.push('送样阶段「' + raw + '」不在可选项内（' + list.join(' / ') + '）');
+          } else {
+            warns.push(f.key + '「' + raw + '」不在可选项内，已留空，导入后可在页面补选');
+          }
+          data[f.key] = '';
+        } else {
+          if (impNormKeyPart(hit) !== impNormKeyPart(raw)) { warns.push(f.key + '按「' + hit + '」归档'); }
+          data[f.key] = hit;
+        }
+        continue;
+      }
+      data[f.key] = raw;
+    }
+
+    if (!any) { continue; }
+
+    for (j = 0; j < IMPORT_FIELDS.length; j++) {
+      if (IMPORT_FIELDS[j].req && !data[IMPORT_FIELDS[j].key]) {
+        var miss = IMPORT_FIELDS[j].key;
+        var dup = false;
+        for (var k = 0; k < errors.length; k++) { if (errors[k].indexOf(miss) === 0) { dup = true; } }
+        if (!dup) { errors.push('缺少必填项：' + miss); }
+      }
+    }
+
+    if (data['送样日期'] && data['回传日期']) {
+      var a = parseYMD(data['送样日期']), b = parseYMD(data['回传日期']);
+      if (a !== null && b !== null && b < a) { errors.push('回传日期早于送样日期，请核对'); }
+    }
+    if (data['回传日期'] && data['未回传分类']) {
+      warns.push('已回传的记录不需要未回传分类，该分类已忽略');
+      data['未回传分类'] = '';
+    }
+
+    out.push({
+      rowNo: rows[i].r,
+      present: true,
+      data: data,
+      errors: errors,
+      warns: warns,
+      subject: [data['客户集团'], data['客户基地'], data['产品型号']].filter(Boolean).join(' · ')
+    });
+  }
+  return out;
+}
+
+/* 已校验行 + 库里现有记录 -> 导入计划
+   返回 {items:[{rowNo, action, data, changes, msgs, subject}], stat:{create,update,skip,error,total}} */
+function impPlanRows(coerced, existingRows, mode, seqStart) {
+  var idx = {}, i, j;
+  for (i = 0; i < existingRows.length; i++) {
+    var er = existingRows[i];
+    var ed = {
+      '送样日期': fmtYMD(parseYMD(fldOf(er, '送样日期'))),
+      '客户集团': fldOf(er, '客户集团'),
+      '客户基地': fldOf(er, '客户基地'),
+      '产品型号': fldOf(er, '产品型号')
+    };
+    if (!ed['送样日期']) { continue; }
+    idx[impPrimaryKey(ed)] = er;
+  }
+
+  var seq = seqStart || 1;
+  var usedCodes = {}, fileSeen = {}, items = [];
+  for (i = 0; i < existingRows.length; i++) {
+    var c0 = fldOf(existingRows[i], '记录编号');
+    if (c0) { usedCodes[impNormKeyPart(c0)] = 1; }
+  }
+  for (i = 0; i < coerced.length; i++) { if (coerced[i].data['记录编号']) { usedCodes[impNormKeyPart(coerced[i].data['记录编号'])] = 1; } }
+
+  var stat = { create: 0, update: 0, skip: 0, error: 0, total: coerced.length };
+
+  for (i = 0; i < coerced.length; i++) {
+    var row = coerced[i];
+    var item = { rowNo: row.rowNo, data: row.data, subject: row.subject, changes: [], msgs: [], action: '' };
+
+    for (j = 0; j < row.errors.length; j++) { item.msgs.push({ level: 'error', text: row.errors[j] }); }
+    for (j = 0; j < row.warns.length; j++) { item.msgs.push({ level: 'warn', text: row.warns[j] }); }
+
+    if (row.errors.length) {
+      item.action = 'error';
+      stat.error++;
+      items.push(item);
+      continue;
+    }
+
+    var key = impPrimaryKey(row.data);
+    if (fileSeen[key]) {
+      item.action = 'error';
+      item.msgs.push({ level: 'error', text: '与第 ' + fileSeen[key] + ' 行主键重复（同送样日、集团、基地、型号）' });
+      stat.error++;
+      items.push(item);
+      continue;
+    }
+    fileSeen[key] = row.rowNo;
+
+    var exist = idx[key];
+    if (!exist) {
+      item.action = 'create';
+      if (!item.data['记录编号']) {
+        var code = '';
+        do { code = 'S-' + (seq < 10 ? '0' : '') + seq; seq++; } while (usedCodes[impNormKeyPart(code)]);
+        item.data['记录编号'] = code;
+        usedCodes[impNormKeyPart(code)] = 1;
+      }
+      stat.create++;
+      items.push(item);
+      continue;
+    }
+
+    item.existId = exist.id || null;
+    if (mode === 'add') {
+      item.action = 'skip';
+      item.msgs.push({ level: 'info', text: '库里已有这条记录，按「仅新增」跳过' });
+      stat.skip++;
+      items.push(item);
+      continue;
+    }
+
+    var changed = impDiffFields(item.data, exist, mode);
+    item.changes = changed;
+    if (!changed.length) {
+      item.action = 'skip';
+      item.msgs.push({ level: 'info', text: '库里已有且没有新信息，跳过' });
+      stat.skip++;
+    } else {
+      item.action = 'update';
+      stat.update++;
+    }
+    items.push(item);
+  }
+  return { items: items, stat: stat };
+}
+
+/* 回传侧字段：二次上传时最常补的就是这些 */
+var IMP_LATE_FIELDS = ['回传日期', '回传渠道', '未回传分类', '责任销售', '责任产品技术', '下一步计划', '备注'];
+
+function impDiffFields(data, exist, mode) {
+  var out = [], i, f, oldV, newV;
+  var keys = [].concat(IMPORT_FIELDS.map(function (x) { return x.key; }));
+  for (i = 0; i < keys.length; i++) {
+    f = keys[i];
+    if (f === '记录编号') { continue; }
+    newV = data[f] || '';
+    if (!newV) { continue; }
+    oldV = fldOf(exist, f);
+    if (f === '回传日期') { oldV = fmtYMD(parseYMD(oldV)); }
+    oldV = impNormText(oldV);
+    if (oldV === impNormText(newV)) { continue; }
+    if (mode === 'overwrite') {
+      out.push({ field: f, from: oldV, to: newV });
+      continue;
+    }
+    // smart：只补空，且只补回传侧字段
+    if (oldV) { continue; }
+    if (IMP_LATE_FIELDS.indexOf(f) === -1) { continue; }
+    out.push({ field: f, from: '', to: newV });
+  }
+  return out;
+}
+
+function impParamsToProps(data) {
+  var p = {}, i, f, v;
+  for (i = 0; i < IMPORT_FIELDS.length; i++) {
+    f = IMPORT_FIELDS[i];
+    v = data[f.key];
+    if (!v) { continue; }
+    if (f.kind === 'date') { p[f.key] = { date: v }; }
+    else if (f.kind === 'select' || f.kind === 'enum') { p[f.key] = { select: v }; }
+    else { p[f.key] = { text: String(v) }; }
+  }
+  return p;
+}
+/*__IMPORT_CORE_END__*/
+
+/* ================= Excel 导入：模板 / 上传 / 预览 / 执行 ================= */
+
+function impOptionsOf(field) {
+  var opt = state.options && state.options[field];
+  if (opt && opt.length) {
+    var out = [], i;
+    for (i = 0; i < opt.length; i++) {
+      if (opt[i] && opt[i].text) { out.push(String(opt[i].text)); }
+    }
+    if (out.length) { return out; }
+  }
+  return (IMPORT_OPTIONS_FALLBACK[field] || []).slice();
+}
+
+/* 生成模板：Sheet1 台账（表头 + 下拉 + 冻结），Sheet2 填写说明 */
+function impTemplateBytes() {
+  var i, head = [], cols = [], validations = [];
+  for (i = 0; i < IMPORT_FIELDS.length; i++) {
+    var f = IMPORT_FIELDS[i];
+    head.push({ v: f.key, s: 1 });
+    cols.push({ w: f.width });
+    if (f.kind === 'select' || f.kind === 'enum') {
+      validations.push({
+        sqref: colName(i) + '2:' + colName(i) + '501',
+        list: f.kind === 'enum' ? ['国内', '海外'] : impOptionsOf(f.key)
+      });
+    }
+  }
+
+  var info = [];
+  info.push([{ v: '送样回传台账 · 填写说明', s: 3 }]);
+  info.push([]);
+  info.push([{ v: '这张表是给填报人用的：在「送样台账」页从第 2 行开始一行填一条，填完把文件回传即可。本页不用管。', s: 4 }]);
+  info.push([]);
+  info.push(['字段', '必填', '填写要求', '示例'].map(function (v) { return { v: v, s: 1 }; }));
+  for (i = 0; i < IMPORT_FIELDS.length; i++) {
+    var fd = IMPORT_FIELDS[i];
+    info.push([{ v: fd.key, s: 2 }, { v: fd.req ? '必填' : '选填', s: 4 }, { v: fd.desc, s: 4 }, { v: fd.sample, s: 4 }]);
+  }
+
+  info.push([]);
+  info.push([{ v: '导入规则（系统按这几条自动处理）', s: 3 }]);
+  var rules = [
+    '只读第一张工作表；表头顺序可以不同，多出来的列会被忽略，本说明页不参与导入。',
+    '同一「送样日期＋客户集团＋客户基地＋产品型号」视为一条记录：库里没有就新增，已有就按你选的模式合并。',
+    '回传日期留空表示「未回传」，系统按统计基准日计算滞留天数并判档；不要填 0 或「未回传」三个字。',
+    '日期可写 2026-09-08、2026/9/8、20260928，也可直接用日期选择器；认不出的日期不会被猜成某一天。',
+    '区域只能是「国内」或「海外」——它决定及时阈值，写错或不填该行不会导入。',
+    '必填六项缺任一项，该行跳过、其余行照常导入，预览里会逐行告诉你原因。',
+    '同一份表重复上传是安全的：已存在且没有新信息的记录会被跳过，不会重复计数。',
+    '导入前先出预览：可新增几条、可更新几条、跳过几条、有问题几条，确认后才写进台账。'
+  ];
+  for (i = 0; i < rules.length; i++) { info.push([{ v: (i + 1) + '. ' + rules[i], s: 5 }]); }
+
+  info.push([]);
+  info.push([{ v: '判定口径（写死在系统里，改表也改不了）', s: 3 }]);
+  var rules2 = [
+    '完成率 ＝ 已回传条数 ÷ 应回传条数。',
+    '及时率 ＝ 及时回传条数 ÷ 已回传条数。分母与完成率不同，两个必须一起看。',
+    '及时：国内 ≤10 天、海外 ≤20 天，等于阈值算及时。',
+    '逾期：未回传且滞留 >10 天；超期 >30 天；严重超期 >45 天。',
+    '逾期三分类互斥：客户真没测 / 已测未上传系统 / 已测NG不推进，三者之和应等于逾期条数。',
+    '状态由日期与区域自动算出，不需要也不允许手填。'
+  ];
+  for (i = 0; i < rules2.length; i++) { info.push([{ v: '· ' + rules2[i], s: 5 }]); }
+
+  info.push([]);
+  info.push([{ v: '模板版本 v1.0 · 生成于 ' + nowStr() + ' · 页面会自动识别常见列名别名（如「客户名称」「样品阶段」「送样日」「报告回传日」）', s: 5 }]);
+
+  var sheets = [
+    {
+      name: '送样台账', tabSelected: true, freeze: 1, headerRow: true,
+      cols: cols, rows: [head], validations: validations
+    },
+    {
+      name: '填写说明',
+      cols: [{ w: 16 }, { w: 8 }, { w: 58 }, { w: 30 }],
+      rows: info,
+      merges: ['A1:D1']
+    }
+  ];
+  return buildXlsx(sheets);
+}
+
+function downloadBytes(name, bytes, mime) {
+  try {
+    var blob = new Blob([bytes], { type: mime });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
+  } catch (e) {
+    toast('下载失败：浏览器不支持本地保存', true);
+  }
+}
+
+function downloadTemplate() {
+  try {
+    var bytes = impTemplateBytes();
+    downloadBytes('送样回传台账_导入模板_v1.0.xlsx', bytes, XLSX_MIME);
+    toast('模板已下载，可直接发给填报人');
+  } catch (e) {
+    console.error('[import] 生成模板失败:', e);
+    toast('生成模板失败：' + ((e && e.message) || '请重试'), true);
+  }
+}
+
+function downloadTemplateCsv() {
+  var head = IMPORT_FIELDS.map(function (f) { return f.key; });
+  var lines = [head.map(csvCell).join(',')];
+  download('送样回传台账_导入模板_v1.0.csv', '\ufeff' + lines.join('\r\n'), 'text/csv');
+  toast('CSV 模板已下载（不含下拉选项）');
+}
+
+/* ---------- 抽屉状态 ---------- */
+function resetImport() {
+  state.impCoerced = null;
+  state.impPlan = null;
+  state.impFileName = '';
+  state.impMode = state.impMode || 'smart';
+  show(byId('impResult'), false);
+  show(byId('impErr'), false);
+  show(byId('impFileInfo'), false);
+  var run = byId('btnImpRun');
+  if (run) { run.disabled = true; run.textContent = '确认导入'; }
+  var list = byId('impList');
+  if (list) { clear(list); }
+  var sum = byId('impSum');
+  if (sum) { clear(sum); }
+  renderImportModes();
+}
+
+function openImport() {
+  resetImport();
+  show(byId('mask'), true);
+  show(byId('drawerImport'), true);
+}
+function closeImport() {
+  show(byId('drawerImport'), false);
+  if (!byId('drawerForm') || byId('drawerForm').hidden) {
+    if (!byId('drawerConfig') || byId('drawerConfig').hidden) { show(byId('mask'), false); }
+  }
+}
+
+function impErr(msg) {
+  var n = byId('impErr');
+  if (!n) { return; }
+  n.textContent = msg;
+  n.hidden = false;
+}
+
+function setImpBusy(on, text) {
+  var zone = byId('dropZone');
+  if (zone) { zone.className = 'dropzone' + (on ? ' on' : ''); }
+  var tip = byId('dropHint');
+  if (tip && text) { tip.textContent = text; }
+}
+
+function decodeTextAuto(buf) {
+  var u8 = new Uint8Array(buf);
+  var s = new TextDecoder('utf-8', { fatal: false }).decode(u8);
+  if (s.indexOf('\ufffd') !== -1) {
+    try {
+      var g = new TextDecoder('gbk').decode(u8);
+      if (g.indexOf('\ufffd') === -1) { return g; }
+    } catch (e) { /* 该环境无 GBK 解码器，按 UTF-8 处理 */ }
+  }
+  return s;
+}
+
+function handleImportFile(file) {
+  if (!file) { return; }
+  show(byId('impErr'), false);
+  if (file.size > 8 * 1024 * 1024) {
+    impErr('文件 ' + (file.size / 1048576).toFixed(1) + 'MB，超过 8MB 上限。请按月份拆分后再导入。');
+    return;
+  }
+  var name = String(file.name || '');
+  var low = name.toLowerCase();
+  var isCsv = /\.csv$/.test(low);
+  if (!isCsv && !/\.(xlsx|xlsm)$/.test(low)) {
+    impErr('只支持 .xlsx / .xlsm / .csv。' + (/\.xls$/.test(low) ? '这是老版 .xls，请用 Excel 另存为 .xlsx 后再上传。' : '请确认文件类型。'));
+    return;
+  }
+
+  setImpBusy(true, '正在读取 ' + name + ' …');
+  var reader = new FileReader();
+  reader.onload = function () {
+    function done(rows, sheetName) {
+      setImpBusy(false, '点击选择或把文件拖到这里');
+      afterParse(rows, sheetName, name);
+    }
+    if (isCsv) {
+      try { done(parseCsvText(decodeTextAuto(reader.result)), 'CSV'); }
+      catch (e) { impErr('CSV 解析失败：' + ((e && e.message) || '文件可能已损坏')); }
+      return;
+    }
+    readXlsxFirstSheet(reader.result).then(function (sheet) {
+      done(sheet.rows, sheet.name);
+    }).catch(function (err) {
+      setImpBusy(false, '点击选择或把文件拖到这里');
+      console.error('[import] 解析失败:', err);
+      impErr((err && err.message) ? err.message : '文件解析失败，请确认是 Excel 另存出来的 .xlsx');
+    });
+  };
+  reader.onerror = function () {
+    setImpBusy(false, '点击选择或把文件拖到这里');
+    impErr('读取文件失败，请重试或换一个文件。');
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function afterParse(rows, sheetName, fileName) {
+  if (!rows || !rows.length) { impErr('这个文件里没有内容。'); return; }
+
+  var header = impFindHeader(rows);
+  if (!header) {
+    impErr('没认出表头：前 8 行里至少要有一行同时包含「客户集团」和「产品型号」两列。可以点上面的「下载导入模板」对照一下。');
+    return;
+  }
+
+  var coerced = impCoerceRows(rows, header, { options: state.options });
+  if (!coerced.length) {
+    impErr('表头（第 ' + header.rowNo + ' 行）下面没有数据行。');
+    return;
+  }
+
+  state.impCoerced = coerced;
+  state.impFileName = fileName;
+
+  var unknown = header.unknown.length ? header.unknown.join('、') : '';
+  var info = byId('impFileInfo');
+  if (info) {
+    info.hidden = false;
+    var txt = '已读取「' + (sheetName || '工作表1') + '」：表头在第 ' + header.rowNo + ' 行，' +
+      coerced.length + ' 行数据。';
+    if (unknown) { txt += '未识别的列已忽略：' + unknown + '。'; }
+    info.textContent = txt;
+  }
+
+  replan();
+}
+
+function nextCodeSeq() {
+  var max = 0;
+  for (var i = 0; i < state.rows.length; i++) {
+    var m = /^S-(\d+)$/.exec(getField(state.rows[i], '记录编号'));
+    if (m) { max = Math.max(max, parseInt(m[1], 10)); }
+  }
+  return max + 1;
+}
+
+function replan() {
+  if (!state.impCoerced) { return; }
+  state.impPlan = impPlanRows(state.impCoerced, state.rows, state.impMode, nextCodeSeq());
+  renderImportPlan();
+}
+
+function renderImportModes() {
+  var box = byId('impModes');
+  if (!box) { return; }
+  clear(box);
+  for (var i = 0; i < IMPORT_MODES.length; i++) {
+    (function (m) {
+      var lab = el('label', state.impMode === m.id ? 'on' : '');
+      var radio = document.createElement('input');
+      radio.type = 'radio';
+      radio.name = 'impMode';
+      radio.value = m.id;
+      radio.checked = state.impMode === m.id;
+      radio.addEventListener('change', function () {
+        state.impMode = m.id;
+        renderImportModes();
+        replan();
+      });
+      var body = el('div');
+      body.appendChild(el('b', null, m.label));
+      body.appendChild(el('em', null, m.desc));
+      lab.appendChild(radio);
+      lab.appendChild(body);
+      box.appendChild(lab);
+    })(IMPORT_MODES[i]);
+  }
+}
+
+var IMP_TAG = {
+  create: { text: '新增', cls: 'ok' },
+  update: { text: '更新', cls: 'info' },
+  skip: { text: '跳过', cls: 'mute' },
+  done: { text: '已导入', cls: 'ok' },
+  error: { text: '有问题', cls: 'bad' }
+};
+
+function renderImportPlan() {
+  var plan = state.impPlan;
+  if (!plan) { return; }
+  show(byId('impResult'), true);
+
+  var sum = byId('impSum');
+  clear(sum);
+  var cells = [
+    { k: 'ok', label: '可新增', v: plan.stat.create },
+    { k: 'up', label: '可更新', v: plan.stat.update },
+    { k: 'sk', label: '跳过', v: plan.stat.skip },
+    { k: 'er', label: '有问题', v: plan.stat.error }
+  ];
+  for (var i = 0; i < cells.length; i++) {
+    var b = el('div', 'imp-s ' + cells[i].k);
+    b.appendChild(el('u', null, cells[i].label));
+    b.appendChild(el('b', null, cells[i].v));
+    sum.appendChild(b);
+  }
+
+  var list = byId('impList');
+  clear(list);
+  var limit = 200, shown = 0;
+  for (i = 0; i < plan.items.length; i++) {
+    var it = plan.items[i];
+    if (shown >= limit) { break; }
+    shown++;
+    var row = el('div', 'imp-row is-' + it.action);
+    row.appendChild(el('span', 'imp-rn', '第' + it.rowNo + '行'));
+
+    var sub = el('span', 'imp-sub');
+    sub.appendChild(el('b', null, it.subject || '（主体信息不全）'));
+    if (it.action === 'update' && it.changes.length) {
+      var parts = [], j;
+      for (j = 0; j < it.changes.length; j++) {
+        var c = it.changes[j];
+        parts.push(c.field + (c.from ? '：' + c.from + ' → ' : '：补 ') + c.to);
+      }
+      sub.appendChild(el('em', 'imp-chg', parts.join('；')));
+    }
+    if (it.data && it.data['送样日期']) {
+      sub.appendChild(el('em', 'imp-chg', '送样 ' + it.data['送样日期'] +
+        (it.data['回传日期'] ? ' · 回传 ' + it.data['回传日期'] : ' · 未回传')));
+    }
+    row.appendChild(sub);
+
+    var tag = IMP_TAG[it.action] || IMP_TAG.skip;
+    row.appendChild(el('span', 'imp-tag t-' + tag.cls, tag.text));
+
+    if (it.msgs && it.msgs.length) {
+      var notes = [], k;
+      for (k = 0; k < it.msgs.length; k++) {
+        notes.push((it.msgs[k].level === 'error' ? '✕ ' : '! ') + it.msgs[k].text);
+      }
+      row.appendChild(el('span', 'imp-note', notes.join('  ')));
+    }
+    list.appendChild(row);
+  }
+  if (plan.items.length > limit) {
+    list.appendChild(el('p', 'hint', '列表只显示前 ' + limit + ' 行，导入时会处理全部 ' + plan.items.length + ' 行。'));
+  }
+
+  var run = byId('btnImpRun');
+  var todo = plan.stat.create + plan.stat.update;
+  run.disabled = todo === 0;
+  if (!todo) {
+    run.textContent = plan.stat.error ? '没有可导入的行' : '没有需要导入的新内容';
+  } else {
+    run.textContent = '确认导入 ' + plan.stat.create + ' 条新增' +
+      (plan.stat.update ? ' + ' + plan.stat.update + ' 条更新' : '');
+  }
+}
+
+function impPropsForChanges(changes) {
+  var data = {}, i;
+  for (i = 0; i < changes.length; i++) { data[changes[i].field] = changes[i].to; }
+  return impParamsToProps(data);
+}
+
+function runImport() {
+  var plan = state.impPlan;
+  if (!plan || !db) {
+    if (!db) { impErr('未连接资料库，无法写入。请从资料库页面打开。'); }
+    return;
+  }
+  var todo = [];
+  for (var i = 0; i < plan.items.length; i++) {
+    if (plan.items[i].action === 'create' || plan.items[i].action === 'update') { todo.push(plan.items[i]); }
+  }
+  if (!todo.length) { return; }
+
+  var btn = byId('btnImpRun');
+  var cancel = byId('btnImpCancel');
+  btn.disabled = true;
+  cancel.disabled = true;
+  var done = 0, ok = 0, failed = [];
+
+  function finish() {
+    cancel.disabled = false;
+    btn.textContent = '确认导入';
+
+    if (!failed.length) {
+      toast('导入完成：新增 ' + plan.stat.create + ' 条、更新 ' + plan.stat.update + ' 条，指标已重算');
+      closeImport();
+      loadData();
+      return;
+    }
+
+    // 已成功的项不再留在待导入列表里，避免再次点击时重复新增
+    var i, rest = 0, stat = { create: 0, update: 0, skip: 0, error: 0, total: plan.items.length };
+    for (i = 0; i < plan.items.length; i++) {
+      var it = plan.items[i];
+      if (it.action === 'done') { it.action = 'skip'; }
+      if (it.action === 'create') { stat.create++; }
+      else if (it.action === 'update') { stat.update++; }
+      else if (it.action === 'error') { stat.error++; }
+      else { stat.skip++; }
+    }
+    plan.stat = stat;
+    rest = stat.create + stat.update;
+    renderImportPlan();
+    btn.disabled = rest === 0;
+    if (rest === 0) { btn.textContent = '剩余项已全部处理'; }
+
+    impErr('导入结束：成功 ' + ok + ' 条，失败 ' + failed.length + ' 条。' +
+      (rest ? '已成功的记录不再重复写入，可重新点「确认导入」只补剩余 ' + rest + ' 条。' : '') +
+      '失败明细：' + failed.slice(0, 5).join('；') + (failed.length > 5 ? ' …' : ''));
+    toast('有 ' + failed.length + ' 条写入失败', true);
+    loadData();
+  }
+
+  function step() {
+    if (done >= todo.length) { finish(); return; }
+    var it = todo[done];
+    done++;
+    btn.textContent = '导入中 ' + done + '/' + todo.length + '…';
+
+    var props = (it.action === 'update') ? impPropsForChanges(it.changes) : impParamsToProps(it.data);
+    var op;
+    if (it.action === 'update') {
+      if (!it.existId) {
+        failed.push('第' + it.rowNo + '行 缺少记录 ID');
+        setTimeout(step, 0);
+        return;
+      }
+      op = db.updateRecord({ databaseId: DATABASE_ID, recordId: it.existId, properties: props });
+    } else {
+      op = db.addRecord({ databaseId: DATABASE_ID, properties: props });
+    }
+    (function (item) {
+      op.then(function () {
+        ok++;
+        item.action = 'done';
+        setTimeout(step, 0);
+      }).catch(function (err) {
+        console.error('[import] 第' + item.rowNo + '行写入失败:', err);
+        failed.push('第' + item.rowNo + '行 ' + ((err && err.message) ? err.message : '写入失败'));
+        setTimeout(step, 60);
+      });
+    })(it);
+  }
+  step();
+}
+
+/* 拖拽 */
+function bindDropZone() {
+  var zone = byId('dropZone');
+  if (!zone) { return; }
+  ['dragenter', 'dragover'].forEach(function (ev) {
+    zone.addEventListener(ev, function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      zone.className = 'dropzone on';
+    });
+  });
+  ['dragleave', 'drop'].forEach(function (ev) {
+    zone.addEventListener(ev, function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      zone.className = 'dropzone';
+    });
+  });
+  zone.addEventListener('drop', function (e) {
+    var dt = e.dataTransfer;
+    if (dt && dt.files && dt.files.length) { handleImportFile(dt.files[0]); }
+  });
+}
+
+  /* ================= 口径配置 ================= */
+  function loadCfg() {
+    var c = { dom: DEFAULT_CFG.dom, ovs: DEFAULT_CFG.ovs, over: DEFAULT_CFG.over, sup: DEFAULT_CFG.sup, grave: DEFAULT_CFG.grave };
+    try {
+      var raw = window.localStorage.getItem(LS_CFG);
+      if (raw) {
+        var o = JSON.parse(raw);
+        if (o && typeof o === 'object') {
+          ['dom', 'ovs', 'over', 'sup', 'grave'].forEach(function (k) {
+            var n = parseInt(o[k], 10);
+            if (!isNaN(n) && n > 0) { c[k] = n; }
+          });
+        }
+      }
+    } catch (e) { /* 本地存储不可用时静默降级为默认口径 */ }
+    return c;
+  }
+  function saveCfg(c) {
+    try { window.localStorage.setItem(LS_CFG, JSON.stringify(c)); } catch (e) { /* 静默降级 */ }
+  }
+
+  /* ================= 状态判读（六态） ================= */
+  function computeStatus(row) {
+    var cfg = state.cfg;
+    var sendMs = parseYMD(getField(row, '送样日期'));
+    var retMs = parseYMD(getField(row, '回传日期'));
+    var baseMs = parseYMD(state.baseDate);
+    var isOversea = getField(row, '区域') === '海外';
+    var th = isOversea ? cfg.ovs : cfg.dom;
+
+    if (!sendMs) {
+      return { key: 'nodate', label: '待补日期', cls: 'c-na', days: null, returned: false, overdue: false, timely: null, level: 0 };
+    }
+    if (retMs) {
+      var d = diffDays(retMs, sendMs);
+      if (d < 0) {
+        return { key: 'bad', label: '日期异常', cls: 'c-na', days: null, returned: true, overdue: false, timely: null, level: 0 };
+      }
+      var ok = d <= th;
+      return {
+        key: ok ? 'timely' : 'late',
+        label: ok ? '已回传·及时' : '已回传·迟回',
+        cls: ok ? 'c-ok' : 'c-late',
+        days: d, returned: true, overdue: false, timely: ok, level: 0, threshold: th
+      };
+    }
+    var s = diffDays(baseMs, sendMs);
+    if (s < 0) {
+      return { key: 'future', label: '未到送样日', cls: 'c-na', days: s, returned: false, overdue: false, timely: null, level: 0 };
+    }
+    if (s <= cfg.over) {
+      return { key: 'window', label: '窗口内', cls: 'c-win', days: s, returned: false, overdue: false, timely: null, level: 0 };
+    }
+    if (s <= cfg.sup) {
+      return { key: 'over', label: '逾期', cls: 'c-over', days: s, returned: false, overdue: true, timely: null, level: 3 };
+    }
+    if (s <= cfg.grave) {
+      return { key: 'super', label: '超期', cls: 'c-super', days: s, returned: false, overdue: true, timely: null, level: 2 };
+    }
+    return { key: 'grave', label: '严重超期', cls: 'c-grave', days: s, returned: false, overdue: true, timely: null, level: 1 };
+  }
+
+  /* ================= 聚合（一律从明细重算，禁止比率平均） ================= */
+  function agg(items) {
+    var o = { n: 0, ret: 0, tim: 0, over: 0, sup: 0, grave: 0, win: 0, nodate: 0, sumDays: 0, overCnt: 0, rate: null, tRate: null, avg: null };
+    for (var i = 0; i < items.length; i++) {
+      var st = items[i].st;
+      o.n++;
+      if (st.returned) {
+        o.ret++;
+        if (st.timely === true) { o.tim++; }
+        if (st.days !== null) { o.sumDays += st.days; }
+      } else if (st.key === 'window') { o.win++; }
+      else if (st.key === 'over') { o.over++; }
+      else if (st.key === 'super') { o.sup++; }
+      else if (st.key === 'grave') { o.grave++; }
+      else if (st.key === 'nodate') { o.nodate++; }
+    }
+    o.overCnt = o.over + o.sup + o.grave;
+    o.rate = o.n ? o.ret / o.n : null;
+    o.tRate = o.ret ? o.tim / o.ret : null;
+    o.avg = o.ret ? o.sumDays / o.ret : null;
+    o.overShare = o.n ? o.overCnt / o.n : null;
+    return o;
+  }
+
+  function groupBy(items, keyFn) {
+    var map = {}, order = [];
+    for (var i = 0; i < items.length; i++) {
+      var k = keyFn(items[i]);
+      if (!k) { continue; }
+      if (!map[k]) { map[k] = []; order.push(k); }
+      map[k].push(items[i]);
+    }
+    return { map: map, order: order };
+  }
+
+  /* ================= 模型 ================= */
+  function buildModel() {
+    var items = [];
+    for (var i = 0; i < state.rows.length; i++) {
+      var r = state.rows[i];
+      items.push({ raw: r, st: computeStatus(r), id: r._id, code: getField(r, '记录编号') });
+    }
+    var m = { items: items, total: agg(items) };
+
+    var rg = groupBy(items, function (it) { return getField(it.raw, '区域'); });
+    m.byRegion = [];
+    var fixedRegions = ['国内', '海外'];
+    for (var a = 0; a < fixedRegions.length; a++) {
+      if (rg.map[fixedRegions[a]]) {
+        m.byRegion.push({ key: fixedRegions[a], agg: agg(rg.map[fixedRegions[a]]) });
+      }
+    }
+    for (var b = 0; b < rg.order.length; b++) {
+      if (fixedRegions.indexOf(rg.order[b]) === -1) {
+        m.byRegion.push({ key: rg.order[b], agg: agg(rg.map[rg.order[b]]) });
+      }
+    }
+
+    var sg = groupBy(items, function (it) { return getField(it.raw, '送样阶段'); });
+    m.byStage = [];
+    var stageOrder = (state.options['送样阶段'] || []).map(function (o) { return o.text; });
+    stageOrder.concat(sg.order).forEach(function (k) {
+      if (sg.map[k] && !m.byStage.some(function (x) { return x.key === k; })) {
+        m.byStage.push({ key: k, agg: agg(sg.map[k]) });
+      }
+    });
+
+    var gg = groupBy(items, function (it) { return getField(it.raw, '客户集团'); });
+    m.byGroup = [];
+    gg.order.forEach(function (k) { m.byGroup.push({ key: k, agg: agg(gg.map[k]) }); });
+    m.byGroup.sort(function (x, y) {
+      if (x.agg.rate === null && y.agg.rate === null) { return y.agg.n - x.agg.n; }
+      if (x.agg.rate === null) { return 1; }
+      if (y.agg.rate === null) { return -1; }
+      if (x.agg.rate !== y.agg.rate) { return x.agg.rate - y.agg.rate; }
+      return y.agg.overCnt - x.agg.overCnt;
+    });
+
+    var cats = { '客户真没测': 0, '已测未上传系统': 0, '已测NG不推进': 0, '待认定': 0 };
+    var overdueItems = [];
+    for (var j = 0; j < items.length; j++) {
+      if (!items[j].st.overdue) { continue; }
+      overdueItems.push(items[j]);
+      var c = getField(items[j].raw, '未回传分类');
+      if (!c || c === '待认定' || !cats.hasOwnProperty(c)) { cats['待认定']++; }
+      else { cats[c]++; }
+    }
+    m.cats = cats;
+    m.overdueItems = overdueItems;
+
+    m.actionable = items.filter(function (it) { return it.st.overdue; });
+    m.actionable.sort(function (x, y) {
+      if (x.st.level !== y.st.level) { return x.st.level - y.st.level; }
+      return (y.st.days || 0) - (x.st.days || 0);
+    });
+
+    state.model = m;
+    return m;
+  }
+
+  /* ================= 加载 ================= */
+  function setSync(text, cls) {
+    var p = byId('syncPill');
+    if (!p) { return; }
+    p.textContent = text;
+    p.className = 'pill' + (cls ? ' ' + cls : '');
+  }
+
+  function loadAll(startCursor, acc, guard) {
+    acc = acc || [];
+    guard = guard || 0;
+    if (guard > 100) { return Promise.resolve(acc); }
+    return db.query({
+      databaseId: DATABASE_ID,
+      sorts: [{ property: '送样日期', direction: 'descending' }],
+      pageSize: 200,
+      startCursor: startCursor
+    }).then(function (r) {
+      acc = acc.concat(r.results || []);
+      var next = r.nextCursor;
+      if (r.hasMore && next && next !== startCursor && (r.results || []).length) {
+        return loadAll(next, acc, guard + 1);
+      }
+      return acc;
+    }).catch(function (err) {
+      console.error('[database] 分页读取失败:', err);
+      throw err;
+    });
+  }
+
+  function showLoading(on) {
+    state.loading = on;
+    show(byId('loadToday'), on);
+    show(byId('loadLedger'), on && !state.loaded);
+  }
+
+  function failAll(msg) {
+    state.loaded = false;
+    showLoading(false);
+    setSync('离线模式', 'off');
+    ['errToday', 'errLedger'].forEach(function (id) {
+      var n = byId(id);
+      if (n) { n.textContent = '数据读取失败：' + msg + '（请刷新重试；页面数据来自资料库，不提供本地假数据兜底）'; n.hidden = false; }
+    });
+  }
+
+  function loadData() {
+    if (!db) { return; }
+    showLoading(true);
+    show(byId('errToday'), false);
+    show(byId('errLedger'), false);
+    loadAll().then(function (rows) {
+      state.rows = rows;
+      state.loaded = true;
+      showLoading(false);
+      setSync('已连接·' + rows.length + ' 条', 'ok');
+      buildModel();
+      refreshAll();
+    }).catch(function (err) {
+      console.error('[database] 数据加载失败:', err);
+      failAll((err && err.message) ? err.message : '网络或权限异常');
+    });
+  }
+
+  /* ================= 统一刷新入口（渲染函数之间不互调） ================= */
+  function refreshAll() {
+    if (!state.model) { return; }
+    renderTabBadge();
+    renderToday();
+    renderLedger();
+    renderBoard();
+    renderReport();
+  }
+  /* ================= 渲染：Tab 徽标 ================= */
+  function renderTabBadge() {
+    var n = state.model ? state.model.actionable.length : 0;
+    var b = byId('tabBadgeToday');
+    if (!b) { return; }
+    b.textContent = String(n);
+    b.setAttribute('data-zero', n === 0 ? '1' : '0');
+  }
+
+  function statusChip(st) {
+    return el('span', 'chip ' + st.cls, st.label);
+  }
+
+  /* ================= 渲染：今天要处理 ================= */
+  function renderToday() {
+    var m = state.model;
+    var list = byId('todayList');
+    if (!list) { return; }
+    clear(list);
+
+    var t = m.total;
+    setStat('need', m.actionable.length);
+    setStat('grave', t.grave);
+    setStat('super', t.sup);
+    setStat('over', t.over);
+    setStat('window', t.win);
+
+    var emptyNode = byId('emptyToday');
+    if (!m.actionable.length) {
+      show(emptyNode, true);
+      return;
+    }
+    show(emptyNode, false);
+
+    for (var i = 0; i < m.actionable.length; i++) {
+      list.appendChild(todayCard(m.actionable[i]));
+    }
+  }
+
+  function todayCard(it) {
+    var r = it.raw;
+    var st = it.st;
+    var card = el('div', 'tcard lv' + st.level);
+
+    var main = el('div', 'tcard-main');
+    var title = el('div', 'tcard-t');
+    var nameParts = [getField(r, '客户集团'), getField(r, '客户基地'), getField(r, '产品型号')].filter(Boolean);
+    title.appendChild(el('span', null, nameParts.length ? nameParts.join(' · ') : '未命名记录'));
+    title.appendChild(statusChip(st));
+    title.appendChild(el('span', 'code', getField(r, '记录编号') || '—'));
+    main.appendChild(title);
+
+    var meta = el('div', 'tcard-m');
+    addMeta(meta, '阶段', getField(r, '送样阶段'));
+    addMeta(meta, '区域', getField(r, '区域'));
+    addMeta(meta, '送样日', fmtYMD(parseYMD(getField(r, '送样日期'))) || '待补');
+    var days = el('span');
+    days.appendChild(el('em', null, '滞留'));
+    days.appendChild(el('span', 'days', (st.days === null ? '—' : st.days + ' 天')));
+    meta.appendChild(days);
+    var cat = getField(r, '未回传分类');
+    addMeta(meta, '分类', cat && cat !== '待认定' ? cat : '待认定');
+    addMeta(meta, '销售', getField(r, '责任销售') || '缺失(列入缺口)');
+    if (getField(r, '下一步计划')) { addMeta(meta, '下一步', getField(r, '下一步计划')); }
+    main.appendChild(meta);
+    bind(main);
+    card.appendChild(main);
+
+    var act = el('div', 'tcard-act');
+    act.appendChild(makeBtn('标记已回传', 'iconbtn', function () { markReturned(it); }));
+    act.appendChild(makeBtn('催办草稿', 'iconbtn', function () { copyText(buildReminder(it), '催办草稿已复制'); }));
+    act.appendChild(makeBtn('编辑', 'iconbtn', function () { openForm(it); }));
+    card.appendChild(act);
+    return card;
+  }
+
+  function setStat(name, v) {
+    var n = document.querySelector('[data-stat="' + name + '"]');
+    if (n) { n.textContent = String(v); }
+  }
+  function addMeta(parent, label, value) {
+    var s = el('span');
+    s.appendChild(el('em', null, label));
+    s.appendChild(el('span', null, value || '—'));
+    parent.appendChild(s);
+  }
+  function makeBtn(text, cls, fn) {
+    var b = el('button', cls, text);
+    b.type = 'button';
+    b.addEventListener('click', fn);
+    return b;
+  }
+
+  /* ================= 渲染：送样台账 ================= */
+  function filterItems(items) {
+    var f = state.filters;
+    var kw = (f.kw || '').trim().toLowerCase();
+    return items.filter(function (it) {
+      var r = it.raw;
+      if (f.region && getField(r, '区域') !== f.region) { return false; }
+      if (f.stage && getField(r, '送样阶段') !== f.stage) { return false; }
+      if (f.status === 'returned' && !it.st.returned) { return false; }
+      if (f.status === 'overdue' && !it.st.overdue) { return false; }
+      if (f.status === 'window' && it.st.key !== 'window') { return false; }
+      if (kw) {
+        var hay = [getField(r, '客户集团'), getField(r, '客户基地'), getField(r, '产品型号'),
+          getField(r, '记录编号'), getField(r, '责任销售'), getField(r, '责任产品技术')].join(' ').toLowerCase();
+        if (hay.indexOf(kw) === -1) { return false; }
+      }
+      return true;
+    });
+  }
+
+  function renderLedger() {
+    var tb = byId('tblBody');
+    var tpl = byId('tplRow');
+    if (!tb || !tpl) { return; }
+    clear(tb);
+
+    var items = filterItems(state.model.items);
+    var rc = byId('rowCount');
+    if (rc) { rc.textContent = items.length + ' / ' + state.model.items.length + ' 条'; }
+
+    var empty = byId('emptyLedger');
+    if (!items.length) { show(empty, true); return; }
+    show(empty, false);
+
+    for (var i = 0; i < items.length; i++) {
+      var it = items[i];
+      var r = it.raw;
+      var st = it.st;
+      var tr = tpl.cloneNode(true);
+      tr.removeAttribute('id');
+      var c = tr.children;
+
+      c[0].textContent = getField(r, '记录编号') || '—';
+      c[0].className = 'mono';
+      c[1].textContent = getField(r, '客户集团') || '—';
+      c[2].textContent = getField(r, '客户基地') || '—';
+      c[3].textContent = getField(r, '产品型号') || '—';
+      c[4].textContent = getField(r, '送样阶段') || '—';
+      c[5].textContent = getField(r, '区域') || '—';
+      c[6].textContent = fmtYMD(parseYMD(getField(r, '送样日期'))) || '待补';
+      c[7].textContent = fmtYMD(parseYMD(getField(r, '回传日期'))) || '—';
+      c[8].className = 'num';
+      c[8].textContent = st.days === null ? '—' : st.days + ' 天';
+      clear(c[9]);
+      c[9].appendChild(statusChip(st));
+      c[10].textContent = getField(r, '未回传分类') || (st.overdue ? '待认定' : '—');
+      if (st.overdue && !getField(r, '未回传分类')) { c[10].className = 'muted'; }
+      c[11].textContent = getField(r, '责任销售') || '缺失';
+      c[12].className = 'wide';
+      c[12].textContent = getField(r, '下一步计划') || '—';
+      clear(c[13]);
+      c[13].className = 'ops-td';
+      var ops = el('div', 'ops');
+      if (!st.returned) {
+        ops.appendChild(makeBtn('标记回传', 'iconbtn', (function (x) { return function () { markReturned(x); }; })(it)));
+      }
+      ops.appendChild(makeBtn('编辑', 'iconbtn', (function (x) { return function () { openForm(x); }; })(it)));
+      c[13].appendChild(ops);
+
+      [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].forEach(function (k) { bind(c[k]); });
+      tb.appendChild(tr);
+    }
+  }
+
+  /* ================= 渲染：指标看板 ================= */
+  function renderBoard() {
+    var m = state.model;
+    var t = m.total;
+    var C = 2 * Math.PI * 25;
+
+    setText('kpiRate', pct(t.rate));
+    setText('kpiRateSub', '(' + t.ret + '÷' + t.n + ')');
+    setText('kpiRateNote', '已回传 ÷ 应回传 · 分母为应回传数');
+    setRing('ringRate', t.rate, C);
+
+    setText('kpiTimely', pct(t.tRate));
+    setText('kpiTimelySub', '(' + t.tim + '÷' + t.ret + ')');
+    setText('kpiTimelyNote', '及时回传 ÷ 已回传 · 与完成率分母不同，须并报');
+    setRing('ringTimely', t.tRate, C);
+
+    setText('kpiOver', String(t.overCnt));
+    setText('kpiOverSub', pct(t.overShare));
+    setText('kpiOverNote', '占应回传 ' + (t.n ? t.overCnt + '÷' + t.n : '—') + ' · 严重超期 ' + t.grave + ' / 超期 ' + t.sup + ' / 逾期 ' + t.over);
+
+    setText('kpiAvg', num1(t.avg));
+    var dom = null, ovs = null;
+    m.byRegion.forEach(function (x) { if (x.key === '国内') { dom = x.agg; } if (x.key === '海外') { ovs = x.agg; } });
+    setText('kpiAvgNote', '国内 ' + (dom && dom.avg !== null ? dom.avg.toFixed(1) : '—') + ' 天 · 海外 ' + (ovs && ovs.avg !== null ? ovs.avg.toFixed(1) : '—') + ' 天');
+
+    fillLayers('tblRegion', m.byRegion, false);
+    fillLayers('tblStage', m.byStage, false);
+    fillLayers('tblGroup', m.byGroup, true);
+
+    renderCats(m);
+    renderRank(m);
+  }
+
+  function setText(id, v) {
+    var n = byId(id);
+    if (n) { n.textContent = v; }
+  }
+  function setRing(id, v, C) {
+    var n = byId(id);
+    if (!n) { return; }
+    var p = (v === null || v === undefined) ? 0 : Math.max(0, Math.min(1, v));
+    n.setAttribute('stroke-dashoffset', String(C * (1 - p)));
+  }
+
+  function fillLayers(tbodyId, rows, withOverdue) {
+    var tb = byId(tbodyId);
+    if (!tb) { return; }
+    clear(tb);
+    if (!rows.length) {
+      var tr0 = el('tr');
+      var td0 = el('td', 'muted', '暂无记录');
+      td0.colSpan = withOverdue ? 7 : 6;
+      tr0.appendChild(td0);
+      tb.appendChild(tr0);
+      return;
+    }
+    for (var i = 0; i < rows.length; i++) {
+      var a = rows[i].agg;
+      var tr = el('tr');
+      tr.appendChild(el('td', null, rows[i].key));
+      tr.appendChild(el('td', null, String(a.n)));
+      tr.appendChild(el('td', null, String(a.ret)));
+      tr.appendChild(rateCell(a.rate));
+      tr.appendChild(rateCell(a.tRate));
+      tr.appendChild(el('td', null, a.avg === null ? '—' : a.avg.toFixed(1) + ' 天'));
+      if (withOverdue) { tr.appendChild(el('td', null, String(a.overCnt))); }
+      tb.appendChild(tr);
+    }
+  }
+  function rateCell(v) {
+    var td = el('td');
+    if (v === null || v === undefined) {
+      td.appendChild(el('span', 'muted', '无法计算'));
+      td.title = '分母为 0，不填 0、不沿用上期值';
+    } else {
+      td.textContent = (v * 100).toFixed(1) + '%';
+    }
+    return td;
+  }
+
+  function renderCats(m) {
+    var wrap = byId('catBars');
+    if (!wrap) { return; }
+    clear(wrap);
+    var cats = m.cats;
+    var totalOver = m.overdueItems.length;
+    var colors = { '客户真没测': '#B42318', '已测未上传系统': '#DC6803', '已测NG不推进': '#475467', '待认定': '#98A2B3' };
+    var order = ['客户真没测', '已测未上传系统', '已测NG不推进', '待认定'];
+    for (var i = 0; i < order.length; i++) {
+      var k = order[i];
+      var v = cats[k] || 0;
+      var row = el('div', 'catrow');
+      row.appendChild(el('span', null, k));
+      var bar = el('div', 'bar');
+      var i2 = el('i');
+      i2.style.width = (totalOver ? (v / totalOver * 100) : 0) + '%';
+      i2.style.background = colors[k];
+      bar.appendChild(i2);
+      row.appendChild(bar);
+      row.appendChild(el('span', 'v', v + ' 条'));
+      bind(row);
+      wrap.appendChild(row);
+    }
+    var note = byId('catNote');
+    if (note) {
+      var sum = (cats['客户真没测'] || 0) + (cats['已测未上传系统'] || 0) + (cats['已测NG不推进'] || 0) + (cats['待认定'] || 0);
+      var ok = sum === totalOver;
+      note.textContent = '三分类合计 ' + sum + ' 条 ' + (ok ? '= ' : '≠ ') + '逾期条数 ' + totalOver + ' 条' +
+        (ok ? '，勾稽通过。' : '，勾稽不通过。') +
+        (cats['待认定'] ? ' 其中 ' + cats['待认定'] + ' 条无证据待认定，出稿前须回填。' : '');
+    }
+  }
+
+  function renderRank(m) {
+    var wrap = byId('rankList');
+    if (!wrap) { return; }
+    clear(wrap);
+    var scored = m.byGroup.filter(function (x) { return x.agg.rate !== null; });
+    if (!scored.length) {
+      wrap.appendChild(el('p', 'hint', '暂无可排名主体（完成率均无法计算）。'));
+      return;
+    }
+    for (var i = 0; i < scored.length; i++) {
+      var x = scored[i];
+      var isB3 = i < 3 && scored.length > 1;
+      var row = el('div', 'rankrow' + (isB3 ? ' is-b3' : ''));
+      var name = el('span');
+      name.textContent = x.key;
+      if (isB3) { name.appendChild(el('span', 'tag-b3', 'BOTTOM3')); }
+      row.appendChild(name);
+      var track = el('div', 'track');
+      var bar = el('i');
+      bar.style.width = Math.max(2, x.agg.rate * 100) + '%';
+      track.appendChild(bar);
+      row.appendChild(track);
+      row.appendChild(el('span', 'rv', (x.agg.rate * 100).toFixed(1) + '% (' + x.agg.ret + '÷' + x.agg.n + ')'));
+      bind(row);
+      wrap.appendChild(row);
+    }
+    var nulls = m.byGroup.filter(function (x) { return x.agg.rate === null; });
+    if (nulls.length) {
+      wrap.appendChild(el('p', 'hint', '无法计算（分母为 0，单列不参与排名）：' + nulls.map(function (x) { return x.key; }).join('、')));
+    }
+  }
+
+  /* ================= 渲染：周报 ================= */
+  function paymentLine(label, a) {
+    return '· ' + label + '：应回传 ' + a.n + ' 条；已回传 ' + a.ret + ' 条，完成率 ' + pct(a.rate) +
+      '（' + a.ret + '÷' + a.n + '）；及时 ' + a.tim + ' 条，及时率 ' + pct(a.tRate) + '（' + a.tim + '÷' + a.ret + '）' +
+      '；平均回传 ' + (a.avg === null ? '—' : a.avg.toFixed(1) + ' 天（' + a.sumDays + '÷' + a.ret + '）') + '。';
+  }
+
+  function buildReportText() {
+    var m = state.model;
+    var t = m.total;
+    var cfg = state.cfg;
+    var L = [];
+    L.push('【送样回传周报 · 待复核初稿】');
+    L.push('统计基准日 ' + state.baseDate + ' ｜ 判定口径 ' + CFG_VERSION +
+      '（国内≤' + cfg.dom + ' 天 / 海外≤' + cfg.ovs + ' 天；逾期>' + cfg.over + ' / 超期>' + cfg.sup + ' / 严重超期>' + cfg.grave + '）');
+    L.push('生成时间 ' + nowStr() + ' ｜ 数据来源：送样回传跟踪台账，共 ' + t.n + ' 条记录（含虚拟示例）');
+    L.push('');
+    L.push('① 一句话摘要');
+    L.push('本期应回传 ' + t.n + ' 条，已回传 ' + t.ret + ' 条，完成率 ' + pct(t.rate) + '（' + t.ret + '÷' + t.n + '）；' +
+      '及时 ' + t.tim + ' 条，及时率 ' + pct(t.tRate) + '（' + t.tim + '÷' + t.ret + '）。' +
+      '未回传 ' + (t.n - t.ret) + ' 条，其中已越阈值 ' + t.overCnt + ' 条（严重超期 ' + t.grave + ' / 超期 ' + t.sup + ' / 逾期 ' + t.over + '）；' +
+      '三分类待认定 ' + (m.cats['待认定'] || 0) + ' 条。');
+    L.push('');
+    L.push('② 闭环情况');
+    L.push('· 应回传：' + t.n + ' 条（全部台账记录）');
+    L.push('· 已回传：' + t.ret + ' 条 → 完成率 ' + pct(t.rate) + '（' + t.ret + '÷' + t.n + '）');
+    L.push('· 未回传：' + (t.n - t.ret) + ' 条，其中 窗口内 ' + t.win + ' / 逾期 ' + t.over + ' / 超期 ' + t.sup + ' / 严重超期 ' + t.grave + (t.nodate ? ' / 待补日期 ' + t.nodate : ''));
+    L.push('· 逾期占比：' + pct(t.overShare) + '（' + t.overCnt + '÷' + t.n + '，与完成率同分母）');
+    L.push('· 平均回传天数：' + (t.avg === null ? '无法计算' : t.avg.toFixed(1) + ' 天（' + t.sumDays + '÷' + t.ret + '）'));
+    L.push('');
+    L.push('③ 回传效率（国内 / 海外分列，各层从明细重算）');
+    if (!m.byRegion.length) { L.push('· 暂无区域维度数据。'); }
+    for (var i = 0; i < m.byRegion.length; i++) {
+      L.push(paymentLine(m.byRegion[i].key, m.byRegion[i].agg));
+    }
+    for (var j = 0; j < m.byStage.length; j++) {
+      L.push('· 阶段「' + m.byStage[j].key + '」：完成率 ' + pct(m.byStage[j].agg.rate) +
+        '（' + m.byStage[j].agg.ret + '÷' + m.byStage[j].agg.n + '）；及时率 ' + pct(m.byStage[j].agg.tRate) + '。');
+    }
+    L.push('');
+    L.push('④ 归因（三分类 + 具名下一步）');
+    L.push('· 客户真没测：' + (m.cats['客户真没测'] || 0) + ' 条（风险类，确认产线验证窗口）');
+    L.push('· 已测未上传系统：' + (m.cats['已测未上传系统'] || 0) + ' 条（流程类，催上传不等结果）');
+    L.push('· 已测NG不推进：' + (m.cats['已测NG不推进'] || 0) + ' 条（业务类，转补样或换型）');
+    L.push('· 待认定：' + (m.cats['待认定'] || 0) + ' 条');
+    if (m.overdueItems.length) {
+      L.push('');
+      for (var k = 0; k < m.overdueItems.length; k++) {
+        var it = m.overdueItems[k];
+        var r = it.raw;
+        L.push('  ' + (k + 1) + '. [' + (getField(r, '记录编号') || '无编号') + '] ' +
+          getField(r, '客户集团') + '·' + getField(r, '客户基地') + '·' + getField(r, '产品型号') +
+          '｜滞留 ' + it.st.days + ' 天（' + it.st.label + '）' +
+          '｜分类：' + (getField(r, '未回传分类') || '待认定') +
+          '｜责任销售：' + (getField(r, '责任销售') || '缺失(列入缺口)') +
+          '｜技术：' + (getField(r, '责任产品技术') || '—') +
+          '｜下一步：' + (getField(r, '下一步计划') || '待补'));
+      }
+    }
+    L.push('');
+    L.push('⑤ 附件与口径');
+    L.push('· 口径版本：' + CFG_VERSION + '（等于阈值计入及时，比较符为 ≤）');
+    L.push('· 计算时间：' + nowStr() + ' ｜ 统计基准日：' + state.baseDate);
+    L.push('· 明细附件：台账 ' + t.n + ' 条，导出 CSV 即明细；本页可一键导出 JSON 备份');
+    L.push('· 待确认项：应回传口径（免费样 / 二次送样是否计入分母）、回传权威系统、责任人清单维护人');
+    L.push('');
+    L.push('—— 分栏（供签核）——');
+    L.push('【事实】' + t.n + ' 条送样记录中已回传 ' + t.ret + ' 条、未回传 ' + (t.n - t.ret) + ' 条；已越阈值 ' + t.overCnt + ' 条。');
+    L.push('【判读】按当前口径，' + (t.rate === null ? '完成率无法计算' : '完成率 ' + pct(t.rate)) + '、及时率 ' + pct(t.tRate) + '，属' +
+      (t.rate !== null && t.rate >= 0.8 ? '整体可控' : '需集中推进') + '区间。');
+    L.push('【假设】假设客户代号与虚拟责任人可代表真实分布；真实底表到位后需重算。');
+    L.push('【建议】先处置严重超期 ' + t.grave + ' 条，再补三分类待认定 ' + (m.cats['待认定'] || 0) + ' 条。');
+    L.push('【决策】待五角色（销售 / 产品技术 / 品质 / 基地 / 管理层）签核后定稿，当前状态：待复核初稿。');
+    return L.join('\n');
+  }
+
+  function renderReport() {
+    var n = byId('reportText');
+    if (!n) { return; }
+    n.textContent = buildReportText();
+  }
+
+  function buildReminder(it) {
+    var r = it.raw;
+    return '【送样回传催办】\n' +
+      '记录：' + (getField(r, '记录编号') || '—') + '｜' + getField(r, '客户集团') + ' ' + getField(r, '客户基地') + ' ' + getField(r, '产品型号') + '\n' +
+      '送样日：' + (fmtYMD(parseYMD(getField(r, '送样日期'))) || '待补') + '｜已滞留 ' + (it.st.days === null ? '—' : it.st.days + ' 天') + '（' + it.st.label + '）\n' +
+      '当前分类：' + (getField(r, '未回传分类') || '待认定') + '\n' +
+      '请回复：客户是否已测（是/否）＋ 测试结论（数据或 NG 原因）＋ 预计回传日期。\n' +
+      '（本消息为草稿，需人工确认后发送）';
+  }
+  /* ================= 表单 ================= */
+  function optionId(field, text) {
+    var arr = state.options[field] || [];
+    for (var i = 0; i < arr.length; i++) { if (arr[i].text === text) { return arr[i].id; } }
+    return '';
+  }
+  function fillSelect(selectId, field, placeholder) {
+    var s = byId(selectId);
+    if (!s) { return; }
+    var cur = s.value;
+    clear(s);
+    var o0 = document.createElement('option');
+    o0.value = '';
+    o0.textContent = placeholder || '请选择';
+    s.appendChild(o0);
+    var arr = state.options[field] || [];
+    for (var i = 0; i < arr.length; i++) {
+      var o = document.createElement('option');
+      o.value = arr[i].id;
+      o.textContent = arr[i].text;
+      s.appendChild(o);
+    }
+    s.value = cur;
+  }
+  function fillAllSelects() {
+    fillSelect('f_stage', '送样阶段');
+    fillSelect('f_region', '区域');
+    fillSelect('f_channel', '回传渠道');
+    fillSelect('f_cat', '未回传分类');
+  }
+  function fillStageFilter() {
+    var s = byId('fltStage');
+    if (!s) { return; }
+    var cur = s.value;
+    clear(s);
+    var o0 = document.createElement('option');
+    o0.value = '';
+    o0.textContent = '全部阶段';
+    s.appendChild(o0);
+    var arr = state.options['送样阶段'] || [];
+    for (var i = 0; i < arr.length; i++) {
+      var o = document.createElement('option');
+      o.value = arr[i].text;
+      o.textContent = arr[i].text;
+      s.appendChild(o);
+    }
+    s.value = cur;
+  }
+
+  function setVal(id, v) { var n = byId(id); if (n) { n.value = v === null || v === undefined ? '' : v; } }
+  function getVal(id) { var n = byId(id); return n ? String(n.value || '').trim() : ''; }
+
+  function openForm(item) {
+    state.editingId = item ? item.id : null;
+    fillAllSelects();
+    byId('formTitle').textContent = item ? ('编辑：' + (getField(item.raw, '记录编号') || '未编号记录')) : '新增送样记录';
+    show(byId('btnDelete'), !!item);
+    show(byId('formErr'), false);
+
+    var r = item ? item.raw : {};
+    setVal('f_id', item ? item.id : '');
+    setVal('f_code', getField(r, '记录编号'));
+    setVal('f_group', getField(r, '客户集团'));
+    setVal('f_base', getField(r, '客户基地'));
+    setVal('f_model', getField(r, '产品型号'));
+    setVal('f_stage', optionId('送样阶段', getField(r, '送样阶段')));
+    setVal('f_region', optionId('区域', getField(r, '区域')));
+    setVal('f_channel', optionId('回传渠道', getField(r, '回传渠道')));
+    setVal('f_cat', optionId('未回传分类', getField(r, '未回传分类')));
+    setVal('f_send', fmtYMD(parseYMD(getField(r, '送样日期'))));
+    setVal('f_return', fmtYMD(parseYMD(getField(r, '回传日期'))));
+    setVal('f_sales', getField(r, '责任销售'));
+    setVal('f_tech', getField(r, '责任产品技术'));
+    setVal('f_next', getField(r, '下一步计划'));
+    setVal('f_remark', getField(r, '备注'));
+
+    if (!item) { restoreDraft(); }
+    show(byId('mask'), true);
+    show(byId('drawerForm'), true);
+  }
+
+  function closeForm() {
+    show(byId('mask'), false);
+    show(byId('drawerForm'), false);
+    state.editingId = null;
+  }
+
+  function formError(msg) {
+    var n = byId('formErr');
+    if (!n) { return; }
+    n.textContent = msg;
+    n.hidden = false;
+  }
+
+  function collectProps() {
+    var p = {};
+    p['记录编号'] = { text: getVal('f_code') };
+    p['客户集团'] = { text: getVal('f_group') };
+    p['客户基地'] = { text: getVal('f_base') };
+    p['产品型号'] = { text: getVal('f_model') };
+    p['责任销售'] = { text: getVal('f_sales') };
+    p['责任产品技术'] = { text: getVal('f_tech') };
+    p['下一步计划'] = { text: getVal('f_next') };
+    p['备注'] = { text: getVal('f_remark') };
+
+    var stage = getVal('f_stage'); if (stage) { p['送样阶段'] = { select: stage }; }
+    var region = getVal('f_region'); if (region) { p['区域'] = { select: region }; }
+    var channel = getVal('f_channel'); if (channel) { p['回传渠道'] = { select: channel }; }
+    var cat = getVal('f_cat'); if (cat) { p['未回传分类'] = { select: cat }; }
+    var send = getVal('f_send'); if (send) { p['送样日期'] = { date: send }; }
+    var ret = getVal('f_return'); if (ret) { p['回传日期'] = { date: ret }; }
+    return p;
+  }
+
+  function saveRecord() {
+    if (!db) { formError('未连接资料库，无法保存。'); return; }
+    show(byId('formErr'), false);
+    if (!getVal('f_group')) { formError('请填写客户集团。'); return; }
+    if (!getVal('f_model')) { formError('请填写产品型号。'); return; }
+    if (!getVal('f_send')) { formError('请填写送样日期，否则无法判读状态。'); return; }
+    var send = getVal('f_send'), ret = getVal('f_return');
+    if (send && ret && parseYMD(ret) < parseYMD(send)) { formError('回传日期不能早于送样日期。'); return; }
+
+    var props = collectProps();
+    var btn = byId('btnSave');
+    btn.disabled = true;
+    var text0 = btn.textContent;
+    btn.textContent = '保存中…';
+
+    var op;
+    if (state.editingId) {
+      op = db.updateRecord({ databaseId: DATABASE_ID, recordId: state.editingId, properties: props });
+    } else {
+      op = db.addRecord({ databaseId: DATABASE_ID, properties: props });
+    }
+    op.then(function () {
+      clearDraft();
+      btn.disabled = false;
+      btn.textContent = text0;
+      closeForm();
+      toast(state.editingId ? '已更新' : '已新增，指标已重算');
+      loadData();
+    }).catch(function (err) {
+      console.error('[database] 保存失败:', err);
+      btn.disabled = false;
+      btn.textContent = text0;
+      formError('保存失败：' + ((err && err.message) ? err.message : '请稍后重试'));
+    });
+  }
+
+  function markReturned(it) {
+    if (!db) { toast('未连接资料库', true); return; }
+    var props = {};
+    props['回传日期'] = { date: state.baseDate };
+    db.updateRecord({ databaseId: DATABASE_ID, recordId: it.id, properties: props })
+      .then(function () { toast('已按基准日 ' + state.baseDate + ' 记为已回传'); loadData(); })
+      .catch(function (err) {
+        console.error('[database] 标记回传失败:', err);
+        toast('标记失败：' + ((err && err.message) ? err.message : '请重试'), true);
+      });
+  }
+
+  function deleteRecord() {
+    if (!db || !state.editingId) { return; }
+    var id = state.editingId;
+    if (!window.confirm('删除后不可恢复，确认删除这条送样记录？')) { return; }
+    var btn = byId('btnDelete');
+    btn.disabled = true;
+    db.deleteRecord({ databaseId: DATABASE_ID, recordId: id })
+      .then(function () { btn.disabled = false; closeForm(); toast('已删除'); loadData(); })
+      .catch(function (err) {
+        console.error('[database] 删除失败:', err);
+        btn.disabled = false;
+        formError('删除失败：' + ((err && err.message) ? err.message : '请重试'));
+      });
+  }
+
+  /* ================= 草稿缓存（仅缓存实际提交的字段） ================= */
+  var draftTimer = null;
+  var DRAFT_IDS = ['f_code', 'f_group', 'f_base', 'f_model', 'f_stage', 'f_region',
+    'f_channel', 'f_cat', 'f_send', 'f_return', 'f_sales', 'f_tech', 'f_next', 'f_remark'];
+  function saveDraft() {
+    if (state.editingId) { return; }
+    var o = {};
+    DRAFT_IDS.forEach(function (id) { o[id] = getVal(id); });
+    try { window.localStorage.setItem(LS_DRAFT, JSON.stringify(o)); } catch (e) { /* 静默降级 */ }
+  }
+  function restoreDraft() {
+    var raw = null;
+    try { raw = window.localStorage.getItem(LS_DRAFT); } catch (e) { return; }
+    if (!raw) { return; }
+    var o;
+    try { o = JSON.parse(raw); } catch (e2) { return; }
+    if (!o) { return; }
+    DRAFT_IDS.forEach(function (id) { if (o[id]) { setVal(id, o[id]); } });
+  }
+  function clearDraft() {
+    try { window.localStorage.removeItem(LS_DRAFT); } catch (e) { /* 静默降级 */ }
+  }
+
+  /* ================= 导出 / 备份 ================= */
+  function download(name, content, mime) {
+    try {
+      var blob = new Blob([content], { type: mime + ';charset=utf-8' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = name;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
+    } catch (e) {
+      toast('导出失败：浏览器不支持本地下载', true);
+    }
+  }
+  function csvCell(v) {
+    var s = v === null || v === undefined ? '' : String(v);
+    return '"' + s.replace(/"/g, '""') + '"';
+  }
+  function exportCsv() {
+    if (!state.model) { return; }
+    var head = ['记录编号', '客户集团', '客户基地', '产品型号', '送样阶段', '区域', '送样日期', '回传日期',
+      '回传天数', '滞留天数', '状态', '未回传分类', '回传渠道', '责任销售', '责任产品技术', '下一步计划', '备注'];
+    var lines = [head.map(csvCell).join(',')];
+    state.model.items.forEach(function (it) {
+      var r = it.raw, st = it.st;
+      var row = [
+        getField(r, '记录编号'), getField(r, '客户集团'), getField(r, '客户基地'), getField(r, '产品型号'),
+        getField(r, '送样阶段'), getField(r, '区域'),
+        fmtYMD(parseYMD(getField(r, '送样日期'))), fmtYMD(parseYMD(getField(r, '回传日期'))),
+        st.returned && st.days !== null ? st.days : '', !st.returned && st.days !== null ? st.days : '',
+        st.label, getField(r, '未回传分类'), getField(r, '回传渠道'),
+        getField(r, '责任销售'), getField(r, '责任产品技术'), getField(r, '下一步计划'), getField(r, '备注')
+      ];
+      lines.push(row.map(csvCell).join(','));
+    });
+    download('送样回传台账_' + state.baseDate + '.csv', '\ufeff' + lines.join('\r\n'), 'text/csv');
+    toast('已导出 CSV');
+  }
+  function exportJson() {
+    if (!state.model) { return; }
+    var payload = {
+      type: 'sample-loop-backup',
+      exported_at: nowStr(),
+      base_date: state.baseDate,
+      config: state.cfg,
+      records: state.rows
+    };
+    download('送样回传备份_' + state.baseDate + '.json', JSON.stringify(payload, null, 2), 'application/json');
+    toast('已导出 JSON 备份');
+  }
+  function importJson(file) {
+    if (!file || !db) { return; }
+    var reader = new FileReader();
+    reader.onload = function () {
+      var data;
+      try { data = JSON.parse(String(reader.result)); } catch (e) {
+        toast('文件不是有效 JSON', true);
+        return;
+      }
+      var rows = (data && data.records) ? data.records : (Object.prototype.toString.call(data) === '[object Array]' ? data : null);
+      if (!rows || !rows.length) { toast('备份里没有可恢复的记录', true); return; }
+      toast('正在恢复 ' + rows.length + ' 条…');
+      var i = 0;
+      function next() {
+        if (i >= rows.length) { toast('恢复完成，共 ' + rows.length + ' 条'); loadData(); return; }
+        var r = rows[i++];
+        var p = {};
+        ['记录编号', '客户集团', '客户基地', '产品型号', '责任销售', '责任产品技术', '下一步计划', '备注'].forEach(function (k) {
+          if (r[k]) { p[k] = { text: String(r[k]) }; }
+        });
+        ['送样阶段', '区域', '回传渠道', '未回传分类'].forEach(function (k) {
+          if (r[k]) { p[k] = { select: String(r[k]) }; }
+        });
+        if (r['送样日期']) { p['送样日期'] = { date: fmtYMD(parseYMD(r['送样日期'])) }; }
+        if (r['回传日期']) { p['回传日期'] = { date: fmtYMD(parseYMD(r['回传日期'])) }; }
+        db.addRecord({ databaseId: DATABASE_ID, properties: p })
+          .then(function () { next(); })
+          .catch(function (err) { console.error('[database] 恢复失败:', err); toast('恢复中断：' + ((err && err.message) || '请重试'), true); });
+      }
+      next();
+    };
+    reader.onerror = function () { toast('读取文件失败', true); };
+    reader.readAsText(file, 'utf-8');
+  }
+
+  function copyText(text, okMsg) {
+    var done = function () { toast(okMsg || '已复制'); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done).catch(function () { fallbackCopy(text, done); });
+    } else {
+      fallbackCopy(text, done);
+    }
+  }
+  function fallbackCopy(text, done) {
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      done();
+    } catch (e) {
+      toast('复制失败，请手动选择文本', true);
+    }
+  }
+
+  /* ================= 口径抽屉 ================= */
+  function openConfig() {
+    setVal('cfg_dom', state.cfg.dom);
+    setVal('cfg_ovs', state.cfg.ovs);
+    setVal('cfg_over', state.cfg.over);
+    setVal('cfg_super', state.cfg.sup);
+    setVal('cfg_grave', state.cfg.grave);
+    show(byId('mask'), true);
+    show(byId('drawerConfig'), true);
+  }
+  function closeConfig() {
+    show(byId('mask'), false);
+    show(byId('drawerConfig'), false);
+  }
+  function saveConfig() {
+    var c = {
+      dom: parseInt(getVal('cfg_dom'), 10),
+      ovs: parseInt(getVal('cfg_ovs'), 10),
+      over: parseInt(getVal('cfg_over'), 10),
+      sup: parseInt(getVal('cfg_super'), 10),
+      grave: parseInt(getVal('cfg_grave'), 10)
+    };
+    var keys = ['dom', 'ovs', 'over', 'sup', 'grave'];
+    for (var i = 0; i < keys.length; i++) {
+      if (!c[keys[i]] || c[keys[i]] < 1) { toast('阈值必须是大于 0 的整数', true); return; }
+    }
+    if (!(c.over < c.sup && c.sup < c.grave)) { toast('须满足：逾期阈值 < 超期阈值 < 严重超期阈值', true); return; }
+    state.cfg = c;
+    saveCfg(c);
+    closeConfig();
+    buildModel();
+    refreshAll();
+    toast('口径已更新，指标已重算');
+  }
+  function resetConfig() {
+    state.cfg = { dom: DEFAULT_CFG.dom, ovs: DEFAULT_CFG.ovs, over: DEFAULT_CFG.over, sup: DEFAULT_CFG.sup, grave: DEFAULT_CFG.grave };
+    saveCfg(state.cfg);
+    openConfig();
+    toast('已恢复默认口径');
+  }
+
+  /* ================= 交互绑定 ================= */
+  function setTab(name) {
+    state.tab = name;
+    var tabs = document.querySelectorAll('.tab');
+    for (var i = 0; i < tabs.length; i++) {
+      var on = tabs[i].getAttribute('data-tab') === name;
+      tabs[i].className = on ? 'tab is-on' : 'tab';
+    }
+    var secs = document.querySelectorAll('.sec');
+    for (var j = 0; j < secs.length; j++) {
+      secs[j].className = secs[j].id === ('sec-' + name) ? 'sec is-on' : 'sec';
+    }
+  }
+
+  function bindEvents() {
+    var tabs = document.querySelectorAll('.tab');
+    for (var i = 0; i < tabs.length; i++) {
+      (function (t) {
+        t.addEventListener('click', function () { setTab(t.getAttribute('data-tab')); });
+      })(tabs[i]);
+    }
+
+    byId('btnAdd').addEventListener('click', function () { openForm(null); });
+    byId('btnCloseForm').addEventListener('click', closeForm);
+    byId('btnCancelForm').addEventListener('click', closeForm);
+    byId('btnSave').addEventListener('click', saveRecord);
+    byId('btnDelete').addEventListener('click', deleteRecord);
+
+    byId('btnConfig').addEventListener('click', openConfig);
+    byId('btnCloseConfig').addEventListener('click', closeConfig);
+    byId('btnConfigSave').addEventListener('click', saveConfig);
+    byId('btnConfigReset').addEventListener('click', resetConfig);
+
+    byId('mask').addEventListener('click', function () { closeForm(); closeConfig(); closeImport(); });
+
+    var form = byId('recForm');
+    form.addEventListener('input', function () {
+      if (draftTimer) { clearTimeout(draftTimer); }
+      draftTimer = setTimeout(saveDraft, 300);
+    });
+
+    byId('baseDate').addEventListener('change', function () {
+      var v = getVal('baseDate');
+      if (!parseYMD(v)) { toast('基准日无效', true); return; }
+      state.baseDate = fmtYMD(parseYMD(v));
+      buildModel();
+      refreshAll();
+    });
+    byId('btnBaseExample').addEventListener('click', function () {
+      var maxMs = null;
+      state.rows.forEach(function (r) {
+        var m = parseYMD(getField(r, '送样日期'));
+        if (m !== null && (maxMs === null || m > maxMs)) { maxMs = m; }
+      });
+      if (maxMs === null) { toast('没有可用的送样日期', true); return; }
+      var d = new Date(maxMs);
+      var monthEnd = Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 0);
+      state.baseDate = fmtYMD(monthEnd);
+      setVal('baseDate', state.baseDate);
+      buildModel();
+      refreshAll();
+      toast('基准日已设为最近送样月月末：' + state.baseDate);
+    });
+
+    byId('fltRegion').addEventListener('change', function () { state.filters.region = getVal('fltRegion'); renderLedger(); });
+    byId('fltStage').addEventListener('change', function () { state.filters.stage = getVal('fltStage'); renderLedger(); });
+    byId('fltStatus').addEventListener('change', function () { state.filters.status = getVal('fltStatus'); renderLedger(); });
+    byId('fltKw').addEventListener('input', function () { state.filters.kw = getVal('fltKw'); renderLedger(); });
+    byId('btnClearFlt').addEventListener('click', function () {
+      state.filters = { region: '', stage: '', status: '', kw: '' };
+      setVal('fltRegion', ''); setVal('fltStage', ''); setVal('fltStatus', ''); setVal('fltKw', '');
+      renderLedger();
+    });
+
+    byId('btnImportXlsx').addEventListener('click', openImport);
+    byId('btnCloseImport').addEventListener('click', closeImport);
+    byId('btnImpCancel').addEventListener('click', closeImport);
+    byId('btnTplDownload').addEventListener('click', downloadTemplate);
+    byId('btnTplCsv').addEventListener('click', downloadTemplateCsv);
+    byId('btnImpRun').addEventListener('click', runImport);
+    byId('fileImportXlsx').addEventListener('change', function (e) {
+      var f = e.target.files && e.target.files[0];
+      handleImportFile(f);
+      e.target.value = '';
+    });
+    bindDropZone();
+
+    byId('btnExportCsv').addEventListener('click', exportCsv);
+    byId('btnExportJson').addEventListener('click', exportJson);
+    byId('fileImportJson').addEventListener('change', function (e) {
+      var f = e.target.files && e.target.files[0];
+      importJson(f);
+      e.target.value = '';
+    });
+
+    byId('btnGenReport').addEventListener('click', function () { renderReport(); toast('已按当前口径重新生成'); });
+    byId('btnCopyReport').addEventListener('click', function () { copyText(byId('reportText').textContent, '周报全文已复制'); });
+    byId('btnDownloadReport').addEventListener('click', function () {
+      download('送样回传周报_' + state.baseDate + '.md', byId('reportText').textContent, 'text/markdown');
+      toast('已下载 .md');
+    });
+  }
+
+  /* ================= 初始化 ================= */
+  function offlineMode(msg) {
+    setSync('离线模式', 'off');
+    showLoading(false);
+    ['errToday', 'errLedger'].forEach(function (id) {
+      var n = byId(id);
+      if (n) { n.textContent = msg; n.hidden = false; }
+    });
+  }
+
+  function init() {
+    state.cfg = loadCfg();
+    state.baseDate = todayStr();
+    setVal('baseDate', state.baseDate);
+    bindEvents();
+
+    if (!db) {
+      offlineMode('未检测到资料库运行环境：当前为离线预览。请通过资料库页面链接打开，才能读写在线台账。');
+      return;
+    }
+
+    setSync('连接中…', '');
+    db.getSchema({ databaseId: DATABASE_ID }).then(function (schema) {
+      (schema.properties || []).forEach(function (f) {
+        if ((f.type === 'select' || f.type === 'multi_select') && f.config && f.config.options) {
+          state.options[f.name] = f.config.options;
+        }
+      });
+      fillStageFilter();
+      fillAllSelects();
+      loadData();
+    }).catch(function (err) {
+      console.error('[database] 表结构读取失败:', err);
+      setSync('读表失败·按默认口径', 'off');
+      loadData();
+    });
+
+    if (typeof db.onUpdated === 'function') {
+      var updTimer = null;
+      db.onUpdated(function (payload) {
+        var ids = (payload && payload.databaseIds) || [];
+        if (ids.indexOf(DATABASE_ID) === -1) { return; }
+        if (updTimer) { clearTimeout(updTimer); }
+        updTimer = setTimeout(function () { loadData(); }, 300);
+      });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>
