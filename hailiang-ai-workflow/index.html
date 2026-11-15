@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>培养 AI 专家 → 组建专家团 → 协同与验收｜海亮智汇后勤 模块三</title>
-<meta name="description" content="海亮智汇后勤 AI 实操课模块三：沿用模块二 IPO，3.1 培养 AI 专家（人设、能力模型、工作流程、责任边界），3.2 组建 AI 专家团，3.3 协同执行与人工验收。三个可复制提示词，先练习后讲解。" />
+<title>从临时多智能体到可复用专家团｜海亮智汇后勤 模块三</title>
+<meta name="description" content="海亮智汇后勤 AI 实操课模块三：第一步用一个提示词加两个附件，5 分钟跑通多智能体协同；第二步用专家团把同一套分工固化下来，变成一个能被点开、能被分发的东西。" />
 <style>
 :root{
   --navy:#061b46;--navy-2:#0a2a68;--blue:#155eef;--blue-deep:#0b47c2;--blue-soft:#eef4ff;
@@ -19,7 +19,11 @@ a{color:inherit;text-decoration:none}
 :is(a,button):focus-visible{outline:3px solid #9cc0ff;outline-offset:2px;border-radius:6px}
 .wrap{max-width:920px;margin:0 auto;padding-inline:22px}
 
-.site-head{position:sticky;top:0;z-index:50;background:rgba(6,27,70,.92);backdrop-filter:blur(8px);color:#fff;box-shadow:0 4px 18px rgba(6,27,70,.25)}
+.top-ribbon{background:#eaf2ff;border-bottom:1px solid #cadbf8;color:#17417e;font-size:.84rem}
+.top-ribbon .wrap{padding-block:9px;display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.top-ribbon a{color:#0b47c2;font-weight:800;text-decoration:underline;text-underline-offset:3px}
+
+.site-head{position:sticky;top:0;z-index:50;background:rgba(6,27,70,.94);backdrop-filter:blur(8px);color:#fff;box-shadow:0 4px 18px rgba(6,27,70,.25)}
 .head-inner{display:flex;align-items:center;justify-content:space-between;min-height:54px;gap:14px;padding-block:8px}
 .brand{font-weight:800;font-size:.92rem;display:flex;align-items:center;gap:8px}
 .brand .dot{width:9px;height:9px;border-radius:50%;background:#5b8dff;box-shadow:0 0 0 4px rgba(91,141,255,.22)}
@@ -30,218 +34,136 @@ a{color:inherit;text-decoration:none}
 
 .hero{background:linear-gradient(132deg,var(--navy),var(--navy-2) 55%,#0f3ea0);color:#fff;position:relative;overflow:hidden}
 .hero::before{content:"";position:absolute;width:460px;height:460px;right:-160px;top:-220px;border:1px solid rgba(255,255,255,.12);border-radius:50%}
-.hero .wrap{position:relative;z-index:2;padding-block:46px 40px}
+.hero .wrap{position:relative;z-index:2;padding-block:34px 30px}
 .badges{display:flex;gap:10px;flex-wrap:wrap}
 .badge{display:inline-flex;align-items:center;padding:5px 13px;border-radius:999px;font-size:.8rem;font-weight:600;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.22)}
 .badge.solid{background:#fff;color:var(--navy)}
-.hero h1{font-size:clamp(1.7rem,4vw,2.3rem);line-height:1.25;margin:16px 0 6px;font-weight:800}
-.hero .sub{font-size:.98rem;color:rgba(255,255,255,.85);font-weight:600;margin:0}
-.hero .path{margin-top:14px;font-size:.83rem;color:rgba(255,255,255,.66)}
+.hero h1{font-size:clamp(1.65rem,4vw,2.25rem);line-height:1.25;margin:15px 0 6px;font-weight:800}
+.hero .sub{font-size:.96rem;color:rgba(255,255,255,.85);font-weight:600;margin:0}
+.hero .path{margin-top:13px;font-size:.85rem;color:rgba(255,255,255,.68);max-width:660px}
 .hero .path b{color:#fff}
-.qa-strip{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
-.qa{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:14px 16px}
-.qa .lab{font-size:.72rem;font-weight:800;letter-spacing:.08em;color:rgba(255,255,255,.65);margin-bottom:4px}
-.qa p{margin:0;font-size:.92rem}
-.qa.m .lab{color:#ffd98a}
+.qa-strip{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
+.qa{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:13px 16px}
+.qa .lab{font-size:.71rem;font-weight:800;letter-spacing:.08em;color:#ffd98a;margin-bottom:3px}
+.qa p{margin:0;font-size:.9rem}
 
-section.block{padding-block:44px 6px}
+section.block{padding-block:40px 6px}
+.sec-head{margin-bottom:18px}
 .sec-kicker{display:inline-flex;align-items:center;gap:8px;color:var(--blue-deep);font-weight:800;font-size:.78rem;letter-spacing:.14em}
 .sec-kicker::before{content:"";width:22px;height:3px;border-radius:2px;background:var(--blue)}
-.sec-head h2{font-size:clamp(1.3rem,2.8vw,1.6rem);margin:10px 0 6px;font-weight:800}
-.sec-head p{margin:0;color:var(--ink-2)}
+.sec-head h2{font-size:clamp(1.28rem,2.8vw,1.58rem);margin:10px 0 6px;font-weight:800}
+.sec-head p{margin:0;color:var(--ink-2);font-size:.94rem}
 
-.topic{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden}
-.topic-head{display:flex;gap:14px;align-items:center;padding:18px 22px 14px}
-.topic-no{flex:none;width:44px;height:44px;border-radius:12px;background:var(--blue-soft);color:var(--blue-deep);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.95rem}
-.topic-head h3{margin:0;font-size:1.08rem;font-weight:800}
-.topic-body{display:grid;grid-template-columns:1fr 1fr;gap:0;padding:0 22px 18px}
-.tcol{padding:2px 0}
-.tcol+.tcol{border-left:1px dashed var(--line);padding-left:20px;margin-left:20px}
-.tcol h4{margin:0 0 8px;font-size:.74rem;font-weight:800;letter-spacing:.1em;color:var(--ink-2)}
-.tcol ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
-.tcol li{position:relative;padding-left:15px;font-size:.9rem}
-.tcol li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:6px;border-radius:2px;background:#b9cdf2}
-.tcol.case li::before{background:#f0c66a}
+.overview{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.ov-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;display:block;transition:border-color .15s,transform .15s}
+.ov-card:hover{border-color:#a9c5f4;transform:translateY(-1px)}
+.ov-card .num{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:9px;background:var(--navy);color:#fff;font-weight:800;font-size:.9rem;margin-bottom:8px}
+.ov-card h3{margin:0 0 4px;font-size:1.02rem;font-weight:800;color:#0f3a80}
+.ov-card p{margin:0;font-size:.85rem;color:var(--ink-2)}
+.ov-card .time{display:inline-block;margin-top:9px;font-size:.76rem;font-weight:700;color:var(--blue-deep);background:#edf4ff;border-radius:999px;padding:3px 10px}
 
-.chat-card{margin-top:18px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px}
-.chat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
-.chat-item{border:1px solid var(--line);border-radius:12px;padding:13px 14px;background:#fbfdff}
-.chat-item .letter{display:inline-flex;width:30px;height:30px;border-radius:9px;background:var(--navy);color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.95rem;margin-bottom:7px}
-.chat-item h4{margin:0 0 3px;font-size:.95rem;font-weight:800}
-.chat-item p{margin:0;font-size:.8rem;color:var(--ink-2);line-height:1.6}
-.chat-formula{margin-top:14px;background:var(--amber-soft);border:1px solid #f0dcb4;border-radius:10px;padding:11px 16px;font-size:.9rem}
-.chat-formula b{color:var(--amber)}
-.chat-tips{margin-top:10px;font-size:.83rem;color:var(--ink-2)}
-.chat-src{margin-top:10px;font-size:.75rem;color:#8a97ad}
+.step-banner{scroll-margin-top:78px;display:flex;gap:14px;align-items:flex-start;border:1px solid #c8d9fa;background:#f0f5ff;border-radius:12px;padding:16px 18px;margin:32px 0 14px}
+.step-banner>span{flex:none;display:grid;place-items:center;background:var(--navy);color:white;width:44px;height:44px;border-radius:12px;font-weight:900;font-size:1rem}
+.step-banner b{color:#103c87;font-size:1.05rem;display:block}
+.step-banner p{font-size:.89rem;margin:3px 0 0;color:var(--ink-2)}
 
-.prompt-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:18px;overflow:hidden}
-.prompt-head{display:flex;gap:12px;align-items:center;padding:16px 20px 12px;flex-wrap:wrap}
-.prompt-step{flex:none;font-size:.74rem;font-weight:800;background:var(--blue);color:#fff;border-radius:999px;padding:4px 12px;letter-spacing:.04em}
-.prompt-head h3{margin:0;font-size:1rem;font-weight:800}
-.prompt-desc{padding:0 20px;font-size:.87rem;color:var(--ink-2);margin:0}
-.prompt-toolbar{display:flex;gap:10px;align-items:center;padding:12px 20px 0;flex-wrap:wrap}
-.copy-btn{border:none;cursor:pointer;background:var(--navy);color:#fff;font-weight:700;font-size:.85rem;border-radius:9px;padding:8px 18px;transition:background .15s}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 22px;margin-bottom:14px}
+.card h3{margin:0 0 10px;font-size:.98rem;font-weight:800;color:#123d87}
+
+.need{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.need-item{border:1px solid var(--line);border-radius:12px;padding:13px 14px;background:#fbfdff}
+.need-item .tag{font-size:.72rem;font-weight:800;letter-spacing:.06em;color:var(--blue-deep);background:#edf4ff;border-radius:6px;padding:2px 8px;display:inline-block;margin-bottom:6px}
+.need-item b{display:block;font-size:.92rem;color:var(--navy-2)}
+.need-item span{font-size:.8rem;color:var(--ink-2)}
+
+.dl-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.dl-card{border:1px solid #bfd3f5;border-radius:12px;padding:16px 18px;background:linear-gradient(180deg,#f8fbff,#eef4ff)}
+.dl-card .fname{font-weight:800;color:#0e3d8a;font-size:.95rem;display:flex;align-items:center;gap:7px}
+.dl-card .ftype{font-size:.7rem;font-weight:800;background:#0e3d8a;color:#fff;border-radius:5px;padding:1px 6px}
+.dl-card p{margin:5px 0 11px;font-size:.82rem;color:var(--ink-2);line-height:1.6}
+.dl-btn{display:inline-block;background:var(--navy);color:#fff;font-weight:700;font-size:.84rem;border-radius:8px;padding:8px 16px}
+.dl-btn:hover{background:#12356e}
+.dl-btn.ghost{background:#fff;color:var(--blue-deep);border:1px solid #b9cdf2;margin-left:8px}
+.dl-note{margin:11px 0 0;font-size:.78rem;color:#7a8aa4}
+
+.prompt-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden}
+.prompt-head{display:flex;gap:12px;align-items:center;padding:15px 20px 10px;flex-wrap:wrap}
+.prompt-step{flex:none;font-size:.73rem;font-weight:800;background:var(--blue);color:#fff;border-radius:999px;padding:4px 12px}
+.prompt-head h3{margin:0;font-size:.98rem;font-weight:800}
+.prompt-desc{padding:0 20px;font-size:.86rem;color:var(--ink-2);margin:0}
+.prompt-desc b{color:#0b47c2}
+.prompt-toolbar{display:flex;gap:10px;align-items:center;padding:11px 20px 0;flex-wrap:wrap}
+.copy-btn{border:none;cursor:pointer;background:var(--navy);color:#fff;font-weight:700;font-size:.85rem;border-radius:9px;padding:8px 18px}
 .copy-btn:hover{background:#12356e}
 .select-btn{border:1px solid var(--line);background:#fff;cursor:pointer;color:var(--ink-2);font-weight:600;font-size:.82rem;border-radius:9px;padding:8px 14px}
-.select-btn:hover{border-color:#b9cdf2;color:var(--ink)}
 .copy-status{font-size:.82rem;font-weight:600}
 .copy-status.ok{color:var(--green)}
 .copy-status.err{color:#c0392b}
-.prompt-card pre{
-  margin:14px 20px 20px;background:var(--code-bg);color:#dbe7ff;border-radius:12px;
-  padding:18px 20px;font-size:.87rem;line-height:1.8;white-space:pre-wrap;word-break:break-word;
-  font-family:inherit;user-select:all;
-}
+.prompt-card pre{margin:13px 20px 18px;background:var(--code-bg);color:#dbe7ff;border-radius:12px;padding:17px 19px;font-size:.86rem;line-height:1.8;white-space:pre-wrap;word-break:break-word;font-family:inherit;user-select:all;max-height:520px;overflow:auto}
 
-footer{margin-top:48px;background:var(--navy);color:rgba(255,255,255,.8);padding:30px 0 28px}
+.flow{display:grid;gap:9px;margin-top:4px}
+.flow-row{display:grid;grid-template-columns:38px minmax(0,1fr);gap:13px;align-items:start;border:1px solid #dbe5f4;background:#fbfdff;border-radius:10px;padding:12px 14px}
+.flow-row .n{background:#e5eeff;color:#164da9;border-radius:9px;width:34px;height:34px;display:grid;place-items:center;font-weight:800;font-size:.82rem}
+.flow-row b{display:block;font-size:.92rem;color:#123d87}
+.flow-row small{color:var(--ink-2);font-size:.82rem;line-height:1.6;display:block}
+
+.check-point{background:#eff6ff;border-left:4px solid #155eef;color:#294d80;border-radius:0 9px 9px 0;padding:12px 15px;font-size:.87rem;margin:6px 0 16px}
+.check-point b{color:#0b408e}
+
+table.cmp{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:.87rem}
+table.cmp th,table.cmp td{padding:11px 14px;text-align:left;border-bottom:1px solid #e6eefa;vertical-align:top}
+table.cmp th{background:#f1f6ff;color:#123d87;font-weight:800;font-size:.84rem}
+table.cmp tr:last-child td{border-bottom:none}
+table.cmp td:first-child{font-weight:700;color:#31456b;white-space:nowrap}
+
+.faq{background:#fff;border:1px solid var(--line);border-radius:12px;padding:4px 22px;box-shadow:var(--shadow)}
+.faq details{border-bottom:1px solid #e9f0fb;padding:13px 0}
+.faq details:last-child{border-bottom:none}
+.faq summary{cursor:pointer;font-weight:800;color:#123d87;font-size:.94rem;list-style:none}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::before{content:"＋";color:#155eef;margin-right:8px;font-weight:800}
+.faq details[open] summary::before{content:"－"}
+.faq p{margin:8px 0 2px;font-size:.87rem;color:var(--ink-2)}
+
+footer{margin-top:44px;background:var(--navy);color:rgba(255,255,255,.8);padding:28px 0 26px}
 .foot-grid{display:flex;gap:24px;flex-wrap:wrap;align-items:center;justify-content:space-between}
 .lecturer{display:flex;gap:14px;align-items:center}
-.avatar{flex:none;width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#2a57c9,#5b8dff);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.15rem;color:#fff;border:2px solid rgba(255,255,255,.35)}
-.lecturer .name{font-size:1.02rem;font-weight:800;color:#fff}
-.lecturer .title{font-size:.82rem;color:rgba(255,255,255,.72)}
-.foot-links a{color:#9cc0ff;font-size:.88rem}
+.avatar{flex:none;width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#2a57c9,#5b8dff);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;color:#fff;border:2px solid rgba(255,255,255,.35)}
+.lecturer .name{font-size:.98rem;font-weight:800;color:#fff}
+.lecturer .title{font-size:.8rem;color:rgba(255,255,255,.72)}
+.foot-links a{color:#9cc0ff;font-size:.85rem;margin-left:14px}
 .foot-links a:hover{text-decoration:underline}
-.foot-note{margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.14);font-size:.76rem;color:rgba(255,255,255,.55)}
+.foot-note{margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,.14);font-size:.75rem;color:rgba(255,255,255,.55)}
 
 @media (max-width:760px){
-  .qa-strip{grid-template-columns:1fr}
-  .topic-body{grid-template-columns:1fr}
-  .tcol+.tcol{border-left:none;margin-left:0;padding-left:0;border-top:1px dashed var(--line);margin-top:12px;padding-top:12px}
-  .chat-grid{grid-template-columns:repeat(2,1fr)}
+  .qa-strip,.overview,.need,.dl-grid{grid-template-columns:1fr}
+  .head-nav a:not(.home){display:none}
 }
 @media (max-width:520px){
   .wrap{padding-inline:16px}
-  .head-nav a:not(.home){display:none}
-  .chat-grid{grid-template-columns:1fr}
-  .topic-head{padding:16px 16px 12px}
-  .topic-body{padding:0 16px 16px}
-  .prompt-card pre{margin:12px 14px 16px;padding:14px 16px;font-size:.84rem}
-  .prompt-head,.prompt-desc,.prompt-toolbar{padding-inline:16px}
+  .prompt-card pre{margin:12px 14px 16px;padding:14px 15px;font-size:.82rem}
+  .prompt-head,.prompt-desc,.prompt-toolbar{padding-inline:15px}
+  .card{padding:17px 16px}
+  table.cmp{font-size:.82rem}
+  table.cmp th,table.cmp td{padding:9px 10px}
 }
-
-/* 模块三 v2：沿用原有科技深蓝视觉体系 */
-.top-ribbon{background:#eaf2ff;border-bottom:1px solid #cadbf8;color:#17417e;font-size:.84rem}
-.top-ribbon .wrap{padding-block:9px;display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap}
-.top-ribbon a{color:#0b47c2;font-weight:800;text-decoration:underline;text-underline-offset:3px}
-.handoff-card,.framework-card,.case-card,.lesson-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;margin-top:18px}
-.handoff-grid{display:grid;grid-template-columns:1fr 48px 1fr;gap:12px;align-items:center;margin:16px 0}
-.handoff-side{border-radius:12px;padding:18px;background:#f2f6ff;border:1px solid #d9e5fb;min-height:150px}
-.handoff-side.current{background:#eaf2ff;border-color:#b7cef7}
-.handoff-side .eyebrow{font-size:.77rem;font-weight:800;color:var(--blue-deep)}
-.handoff-side h3{font-size:1.1rem;margin:5px 0 8px}
-.handoff-side p{font-size:.88rem;margin:0;color:var(--ink-2)}
-.arrow-between{text-align:center;font-size:1.8rem;font-weight:800;color:var(--blue-deep)}
-.insight{border-left:4px solid var(--blue);background:#f0f5ff;padding:12px 16px;border-radius:0 10px 10px 0;font-size:.92rem}
-.insight strong{color:#093b90}
-.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
-.pill{display:inline-block;background:#eef4ff;border:1px solid #d0dffc;color:#173d82;border-radius:999px;font-weight:700;font-size:.78rem;padding:4px 11px}
-.topic-head .tag{font-size:.78rem;margin-left:auto;color:var(--blue-deep);font-weight:800;background:#edf4ff;border-radius:8px;padding:3px 9px}
-.topic-summary{margin:0 22px 14px;padding:9px 13px;border-radius:9px;background:#f4f8ff;color:#21457b;font-weight:700;font-size:.9rem}
-.topic-output{margin:0 22px 18px;padding:11px 14px;background:#eaf5ea;border:1px solid #cde8d0;border-radius:9px;font-size:.88rem}
-.topic-output b{color:#287039}
-.framework-intro{margin:0 0 12px;color:var(--ink-2);font-size:.9rem}
-.frame-outer{border:2px solid #b4cdf6;border-radius:14px;padding:14px;background:#f8fbff}
-.frame-row{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.frame-box{border-radius:11px;border:1px solid #d7e4f9;padding:13px;background:#fff}
-.frame-box h4{font-size:.9rem;margin:0 0 4px;color:#103974}
-.frame-box p{font-size:.8rem;color:var(--ink-2);margin:0}
-.frame-core{border-radius:12px;background:#e9f1ff;border:2px solid #5b8dff;padding:15px;margin-top:12px}
-.frame-core h4{margin:0 0 4px;font-size:1rem;color:#083b91}
-.frame-core p{margin:0 0 10px;font-size:.84rem;color:#4a5e82}
-.ipo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
-.ipo-cell{background:white;border:1px solid #bed4f5;border-radius:9px;padding:11px;text-align:center}
-.ipo-cell b{display:block;color:#073c99;font-size:1.2rem}
-.ipo-cell span{font-size:.79rem;color:var(--ink-2)}
-.frame-caveat{color:#54647c;font-size:.83rem;margin:12px 0 0}
-.case-steps{display:grid;gap:9px;margin-top:14px}
-.case-step{display:grid;grid-template-columns:36px minmax(0,1fr) auto;align-items:center;gap:12px;border:1px solid #dbe5f4;background:#fbfdff;border-radius:10px;padding:11px 13px}
-.case-step .num{background:#e5eeff;color:#164da9;border-radius:9px;width:34px;height:34px;display:grid;place-items:center;font-weight:800;font-size:.84rem}
-.case-step .body strong{display:block;font-size:.92rem}
-.case-step .body small{color:var(--ink-2);font-size:.8rem}
-.case-step .who{color:#144a99;background:#edf4ff;padding:3px 9px;border-radius:999px;font-size:.76rem;font-weight:700;white-space:nowrap}
-.case-note{color:var(--ink-2);font-size:.83rem;margin:12px 0 0}
-.lesson-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:13px}
-.lesson-item{background:#f5f8ff;border:1px solid #dce7f8;border-radius:11px;padding:14px}
-.lesson-item b{color:#0a3a8c;font-size:.93rem}
-.lesson-item p{font-size:.82rem;color:var(--ink-2);margin:6px 0 0}
-.lesson-quote{font-weight:800;color:var(--blue-deep);font-size:1.05rem;margin:15px 0 0}
-.practice-note{margin:14px 0 18px;background:#eaf2ff;border-left:4px solid #155eef;padding:12px 15px;border-radius:0 9px 9px 0;font-size:.9rem}
-.prompt-card pre{max-height:680px;overflow:auto}
-.prompt-desc b{color:#0b47c2}
-.mini-note{font-size:.83rem;color:var(--ink-2);margin:0 0 8px}
-@media(max-width:760px){.handoff-grid{grid-template-columns:1fr}.arrow-between{transform:rotate(90deg)}.lesson-grid{grid-template-columns:1fr}}
-@media(max-width:520px){.frame-row{grid-template-columns:1fr}.case-step{grid-template-columns:34px minmax(0,1fr)}.case-step .who{grid-column:2;justify-self:start}.topic-head .tag{display:none}.topic-summary,.topic-output{margin-inline:16px}}
-
-
-.t-layer{margin-top:10px;background:#fff;border:1px solid #a4bfea;border-radius:10px;padding:10px}
-.t-head{font-size:.91rem;font-weight:800;color:#073c99;margin-bottom:7px}
-.t-flow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
-.t-node{background:#f7faff;border:1px solid #cad9f4;border-radius:8px;padding:11px 8px;text-align:center}
-.t-node b{font-size:.87rem;color:#073c99;display:block}
-.t-node span{font-size:.8rem;color:#526178}
-.t-links{font-weight:600;font-size:.79rem;color:#2d588e;margin-top:9px}
-.t-down{text-align:center;color:#174e9b;font-size:.84rem;font-weight:800;margin-top:9px}
-@media(max-width:520px){.t-flow{grid-template-columns:1fr}}
-
-/* 客户反馈版：先练习，后附录；继承既有深蓝视觉 */
-.hero .wrap{padding-block:29px 28px}
-.qa-strip{margin-top:14px}
-#prompts{padding-top:27px}
-.quick-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
-.quick-steps a{background:#fff;border:1px solid #c9d9f5;border-radius:13px;padding:15px;display:flex;flex-direction:column;gap:3px;box-shadow:0 7px 19px rgba(17,57,122,.06)}
-.quick-steps a:hover{border-color:var(--blue);background:#f7faff}
-.quick-steps b{color:var(--blue-deep);font-size:1rem}
-.quick-steps small{color:var(--ink-2);font-size:.79rem}
-.sample-panel{border:1px solid #b9cef1;border-radius:13px;background:white;margin:19px 0;overflow:hidden}
-.sample-panel>summary{cursor:pointer;font-size:.97rem;font-weight:800;color:#123d87;background:#edf4ff;padding:15px 18px}
-.sample-panel>summary span{font-size:.77rem;font-weight:500;color:#6581a9;margin-left:10px}
-.sample-explain{color:var(--ink-2);font-size:.86rem;padding:0 18px}
-.sample-panel .prompt-card{margin:10px 17px}
-.sample-panel .check-point{margin:10px 17px 18px}
-.step-banner{scroll-margin-top:78px;display:flex;gap:14px;align-items:flex-start;border:1px solid #c8d9fa;background:#f0f5ff;border-radius:12px;padding:16px 18px;margin:23px 0 13px}
-.step-banner>span{flex:none;display:grid;place-items:center;background:var(--navy);color:white;width:44px;height:44px;border-radius:12px;font-weight:900}
-.step-banner b{color:#103c87;font-size:1.04rem}
-.step-banner p{font-size:.89rem;margin:3px 0 0;color:var(--ink-2)}
-.check-point{background:#eff6ff;border-left:4px solid #155eef;color:#294d80;border-radius:0 9px 9px 0;padding:12px 15px;font-size:.87rem;margin:8px 0 16px}
-.check-point b{color:#0b408e}
-.end-state{border:1px solid #b8cffa;border-radius:12px;background:#e8f1ff;padding:17px 19px;margin-top:19px;font-size:.91rem}
-.end-state a{color:var(--blue-deep);font-weight:800;text-decoration:underline;margin-left:6px}
-#appendix{padding-top:50px}
-.appendix-block{padding-top:12px!important}
-.appendix-toggle{border:1px solid var(--line);background:white;box-shadow:0 6px 18px rgba(17,57,122,.05);border-radius:13px;overflow:hidden}
-.appendix-toggle>summary{cursor:pointer;list-style:none;padding:18px 22px;font-size:.98rem;font-weight:800;color:#133f86;display:flex;gap:10px;justify-content:space-between}
-.appendix-toggle>summary::-webkit-details-marker{display:none}
-.appendix-toggle>summary:before{content:"＋";color:#155eef}
-.appendix-toggle[open]>summary:before{content:"－"}
-.appendix-toggle>summary em{font-style:normal;font-weight:400;color:#7c8da9;font-size:.78rem}
-.appendix-toggle[open]>summary{background:#f1f6ff;border-bottom:1px solid var(--line)}
-.appendix-toggle>.wrap{padding-bottom:22px}
-.appendix-toggle .sec-head{margin-top:20px}
-@media(max-width:760px){.quick-steps{grid-template-columns:1fr}.quick-steps a{padding:10px 13px}}
-@media(max-width:520px){.appendix-toggle>summary{font-size:.88rem;padding:14px}.appendix-toggle>summary em{display:none}.sample-panel .prompt-card{margin:9px}}
-
-/* 专家团教学版：继承既有深蓝风格，保持练习置顶 */
-.expert-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:16px 0}
-.expert-card{min-width:0;background:#f3f7ff;border:1px solid #cbdcf7;border-radius:12px;padding:13px;text-align:center}
-.expert-card b{display:block;color:var(--navy-2);font-size:.9rem;line-height:1.4}
-.expert-card p{font-size:.8rem;line-height:1.55;color:var(--ink-2);margin:6px 0 0}
-.expert-flow{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;margin:18px 0}
-.expert-flow .leadrow{text-align:center;background:#e9f2ff;border-radius:9px;padding:9px;color:var(--navy-2);font-weight:800;font-size:.92rem}
-.expert-flow .down{text-align:center;color:var(--blue);font-weight:900;padding:5px 0}
-.lesson-focus{font-weight:800;color:#123f8a;background:#edf4ff;border-left:4px solid var(--blue);padding:12px 15px;border-radius:0 9px 9px 0;margin:15px 0}
-.kpi{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:14px 0;color:#43618a;font-size:.83rem}
-.kpi span{border:1px solid #cddff9;border-radius:99px;padding:5px 11px;background:#f3f7ff}
-@media(max-width:700px){.expert-grid{grid-template-columns:1fr}.expert-card{text-align:left}.expert-flow{padding:12px}}
 </style>
 </head>
-<body><div class="top-ribbon"><div class="wrap"><span><b>课堂承接：</b>先取出模块2已经核对的 IPO 任务卡，本模块不重新选题、不重新建总 IPO 卡。</span><a href="/lijiagui/hailiang-ipo/" target="_blank" rel="noopener">回看模块2 · IPO任务卡 ↗</a></div></div>
+<body>
+
+<div class="top-ribbon"><div class="wrap">
+  <span><b>课堂承接：</b>模块二已经把任务用 IPO 拆清了。这一步不再讨论"任务怎么拆"，而是"谁来干、怎么协同、怎么固化"。</span>
+  <a href="/lijiagui/hailiang-ipo/" target="_blank" rel="noopener">回看模块2 · IPO任务卡 ↗</a>
+</div></div>
 
 <header class="site-head">
   <div class="wrap head-inner">
     <a class="brand" href="/lijiagui/list/"><span class="dot"></span>李家贵 · AI 实战训练</a>
     <nav class="head-nav" aria-label="页面导航">
-      <a href="#prompts" class="home">立即练习</a><a href="#step31">3.1</a><a href="#step32">3.2</a><a href="#step33">3.3</a>
-      <a class="home" href="/lijiagui/list/">资源导航</a>
+      <a href="#step1" class="home">第一步 · 跑通</a>
+      <a href="#step2">第二步 · 固化</a>
+      <a href="#compare">两步区别</a>
+      <a href="#faq">常见问题</a>
     </nav>
   </div>
 </header>
@@ -249,130 +171,233 @@ footer{margin-top:48px;background:var(--navy);color:rgba(255,255,255,.8);padding
 <main>
   <section class="hero">
     <div class="wrap">
-      <div class="badges"><span class="badge solid">模块三 · 协同交付</span><span class="badge">三步可复制</span></div>
-      <h1>从培养 AI 专家，到组建 AI 专家团</h1>
+      <div class="badges"><span class="badge solid">模块三 · 升级版</span><span class="badge">两步可复制</span><span class="badge">真实工具操作</span></div>
+      <h1>从临时多智能体，<br>到可复用的专家团</h1>
       <p class="sub">海亮智汇后勤 全员 AI 实操技巧 · 模块三</p>
-      <p class="path">模块二已用 IPO 拆清任务；本模块沿用原任务，不重新建 IPO：<b>培养专家 → 组建专家团 → 专家协同与人工验收</b>。模块四再把验证有效的方法沉淀为 SOP / Skill。</p>
+      <p class="path">第一步用一句话加两个附件，当场跑出三个子智能体协作；第二步把同一套分固化成一个能被点开、能被分发的专家团。<b>先看见它动起来，再让它留下来。</b></p>
+      <div class="qa-strip">
+        <div class="qa"><div class="lab">今天先回答</div><p>AI 到底能不能分工？能不能有人拆任务、有人干活、有人挑错？</p></div>
+        <div class="qa"><div class="lab">今天再回答</div><p>这套分工能不能不做一次就散？能不能变成你们部门自己的、随时点开的团队？</p></div>
+      </div>
     </div>
   </section>
 
-  <section class="block" id="prompts">
+  <section class="block">
     <div class="wrap">
       <div class="sec-head">
-        <span class="sec-kicker">直接练习 · 沿用模块二 IPO</span>
-        <h2>一个专家到一个专家团，三步完成</h2>
-        <p>直接把下面三个简短提示词依次复制到同一段 AI 对话。只带原 IPO，不需要重新拆任务，也不要求搭建多 Agent 系统。</p>
+        <span class="sec-kicker">两步走</span>
+        <h2>先临时搭一个，再把它固化下来</h2>
+        <p>不要求你懂编程，也不要求先建系统。第一步是"演示"，第二步是"资产"。</p>
       </div>
-      <div class="quick-steps">
-        <a href="#step31"><b>3.1 培养 AI 专家</b><small>人设 · 能力 · 流程 · 边界</small></a>
-        <a href="#step32"><b>3.2 组建专家团</b><small>分工 · 交接 · 人工检查</small></a>
-        <a href="#step33"><b>3.3 协同与验收</b><small>执行 · 复核 · 人工裁决</small></a>
+      <div class="overview">
+        <a class="ov-card" href="#step1">
+          <span class="num">01</span>
+          <h3>临时搭建多智能体</h3>
+          <p>一个提示词 + 两个附件，在同一段对话里跑出"管理 → 执行 → 质检"的汇报线。</p>
+          <span class="time">约 5 分钟</span>
+        </a>
+        <a class="ov-card" href="#step2">
+          <span class="num">02</span>
+          <h3>用专家团固化下来</h3>
+          <p>把刚才那套角色、规则、交付物包装成一个专家团，以后点开就能用。</p>
+          <span class="time">约 15 分钟</span>
+        </a>
       </div>
-      <p class="lesson-focus">模块二解决“工作怎么做”，模块三解决“让哪些专家、按照什么分工完成工作”，模块四解决“怎样沉淀有效的方法”。</p>
-      <p class="practice-note"><b>练习准备：</b>直接使用模块二已经确认的 IPO 任务卡；没有材料也可以展开下面的校园报修工单模拟案例。</p>
 
-      <details class="sample-panel" id="sample">
-        <summary>没有 IPO？展开校园报修工单的模拟案例 <span>可一键复制，非真实业务数据</span></summary>
-        <p class="sample-explain">此案例只用于课堂练习。先复制到 AI 对话，再继续 3.1；如果已有自己的 IPO，则不需要复制此案例。</p>
-        <div class="prompt-card">
-          <div class="prompt-head"><span class="prompt-step">贯穿案例 · 复制使用</span><h3>校园报修工单跟进 IPO（模拟）</h3></div>
-          <p class="prompt-desc">跟进工单进展并形成简报，不自动派工、验收或结案。</p>
-          <div class="prompt-toolbar"><button class="copy-btn" type="button">复制模拟案例</button><button class="select-btn" type="button">全选文本</button><span class="copy-status" role="status"></span></div>
-          <pre>【任务】整理校园报修工单跟进简报。
-【已确认 IPO】
-I：脱敏工单台账、维修记录、风险清单。
-P：核对工单 → 识别异常 → 跟踪处理 → 复核证据 → 生成简报 → 人工确认。
-O：一页跟进简报，包含工单进展、异常风险、待办与下一步；关键结论保留来源。
-【模拟材料】
-工单台账：A 单标“已完成”，B 单风险为“低”。
-维修记录：A 单现场处理尚未结束，未有验收凭证。
-风险清单：B 单风险为“高”，具体原因待核查。
-【边界】所有材料仅供教学；状态冲突必须标“待确认”；AI 不自动结案、派工、判断安全事故或对外承诺。</pre>
-        </div>
-      </details>
-
-      <div class="step-banner" id="step31"><span>01</span><div><b>3.1 培养一个 AI 专家</b><p>把普通助手变成面向特定工作的专家：人设 + 能力模型 + 工作流程 + 责任边界。</p></div></div>
-      <div class="kpi"><span>取用：原 IPO</span><span>生成：专家配置卡</span><span>人工检查：能力是否真实可用</span></div>
-      <div class="prompt-card">
-        <div class="prompt-head"><span class="prompt-step">3.1 · 复制使用</span><h3>给 AI 专家写一张配置卡</h3></div>
-        <p class="prompt-desc">先确定专家“是谁、会什么、怎么做、哪些不能做”，不是简单说一句“你是资深专家”。</p>
-        <div class="prompt-toolbar"><button class="copy-btn" type="button">复制提示词</button><button class="select-btn" type="button">全选文本</button><span class="copy-status" role="status"></span></div>
-        <pre>沿用模块二已确认的 IPO，不要重写。
-
-请为这项工作设计一名 AI 专家，输出《专家配置卡》：
-1. 人设：专家名称、定位、职责。
-2. 能力模型：需要的知识、技能和工具。
-3. 工作流程：按步骤说明怎么完成任务。
-4. 责任边界：哪些由 AI 做，哪些必须人工确认。
-
-缺少的能力、资料或权限标“待确认”，不要假设已经具备。</pre>
+      <div class="step-banner" id="step1">
+        <span>01</span>
+        <div><b>临时搭建多智能体：一句话 + 两个附件</b><p>把材料喂给 AI，让它自己派人干活。这一步的重点是"看见过程"。</p></div>
       </div>
-      <p class="check-point"><b>学员检查：</b>专家的能力和工作步骤能否对应原 IPO？有没有把“需要某项工具”误写成“已经接入”？安全、审批和结案是否有人负责？<b>产出：</b>《AI 专家配置卡》。</p>
-      <details class="sample-panel">
-        <summary>查看 3.1 示例结果 <span>不必照搬，按实际岗位修改</span></summary>
-        <div class="sample-explain">
-          <div class="case-steps">
-            <div class="case-step"><span class="num">人设</span><span class="body"><strong>校园物业工单运营专家</strong><small>负责整理工单、识别异常、生成跟进简报初稿</small></span></div>
-            <div class="case-step"><span class="num">能力</span><span class="body"><strong>状态核对、异常分类、证据对照、报告生成</strong><small>使用的知识库、工单系统权限须另行确认</small></span></div>
-            <div class="case-step"><span class="num">流程</span><span class="body"><strong>读台账 → 核记录 → 找异常 → 起草清单 → 人审</strong></span></div>
-            <div class="case-step"><span class="num">边界</span><span class="body"><strong>不擅自派工、结案、验收或判断安全事故</strong><small>涉及责任认定和业务承诺交给负责人</small></span></div>
+
+      <div class="need">
+        <div class="need-item"><span class="tag">1 个提示词</span><b>总调度指令</b><span>下面可直接复制</span></div>
+        <div class="need-item"><span class="tag">附件 A</span><b>报修工单数据</b><span>20 条，含故意埋的问题</span></div>
+        <div class="need-item"><span class="tag">附件 B</span><b>三个岗位职责说明</b><span>子智能体自己会去读</span></div>
+      </div>
+
+      <div class="card">
+        <h3>先下载两个附件</h3>
+        <div class="dl-grid">
+          <div class="dl-card">
+            <div class="fname"><span class="ftype">CSV</span> tickets-sample.csv</div>
+            <p>今天上午 20 条报修工单，字段按真实工单表构造。里面故意埋了重复单、超时、技能错配、无证作业等问题。</p>
+            <a class="dl-btn" href="./tickets-sample.csv" download="tickets-sample.csv">下载工单数据</a>
+          </div>
+          <div class="dl-card">
+            <div class="fname"><span class="ftype">MD</span> agent-roles.md</div>
+            <p>管理、执行、质检三个角色的职责、输出表格列和红线。这是子智能体要读的"岗位说明书"。</p>
+            <a class="dl-btn" href="./agent-roles.md" download="agent-roles.md">下载岗位说明</a>
           </div>
         </div>
-      </details>
+        <p class="dl-note">下载后建议保存到同一个文件夹，等下一起拖进对话。如果点击没反应，右键链接选择"链接另存为"。</p>
+      </div>
 
-      <div class="step-banner" id="step32"><span>02</span><div><b>3.2 组建 AI 专家团</b><p>按照原 IPO 的处理步骤设计专业分工、接力规则和人工检查点。</p></div></div>
-      <div class="expert-flow">
-        <div class="leadrow">人类后勤业务负责人：确定目标、授权、处理分歧并最终审核</div>
-        <div class="down">↓</div>
-        <div class="expert-grid">
-          <div class="expert-card"><b>工单分诊专家</b><p>核对台账、分类工单、发现缺项</p></div>
-          <div class="expert-card"><b>维修协调专家</b><p>整理维修进展、识别待协调事项</p></div>
-          <div class="expert-card"><b>质量复核专家</b><p>对照记录、审查证据、提示冲突</p></div>
+      <div class="prompt-card">
+        <div class="prompt-head"><span class="prompt-step">第一步 · 复制使用</span><h3>总调度指令（管理 Agent）</h3></div>
+        <p class="prompt-desc">这句话的关键不是描述得很详细，而是<b>明确说清"你是管理者，不许亲手干"</b>。不写这一句，它会自己一口气把所有活干完，你就看不到协作过程了。</p>
+        <div class="prompt-toolbar">
+          <button class="copy-btn" type="button" data-label="复制提示词">复制提示词</button>
+          <button class="select-btn" type="button">全选文本</button>
+          <span class="copy-status" role="status"></span>
         </div>
-        <div class="down">↓</div>
-        <div class="leadrow">统一交付：工单进展、异常风险、责任待办与下一步</div>
+        <pre>你是园区后勤中心的值班经理，手下有三个执行专员和一名品质稽核。
+
+【材料】
+工单数据见附件 tickets-sample.csv（20 条，含重复单、超时、技能错配等脏数据）。
+岗位规范见附件 agent-roles.md。
+
+【你的职责，只有四件】
+1. 分流：把工单分成 A 紧急件（SLA 30 分钟）、B 一般件（SLA 60 分钟）、
+   C 需持证或需外委（电梯、消防、燃气、高压电、专业厨房设备，单独挂起）。
+2. 建台账：为每个专员建任务卡，写清负责人、工单号清单、要交的文件名。
+3. 派工：真实派生子智能体，各自独立执行、独立交付文件。
+   派工时明确告诉每个专员：先读 agent-roles.md 的对应章节，
+   严格按其中要求执行，不要凭常识发挥，也不要自行简化表格列。
+4. 定升级：响应已超 SLA 50% 仍未动的工单，升级给项目经理并说明理由。
+
+【红线】
+不许亲自派单，不许替稽核挑错，不要自己一次性把所有活干完。
+三个专员可以并行；稽核必须等他们交付完才能开始。
+
+【交付】你自己只产出《今日工单处置台账》，含任务卡、升级清单、待决策事项。</pre>
       </div>
+
+      <div class="card">
+        <h3>操作四步</h3>
+        <div class="flow">
+          <div class="flow-row"><span class="n">1</span><div><b>新建一个对话</b><small>不要用旧对话，避免上一轮的历史干扰判断。</small></div></div>
+          <div class="flow-row"><span class="n">2</span><div><b>把两个附件一起拖进对话框</b><small>CSV 和 MD 都要拖进去。只拖 CSV，它就不知道该按什么标准派单。</small></div></div>
+          <div class="flow-row"><span class="n">3</span><div><b>粘贴上面那段提示词，发送</b><small>发出去之后先别催，让它自己拆、自己派。</small></div></div>
+          <div class="flow-row"><span class="n">4</span><div><b>等子智能体跑起来，然后展开团队列表</b><small>界面上会折叠成一个团队，点开才能看到几个成员各自在干什么。</small></div></div>
+        </div>
+      </div>
+
+      <p class="check-point"><b>怎么判断真的成功了：</b>能看到多个成员分别完成、各自交出不同的文件；派单表里出现"判断依据""是否外委"这些列；稽核报告里点名了具体工单号。<b>如果它一个人写完了全部内容，说明提示词里的"不许亲自干"没生效，直接追问它：按职责你应该只做拆解和台账，现在补派一次。</b></p>
+
+      <div class="step-banner" id="step2">
+        <span>02</span>
+        <div><b>用专家团固化：把刚才那套分工存下来</b><p>刚才那套东西关掉对话就没了。这一步把它变成一个能被点开、能被同事使用的团队。</p></div>
+      </div>
+
+      <div class="card">
+        <h3>操作路径</h3>
+        <div class="flow">
+          <div class="flow-row"><span class="n">1</span><div><b>进入专家中心 → 专家团 → 我的专家 → 创建专家团</b><small>入口名称以你客户端的实际版本为准，找不到就在专家首页找"创建"。</small></div></div>
+          <div class="flow-row"><span class="n">2</span><div><b>就在刚才那段对话后面，粘贴下面这条提示词</b><small>不用重新解释背景，它已经知道刚才那套分工。也可以新建对话、把两个附件再拖进去一次。</small></div></div>
+          <div class="flow-row"><span class="n">3</span><div><b>按它的追问补全信息</b><small>它会问花名、行业分类、标签、推荐问法。这些是让专家在列表里被认出来的"包装"，答完就能生成。</small></div></div>
+        </div>
+      </div>
+
       <div class="prompt-card">
-        <div class="prompt-head"><span class="prompt-step">3.2 · 复制使用</span><h3>一张表设计专家团协同</h3></div>
-        <p class="prompt-desc">专家数量以工作需要为准，不强行凑三人；明确每个人交给下一位专家什么内容。</p>
-        <div class="prompt-toolbar"><button class="copy-btn" type="button">复制提示词</button><button class="select-btn" type="button">全选文本</button><span class="copy-status" role="status"></span></div>
-        <pre>沿用已确认的 IPO 和 3.1《专家配置卡》。
+        <div class="prompt-head"><span class="prompt-step">第二步 · 复制使用</span><h3>创建专家团的指令</h3></div>
+        <p class="prompt-desc">这条提示词会唤起专家包管理器。它<b>不会一次做完</b>，会分几轮问你缺的字段——这是正常的，也是必要的，缺字段会导致生成后无法使用。</p>
+        <div class="prompt-toolbar">
+          <button class="copy-btn" type="button" data-label="复制提示词">复制提示词</button>
+          <button class="select-btn" type="button">全选文本</button>
+          <span class="copy-status" role="status"></span>
+        </div>
+        <pre>帮我创建一个「园区后勤调度专家团」。
 
-如果这项工作需要多个专家，请设计一个 AI 专家团。
+【团队定位】
+园区后勤的报修工单分流、派单调度与品质稽核。
 
-输出《专家团协同接力表》：
-工作步骤｜负责专家｜需要的输入｜专家要做什么｜交给谁｜人工检查点
+【团队成员】
+- 主理人：后勤调度总监。负责分流、建台账、派工、定升级规则，不亲自干活。
+- 工单派单主管：按技能、资质、距离、负载出派单决策，交付《派单复核表》。
+- 品质稽核主管：按七条逐单复核，有权退回重做，交付《稽核报告》。
 
-专家数量以够用为准，职责不要重叠。
-本轮只设计分工，不执行任务。</pre>
+【共同擅长】
+园区后勤工单的分流派单、资质合规与品质稽核。
+
+【我的经验】
+长期为大型集团做 AI 落地培训与陪跑，熟悉后勤、物业、能源运营场景。
+
+【两个要求】
+1. 把刚才那套岗位职责和输出规范，写进每个成员的角色设定，
+   不要简化表格列，不要把"不许亲自派单"这类红线删掉。
+2. 缺的字段（花名、行业分类、标签、推荐问法）你先给建议方案，我确认后一次做完。</pre>
       </div>
-      <p class="check-point"><b>学员检查：</b>是否覆盖原 IPO 的 P？专家之间有无遗漏、重复或无人负责的步骤？人在哪里复核和批准？<b>产出：</b>《专家团协同接力表》。</p>
 
-      <div class="step-banner" id="step33"><span>03</span><div><b>3.3 专家团协同执行与成果验收</b><p>按专家团分工处理已有材料，由质检专家复核，再依照原 IPO 的 O 进行验收。</p></div></div>
-      <div class="prompt-card">
-        <div class="prompt-head"><span class="prompt-step">3.3 · 复制使用</span><h3>模拟专家团接力，输出验收表</h3></div>
-        <p class="prompt-desc">重点看“各专家是否有依据、有没有冲突、原 IPO 的交付标准是否达成”。</p>
-        <div class="prompt-toolbar"><button class="copy-btn" type="button">复制提示词</button><button class="select-btn" type="button">全选文本</button><span class="copy-status" role="status"></span></div>
-        <pre>沿用原 IPO 和 3.2《专家团协同接力表》。
-
-请基于已提供的材料，模拟专家团依次完成任务：
-1. 每位专家输出自己的工作结果。
-2. 质检专家检查错误、遗漏与冲突。
-3. 对照原 IPO 的 O，输出《专家团验收检查表》。
-
-表格列：
-验收项目｜检查结果｜依据｜待确认事项
-
-未实际完成的不能写成完成；有分歧交由人判断，最终结果由人确认。</pre>
+      <div class="card">
+        <h3>它大概会问你这些</h3>
+        <table class="cmp">
+          <tr><th>它会问</th><th>为什么必须补</th></tr>
+          <tr><td>团队名和成员花名</td><td>花名是专家在列表里的"人"，不能用"调度经理"这种职能词代替</td></tr>
+          <tr><td>行业分类</td><td>决定它出现在专家中心哪个分类下，找不到就等于没用</td></tr>
+          <tr><td>三个擅长标签</td><td>决定别人搜索时能不能搜到它</td></tr>
+          <tr><td>三条推荐问法</td><td>别人点开它时，第一屏看到的就是这三句</td></tr>
+          <tr><td>SOP 分几个阶段</td><td>决定它是"真协作"还是"一个人演三个角色"</td></tr>
+        </table>
       </div>
-      <div class="sample-panel">
-        <div style="padding:16px 18px 4px;font-weight:800;color:var(--navy-2)">课堂检验：同一工单，两份资料结论不同怎么办？</div>
-        <p class="sample-explain">A 单台账写“已完成”，维修记录却没有验收证据。正确做法：分诊专家发现冲突 → 维修协调专家列出待核实事项 → 质量复核专家标为“待确认” → 业务负责人决定是否结案。<b>AI 不能把待确认写成已完成。</b></p>
+
+      <p class="check-point"><b>怎么判断真的固化了：</b>① 在专家中心能看到它；② 换一个新对话点开它，人格和规则都还在；③ 点"打包"，能导出一个文件发给同事。<b>三个都成立，才算真的成了一项资产。</b></p>
+
+      <div class="step-banner" id="compare">
+        <span>≠</span>
+        <div><b>两步的区别：一个是一次性演出，一个是可复用资产</b><p>同样一套分工，两条路的产出物完全不同。</p></div>
       </div>
-      <p class="check-point"><b>学员检查：</b>验收表是否列清检查结果和来源？未完成、缺资料、状态冲突是否如实标注？最终审批是否留给人？<b>产出：</b>《专家团验收检查表》及纠错记录。</p>
+
+      <table class="cmp">
+        <tr><th>维度</th><th>第一步 · 临时多智能体</th><th>第二步 · 专家团</th></tr>
+        <tr><td>存在多久</td><td>关掉这段对话就没了</td><td>一直在，随时点开</td></tr>
+        <tr><td>谁能用</td><td>只有你自己</td><td>可以打包发给同事</td></tr>
+        <tr><td>过程可见</td><td>能看见拆任务、派工、退回</td><td>编排被封在内部，看得少</td></tr>
+        <tr><td>改角色</td><td>现场一句话就能改</td><td>要改配置，再重新生成</td></tr>
+        <tr><td>适合场景</td><td>第一次给领导或客户演示</td><td>部门要长期用、要交接</td></tr>
+        <tr><td>价值</td><td>证明"这件事能成"</td><td>证明"这件事能留下来"</td></tr>
+      </table>
+      <p class="check-point" style="margin-top:14px"><b>所以两步都要做，顺序不能反。</b>先用第一步让人相信，再用第二步让成果留下。只做第一步，演示完就散了；只做第二步，别人看不见它凭什么可信。</p>
+
+      <div class="step-banner" id="faq">
+        <span>?</span>
+        <div><b>常见问题</b><p>学员最容易卡住的几个点。</p></div>
+      </div>
+
+      <div class="faq">
+        <details open>
+          <summary>把刚才那段提示词复制进"创建专家"，是不是就成了专家？</summary>
+          <p>不够，还差三层。第一，提示词只是专家的"正文"，一个专家还要有名字、头衔、分类、标签、推荐问法这些能被认出来的信息。第二，团队型必须写清分几个阶段、谁先谁后、谁把结果交给谁，否则模型会一个人演三个角色，看着像开会，其实在自言自语。第三，生成完还要注册，不注册在专家中心根本看不到。所以第二步才需要走一遍创建流程、回答几轮追问，而不是复制粘贴就完事。</p>
+        </details>
+        <details>
+          <summary>为什么一定要两个附件？只给 CSV 不行吗？</summary>
+          <p>只给 CSV，它知道有哪些工单，但不知道该按什么标准派。附件里的岗位说明写的是规则：资质一票否决、同园区优先、单人超过 4 单要预警、稽核必须查七项。没有这些，它只能凭常识发挥，派出来的东西看着合理，但你没法验收。</p>
+        </details>
+        <details>
+          <summary>它没有派出子智能体，一个人把活干完了怎么办？</summary>
+          <p>直接追问它："按职责你只做拆解和台账，不许亲自派单，现在重新派一次。"这句话本身就是教学点：<b>让它当众改，比让它一次做对更能说明这套机制是可控的。</b></p>
+        </details>
+        <details>
+          <summary>数据是真的吗？能直接接到我们系统上吗？</summary>
+          <p>不是真的。工单数据是按真实字段构造的教学模拟数据，不含任何企业真实业务信息。这一步演示的是"分工和流转能跑通"，不等于已经和你们的工单系统对接了。真正落地需要把数据源接进来，那是另一个阶段的事。</p>
+        </details>
+        <details>
+          <summary>这套东西的准确率有多高？</summary>
+          <p>这一步不承诺准确率。教学数据只能证明流程成立，不能证明业务准确。要谈准确率，得用你们自己过去一个月或一个季度的真实工单回测，看它挑出来的问题你们认不认——那才是能拿上台面的数字。</p>
+        </details>
+      </div>
+
     </div>
   </section>
 </main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="lecturer">
+        <div class="avatar">李</div>
+        <div>
+          <div class="name">李家贵</div>
+          <div class="title">AI 战略与落地 · 企业培训与陪跑</div>
+        </div>
+      </div>
+      <div class="foot-links">
+        <a href="/lijiagui/list/">资源导航</a>
+        <a href="/lijiagui/hailiang-ipo/">模块二 · IPO</a>
+      </div>
+    </div>
+    <div class="foot-note">本页材料仅用于课堂练习。工单数据为教学模拟，不含任何企业真实业务信息。AI 输出须经人工确认后使用。</div>
+  </div>
+</footer>
 
 <script>
 (function () {
@@ -405,7 +430,10 @@ O：一页跟进简报，包含工单进展、异常风险、待办与下一步�
           setStatus('已复制，可直接粘贴使用', 'ok');
           btn.textContent = '已复制 ✓';
           clearTimeout(resetTimer);
-          resetTimer = setTimeout(function () { btn.textContent = btn.getAttribute('data-label') || '复制提示词'; setStatus(''); }, 2600);
+          resetTimer = setTimeout(function () {
+            btn.textContent = btn.getAttribute('data-label') || '复制提示词';
+            setStatus('');
+          }, 2600);
         } else {
           setStatus('复制失败：已为你全选文本，请按 Ctrl+C 手动复制', 'err');
         }
