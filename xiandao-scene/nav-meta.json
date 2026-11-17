@@ -1,0 +1,30 @@
+{
+  "id": "xiandao-scene",
+  "title": "锂电装备制造 AI 场景训练操作台｜先导智能",
+  "shortTitle": "锂电装备场景",
+  "category": "制造与装备",
+  "description": "面向先导智能售前方案、研发设计、采购供应链、装配调试、项目管理与售后岗位。围绕非标设备 ETO 端到端交付：售前订单与方案、研发设计与变更、采购与齐套、装配调试与质量、现场交付与售后，四步完成流程生成、AI 介入、场景湖与高 ROI 评分，含四个可编辑提示词与三份 Excel 模板。",
+  "url": "https://xjtulijiagui-max.github.io/lijiagui/xiandao-scene/",
+  "path": "xiandao-scene/",
+  "tags": [
+    "先导智能",
+    "锂电装备",
+    "非标自动化",
+    "ETO",
+    "端到端交付",
+    "供应链",
+    "齐套分析",
+    "设计变更",
+    "装配调试",
+    "场景创新",
+    "Mermaid",
+    "ROI"
+  ],
+  "type": "实战练习",
+  "client": "先导智能",
+  "status": "正常",
+  "featured": false,
+  "updated": "2026-11-17",
+  "source": "基于本站 scene-suite 三件套框架生成（锂电装备制造/先导智能）",
+  "order": 119
+}
