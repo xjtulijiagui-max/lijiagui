@@ -1,0 +1,30 @@
+{
+  "id": "xiandao-spec",
+  "title": "先导智能｜PRD + Spec 标准 → Workspace → 工作台 · 两步练习",
+  "shortTitle": "先导智能 Workspace 两步练习",
+  "category": "制造与装备",
+  "description": "先导智能非标装备交付场景的两步练习：第一步把交付风险与齐套分析 IPO 定义书与《Spec Workspace 初始化标准 v2.0》一起交给 AI，生成候选 Workspace 输入包；第二步选专家「工作台搭建师」把规格变成可点的工作台。附交付风险分析 IPO Word、通用标准包 ZIP 与两段可复制提示词。",
+  "url": "https://xjtulijiagui-max.github.io/lijiagui/xiandao-spec/",
+  "path": "xiandao-spec/",
+  "tags": [
+    "先导智能",
+    "锂电装备",
+    "交付风险",
+    "齐套分析",
+    "IPO",
+    "PRD",
+    "Spec",
+    "Workspace",
+    "规格驱动",
+    "工作台搭建师",
+    "提示词",
+    "课堂练习"
+  ],
+  "type": "课堂练习",
+  "client": "先导智能",
+  "status": "正常",
+  "featured": false,
+  "updated": "2026-11-17",
+  "source": "基于本站 scene-suite 三件套框架生成（锂电装备制造/先导智能）",
+  "order": 121
+}
