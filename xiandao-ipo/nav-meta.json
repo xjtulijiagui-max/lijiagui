@@ -1,0 +1,28 @@
+{
+  "id": "xiandao-ipo",
+  "title": "先导智能｜课前 IPO 填写说明 · 三步交回",
+  "shortTitle": "先导智能 IPO 填写说明",
+  "category": "制造与装备",
+  "description": "面向先导智能售前、研发、采购、装配调试与项目交付岗位的课前业务场景 IPO 填写说明：下载非标设备订单交付闭环样例 Word，对着录音讲一遍自己的业务，交给 AI 按模板改写，核对后提交飞书收集表。含 ETO 场景可复制提示词与口述样例。",
+  "url": "https://xjtulijiagui-max.github.io/lijiagui/xiandao-ipo/",
+  "path": "xiandao-ipo/",
+  "tags": [
+    "先导智能",
+    "锂电装备",
+    "ETO",
+    "订单交付",
+    "IPO",
+    "Input Process Output",
+    "课前工具",
+    "提示词",
+    "语音口述",
+    "飞书收集表"
+  ],
+  "type": "课前工具",
+  "client": "先导智能",
+  "status": "正常",
+  "featured": false,
+  "updated": "2026-11-17",
+  "source": "基于本站 scene-suite 三件套框架生成（锂电装备制造/先导智能）",
+  "order": 120
+}
