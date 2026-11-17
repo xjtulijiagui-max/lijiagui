@@ -1,0 +1,1065 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="先导智能锂电装备制造 AI 场景训练操作台，包含四个可编辑提示词与 ETO 交付场景、评分模板下载。">
+  <title>锂电装备制造 AI 场景训练操作台｜先导智能</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --surface-primary: #08090a;
+      --surface-secondary: #0f1011;
+      --surface-elevated: #191a1b;
+      --surface-inset: #111316;
+      --text-primary: #f7f8f8;
+      --text-secondary: #d0d6e0;
+      --text-muted: #8a8f98;
+      --border-subtle: rgba(255,255,255,0.06);
+      --border-standard: rgba(255,255,255,0.10);
+      --accent-primary: #7170ff;
+      --accent-hover: #8585ff;
+      --accent-green: #2dd4bf;
+      --accent-amber: #f7b955;
+      --status-error: #ff7979;
+      --radius-card: 8px;
+      --radius-control: 6px;
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+      --space-16: 64px;
+      --font-sans: Arial, "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+      --font-mono: "Cascadia Mono", "Microsoft YaHei Mono", Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        linear-gradient(180deg, rgba(113,112,255,0.08), transparent 360px),
+        var(--surface-primary);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.65;
+      letter-spacing: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      overflow-wrap: anywhere;
+    }
+
+    button,
+    textarea,
+    input {
+      font: inherit;
+      letter-spacing: 0;
+    }
+
+    button,
+    .button-link {
+      border: 1px solid var(--border-standard);
+      border-radius: var(--radius-control);
+      background: rgba(255,255,255,0.04);
+      color: var(--text-primary);
+      min-height: 40px;
+      padding: 0 var(--space-4);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      cursor: pointer;
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease, color 160ms ease;
+      white-space: nowrap;
+    }
+
+    button:hover,
+    .button-link:hover {
+      transform: translateY(-1px);
+      border-color: rgba(113,112,255,0.65);
+      background: rgba(113,112,255,0.14);
+    }
+
+    button:active,
+    .button-link:active {
+      transform: translateY(0);
+    }
+
+    button:focus-visible,
+    a:focus-visible,
+    textarea:focus-visible {
+      outline: 2px solid var(--accent-hover);
+      outline-offset: 3px;
+    }
+
+    .shell {
+      width: min(100%, 1480px);
+      margin: 0 auto;
+      padding: var(--space-6);
+      display: grid;
+      grid-template-columns: 284px minmax(0, 1fr);
+      gap: var(--space-6);
+    }
+
+    .rail {
+      position: sticky;
+      top: var(--space-6);
+      align-self: start;
+      min-height: calc(100dvh - 48px);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-card);
+      background: rgba(15,16,17,0.92);
+      padding: var(--space-4);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.22);
+    }
+
+    .rail-title {
+      padding: var(--space-2) var(--space-2) var(--space-3);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .rail-title strong {
+      display: block;
+      font-size: 15px;
+      line-height: 1.4;
+      font-weight: 650;
+    }
+
+    .rail-title span {
+      color: var(--text-muted);
+      display: block;
+      margin-top: var(--space-1);
+      font-size: 12px;
+    }
+
+    .nav-list,
+    .tool-list,
+    .check-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: var(--space-2);
+    }
+
+    .nav-item {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: var(--space-2);
+      min-height: 44px;
+      padding: var(--space-2);
+      border-radius: var(--radius-control);
+      color: var(--text-secondary);
+      border: 1px solid transparent;
+      transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+    }
+
+    .nav-item:hover {
+      background: rgba(255,255,255,0.035);
+      border-color: var(--border-subtle);
+      transform: translateX(2px);
+    }
+
+    .nav-index {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: var(--radius-control);
+      background: rgba(255,255,255,0.04);
+      color: var(--accent-primary);
+      font-size: 12px;
+      font-weight: 650;
+      font-family: var(--font-mono);
+    }
+
+    .tool-link {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-3);
+      padding: var(--space-3);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-control);
+      background: rgba(255,255,255,0.025);
+      color: var(--text-secondary);
+      font-size: 13px;
+      transition: background 160ms ease, border-color 160ms ease;
+    }
+
+    .tool-link:hover {
+      border-color: rgba(45,212,191,0.45);
+      background: rgba(45,212,191,0.08);
+    }
+
+    .tool-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-top: var(--space-4);
+    }
+
+    .tool-tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      border-radius: 999px;
+      border: 1px solid rgba(113,112,255,0.34);
+      background: rgba(113,112,255,0.08);
+      color: #d9ddff;
+      padding: 0 var(--space-3);
+      font-size: 12px;
+      font-weight: 560;
+      transition: background 160ms ease, border-color 160ms ease;
+    }
+
+    .tool-tag:hover {
+      border-color: rgba(45,212,191,0.42);
+      background: rgba(45,212,191,0.08);
+    }
+
+    main {
+      min-width: 0;
+      display: grid;
+      gap: var(--space-6);
+    }
+
+    .hero,
+    .section {
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-card);
+      background: rgba(15,16,17,0.76);
+    }
+
+    .hero {
+      min-height: 420px;
+      padding: clamp(24px, 5vw, 56px);
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+      gap: var(--space-8);
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(120deg, transparent 0 46%, rgba(113,112,255,0.10) 46% 47%, transparent 47%),
+        radial-gradient(circle at 78% 20%, rgba(45,212,191,0.14), transparent 28%);
+      pointer-events: none;
+    }
+
+    .hero > * {
+      position: relative;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      min-height: 28px;
+      border-radius: 999px;
+      border: 1px solid rgba(113,112,255,0.35);
+      background: rgba(113,112,255,0.10);
+      color: #d9ddff;
+      padding: 0 var(--space-3);
+      font-size: 13px;
+      font-weight: 560;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin-bottom: var(--space-5);
+      font-size: clamp(32px, 5vw, 56px);
+      line-height: 1.08;
+      font-weight: 650;
+      letter-spacing: 0;
+    }
+
+    .title-line {
+      white-space: nowrap;
+    }
+
+    h2 {
+      margin-bottom: var(--space-3);
+      font-size: clamp(24px, 3vw, 34px);
+      line-height: 1.22;
+      font-weight: 650;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin-bottom: var(--space-2);
+      font-size: 18px;
+      line-height: 1.35;
+      font-weight: 650;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      color: var(--text-secondary);
+      font-size: 18px;
+      max-width: 720px;
+      margin-bottom: var(--space-6);
+    }
+
+    .hero-actions,
+    .card-actions,
+    .file-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      align-items: center;
+    }
+
+    .primary {
+      background: var(--accent-primary);
+      border-color: var(--accent-primary);
+      color: white;
+      font-weight: 650;
+    }
+
+    .green {
+      border-color: rgba(45,212,191,0.50);
+      color: #c7fff5;
+      background: rgba(45,212,191,0.10);
+    }
+
+    .workflow-visual {
+      border: 1px solid var(--border-standard);
+      border-radius: var(--radius-card);
+      background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.018));
+      padding: var(--space-5);
+      display: grid;
+      gap: var(--space-4);
+    }
+
+    .flow-node {
+      min-height: 58px;
+      display: grid;
+      grid-template-columns: 42px 1fr auto;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-control);
+      background: rgba(8,9,10,0.52);
+    }
+
+    .node-number {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: var(--radius-control);
+      background: rgba(113,112,255,0.12);
+      color: var(--accent-primary);
+      font-family: var(--font-mono);
+      font-weight: 650;
+    }
+
+    .node-title {
+      display: block;
+      font-weight: 650;
+      line-height: 1.35;
+    }
+
+    .node-meta {
+      display: block;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .node-tool {
+      min-width: 74px;
+      text-align: center;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      padding: var(--space-1) var(--space-3);
+      font-size: 12px;
+    }
+
+    .section {
+      padding: clamp(22px, 4vw, 40px);
+      scroll-margin-top: 24px;
+    }
+
+    .section-head {
+      max-width: 840px;
+      margin-bottom: var(--space-6);
+    }
+
+    .section-head p {
+      color: var(--text-secondary);
+      margin-bottom: 0;
+    }
+
+    .grid-two {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+      gap: var(--space-6);
+      align-items: start;
+    }
+
+    .grid-two > :only-child {
+      grid-column: 1 / -1;
+      width: 100%;
+      max-width: 940px;
+      margin-inline: auto;
+    }
+
+    .prompt-card,
+    .note-card,
+    .download-card,
+    .artifact-card {
+      min-width: 0;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-card);
+      background: rgba(255,255,255,0.035);
+      padding: var(--space-5);
+    }
+
+    .prompt-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      border-radius: 999px;
+      border: 1px solid rgba(113,112,255,0.32);
+      color: #d9ddff;
+      padding: 0 var(--space-3);
+      font-size: 12px;
+      font-weight: 560;
+      white-space: nowrap;
+    }
+
+    .badge.greenish {
+      border-color: rgba(45,212,191,0.36);
+      color: #c7fff5;
+    }
+
+    .badge.amber {
+      border-color: rgba(247,185,85,0.45);
+      color: #ffe1a7;
+    }
+
+    .prompt-box {
+      width: 100%;
+      max-width: 100%;
+      min-height: 220px;
+      resize: vertical;
+      border: 1px solid var(--border-standard);
+      border-radius: var(--radius-control);
+      background: var(--surface-inset);
+      color: var(--text-primary);
+      padding: var(--space-4);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .prompt-box.short {
+      min-height: 300px;
+    }
+
+    .prompt-box.tall {
+      min-height: 420px;
+    }
+
+    .hint-list {
+      margin: var(--space-4) 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: var(--space-2);
+    }
+
+    .hint-list li,
+    .check-list li {
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      gap: var(--space-2);
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .mark {
+      color: var(--accent-green);
+      font-weight: 700;
+    }
+
+    .download-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-4);
+    }
+
+    .download-card {
+      min-height: 210px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .step-downloads {
+      display: grid;
+      gap: var(--space-3);
+      margin-top: var(--space-4);
+    }
+
+    .step-download {
+      border: 1px solid rgba(45,212,191,0.28);
+      border-radius: var(--radius-card);
+      background: rgba(45,212,191,0.07);
+      padding: var(--space-4);
+    }
+
+    .download-title {
+      display: inline-flex;
+      width: fit-content;
+      color: #c7fff5;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.5;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .file-name {
+      font-family: var(--font-mono);
+      color: var(--text-primary);
+      overflow-wrap: anywhere;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .file-purpose {
+      color: var(--text-secondary);
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .file-note {
+      color: var(--text-muted);
+      font-size: 13px;
+      margin: 0;
+    }
+
+    .file-actions {
+      margin-top: auto;
+    }
+
+    .copy-status {
+      min-height: 22px;
+      color: var(--accent-green);
+      font-size: 13px;
+      margin-top: var(--space-3);
+    }
+
+    .artifact-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-4);
+    }
+
+    .artifact-card h3 {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-3);
+      align-items: center;
+    }
+
+    .artifact-card p {
+      color: var(--text-secondary);
+      margin-bottom: 0;
+    }
+
+    .mini-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: var(--space-4);
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .mini-table th,
+    .mini-table td {
+      border-bottom: 1px solid var(--border-subtle);
+      padding: var(--space-3);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .mini-table th:first-child,
+    .mini-table td:first-child {
+      white-space: nowrap;
+      width: 1%;
+    }
+
+    .mini-table th {
+      color: var(--text-primary);
+      font-weight: 650;
+      background: rgba(255,255,255,0.025);
+    }
+
+    .warning {
+      border-color: rgba(247,185,85,0.34);
+      background: rgba(247,185,85,0.08);
+      color: #ffe1a7;
+    }
+
+    .warning ul {
+      margin: var(--space-2) 0 0;
+      padding-left: var(--space-5);
+      display: grid;
+      gap: var(--space-2);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .warning p {
+      margin-bottom: 0;
+      font-size: 14px;
+    }
+
+    .warning h3 {
+      color: #ffe1a7;
+    }
+
+    .footer-note {
+      color: var(--text-muted);
+      font-size: 13px;
+      text-align: center;
+      padding-bottom: var(--space-6);
+    }
+
+    .only-mobile {
+      display: none;
+    }
+
+    @media (max-width: 1100px) {
+      .shell {
+        grid-template-columns: 1fr;
+        padding: var(--space-4);
+      }
+
+      .rail {
+        position: relative;
+        top: auto;
+        min-height: auto;
+      }
+
+      .nav-list {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .hero,
+      .grid-two {
+        grid-template-columns: 1fr;
+      }
+
+      .workflow-visual {
+        order: -1;
+      }
+
+      .download-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .shell {
+        padding: var(--space-3);
+      }
+
+      .nav-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .hero,
+      .section {
+        padding: var(--space-5);
+      }
+
+      .hero-actions,
+      .card-actions,
+      .file-actions {
+        align-items: stretch;
+      }
+
+      .hero-actions > *,
+      .card-actions > *,
+      .file-actions > * {
+        width: 100%;
+      }
+
+      .prompt-top {
+        display: grid;
+      }
+
+      .flow-node {
+        grid-template-columns: 38px 1fr;
+      }
+
+      .node-tool {
+        grid-column: 2;
+        width: fit-content;
+      }
+
+      .artifact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *,
+      *::before,
+      *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="rail" aria-label="步骤导航">
+      <div class="rail-title">
+        <strong>锂电装备制造 AI 场景训练操作台｜先导智能</strong>
+        <span>先替换变量，再复制提示词。</span>
+      </div>
+      <nav aria-label="页面步骤">
+        <ol class="nav-list">
+          <li><a class="nav-item" href="#flow"><span class="nav-index">01</span><span>Step1 流程生成</span></a></li>
+          <li><a class="nav-item" href="#ai-flow"><span class="nav-index">02</span><span>Step2 AI 介入</span></a></li>
+          <li><a class="nav-item" href="#scene-lake"><span class="nav-index">03</span><span>Step3 场景湖</span></a></li>
+          <li><a class="nav-item" href="#roi"><span class="nav-index">04</span><span>Step4 ROI 评分</span></a></li>
+        </ol>
+      </nav>
+      <div class="note-card warning">
+        <h3>安全合规提醒</h3>
+        <p class="file-purpose">本页提示词只用于流程梳理和材料整理。客户图纸、技术协议、BOM、工艺参数、产线数据与真实成本报价请先脱敏或改用模拟结构；AI 生成的任何设计建议、采购判断、交期承诺与验收结论都必须由具备权限的工程、采购或项目负责人复核后才能使用，不得直接下发变更、下单或对外承诺。</p>
+      </div>
+      <div class="note-card">
+        <h3>变量替换</h3>
+        <p class="file-purpose">把 {变量} 换成本部门的信息和材料，再复制到 AI 工具。</p>
+      </div>
+    </aside>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div>
+          <span class="kicker">先导智能 · 非标装备实操练习</span>
+          <h1 id="page-title">锂电装备制造<br><span class="title-line">AI 场景训练操作台</span></h1>
+          <p class="lead">面向售前方案、研发设计、工艺、采购供应链、装配调试、项目管理与售后岗位。非标装备是 ETO 模式——接单后才开始设计，再采购、装配、调试、交付到客户现场，研发、采购、生产、装配、调试、交付被同一个订单紧紧串在一起。按顺序完成流程图、场景湖清单和 ROI 评分，花括号里的内容换成本岗位的实际资料。四个步骤不限工具，用你手边能打开网页、能上传附件的 AI 工具即可。</p>
+          <div class="hero-actions">
+            <button class="primary" type="button" data-copy-all>复制四个提示词</button>
+            <a class="button-link" href="#scene-lake">下载模板资料</a>
+          </div>
+          <div class="copy-status" aria-live="polite" data-global-status></div>
+        </div>
+        <div class="workflow-visual" aria-label="四步流程概览">
+          <div class="flow-node">
+            <span class="node-number">01</span>
+            <span><span class="node-title">流程生成</span><span class="node-meta">替换岗位变量，补完整 ETO 交付流程并输出 Mermaid</span></span>
+            <span class="node-tool">DeepSeek/豆包</span>
+          </div>
+          <div class="flow-node">
+            <span class="node-number">02</span>
+            <span><span class="node-title">讨论 AI 介入节点</span><span class="node-meta">用 SCAMPER、SWOT 等方法找减负提效点</span></span>
+            <span class="node-tool">DeepSeek/豆包</span>
+          </div>
+          <div class="flow-node">
+            <span class="node-number">03</span>
+            <span><span class="node-title">刷新场景湖清单</span><span class="node-meta">上传示例表格和讨论材料，输出 xls</span></span>
+            <span class="node-tool">任选 AI 工具</span>
+          </div>
+          <div class="flow-node">
+            <span class="node-number">04</span>
+            <span><span class="node-title">完成高 ROI 评分</span><span class="node-meta">同一对话追加评分模板，返回 xls</span></span>
+            <span class="node-tool">任选 AI 工具</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="flow" aria-labelledby="flow-title">
+        <div class="section-head">
+          <h2 id="flow-title">Step1：流程生成：先把 ETO 交付流程补完整</h2>
+          <p>先填写 {单位/部门名称及负责的专业}，梳理从客户订单与技术协议、研发设计与 BOM、采购与齐套、装配与调试到现场交付与售后的完整链条。拿到 Mermaid 后，检查售前、设计、采购、计划、装配、调试、项目与售后之间的交接，把信息断点补上，再导出 SVG。</p>
+          <div class="tool-tags" aria-label="Step1 工具入口">
+            <a class="tool-tag" href="https://chat.deepseek.com" target="_blank" rel="noopener">DeepSeek</a>
+            <a class="tool-tag" href="https://www.doubao.com" target="_blank" rel="noopener">豆包</a>
+          </div>
+        </div>
+        <div class="grid-two">
+          <article class="prompt-card">
+            <div class="prompt-top">
+              <div>
+                <span class="badge">提示词 1</span>
+                <h3>流程提示词</h3>
+              </div>
+              <button type="button" data-copy-target="prompt-flow">复制当前提示词</button>
+            </div>
+            <textarea class="prompt-box tall" id="prompt-flow">我是一名锂电非标装备企业的管理者，负责 {部门/岗位及负责的专业，例如售前方案/技术协议与报价、研发设计/机械电气与BOM、工艺/装配与调试、采购供应链/采购计划与齐套、项目管理/现场交付与验收} 的管理工作。公司是 ETO（按单设计）模式：接到客户订单后才开始研发设计，随后采购、装配、调试，最终交付到客户现场。现在要梳理“从客户订单到现场验收”的端到端交付流程，减少部门各自完成但整体交付不顺畅的问题，让售前、设计、采购、计划、装配、调试、项目与售后的任务与交接更清楚。请结合非标自动化装备制造实践搜索并补充流程，输出为 Mermaid 格式。
+
+流程请覆盖：客户需求与订单评审、技术协议与验收条款确认、方案设计与报价、机械与电气详细设计、图纸与BOM发布、设计变更（ECN）提出与审批、长周期物料识别、采购申请与下单、供应商交期跟踪与外协、物料到货与来料检验、齐套分析与缺料预警、生产排产与装配、装配质量检验、单机调试与整线联调、FAT 出厂验收、包装发运、现场安装与就位、SAT 现场验收、问题整改与移交、售后工单与备件供应、项目复盘与知识沉淀。说明每一步的责任岗位、输入资料、输出成果和交接对象；补充客户需求变更、设计返工、关键物料延期、齐套不全、装配返工、调试不达标、验收整改、跨部门责任边界不清等分支。
+
+以 {本企业现行项目管理制度、设计变更流程、采购与供应商管理办法、质量与验收标准、客户保密与数据安全要求} 为依据；缺少的信息列为待确认，不编造客户名称、图号、工艺参数、交期承诺或成本数据。涉及客户技术秘密、产线数据与对外承诺时，请注明可核验的正式制度来源和适用范围。
+
+请同时满足以下格式要求：
+1. 不同阶段使用不同颜色。
+2. 各阶段横向排布，阶段内部可自上而下展开；把周例会、齐套检查、变更评审、项目复盘等周期性工作单独标成循环，避免画成一次性的直线。
+3. 用不同形状区分开始/结束、审批、判断、资料、执行和风险提示。
+4. 长流程按售前订单与方案、研发设计与变更、采购与齐套、装配调试与质量、现场交付与售后分区，标明售前、设计、采购、计划、装配、调试、项目与售后之间的交接节点，并特别标注信息断点常发位置。
+5. 输出可直接在 Mermaid 工具或 draw.io 中渲染的代码，不要只给文字说明。</textarea>
+            <ul class="hint-list">
+              <li><span class="mark">+</span><span>先填写部门/岗位及负责专业，例如售前方案、研发设计、采购供应链或项目管理，再复制提示词。</span></li>
+              <li><span class="mark">+</span><span>如果流程不完整，继续追问：“请补充客户需求变更导致设计返工、长周期物料延期、齐套不全停产以及验收整改的处理分支与各环节时限。”</span></li>
+              <li><span class="mark">+</span><span>最终下载 SVG，建议命名为：01-{部门名称}-ETO流程生成.svg。</span></li>
+            </ul>
+            <div class="copy-status" aria-live="polite"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="ai-flow" aria-labelledby="ai-flow-title">
+        <div class="section-head">
+          <h2 id="ai-flow-title">Step2：AI 介入：在同一轮对话里找改造点</h2>
+          <p>结合售前、设计、采购、装配与项目人员的日常动作，找出 AI 能减少人工比对、缩短信息传递、提前暴露风险的环节，并明确设计变更、采购下单、交期承诺与验收结论等事项的人工复核与审批边界。</p>
+          <div class="tool-tags" aria-label="Step2 工具入口">
+            <a class="tool-tag" href="https://chat.deepseek.com" target="_blank" rel="noopener">DeepSeek</a>
+            <a class="tool-tag" href="https://www.doubao.com" target="_blank" rel="noopener">豆包</a>
+          </div>
+        </div>
+        <div class="grid-two">
+          <article class="prompt-card">
+            <div class="prompt-top">
+              <div>
+                <span class="badge">提示词 2</span>
+                <h3>流程 AI 化提示词</h3>
+              </div>
+              <button type="button" data-copy-target="prompt-ai-flow">复制当前提示词</button>
+            </div>
+            <textarea class="prompt-box tall" id="prompt-ai-flow">请基于上一步生成的 {ETO 端到端交付流程 Mermaid 代码}，分析哪些节点适合 AI 辅助，帮助售前、设计、采购、装配与项目人员减少人工比对和信息传递损耗，让缺料与变更风险提前暴露。
+
+重点考虑技术协议条款与需求清单比对、报价与交期测算辅助、图纸与BOM一致性核对、设计变更（ECN）影响物料与工序传导分析、长周期物料识别与到货预警、齐套分析与缺料清单生成、装配作业指导与工艺文件检索、调试异常与质量问题归因初稿、FAT/SAT 验收资料清单核对、售后工单分类与备件需求预测、项目周报与风险清单汇总。请用 SCAMPER、SWOT、价值链分析等方法检查遗漏，区分“用脱敏或模拟材料即可试用”和“需要对接 PLM/ERP/MES 或涉及变更与下单权限”的场景，输出新的 Mermaid 流程图。
+
+格式要求：
+1. 保留原流程主线和必要的评审、审批、复核与质量关口。
+2. AI 辅助节点使用另一种颜色，节点名写清“AI 介入”。
+3. 每个 AI 节点说明责任岗位、输入数据、处理动作、输出结果和验证指标，例如报价响应周期、变更传导时长、齐套率、缺料停线时长、装配返工率、调试一次通过率、验收周期或售后响应时效；没有实测数据时，不虚构提效比例。
+4. 安全合规边界必须写明：AI 只能做比对、整理、初判、预警与草拟，不得直接下发设计变更、生成采购订单、修改工艺参数或对外承诺交期与验收结论；不得上传未脱敏的客户图纸、技术协议、BOM 与产线数据；不得虚构交期、成本、良率与齐套数据；变更、采购与对客承诺须由授权人员审批并留痕。
+5. 数据按最小必要原则处理：客户名称、图号、工艺参数与成本先脱敏或替换为模拟结构，按岗位权限访问，说明信息缺失、模型出错或系统不可用时如何转人工。
+6. Mermaid 代码要能直接复制渲染。</textarea>
+            <ul class="hint-list">
+              <li><span class="mark">+</span><span>填入 {ETO 交付流程 Mermaid 代码}，接着第一步的场景继续讨论。</span></li>
+              <li><span class="mark">+</span><span>要求 AI 节点标注“输入数据、AI 处理、输出结果、节省时间或降低风险、安全风险点”。</span></li>
+              <li><span class="mark">+</span><span>最终下载 SVG，建议命名为：02-{部门名称}-AI化改造.svg。</span></li>
+            </ul>
+            <div class="copy-status" aria-live="polite"></div>
+          </article>
+          <aside class="note-card">
+            <span class="badge greenish">讨论口径</span>
+            <h3>多人对话时重点讨论这些问题</h3>
+            <table class="mini-table">
+              <thead>
+                <tr><th>讨论点</th><th>追问句式</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>增加流程</td><td>“客户临时改需求、关键物料延期、齐套不全导致停线时，谁先定性、用什么数据判断、多久必须升级，怎么避免部门之间互相等？”</td></tr>
+                <tr><td>修改流程</td><td>“请把设计变更拆成提出、影响评估、审批、物料与工序传导、验证关闭，写清每步责任人和留痕要求。”</td></tr>
+                <tr><td>删除流程</td><td>“这个环节是否适用于本企业的项目制交付和现有系统？不适用的请删除并说明原因。”</td></tr>
+                <tr><td>找业务点</td><td>“哪些 AI 介入点能减少人工比对和等待，同时降低客户技术秘密泄露与变更失控风险？”</td></tr>
+              </tbody>
+            </table>
+            <div class="warning" style="margin-top:16px;border:1px solid rgba(247,185,85,0.34);border-radius:8px;padding:16px">
+              <h3>四条红线，讨论时先说清</h3>
+              <ul>
+                <li>不把未脱敏的客户图纸、技术协议、BOM、工艺参数与产线数据上传到公网 AI 工具。</li>
+                <li>不让 AI 直接下发设计变更、生成采购订单或改工艺参数，变更与采购须走审批和双人复核。</li>
+                <li>不虚构交期、成本、良率与齐套数据，不隐瞒缺料、延期与质量风险。</li>
+                <li>客户商业秘密与产线数据按权限使用，对外文件、验收资料与承诺须授权复核留痕。</li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section" id="scene-lake" aria-labelledby="scene-lake-title">
+        <div class="section-head">
+          <h2 id="scene-lake-title">Step3：场景湖：输出 Excel 场景清单</h2>
+          <p>这一步输入三类材料：场景湖示例表格、本岗位的订单台账/齐套表/变更单/调试记录或项目周会讨论要点、第二步输出的 AI 改造 Mermaid 代码。注意给 AI 的是代码，不是图片。工具不限，任何能上传附件并导出 Excel 的 AI 工具都可以。</p>
+          <div class="tool-tags" aria-label="Step3 工具说明">
+            <span class="tool-tag">自选 AI 工具 · 支持上传附件与导出表格</span>
+          </div>
+        </div>
+        <div class="grid-two">
+          <article class="prompt-card">
+            <div class="prompt-top">
+              <div>
+                <span class="badge">提示词 3</span>
+                <h3>场景湖提示词</h3>
+              </div>
+              <button type="button" data-copy-target="prompt-scene">复制当前提示词</button>
+            </div>
+            <textarea class="prompt-box short" id="prompt-scene">请以“先导智能场景湖清单-示例.xlsx”为格式模板，根据 {本岗位的订单台账、齐套表、设计变更单、调试与验收记录、项目周会讨论要点}，结合 {Step2 输出的 ETO 交付 AI 改造 Mermaid 代码}，整理 {部门/岗位} 的 AI 场景湖清单，输出为 xls。
+
+按售前订单与方案、研发设计与变更、采购与齐套、装配调试与质量、现场交付与售后五类梳理。场景名称要落到具体动作，例如“技术协议条款与需求清单比对”“图纸与BOM一致性核对”“设计变更影响物料与工序传导分析”“长周期物料识别与到货预警”“齐套分析与缺料清单生成”“调试异常与质量问题归因初稿”“验收资料清单核对”“售后工单分类与备件需求预测”。
+
+保留模板原有列名、顺序和格式，在对应字段写清业务痛点、触发条件、责任岗位、输入数据、AI 动作、人工复核、输出成果、衡量指标和安全合规注意。涉及客户图纸、技术协议、成本与产线数据时，补充脱敏方式、访问权限和人工确认边界；模板没有的字段放在补充说明工作表中。
+
+合并重复场景；讨论中未确认的建议标记为“待确认”，缺少的数据写“待补充”，不要照搬示例表中的其他企业内容。涉及设计变更、采购下单、交期承诺与验收结论的场景单独标注风险等级。</textarea>
+            <ul class="hint-list">
+              <li><span class="mark">+</span><span>先下载并上传下方资料：先导智能场景湖清单-示例.xlsx。</span></li>
+              <li><span class="mark">+</span><span>补充本岗位的订单台账、齐套表、变更单、调试记录和讨论要点。</span></li>
+              <li><span class="mark">+</span><span>若清单不对，继续对话让它补充、合并、删除或重排场景。</span></li>
+            </ul>
+            <div class="step-downloads" aria-label="Step3 下载资料">
+              <div class="step-download">
+                <span class="badge greenish">下载资料</span>
+                <p class="file-purpose">点击标题下载后，上传给 AI 工具作为格式参考；场景内容按本部门材料重新填写。</p>
+                <a class="download-title" href="assets/先导智能场景湖清单-示例.xlsx" download>先导智能场景湖清单-示例.xlsx</a>
+              </div>
+            </div>
+            <div class="copy-status" aria-live="polite"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="roi" aria-labelledby="roi-title">
+        <div class="section-head">
+          <h2 id="roi-title">Step4：高 ROI 场景：同一对话继续打分</h2>
+          <p>第四步继续在第三步的同一段对话里完成，不要新开对话。追加评分标准模板和输出格式模板，再输入提示词，让它返回评分后的 Excel。</p>
+          <div class="tool-tags" aria-label="Step4 工具说明">
+            <span class="tool-tag">自选 AI 工具 · 与第三步同一对话</span>
+          </div>
+        </div>
+        <div class="grid-two">
+          <article class="prompt-card">
+            <div class="prompt-top">
+              <div>
+                <span class="badge">提示词 4</span>
+                <h3>高 ROI 场景提示词</h3>
+              </div>
+              <button type="button" data-copy-target="prompt-roi">复制当前提示词</button>
+            </div>
+            <textarea class="prompt-box short" id="prompt-roi">请根据 {Step3 输出的本岗位 ETO 交付 AI 场景湖清单}，使用“先导智能高ROI场景评分表-示例.xlsx”和“先导智能场景综合评价表-参考-课后.xlsx”，完成场景评分，返回 xls。
+
+严格按模板的评分维度、5 分制标准和权重逐项打分，并写出依据。结合报价响应周期、变更传导时长、齐套率、缺料停线时长、装配返工率、调试一次通过率、FAT/SAT 验收周期、售后响应时效，以及系统对接（PLM/ERP/MES）、数据治理、培训、维护和人工复核成本判断。没有依据的分值标记为“暂估”，列出需要补采的数据；仅有演示效果时，不视为收益已实现。
+
+区分接单评审期、设计出图高峰、长周期物料到货窗口、装配与调试集中期、客户现场验收期。节省工时与实际成本节约分别列示，避免重复计算；不要把综合评分当成财务 ROI，也不要把 AI 使用量直接换算成减员人数。
+
+在综合评价中选出优先试点的 3 个场景，写明责任人、试点范围、实施前基线、验收指标和复盘时间。优先考虑数据准备充分、人工复核明确、可小范围验证的辅助工作，例如技术协议条款比对、BOM一致性核对、齐套分析与缺料清单、验收资料清单核对。涉及设计变更下发、采购下单、交期承诺与对客验收的场景必须单列风险与上线前提，不因预计收益高就放宽安全要求，也不要把需要工程师判断和审批的环节交给 AI 自动执行。
+
+保持模板结构，输出文件命名为“04-{部门名称}-高ROI场景评分结果.xls”。</textarea>
+            <ul class="hint-list">
+              <li><span class="mark">+</span><span>先下载并上传下方两份资料：评分表和综合评价参考表。</span></li>
+              <li><span class="mark">+</span><span>确认评分理由不要空，便于老师看出判断依据。</span></li>
+              <li><span class="mark">+</span><span>输出文件建议命名为：04-{部门名称}-高ROI场景评分结果.xls。</span></li>
+            </ul>
+            <div class="step-downloads" aria-label="Step4 下载资料">
+              <div class="step-download">
+                <span class="badge greenish">下载资料</span>
+                <p class="file-purpose">点击标题下载后，上传给 AI 工具作为评分标准。</p>
+                <a class="download-title" href="assets/先导智能高ROI场景评分表-示例.xlsx" download>先导智能高ROI场景评分表-示例.xlsx</a>
+              </div>
+              <div class="step-download">
+                <span class="badge greenish">下载资料</span>
+                <p class="file-purpose">点击标题下载后，上传给 AI 工具作为综合评价格式参考。</p>
+                <a class="download-title" href="assets/先导智能场景综合评价表-参考-课后.xlsx" download>先导智能场景综合评价表-参考-课后.xlsx</a>
+              </div>
+            </div>
+            <div class="copy-status" aria-live="polite"></div>
+          </article>
+        </div>
+      </section>
+
+      <p class="footer-note">本页只提供四个提示词和三个模板文件。完成后按现场老师通知的方式提交成果，不要提交到其他项目的表单。客户图纸、技术协议与产线数据请勿在公网工具中长期留存。</p>
+    </main>
+  </div>
+
+  <script>
+    const prompts = ["prompt-flow", "prompt-ai-flow", "prompt-scene", "prompt-roi"];
+
+    // 让提示词框按内容自动撑高，避免关键条款被裁掉
+    function autoGrow() {
+      document.querySelectorAll(".prompt-box").forEach((box) => {
+        box.style.height = "auto";
+        box.style.height = box.scrollHeight + 2 + "px";
+      });
+    }
+
+    window.addEventListener("load", autoGrow);
+    window.addEventListener("resize", autoGrow);
+
+    async function copyText(text, statusTarget) {
+      try {
+        await navigator.clipboard.writeText(text);
+        statusTarget.textContent = "已复制";
+      } catch (error) {
+        const fallback = document.createElement("textarea");
+        fallback.value = text;
+        fallback.setAttribute("readonly", "");
+        fallback.style.position = "fixed";
+        fallback.style.left = "-9999px";
+        document.body.appendChild(fallback);
+        fallback.select();
+        document.execCommand("copy");
+        document.body.removeChild(fallback);
+        statusTarget.textContent = "已复制";
+      }
+      window.setTimeout(() => {
+        statusTarget.textContent = "";
+      }, 1800);
+    }
+
+    document.querySelectorAll("[data-copy-target]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const target = document.getElementById(button.dataset.copyTarget);
+        const card = button.closest(".prompt-card");
+        const status = card.querySelector(".copy-status");
+        copyText(target.value, status);
+      });
+    });
+
+    document.querySelector("[data-copy-all]").addEventListener("click", () => {
+      const all = prompts
+        .map((id, index) => `提示词 ${index + 1}\n${document.getElementById(id).value}`)
+        .join("\n\n");
+      copyText(all, document.querySelector("[data-global-status]"));
+    });
+  </script>
+</body>
+</html>
