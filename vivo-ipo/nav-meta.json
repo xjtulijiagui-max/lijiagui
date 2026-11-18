@@ -1,15 +1,15 @@
 {
   "id": "vivo-ipo",
-  "title": "vivo AI实操课｜IPO任务卡填写说明 · 模板 + 提示词",
+  "title": "vivo AI实操课｜IPO任务卡填写说明 · 模板 + 提示词 + 模拟数据",
   "shortTitle": "vivo IPO任务卡",
   "category": "通用方法与沙盘",
-  "description": "vivo全员AI实操课课前IPO任务卡填写说明：挑一项值得AI介入的工作，用模板和提示词生成IPO初稿，核对后带进150分钟线上课跟练完善。",
+  "description": "vivo全员AI实操课课前IPO任务卡说明：挑一项值得AI介入的工作拆清I·P·O，再用30天模拟简报跑一份周报和月报做验证——输入一个I拿不到想要的O就回头改卡，改通了带进课堂跟练。",
   "path": "vivo-ipo/",
-  "tags": ["vivo", "IPO", "任务卡", "AI实操", "线上课程", "课前准备", "资料下载"],
+  "tags": ["vivo", "IPO", "任务卡", "AI实操", "线上课程", "课前准备", "模拟数据", "周报", "月报", "提示词", "资料下载"],
   "type": "课前工具",
   "client": "vivo",
   "order": 1000,
   "status": "正常",
   "featured": true,
-  "updated": "2026-11-11"
+  "updated": "2026-11-18"
 }
