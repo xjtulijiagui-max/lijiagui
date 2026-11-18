@@ -204,6 +204,17 @@
     const list = EXERCISES.filter(e => activeMod === 0 || e.module === activeMod);
     exWrap.innerHTML = list.map(e => {
       const isDone = doneSet.has(e.id);
+      const kit = (typeof STARTKIT !== "undefined" ? STARTKIT.find(k => k.ex === e.id) : null);
+      const kitBlk = kit ? `
+        <div class="prompt kit">
+          <div class="prompt-h">
+            <span class="nm">开局消息 · 已配 ${esc(kit.who)}</span>
+            <button class="copy strong" data-copy="k-${e.id}">复制整条</button>
+            <button class="copy" data-max="k-${e.id}">展开</button>
+          </div>
+          <p class="kit-note">${esc(kit.reason)}</p>
+          <pre id="k-${e.id}">${esc(kit.kit)}</pre>
+        </div>` : "";
       const proms = e.prompts.map((p, pi) => `
         <div class="prompt">
           <div class="prompt-h">
@@ -232,6 +243,8 @@
             <dt>一线痛点</dt><dd>${esc(e.pain)}</dd>
             <dt>要准备</dt><dd>${esc(e.input)}</dd>
           </dl>
+          ${kitBlk}
+          ${kit ? '<p class="mini-h raw-h">提示词原文 · 换成你自己的客户时用</p>' : ""}
           ${proms}
           <div class="cols2">
             <div>
@@ -259,7 +272,7 @@
     if (cp) {
       const pre = document.getElementById(cp.dataset.copy);
       if (pre) {
-        copy(pre.textContent, "提示词");
+        copy(pre.textContent, cp.dataset.copy.startsWith("k-") ? "开局消息" : "提示词");
         const old = cp.textContent;
         cp.textContent = "已复制";
         cp.classList.add("ok");
@@ -354,6 +367,7 @@
   const DLS = [
     { t: "AGENTS.md 身份文件初稿", s: "六节骨架 + 合规红线 + 快捷指令，改【】即可用", href: "AGENTS.md", ic: "▤" },
     { t: "8 位客户数据集（合集）", s: "约 3.7 万字 · 8 份 10 分钟录音转写 + 参考答案", href: "data/全部客户数据集.md", ic: "▦" },
+    { t: "11 条开局消息（客户已配好）", s: "提示词 + 客户素材合成一条 · 复制即练", href: "prompts/11条开局消息.md", ic: "▶" },
     { t: "11 个练习提示词（合集）", s: "按五段配方写成 · 可整段复制", href: "prompts/全部提示词合集.md", ic: "◆" },
     { t: "客群名单（12 人 CSV）", s: "练习 4 意向打分用 · 可直接导入表格", href: "data/客群名单.csv", ic: "▩" }
   ];
