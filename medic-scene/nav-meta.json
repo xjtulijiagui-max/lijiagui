@@ -1,0 +1,27 @@
+{
+  "id": "medic-scene",
+  "title": "中国生物制药 BD AI 场景训练操作台",
+  "shortTitle": "中国生物制药 BD 场景",
+  "description": "面向医药 BD 的 Sourcing 寻源、科学评估、立项决策、尽调·估值·谈判、签协议与项目管理岗位。围绕 License in/out 全流程，四步完成流程生成、AI 介入、场景湖与高价值场景筛选，含四个可编辑提示词与两个 Excel 模板，支持六个环节切换与变量联动。",
+  "url": "https://xjtulijiagui-max.github.io/lijiagui/medic-scene/",
+  "path": "medic-scene/",
+  "tags": [
+    "中国生物制药",
+    "医药BD",
+    "License in/out",
+    "证据卡",
+    "场景创新",
+    "Mermaid",
+    "ROI",
+    "四道筛子",
+    "AI介入",
+    "课前工具"
+  ],
+  "type": "实战练习",
+  "client": "中国生物制药 BD 团队",
+  "status": "正常",
+  "featured": false,
+  "updated": "2026-11-19",
+  "source": "发布自本地定制版 medic-scene 交互页（六环节+变量联动+四道筛子）",
+  "order": 439
+}
