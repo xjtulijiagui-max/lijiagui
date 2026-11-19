@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>专题02 · 数据校验 | WorkBuddy 财务实战训练</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">跳到正文</a>
+<header class="topbar"><div class="tb-inner">
+  <a class="brand" href="index.html"><span class="logo">WB</span> WorkBuddy 财务实战训练</a>
+  <nav class="tb-nav">
+    <a href="index.html">全部专题</a>
+    <a href="topic-1.html" class="">上一专题</a>
+    <a href="topic-3.html" class="">下一专题</a>
+  </nav>
+</div></header>
+
+<section class="hero hero-topic"><div class="hero-inner">
+  <p class="eyebrow">专题 02 / 06 · L2 → L3</p>
+  <h1>数据校验</h1>
+  <p class="lead">在一份故意埋入问题的往来明细上，按金额、日期、编号、公式四类规则校验并出异常报告。异常只标记，不修正。</p>
+  <div class="chips">
+    <span class="chip">难度 L2 → L3</span>
+    <span class="chip">1 个数据集</span>
+    <span class="chip">提示词可复制</span>
+    <span class="chip">含验收清单与讲师答案</span>
+  </div>
+</div></section>
+
+<main id="main" class="wrap">
+  <section class="sec">
+    <h2 class="sec-title"><span class="sn">01</span>怎么练：四步走</h2>
+    <ol class="steps"><li>下载校验样本，放进 01-原始数据\专题二-数据校验。</li><li>在 WorkBuddy 新建任务，工作空间只加入这个文件夹，先 Plan 后执行。</li><li>复制提示词，先看 AI 列出的规则理解是否与你一致，再放行；试着关掉可选行再跑一次，比较差异。</li><li>对照验收清单检查，尤其看边界值和反例有没有被误报。</li></ol>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head">
+      <h2 class="sec-title"><span class="sn">02</span>数据集下载</h2>
+      <a class="btn btn-soft" href="data/专题二-数据校验/数据校验-数据集.zip" download>打包下载全部</a>
+    </div>
+    <p class="sec-sub">全部为课堂模拟数据。下载后放入工作区对应文件夹，与提示词里的路径保持一致。</p>
+    <div class="files"><div class="file">
+  <div class="fico xlsx">XLS</div>
+  <div class="file-main">
+    <div class="file-name">校验样本_往来明细_2026-10.xlsx</div>
+    <div class="file-desc">40 行往来明细 + 部门小计填报 + 利润表填报，用于金额、日期、编号、公式四类校验。</div>
+    <div class="file-meta"><span>8.4 KB</span>
+      <a class="dl" href="data/专题二-数据校验/校验样本_往来明细_2026-10.xlsx" download>下载</a></div>
+  </div>
+</div></div>
+  </section>
+
+  <section class="sec">
+    <h2 class="sec-title"><span class="sn">03</span>提示词（可直接复制）</h2>
+    <div class="ws-row">
+      <label for="ws">工作区路径</label>
+      <input id="ws" type="text" spellcheck="false" placeholder="D:\WorkBuddy-财务工作区">
+    </div>
+    <div class="opts" id="opts"></div>
+    <div class="prompt-box">
+      <div class="prompt-bar"><span>按当前选项与路径生成，可直接粘贴到 WorkBuddy</span>
+        <button id="copy" class="btn btn-primary" type="button">复制提示词</button></div>
+      <pre id="prompt"></pre>
+    </div>
+    <p class="tip">手册原文没有定义“差异率”的分母，也没写“编号缺失”和“利润公式”。三条可选行就是补这些口径：关掉再跑一次，你会看到口径不写清，结果就会飘。</p>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head">
+      <h2 class="sec-title"><span class="sn">04</span>验收清单</h2>
+      <span class="progress" id="prog">0 / 6</span>
+    </div>
+    <ul class="checklist" id="checklist"></ul>
+  </section>
+
+  <details class="answer">
+    <summary>讲师答案（练完再展开）</summary>
+    <div class="answer-body"><p>差异率口径：|金额 − 原始凭证金额| ÷ 原始凭证金额；“超过”均不含等于。</p><p>四类规则（金额、日期、编号、公式）共 15 处命中；另有 4 个“边界/反例”不应被误报。</p><div class="tbl-wrap"><table><thead><tr><th>规则</th><th>位置（Excel 行号，含表头）</th><th>期望结果</th></tr></thead><tbody><tr><td>1 金额为负（非退款）</td><td>明细 第 6 行（JS-2026-1005，-3,200.00）</td><td>标记异常</td></tr><tr><td>1 金额为负（非退款）</td><td>明细 第 18 行（JS-2026-1017，-850.00）</td><td>标记异常</td></tr><tr><td>反例：退款允许为负</td><td>明细 第 10 行（JS-2026-1009）</td><td>不应标记</td></tr><tr><td>2 金额超过 10 万</td><td>明细 第 24 行（JS-2026-1023，108,600.00）</td><td>标记“需复核”</td></tr><tr><td>2 金额超过 10 万</td><td>明细 第 32 行（JS-2026-1031，235,000.00）</td><td>标记“需复核”</td></tr><tr><td>边界：恰好 10 万</td><td>明细 第 13 行（JS-2026-1012，100,000.00）</td><td>不应标记（超过才标记）</td></tr><tr><td>3 与凭证差异 &gt;1%</td><td>明细 第 15 行（JS-2026-1014，差异 3.27%）</td><td>标记“异常”</td></tr><tr><td>3 与凭证差异 &gt;1%</td><td>明细 第 28 行（JS-2026-1027，差异 2.56%）</td><td>标记“异常”</td></tr><tr><td>反例：差异 ≤1%</td><td>明细 第 21 行（JS-2026-1020，差异 0.50%）</td><td>不应标记</td></tr><tr><td>4 日期晚于当前日期</td><td>明细 第 8 行（JS-2026-1007，2027-03-15）</td><td>标记异常</td></tr><tr><td>4 日期晚于当前日期</td><td>明细 第 36 行（JS-2026-1035，2027-06-30）</td><td>标记异常</td></tr><tr><td>5 审批间隔 &gt;30 天</td><td>明细 第 4 行（JS-2026-1003，间隔 53 天）</td><td>标记“超期”</td></tr><tr><td>5 审批间隔 &gt;30 天</td><td>明细 第 19 行（JS-2026-1018，间隔 44 天）</td><td>标记“超期”</td></tr><tr><td>5 审批间隔 &gt;30 天</td><td>明细 第 30 行（JS-2026-1029，间隔 40 天）</td><td>标记“超期”</td></tr><tr><td>边界：恰好 30 天</td><td>明细 第 23 行（JS-2026-1022）</td><td>不应标记</td></tr><tr><td>6 编号重复</td><td>明细 第 11、27 行（JS-2026-1010）</td><td>标记重复</td></tr><tr><td>6 编号缺失</td><td>明细 第 34 行</td><td>标记“待补充”（需在指令中写明，原始 7 条规则未覆盖）</td></tr><tr><td>7 小计与明细不一致</td><td>汇总填报：采购部 填报 264,700.00，明细合计 263,700.00，差 +1,000.00</td><td>标记不一致</td></tr><tr><td>公式：利润≠收入−成本−费用</td><td>利润表填报：填报 270,000.00，应为 260,000.00，差 +10,000.00</td><td>标记不一致（需在指令中追加该规则）</td></tr></tbody></table></div></div>
+  </details>
+
+  <div class="pager"><a href="topic-1.html"><div class="p-lbl">← 上一专题</div><div class="p-name">专题01 · 报表处理</div></a><a class="r" href="topic-3.html"><div class="p-lbl">下一专题 →</div><div class="p-name">专题03 · 财报信息抽取</div></a></div>
+</main>
+<footer class="foot">WorkBuddy 财务实战训练 · 课堂模拟材料，仅用于教学训练，不代表任何真实公司</footer>
+<script>window.__TOPIC__={"id": "t2", "num": 2, "name": "数据校验", "level": "L2 → L3", "prompt": {"official": true, "tpl": "<<PLAN>>\n读取 {IN2}{SEP}校验样本_往来明细_2026-10.xlsx，按以下规则进行校验：\n1. 金额必须为正数（退款除外）\n2. 金额超过 10 万标记为“需复核”\n3. 金额与原始凭证差异超过 1% 标记为“异常”\n4. 日期不得晚于当前日期\n5. 日期与审批日期间隔超过 30 天标记为“超期”\n6. 编号不得重复\n7. 小计与明细之和必须一致\n<<OPT:t2_r8>>\n<<OPT:t2_r9>>\n<<OPT:t2_def>>\n生成校验报告，列出所有异常项，标注严重程度、可能原因、建议处理方式。\n保存路径：{CHK}", "options": [{"id": "t2_r8", "label": "追加规则 8：利润＝收入−成本−费用（对应“利润表填报”表）", "tag": "推荐", "def": true, "line": "8. 利润必须等于收入减成本减费用（见“利润表填报”表）"}, {"id": "t2_r9", "label": "追加规则 9：编号缺失标记“待补充”", "tag": "推荐", "def": true, "line": "9. 编号缺失标记为“待补充”"}, {"id": "t2_def", "label": "写明差异率分母与“超过”的含义", "tag": "推荐", "def": true, "line": "口径说明：差异率＝|金额−原始凭证金额|÷原始凭证金额；“超过”不含等于；退款允许为负数。"}], "tip": "手册原文没有定义“差异率”的分母，也没写“编号缺失”和“利润公式”。三条可选行就是补这些口径：关掉再跑一次，你会看到口径不写清，结果就会飘。"}, "checklist": ["每个异常项都有严重程度、可能原因、建议处理方式", "边界值判断正确：恰好 10 万、恰好间隔 30 天都没有被标记", "退款的负数没有被误报", "编号重复、编号缺失、部门小计不一致、利润不平都被发现", "没有自动修正任何数据，只做标记", "校验报告存入 04-校验报告，并由人逐项确认处理方式"]};window.__ALL__=[{"num": 1, "name": "报表处理"}, {"num": 2, "name": "数据校验"}, {"num": 3, "name": "财报信息抽取"}, {"num": 4, "name": "合同审阅"}, {"num": 5, "name": "合规检查"}, {"num": 6, "name": "费用分析"}];</script>
+<script src="assets/app.js"></script>
+</body>
+</html>
