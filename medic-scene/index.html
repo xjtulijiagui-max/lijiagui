@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="中国生物制药 AI 场景训练操作台（medic-scene）：围绕医药 BD 的 License in/out 全流程，从流程梳理、AI 介入、场景湖清单到四道筛子，含四个可编辑提示词与两个 Excel 模板。">
+<title>中国生物制药 AI 场景训练操作台 · medic-scene</title>
+<style>
+:root {
+  color-scheme: light;
+  --paper: #f3f7fc;
+  --card: #ffffff;
+  --card-2: #f7faff;
+  --field: #ffffff;
+  --ink: #12233d;
+  --ink-2: #3d4e66;
+  --muted: #64748b;
+  --line: #d6e3f3;
+  --line-strong: #b4cbe8;
+  --blue: #0564cd;
+  --blue-ink: #0a4fa3;
+  --blue-soft: #eaf3fc;
+  --navy: #1f3864;
+  --orange: #b85c07;
+  --orange-soft: #fff3e3;
+  --green: #0b7a4b;
+  --green-soft: #e3f6ec;
+  --focus: #0564cd;
+  --font: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", system-ui, sans-serif;
+  --mono: "Cascadia Mono", "SF Mono", Consolas, "Noto Sans Mono CJK SC", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --paper: #0a1424; --card: #0f1b2f; --card-2: #12213a; --field: #0b1627;
+    --ink: #e6eefa; --ink-2: #b9c7dc; --muted: #8798b0;
+    --line: #213450; --line-strong: #33507a;
+    --blue: #5aa2ff; --blue-ink: #8cbcff; --blue-soft: #132641; --navy: #9db8e6;
+    --orange: #f0a04c; --orange-soft: #2a1d0e; --green: #4cd49a; --green-soft: #0f2a21; --focus: #8cbcff;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #0a1424; --card: #0f1b2f; --card-2: #12213a; --field: #0b1627;
+  --ink: #e6eefa; --ink-2: #b9c7dc; --muted: #8798b0;
+  --line: #213450; --line-strong: #33507a;
+  --blue: #5aa2ff; --blue-ink: #8cbcff; --blue-soft: #132641; --navy: #9db8e6;
+  --orange: #f0a04c; --orange-soft: #2a1d0e; --green: #4cd49a; --green-soft: #0f2a21; --focus: #8cbcff;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 20px; }
+body {
+  margin: 0; background: var(--paper); color: var(--ink);
+  font-family: var(--font); font-size: 16px; line-height: 1.7;
+}
+a { color: inherit; text-decoration: none; overflow-wrap: anywhere; }
+button, input, textarea, select { font: inherit; color: inherit; }
+h1, h2, h3, p { margin: 0; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+/* ---------- controls ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 40px; padding: 0 16px; border-radius: 8px; cursor: pointer; white-space: nowrap;
+  border: 1px solid var(--line-strong); background: var(--card); color: var(--ink);
+  transition: background .15s, border-color .15s, color .15s;
+}
+.btn:hover { border-color: var(--blue); background: var(--blue-soft); }
+.btn.primary { background: var(--blue); border-color: var(--blue); color: #fff; font-weight: 600; }
+.btn.primary:hover { background: var(--blue-ink); border-color: var(--blue-ink); }
+:root[data-theme="dark"] .btn.primary { color: #06101f; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .btn.primary { color: #06101f; } }
+.btn.quiet { min-height: 34px; padding: 0 12px; font-size: 14px; color: var(--ink-2); }
+.btn[hidden] { display: none; }
+
+/* ---------- layout ---------- */
+.shell {
+  width: min(100%, 1440px); margin: 0 auto; padding: 24px;
+  display: grid; grid-template-columns: 268px minmax(0, 1fr); gap: 28px;
+}
+.rail {
+  position: sticky; top: 24px; align-self: start; max-height: calc(100dvh - 48px); overflow: auto;
+  border: 1px solid var(--line); border-radius: 12px; background: var(--card);
+  padding: 18px 16px; display: flex; flex-direction: column; gap: 18px;
+  box-shadow: 0 10px 30px rgba(18, 35, 61, .07);
+}
+.rail-title strong { display: block; font-size: 16px; line-height: 1.4; }
+.rail-title span { display: block; margin-top: 2px; color: var(--muted); font-size: 13px; }
+.nav-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.nav-item {
+  display: grid; grid-template-columns: 32px 1fr; gap: 10px; align-items: center;
+  min-height: 44px; padding: 6px 8px; border-radius: 8px; color: var(--ink-2); font-size: 15px;
+  border: 1px solid transparent;
+}
+.nav-item:hover { background: var(--blue-soft); }
+.nav-item[aria-current="true"] { background: var(--blue-soft); border-color: var(--line-strong); color: var(--ink); font-weight: 600; }
+.nav-index {
+  width: 32px; height: 32px; display: grid; place-items: center; border-radius: 8px;
+  background: var(--blue-soft); color: var(--blue); font-size: 13px; font-weight: 700;
+}
+.nav-item[aria-current="true"] .nav-index { background: var(--blue); color: #fff; }
+:root[data-theme="dark"] .nav-item[aria-current="true"] .nav-index { color: #06101f; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .nav-item[aria-current="true"] .nav-index { color: #06101f; } }
+.note-card {
+  border: 1px solid var(--line); border-radius: 10px; background: var(--card-2); padding: 14px 16px;
+}
+.note-card h3 { font-size: 15px; line-height: 1.5; margin-bottom: 6px; }
+.note-card p, .file-purpose { color: var(--ink-2); font-size: 14px; line-height: 1.65; }
+.note-card.warn { background: var(--orange-soft); border-color: transparent; }
+.note-card.warn h3 { color: var(--orange); }
+.rail-actions { display: grid; gap: 8px; }
+
+main { min-width: 0; display: grid; gap: 40px; }
+
+/* ---------- hero ---------- */
+.hero {
+  display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 32px; align-items: center;
+  padding: 36px; border: 1px solid var(--line); border-radius: 14px; background: var(--card);
+}
+h1 { font-size: clamp(32px, 4.2vw, 50px); line-height: 1.18; font-weight: 700; letter-spacing: 0; }
+.lead { margin-top: 16px; color: var(--ink-2); font-size: 17px; line-height: 1.8; max-width: 38em; }
+.hero-actions { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.copy-status { min-height: 22px; margin-top: 8px; color: var(--green); font-size: 14px; }
+.flow { display: grid; gap: 10px; counter-reset: s; }
+.flow-node {
+  display: grid; grid-template-columns: 40px 1fr auto; gap: 14px; align-items: center;
+  padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--card-2);
+  transition: border-color .15s, background .15s;
+}
+.flow-node:hover { border-color: var(--blue); background: var(--blue-soft); }
+.node-number {
+  width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center;
+  background: var(--blue); color: #fff; font-weight: 700; font-size: 15px;
+}
+:root[data-theme="dark"] .node-number { color: #06101f; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .node-number { color: #06101f; } }
+.node-title { display: block; font-weight: 650; line-height: 1.4; }
+.node-meta { display: block; color: var(--muted); font-size: 13.5px; line-height: 1.5; }
+.node-tool { color: var(--muted); font-size: 12.5px; text-align: right; max-width: 7.5em; line-height: 1.4; }
+
+/* ---------- sections ---------- */
+.section { scroll-margin-top: 20px; }
+.section-head { margin-bottom: 18px; max-width: 62em; }
+.step-pill {
+  display: inline-block; padding: 1px 10px; border-radius: 999px; margin-bottom: 8px;
+  background: var(--blue-soft); color: var(--blue); font-size: 13px; font-weight: 700;
+}
+h2 { font-size: clamp(22px, 2.4vw, 28px); line-height: 1.35; font-weight: 700; }
+.section-head > p { margin-top: 8px; color: var(--ink-2); }
+.tool-tags { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
+.tool-tag {
+  display: inline-flex; align-items: center; min-height: 30px; padding: 0 12px; border-radius: 999px;
+  border: 1px solid var(--line-strong); background: var(--card); color: var(--ink-2); font-size: 13.5px;
+}
+a.tool-tag:hover { border-color: var(--blue); color: var(--blue); }
+h3 { font-size: 17px; line-height: 1.45; }
+.grid-two { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.stack { display: grid; gap: 16px; }
+
+/* ---------- variables: pipeline selector ---------- */
+.panel { border: 1px solid var(--line); border-radius: 14px; background: var(--card); padding: 26px; display: grid; gap: 22px; }
+.field-label { display: block; font-size: 14px; font-weight: 650; color: var(--ink-2); margin-bottom: 8px; }
+.field-label small { font-weight: 400; color: var(--muted); margin-left: 6px; }
+.pipe { display: grid; grid-template-columns: 2fr 4fr; gap: 10px; }
+.pipe-group { border: 1px solid var(--line-strong); border-radius: 10px; overflow: hidden; background: var(--card-2); }
+.pipe-head { padding: 6px 12px; font-size: 13px; font-weight: 650; color: var(--navy); background: var(--blue-soft); border-bottom: 1px solid var(--line-strong); }
+.pipe-cells { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 1px; background: var(--line); }
+.pipe-cells input, .seg input { position: absolute; opacity: 0; pointer-events: none; }
+.pipe-cells label {
+  display: grid; gap: 2px; align-content: center; justify-items: start; min-height: 64px; padding: 8px 12px;
+  background: var(--card); cursor: pointer; transition: background .15s;
+}
+.pipe-cells label b { font-size: 12.5px; color: var(--muted); font-weight: 700; }
+.pipe-cells label span { font-size: 15px; font-weight: 600; line-height: 1.35; }
+.pipe-cells label:hover { background: var(--blue-soft); }
+.pipe-cells input:checked + label { background: var(--blue); color: #fff; }
+.pipe-cells input:checked + label b { color: rgba(255, 255, 255, .8); }
+:root[data-theme="dark"] .pipe-cells input:checked + label, :root[data-theme="dark"] .pipe-cells input:checked + label b { color: #06101f; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .pipe-cells input:checked + label, :root:not([data-theme="light"]) .pipe-cells input:checked + label b { color: #06101f; } }
+.pipe-cells input:focus-visible + label, .seg input:focus-visible + label { outline: 2px solid var(--focus); outline-offset: -3px; }
+.fields { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 16px; }
+.fields .f-dir { grid-column: span 4; }
+.fields .f-role { grid-column: span 4; }
+.fields .f-owner { grid-column: span 4; }
+.fields .f-task { grid-column: span 12; }
+.seg { display: inline-grid; grid-auto-flow: column; grid-auto-columns: 1fr; border: 1px solid var(--line-strong); border-radius: 8px; overflow: hidden; width: 100%; }
+.seg label { min-height: 42px; display: grid; place-content: center; text-align: center; padding: 2px 8px; cursor: pointer; background: var(--card); font-size: 15px; line-height: 1.25; border-left: 1px solid var(--line); }
+.seg label:first-of-type { border-left: 0; }
+.seg label small { display: block; font-size: 11.5px; color: var(--muted); }
+.seg input:checked + label { background: var(--blue); color: #fff; }
+.seg input:checked + label small { color: rgba(255, 255, 255, .8); }
+:root[data-theme="dark"] .seg input:checked + label, :root[data-theme="dark"] .seg input:checked + label small { color: #06101f; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .seg input:checked + label, :root:not([data-theme="light"]) .seg input:checked + label small { color: #06101f; } }
+.text-in {
+  width: 100%; min-height: 42px; padding: 8px 12px; border: 1px solid var(--line-strong); border-radius: 8px; background: var(--field);
+}
+.text-in::placeholder { color: var(--muted); }
+.data-note { display: none; background: var(--orange-soft); color: var(--ink-2); border-radius: 8px; padding: 10px 14px; font-size: 14px; line-height: 1.65; }
+.data-note b { color: var(--orange); }
+.panel-foot { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; color: var(--muted); font-size: 14px; }
+
+/* ---------- prompt cards ---------- */
+.prompt-card { border: 1px solid var(--line); border-radius: 14px; background: var(--card); padding: 20px; display: grid; gap: 14px; }
+.prompt-top { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; flex-wrap: wrap; }
+.prompt-top h3 { font-size: 19px; margin-top: 4px; }
+.badge { display: inline-block; padding: 0 9px; border-radius: 6px; background: var(--blue-soft); color: var(--blue); font-size: 12.5px; font-weight: 700; line-height: 1.7; }
+.badge.amber { background: var(--orange-soft); color: var(--orange); }
+.badge.green { background: var(--green-soft); color: var(--green); }
+.prompt-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.prompt-box {
+  width: 100%; min-height: 260px; resize: vertical; overflow: hidden; padding: 14px 16px; border: 1px solid var(--line-strong); border-radius: 10px;
+  background: var(--field); font-size: 14.5px; line-height: 1.75;
+}
+.prompt-box.short { min-height: 260px; }
+.prompt-meta { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; align-items: center; font-size: 13.5px; color: var(--muted); min-height: 24px; }
+.left-count[data-n="0"] { color: var(--green); }
+.left-count:not([data-n="0"]) { color: var(--orange); }
+.prompt-meta .copy-status { margin: 0; min-height: 0; }
+.hint-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.hint-list li { display: grid; grid-template-columns: 24px 1fr; gap: 10px; color: var(--ink-2); font-size: 14.5px; line-height: 1.65; }
+.mark { width: 22px; height: 22px; display: grid; place-items: center; border-radius: 6px; background: var(--blue-soft); color: var(--blue); font-size: 12px; font-weight: 700; margin-top: 2px; }
+.mini-table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 8px; }
+.mini-table th, .mini-table td { text-align: left; vertical-align: top; padding: 9px 8px; border-top: 1px solid var(--line); line-height: 1.55; }
+.mini-table th { color: var(--muted); font-weight: 650; font-size: 13px; border-top: 0; }
+.mini-table td:first-child { font-weight: 650; white-space: nowrap; padding-right: 12px; }
+.plain-list { margin: 8px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; font-size: 14.5px; color: var(--ink-2); }
+.plain-list li { padding-left: 14px; position: relative; line-height: 1.6; }
+.plain-list li::before { content: ""; position: absolute; left: 0; top: .7em; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px; }
+.split > div { border-radius: 8px; padding: 10px 12px; font-size: 14px; line-height: 1.6; }
+.split .ai { background: var(--blue-soft); }
+.split .human { background: var(--orange-soft); }
+.split b { display: block; margin-bottom: 4px; font-size: 13.5px; }
+.split .human b { color: var(--orange); }
+.split .ai b { color: var(--blue); }
+
+/* ---------- downloads ---------- */
+.step-download { border: 1px dashed var(--line-strong); border-radius: 10px; padding: 14px 16px; background: var(--card-2); display: grid; gap: 8px; justify-items: start; }
+.download-title {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 16px; border-radius: 8px;
+  border: 1px solid var(--blue); color: var(--blue); font-weight: 650; background: var(--card);
+}
+.download-title:hover { background: var(--blue); color: #fff; }
+:root[data-theme="dark"] .download-title:hover { color: #06101f; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .download-title:hover { color: #06101f; } }
+.file-name { color: var(--muted); font-size: 13px; }
+.footer-note { color: var(--muted); font-size: 13.5px; padding: 4px 4px 28px; max-width: 62em; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 1100px) {
+  .shell { grid-template-columns: 1fr; padding: 16px; gap: 20px; }
+  .rail { position: static; max-height: none; box-shadow: none; padding: 12px; gap: 12px; }
+  .rail-title span { display: inline; margin-left: 8px; }
+  .nav-list { display: flex; overflow-x: auto; gap: 6px; padding-bottom: 4px; }
+  .nav-item { flex: 0 0 auto; white-space: nowrap; padding-right: 14px; }
+  .rail .note-card { display: none; }
+  .rail-actions { grid-template-columns: 1fr 1fr; }
+  .data-note { display: block; }
+  .hero { grid-template-columns: 1fr; padding: 26px; }
+  .grid-two { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  body { font-size: 15.5px; }
+  .hero { padding: 20px; }
+  .panel { padding: 18px; }
+  .pipe { grid-template-columns: 1fr; }
+  .pipe-cells { grid-auto-flow: row; grid-template-columns: repeat(2, 1fr); }
+  .fields .f-dir, .fields .f-role, .fields .f-owner { grid-column: span 12; }
+  .flow-node { grid-template-columns: 40px 1fr; }
+  .node-tool { grid-column: 2; text-align: left; max-width: none; }
+  .prompt-card { padding: 16px; }
+  .prompt-box { min-height: 240px; }
+  .prompt-actions, .hero-actions { width: 100%; }
+  .prompt-actions .btn, .hero-actions .btn { flex: 1; }
+  .split { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside class="rail" aria-label="步骤导航">
+    <div class="rail-title">
+      <strong>AI 场景训练操作台</strong>
+      <span>中国生物制药 · 医药 BD</span>
+    </div>
+    <nav aria-label="页面步骤">
+      <ol class="nav-list">
+        <li><a class="nav-item" href="#vars"><span class="nav-index">00</span><span>先填变量</span></a></li>
+        <li><a class="nav-item" href="#flow"><span class="nav-index">01</span><span>Step1 流程生成</span></a></li>
+        <li><a class="nav-item" href="#ai-flow"><span class="nav-index">02</span><span>Step2 AI 介入</span></a></li>
+        <li><a class="nav-item" href="#scene-lake"><span class="nav-index">03</span><span>Step3 场景湖</span></a></li>
+        <li><a class="nav-item" href="#roi"><span class="nav-index">04</span><span>Step4 四道筛子</span></a></li>
+      </ol>
+    </nav>
+    <div class="note-card warn">
+      <h3>数据与使用提醒</h3>
+      <p class="file-purpose">只使用公开、模拟或经批准的脱敏材料。未公开管线、交易底价、未公开协议和患者数据，不要输入未经批准的工具。工具入口为示例，请使用公司允许且可访问的 AI 工具。</p>
+    </div>
+    <div class="rail-actions">
+      <button class="btn quiet" type="button" data-theme-toggle aria-pressed="false">切换深色模式</button>
+      <a class="btn quiet" href="https://xjtulijiagui-max.github.io/lijiagui/list/" target="_blank" rel="noopener">返回课堂记录</a>
+    </div>
+  </aside>
+
+  <main>
+    <section class="hero" aria-labelledby="page-title">
+      <div>
+        <h1 id="page-title">中国生物制药<br>AI 场景训练操作台</h1>
+        <p class="lead">从自己主责环节里的一项具体工作开始：先梳清流程，再找 AI 能帮上忙的节点，整理成场景湖清单，最后用“四道筛子”选出优先场景。先填变量，四个提示词会同步更新；选出的 P1 场景，带入后续的 IPO 拆解与 Skill 共创。</p>
+        <div class="hero-actions">
+          <button class="btn primary" type="button" data-copy-all>复制四个提示词</button>
+          <a class="btn" href="#scene-lake">下载模板资料</a>
+        </div>
+        <div class="copy-status" aria-live="polite" data-global-status></div>
+      </div>
+      <div class="flow" aria-label="四步流程概览">
+        <a class="flow-node" href="#flow"><span class="node-number">01</span><span><span class="node-title">流程生成</span><span class="node-meta">选一项具体工作，补完整流程并列出步骤</span></span><span class="node-tool">豆包 / 对话工具</span></a>
+        <a class="flow-node" href="#ai-flow"><span class="node-number">02</span><span><span class="node-title">讨论 AI 介入节点</span><span class="node-meta">找效率提升点，标出专家复核边界</span></span><span class="node-tool">豆包 / 对话工具</span></a>
+        <a class="flow-node" href="#scene-lake"><span class="node-number">03</span><span><span class="node-title">刷新场景湖清单</span><span class="node-meta">上传示例表格和讨论材料，输出 Excel</span></span><span class="node-tool">桌面智能体</span></a>
+        <a class="flow-node" href="#roi"><span class="node-number">04</span><span><span class="node-title">用四道筛子选优先场景</span><span class="node-meta">同一对话完成四问，得到 P1/P2/P3</span></span><span class="node-tool">桌面智能体</span></a>
+      </div>
+    </section>
+
+    <section class="section" id="vars" aria-labelledby="vars-title">
+      <div class="section-head">
+        <span class="step-pill">开始前</span>
+        <h2 id="vars-title">先填变量：环节、方向和候选工作</h2>
+        <p>点选你当前的主责环节，其余内容按需填写。下面四个提示词会随之更新；已经手动改过的提示词不会被覆盖。</p>
+      </div>
+      <div class="panel">
+        <div>
+          <span class="field-label" id="stage-label">主责环节<small>对应 BD 全流程六个环节</small></span>
+          <div class="pipe" role="radiogroup" aria-labelledby="stage-label">
+            <div class="pipe-group">
+              <div class="pipe-head">前端：找得到、看得懂</div>
+              <div class="pipe-cells"><input type="radio" name="stage" id="stage-0" value="0"><label for="stage-0"><b>1</b><span>Sourcing寻源</span></label><input type="radio" name="stage" id="stage-1" value="1" checked><label for="stage-1"><b>2</b><span>科学评估</span></label></div>
+            </div>
+            <div class="pipe-group">
+              <div class="pipe-head">中后端：做决策、成交易、管项目</div>
+              <div class="pipe-cells"><input type="radio" name="stage" id="stage-2" value="2"><label for="stage-2"><b>3</b><span>立项决策</span></label><input type="radio" name="stage" id="stage-3" value="3"><label for="stage-3"><b>4</b><span>尽调·估值·谈判</span></label><input type="radio" name="stage" id="stage-4" value="4"><label for="stage-4"><b>5</b><span>签协议</span></label><input type="radio" name="stage" id="stage-5" value="5"><label for="stage-5"><b>6</b><span>项目管理</span></label></div>
+            </div>
+          </div>
+        </div>
+        <div class="fields">
+          <div class="f-dir">
+            <span class="field-label" id="dir-label">License 方向</span>
+            <div class="seg" role="radiogroup" aria-labelledby="dir-label"><input type="radio" name="direction" id="dir-in" value="in" checked><label for="dir-in">引进<small>License in</small></label><input type="radio" name="direction" id="dir-out" value="out"><label for="dir-out">授权<small>License out</small></label><input type="radio" name="direction" id="dir-both" value="both"><label for="dir-both">两者<small>in 与 out</small></label></div>
+          </div>
+          <div class="f-role">
+            <label class="field-label" for="v-role">BD 岗位</label>
+            <input class="text-in" id="v-role" type="text" autocomplete="off" placeholder="例如：科学评估专员">
+          </div>
+          <div class="f-owner">
+            <label class="field-label" for="v-owner">姓名 / 部门<small>用于场景湖清单和文件命名</small></label>
+            <input class="text-in" id="v-owner" type="text" autocomplete="off" placeholder="例如：BD 一部">
+          </div>
+          <div class="f-task">
+            <label class="field-label" for="v-task">候选工作<small>已按所选环节给出示例，可直接改写成你的具体工作；清空则恢复示例</small></label>
+            <input class="text-in" id="v-task" type="text" autocomplete="off">
+          </div>
+        </div>
+        <p class="data-note"><b>数据提醒：</b>只使用公开、模拟或经批准的脱敏材料；未公开管线、交易底价、未公开协议和患者数据，不要输入未经批准的工具。</p>
+        <div class="panel-foot">
+          <span>提示词里剩下的 {花括号} 内容，需要换成你自己的材料。</span>
+          <button class="btn quiet" type="button" data-reset-all>全部提示词重置为模板</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="flow" aria-labelledby="flow-title">
+      <div class="section-head">
+        <span class="step-pill">Step 1</span>
+        <h2 id="flow-title">流程生成：先把一项工作梳理完整</h2>
+        <p>选一项具体的候选工作，把它从开始到完成用简单文字列出来，再检查上下游交接、资料来源和专家复核节点。</p>
+        <div class="tool-tags" aria-label="Step1 工具入口">
+          <a class="tool-tag" href="https://www.doubao.com" target="_blank" rel="noopener">豆包</a>
+          <span class="tool-tag">公司批准的对话工具</span>
+        </div>
+      </div>
+      <div class="grid-two">
+        <article class="prompt-card">
+          <div class="prompt-top">
+            <div><span class="badge">提示词 1</span><h3>流程提示词</h3></div>
+            <div class="prompt-actions">
+              <button class="btn quiet" type="button" data-reset="prompt-flow" hidden>重置为模板</button>
+              <button class="btn" type="button" data-copy-target="prompt-flow">复制当前提示词</button>
+            </div>
+          </div>
+          <textarea class="prompt-box" id="prompt-flow" spellcheck="false">我是中国生物制药 BD 团队成员，岗位是 {你的BD岗位，例如：寻源经理／科学评估专员／交易经理}，主责环节是“科学评估”，主要面向引进（License in）。现在要梳理“文献关键信息提取，生成标准化证据卡”从开始到完成的完整流程，让各环节的输入输出更清楚，减少重复整理、遗漏和来回等待。请结合医药 BD 通用实践补充流程，用简单文字列出步骤。
+
+流程请覆盖：评估问题与字段口径确认、文献检索与收集、关键信息提取（统一字段）、证据链整理与同类资产比对、科学与商业双维评估草稿、研发/医学专家复核、结论汇报与归档。说明每一步的责任角色、输入资料、输出成果和交接对象；补充来源缺失、口径分歧、数据不完整、多方意见不一致、时间临时压缩等分支。如果你梳理的是其他环节的工作，请按同样的结构替换对应步骤。
+
+以 {你所在团队的实际做法} 为依据；缺少的信息列为“待确认”，不编造公司内部制度、审批权限和未公开项目信息。只使用公开、模拟或经批准的脱敏材料，不输入未公开管线、交易底价、未公开协议等敏感信息。
+
+请同时满足以下格式要求：
+1. 不同阶段使用不同颜色。
+2. 各阶段横向排布，阶段内部自上而下展开；把定期更新这类周期性工作单独标成循环，避免画成只走一次的直线。
+3. 用不同形状区分开始/结束、判断、资料、执行、专家复核和风险提示。
+4. 按“准备—收集—处理—评估—复核—交付”分区，标明与研发/医学、法务、财务和 BD 负责人的交接节点。
+5. 输出可直接在普通对话工具中渲染的 Mermaid 代码，不要只给文字说明。</textarea>
+          <div class="prompt-meta"><span class="left-count" data-left-for="prompt-flow" data-n="0"></span><span class="copy-status" aria-live="polite"></span></div>
+          <ul class="hint-list">
+            <li><span class="mark">+</span><span>候选工作要具体、能动手做；“做好 BD”这类大题请拆成一项项工作。</span></li>
+            <li><span class="mark">+</span><span>如果流程不完整，继续追问：“请补充与研发/医学、法务、财务的交接信息和时间要求，以及来源缺失、口径分歧、意见不一致时的处理分支。”</span></li>
+            <li><span class="mark">+</span><span>最终下载 SVG，建议命名为：01-medic-{姓名或部门}-流程生成.svg。</span></li>
+          </ul>
+        </article>
+        <div class="stack">
+          <aside class="note-card">
+            <span class="badge amber">选题口径</span>
+            <h3>什么样的候选工作值得先做</h3>
+            <ul class="plain-list">
+              <li>高频、重复、步骤相对固定，能向新同事讲清输入和交付。</li>
+              <li>手头有公开、模拟或脱敏的材料，可以直接试用。</li>
+              <li>输出能对照原文或原表复核，出错有专业人员兜底。</li>
+            </ul>
+          </aside>
+          <aside class="note-card">
+            <h3>流程图渲染不出来时</h3>
+            <ul class="plain-list">
+              <li>追问：“请把这张流程图改为输出 SVG 代码。”</li>
+              <li>或把 Mermaid 代码粘贴到支持 Mermaid 的编辑器中，再导出 SVG。</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="ai-flow" aria-labelledby="ai-flow-title">
+      <div class="section-head">
+        <span class="step-pill">Step 2</span>
+        <h2 id="ai-flow-title">AI 介入：在同一轮对话里找改造点</h2>
+        <p>对照流程逐段检查，找出 AI 能减少重复整理、缩短等待的节点；同时明确哪些判断必须由专业人员负责，例如科学结论、估值假设、法律意见和各类决策。</p>
+        <div class="tool-tags" aria-label="Step2 工具入口">
+          <a class="tool-tag" href="https://www.doubao.com" target="_blank" rel="noopener">豆包</a>
+          <span class="tool-tag">公司批准的对话工具</span>
+        </div>
+      </div>
+      <div class="grid-two">
+        <article class="prompt-card">
+          <div class="prompt-top">
+            <div><span class="badge">提示词 2</span><h3>流程 AI 化提示词</h3></div>
+            <div class="prompt-actions">
+              <button class="btn quiet" type="button" data-reset="prompt-ai-flow" hidden>重置为模板</button>
+              <button class="btn" type="button" data-copy-target="prompt-ai-flow">复制当前提示词</button>
+            </div>
+          </div>
+          <textarea class="prompt-box" id="prompt-ai-flow" spellcheck="false">请基于上一步生成的 {岗位工作流程 Mermaid 代码}，分析哪些节点适合 AI 辅助，帮助我减少重复整理、缩短准备时间，让证据和结论更完整、更可追溯。
+
+重点考虑（以“科学评估”为主，兼顾相邻环节）：Sourcing：指定来源检索、管线/靶点/竞品与交易动态跟踪、伙伴长名单整理；科学评估：文献关键信息提取、证据链整理、同类资产对比；立项：多来源材料汇编、评分维度结构化、决策问题清单；尽调·估值·谈判：尽调清单与风险矩阵、可比交易与估值假设整理、BATNA 与谈判问答；签协议：版本条款比对、关键偏差与风险点提示；项目管理：里程碑台账、会议行动项、周报与定期更新。请用 SCAMPER、5W1H 等方法检查遗漏，并用“四道筛子”逐节点判断：数据敏感度、流程稳定性、验证成本、动作风险；区分“有公开或脱敏材料即可试用”和“需要对接内部系统或数据源”的场景，输出新的 Mermaid 流程图。
+
+格式要求：
+1. 保留原流程主线和必要的专家复核、审批节点。
+2. AI 辅助节点使用另一种颜色，节点名写清“AI 介入”。
+3. 每个 AI 节点说明责任角色、输入数据、处理动作、输出结果和验证指标，例如单篇文献整理工时、字段遗漏率、返工轮次、来源可追溯比例；没有实测数据时，不虚构提效比例。
+4. 科学评估与临床判断、估值结论与财务假设、法律意见与条款定稿、立项/谈判/签约决策，由相应专业人员复核并负责。AI 仅检索、整理、比对、提示缺项、草拟材料，不代替决策，不直接给出立项、估值或法律结论。
+5. 只使用公开、模拟或经批准的脱敏材料；未公开管线、交易底价、未公开协议、患者数据不得输入未经批准的工具。说明信息缺失、模型出错或工具不可用时如何转人工。
+6. 每个数据点和事实性结论都标注来源（原文出处、页码或链接）；没有可靠依据的标“待确认”。
+7. 步骤文字要能直接复制到普通对话工具中继续修改。</textarea>
+          <div class="prompt-meta"><span class="left-count" data-left-for="prompt-ai-flow" data-n="0"></span><span class="copy-status" aria-live="polite"></span></div>
+          <ul class="hint-list">
+            <li><span class="mark">+</span><span>把 Step1 生成的 Mermaid 代码填入 {岗位工作流程 Mermaid 代码}，在同一轮对话里继续讨论。</span></li>
+            <li><span class="mark">+</span><span>要求每个 AI 节点标注“输入数据、AI 处理、输出结果、节省时间或降低风险”。</span></li>
+            <li><span class="mark">+</span><span>最终下载 SVG，建议命名为：02-medic-{姓名或部门}-AI化改造.svg。</span></li>
+          </ul>
+        </article>
+        <div class="stack">
+          <aside class="note-card">
+            <span class="badge amber">讨论口径</span>
+            <h3>多人讨论时重点核对这些变化</h3>
+            <table class="mini-table">
+              <thead><tr><th>讨论点</th><th>追问句式</th></tr></thead>
+              <tbody>
+                <tr><td>增加流程</td><td>“文献来源不全或口径不一致时，谁补充、谁兜底、什么时候升级给研发或医学专家？”</td></tr>
+                <tr><td>修改流程</td><td>“请把‘关键信息提取’拆成字段定义、逐项提取、出处标注和抽样复核四步，写清每步责任角色。”</td></tr>
+                <tr><td>删除流程</td><td>“这个环节是否符合本团队 License in/out 的实际做法？不适用的请删除并说明原因。”</td></tr>
+                <tr><td>找业务点</td><td>“哪些 AI 介入点能减少重复整理、缩短等待，或降低遗漏与返工？”</td></tr>
+              </tbody>
+            </table>
+          </aside>
+          <aside class="note-card">
+            <h3>人机边界速查</h3>
+            <div class="split">
+              <div class="ai"><b>AI 可以辅助</b>检索与抓取、整理与比对、起草清单和问答要点、定期汇总提醒</div>
+              <div class="human"><b>专业人员负责</b>科学与临床判断、估值结论、法律意见、立项/谈判/签约决策</div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="scene-lake" aria-labelledby="scene-lake-title">
+      <div class="section-head">
+        <span class="step-pill">Step 3</span>
+        <h2 id="scene-lake-title">场景湖：用桌面智能体输出 Excel 清单</h2>
+        <p>先下载下方的医药 BD 场景湖清单模板，再上传模板、岗位痛点与讨论要点、Step2 的 AI 改造 Mermaid 代码，让桌面智能体生成你自己的 Excel 场景清单；请使用代码，而不是流程截图。</p>
+        <div class="tool-tags" aria-label="Step3 工具入口">
+          <span class="tool-tag">任意桌面智能体（如豆包工作）</span>
+        </div>
+      </div>
+      <div class="grid-two">
+        <article class="prompt-card">
+          <div class="prompt-top">
+            <div><span class="badge">提示词 3</span><h3>场景湖提示词</h3></div>
+            <div class="prompt-actions">
+              <button class="btn quiet" type="button" data-reset="prompt-scene" hidden>重置为模板</button>
+              <button class="btn" type="button" data-copy-target="prompt-scene">复制当前提示词</button>
+            </div>
+          </div>
+          <textarea class="prompt-box short" id="prompt-scene" spellcheck="false">请先下载并上传本页面 Step3 的《中国生物制药场景湖清单-教学模板.xlsx》。结合 {Step2 的 AI 改造流程 Mermaid 代码}、{我的岗位痛点记录/课堂讨论材料}，为 {姓名/部门} 整理医药 BD 的 AI 场景湖，并输出可下载的 Excel 清单。
+
+请保留模板主表12列的名称、顺序和格式：场景编号、一级流程、二级流程、业务场景、当前痛点、AI介入方式、输入数据、输出结果、使用角色、推荐工具、价值假设、备注。
+先围绕“文献关键信息提取，生成标准化证据卡”找候选点，也可以按六个环节拓展到 Sourcing、科学评估、立项、尽调·估值·谈判、签协议、项目管理；每个名称必须是可以动手做的具体工作。
+每个场景对应 Step2 的流程节点，写清当前痛点、AI 如何介入、需要什么输入、输出什么材料、由谁复核，以及可衡量的改善方向。一级流程填六个BD环节之一，二级流程写具体的业务环节；License方向（引进(in)/授权(out)/通用）写在“备注”，必须由专家或专业人员复核的点写进“AI介入方式”。模板没有的触发条件、风险边界和指标可写在“备注”或单独补充页。
+合并重复项；未确认的信息标“待确认”，数据缺口标“待补充”。不要把教学示例当成中国生物制药真实项目数据；只使用公开、模拟或脱敏材料，不编造实际提效比例。</textarea>
+          <div class="prompt-meta"><span class="left-count" data-left-for="prompt-scene" data-n="0"></span><span class="copy-status" aria-live="polite"></span></div>
+          <ul class="hint-list">
+            <li><span class="mark">+</span><span>先下载右侧的场景湖清单模板，并把 Excel 上传给桌面智能体。</span></li>
+            <li><span class="mark">+</span><span>补充你的岗位痛点记录、跟练笔记和 AI 改造 Mermaid 代码。</span></li>
+            <li><span class="mark">+</span><span>若清单不对，继续对话让它补充、合并、删除或重排场景。</span></li>
+          </ul>
+        </article>
+        <div class="stack">
+          <div class="step-download" aria-label="Step3 场景湖清单模板">
+            <span class="badge green">Step 3 · Excel 模板</span>
+            <p class="file-purpose">先下载、再上传给桌面智能体。沿用原模板的 12 列，含 6 个医药 BD 课堂虚拟示例（每个环节 1 个），可按岗位替换或删除；还有一页填写说明。</p>
+            <a class="download-title" id="dl-scene" title="点击下载 Excel 模板" download="中国生物制药场景湖清单-教学模板.xlsx" href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,UEsDBBQAAAAIAGMWc11Gx01IlQAAAM0AAAAQAAAAZG9jUHJvcHMvYXBwLnhtbE3PTQvCMAwG4L9SdreZih6kDkQ9ip68zy51hbYpbYT67+0EP255ecgboi6JIia2mEXxLuRtMzLHDUDWI/o+y8qhiqHke64x3YGMsRoPpB8eA8OibdeAhTEMOMzit7Dp1C5GZ3XPlkJ3sjpRJsPiWDQ6sScfq9wcChDneiU+ixNLOZcrBf+LU8sVU57mym/8ZAW/B7oXUEsDBBQAAAAIAGMWc12NlN6X7gAAACsCAAARAAAAZG9jUHJvcHMvY29yZS54bWzNksFOwzAMhl8F5d666cQQUZcLiBNISEwCcYscb4to2igxavf2pGXrhOABOMb+8/mz5AaDwj7Sc+wDRXaUrkbfdklh2IgDc1AACQ/kTSpzosvNXR+94fyMewgGP8yeoK6qNXhiYw0bmIBFWIhCNxYVRjLcxxPe4oIPn7GdYRaBWvLUcQJZShB6mhiOY9vABTDBmKJP3wWyC3Gu/omdOyBOyTG5JTUMQzms5lzeQcLb0+PLvG7husSmQ8q/klN8DLQR58mvq7v77YPQdVWvCykLebutanUtVXXzPrn+8LsI+966nfvHxmdB3cCvu9BfUEsDBBQAAAAIAGMWc12dv3xoOAMAAPIPAAATAAAAeGwvdGhlbWUvdGhlbWUxLnhtbO1Xy27iMBT9FSv71nmZBlRaFQqaRUcjlUqzNomTeOo8FLul/ftxnJA4hABtqTSLYQGxc8499+UH17dvCQOvpOA0S6eGdWkagKR+FtA0mhovIrzwjNubazwRMUkISHFCpsavMKQ+AU/llAGkgZRP8NSIhcgnEHJfzmN+meUkle/CrEiwkMMigkGBN9JwwqBtmiOYYJoajfEFk1+p4OWEz4qV31NU2ODZKn/4O5+zArxiNjWkzSDbPJE3YQCGuZAvpoapPgaAN9ewYTExQNaIS/XZEmtG8GwrYhGtG6a1dMdX962CXSn0gYvFYr6wWosKgX1fRmv1wO7Ss2aNVQ1VPfatz01kujsETcHpEcaz2QyNuwSnJbg9gmeO3Du7S3BbAurHMLubz0ddAmoJox5heTUeuTsEhYoZTZ978LKybYkaTJixH3vxnsR7TS+0MKh1WmUgFUN9l+A/WbGUAFVlLGgKxHtOQuxL3Bwzui4oeKBRLJQOnhB8BODzgwC4o5nQ9KgDB6QPiDZyrQLUk6FSkwxmJqSMrcQ7Iw9c+cYzRoOlnFQDRWoqkcfycavXAUYFVs+gyMRvKuJVjHOpYymJiNe2Iw7yjMsOMAaNqw2FpqKaQ80uIOFY/MyCat7pbA+NITWKuC7llCZOlXOuvipnVcgT9Sw0oIcO60Etp3ItAFxu99bIrt3kPmYkKLNfW9hW5+yV4jEOSF0qa38slnNq7rzjqdP0xs5X9U6plS7oDgmicxTL7BcL9lcnS7sjsJGOIRsZpy3d3ZAG+s8yh0PqiOQFF/eYxxVNvWoOyrT10EbuNtGf2l1OlHE86ztl4G76SRgSXwzMtMP6XfYiSLGKgw1Ys5fiEcuau1ULBJQLmaTtQN5ikFt3R3eR1sHtHqZ10JjlMa43EE+vX4VXz40TaqT5Bwec/2QszhljQf9jaZ2H+9puHS3/5VPcHTrFjxxzrZT7kVPV1Xc1bbMbf9WLDx4Y9kDYNjr9wMixiEH5NTV8WvisvbM9ZY+yC0B7SZKteuHV3dlMrqXXnh5faet77wRtIbyhup/1OqVl3BnK+BHBz2cc7Uk4OpJv2F+wULuiq9HOf+rtzM1fUEsDBBQAAAAIAGMWc11D0XNM0QsAADI7AAAYAAAAeGwvd29ya3NoZWV0cy9zaGVldDEueG1szVtZbyM3Ev4rghYwsg8b8WYzPoDE3hl71gsYmT2eNXZ7LESWvFI7TvbXb5FVbHVT7KaUYGfy4nYfLNZdH4vU2dt689P2qa6byS/Py9X2fPrUNC/fzWbb+6f6eb79dv1Sr+DN43rzPG/gdvN5tn3Z1POHMOh5OROMmdnzfLGaXpyFZ3ebi7P1a7NcrOq7zWT7+vw83/z6Q71cv51P+TQ++HHx+anxD2YXZy/zz/XHuvnny90G7mYtlYfFc73aLtaryaZ+PJ9+z7+7tf778MG/FvXbtvP/xEvyab3+yd/cPJxP2dRTXtWTXz++LBdhrkmzfrmtH5vLerkEemI6md83i5/rO/jsfPpp3TTrZ/8euGzmDTx63Kz/W6/CnPWyhm+BFxxCJLxA/yHupi3znoXu/5HPd0GLoJVP8219uV7+e/HQPJ1Pq+nkoX6cvy6bH9dv1zVpRnt69+vlNvydvOG3XE0n969bYJQGAwfPixVe57+QRrsDqoEBggaIZIBgAwMkDZDJADk0QNEAlc4wxJKmATodYAYGGBpgDp3B0gB76AwVDahStQ4NcDTAHWoHzqLlWMrUoK1bY6fWHjQej+bmwd4zdKzglVfzZn5xtlm/TTbhe+99sp269UcIp3v/RfD5YCt4ulj5OP/YbODtAgg2Fyd/EkJKdgpXA//BVQotlb/nyunTs1kD0/tvZ/dE8YcSRe6cqQIlFSgK64zz91womaN4WeSRcXYUxasDeHQoJdeBYk8LGYp/LfKoFAuUOEPeGLfc31eVtjmK78Ypfn8T5EYarJI2cMdUuFdSZm3zvsSlNFbrLkWNthJaaZWjeH04RVcZtJFBXrXIUrwpW1vqICXYSHiKWlThKqXLUvxQpKg1RwqGm6A/htKzSmf1+Lcyj4Kj1FoxvAaepbY2y+NtOQ6tC1LbqmIJhRmEexvzAmPemeGYF2EuMzDXx78wxnOBXRi2ft3cL1afgUWpVVBfJVlW2MtxSqCmyqspBkcIRzQx927og8g4i+FpgnoV6NW/N5I7vOZd4ao0M2Q3dC6pNBpOKRdmMNVOJh++Mhh2j1MhKpfhNEoAISvD1XDJMxLA9yGVCSN1CBdOLqmBs2ziKUpkVEg4kXMIRIch7UJgQhyGMBJWO9flQHMju8FgKo4BzLAAaGfDOGeZ6NKJklUKryQJJKcgeauhSrugQVMZ/H4gab0blzAkQrBa4DW1XiJ7a4VUFq5sCFeldO595Bm+k/47aaEMdmROk1yUVQAhk7Oy4ujPlcL0OsgnZCDUYbDNTseKo3ymYiRv8ErHpMTnQfeVEIzECrUbsjrDLKQqfM0DVcnsEVxIBgkCfRl9nDwELFlFresOd9Jpk43G98dGI2jdSYwuiMpZWp88K6DqIAJHFrgMCmkNWDA8KLiqxsIa7GlonmBAUAHvOTXxYbWVRM913oNKbdVVZSm8r4sqSlNgj2JX8r5LtsblyqAmhGWjmus7h6y4CuO1ZkES5URal7Cej0vww1VaMPy9ZVltfChqg4kQmDv8RpVdg9inIVX0avvMv3IYSxwVtvsAVJkt/sXqBTrBcLMYJ0mmhAzJMPplcLY2qrUOTiidUbnsBaaq7F7GDLWJZzPn7Tint4t7WJHXk8VqBkv8QDdk5AisIC9YVB4wGlxHY/pQEpWrZQg2ySmYmDSyKw/xC5BXoMtoNgpdJEIX7pc3Q9hFFrGLyGGX8WFeBo45DkBkhSkScxkToIMchilRBKsjYHMKa0CKJMjaPgBFJyA9RLTdlNbznhymOZ6TCsFoxV0W4ySctfYEDrHKcvRHqjJQ9WQ3hexJwCF9Z7HL0ZxDdmLdpCQlckTpNk3nXqf8dLfkTCMtSigjuKbI3H2XlBcqBxG7CFgN4nuqU1wxWjYBvRyWGZe4i2VgoWRdh/dU1lht25o/ZLWI66BosxGZWmvalq7Aam8FZjHOSWa0ckj4JzvM4weeZjAKFSJIxaH0DWGUgc/3MYpARMWU6eaY1oeF7HlIIi2s8GQAAIDg+iuLJP5pmep9OUhLmAe4wNwM+N4GBMKJMRroCeK9wkoPrkXq3Vu3IQgqBgGrFGIbKVjrXDEo7q7eHR4P0Wados7RR1Qom/2sF8omVjDycwlGQdgTVz8StedYHuFdF4U7Kod0gFbyvoUj1nLKZYjUU4kJCqfIebANc/P7KscYmCkb/guAmaJ4aRpK0kwGQeOSKAFB0kke1GMsXivF0OUqBDE9UJQDM0V1KRm6X5AYIbS/Waz+/BUgjCp3X1QRwcgcghkfFtZE6PExvzIXWlA+ZvNdmKMpGqVw8cIC5I+xhi3hHDIpzRDr+R7SHZ1pGJHscawNLucoj+26MF3dpHnsJFkE5ZBLUbJUgoGuyy5bOKo73sE6dYwQTBqGu+pO+a4tm9he9vVJdstPCUW+G5eoh0wKPKfWSnWx65pgk1RKw9wB1otdE5CR97otMacXrBoxRFenMjevgicop+7qOv2u9SYtqP/Bjcrx0fZL+s9j/wTGCRovs6jxfTFS05qTaLxTNUctt1ctuYxNAuzVpZqy3BCOcOTVaDFQNFrQyfjcZfHB0Tko8Ymd7winRyVttx0YFUiblfj3ZoabcYl8u8PzIsdi8UMxu3wJZFA0TYoMEqdLVd6mLOZU4EBq3AmjZurBqeq2qJ4/AhLQZSSgi0hA5ZDA+DCvWEgkKGpQNMcaGXMDbUnhU/9NRWJlYdflsbPtNRDjCstxAn6aIeCr2GgUXBVnjvUoQeAYyzd33ahm1AgXrLsHITg2xOM27+55N55CpsamKq2h9ype2hn5jTqRDHeLfBs5jzuKOklmkpXFlR/lHOzF92B6X5Jk92ZXq6m2tcGtLa2DEf6H9bDXBLWfjRjAGeMS9HZzjtV6urYbaGWXZDnMOvu1p+1RcM26rYCYpft1vlv/+52cdJumY4Oet/Y3lbsdxG5MB31x6iiFNnvby2j5EIghIz+9+XN4pOiFyS6nFJTS6RDJOE7obVog/lBUWkpxtYtflkWmtP0DJQktGZHl0Or/+gBJaUOJZjqQw5IPprjkOF/M4ZJxSfZxyb42D/PnHJ4pa/EL4JlyOUm2XxJTemcJpmZKiI5TDXU82pZW0lwe7nCUOVRxgxXC5Zv1a/M1gI0pAxtTBDY6B2zGh52EvU1qBgpqzuo8aClR6lM42W1Z27h/a6iQ6/zWxdXRMzhBxyCo5To648imy97mjdbY2KSGeG+BlIMQRS2b/gZA5EhAecJkPrhZwrEFQTvSPB6hqTQtdyU5HLXqFS7puMUWiVQV7xQNhCA5CDEuQQ9CJFqWvMI1iVB4ToBkU8xWyCNDLUdrxV47WW23udG2rbMHPnapsxtUvW2Jvq4KrY0UEhRbG+mBFEtbxkCvuzaL2xttDoutivg9QY29ox1S0UaY7+LmIEIxPlJNp/EStpv+UW+eJx/9udYdaGibDiGxzQ5AEayihSZzaKw+Ciiu6a+LwqTBHINRSZHdd0mDOB2fhlwBDaTn5Ibcpty9GJd0FCX0XCaHAsou8QVQQJmJpDtRyIZDhzkgMixxgu+N06NZ7Xacsz/cYQ1bhgG2CANMDgaMD+uuk5SiM5JYUIY6CZdFilai0OHAeIgb01sJqoqUhOm65aB43vT/NbM3F26n8d6OSFwHtOZOdLU73Tl0nrTIscAd+HRPZUiSwfOmPU5O9s+bJju5O0Ak6QgeHXiLZzF6O7o52DAuWTxQr073Zdw7LzJglc7qLruyBplxK1/TSt4q4n3gnGeig9Tq7TnSxOqpbvdgC53x2DsLMngCtH+Gdz/pIfzYi8yBjkdrq1iBIdNjx4K6SIqZ7Hr8fck7Uxgx6JVJxd1VZqFZd3zq7dHCh8flMaAlBz5+awpJWSmyPthM6TvT4JZLCkrietqCubNg4+hEf3DDoegmXwJqlJkobIQMZcC4sKIo3Ou9AsJgbTbJQY2i4r8auJh1fsTmf0n69/nm82K1nSzrR+CVfQucbxBmhP+b9Uv4T08n+IPPePdUzx/qjb+T08njet3EG/9zufZnshf/A1BLAwQUAAAACABjFnNdWqBAX5oEAAA1DQAAGAAAAHhsL3dvcmtzaGVldHMvc2hlZXQyLnhtbJVX247bNhD9FUEF+hjxLjJrG8gmKBogARZZtH3W2vRaiC6OpK2Tfn2HM5RWduz15sUyKXLmzJwzQ2pxaLuv/c77IfleV02/THfDsH+bZf165+uif9PufQNvtm1XFwMMu8es33e+2OCmusoEYyari7JJVwucu+tWi/ZpqMrG33VJ/1TXRffj1lftYZnydJz4Uj7uhjCRrRb74tHf++Gv/V0Ho2yysilr3/Rl2ySd3y7Td/ztrQ7rccHfpT/0s/9JiOShbb+GwcfNMmVpsNz45Mf9virRVzK0+09+O7z3VQX2RJoU66H819/BsmX60A5DW4f3gHIoBpjadu1/vkGfvvKwFrDQlmgiBPQtoksn8AHC/P+I8w/MImTloej9+7b6p9wMu2Vq02Tjt8VTNXxpD3/6mBkMdd1WPf4mB1orVJqsn3oAGjcDgrps6Fl8jxmdbbCXNoi4QSBucoQoPxRDsVp07SHpcHVAIycrEz5I7zqswBwsUw3ZXaZlE3i/Hzp4W4LBYfX7b9IxKW/gyZQyN4tsAHfhXbaOFm6vWtBWWLAgDBenFjIAOqEVEa25jFagr/yiL+GcEwGtsVadRUsWzGW0XMtggTuX5wF1rpyMY4yCCW2CB6FyiVHljIWxzbXCsZDhKSUTHNdLFuwYLRAZjLnBJxPxydGOEMbdYAQWx05YHHOm0J80CvFwskfj2w9hJ/gizwJ3WoE7hOVG047IoFSI1OQa55mzuM4Yi8iVlLReKcyhyPMQARfCsZd4k8SbeoE3eYW3Z0xWYpRGKdIMY+4sj/JFHkNeQLGaMmw1j8xh/DrXlhhEBqQWLMaJGQemHeaDgxRQAQ6ZkRwyREzlmG/NObv57KErlJtgnjuNac7F3JzQzqF7pzDdYN4KokXkMzhAQ+5IIAbp4tpwEo5FuFCIMUUq0iXY3E/OSUBacj7BQyGSULXD/cGew2cUknJoB+zCfhMmLCkVhCxnSoUR5SU6kJyh0kfAk8JziDgqm5FCneGYGqlgho+vXiEtRdIy4rK01KulRXIf6Q7qPt8i1JUWcRzgmQKUWqFHJbg4IyBKQyhQq49bgyUmsXDffURN5fyoLJjis1IduT8tn5/nKfZJKyAl0mRsl6AJfMpIMTeosZ9KAXoa2dPYSkYNwTozltT5kjGTdvUL0sA3Ss4sUm4+lWu4S/hZArgW8+IANzgPfR+KKgsiVZY4UeA5wzeOzUIey2BKupBEFmAneVjLjsjh1N8VIypgXR6755zM0R4heQ2JUyGe1BPso/4NDt2Zvjwh48rSycAEnjxWs1cVl77et/W18xZuBYgRugj1Bq0RYw55OVtc+lpxQTTiWDIjT7/W9uAQpLYH4qcSoHN5PAVP2mKIBNcpY/MZKyCgKMxj/3CK43rwo+YlB6zh/QFuO5LHJjAvnWndBbunx8K0Hq4bLrIfcWOBgNB1LFXL5+3tOW/jiYr6Htv9s66ZkWf2n953wj2EzXBfy+9UJ3D66hfVmM3ureFj4nPRPZZNn1Rwl4cPgTegvo50if/hKwD/gZDozj+OdvBd47swgrvBtm2HcRBuyNOX0up/UEsDBBQAAAAIAGMWc13ZArhe3wIAADMQAAANAAAAeGwvc3R5bGVzLnhtbO1YW2+bMBT+K4gfMAfc0jABUkqHtJdpUvuwV5KYBMlcZpyM9NfPxyaBtD5VenmYpoIi7POd79x8jFGiTh44u98yJp2+4nUXu1sp26+EdKstq/LuS9OyWiFFI6pcqqnYkK4VLF93QKo48WezgFR5WbtJVO+qrJKds2p2tYzdmUuSqGjqUXLlGoFSzSvm7HMeu2nOy6UoQXfV8EY4UnlmseuBpHs0Sp6eEcN9amEhypwDvhyUR1tis4zdbLguMXFG8zxv7t+8y/Ms8278xcSEfnTKVMn5eV2UIInaXEom6kxNNEcLn0HOMH44tKpSG5EfPP/avZjQNbxcg8tNepZu5ofUpDuhvtPotyC7yjzUqH6ociwbsWbiVBDqHkXkOEgizgrp6I6NXbnVHXdW6zvv7vruVrsC1SQS5WZ7KUPrJpFs2gsJShNCk7KpLmQYZT0wCZ0yHCSqDivG+T1Y+1WciuEpm33hmN31fQ0by4EuOg5VBYehMQMTX3ucWjO2J2bDN5hVk7bcN/J2p1Kp9fz3rpHsp2BF2et5XxhFglv3Ruv+1LqS523LDwtebuqKmdwvdphE+ZHnbBtRPipvsClXSsCE6+yZkOVqKvkj8vaB9XLYuKQv8Jh9pCIfF/MYn2qt1wVHx+DoPxcc3qKfvfTZSx/TS7MPC84WDRnenJPX89nL+SR14NMgdn/A1xI/a9/xVdwNB4R6lvWa9WydDlN1YkyOztlwAfspMn7PPEcwjsHsCGCYHywCjGNYmJ//KZ85mo/BsNjmVmSOcuYox7BsSKpvzI+dE6rLnmkYUhoEWEXT1BpBitUtCOBnt4bFBgzMD3h6Xa3x1cY75OU+wNb0pQ7BMsU7EcsUrzUg9roBIwztq435AQa2CljvgH+7H+gpO4dSWFUsNmwH40gYYgj0or1HgwCpTgC3fX2wXUJpGNoRwOwRUIohsBtxBIsAYsAQSvUZ9eQ8Isdziox/EyR/AVBLAwQUAAAACABjFnNdl4q7HMAAAAATAgAACwAAAF9yZWxzLy5yZWxznZK5bsMwDEB/xdCeMAfQIYgzZfEWBPkBVqIP2BIFikWdv6/apXGQCxl5PTwS3B5pQO04pLaLqRj9EFJpWtW4AUi2JY9pzpFCrtQsHjWH0kBE22NDsFosPkAuGWa3vWQWp3OkV4hc152lPdsvT0FvgK86THFCaUhLMw7wzdJ/MvfzDDVF5UojlVsaeNPl/nbgSdGhIlgWmkXJ06IdpX8dx/aQ0+mvYyK0elvo+XFoVAqO3GMljHFitP41gskP7H4AUEsDBBQAAAAIAGMWc12QYrR54AAAAKsBAAAPAAAAeGwvd29ya2Jvb2sueG1stVA7jsIwFLxK5ANgSEERJaloaBBXMPHLxiK2o/e8wAWg2+12BRLN1hQ0FMB9EnGMNbCRqBDNVu8zo5nRxHOL04m102ChS0MJK5yrIs4pK0AL6tgKjEdyi1o4f+IbpwpBSCoAnC552O32uRbKsDRutcbI0/hGoL95V4/wFX2b5yqDgc3eNRh3N0AohVPWUKEqYoERGhJWb8/NZt+cvpvjsv74YsHNaigT1vO7E85zZorUpAQWYKQ8gEPZY/xfQ/3s6tXmsj8068+HROGTROE1EW/7kpArA3Lk1ej6b0tNfwFQSwMEFAAAAAgAYxZzXY33LFq0AAAAiQIAABoAAAB4bC9fcmVscy93b3JrYm9vay54bWwucmVsc8WSTQqDMBBGrxJygI7a0kVRV924LV4g6PiD0YTMlOrta3WhgS66ka7CNyHvezCJH6gVt2agprUkxl4PlMiG2d4AqGiwV3QyFof5pjKuVzxHV4NVRadqhCgIruD2DJnGe6bIJ4u/EE1VtQXeTfHsceAvYHgZ11GDyFLkytXIiYRRb2OC5QhPM1mKrEyky8pQwr+FIk8oOlCIeNJIm82avfrzgfU8v8WtfYnr0N/J5eMA3s9L31BLAwQUAAAACABjFnNdbqckvB4BAABXBAAAEwAAAFtDb250ZW50X1R5cGVzXS54bWzFlM9OwzAMxl+lynVqMnbggNZdgCvswAuE1l2j5p9ib3Rvj9tuk0CjYioSl0aN7e/n+IuyfjtGwKxz1mMhGqL4oBSWDTiNMkTwHKlDcpr4N+1U1GWrd6BWy+W9KoMn8JRTryE26yeo9d5S9tzxNprgC5HAosgex8SeVQgdozWlJo6rg6++UfITQXLlkIONibjgBKGuEvrIz4BT3esBUjIVZFud6EU7zlKdVUhHCyinJa70GOralFCFcu+4RGJMoCtsAMhZOYoupsnEE4bxezebP8hMATlzm0JEdizB7bizJX11HlkIEpnpI16ILD37fNC7XUH1SzaP9yOkdvAD1bDMn/FXjy/6N/ax+sc+3kNo//qq96t02vgzXw3vyeYTUEsBAhQDFAAAAAgAYxZzXUbHTUiVAAAAzQAAABAAAAAAAAAAAAAAAIABAAAAAGRvY1Byb3BzL2FwcC54bWxQSwECFAMUAAAACABjFnNdjZTel+4AAAArAgAAEQAAAAAAAAAAAAAAgAHDAAAAZG9jUHJvcHMvY29yZS54bWxQSwECFAMUAAAACABjFnNdnb98aDgDAADyDwAAEwAAAAAAAAAAAAAAgAHgAQAAeGwvdGhlbWUvdGhlbWUxLnhtbFBLAQIUAxQAAAAIAGMWc11D0XNM0QsAADI7AAAYAAAAAAAAAAAAAACAgUkFAAB4bC93b3Jrc2hlZXRzL3NoZWV0MS54bWxQSwECFAMUAAAACABjFnNdWqBAX5oEAAA1DQAAGAAAAAAAAAAAAAAAgIFQEQAAeGwvd29ya3NoZWV0cy9zaGVldDIueG1sUEsBAhQDFAAAAAgAYxZzXdkCuF7fAgAAMxAAAA0AAAAAAAAAAAAAAIABIBYAAHhsL3N0eWxlcy54bWxQSwECFAMUAAAACABjFnNdl4q7HMAAAAATAgAACwAAAAAAAAAAAAAAgAEqGQAAX3JlbHMvLnJlbHNQSwECFAMUAAAACABjFnNdkGK0eeAAAACrAQAADwAAAAAAAAAAAAAAgAETGgAAeGwvd29ya2Jvb2sueG1sUEsBAhQDFAAAAAgAYxZzXY33LFq0AAAAiQIAABoAAAAAAAAAAAAAAIABIBsAAHhsL19yZWxzL3dvcmtib29rLnhtbC5yZWxzUEsBAhQDFAAAAAgAYxZzXW6nJLweAQAAVwQAABMAAAAAAAAAAAAAAIABDBwAAFtDb250ZW50X1R5cGVzXS54bWxQSwUGAAAAAAoACgCEAgAAWx0AAAAA">下载场景湖清单模板（Excel）</a>
+            <span class="file-name">中国生物制药场景湖清单-教学模板.xlsx · 8 KB</span>
+          </div>
+          <aside class="note-card">
+            <h3>模板里的 6 个虚拟示例</h3>
+            <table class="mini-table">
+              <thead><tr><th>一级流程</th><th>示例场景</th></tr></thead>
+              <tbody>
+                <tr><td>Sourcing寻源</td><td>靶点、竞品与交易动态周更简报</td></tr>
+                <tr><td>科学评估</td><td>文献关键信息提取，生成证据卡</td></tr>
+                <tr><td>立项决策</td><td>材料汇编，生成立项摘要与决策问题清单</td></tr>
+                <tr><td>尽调·估值·谈判</td><td>五维度尽调清单与风险矩阵</td></tr>
+                <tr><td>签协议</td><td>协议版本条款比对与偏差摘要</td></tr>
+                <tr><td>项目管理</td><td>里程碑与行动项台账、项目周报草稿</td></tr>
+              </tbody>
+            </table>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="roi" aria-labelledby="roi-title">
+      <div class="section-head">
+        <span class="step-pill">Step 4</span>
+        <h2 id="roi-title">四道筛子：选出优先场景</h2>
+        <p>继续在第三步的同一轮对话中完成。下载《高价值场景最终得分表》，把场景湖的候选工作填入表格，逐项回答四问。Excel 自动得分并给出优先级；四项都满足的工作，优先进入 IPO 拆解与 Skill 共创。</p>
+        <div class="tool-tags" aria-label="Step4 使用工具">
+          <span class="tool-tag">任意桌面智能体（如豆包工作）</span>
+        </div>
+      </div>
+      <div class="grid-two">
+        <article class="prompt-card">
+          <div class="prompt-top">
+            <div><span class="badge">提示词 4</span><h3>四道筛子提示词</h3></div>
+            <div class="prompt-actions">
+              <button class="btn quiet" type="button" data-reset="prompt-roi" hidden>重置为模板</button>
+              <button class="btn" type="button" data-copy-target="prompt-roi">复制当前提示词</button>
+            </div>
+          </div>
+          <textarea class="prompt-box short" id="prompt-roi" spellcheck="false">请继续在 Step3 的同一轮对话中操作，并上传本页面 Step4 的《中国生物制药高价值场景最终得分表.xlsx》。将刚才整理的场景湖候选工作逐行写入得分表，输出填写完成的 Excel 文件。
+
+只需对每项工作回答以下四问（对应“四道筛子”），每项只填“是”或“否”，并给一句有依据的说明：
+1. 数据可用？有公开、模拟或经批准的脱敏资料可用，且不涉及未公开管线、交易底价、未公开协议等敏感信息。
+2. 流程稳定？高频、重复、步骤相对固定，能向新同事讲清输入、步骤和交付要求。
+3. 好验证？输出能对照原文、原表或检查清单快速复核。
+4. 动作安全？只做检索、整理、比对、起草；不直接给立项、估值或法律结论，不自行外发或改动系统；出错有专业人员复核兜底。
+
+请保留模板的原有字段、格式、下拉选项与自动计算公式；按场景填写编号、名称、环节与岗位、D-G列四问、K列下一步、L列判断依据。不要把H-J列的自动得分和筛选结论改为手写值，也不要将教学演示行算作学员提交场景。
+选择四项全“是”（4/4）的 P1 场景优先进入 IPO 拆解与 Skill 共创；若存在多个 P1，优先选择更高频或更费时、且有材料可验证的一项。“数据可用”或“动作安全”为“否”的必须暂缓。最后只推荐一项优先工作；无法判断的内容写“待补充”，不得编造内部流程、项目数据和收益数据。</textarea>
+          <div class="prompt-meta"><span class="left-count" data-left-for="prompt-roi" data-n="0"></span><span class="copy-status" aria-live="polite"></span></div>
+          <ul class="hint-list">
+            <li><span class="mark">1</span><span><b>数据可用：</b>有公开、模拟或脱敏资料，不涉及敏感信息。</span></li>
+            <li><span class="mark">2</span><span><b>流程稳定：</b>高频、重复，步骤能讲给新同事听。</span></li>
+            <li><span class="mark">3</span><span><b>好验证：</b>输出能对照原文或原表快速复核。</span></li>
+            <li><span class="mark">4</span><span><b>动作安全：</b>只做检索、整理、比对、起草，出错有专家兜底。</span></li>
+            <li><span class="mark">+</span><span>填写浅黄色区域；浅蓝色的得分、结论和推荐动作由 Excel 公式自动计算。</span></li>
+          </ul>
+        </article>
+        <div class="stack">
+          <div class="step-download" aria-label="Step4 最终得分表模板">
+            <span class="badge green">Step 4 · Excel 得分表</span>
+            <p class="file-purpose">将 Step3 的候选场景填入浅黄色区域，四问选择“是/否”；表格自动计算 0–4 分、P1/P2/P3 或暂缓，并给出下一步建议。含评分口径与示例页、组织级评估衔接页。</p>
+            <a class="download-title" id="dl-score" title="点击下载 Excel 模板" download="中国生物制药高价值场景最终得分表.xlsx" href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,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">下载高价值场景最终得分表（Excel）</a>
+            <span class="file-name">中国生物制药高价值场景最终得分表.xlsx · 19 KB</span>
+          </div>
+          <aside class="note-card">
+            <h3>结论怎么得出</h3>
+            <table class="mini-table">
+              <thead><tr><th>情形</th><th>结论</th></tr></thead>
+              <tbody>
+                <tr><td>四项全“是”</td><td>P1 优先拆解</td></tr>
+                <tr><td>3 分，数据可用与动作安全均为“是”</td><td>P2 补条件再评</td></tr>
+                <tr><td>0–2 分，数据可用与动作安全均为“是”</td><td>P3 暂不优先</td></tr>
+                <tr><td>“动作安全”为“否”</td><td>暂缓，先明确专家复核与动作边界</td></tr>
+                <tr><td>“数据可用”为“否”</td><td>暂缓，先取得可合规使用的资料</td></tr>
+              </tbody>
+            </table>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note">本页为课堂训练工具。页面和 Excel 中的示例均为虚拟，不代表中国生物制药的真实项目、制度或数据；最终场景、工具和实操深度以课前调研及客户合规要求为准。</p>
+  </main>
+</div>
+
+<script>
+const DATA = {"stages": [{"name": "Sourcing寻源", "task": "指定信息源的靶点、竞品与交易动态周更简报", "coverage": "检索目标与口径确认、指定信息源检索与资料收集（记录来源、日期、原文链接）、去重与初筛、动态跟踪与更新比对、来源核验与情报表整理、与研发和BD负责人沟通、简报汇报与归档"}, {"name": "科学评估", "task": "文献关键信息提取，生成标准化证据卡", "coverage": "评估问题与字段口径确认、文献检索与收集、关键信息提取（统一字段）、证据链整理与同类资产比对、科学与商业双维评估草稿、研发/医学专家复核、结论汇报与归档"}, {"name": "立项决策", "task": "多来源材料汇编，生成立项摘要与决策问题清单", "coverage": "立项目标与评分维度确认、多来源材料收集与汇编、评分结构化、立项摘要起草、决策问题清单整理、内部评审与修改、立项汇报与决策记录归档"}, {"name": "尽调·估值·谈判", "task": "按五个维度生成尽调清单与风险矩阵", "coverage": "交易背景与尽调范围确认、五维度（科学/IP/临床/商务/合规）清单生成、资料缺口跟进与风险矩阵、可比交易与估值假设整理、BATNA与谈判问答准备、各专业负责人确认、结论汇报与归档"}, {"name": "签协议", "task": "协议版本条款比对，生成关键偏差摘要", "coverage": "协议版本与检查清单确认、版本条款比对、关键条款提取、风险点与待确认问题整理、与法务沟通及修改往返、签署前条款核对、版本归档"}, {"name": "项目管理", "task": "里程碑与行动项台账，草拟项目周报", "coverage": "协议里程碑与责任人确认、会议纪要与行动项收集、台账更新与状态核查、周报与风险提醒草拟、跨团队沟通与升级、定期汇报与归档"}], "directions": [{"key": "in", "label": "引进", "sub": "License in", "text": "引进（License in）"}, {"key": "out", "label": "授权", "sub": "License out", "text": "授权（License out）"}, {"key": "both", "label": "两者", "sub": "in 与 out", "text": "引进与授权（License in/out）"}], "defaults": {"stage": 1, "direction": "in"}, "fallback": {"role": "{你的BD岗位，例如：寻源经理／科学评估专员／交易经理}", "owner": "{姓名/部门}"}, "prompts": [{"id": "prompt-flow", "tpl": "我是中国生物制药 BD 团队成员，岗位是 {{role}}，主责环节是“{{stage}}”，主要面向{{direction}}。现在要梳理“{{task}}”从开始到完成的完整流程，让各环节的输入输出更清楚，减少重复整理、遗漏和来回等待。请结合医药 BD 通用实践补充流程，用简单文字列出步骤。\n\n流程请覆盖：{{coverage}}。说明每一步的责任角色、输入资料、输出成果和交接对象；补充来源缺失、口径分歧、数据不完整、多方意见不一致、时间临时压缩等分支。如果你梳理的是其他环节的工作，请按同样的结构替换对应步骤。\n\n以 {你所在团队的实际做法} 为依据；缺少的信息列为“待确认”，不编造公司内部制度、审批权限和未公开项目信息。只使用公开、模拟或经批准的脱敏材料，不输入未公开管线、交易底价、未公开协议等敏感信息。\n\n请同时满足以下格式要求：\n1. 不同阶段使用不同颜色。\n2. 各阶段横向排布，阶段内部自上而下展开；把定期更新这类周期性工作单独标成循环，避免画成只走一次的直线。\n3. 用不同形状区分开始/结束、判断、资料、执行、专家复核和风险提示。\n4. 按“准备—收集—处理—评估—复核—交付”分区，标明与研发/医学、法务、财务和 BD 负责人的交接节点。\n5. 输出可直接在普通对话工具中渲染的 Mermaid 代码，不要只给文字说明。"}, {"id": "prompt-ai-flow", "tpl": "请基于上一步生成的 {岗位工作流程 Mermaid 代码}，分析哪些节点适合 AI 辅助，帮助我减少重复整理、缩短准备时间，让证据和结论更完整、更可追溯。\n\n重点考虑（以“{{stage}}”为主，兼顾相邻环节）：Sourcing：指定来源检索、管线/靶点/竞品与交易动态跟踪、伙伴长名单整理；科学评估：文献关键信息提取、证据链整理、同类资产对比；立项：多来源材料汇编、评分维度结构化、决策问题清单；尽调·估值·谈判：尽调清单与风险矩阵、可比交易与估值假设整理、BATNA 与谈判问答；签协议：版本条款比对、关键偏差与风险点提示；项目管理：里程碑台账、会议行动项、周报与定期更新。请用 SCAMPER、5W1H 等方法检查遗漏，并用“四道筛子”逐节点判断：数据敏感度、流程稳定性、验证成本、动作风险；区分“有公开或脱敏材料即可试用”和“需要对接内部系统或数据源”的场景，输出新的 Mermaid 流程图。\n\n格式要求：\n1. 保留原流程主线和必要的专家复核、审批节点。\n2. AI 辅助节点使用另一种颜色，节点名写清“AI 介入”。\n3. 每个 AI 节点说明责任角色、输入数据、处理动作、输出结果和验证指标，例如单篇文献整理工时、字段遗漏率、返工轮次、来源可追溯比例；没有实测数据时，不虚构提效比例。\n4. 科学评估与临床判断、估值结论与财务假设、法律意见与条款定稿、立项/谈判/签约决策，由相应专业人员复核并负责。AI 仅检索、整理、比对、提示缺项、草拟材料，不代替决策，不直接给出立项、估值或法律结论。\n5. 只使用公开、模拟或经批准的脱敏材料；未公开管线、交易底价、未公开协议、患者数据不得输入未经批准的工具。说明信息缺失、模型出错或工具不可用时如何转人工。\n6. 每个数据点和事实性结论都标注来源（原文出处、页码或链接）；没有可靠依据的标“待确认”。\n7. 步骤文字要能直接复制到普通对话工具中继续修改。"}, {"id": "prompt-scene", "tpl": "请先下载并上传本页面 Step3 的《中国生物制药场景湖清单-教学模板.xlsx》。结合 {Step2 的 AI 改造流程 Mermaid 代码}、{我的岗位痛点记录/课堂讨论材料}，为 {{owner}} 整理医药 BD 的 AI 场景湖，并输出可下载的 Excel 清单。\n\n请保留模板主表12列的名称、顺序和格式：场景编号、一级流程、二级流程、业务场景、当前痛点、AI介入方式、输入数据、输出结果、使用角色、推荐工具、价值假设、备注。\n先围绕“{{task}}”找候选点，也可以按六个环节拓展到 Sourcing、科学评估、立项、尽调·估值·谈判、签协议、项目管理；每个名称必须是可以动手做的具体工作。\n每个场景对应 Step2 的流程节点，写清当前痛点、AI 如何介入、需要什么输入、输出什么材料、由谁复核，以及可衡量的改善方向。一级流程填六个BD环节之一，二级流程写具体的业务环节；License方向（引进(in)/授权(out)/通用）写在“备注”，必须由专家或专业人员复核的点写进“AI介入方式”。模板没有的触发条件、风险边界和指标可写在“备注”或单独补充页。\n合并重复项；未确认的信息标“待确认”，数据缺口标“待补充”。不要把教学示例当成中国生物制药真实项目数据；只使用公开、模拟或脱敏材料，不编造实际提效比例。"}, {"id": "prompt-roi", "tpl": "请继续在 Step3 的同一轮对话中操作，并上传本页面 Step4 的《中国生物制药高价值场景最终得分表.xlsx》。将刚才整理的场景湖候选工作逐行写入得分表，输出填写完成的 Excel 文件。\n\n只需对每项工作回答以下四问（对应“四道筛子”），每项只填“是”或“否”，并给一句有依据的说明：\n1. 数据可用？有公开、模拟或经批准的脱敏资料可用，且不涉及未公开管线、交易底价、未公开协议等敏感信息。\n2. 流程稳定？高频、重复、步骤相对固定，能向新同事讲清输入、步骤和交付要求。\n3. 好验证？输出能对照原文、原表或检查清单快速复核。\n4. 动作安全？只做检索、整理、比对、起草；不直接给立项、估值或法律结论，不自行外发或改动系统；出错有专业人员复核兜底。\n\n请保留模板的原有字段、格式、下拉选项与自动计算公式；按场景填写编号、名称、环节与岗位、D-G列四问、K列下一步、L列判断依据。不要把H-J列的自动得分和筛选结论改为手写值，也不要将教学演示行算作学员提交场景。\n选择四项全“是”（4/4）的 P1 场景优先进入 IPO 拆解与 Skill 共创；若存在多个 P1，优先选择更高频或更费时、且有材料可验证的一项。“数据可用”或“动作安全”为“否”的必须暂缓。最后只推荐一项优先工作；无法判断的内容写“待补充”，不得编造内部流程、项目数据和收益数据。"}]};
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const FALLBACK = DATA.fallback;
+const state = { stage: DATA.defaults.stage, direction: DATA.defaults.direction, taskTouched: false };
+const dirty = {};
+
+function render(tpl) {
+  const st = DATA.stages[state.stage];
+  const dr = DATA.directions.find(d => d.key === state.direction);
+  const task = $('#v-task').value.trim() || st.task;
+  const map = {
+    '{{role}}': $('#v-role').value.trim() || FALLBACK.role,
+    '{{stage}}': st.name,
+    '{{direction}}': dr.text,
+    '{{task}}': task,
+    '{{coverage}}': st.coverage,
+    '{{owner}}': $('#v-owner').value.trim() || FALLBACK.owner
+  };
+  return Object.keys(map).reduce((t, k) => t.split(k).join(map[k]), tpl);
+}
+
+function countLeft(id) {
+  const box = document.getElementById(id);
+  const found = new Set((box.value.match(/\{[^{}\n]{1,80}\}/g) || []));
+  const el = $(`[data-left-for="${id}"]`);
+  el.dataset.n = String(found.size);
+  el.textContent = found.size === 0 ? '变量已全部替换' : `还有 ${found.size} 处 {变量} 需要替换`;
+}
+
+function fit(box) {
+  box.style.height = 'auto';
+  box.style.height = (box.scrollHeight + 4) + 'px';
+}
+
+function refresh(force) {
+  DATA.prompts.forEach(p => {
+    const box = document.getElementById(p.id);
+    if (force || !dirty[p.id]) {
+      box.value = render(p.tpl);
+      dirty[p.id] = false;
+      $(`[data-reset="${p.id}"]`).hidden = true;
+    }
+    countLeft(p.id);
+    fit(box);
+  });
+}
+
+async function copyText(text, status) {
+  let ok = true;
+  try { await navigator.clipboard.writeText(text); }
+  catch (e) {
+    try {
+      const t = document.createElement('textarea');
+      t.value = text; t.setAttribute('readonly', '');
+      t.style.cssText = 'position:fixed;left:-9999px';
+      document.body.appendChild(t); t.select();
+      ok = document.execCommand('copy');
+      document.body.removeChild(t);
+    } catch (e2) { ok = false; }
+  }
+  status.textContent = ok ? '已复制' : '复制失败，请手动全选后复制';
+  status.style.color = ok ? '' : 'var(--orange)';
+  setTimeout(() => { status.textContent = ''; status.style.color = ''; }, 2200);
+}
+
+// stage + direction
+$$('input[name="stage"]').forEach(r => r.addEventListener('change', () => {
+  state.stage = Number(r.value);
+  if (!state.taskTouched) $('#v-task').value = DATA.stages[state.stage].task;
+  refresh(false);
+}));
+$$('input[name="direction"]').forEach(r => r.addEventListener('change', () => { state.direction = r.value; refresh(false); }));
+['#v-role', '#v-owner'].forEach(s => $(s).addEventListener('input', () => refresh(false)));
+$('#v-task').addEventListener('input', e => {
+  state.taskTouched = e.target.value.trim() !== '';
+  if (!state.taskTouched) e.target.value = DATA.stages[state.stage].task;
+  refresh(false);
+});
+
+// prompt boxes
+DATA.prompts.forEach(p => {
+  const box = document.getElementById(p.id);
+  box.addEventListener('input', () => {
+    dirty[p.id] = true;
+    $(`[data-reset="${p.id}"]`).hidden = false;
+    countLeft(p.id);
+    fit(box);
+  });
+});
+$$('[data-reset]').forEach(b => b.addEventListener('click', () => {
+  const p = DATA.prompts.find(x => x.id === b.dataset.reset);
+  const box = document.getElementById(p.id);
+  box.value = render(p.tpl);
+  dirty[p.id] = false; b.hidden = true; countLeft(p.id); fit(box);
+}));
+$('[data-reset-all]').addEventListener('click', () => refresh(true));
+
+// copy
+$$('[data-copy-target]').forEach(b => b.addEventListener('click', () => {
+  const card = b.closest('.prompt-card');
+  copyText(document.getElementById(b.dataset.copyTarget).value, $('.copy-status', card));
+}));
+$('[data-copy-all]').addEventListener('click', () => {
+  const all = DATA.prompts.map((p, i) => `提示词 ${i + 1}\n${document.getElementById(p.id).value}`).join('\n\n');
+  copyText(all, $('[data-global-status]'));
+});
+
+// theme
+(function () {
+  const root = document.documentElement, btn = $('[data-theme-toggle]');
+  const dark = () => root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  const sync = () => { btn.textContent = dark() ? '切换浅色模式' : '切换深色模式'; btn.setAttribute('aria-pressed', String(dark())); };
+  try { const saved = localStorage.getItem('medic-scene-theme'); if (saved) root.dataset.theme = saved; } catch (e) {}
+  btn.addEventListener('click', () => {
+    root.dataset.theme = dark() ? 'light' : 'dark';
+    try { localStorage.setItem('medic-scene-theme', root.dataset.theme); } catch (e) {}
+    sync();
+  });
+  sync();
+})();
+
+// active nav: the last section whose top has passed the 30% line of the viewport
+(function () {
+  const links = $$('.nav-item');
+  const sections = links.map(a => document.getElementById(a.getAttribute('href').slice(1))).filter(Boolean);
+  let queued = false;
+  function update() {
+    queued = false;
+    const line = innerHeight * 0.3;
+    let cur = sections[0];
+    sections.forEach(el => { if (el.getBoundingClientRect().top <= line) cur = el; });
+    if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) cur = sections[sections.length - 1];
+    links.forEach(a => a.getAttribute('href') === '#' + cur.id ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current'));
+  }
+  addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(update); } }, { passive: true });
+  addEventListener('resize', update);
+  update();
+})();
+
+// init
+$('#v-task').value = DATA.stages[state.stage].task;
+refresh(true);
+addEventListener('resize', () => DATA.prompts.forEach(p => fit(document.getElementById(p.id))));
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => DATA.prompts.forEach(p => fit(document.getElementById(p.id))));
+</script>
+</body>
+</html>
