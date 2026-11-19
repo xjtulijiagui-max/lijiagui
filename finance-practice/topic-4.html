@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>专题04 · 合同审阅 | WorkBuddy 财务实战训练</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">跳到正文</a>
+<header class="topbar"><div class="tb-inner">
+  <a class="brand" href="index.html"><span class="logo">WB</span> WorkBuddy 财务实战训练</a>
+  <nav class="tb-nav">
+    <a href="index.html">全部专题</a>
+    <a href="topic-3.html" class="">上一专题</a>
+    <a href="topic-5.html" class="">下一专题</a>
+  </nav>
+</div></header>
+
+<section class="hero hero-topic"><div class="hero-inner">
+  <p class="eyebrow">专题 04 / 06 · L3</p>
+  <h1>合同审阅</h1>
+  <p class="lead">审阅三份待审合同：提取关键条款，标注高额违约金、独家合作、自动续签等风险，并与标准模板对比偏离。</p>
+  <div class="chips">
+    <span class="chip">难度 L3</span>
+    <span class="chip">4 个数据集</span>
+    <span class="chip">提示词可复制</span>
+    <span class="chip">含验收清单与讲师答案</span>
+  </div>
+</div></section>
+
+<main id="main" class="wrap">
+  <section class="sec">
+    <h2 class="sec-title"><span class="sn">01</span>怎么练：四步走</h2>
+    <ol class="steps"><li>下载三份待审合同；标准合同模板在 03-报表模板，一起加入工作空间作对照。</li><li>只处理这些模拟合同，不要放入任何真实合同。</li><li>复制提示词，先审计划，再放行；输出为 Markdown 审阅摘要。</li><li>对照验收清单检查：风险是否引用了条款编号，缺失条款是否通过对比被发现。</li></ol>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head">
+      <h2 class="sec-title"><span class="sn">02</span>数据集下载</h2>
+      <a class="btn btn-soft" href="data/专题四-合同审阅/合同审阅-数据集.zip" download>打包下载全部</a>
+    </div>
+    <p class="sec-sub">全部为课堂模拟数据。下载后放入工作区对应文件夹，与提示词里的路径保持一致。</p>
+    <div class="files"><div class="file">
+  <div class="fico docx">DOC</div>
+  <div class="file-main">
+    <div class="file-name">合同A_采购框架合同（待审）.docx</div>
+    <div class="file-desc">待审合同 A：年度办公设备采购框架合同，约 120 万元。</div>
+    <div class="file-meta"><span>11.8 KB</span>
+      <a class="dl" href="data/专题四-合同审阅/合同A_采购框架合同（待审）.docx" download>下载</a></div>
+  </div>
+</div><div class="file">
+  <div class="fico docx">DOC</div>
+  <div class="file-main">
+    <div class="file-name">合同B_软件服务合同（待审）.docx</div>
+    <div class="file-desc">待审合同 B：云财务系统软件服务合同，三年 108 万元。</div>
+    <div class="file-meta"><span>11.9 KB</span>
+      <a class="dl" href="data/专题四-合同审阅/合同B_软件服务合同（待审）.docx" download>下载</a></div>
+  </div>
+</div><div class="file">
+  <div class="fico docx">DOC</div>
+  <div class="file-main">
+    <div class="file-name">合同C_办公租赁合同（待审）.docx</div>
+    <div class="file-desc">待审合同 C：办公场所租赁合同，月租 6.8 万元，五年。</div>
+    <div class="file-meta"><span>11.7 KB</span>
+      <a class="dl" href="data/专题四-合同审阅/合同C_办公租赁合同（待审）.docx" download>下载</a></div>
+  </div>
+</div><div class="file">
+  <div class="fico docx">DOC</div>
+  <div class="file-main">
+    <div class="file-name">标准合同模板（对照用）.docx</div>
+    <div class="file-desc">公司标准合同模板，用于“与标准合同模板对比”。放在 03-报表模板 文件夹，不是待审合同。</div>
+    <div class="file-meta"><span>11.8 KB</span>
+      <a class="dl" href="data/专题四-合同审阅/标准合同模板（对照用）.docx" download>下载</a></div>
+  </div>
+</div></div>
+  </section>
+
+  <section class="sec">
+    <h2 class="sec-title"><span class="sn">03</span>提示词（可直接复制）</h2>
+    <div class="ws-row">
+      <label for="ws">工作区路径</label>
+      <input id="ws" type="text" spellcheck="false" placeholder="D:\WorkBuddy-财务工作区">
+    </div>
+    <div class="opts" id="opts"></div>
+    <div class="prompt-box">
+      <div class="prompt-bar"><span>按当前选项与路径生成，可直接粘贴到 WorkBuddy</span>
+        <button id="copy" class="btn btn-primary" type="button">复制提示词</button></div>
+      <pre id="prompt"></pre>
+    </div>
+    <p class="tip">标准合同模板放在 03-报表模板 文件夹，不在待审合同文件夹里，需要一起加入工作空间。AI 的结论只作辅助，不要问它“能不能签”。</p>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head">
+      <h2 class="sec-title"><span class="sn">04</span>验收清单</h2>
+      <span class="progress" id="prog">0 / 6</span>
+    </div>
+    <ul class="checklist" id="checklist"></ul>
+  </section>
+
+  <details class="answer">
+    <summary>讲师答案（练完再展开）</summary>
+    <div class="answer-body"><p>三份合同都有“故意埋入”的风险条款，另含 1 处合同内部矛盾和 1 处缺失条款。AI 应引用条款编号，并与标准模板对比。</p><p>标准模板要点：付款 30% / 60% / 10%；违约金万分之五/日、上限 10%；非独家；续签须书面确认；保密 3 年；甲方所在地法院。</p><div class="tbl-wrap"><table><thead><tr><th>合同</th><th>条款</th><th>风险类型与期望表述</th></tr></thead><tbody><tr><td>合同A 采购框架</td><td>第二条</td><td>付款节点偏离：预付款 70%，无质保金（模板 30%/60%/10%）</td></tr><tr><td>合同A 采购框架</td><td>第四条</td><td>高额违约金且责任不对等：甲方逾期千分之五/日、不设上限；单方解除付 30% 违约金；乙方仅万分之一/日、上限 1%</td></tr><tr><td>合同A 采购框架</td><td>第五条</td><td>独家合作：甲方三年内只能向乙方采购（模板为非独家）</td></tr><tr><td>合同A 采购框架</td><td>第六条</td><td>自动续签三年；且“期满前30日内未提出终止”与“须提前90日通知”自相矛盾（合同内部冲突）</td></tr><tr><td>合同A 采购框架</td><td>第七条</td><td>单方解除权不对等：乙方提前10日通知即可解除，甲方无此权利</td></tr><tr><td>合同A 采购框架</td><td>（缺失）</td><td>缺少保密条款（模板第七条）——需通过与模板对比才能发现</td></tr><tr><td>合同A 采购框架</td><td>第八条</td><td>争议解决偏离：乙方所在地仲裁（模板为甲方所在地法院）</td></tr><tr><td>合同B 软件服务</td><td>第二条</td><td>付款节点：一次性预付三年全部服务费 1,080,000 元，资金占用大</td></tr><tr><td>合同B 软件服务</td><td>第三条</td><td>自动续期（每次一年，须提前60日通知不续）</td></tr><tr><td>合同B 软件服务</td><td>第四条</td><td>单方调价：每年可上调不超过 20%，无需甲方同意</td></tr><tr><td>合同B 软件服务</td><td>第五条</td><td>责任限制：不保证可用性，数据丢失不赔偿</td></tr><tr><td>合同B 软件服务</td><td>第六条</td><td>高额违约/罚没：提前终止须付剩余全部服务费且不退已付款项</td></tr><tr><td>合同B 软件服务</td><td>第七条</td><td>保密无期限（模板为终止后 3 年）</td></tr><tr><td>合同C 办公租赁</td><td>第二条</td><td>租金每年自动递增 10%；押金 6 个月租金 408,000 元</td></tr><tr><td>合同C 办公租赁</td><td>第三条</td><td>逾期付款违约金千分之五/日，无上限</td></tr><tr><td>合同C 办公租赁</td><td>第四条</td><td>高额违约金：提前解约付剩余租期全部租金的 50%</td></tr><tr><td>合同C 办公租赁</td><td>第五条</td><td>自动续租五年且租金上调 10%</td></tr><tr><td>合同C 办公租赁</td><td>第六条</td><td>免责：设施故障乙方不承担任何维修及赔偿责任</td></tr><tr><td>合同C 办公租赁</td><td>第八条</td><td>争议解决偏离：乙方所在地法院（模板为甲方所在地）</td></tr><tr><td>合同C 办公租赁</td><td>第七条</td><td>反例：保密 3 年，与模板一致，不应作为风险点</td></tr></tbody></table></div></div>
+  </details>
+
+  <div class="pager"><a href="topic-3.html"><div class="p-lbl">← 上一专题</div><div class="p-name">专题03 · 财报信息抽取</div></a><a class="r" href="topic-5.html"><div class="p-lbl">下一专题 →</div><div class="p-name">专题05 · 合规检查</div></a></div>
+</main>
+<footer class="foot">WorkBuddy 财务实战训练 · 课堂模拟材料，仅用于教学训练，不代表任何真实公司</footer>
+<script>window.__TOPIC__={"id": "t3", "num": 4, "name": "合同审阅", "level": "L3", "prompt": {"official": true, "tpl": "<<PLAN>>\n读取 {IN4} 中的合同文件，按以下规则审阅：\n1. 提取关键条款（付款节点、违约责任、续签条件、保密条款）\n2. 标注风险条款（高额违约金、独家合作、自动续签等）\n3. 与标准合同模板对比，标注偏离条款\n4. 生成审阅摘要\n<<OPT:t3_tpl>>\n输出格式：Markdown\n保存路径：{CON}{日期}-{合同名称}.md\n注意：此为辅助审阅，不替代法务专业判断", "options": [{"id": "t3_tpl", "label": "指定对照用的标准合同模板文件", "tag": "推荐", "def": true, "line": "标准合同模板：{TPL}标准合同模板（对照用）.docx（只作对照，不是待审合同）"}], "tip": "标准合同模板放在 03-报表模板 文件夹，不在待审合同文件夹里，需要一起加入工作空间。AI 的结论只作辅助，不要问它“能不能签”。"}, "checklist": ["三份合同的付款节点、违约责任、续签条件、保密条款都已提取", "高额违约金、独家合作、自动续签等风险都被标出，并引用了条款编号", "与标准模板的偏离处被指出，包括合同 A 缺少的保密条款", "发现合同 A 续签条款自身矛盾（期满前 30 日 与 提前 90 日）", "保密 3 年与模板一致的合同 C 第七条，没有被当成风险点", "输出带有“辅助审阅，不替代法务专业判断”，且没有给出“能签/不能签”的结论"]};window.__ALL__=[{"num": 1, "name": "报表处理"}, {"num": 2, "name": "数据校验"}, {"num": 3, "name": "财报信息抽取"}, {"num": 4, "name": "合同审阅"}, {"num": 5, "name": "合规检查"}, {"num": 6, "name": "费用分析"}];</script>
+<script src="assets/app.js"></script>
+</body>
+</html>
