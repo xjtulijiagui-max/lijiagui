@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>专题06 · 费用分析 | WorkBuddy 财务实战训练</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">跳到正文</a>
+<header class="topbar"><div class="tb-inner">
+  <a class="brand" href="index.html"><span class="logo">WB</span> WorkBuddy 财务实战训练</a>
+  <nav class="tb-nav">
+    <a href="index.html">全部专题</a>
+    <a href="topic-5.html" class="">上一专题</a>
+    <a href="#" class="dis">下一专题</a>
+  </nav>
+</div></header>
+
+<section class="hero hero-topic"><div class="hero-inner">
+  <p class="eyebrow">专题 06 / 06 · L4</p>
+  <h1>费用分析</h1>
+  <p class="lead">基于 1–10 月费用明细，从部门、项目、月份、供应商四个维度分析，找出超预算、供应商集中和一次性大额。</p>
+  <div class="chips">
+    <span class="chip">难度 L4</span>
+    <span class="chip">1 个数据集</span>
+    <span class="chip">提示词可复制</span>
+    <span class="chip">含验收清单与讲师答案</span>
+  </div>
+</div></section>
+
+<main id="main" class="wrap">
+  <section class="sec">
+    <h2 class="sec-title"><span class="sn">01</span>怎么练：四步走</h2>
+    <ol class="steps"><li>下载费用分析数据，放进 01-原始数据\专题五-费用分析。</li><li>在 WorkBuddy 新建任务；如当前版本支持专家团或多 Agent，就分给数据官、分析官、报告官，否则按顺序分三段做。</li><li>复制提示词，先审计划，确认分工和停止条件后再放行。</li><li>对照验收清单检查，每条洞察都要回到原表核对数字，不能只看 PPT。</li></ol>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head">
+      <h2 class="sec-title"><span class="sn">02</span>数据集下载</h2>
+      <a class="btn btn-soft" href="data/专题六-费用分析/费用分析-数据集.zip" download>打包下载全部</a>
+    </div>
+    <p class="sec-sub">全部为课堂模拟数据。下载后放入工作区对应文件夹，与提示词里的路径保持一致。</p>
+    <div class="files"><div class="file">
+  <div class="fico xlsx">XLS</div>
+  <div class="file-main">
+    <div class="file-name">费用分析数据_2026年1-10月.xlsx</div>
+    <div class="file-desc">2026 年 1–10 月费用明细（部门、项目、供应商、费用类别四个维度）+ 部门月度预算。</div>
+    <div class="file-meta"><span>13.7 KB</span>
+      <a class="dl" href="data/专题六-费用分析/费用分析数据_2026年1-10月.xlsx" download>下载</a></div>
+  </div>
+</div></div>
+  </section>
+
+  <section class="sec">
+    <h2 class="sec-title"><span class="sn">03</span>提示词（可直接复制）</h2>
+    <div class="ws-row">
+      <label for="ws">工作区路径</label>
+      <input id="ws" type="text" spellcheck="false" placeholder="D:\WorkBuddy-财务工作区">
+    </div>
+    <div class="opts" id="opts"></div>
+    <div class="prompt-box">
+      <div class="prompt-bar"><span>按当前选项与路径生成，可直接粘贴到 WorkBuddy</span>
+        <button id="copy" class="btn btn-primary" type="button">复制提示词</button></div>
+      <pre id="prompt"></pre>
+    </div>
+    <p class="tip">多 Agent 属于 L4 能力。如果你的 WorkBuddy 版本没有开通专家团，指令不用改，它会按“数据官→分析官→报告官”依次完成。</p>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head">
+      <h2 class="sec-title"><span class="sn">04</span>验收清单</h2>
+      <span class="progress" id="prog">0 / 6</span>
+    </div>
+    <ul class="checklist" id="checklist"></ul>
+  </section>
+
+  <details class="answer">
+    <summary>讲师答案（练完再展开）</summary>
+    <div class="answer-body"><p>1–10 月费用合计 4,194,640 元，共 239 行；各部门累计 / 预算：销售部 1,089,010 / 1,200,000（-9.2%）；市场部 1,345,580 / 1,100,000（+22.3%）；采购部 279,560 / 420,000（-33.4%）；行政部 638,780 / 850,000（-24.8%）；技术部 841,710 / 950,000（-11.4%）。</p><p>明细合计必须等于各维度汇总合计（部门、项目、月份、供应商四个维度分别核对）。</p><div class="tbl-wrap"><table><thead><tr><th>洞察</th><th>数据依据</th><th>期望表述</th></tr></thead><tbody><tr><td>销售部连续超预算</td><td>2026-08 实际 136,100 / 预算 120,000；2026-09 实际 137,400 / 预算 120,000；2026-10 实际 135,690 / 预算 120,000</td><td>指出 8–10 月连续三个月超预算，主要来自差旅费上升；原因（如促销季出差增多）数据无法证明，须标“需人工复核”</td></tr><tr><td>技术部供应商集中</td><td>技术部 IT 服务费合计 713,690 元，供应商 S03 占 72.6%（518,130）、S04 占 27.4%</td><td>指出集中度过高（&gt;60%），提示议价与替代风险</td></tr><tr><td>市场部 8 月一次性大额</td><td>2026-08 市场部·品牌升级·S01·广告费 380,000 元；市场部 8 月合计 473,620 元，预算 110,000；占 8 月全公司费用 60.0%</td><td>识别为一次性项目支出，8 月唯一超预算的月份（市场部）；是否合理需业务确认</td></tr><tr><td>市场部累计超预算</td><td>1–10 月累计 1,345,580 / 预算 1,100,000（+22.3%）</td><td>扣除 38 万一次性支出后，其余月份均在预算内</td></tr><tr><td>对照组：无异常</td><td>采购部、行政部、技术部各月均未超预算；行政部租赁费每月 45,000 左右</td><td>不应被报告为异常</td></tr></tbody></table></div></div>
+  </details>
+
+  <div class="pager"><a href="topic-5.html"><div class="p-lbl">← 上一专题</div><div class="p-name">专题05 · 合规检查</div></a><a class="r" href="index.html"><div class="p-lbl">已完成 →</div><div class="p-name">返回全部专题</div></a></div>
+</main>
+<footer class="foot">WorkBuddy 财务实战训练 · 课堂模拟材料，仅用于教学训练，不代表任何真实公司</footer>
+<script>window.__TOPIC__={"id": "t5", "num": 6, "name": "费用分析", "level": "L4", "prompt": {"official": false, "tpl": "<<PLAN>>\n基于 {IN6}{SEP}费用分析数据_2026年1-10月.xlsx 做 2026 年 1–10 月费用分析。\n角色分工（有专家团或多 Agent 能力时分别调用；没有则按“数据官→分析官→报告官”依次完成）：\n· 数据官：清洗并聚合，输出部门、项目、月份、供应商四个维度的汇总表，并核对“明细合计＝汇总合计”\n· 分析官：基于汇总表给出洞察，至少回答：①哪些部门、哪些月份超预算；②哪个供应商占比过高；③有没有一次性大额费用。每条洞察写明数据依据（维度＋金额＋占比）\n· 报告官：生成 8–10 页分析 PPT 和一份 Excel 汇总，数字与 Excel 一致；“待人工确认事项”单列\n由你整合三个角色的结果；数据无法支持的结论或原因，标记“需人工复核”，不要编造。\n输出格式：Excel + PPT\n保存路径：{OUT}\n命名规则：{日期}-费用分析-v1\n注意：不得覆盖原始数据，不得删除任何文件", "options": [], "tip": "多 Agent 属于 L4 能力。如果你的 WorkBuddy 版本没有开通专家团，指令不用改，它会按“数据官→分析官→报告官”依次完成。"}, "checklist": ["数据官：明细合计等于四个维度各自的汇总合计", "每条洞察都写明维度、金额、占比", "洞察覆盖三个问题：超预算、供应商集中度、一次性大额", "数据无法解释的原因标了“需人工复核”，没有编造", "PPT 的数字与 Excel 一致", "“待人工确认事项”单独列出，原始数据未被覆盖"]};window.__ALL__=[{"num": 1, "name": "报表处理"}, {"num": 2, "name": "数据校验"}, {"num": 3, "name": "财报信息抽取"}, {"num": 4, "name": "合同审阅"}, {"num": 5, "name": "合规检查"}, {"num": 6, "name": "费用分析"}];</script>
+<script src="assets/app.js"></script>
+</body>
+</html>
