@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI赋能财务效率与共享升级 · 课堂练习台｜李家贵</title>
+<meta name="description" content="6小时课程配套练习：17个任务、27条可复制提示词、27个可下载数据集，与授课PPT逐页对应。">
+<link rel="stylesheet" href="assets/tailwind.css">
+<style>
+  :root{
+    --bg:#f1f4f9; --panel:#ffffff; --ink:#16233a; --muted:#5b6b83;
+    --line:#dde4ef; --brand:#254a8c; --brand2:#3b6fd4; --accent:#d9822b;
+  }
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink)}
+  .side-scroll{scrollbar-width:thin;scrollbar-color:#c3cee0 transparent}
+  .side-scroll::-webkit-scrollbar{width:8px}
+  .side-scroll::-webkit-scrollbar-thumb{background:#c3cee0;border-radius:8px}
+  .nav-group-btn{width:100%;text-align:left}
+  .nav-task{display:block;width:100%;text-align:left;border-left:3px solid transparent;transition:background .15s,border-color .15s}
+  .nav-task:hover{background:#eef3fb}
+  .nav-task.active{background:#e7effc;border-left-color:var(--accent)}
+  .prompt-pre{white-space:pre-wrap;word-break:break-word;font-family:inherit}
+  .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .drawer{transition:transform .25s ease}
+  .task-card{scroll-margin-top:24px}
+  ::selection{background:#cfe0ff}
+  @media (min-width:1024px){ .main-shift{margin-left:288px} }
+</style>
+</head>
+<body class="font-sans antialiased">
+
+<!-- 顶栏 -->
+<header class="sticky top-0 z-40 border-b" style="background:#fff;border-color:var(--line)">
+  <div class="mx-auto max-w-[1500px] px-4 sm:px-6 lg:px-8 py-3 flex items-center gap-3">
+    <button id="menuBtn" aria-label="打开目录" class="lg:hidden inline-flex items-center justify-center rounded-lg border p-2" style="border-color:var(--line);color:var(--brand)">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <div class="min-w-0 flex-1">
+      <div class="flex items-baseline gap-2 flex-wrap">
+        <span class="text-[11px] font-bold tracking-widest uppercase" style="color:var(--accent)">Finance · Practice Desk</span>
+        <span class="text-[11px]" style="color:var(--muted)">授课PPT 93页 · 五模块配套</span>
+      </div>
+      <h1 class="text-base sm:text-lg font-bold truncate" id="headerTitle">AI赋能财务效率与共享升级 · 课堂练习台</h1>
+    </div>
+    <div class="hidden md:flex items-center gap-4 text-xs" style="color:var(--muted)">
+      <span><b id="statTask" class="text-base" style="color:var(--brand)">17</b> 任务</span>
+      <span><b id="statPrompt" class="text-base" style="color:var(--brand)">27</b> 提示词</span>
+      <span><b id="statData" class="text-base" style="color:var(--brand)">27</b> 数据集</span>
+    </div>
+  </div>
+</header>
+
+<!-- 遮罩（手机） -->
+<div id="overlay" class="fixed inset-0 z-40 hidden lg:hidden" style="background:rgba(14,24,42,.45)"></div>
+
+<!-- 左侧边栏 -->
+<aside id="sidebar" class="drawer fixed z-50 top-0 left-0 h-full w-[288px] -translate-x-full lg:translate-x-0 flex flex-col"
+       style="background:#142644;color:#e8eef8" aria-label="练习目录">
+  <div class="px-5 py-5 border-b" style="border-color:#28406b">
+    <div class="flex items-center justify-between">
+      <div>
+        <div class="text-[11px] tracking-widest" style="color:#8fb0e8">课程练习目录</div>
+        <div class="mt-1 font-bold text-sm">按PPT模块定位</div>
+      </div>
+      <button id="closeBtn" aria-label="关闭目录" class="lg:hidden rounded p-1" style="color:#cbd8ee">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <label class="relative block mt-4">
+      <svg class="absolute left-3 top-1/2 -translate-y-1/2" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8fb0e8" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="searchInput" type="search" placeholder="搜索任务 / 提示词 / 数据集…" autocomplete="off"
+             class="w-full rounded-lg py-2 pl-9 pr-3 text-sm outline-none" style="background:#1e3560;color:#eef3fb;border:1px solid #33518a" aria-label="搜索练习">
+    </label>
+    <div class="mt-2 flex items-center justify-between text-[11px]" style="color:#9fb6da">
+      <span id="navCount">显示全部 17 个任务</span>
+      <button id="clearBtn" class="hidden underline" style="color:#f0b478">清空</button>
+    </div>
+  </div>
+  <nav id="nav" class="side-scroll flex-1 overflow-y-auto py-3"></nav>
+  <div class="px-5 py-3 border-t text-[11px] leading-relaxed" style="border-color:#28406b;color:#9fb6da">
+    全程仅用模拟/脱敏副本 · 不覆盖原文件 · 不外发 · AI输出一律当初稿
+  </div>
+</aside>
+
+<!-- 正文 -->
+<main class="main-shift">
+  <div class="mx-auto max-w-[1120px] px-4 sm:px-6 lg:px-8 py-6 lg:py-9">
+
+    <!-- 导读 -->
+    <section class="rounded-2xl p-5 sm:p-7 mb-6 overflow-hidden" style="background:linear-gradient(135deg,#1d3f7c,#2f5fb0);color:#fff">
+      <div class="text-[11px] tracking-widest" style="color:#bcd3f7">WELCOME · 使用说明</div>
+      <h2 class="text-xl sm:text-2xl font-bold mt-1">下载数据 · 复制提示词 · 对照验收</h2>
+      <p class="mt-2 text-sm leading-relaxed" style="color:#dbe7fb">每个实操任务都用同一个五步节奏。本页与授课PPT逐页对应：左侧按模块定位任务，每张任务卡标注PPT页码，提示词可一键复制、数据集可一键下载。</p>
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 mt-5" id="workflow"></div>
+    </section>
+
+    <!-- 安全区 -->
+    <section class="grid md:grid-cols-2 gap-4 mb-8">
+      <div class="rounded-xl border p-4" style="background:#fff;border-color:var(--line)">
+        <h3 class="text-sm font-bold mb-2" style="color:var(--brand)">建议工作区目录</h3>
+        <ul id="workspaceList" class="space-y-1.5 text-[13px]" style="color:var(--muted)"></ul>
+      </div>
+      <div class="rounded-xl border p-4" style="background:#fff7f0;border-color:#f0d5bb">
+        <h3 class="text-sm font-bold mb-2" style="color:#b35a11">四条安全红线</h3>
+        <ul id="redlineList" class="space-y-1.5 text-[13px]" style="color:#8a5a34"></ul>
+      </div>
+    </section>
+
+    <div class="flex items-end justify-between mb-3">
+      <div>
+        <h2 class="text-lg font-bold">任务清单</h2>
+        <p class="text-xs mt-0.5" style="color:var(--muted)" id="resultInfo">按PPT顺序排列 · 共 17 个任务</p>
+      </div>
+      <button id="downloadAllBtn" class="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-lg" style="background:#eef3fb;color:var(--brand)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v3h16v-3"/></svg>
+        打包下载全部27个数据集
+      </button>
+    </div>
+
+    <div id="taskList" class="space-y-5"></div>
+    <div id="emptyState" class="hidden rounded-xl border p-10 text-center" style="background:#fff;border-color:var(--line)">
+      <div class="text-3xl mb-2">🔍</div>
+      <p class="font-semibold">没有匹配的任务</p>
+      <p class="text-sm mt-1" style="color:var(--muted)">换个关键词，或点击「清空」查看全部。</p>
+    </div>
+
+    <footer class="mt-10 pt-5 border-t text-center text-[11px] leading-relaxed" style="border-color:var(--line);color:var(--muted)">
+      AI赋能财务效率与共享升级 · 6小时授课课件配套练习台 · 主讲：李家贵<br>
+      数据集为模拟/脱敏副本，仅用于课堂练习；提示词原文来自授课PPT，5.1为按任务定位整理并已标注。
+    </footer>
+  </div>
+</main>
+
+<div id="toast" class="toast px-4 py-2 rounded-lg text-sm font-semibold" style="background:#16233a;color:#fff"></div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
