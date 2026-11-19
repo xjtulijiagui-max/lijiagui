@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>专题05 · 合规检查 | WorkBuddy 财务实战训练</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">跳到正文</a>
+<header class="topbar"><div class="tb-inner">
+  <a class="brand" href="index.html"><span class="logo">WB</span> WorkBuddy 财务实战训练</a>
+  <nav class="tb-nav">
+    <a href="index.html">全部专题</a>
+    <a href="topic-4.html" class="">上一专题</a>
+    <a href="topic-6.html" class="">下一专题</a>
+  </nav>
+</div></header>
+
+<section class="hero hero-topic"><div class="hero-inner">
+  <p class="eyebrow">专题 05 / 06 · L3 → L4</p>
+  <h1>合规检查</h1>
+  <p class="lead">对照费用管理制度，逐笔检查 30 笔报销单：预算、税率、审批、招待标准。制度没写的，交给人。</p>
+  <div class="chips">
+    <span class="chip">难度 L3 → L4</span>
+    <span class="chip">2 个数据集</span>
+    <span class="chip">提示词可复制</span>
+    <span class="chip">含验收清单与讲师答案</span>
+  </div>
+</div></section>
+
+<main id="main" class="wrap">
+  <section class="sec">
+    <h2 class="sec-title"><span class="sn">01</span>怎么练：四步走</h2>
+    <ol class="steps"><li>下载费用管理制度和待检查报销单，放进 01-原始数据\专题四-合规检查。</li><li>在 WorkBuddy 新建任务，把这两个文件加入工作空间，先 Plan 后执行。</li><li>复制提示词；规则放在制度里，指令只负责说清怎么查、怎么出结果、哪里必须停。</li><li>对照验收清单检查，特别留意“按组合汇总的预算”和金额档位的边界。</li></ol>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head">
+      <h2 class="sec-title"><span class="sn">02</span>数据集下载</h2>
+      <a class="btn btn-soft" href="data/专题五-合规检查/合规检查-数据集.zip" download>打包下载全部</a>
+    </div>
+    <p class="sec-sub">全部为课堂模拟数据。下载后放入工作区对应文件夹，与提示词里的路径保持一致。</p>
+    <div class="files"><div class="file">
+  <div class="fico docx">DOC</div>
+  <div class="file-main">
+    <div class="file-name">费用管理制度（节选，模拟）.docx</div>
+    <div class="file-desc">费用管理制度（节选）：预算、审批权限、招待标准、税率对照表。</div>
+    <div class="file-meta"><span>11.5 KB</span>
+      <a class="dl" href="data/专题五-合规检查/费用管理制度（节选，模拟）.docx" download>下载</a></div>
+  </div>
+</div><div class="file">
+  <div class="fico xlsx">XLS</div>
+  <div class="file-main">
+    <div class="file-name">待检查报销单_2026-10.xlsx</div>
+    <div class="file-desc">30 笔待检查报销单 + 各“部门+费用类别”的 10 月预算余额。</div>
+    <div class="file-meta"><span>8.0 KB</span>
+      <a class="dl" href="data/专题五-合规检查/待检查报销单_2026-10.xlsx" download>下载</a></div>
+  </div>
+</div></div>
+  </section>
+
+  <section class="sec">
+    <h2 class="sec-title"><span class="sn">03</span>提示词（可直接复制）</h2>
+    <div class="ws-row">
+      <label for="ws">工作区路径</label>
+      <input id="ws" type="text" spellcheck="false" placeholder="D:\WorkBuddy-财务工作区">
+    </div>
+    <div class="opts" id="opts"></div>
+    <div class="prompt-box">
+      <div class="prompt-bar"><span>按当前选项与路径生成，可直接粘贴到 WorkBuddy</span>
+        <button id="copy" class="btn btn-primary" type="button">复制提示词</button></div>
+      <pre id="prompt"></pre>
+    </div>
+    <p class="tip">手册只描述了合规检查的做法（建知识库、自动校验、设人工关口），没有给出原文指令。这条是按该思路写的：规则放在制度文件里，指令只负责说清怎么查、怎么出结果、哪里必须停。</p>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head">
+      <h2 class="sec-title"><span class="sn">04</span>验收清单</h2>
+      <span class="progress" id="prog">0 / 6</span>
+    </div>
+    <ul class="checklist" id="checklist"></ul>
+  </section>
+
+  <details class="answer">
+    <summary>讲师答案（练完再展开）</summary>
+    <div class="answer-body"><p>30 笔报销单中预期命中：超预算 3 个“部门+类别”组合、税率不符 5 笔、审批不全 6 笔、招待违规 3 笔。</p><p>边界与反例：行政部·房屋租赁合计恰好等于预算余额（不超）；人均恰好 200 元不算超标；恰好 10,000 元需财务总监，恰好 50,000 元需总经理。</p><div class="tbl-wrap"><table><thead><tr><th>检查项</th><th>对象</th><th>期望结果</th></tr></thead><tbody><tr><td>预算</td><td>销售一部·餐饮招待：本批合计 6,000，余额 5,000，超 1,000</td><td>标记“超预算”（按组合汇总，不是逐笔）</td></tr><tr><td>预算</td><td>市场部·广告服务：本批合计 111,600，余额 100,000，超 11,600</td><td>标记“超预算”（按组合汇总，不是逐笔）</td></tr><tr><td>预算</td><td>技术部·IT设备：本批合计 41,500，余额 40,000，超 1,500</td><td>标记“超预算”（按组合汇总，不是逐笔）</td></tr><tr><td>预算（反例）</td><td>行政部·房屋租赁：合计 72,000 = 余额</td><td>不应标记</td></tr><tr><td>税率</td><td>BX-202610-003（差旅交通）：开票 6%，应为 9%</td><td>标记“税率不符”</td></tr><tr><td>税率</td><td>BX-202610-012（咨询服务）：开票 13%，应为 6%</td><td>标记“税率不符”</td></tr><tr><td>税率</td><td>BX-202610-015（办公用品）：开票 6%，应为 13%</td><td>标记“税率不符”</td></tr><tr><td>税率</td><td>BX-202610-020（房屋租赁）：开票 6%，应为 9%</td><td>标记“税率不符”</td></tr><tr><td>税率</td><td>BX-202610-025（IT服务）：开票 9%，应为 6%</td><td>标记“税率不符”</td></tr><tr><td>审批</td><td>BX-202610-010（35,000 元）缺：财务总监</td><td>标记“审批不全”并写明缺哪一级</td></tr><tr><td>审批</td><td>BX-202610-011（58,000 元）缺：总经理</td><td>标记“审批不全”并写明缺哪一级</td></tr><tr><td>审批</td><td>BX-202610-016（8,200 元）缺：部门经理</td><td>标记“审批不全”并写明缺哪一级</td></tr><tr><td>审批</td><td>BX-202610-017（21,000 元）缺：财务总监</td><td>标记“审批不全”并写明缺哪一级</td></tr><tr><td>审批</td><td>BX-202610-018（76,000 元）缺：总经理</td><td>标记“审批不全”并写明缺哪一级</td></tr><tr><td>审批</td><td>BX-202610-028（50,000 元）缺：总经理</td><td>标记“审批不全”并写明缺哪一级</td></tr><tr><td>招待费</td><td>BX-202610-005：人均 360 元超标</td><td>标记“招待违规”</td></tr><tr><td>招待费</td><td>BX-202610-006：无事前审批</td><td>标记“招待违规”</td></tr><tr><td>招待费</td><td>BX-202610-007：人均 290 元超标，无事前审批</td><td>标记“招待违规”</td></tr><tr><td>招待费（反例）</td><td>BX-202610-004：2,400 元 / 12 人 = 200 元，有事前审批</td><td>不应标记</td></tr></tbody></table></div></div>
+  </details>
+
+  <div class="pager"><a href="topic-4.html"><div class="p-lbl">← 上一专题</div><div class="p-name">专题04 · 合同审阅</div></a><a class="r" href="topic-6.html"><div class="p-lbl">下一专题 →</div><div class="p-name">专题06 · 费用分析</div></a></div>
+</main>
+<footer class="foot">WorkBuddy 财务实战训练 · 课堂模拟材料，仅用于教学训练，不代表任何真实公司</footer>
+<script>window.__TOPIC__={"id": "t4", "num": 5, "name": "合规检查", "level": "L3 → L4", "prompt": {"official": false, "tpl": "<<PLAN>>\n读取 {IN5} 中的《费用管理制度（节选，模拟）.docx》和《待检查报销单_2026-10.xlsx》，按制度逐笔做合规检查：\n1. 预算：按“部门＋费用类别”汇总本批报销金额，对照“预算余额_10月”表，超出的标记“超预算”\n2. 税率：对照制度中的税率对照表，开票税率不符的标记“税率不符”\n3. 审批：按金额档位核对签字是否齐全，缺失的标记“审批不全”并写明缺哪一级\n4. 招待费：人均超标准或无事前审批的标记“招待违规”\n<<OPT:t4_stop>>\n每个问题写明：单号、违反的制度条款、金额、建议处理方式。\n输出格式：Excel（含“问题清单”“汇总”两个工作表）\n保存路径：{CHK}合规检查结果-v1.xlsx\n注意：此为辅助检查，不替代财务负责人和专业人员的判断；不得修改原始报销单，不得删除任何文件", "options": [{"id": "t4_stop", "label": "制度没规定的事项，标“需人工复核”", "tag": "推荐", "def": true, "line": "制度没有明确规定的事项，标记为“需人工复核”，不要自行判断。"}], "tip": "手册只描述了合规检查的做法（建知识库、自动校验、设人工关口），没有给出原文指令。这条是按该思路写的：规则放在制度文件里，指令只负责说清怎么查、怎么出结果、哪里必须停。"}, "checklist": ["每个问题都写明单号、违反的制度条款、金额、建议处理方式", "预算按“部门＋费用类别”汇总判断，而不是逐笔判断", "审批档位判断正确：恰好 10,000 元、恰好 50,000 元都按“含”处理", "人均恰好 200 元没有被判为超标", "制度没有规定的事项标了“需人工复核”，没有自行判定", "原始报销单没有被修改"]};window.__ALL__=[{"num": 1, "name": "报表处理"}, {"num": 2, "name": "数据校验"}, {"num": 3, "name": "财报信息抽取"}, {"num": 4, "name": "合同审阅"}, {"num": 5, "name": "合规检查"}, {"num": 6, "name": "费用分析"}];</script>
+<script src="assets/app.js"></script>
+</body>
+</html>
