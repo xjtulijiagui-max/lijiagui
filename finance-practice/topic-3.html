@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>专题03 · 财报信息抽取 | WorkBuddy 财务实战训练</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">跳到正文</a>
+<header class="topbar"><div class="tb-inner">
+  <a class="brand" href="index.html"><span class="logo">WB</span> WorkBuddy 财务实战训练</a>
+  <nav class="tb-nav">
+    <a href="index.html">全部专题</a>
+    <a href="topic-2.html" class="">上一专题</a>
+    <a href="topic-4.html" class="">下一专题</a>
+  </nav>
+</div></header>
+
+<section class="hero hero-topic"><div class="hero-inner">
+  <p class="eyebrow">专题 03 / 06 · L2 → L3</p>
+  <h1>财报信息抽取</h1>
+  <p class="lead">从三份模拟上市公司年报摘要网页中，严格依据正文抽取固定字段（营业收入、净利润、毛利率、经营现金流、资产负债率、审计意见），核对口径后汇总为 JSON 与 Excel。</p>
+  <div class="chips">
+    <span class="chip">难度 L2 → L3</span>
+    <span class="chip">4 个数据集</span>
+    <span class="chip">提示词可复制</span>
+    <span class="chip">含验收清单与讲师答案</span>
+  </div>
+</div></section>
+
+<main id="main" class="wrap">
+  <section class="sec">
+    <h2 class="sec-title"><span class="sn">01</span>怎么练：四步走</h2>
+    <ol class="steps"><li>下载本专题 4 个文件（3 份年报摘要网页 + 字段模板 Excel）。</li><li>在 WorkBuddy 新建任务，工作空间只加入本专题文件夹，选 Plan 模式。</li><li>复制提示词，先审计划：抽取字段、单位口径、缺失处理是否写清，再放行。</li><li>对照验收清单逐项核对；重点看审计意见是否照抄、毛利率是否标明计算口径。</li></ol>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head">
+      <h2 class="sec-title"><span class="sn">02</span>数据集下载</h2>
+      <a class="btn btn-soft" href="data/专题三-财务信息抽取/财报信息抽取-数据集.zip" download>打包下载全部</a>
+    </div>
+    <p class="sec-sub">全部为课堂模拟数据。下载后放入工作区对应文件夹，与提示词里的路径保持一致。</p>
+    <div class="files"><div class="file">
+  <div class="fico html">HTML</div>
+  <div class="file-main">
+    <div class="file-name">年报摘要_A公司_2025.html</div>
+    <div class="file-desc">A 公司（制造业）2025 年年报摘要，含主要会计数据与审计意见。</div>
+    <div class="file-meta"><span>1.6 KB</span>
+      <a class="dl" href="data/专题三-财务信息抽取/年报摘要_A公司_2025.html" download>下载</a></div>
+  </div>
+</div><div class="file">
+  <div class="fico html">HTML</div>
+  <div class="file-main">
+    <div class="file-name">年报摘要_B公司_2025.html</div>
+    <div class="file-desc">B 公司（软件服务）2025 年年报摘要，注意利润与审计意见表述。</div>
+    <div class="file-meta"><span>1.7 KB</span>
+      <a class="dl" href="data/专题三-财务信息抽取/年报摘要_B公司_2025.html" download>下载</a></div>
+  </div>
+</div><div class="file">
+  <div class="fico html">HTML</div>
+  <div class="file-main">
+    <div class="file-name">年报摘要_C公司_2025.html</div>
+    <div class="file-desc">C 公司（零售连锁）2025 年年报摘要，注意负债水平。</div>
+    <div class="file-meta"><span>1.6 KB</span>
+      <a class="dl" href="data/专题三-财务信息抽取/年报摘要_C公司_2025.html" download>下载</a></div>
+  </div>
+</div><div class="file">
+  <div class="fico xlsx">XLS</div>
+  <div class="file-main">
+    <div class="file-name">抽取字段模板.xlsx</div>
+    <div class="file-desc">汇总表模板，列名即要求抽取的字段，共 3 家公司待填。</div>
+    <div class="file-meta"><span>5.1 KB</span>
+      <a class="dl" href="data/专题三-财务信息抽取/抽取字段模板.xlsx" download>下载</a></div>
+  </div>
+</div></div>
+  </section>
+
+  <section class="sec">
+    <h2 class="sec-title"><span class="sn">03</span>提示词（可直接复制）</h2>
+    <div class="ws-row">
+      <label for="ws">工作区路径</label>
+      <input id="ws" type="text" spellcheck="false" placeholder="D:\WorkBuddy-财务工作区">
+    </div>
+    <div class="opts" id="opts"></div>
+    <div class="prompt-box">
+      <div class="prompt-bar"><span>按当前选项与路径生成，可直接粘贴到 WorkBuddy</span>
+        <button id="copy" class="btn btn-primary" type="button">复制提示词</button></div>
+      <pre id="prompt"></pre>
+    </div>
+    <p class="tip">这题的关键不是抄数，而是口径：毛利率是披露值还是计算值、审计意见有没有被“美化”。先关掉补充项跑一次，再打开对比。</p>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head">
+      <h2 class="sec-title"><span class="sn">04</span>验收清单</h2>
+      <span class="progress" id="prog">0 / 6</span>
+    </div>
+    <ul class="checklist" id="checklist"></ul>
+  </section>
+
+  <details class="answer">
+    <summary>讲师答案（练完再展开）</summary>
+    <div class="answer-body"><p>答案口径：金额单位万元；毛利率＝(营业收入−营业成本)÷营业收入，三份年报均未直接披露毛利率，故全部为“计算值”。</p><p>埋点：B 公司亏损且审计意见为“带持续经营重大不确定性段落的无保留意见”，不得写成标准无保留；C 公司资产负债率 66.90%，超过 65% 需提示。</p><div class="tbl-wrap"><table><thead><tr><th>公司</th><th>营业收入</th><th>营业成本</th><th>净利润</th><th>毛利率(计算值)</th><th>经营现金流净额</th><th>资产负债率</th><th>审计意见类型</th></tr></thead><tbody><tr><td>A公司</td><td>128,450.00</td><td>99,680.00</td><td>9,620.00</td><td>22.40%</td><td>14,210.00</td><td>48.20%</td><td>标准无保留意见</td></tr><tr><td>B公司</td><td>36,520.00</td><td>14,130.00</td><td>-2,140.00</td><td>61.31%</td><td>-860.00</td><td>31.50%</td><td>带持续经营重大不确定性段落的无保留意见</td></tr><tr><td>C公司</td><td>52,060.00</td><td>42,330.00</td><td>3,810.00</td><td>18.69%</td><td>5,240.00</td><td>66.90%</td><td>标准无保留意见</td></tr></tbody></table></div></div>
+  </details>
+
+  <div class="pager"><a href="topic-2.html"><div class="p-lbl">← 上一专题</div><div class="p-name">专题02 · 数据校验</div></a><a class="r" href="topic-4.html"><div class="p-lbl">下一专题 →</div><div class="p-name">专题04 · 合同审阅</div></a></div>
+</main>
+<footer class="foot">WorkBuddy 财务实战训练 · 课堂模拟材料，仅用于教学训练，不代表任何真实公司</footer>
+<script>window.__TOPIC__={"id": "t6", "num": 3, "name": "财报信息抽取", "level": "L2 → L3", "prompt": {"official": true, "tpl": "<<PLAN>>\n读取 {IN3} 中的 3 份年报摘要网页和「抽取字段模板.xlsx」，按模板字段抽取每家公司的：营业收入、营业成本、净利润、毛利率、经营活动现金流量净额、资产负债率、审计意见类型。\n1. 只依据年报正文与主要会计数据表，不引用任何外部数据\n2. 金额统一换算为万元，保留两位小数\n3. 毛利率若原文未直接给出，用（营业收入−营业成本）÷营业收入 计算，并注明“计算值”；原文直接给出的注明“披露值”\n4. 审计意见照抄原文表述，不得归纳或简化\n5. 原文缺失的字段填“未披露”，不得推算或留空\n<<OPT:t6_note>>\n输出：JSON（每家公司一个对象）+ Excel 汇总表\n保存路径：{OUT}\n命名规则：{日期}-财报抽取-{版本号}\n注意：不得修改原始网页文件", "options": [{"id": "t6_note", "label": "补充：同时在汇总表增加“风险提示”列", "tag": "推荐", "def": true, "line": "补充：在汇总表增加“风险提示”列，对亏损、非标准审计意见、资产负债率超过 65% 的公司各写一句提示，提示必须引用表内数据。"}], "tip": "这题的关键不是抄数，而是口径：毛利率是披露值还是计算值、审计意见有没有被“美化”。先关掉补充项跑一次，再打开对比。"}, "checklist": ["三家公司、七个字段全部填写，无空白单元格", "金额单位统一为万元，保留两位小数", "毛利率标明“披露值”或“计算值”，计算值与公式结果一致", "审计意见照抄原文，非标意见未被改写为标准无保留", "缺失字段写“未披露”，未用 0 或空白代替", "汇总表每个数字都能追溯到具体年报文件"]};window.__ALL__=[{"num": 1, "name": "报表处理"}, {"num": 2, "name": "数据校验"}, {"num": 3, "name": "财报信息抽取"}, {"num": 4, "name": "合同审阅"}, {"num": 5, "name": "合规检查"}, {"num": 6, "name": "费用分析"}];</script>
+<script src="assets/app.js"></script>
+</body>
+</html>
