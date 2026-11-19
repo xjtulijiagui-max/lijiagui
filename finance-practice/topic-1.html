@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>专题01 · 报表处理 | WorkBuddy 财务实战训练</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">跳到正文</a>
+<header class="topbar"><div class="tb-inner">
+  <a class="brand" href="index.html"><span class="logo">WB</span> WorkBuddy 财务实战训练</a>
+  <nav class="tb-nav">
+    <a href="index.html">全部专题</a>
+    <a href="#" class="dis">上一专题</a>
+    <a href="topic-2.html" class="">下一专题</a>
+  </nav>
+</div></header>
+
+<section class="hero hero-topic"><div class="hero-inner">
+  <p class="eyebrow">专题 01 / 06 · L1 → L2</p>
+  <h1>报表处理</h1>
+  <p class="lead">把两份明细和一份预算整理成标准报表：去重、补缺、标异常、合并，再出利润表、费用分析表和同比环比图表。</p>
+  <div class="chips">
+    <span class="chip">难度 L1 → L2</span>
+    <span class="chip">3 个数据集</span>
+    <span class="chip">提示词可复制</span>
+    <span class="chip">含验收清单与讲师答案</span>
+  </div>
+</div></section>
+
+<main id="main" class="wrap">
+  <section class="sec">
+    <h2 class="sec-title"><span class="sn">01</span>怎么练：四步走</h2>
+    <ol class="steps"><li>下载本专题 3 个 Excel，放进 01-原始数据\专题一-报表处理（用完整练习包解压则已就位）。</li><li>在 WorkBuddy 新建任务，工作空间只加入这个文件夹，选 Plan 模式。</li><li>复制下面的提示词，先审计划：每一步的输入、动作、输出、停止条件是否写清，再放行执行。</li><li>对照验收清单逐项检查；练习结束后，再展开讲师答案核对埋点。</li></ol>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head">
+      <h2 class="sec-title"><span class="sn">02</span>数据集下载</h2>
+      <a class="btn btn-soft" href="data/专题一-报表处理/报表处理-数据集.zip" download>打包下载全部</a>
+    </div>
+    <p class="sec-sub">全部为课堂模拟数据。下载后放入工作区对应文件夹，与提示词里的路径保持一致。</p>
+    <div class="files"><div class="file">
+  <div class="fico xlsx">XLS</div>
+  <div class="file-main">
+    <div class="file-name">销售数据_2026-10.xlsx</div>
+    <div class="file-desc">2026 年 10 月销售订单明细（含“上月单位成本”参考表），共 142 行。</div>
+    <div class="file-meta"><span>13.1 KB</span>
+      <a class="dl" href="data/专题一-报表处理/销售数据_2026-10.xlsx" download>下载</a></div>
+  </div>
+</div><div class="file">
+  <div class="fico xlsx">XLS</div>
+  <div class="file-main">
+    <div class="file-name">费用明细_2026-10.xlsx</div>
+    <div class="file-desc">2026 年 10 月费用报销明细，共 47 行。</div>
+    <div class="file-meta"><span>7.5 KB</span>
+      <a class="dl" href="data/专题一-报表处理/费用明细_2026-10.xlsx" download>下载</a></div>
+  </div>
+</div><div class="file">
+  <div class="fico xlsx">XLS</div>
+  <div class="file-main">
+    <div class="file-name">预算与对比基准_2026-10.xlsx</div>
+    <div class="file-desc">10 月部门预算，以及上月、去年同期的收入/成本/费用基准，用于环比与同比。</div>
+    <div class="file-meta"><span>6.7 KB</span>
+      <a class="dl" href="data/专题一-报表处理/预算与对比基准_2026-10.xlsx" download>下载</a></div>
+  </div>
+</div></div>
+  </section>
+
+  <section class="sec">
+    <h2 class="sec-title"><span class="sn">03</span>提示词（可直接复制）</h2>
+    <div class="ws-row">
+      <label for="ws">工作区路径</label>
+      <input id="ws" type="text" spellcheck="false" placeholder="D:\WorkBuddy-财务工作区">
+    </div>
+    <div class="opts" id="opts"></div>
+    <div class="prompt-box">
+      <div class="prompt-bar"><span>按当前选项与路径生成，可直接粘贴到 WorkBuddy</span>
+        <button id="copy" class="btn btn-primary" type="button">复制提示词</button></div>
+      <pre id="prompt"></pre>
+    </div>
+    <p class="tip">手册原文的 7 条规则没有写“缺失成本去哪里取数”，所以本页加了一条可选的补充口径。可以先关掉它跑一次，看 AI 怎么处理缺失值，再打开对比。</p>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head">
+      <h2 class="sec-title"><span class="sn">04</span>验收清单</h2>
+      <span class="progress" id="prog">0 / 6</span>
+    </div>
+    <ul class="checklist" id="checklist"></ul>
+  </section>
+
+  <details class="answer">
+    <summary>讲师答案（练完再展开）</summary>
+    <div class="answer-body"><p>销售明细原始 142 行 = 清洗后 140 行 + 删除重复 2 行（重复订单号：SO-202610-021、SO-202610-096）。</p><p>费用明细原始 47 行 = 清洗后 45 行 + 删除重复 2 行（重复单据号：EX-202610-004、EX-202610-029）。</p><p>清洗后：销售额合计 1,922,010.00 元；成本合计 1,283,243.34 元（含 4 行按上月单位成本填充）；费用合计 534,910.00 元；利润 103,856.66 元。</p><p>环比（对比 2026-09 基准）：收入 +2.1%，成本 +1.5%，费用 +7.5%，利润 -13.4%。</p><p>同比（对比 2025-10 基准）：收入 +15.0%，成本 +10.5%，费用 +12.7%，利润 +190.9%。</p><div class="tbl-wrap"><table><thead><tr><th>埋点类型</th><th>位置</th><th>期望结果</th></tr></thead><tbody><tr><td>完全重复行</td><td>销售明细 SO-202610-021</td><td>保留一条，删除其余；删除记录写入报告</td></tr><tr><td>完全重复行</td><td>销售明细 SO-202610-096</td><td>保留一条，删除其余；删除记录写入报告</td></tr><tr><td>完全重复行</td><td>费用明细 EX-202610-004</td><td>保留一条，删除其余</td></tr><tr><td>完全重复行</td><td>费用明细 EX-202610-029</td><td>保留一条，删除其余</td></tr><tr><td>成本缺失</td><td>销售明细 SO-202610-013（路由器，数量 11）</td><td>按上月单位成本 324.90 × 数量 = 3,573.90 填充，并标注“按上月均值填充”</td></tr><tr><td>成本缺失</td><td>销售明细 SO-202610-036（培训服务（场），数量 1）</td><td>按上月单位成本 4,877.89 × 数量 = 4,877.89 填充，并标注“按上月均值填充”</td></tr><tr><td>成本缺失</td><td>销售明细 SO-202610-078（A4打印纸（箱），数量 9）</td><td>按上月单位成本 120.32 × 数量 = 1,082.88 填充，并标注“按上月均值填充”</td></tr><tr><td>成本缺失</td><td>销售明细 SO-202610-119（培训服务（场），数量 3）</td><td>按上月单位成本 4,877.89 × 数量 = 14,633.67 填充，并标注“按上月均值填充”</td></tr><tr><td>金额超 10 万</td><td>销售明细 SO-202610-061</td><td>标记“需复核”，不得修改金额</td></tr><tr><td>金额超 10 万</td><td>费用明细 EX-202610-006</td><td>标记“需复核”，不得修改金额</td></tr><tr><td>金额超 10 万</td><td>费用明细 EX-202610-019</td><td>标记“需复核”，不得修改金额</td></tr><tr><td>审批间隔 &gt;30 天</td><td>费用明细 EX-202610-008（间隔 43 天）</td><td>标记“超期”</td></tr><tr><td>审批间隔 &gt;30 天</td><td>费用明细 EX-202610-021（间隔 40 天）</td><td>标记“超期”</td></tr><tr><td>审批间隔 &gt;30 天</td><td>费用明细 EX-202610-033（间隔 45 天）</td><td>标记“超期”</td></tr><tr><td>边界：恰好 30 天</td><td>费用明细 EX-202610-027</td><td>不应标记（超过才标记）</td></tr><tr><td>供应商编码缺失</td><td>费用明细 EX-202610-012</td><td>标记“待补充”，不得编造编码</td></tr><tr><td>供应商编码缺失</td><td>费用明细 EX-202610-037</td><td>标记“待补充”，不得编造编码</td></tr></tbody></table></div></div>
+  </details>
+
+  <div class="pager"><span></span><a class="r" href="topic-2.html"><div class="p-lbl">下一专题 →</div><div class="p-name">专题02 · 数据校验</div></a></div>
+</main>
+<footer class="foot">WorkBuddy 财务实战训练 · 课堂模拟材料，仅用于教学训练，不代表任何真实公司</footer>
+<script>window.__TOPIC__={"id": "t1", "num": 1, "name": "报表处理", "level": "L1 → L2", "prompt": {"official": true, "tpl": "<<PLAN>>\n读取 {IN1} 中的所有 Excel 文件，按以下规则处理：\n1. 识别文件类型（销售数据/费用明细/预算表）\n2. 去除重复项（按唯一标识字段）\n3. 填充缺失值（用上月均值或标记为“待补充”）\n4. 标记异常数据（金额超过 10 万、日期与审批日期间隔超过 30 天）\n5. 按统一字段合并多表\n6. 生成标准利润表和费用分析表\n7. 生成同比环比对比图表\n<<OPT:t1_note>>\n输出格式：Excel + PPT\n保存路径：{OUT}\n命名规则：{日期}-{报表类型}-v{版本号}\n注意：不得覆盖原始数据，不得删除任何文件", "options": [{"id": "t1_note", "label": "补充缺失成本的取数口径与去重依据", "tag": "推荐", "def": true, "line": "补充口径：销售数据里缺失的成本，用“销售数据”文件中“上月单位成本”表乘以数量填充，并在备注列注明“按上月均值填充”；去重以订单号、单据号为准。"}], "tip": "手册原文的 7 条规则没有写“缺失成本去哪里取数”，所以本页加了一条可选的补充口径。可以先关掉它跑一次，看 AI 怎么处理缺失值，再打开对比。"}, "checklist": ["销售、费用两份明细都满足：原始行数＝清洗后行数＋删除的重复行数", "缺失成本按“上月单位成本×数量”填充，并有标注，没有悄悄改值", "金额超 10 万、审批间隔超 30 天的记录被标记，而不是被修改", "利润表的收入、成本、费用合计与清洗后明细一致（抽 3 个数回原表核对）", "同比、环比写明了基数和期间，图表数字与表格一致", "原始文件没有被覆盖，成果存入 02-处理结果"]};window.__ALL__=[{"num": 1, "name": "报表处理"}, {"num": 2, "name": "数据校验"}, {"num": 3, "name": "财报信息抽取"}, {"num": 4, "name": "合同审阅"}, {"num": 5, "name": "合规检查"}, {"num": 6, "name": "费用分析"}];</script>
+<script src="assets/app.js"></script>
+</body>
+</html>
