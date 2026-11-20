@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>从业务到智能体｜第一天复习手册</title>
+<style>
+:root{
+  --paper:#F1F4F3; --surface:#FFFFFF; --ink:#16212A; --muted:#566570; --rule:#D2D9DC; --frame:#16212A;
+  --accent:#1747A6; --accent-soft:#E6ECF9; --signal:#8A5300; --signal-bg:#FFEFCF;
+  --prompt-bg:#F6F8FB; --ok:#2C6A47;
+  --serif:"Songti SC","STSong","Source Han Serif SC","Noto Serif CJK SC","Noto Serif SC","SimSun",serif;
+  --sans:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Source Han Sans SC","Noto Sans CJK SC",system-ui,sans-serif;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#10151A; --surface:#172027; --ink:#E3E9EC; --muted:#97A4AC; --rule:#2A353D; --frame:#C8D2D7;
+    --accent:#8FB1FF; --accent-soft:#1B2843; --signal:#F2B552; --signal-bg:#3A2B10;
+    --prompt-bg:#131B21; --ok:#7CC79B; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#10151A; --surface:#172027; --ink:#E3E9EC; --muted:#97A4AC; --rule:#2A353D; --frame:#C8D2D7;
+  --accent:#8FB1FF; --accent-soft:#1B2843; --signal:#F2B552; --signal-bg:#3A2B10;
+  --prompt-bg:#131B21; --ok:#7CC79B; color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 76px)}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75;-webkit-text-size-adjust:100%}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* 标题栏：仿作业指导书 / 图纸标题栏 */
+.titleblock{max-width:1180px;margin:28px auto 0;padding:0 20px}
+.tb{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);border:2px solid var(--frame);background:var(--surface)}
+.tb-main{padding:28px 30px 26px;border-right:1px solid var(--frame)}
+.tb-course{margin:0 0 6px;font-size:15px;color:var(--muted)}
+.tb h1{margin:0;font-family:var(--serif);font-size:clamp(34px,5vw,52px);line-height:1.15;font-weight:700;letter-spacing:.02em}
+.tb-sub{margin:12px 0 0;font-family:var(--serif);font-size:20px;line-height:1.5}
+.tb-meta{margin:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,1fr)}
+.tb-meta div{padding:12px 16px;border-bottom:1px solid var(--frame)}
+.tb-meta div:nth-child(odd){border-right:1px solid var(--frame)}
+.tb-meta div:nth-last-child(-n+2){border-bottom:0}
+.tb-meta dt{font-size:13px;color:var(--muted)}
+.tb-meta dd{margin:2px 0 0;font-size:15px;font-weight:600;line-height:1.45}
+.tb-how{margin:0;grid-column:1 / -1;border-top:1px solid var(--frame);padding:10px 30px;font-size:14px;color:var(--muted)}
+.tb-how mark{background:var(--signal-bg);color:var(--signal);padding:0 3px;border-radius:2px}
+
+/* 工具条 */
+.toolbar{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--rule);padding-top:env(safe-area-inset-top,0px)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:21;background:var(--paper)}
+.toolbar-in{max-width:1180px;margin:0 auto;padding:12px 20px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.search{flex:1 1 260px;display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:0 12px}
+.search input{flex:1;border:0;background:transparent;color:var(--ink);font:inherit;font-size:15px;padding:9px 0;min-width:0}
+.search input:focus{outline:none}
+.search:focus-within{border-color:var(--accent)}
+.search-count{font-size:13px;color:var(--muted);white-space:nowrap}
+.btn{font:inherit;font-size:14px;font-weight:600;border-radius:6px;padding:8px 14px;cursor:pointer;border:1px solid var(--frame);background:var(--surface);color:var(--ink)}
+.btn-primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn .short{display:none}
+.searching #recall,.searching #know,.searching #paths,.searching #labs,.searching #sources{display:none}
+:root[data-theme="dark"] .btn-primary{color:#0E1A33}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn-primary{color:#0E1A33}}
+
+/* 布局 */
+.layout{max-width:1180px;margin:0 auto;padding:0 20px 80px;display:grid;grid-template-columns:200px minmax(0,1fr);gap:48px}
+.nav{position:sticky;top:76px;align-self:start;padding-top:36px;font-size:14px;min-width:0}
+.nav ol{list-style:none;margin:0;padding:0;border-left:2px solid var(--rule)}
+.nav li a{display:block;padding:5px 0 5px 14px;margin-left:-2px;border-left:2px solid transparent;color:var(--muted);text-decoration:none;line-height:1.5}
+.nav li a:hover{color:var(--ink)}
+.nav li a.on{color:var(--ink);border-left-color:var(--accent);font-weight:600}
+.nav li.sub a{padding-left:28px;font-size:13px}
+main{min-width:0;max-width:800px}
+
+section{padding-top:40px}
+.sec-head{margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid var(--frame)}
+.sec-head h2{margin:0;font-family:var(--serif);font-size:30px;line-height:1.3;font-weight:700}
+.sec-head p{margin:6px 0 0;color:var(--muted);font-size:15px}
+.group-title{margin:34px 0 4px;font-family:var(--serif);font-size:22px;line-height:1.4}
+.group-desc{margin:0 0 14px;color:var(--muted);font-size:14px}
+
+/* 速记 */
+.recall{list-style:none;margin:0;padding:0;counter-reset:r}
+.recall li{counter-increment:r;display:grid;grid-template-columns:44px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid var(--rule)}
+.recall li::before{content:counter(r);font-family:var(--serif);font-size:30px;line-height:1;color:var(--accent);font-weight:700;padding-top:4px}
+.recall b{display:block;font-size:17px;line-height:1.55}
+.recall span{display:block;color:var(--muted);font-size:15px;margin-top:2px}
+
+/* 提示词卡片 */
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:16px 18px 14px;margin:0 0 14px}
+.card.core{border:2px solid var(--accent)}
+.card-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.pid{font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums;font-size:14px}
+.card-head h3{margin:0;font-size:17px;line-height:1.45;font-weight:700;flex:1 1 12em;min-width:0}
+.src{font-size:12px;line-height:1.4;padding:2px 7px;border-radius:3px;white-space:nowrap;border:1px solid}
+.src-rec{color:var(--accent);border-color:var(--accent)}
+.src-ppt{color:var(--ink);border-color:var(--muted)}
+.src-org{color:var(--signal);border-color:var(--signal);border-style:dashed}
+.prompt-wrap{position:relative;background:var(--prompt-bg);border-left:3px solid var(--accent);border-radius:0 4px 4px 0}
+.prompt{margin:0;padding:14px 92px 14px 16px;white-space:pre-wrap;word-break:break-word;font-family:var(--sans);font-size:15.5px;line-height:1.8;color:var(--ink)}
+.prompt mark.ph{background:var(--signal-bg);color:var(--signal);padding:0 2px;border-radius:2px;font-weight:600}
+.copy{position:absolute;top:10px;right:10px;font:inherit;font-size:13px;font-weight:600;padding:5px 12px;border-radius:4px;border:1px solid var(--accent);background:var(--surface);color:var(--accent);cursor:pointer;min-width:66px}
+.copy.done{background:var(--accent);color:var(--surface)}
+.note{margin:10px 0 0;font-size:14px;line-height:1.7;color:var(--muted)}
+.note b{color:var(--ink);font-weight:600}
+.check{margin:10px 0 0;font-size:14px;line-height:1.7;color:var(--ok)}
+.check b{font-weight:700}
+.warn{margin:12px 0 0;padding:10px 14px;border:1px solid var(--signal);border-radius:4px;background:var(--signal-bg);color:var(--ink);font-size:14px;line-height:1.7}
+.warn b{color:var(--signal)}
+.sub-label{margin:16px 0 8px;font-size:14px;font-weight:700}
+.stack > .prompt-wrap + .sub-label{margin-top:16px}
+.empty{display:none;padding:18px;border:1px dashed var(--rule);border-radius:6px;color:var(--muted);font-size:15px}
+
+/* 知识点 */
+details{background:var(--surface);border:1px solid var(--rule);border-radius:6px;margin:0 0 10px}
+summary{cursor:pointer;padding:13px 18px;font-weight:700;font-size:16.5px;list-style:none;display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"展开";font-weight:400;font-size:13px;color:var(--muted);white-space:nowrap}
+details[open] summary::after{content:"收起"}
+details[open] summary{border-bottom:1px solid var(--rule)}
+.kbody{padding:6px 18px 14px}
+.kbody ul{margin:8px 0 0;padding-left:1.2em}
+.kbody li{margin:4px 0}
+.kbody .from{margin:10px 0 0;font-size:13px;color:var(--muted)}
+
+/* 表格 */
+.table-wrap{overflow-x:auto;border:1px solid var(--rule);border-radius:6px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:14.5px;line-height:1.6}
+th,td{text-align:left;vertical-align:top;padding:10px 14px;border-bottom:1px solid var(--rule)}
+th{font-weight:700;background:var(--prompt-bg)}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:600;white-space:nowrap}
+
+.legend{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.legend li{display:flex;gap:12px;align-items:baseline;font-size:15px}
+.foot{margin-top:28px;font-size:14px;color:var(--muted)}
+
+@media (max-width: 960px){
+  .layout{grid-template-columns:minmax(0,1fr);gap:0}
+  .nav{position:static;padding-top:16px}
+  .nav ol{display:flex;gap:6px;overflow-x:auto;border-left:0;padding-bottom:6px}
+  .nav li a{border:1px solid var(--rule);border-radius:999px;padding:4px 12px;margin:0;white-space:nowrap;background:var(--surface)}
+  .nav li.sub{display:none}
+  .nav li a.on{border-color:var(--accent)}
+}
+@media (max-width: 720px){
+  .tb{grid-template-columns:1fr}
+  .tb-main{border-right:0;border-bottom:1px solid var(--frame);padding:22px 18px}
+  .tb-how{padding:10px 18px}
+  .titleblock,.toolbar-in,.layout{padding-left:14px;padding-right:14px}
+  .prompt{padding:46px 14px 14px 14px}
+  .toolbar-in{flex-wrap:nowrap;padding-top:10px;padding-bottom:10px}
+  .search{flex:1 1 auto}
+  #printBtn{display:none}
+  .btn .long{display:none}
+  .btn .short{display:inline}
+  .sec-head h2{font-size:26px}
+}
+@media (prefers-reduced-motion: reduce){*{scroll-behavior:auto!important}}
+@media print{
+  :root{--paper:#fff;--surface:#fff;--prompt-bg:#f5f5f5}
+  .toolbar,.nav,.copy,body::before{display:none!important}
+  .layout{display:block;padding:0}
+  main{max-width:none}
+  .titleblock{margin-top:0;padding:0}
+  .card,details,.recall li,tr{break-inside:avoid}
+  .prompt{padding-right:16px}
+  summary::after{content:""!important}
+}
+
+/* 做专家与做技能 */
+.explain p{margin:0 0 12px;font-size:15.5px;line-height:1.8}
+.explain .note{margin:4px 0 18px}
+.trio{margin:0 0 12px}
+.trio table{min-width:560px}
+.trio td:first-child{white-space:normal;width:9.5em}
+.trio .cn{font-weight:400;color:var(--muted);font-size:13px}
+.flow{list-style:none;margin:6px 0 16px;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:2px solid var(--frame);background:var(--surface)}
+.flow li{position:relative;padding:14px 18px 16px;border-right:1px solid var(--frame);display:flex;flex-direction:column;gap:2px}
+.flow li:last-child{border-right:0}
+.flow li:not(:last-child)::after{content:"";position:absolute;right:-8px;top:24px;width:14px;height:14px;background:var(--surface);border-top:1px solid var(--frame);border-right:1px solid var(--frame);transform:rotate(45deg);z-index:1}
+.step-k{font-family:var(--serif);font-size:26px;line-height:1.2;font-weight:700;color:var(--accent)}
+.step-who{font-size:13px;color:var(--muted);font-weight:600}
+.step-txt{font-size:14.5px;line-height:1.7;margin-top:6px}
+.searching .explain{display:none}
+@media (max-width: 720px){
+  .flow{grid-template-columns:1fr}
+  .flow li{border-right:0;border-bottom:1px solid var(--frame)}
+  .flow li:last-child{border-bottom:0}
+  .flow li:not(:last-child)::after{right:auto;left:28px;top:auto;bottom:-8px;transform:rotate(135deg)}
+}
+@media print{.flow li,.trio tr{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header class="titleblock">
+  <div class="tb">
+    <div class="tb-main">
+      <p class="tb-course">AI 应用工作坊（两天）</p>
+      <h1>从业务到智能体</h1>
+      <p class="tb-sub">第一天复习手册：可直接复制的提示词与知识点</p>
+    </div>
+    <dl class="tb-meta">
+      <div><dt>日期</dt><dd>2026年11月20日</dd></div>
+      <div><dt>模块</dt><dd>第一天：工具与方法</dd></div>
+      <div><dt>讲师</dt><dd>李家贵</dd></div>
+      <div><dt>工具</dt><dd>腾讯 WorkBuddy</dd></div>
+      <div><dt>内容</dt><dd>提示词＋知识点</dd></div>
+      <div><dt>提示词</dt><dd><span id="total">0</span> 条</dd></div>
+    </dl>
+    <p class="tb-how">用法：点“复制”直接粘贴到 WorkBuddy；<mark>【方括号】</mark>里的内容换成你自己的。</p>
+  </div>
+</header>
+
+<div class="toolbar" role="search">
+  <div class="toolbar-in">
+    <label class="search">
+      <input id="q" type="search" placeholder="输入关键词，如：周报、记忆、专家、Skill、PPT" aria-label="搜索提示词">
+      <span class="search-count" id="hits"></span>
+    </label>
+    <button class="btn btn-primary" id="copyAll" type="button"><span class="long">复制全部提示词</span><span class="short">复制全部</span></button>
+    <button class="btn" id="printBtn" type="button">打印或存为 PDF</button>
+  </div>
+</div>
+
+<div class="layout">
+  <nav class="nav" aria-label="目录">
+    <ol>
+      <li><a href="#recall">今天只记六句</a></li>
+      <li><a href="#core">核心：课尾总结</a></li>
+      <li><a href="#lib">提示词库</a></li>
+      <li class="sub"><a href="#g-a">入职初始化与记忆</a></li>
+      <li class="sub"><a href="#g-b">一次把话说清</a></li>
+      <li class="sub"><a href="#g-c">Plan 与护栏</a></li>
+      <li class="sub"><a href="#g-d">电脑与浏览器</a></li>
+      <li class="sub"><a href="#g-e">写作与技能</a></li>
+      <li><a href="#craft">做专家与做技能</a></li>
+      <li class="sub"><a href="#expert">专家三件套</a></li>
+      <li class="sub"><a href="#skill">IPO → SOP → Skill</a></li>
+      <li><a href="#know">知识点复习</a></li>
+      <li><a href="#paths">设置入口速查</a></li>
+    </ol>
+  </nav>
+
+  <main>
+  <p class="empty" id="empty">没有匹配的提示词。换个关键词试试，例如“周报”“记忆”“Skill”。</p>
+
+  <!-- ===== 速记 ===== -->
+  <section id="recall">
+    <div class="sec-head">
+      <h2>今天只记六句</h2>
+      <p>上午讲“上下文”，下午讲“怎么用好”。复习时先把这六句讲给同事听。</p>
+    </div>
+    <ol class="recall">
+      <li><div><b>智能体 = 大脑 + 身体。</b><span>模型是大脑，工具、连接器、电脑权限是身体。要变成好智能体，必须给足上下文；没把业务知识交给它，它只是“大号的 DeepSeek”。</span></div></li>
+      <li><div><b>上下文（Context）是核心竞争力。</b><span>提示词交代清角色、背景、目标、行动；一次把话说清楚，最省钱也最出效果。</span></div></li>
+      <li><div><b>人的价值在两头：派活和验收。</b><span>派活派得对（规划设计），验得出好坏（判断力 + 品味）。小白 + AI，还是小白。</span></div></li>
+      <li><div><b>一个对话一个任务。</b><span>多任务混聊会成本爆炸、上下文混乱、越聊越笨；长对话要压缩，重要任务第一轮就把资料给全。</span></div></li>
+      <li><div><b>先给 AI 做“入职初始化”。</b><span>不变的规矩写进个性化，可变的偏好放进记忆，每次纠正都说一句“请写入记忆”。</span></div></li>
+      <li><div><b>复杂任务先 Plan，提示词加护栏。</b><span>计划五要素：目标、步骤、依赖、改动、验收。四不护栏：不编造、不乱改、不越权、不糊弄。</span></div></li>
+    </ol>
+  </section>
+
+  <!-- ===== 核心 ===== -->
+  <section id="core" class="has-cards">
+    <div class="sec-head">
+      <h2>核心：课尾总结的三组提示词</h2>
+      <p>讲师在课程最后重点演示的内容：给 AI 立规矩、让它记住你的修改、一句话出周报。</p>
+    </div>
+
+    <article class="card core">
+      <div class="card-head"><span class="pid">P-01</span><h3>个人背景记忆（讲师原版，供参考改写）</h3></div>
+      <div class="prompt-wrap"><pre class="prompt">用户使用中文交流，称呼助手为“大哥”，偏好直接、不啰嗦、不客套的回复，先给结论，对低级错误容忍度低，对比其他AI表现时会直接指出；通常以简短祈使句（如“继续”）驱动AI主导工作流，多步骤任务中用单字批准逐步推进。具备丰富的企业AI项目、内训与TTT课程交付经验，重视真实性与深度洞见，强批判性思维，习惯使用分层框架与六维分析。严格禁止编造数据，缺失字段统一标记“待确认”，并明确区分“已有证据”“综合推断”“待核验”；偏好IPO格式、规则引用、证据索引等可追溯交付。原型/PRD任务须先进入Plan模式，说明理解、缺口、步骤与验收标准；执行后须进行格式、事实、边界、可用性四维自检并列出待确认项。设计需求通常提供含广告语、配色、字体、视觉元素等参数的详细结构化简报。倾向要求现成可参考、可直接“抄”的技能与模板，而非从零构建。公众号文章倾向参照现有链接的结构与风格。发生错误时，用户会立即提供新凭据并要求重试；对公众号草稿箱等外部系统执行不可逆写入前，倾向先审核并确认写入目标。</pre><button class="copy" type="button">复制</button></div>
+      <p class="note"><b>贴在哪：</b>设置 → 记忆与计划 → 编辑记忆；其中永远不变的规矩放进 设置 → 个性化。</p>
+      <p class="note"><b>讲师提醒：</b>这段是 AI 根据讲师日常任务自动总结出来的，不是手写的。先读懂，再改成你自己的；“大哥”这类称呼、你用不上的风格要求直接删掉，否则它会误解你。读的过程比贴进去更重要。</p>
+    </article>
+
+    <article class="card core">
+      <div class="card-head"><span class="pid">P-02</span><h3>学员改写模板：给自己的 AI 做入职初始化</h3></div>
+      <div class="prompt-wrap"><pre class="prompt">我是【公司/部门】的【岗位】，向【直属领导】汇报，核心考核指标是【KPI/OKR】。
+我当前负责的项目：【项目名称、目标、关键节点】。
+我每天/每周重复做的重要事项：【事项1】；【事项2】；【事项3】。
+我的做事原则：【例：排产计划优先全局最优，只有在……情况下才接受局部最优】。
+回复要求：用中文，先给结论，不客套不铺垫；信息不确定不要编，缺失项标“待确认”。
+输出偏好：【例：报告默认生成 Word；数据默认 Excel；PPT 一律用我的模板】。</pre><button class="copy" type="button">复制</button></div>
+      <p class="note"><b>四件事写清楚：</b>定人设（你是谁、老板是谁）、定目标（项目和 KPI）、定做事方式（原则、要调用的技能）、定输出形式（Word、Excel 还是 PPT）。课堂上把这一步叫“人员初始化”。</p>
+    </article>
+
+    <article class="card core">
+      <div class="card-head"><span class="pid">P-03</span><h3>把每次修改变成规则：“XX，请写入记忆”</h3></div>
+      <div class="prompt-wrap"><pre class="prompt">【刚才纠正它的那条要求】，请写入记忆。</pre><button class="copy" type="button">复制</button></div>
+      <p class="note"><b>例：</b>“开头直接进入具体问题，不要铺垫，请写入记忆。”同一个问题纠正过一次以上，就当场让它写入记忆，下次自动照做。</p>
+    </article>
+
+    <article class="card core">
+      <div class="card-head"><span class="pid">P-04</span><h3>一句话生成本周周报</h3></div>
+      <div class="prompt-wrap"><pre class="prompt">请基于本周的全部上下文，包含私聊、群聊、日程、待办、企业文档、企业会议的全部内容，帮我生成一个本周周报。</pre><button class="copy" type="button">复制</button></div>
+      <div class="card-head" style="margin-top:18px"><span class="pid">P-05</span><h3>周报直接生成企业微信云文档</h3></div>
+      <div class="prompt-wrap"><pre class="prompt">请基于本周的全部上下文，包含私聊、群聊、日程、待办、企业文档、企业会议的全部内容，帮我生成一个本周周报，并生成企业微信文档。</pre><button class="copy" type="button">复制</button></div>
+      <div class="card-head" style="margin-top:18px"><span class="pid">P-06</span><h3>部门负责人：汇总全组周报</h3></div>
+      <div class="prompt-wrap"><pre class="prompt">请针对这个群里所有人的本周周报，帮我汇总成本周部门规划。</pre><button class="copy" type="button">复制</button></div>
+      <p class="note"><b>完整流程：</b>生成周报 → 导出或复制 → 用“去AI味”技能润色（见 P-20）→ 通读后提交。人工汇总只能抽样，AI 汇总能覆盖全量。</p>
+      <p class="note"><b>前提：</b>WorkBuddy 已连接企业微信并获得企业授权。</p>
+      <div class="warn"><b>交之前必须通读。</b>私聊、群聊里对领导的议论会被一起写进周报，课堂上讲过真实翻车案例。周报里不要出现对具体领导的评价；平时在工作群里说话也要有分寸。</div>
+    </article>
+  </section>
+
+  <!-- ===== 提示词库 ===== -->
+  <section id="lib" class="has-cards">
+    <div class="sec-head">
+      <h2>提示词库</h2>
+      <p>课堂上讲到的提示词，按用途分五组。顶部搜索框可按关键词筛选。</p>
+    </div>
+
+    <h3 class="group-title" id="g-a">入职初始化与记忆</h3>
+    <p class="group-desc">让 AI 知道你是谁、按你的规矩办事，并且跨对话不失忆。</p>
+
+    <article class="card">
+      <div class="card-head"><span class="pid">P-07</span><h3>个性化指令示例：角色一致 + 关键词触发技能</h3></div>
+      <div class="prompt-wrap"><pre class="prompt">我是一名培训咨询顾问，回复要与我的角色保持一致；做 PPT 永远使用我的模板。
+当输入包含“课程大纲”或课程大纲制作方案时，先调用课程大纲 skill。</pre><button class="copy" type="button">复制</button></div>
+      <p class="note">这是讲师自己的两条。第二条是“关键词触发技能”的写法：把“课程大纲”换成你的高频任务，把 skill 换成你已安装的技能。统一模板的好处像统一设备型号，客户需求怎么变都能快速组装。</p>
+    </article>
+
+    <article class="card">
+      <div class="card-head"><span class="pid">P-08</span><h3>干活前先读工作台文档</h3></div>
+      <div class="prompt-wrap"><pre class="prompt">开始任何任务之前，先读取【文档绝对路径，例：D:/工作台/我的工作台.md】，按其中的身份、目标和规则执行，读完再动手。</pre><button class="copy" type="button">复制</button></div>
+      <p class="note">文档里写：我是谁、身份定位、长期目标、KPI、做事规则。讲师经验：规则在 300 行以内基本都会遵守。所有任务都先读会拖慢简单任务，可以改成“处理【某类任务】之前先读……”。</p>
+    </article>
+
+    <h3 class="group-title" id="g-b">一次把话说清</h3>
+    <p class="group-desc">交代越完整，效果越好；一次说清楚，也最省钱。</p>
+
+    <article class="card">
+      <div class="card-head"><span class="pid">P-09</span><h3>完整交代：角色、背景、目标、行动</h3></div>
+      <div class="prompt-wrap"><pre class="prompt">角色：你是【岗位/专家角色】。
+背景：【项目情况、已有材料、读者是谁】。
+目标：【要达成什么结果】。
+行动：【具体要做什么，输出成 Word / Excel / PPT 的什么样子】。</pre><button class="copy" type="button">复制</button></div>
+      <p class="note">交代不清，同一个工具效果天差地别。重要任务把第一轮写完整，后面少来回。</p>
+    </article>
+
+    <article class="card">
+      <div class="card-head"><span class="pid">P-10</span><h3>让 AI 按领域权威的思维框架作答</h3></div>
+      <div class="prompt-wrap"><pre class="prompt">请按【本领域公认的权威专家】的思维框架回答，结合【精益/工艺等方法论】，给出系统性的解决方案。</pre><button class="copy" type="button">复制</button></div>
+      <p class="note">讲师建议：把你们整理过的方法论（如精益理论）加进去，要求回答有系统性。</p>
+    </article>
+
+    <article class="card">
+      <div class="card-head"><span class="pid">P-11</span><h3>防“彩虹屁”：要求客观中立</h3></div>
+      <div class="prompt-wrap"><pre class="prompt">请客观中立，基于数据作答，不要夸赞。</pre><button class="copy" type="button">复制</button></div>
+      <p class="note">初稿写得一般，AI 却说“你真棒”，人很容易在表扬里迷失。写进指令，或直接放进个性化。</p>
+    </article>
+
+    <article class="card">
+      <div class="card-head"><span class="pid">P-12</span><h3>开放任务：先翻本机资料再动手</h3></div>
+      <div class="prompt-wrap"><pre class="prompt">先在我电脑上找一找有没有与【任务】相关的可用资料，再基于这些资料帮我完成【任务】。</pre><button class="copy" type="button">复制</button></div>
+      <p class="note">需要打开完全访问里的“文件操作”。讲师经验：本机资料通常比网上资料质量高，它甚至能翻出你忘了的旧文件。涉密资料不要放在它能访问的范围。</p>
+    </article>
+
+    <h3 class="group-title" id="g-c">Plan 与护栏</h3>
+    <p class="group-desc">让错误发生在执行之前；把“不编造、不乱改、不越权、不糊弄”写进提示词。</p>
+
+    <article class="card">
+      <div class="card-head"><span class="pid">P-13</span><h3>课堂演示：计划模式下提一个复杂问题</h3></div>
+      <div class="prompt-wrap"><pre class="prompt">锂电设备的装配精度控制，请出一个系统的解决方案。</pre><button class="copy" type="button">复制</button></div>
+      <p class="note">先打开计划模式再发送。AI 会先反问澄清需求，再查资料出计划；你按五要素评审，不同意就把修改意见告诉它，改成可执行的计划再执行，产物质量会明显提升。</p>
+    </article>
+
+    <article class="card">
+      <div class="card-head"><span class="pid">P-14</span><h3>没开计划模式时：要求先出计划</h3></div>
+      <div class="prompt-wrap"><pre class="prompt">先不要执行。请按目标、步骤、依赖、改动、验收五项给出计划，我确认后再执行。</pre><button class="copy" type="button">复制</button></div>
+    </article>
+
+    <article class="card">
+      <div class="card-head"><span class="pid">P-15</span><h3>四不护栏</h3></div>
+      <div class="prompt-wrap"><pre class="prompt">不允许编造、不允许乱改、不允许越权、不允许糊弄。</pre><button class="copy" type="button">复制</button></div>
+      <p class="note">写进提示词或个性化，可以明显降低幻觉。记笔记只记这四个词就够了。</p>
+    </article>
+
+    <article class="card">
+      <div class="card-head"><span class="pid">P-16</span><h3>清理电脑：先审计，不要急着动手</h3></div>
+      <div class="prompt-wrap"><pre class="prompt">请帮我审计我电脑上的【文件夹/文件】，请先审计，不要着急干活。</pre><button class="copy" type="button">复制</button></div>
+      <p class="note">直接说“帮我清理一下电脑”风险很大。审计完你心里有数哪些不能动，再决定清理范围。</p>
+    </article>
+
+    <h3 class="group-title" id="g-d">电脑与浏览器</h3>
+    <p class="group-desc">打开权限、装好浏览器操控后，AI 可以像人一样操作电脑和网页。</p>
+
+    <article class="card">
+      <div class="card-head"><span class="pid">P-17</span><h3>测试终端权限：查电池健康度</h3></div>
+      <div class="prompt-wrap"><pre class="prompt">帮我看一下我的系统信息，尤其是电池循环次数，看看我电脑的电池健康度怎么样。</pre><button class="copy" type="button">复制</button></div>
+      <p class="note">需要打开完全访问里的“终端命令”。能查电池，就能帮你排查电脑底层问题。</p>
+    </article>
+
+    <article class="card">
+      <div class="card-head"><span class="pid">P-18</span><h3>测试浏览器操控：打开网站</h3></div>
+      <div class="prompt-wrap"><pre class="prompt">帮我打开联合早报网。</pre><button class="copy" type="button">复制</button></div>
+    </article>
+
+    <article class="card">
+      <div class="card-head"><span class="pid">P-19</span><h3>让 AI 替你填系统表单</h3></div>
+      <div class="prompt-wrap"><pre class="prompt">帮我在【系统/网站名称】里填写【表单/工单】，参照我过去填写的情况把字段都填好；遇到验证码或授权时停下来让我处理，提交前先给我确认。</pre><button class="copy" type="button">复制</button></div>
+      <p class="note">适合内网系统填单、工单录入、电商上架这类字段多、规则清楚的活。下班前派活，第二天早上验收。</p>
+    </article>
+
+    <h3 class="group-title" id="g-e">写作与技能</h3>
+    <p class="group-desc">技能入口：专家技能连接器 → 技能 → 搜索，选下载量最大的。Office 三件套（Word、Excel、PPT）的技能最重要。</p>
+
+    <article class="card">
+      <div class="card-head"><span class="pid">P-20</span><h3>去 AI 味：让报告读起来像你写的</h3></div>
+      <div class="prompt-wrap"><pre class="prompt">请用“去AI味”技能改写这份【周报/报告】：保留全部事实、数字和结论，不新增内容，删掉套话。</pre><button class="copy" type="button">复制</button></div>
+      <p class="note">先安装技能：搜 humanizer 或“去AI味”，是课上最受欢迎的技能之一。</p>
+    </article>
+
+    <article class="card">
+      <div class="card-head"><span class="pid">P-21</span><h3>数据分析：调用技能，让它写代码算</h3></div>
+      <div class="prompt-wrap"><pre class="prompt">调用数据分析（Data Analysis）技能：读取【文件名】，用 Python 计算【指标】，输出结果表、图表和计算代码。</pre><button class="copy" type="button">复制</button></div>
+      <p class="note">先安装：搜“数据分析”或 Data Analysis，选下载量最大的。调用后它会直接写 Python 来算。</p>
+    </article>
+
+    <article class="card">
+      <div class="card-head"><span class="pid">P-22</span><h3>PPT 加大信息浓度</h3></div>
+      <div class="prompt-wrap"><pre class="prompt">请把 PPT 的信息浓度加大。</pre><button class="copy" type="button">复制</button></div>
+      <p class="note">讲师的 PPT 都由 AI 制作，常用做法是把 4 页 Word 浓缩成 1 页 PPT。配合技能 PPT Master（搜索时选下载量最大的）。</p>
+    </article>
+  </section>
+
+  <!-- ===== 专家与技能 ===== -->
+  <section id="craft" class="has-cards">
+    <div class="sec-head">
+      <h2>做专家与做技能</h2>
+      <p>用技能是起点，把自己的方法做成专家和技能，经验才能留下来、给同事复用。</p>
+    </div>
+
+    <h3 class="group-title" id="expert">专家三件套：Profile + Capability model + Workflow</h3>
+    <div class="explain">
+      <p>专家是一个有统一人设、带着多个技能的 AI 虚拟员工。你只交代目标，它自己调度工具、保持上下文连贯、按统一口径交付。技能是能力级，专家是角色级。</p>
+      <p><b>什么时候该做专家：</b>每次做项目都要重复调用好几个技能、反复交代同样的背景；希望不管调哪个技能，输出都是同一个口径和交付标准；工作需要连续的上下文。一个技能就能搞定、或者方法还在验证阶段，先用技能。</p>
+      <div class="table-wrap trio"><table>
+        <thead><tr><th>三件套</th><th>写什么</th><th>避免</th></tr></thead>
+        <tbody>
+          <tr><td>Profile<br><span class="cn">人设档案</span></td><td>短角色名，便于召唤（如“文档评审官”）；是谁 + 什么背景（如“十年经验的采购经理”）；服务谁、说话风格。</td><td>“专家1”“助手”这类没有指向的名字；把任务本身当人设。</td></tr>
+          <tr><td>Capability model<br><span class="cn">能力模型</span></td><td>擅长什么、不做什么，边界写清楚；挂哪些技能、连接器和资料库。</td><td>“什么都行”。</td></tr>
+          <tr><td>Workflow<br><span class="cn">工作流</span></td><td>先做什么、后做什么；输出格式；约束（四不护栏、缺信息标“待确认”）；最好附一个例子。</td><td>只写一句“你是一个专家”。</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note"><b>创建路径：</b>专家技能连接器 → 专家 → 我的专家 → 创建专家，在引导对话里逐项确认，再用真实任务测试、修改。专家名称创建后不能改，起名前想清楚。</p>
+    </div>
+
+    <article class="card">
+      <div class="card-head"><span class="pid">P-23</span><h3>创建专家：按三件套一次交代</h3></div>
+      <div class="prompt-wrap"><pre class="prompt">请帮我创建一个专家，名称：【短角色名，如“来料检验评审官”】。
+一、人设档案（Profile）：它是【十年经验的××工程师】，服务【谁】，说话风格【先给结论，不客套】。
+二、能力模型（Capability model）：擅长【任务1】【任务2】【任务3】；不做【越界事项】；可调用技能【技能名】；参考资料【资料库或 IMA 知识库名称】。
+三、工作流（Workflow）：①【澄清需求】→ ②【读取资料】→ ③【分析或生成】→ ④【自检】→ ⑤【按××格式交付】。
+约束：不允许编造、不允许乱改、不允许越权、不允许糊弄；缺失信息标“待确认”。
+示例：【附一个做得好的样例】。</pre><button class="copy" type="button">复制</button></div>
+    </article>
+
+    <h3 class="group-title" id="skill">做技能：IPO → SOP → Skill</h3>
+    <div class="explain">
+      <p>技能的本质是流程加知识，它不是一段更长的提示词，而是一套可触发、可执行、可迭代的能力包。三条都满足再动手：<b>常做</b>（每周每月都会遇到）、<b>做法稳定</b>（不是今天一个流程明天一个流程）、<b>有标准好验收</b>（知道什么是对的）。</p>
+      <ol class="flow" aria-label="IPO 转 SOP 转 Skill 三步">
+        <li><span class="step-k">IPO</span><span class="step-who">写给 AI</span><span class="step-txt">输入、处理、输出说清楚，并已用测试数据验证。未经验证的 IPO，转出来的 SOP 可能有问题。</span></li>
+        <li><span class="step-k">SOP</span><span class="step-who">给人审核</span><span class="step-txt">一句话转：“把以上内容转成SOP”。有步骤、有规则、有检查，人读着舒服，存成 Markdown 就是个人、部门、公司的资产。</span></li>
+        <li><span class="step-k">Skill</span><span class="step-who">给 AI 执行</span><span class="step-txt">把 SOP 丢给智能体说“生成××skill”。以后输入“/技能名”，加上新的输入，直接拿结果。</span></li>
+      </ol>
+      <p><b>更快的路：一句话转技能。</b>一个任务在对话里跑通了，当场说一句“把刚才的完整流程存成技能”，以后说名字就整套复跑。</p>
+      <p><b>怎么检查技能合不合格：</b>先人审 SOP，确保人读得懂、没有漏洞；再用真实输入跑一遍，人审结果。手工做得比技能好，说明技能有问题：先改 SOP，审过后用自然语言改技能。</p>
+      <p><b>讲师案例：</b>做课程大纲，从多轮对话约 2 小时，变成调用技能约 20 秒出稿。</p>
+    </div>
+
+    <article class="card">
+      <div class="card-head"><span class="pid">P-24</span><h3>第一步：写 IPO</h3></div>
+      <div class="prompt-wrap"><pre class="prompt">任务：【岗位上的一件高频重复工作】
+输入（I）：【输入文件、字段、来源、质量要求；缺失信息怎么处理】
+处理（P）：【执行步骤；判断规则写成“如果……则……，除非……”；异常处理；人工复核点】
+输出（O）：【报告或表格结构、必备内容、文件格式；一个合格样例和一个不合格样例】
+验收：【三条可检验的验收标准】</pre><button class="copy" type="button">复制</button></div>
+      <p class="note">自检：随便找一个同事，拿这份 IPO 能不能做出同样的判断？不能，就是规则还没写透。</p>
+    </article>
+
+    <article class="card">
+      <div class="card-head"><span class="pid">P-25</span><h3>第二步：IPO 转 SOP</h3></div>
+      <div class="prompt-wrap"><pre class="prompt">把以上内容转成SOP。</pre><button class="copy" type="button">复制</button></div>
+    </article>
+
+    <article class="card">
+      <div class="card-head"><span class="pid">P-26</span><h3>第三步：SOP 转 Skill</h3></div>
+      <div class="prompt-wrap"><pre class="prompt">请把以上内容整理成一个可重复使用的skill，命名为【项目跟进助手】。</pre><button class="copy" type="button">复制</button></div>
+      <p class="note">通常需要多轮迭代。生成后输入“/项目跟进助手”，再上传本周纪要，直接拿结果。</p>
+    </article>
+
+    <article class="card">
+      <div class="card-head"><span class="pid">P-27</span><h3>一句话转技能：跑通即保存</h3></div>
+      <div class="prompt-wrap"><pre class="prompt">把刚才的完整流程存成技能，名字叫【月度对账】。写清步骤和输出格式；缺哪个文件就明说，不要自己编数据。</pre><button class="copy" type="button">复制</button></div>
+      <p class="note">以后只说“月度对账”四个字，整套流程自动跑。</p>
+    </article>
+
+    <article class="card">
+      <div class="card-head"><span class="pid">P-28</span><h3>迭代技能：改好 SOP 再改技能</h3></div>
+      <div class="prompt-wrap"><pre class="prompt">SOP 第【3】步已更新为【新的做法】，请按更新后的 SOP 修改【技能名】技能，其余部分保持不变。</pre><button class="copy" type="button">复制</button></div>
+    </article>
+  </section>
+
+  <!-- ===== 知识点 ===== -->
+  <section id="know">
+    <div class="sec-head">
+      <h2>知识点复习</h2>
+      <p>按课堂顺序整理，点开看要点。打印时会自动全部展开。</p>
+    </div>
+
+    <details>
+      <summary>1. 智能体和大模型差在哪</summary>
+      <div class="kbody"><ul>
+        <li>大模型是大脑，智能体是大脑加身体。DeepSeek、豆包本质是大模型；WorkBuddy、豆包工作、千问办公是桌面智能体。</li>
+        <li>除模型以外的工具、连接器、电脑权限都算“身体”，而且还在长；大脑（模型）可以换。</li>
+        <li>过去只能问答聊天；现在能完成复杂任务、调用工具、像人一样直接操作电脑。</li>
+        <li>没受过教育的智能体和受过教育的智能体，差别不亚于原始人和名校博士，关键在给足上下文。</li>
+      </ul></div>
+    </details>
+
+    <details>
+      <summary>2. 上下文从哪里来</summary>
+      <div class="kbody"><ul>
+        <li>以前三种：提示词、上传附件、允许联网搜索。</li>
+        <li>现在多了：本地文件、连接器、整台电脑和电脑上的软件、微信和企业微信、资料库、腾讯文档、IMA 知识库。</li>
+        <li>好提示词要交代角色、背景、目标、行动；交代不清，同一个工具效果天差地别。</li>
+        <li>技巧都是杠杆，真正决定上限的是专家知识。知识库就是给 AI 的参考答案和“小抄”，拿掉它水平立刻掉下来。</li>
+        <li>人要有判断力（识别幻觉和噪音）和品味（知道做好一件事的最佳流程和标准）。</li>
+      </ul></div>
+    </details>
+
+    <details>
+      <summary>3. 微信与企业微信变成上下文</summary>
+      <div class="kbody"><ul>
+        <li>微信聊天记录三步导入：多选后合并转发 → 选择“其他应用” → 选 WorkBuddy 打开。讲师实测单次最多 99 条。</li>
+        <li>企业微信打通后，群聊、单聊、会议、日程都能成为上下文，需要企业审批开通权限。</li>
+        <li>AI 会抓取并总结聊天记录，工作群里说话要有分寸。</li>
+      </ul></div>
+    </details>
+
+    <details>
+      <summary>4. 记忆：个性化与记忆的分工</summary>
+      <div class="kbody"><ul>
+        <li>大模型只在当前对话里记事，上下文太长就会遗忘、变笨，多问几次也不会变聪明。WorkBuddy 用“外置记忆”补上，像给电脑加了块移动硬盘。</li>
+        <li>个性化是常设的、不变的规矩；记忆是可变的、会自动迭代的偏好。永远不许变的放个性化，临时的放记忆。</li>
+        <li>让 AI 越用越懂你的三个条件：写下自定义规矩；给它一个固定工作区（一类工作一个空间，不来回换）；把每次修改变成规则（P-03）。</li>
+        <li>记忆别写太泛，“管天管地”的规则会让简单任务也去读，反而变慢。会记，也要会删。</li>
+        <li>工作电脑上不聊炒股、情感等私事，会搅乱记忆、拉低效率。</li>
+        <li>记忆文件在用户目录下 .workbuddy 隐藏文件夹里的 memory 文件，前端看到的就是它。</li>
+      </ul></div>
+    </details>
+
+    <details>
+      <summary>5. 一个对话一个任务</summary>
+      <div class="kbody"><ul>
+        <li>多个任务混在一个对话里有三个坏处：成本爆炸（第 20 轮的消耗约为第 1 轮的 11 倍）、上下文混乱、超出上下文窗口后明显变笨。</li>
+        <li>长对话在输入框输入“/”，选压缩命令即可压缩（课堂演示从 12.5% 压到 3.3%）。</li>
+        <li>设置 → 智能体 → 经济模式：自动压缩，讲师估计能省一半左右，但复杂任务会变笨。</li>
+        <li>重要任务（升职加薪、关系重大、保密要求高）关掉经济模式；第一轮把资料给全，减少轮次；必要时先开一个对话专门整理和清洗上下文。</li>
+        <li>先辅助跑通三次，再沉淀成固定模板。</li>
+      </ul></div>
+    </details>
+
+    <details>
+      <summary>6. 省钱习惯</summary>
+      <div class="kbody"><ul>
+        <li>直接让 AI 生成文件，不要在对话框里刷长文。</li>
+        <li>同类任务批量提交：改 1 个文件名和改 1000 个，消耗几乎一样。</li>
+        <li>一次把话说清楚，最值钱也最省钱。</li>
+        <li>简单问答先在免费工具里聊清楚；按任务选模型，小任务不用贵模型。</li>
+        <li>官方每天可领 100 积分，不领一定不够用。</li>
+        <li>算时间账：按月薪一万一估算，一分钟约 1 元，别为省 0.5 分钱花一分钟切换工具。</li>
+      </ul></div>
+    </details>
+
+    <details>
+      <summary>7. 选模型与自购 API</summary>
+      <div class="kbody"><ul>
+        <li>不用 Auto 和“快 / 中 / 高”几个自动档；讲师只按“简单 / 中度 / 重要”三档手动选。</li>
+        <li>重要任务直接选最贵的；简单任务 10–20 分钟还搞不定，不要犹豫，直接换模型。好模型只为成功找方法，不东绕西绕。</li>
+        <li>同一份内容、同一份上下文，只换模型，PPT 质量差别明显。</li>
+        <li>自购 API（以 DeepSeek 为例）：deepseek.com → API 开放平台 → 注册并实名 → 自定义金额充值（课堂充 1 元体验）→ 创建 API Key 并单独保存（等同账户密码）→ WorkBuddy 模型 → 配置自定义模型 → 供应商选“深度求索” → 粘贴 Key 保存 → 选 V4 Flash，不选 V4 Pro。</li>
+        <li>讲师实测 1 元：问答类大约能用一周，复杂任务可能 10 秒就用完。</li>
+      </ul></div>
+    </details>
+
+    <details>
+      <summary>8. 工作空间与三栏界面</summary>
+      <div class="kbody"><ul>
+        <li>工作空间（现在叫“分组”）本质是一个本地文件夹，输入和输出都在里面。可以新建分组，也可以直接打开已有文件夹。</li>
+        <li>个人空间是铁打的，智能体是流水的，上下文才是核心竞争力。</li>
+        <li>三栏：左边找任务，中间提要求，右边看成果。</li>
+        <li>文件上的常用操作：打开文件夹、用默认应用打开、添加到对话框（重点引用）、复制路径（跨智能体引用绝对路径）、上传到云端（手机微信小程序接力）、分享链接（同事共享）。</li>
+        <li>左栏：常用任务置顶；重要对话一定要重命名，默认名是第一句话，过几天就找不到了。</li>
+      </ul></div>
+    </details>
+
+    <details>
+      <summary>9. 权限与文件安全</summary>
+      <div class="kbody"><ul>
+        <li>“允许完全访问”有三个开关：文件操作、终端命令、上网与外发（公司信息安全最敏感的一项）。</li>
+        <li>打开等于自动驾驶，派完活可以走开；关闭等于辅助驾驶，大事小事都要请示。</li>
+        <li>打开后整台电脑都是它的工作空间。隐秘文件建议关掉相应权限或换一台电脑，按自己的业务情况权衡。</li>
+        <li>动文件前先复制一份，原文件保留，别让工作文件夹成为唯一副本，改了就回不来。</li>
+      </ul></div>
+    </details>
+
+    <details>
+      <summary>10. 资料库、腾讯文档、IMA</summary>
+      <div class="kbody"><ul>
+        <li>本地文件：临时上下文，拖进对话框或 Ctrl+V 即可。</li>
+        <li>资料库：上传后在云端，人和 AI 都能改（人机双写）。AI 做到 99%，最后 1% 人来改只要 1 秒。适合放长期常用的工艺参数、方法论。</li>
+        <li>腾讯文档：核心价值是多人协同，跨部门项目在同一份文档里各自维护。</li>
+        <li>IMA（ima.qq.com）：放公司以外、不涉密的公共知识。共享知识库能让部门里一位高手的积累全员可用；单账号容量有限，可多账号挂到共享库扩容。</li>
+      </ul></div>
+    </details>
+
+    <details>
+      <summary>11. 浏览器操控与数据导入</summary>
+      <div class="kbody"><ul>
+        <li>设置 → 智能体 → 浏览器，按提示安装，并给浏览器添加扩展程序。装好后 AI 能替你打开网站、填表、注册登录，验证码由你输入。</li>
+        <li>适用于内网系统填单、工单录入、电商上架这类字段多、规则清楚的活：下班前派活，第二天早上验收。</li>
+        <li>数据导入：换新电脑第一件事是迁移数据。也可以把其他 AI 产品的历史对话导进来，防止账号出问题后丢失。数据比电脑值钱。</li>
+      </ul></div>
+    </details>
+
+    <details>
+      <summary>12. Plan 模式与打断</summary>
+      <div class="kbody"><ul>
+        <li>三种模式：Ask 先问（只问答），Plan 先规划（确认后执行），默认模式直接执行。</li>
+        <li>默认模式适合目标清楚、范围明确、快速修改。Plan 适合任务复杂多步骤、边界模糊要反复澄清、需要拆步骤和定验收标准、需要多次确认范围。</li>
+        <li>计划五要素：目标、步骤、依赖、改动、验收。</li>
+        <li>流程：AI 反问澄清 → 出计划 → 人评审 → 把修改意见告诉 AI → 改成可执行计划 → 执行。这和软件开发先做架构设计、生产先做计划分解是一个道理。</li>
+        <li>硬打断：发现它在胡说，直接终止任务再发新指令。软打断：等它干完这件再做下一件。</li>
+      </ul></div>
+    </details>
+
+    <details>
+      <summary>13. 技能 Skill</summary>
+      <div class="kbody"><ul>
+        <li>技能的本质是流程加知识。流程同行之间差不多，真正不可替代的是私有知识库。</li>
+        <li>讲师案例：做课程大纲，从多轮对话约 2 小时，变成调用技能约 20 秒出稿，客户直接认可。</li>
+        <li>安装：专家技能连接器 → 技能 → 搜索 → 选下载量最大的。今天装的三个：去AI味（humanizer）、数据分析（Data Analysis）、PPT Master。</li>
+        <li>沉淀什么知识：选经过验证、拿到业绩、市场认可的，而不是还没验证的想法。AI 的原理是“抄答案”，考什么题就准备什么答案。</li>
+        <li>怎么自己做技能，见“做专家与做技能”。</li>
+      </ul></div>
+    </details>
+
+    <details>
+      <summary>14. 顺手的小技巧</summary>
+      <div class="kbody"><ul>
+        <li>语音输入：讲师全程用豆包输入法（认准官方下载）。说话的速度大约是打字的 3 倍。</li>
+        <li>怎么对待下属，就怎么对待 AI：标准讲清楚，做不好就施压，要求它按系统框架回答。</li>
+        <li>重要对话重命名，常用任务置顶。</li>
+      </ul></div>
+    </details>
+  </section>
+
+  <!-- ===== 设置入口 ===== -->
+  <section id="paths">
+    <div class="sec-head">
+      <h2>设置入口速查</h2>
+      <p>常用设置的位置，一张表查完。</p>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>要做什么</th><th>入口</th><th>提醒</th></tr></thead>
+      <tbody>
+        <tr><td>写个性化规矩</td><td>左下角 设置 → 个性化</td><td>只放长期不变的要求</td></tr>
+        <tr><td>查看、编辑记忆</td><td>设置 → 记忆与计划</td><td>定期删掉过时偏好</td></tr>
+        <tr><td>开经济模式</td><td>设置 → 智能体 → 经济模式</td><td>重要任务关掉</td></tr>
+        <tr><td>完全访问权限</td><td>工作权限 → 允许完全访问</td><td>三个开关按需打开</td></tr>
+        <tr><td>浏览器操控</td><td>设置 → 智能体 → 浏览器</td><td>还要装浏览器扩展</td></tr>
+        <tr><td>换电脑迁移</td><td>设置 → 数据导入</td><td>换新电脑第一件事</td></tr>
+        <tr><td>自购模型</td><td>模型 → 配置自定义模型</td><td>API Key 当密码保管</td></tr>
+        <tr><td>压缩对话</td><td>输入框输入“/”，选压缩命令</td><td>重要任务慎用</td></tr>
+        <tr><td>安装技能</td><td>专家技能连接器 → 技能 → 搜索</td><td>选下载量最大的</td></tr>
+        <tr><td>创建专家</td><td>专家技能连接器 → 专家 → 我的专家 → 创建专家</td><td>名称创建后不能改</td></tr>
+        <tr><td>工作空间</td><td>新建分组，或打开已有文件夹</td><td>一类工作一个空间</td></tr>
+        <tr><td>导入微信记录</td><td>微信 合并转发 → 其他应用 → WorkBuddy</td><td>单次 99 条</td></tr>
+        <tr><td>领积分</td><td>每日领取</td><td>每天 100 积分</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  </main>
+</div>
+
+<script>
+(function(){
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.card'));
+  var prompts = Array.prototype.slice.call(document.querySelectorAll('pre.prompt'));
+
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  prompts.forEach(function(p){
+    p.innerHTML = esc(p.textContent).replace(/【[^】]*】/g,function(m){return '<mark class="ph">'+m+'</mark>';});
+  });
+  document.getElementById('total').textContent = prompts.length;
+
+  function legacy(text){
+    return new Promise(function(resolve,reject){
+      var ta=document.createElement('textarea');
+      ta.value=text; ta.setAttribute('readonly','');
+      ta.style.position='fixed'; ta.style.opacity='0';
+      document.body.appendChild(ta); ta.select();
+      try{ document.execCommand('copy') ? resolve() : reject(); }catch(e){ reject(e); }
+      document.body.removeChild(ta);
+    });
+  }
+  function copyText(text){
+    if (navigator.clipboard && window.isSecureContext){
+      return navigator.clipboard.writeText(text).catch(function(){return legacy(text);});
+    }
+    return legacy(text);
+  }
+  function flash(btn,label){
+    if(btn._orig===undefined) btn._orig=btn.innerHTML;
+    btn.textContent=label; btn.classList.add('done');
+    clearTimeout(btn._t);
+    btn._t=setTimeout(function(){btn.innerHTML=btn._orig;btn.classList.remove('done');},1600);
+  }
+  function headOf(w){
+    var h=w.previousElementSibling;
+    while(h && !h.classList.contains('card-head')) h=h.previousElementSibling;
+    return h;
+  }
+
+  document.querySelectorAll('.prompt-wrap').forEach(function(w){
+    var btn=w.querySelector('.copy'), pre=w.querySelector('pre'), head=headOf(w);
+    btn.setAttribute('aria-label','复制 '+(head?head.querySelector('.pid').textContent:''));
+    btn.addEventListener('click',function(){
+      copyText(pre.textContent).then(function(){flash(btn,'已复制');},function(){flash(btn,'请手动选中');});
+    });
+  });
+
+  document.getElementById('copyAll').addEventListener('click',function(){
+    var btn=this, out=['从业务到智能体｜第一天提示词合集',''];
+    document.querySelectorAll('.prompt-wrap').forEach(function(w){
+      if(w.closest('.card').style.display==='none') return;
+      var head=headOf(w);
+      if(head) out.push(head.querySelector('.pid').textContent+'  '+head.querySelector('h3').textContent);
+      out.push(w.querySelector('pre').textContent,'');
+    });
+    copyText(out.join('\n')).then(function(){flash(btn,'已复制全部');},function(){flash(btn,'复制失败');});
+  });
+
+  var q=document.getElementById('q'), hits=document.getElementById('hits'), empty=document.getElementById('empty');
+  function visible(el){return el.style.display!=='none';}
+  function filter(){
+    var v=q.value.trim().toLowerCase(), n=0, shown=0;
+    cards.forEach(function(c){
+      var show=!v || c.textContent.toLowerCase().indexOf(v)>-1;
+      c.style.display=show?'':'none';
+      if(show){ n+=c.querySelectorAll('pre.prompt').length; shown++; }
+    });
+    document.querySelectorAll('.has-cards .group-title').forEach(function(h){
+      var el=h.nextElementSibling, any=false, desc=null;
+      if(el && (el.classList.contains('group-desc')||el.classList.contains('explain'))) desc=el;
+      while(el && !el.classList.contains('group-title')){ if(el.classList.contains('card') && visible(el)) any=true; el=el.nextElementSibling; }
+      h.style.display=any?'':'none';
+      if(desc && desc.classList.contains('group-desc')) desc.style.display=any?'':'none';
+    });
+    document.querySelectorAll('.has-cards').forEach(function(sec){
+      var any=Array.prototype.some.call(sec.querySelectorAll('.card'),visible);
+      sec.style.display=any?'':'none';
+    });
+    document.body.classList.toggle('searching',!!v);
+    empty.style.display=(v && shown===0)?'block':'none';
+    hits.textContent=v?('匹配 '+n+' 条'):'';
+  }
+  q.addEventListener('input',filter);
+
+  document.getElementById('printBtn').addEventListener('click',function(){window.print();});
+  window.addEventListener('beforeprint',function(){
+    document.querySelectorAll('details').forEach(function(d){d.setAttribute('data-was',d.open?'1':'0');d.open=true;});
+  });
+  window.addEventListener('afterprint',function(){
+    document.querySelectorAll('details').forEach(function(d){d.open=d.getAttribute('data-was')==='1';});
+  });
+
+  var links=Array.prototype.slice.call(document.querySelectorAll('.nav a'));
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id);});
+        }
+      });
+    },{rootMargin:'-80px 0px -70% 0px'});
+    links.forEach(function(a){var t=document.querySelector(a.getAttribute('href')); if(t) io.observe(t);});
+  }
+})();
+</script>
+</body>
+</html>
