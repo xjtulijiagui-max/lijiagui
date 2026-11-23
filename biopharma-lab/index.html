@@ -1,0 +1,1748 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WorkBuddy 生物医药实战练习台｜六大专题 · 提示词 · 数据集</title>
+<meta name="description" content="《WorkBuddy 从入门到精通（生物医药版·武汉生物制品研究所）》第五部分配套练习页：六大专题、六段可复制提示词、15 个可下载模拟数据集、12 道口径判断题，边看边练。">
+<style>
+:root{
+  --bg:#f4f7f6;
+  --surface:#ffffff;
+  --ink:#12211e;
+  --ink-2:#2c3f3a;
+  --muted:#52645e;
+  --line:#dce5e1;
+  --line-2:#c6d4cf;
+  --brand:#0d6b5b;
+  --brand-deep:#0a4f44;
+  --brand-dark:#08312b;
+  --brand-pale:#e6f2ee;
+  --brand-pale-2:#d3e8e2;
+  --accent:#b26a12;
+  --accent-pale:#fbf1e0;
+  --bad:#a8332a;
+  --bad-pale:#fbeceb;
+  --radius:14px;
+  --shadow:0 10px 28px rgba(9,49,43,.08);
+  --mono:"Cascadia Mono","Consolas","SFMono-Regular",Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:"微软雅黑","PingFang SC","Noto Sans SC","Microsoft YaHei",Arial,sans-serif;
+  font-size:15px;line-height:1.78;-webkit-font-smoothing:antialiased;
+}
+a{color:var(--brand);text-decoration:none}
+a:hover{text-decoration:underline}
+.skip{position:absolute;left:-9999px;top:0;z-index:99;background:var(--brand-dark);color:#fff;padding:10px 16px;border-radius:0 0 8px 0}
+.skip:focus{left:0}
+
+/* ---------- 顶栏 ---------- */
+.topbar{
+  position:sticky;top:0;z-index:40;background:rgba(255,255,255,.96);
+  border-bottom:1px solid var(--line);backdrop-filter:saturate(180%) blur(8px);
+}
+.tb-inner{max-width:1440px;margin:0 auto;display:flex;align-items:center;gap:14px;padding:10px 20px}
+.brandmark{display:flex;align-items:center;gap:10px;min-width:0}
+.bm-badge{
+  width:34px;height:34px;border-radius:9px;flex:0 0 34px;
+  background:linear-gradient(145deg,var(--brand),var(--brand-dark));
+  color:#fff;display:grid;place-items:center;font-weight:700;font-size:15px;letter-spacing:.5px;
+}
+.bm-txt{min-width:0}
+.bm-title{font-weight:700;font-size:15px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bm-sub{font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.spacer{flex:1 1 auto}
+.search{position:relative;display:flex;align-items:center;gap:6px;flex:0 1 320px}
+.search input{
+  width:100%;padding:9px 34px 9px 32px;border:1px solid var(--line-2);border-radius:10px;
+  font-size:13.5px;font-family:inherit;color:var(--ink);background:#fff;
+}
+.search input:focus{outline:2px solid var(--brand);outline-offset:1px;border-color:var(--brand)}
+.search .mag{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:13px;pointer-events:none}
+.search .clear{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:transparent;
+  color:var(--muted);cursor:pointer;font-size:16px;line-height:1;padding:4px 6px;border-radius:6px}
+.search .clear:hover{background:var(--bg);color:var(--ink)}
+.tb-btns{display:flex;gap:8px;align-items:center}
+.btn{
+  font-family:inherit;font-size:13px;padding:8px 13px;border-radius:9px;border:1px solid var(--line-2);
+  background:#fff;color:var(--ink-2);cursor:pointer;white-space:nowrap;
+}
+.btn:hover{border-color:var(--brand);color:var(--brand)}
+.btn-primary{background:var(--brand);border-color:var(--brand);color:#fff}
+.btn-primary:hover{background:var(--brand-deep);color:#fff}
+.btn[hidden]{display:none}
+#menuBtn{display:none}
+
+/* ---------- 布局 ---------- */
+.layout{max-width:1440px;margin:0 auto;display:grid;grid-template-columns:262px minmax(0,1fr);gap:0;align-items:start}
+.sidebar{
+  position:sticky;top:57px;height:calc(100vh - 57px);overflow-y:auto;
+  background:var(--brand-dark);color:#cfdeda;padding:18px 14px 28px;
+  border-right:1px solid #0b2f29;
+}
+.sh{display:flex;align-items:center;justify-content:space-between;padding:0 6px 10px}
+.sh-t{font-size:11px;letter-spacing:.12em;color:#8fb0a8;text-transform:uppercase}
+.sh-close{display:none;background:transparent;border:0;color:#cfdeda;font-size:20px;cursor:pointer;padding:2px 6px;border-radius:6px}
+.sh-close:hover{background:rgba(255,255,255,.1)}
+.prog{padding:10px 8px 14px;border-bottom:1px solid rgba(255,255,255,.09);margin-bottom:10px}
+.prog-top{display:flex;align-items:baseline;justify-content:space-between;font-size:12px;color:#9dbdb5}
+.prog-num{font-size:19px;font-weight:700;color:#fff}
+.prog-num small{font-size:12px;color:#9dbdb5;font-weight:400}
+.bar{height:6px;border-radius:99px;background:rgba(255,255,255,.14);margin-top:8px;overflow:hidden}
+.bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,#3fbfa3,#7fe0c8);transition:width .35s ease}
+.toc{list-style:none;margin:0;padding:0}
+.toc a{
+  display:flex;gap:9px;align-items:flex-start;padding:8px 9px;border-radius:8px;
+  color:#cfdeda;font-size:13.2px;line-height:1.5;text-decoration:none;border-left:2px solid transparent;
+}
+.toc a:hover{background:rgba(255,255,255,.07);color:#fff}
+.toc a.active{background:rgba(63,191,163,.16);color:#fff;border-left-color:#3fbfa3}
+.toc .n{
+  flex:0 0 20px;height:20px;border-radius:6px;background:rgba(255,255,255,.1);
+  font-size:10.5px;display:grid;place-items:center;color:#a8c6bf;margin-top:2px;
+}
+.toc a.active .n{background:#3fbfa3;color:#04241f}
+.toc .lbl{flex:1}
+.toc .dot{width:7px;height:7px;border-radius:50%;background:transparent;margin-top:8px;flex:0 0 7px;border:1px solid rgba(255,255,255,.28)}
+.toc li.done .dot{background:#7fe0c8;border-color:#7fe0c8}
+.side-foot{margin-top:16px;padding:12px 8px 0;border-top:1px solid rgba(255,255,255,.09);font-size:11.5px;color:#8fb0a8;line-height:1.7}
+.side-foot a{color:#9fe0cf}
+
+main{min-width:0;padding:26px 34px 70px}
+.wrap{max-width:1010px}
+
+/* ---------- Hero ---------- */
+.hero{background:linear-gradient(135deg,#0d6b5b 0%,#0a4f44 55%,#093f37 100%);
+  border-radius:18px;padding:30px 32px;color:#fff;position:relative;overflow:hidden;margin-bottom:20px}
+.hero:after{content:"";position:absolute;right:-70px;top:-80px;width:300px;height:300px;border-radius:50%;
+  background:radial-gradient(circle,rgba(127,224,200,.26),transparent 68%)}
+.hero .kicker{font-size:11.5px;letter-spacing:.16em;color:#9fe0cf;margin:0 0 8px}
+.hero h1{margin:0 0 10px;font-size:30px;line-height:1.28;font-weight:800;letter-spacing:.5px}
+.hero p{margin:0;color:#d6ebe5;font-size:14px;max-width:760px}
+.hero .stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;position:relative;z-index:1}
+.hero .stat{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:8px 13px;font-size:12.5px;color:#eaf7f3}
+.hero .stat b{font-size:16px;margin-right:4px;color:#fff}
+
+/* ---------- 提示条 / 筛选 ---------- */
+.notice{
+  display:flex;gap:10px;align-items:flex-start;background:var(--accent-pale);border:1px solid #f0dcbb;
+  border-radius:12px;padding:11px 14px;font-size:13px;color:#6d4a12;margin-bottom:16px;
+}
+.notice b{color:#5a3c0c}
+.filterbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 6px;position:sticky;top:57px;
+  background:var(--bg);padding:8px 0 10px;z-index:20}
+.chip{
+  border:1px solid var(--line-2);background:#fff;color:var(--ink-2);border-radius:99px;
+  padding:6px 13px;font-size:12.8px;cursor:pointer;font-family:inherit;white-space:nowrap;
+}
+.chip:hover{border-color:var(--brand);color:var(--brand)}
+.chip[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:#fff}
+.count{font-size:12.5px;color:var(--muted);margin:2px 0 18px}
+.count b{color:var(--brand);font-size:14px}
+
+/* ---------- Section ---------- */
+.sec{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:26px 28px 24px;margin-bottom:18px;box-shadow:0 1px 2px rgba(9,49,43,.03);scroll-margin-top:120px}
+.sec[hidden]{display:none}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:6px}
+.sec-no{
+  flex:0 0 40px;height:40px;border-radius:11px;background:var(--brand-pale);color:var(--brand-deep);
+  display:grid;place-items:center;font-weight:800;font-size:14px;letter-spacing:.5px;border:1px solid var(--brand-pale-2)
+}
+.sec-head h2{margin:0;font-size:20px;line-height:1.4;font-weight:800;letter-spacing:.2px}
+.sec-meta{display:flex;flex-wrap:wrap;gap:7px;margin-top:7px}
+.tag{font-size:11.5px;padding:2.5px 9px;border-radius:99px;background:var(--bg);border:1px solid var(--line);color:var(--muted)}
+.tag.lv{background:var(--brand-pale);border-color:var(--brand-pale-2);color:var(--brand-deep);font-weight:600}
+.tag.pg{background:#fff;border-style:dashed}
+.lead{margin:12px 0 4px;color:var(--ink-2);font-size:14.5px}
+h3.sub{font-size:15px;margin:24px 0 10px;color:var(--ink);font-weight:700;display:flex;align-items:center;gap:8px}
+h3.sub .ln{flex:0 0 4px;height:15px;border-radius:2px;background:var(--brand)}
+h3.sub .hint{font-weight:400;font-size:12.5px;color:var(--muted)}
+
+/* 三栏 */
+.cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:10px}
+.col{background:#fafcfb;border:1px solid var(--line);border-radius:11px;padding:14px 15px}
+.col h4{margin:0 0 8px;font-size:13px;color:var(--brand-deep);letter-spacing:.03em}
+.col ul{margin:0;padding-left:17px}
+.col li{font-size:13.2px;color:var(--ink-2);margin:4px 0;line-height:1.66}
+.col li::marker{color:var(--brand)}
+
+/* 表格 */
+.tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:11px;margin-top:10px}
+table{border-collapse:collapse;width:100%;font-size:13.2px;background:#fff;min-width:560px}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--brand-pale);color:var(--brand-deep);font-weight:700;font-size:12.8px;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:#fafcfb}
+td.mono,th.mono{font-family:var(--mono);font-size:12.4px}
+.mono{font-family:var(--mono);font-size:.94em;background:#f0f5f3;padding:1px 5px;border-radius:4px;color:#14513f}
+
+/* 文件卡 */
+.files{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:11px;margin-top:10px}
+.file{border:1px solid var(--line);border-radius:11px;padding:13px 14px;background:#fff;display:flex;flex-direction:column;gap:6px}
+.file:hover{border-color:var(--brand-pale-2);box-shadow:0 4px 14px rgba(9,49,43,.06)}
+.file-top{display:flex;align-items:center;gap:8px}
+.ft{font-size:10.5px;font-weight:700;letter-spacing:.04em;padding:2px 6px;border-radius:5px;flex:0 0 auto}
+.ft.xlsx{background:#e7f4ec;color:#1a6b3c}
+.ft.docx{background:#e8eefb;color:#1f4b8f}
+.ft.zip{background:var(--accent-pale);color:#8a5310}
+.file-name{font-size:13.2px;font-weight:700;line-height:1.5;color:var(--ink)}
+.file-desc{font-size:12.4px;color:var(--muted);line-height:1.65;flex:1}
+.file-dl{
+  align-self:flex-start;font-size:12.6px;padding:6px 12px;border-radius:8px;background:var(--brand-pale);
+  color:var(--brand-deep);border:1px solid var(--brand-pale-2);font-weight:600;
+}
+.file-dl:hover{background:var(--brand);color:#fff;text-decoration:none}
+
+/* 提示词 */
+.prompt{border:1px solid var(--brand-pale-2);border-radius:12px;overflow:hidden;margin-top:10px;background:#fbfdfc}
+.prompt-head{display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--brand-pale);border-bottom:1px solid var(--brand-pale-2)}
+.prompt-head .pt{font-size:12.5px;font-weight:700;color:var(--brand-deep)}
+.prompt-head .sp{flex:1}
+.prompt-body{
+  margin:0;padding:15px 16px;font-family:var(--mono);font-size:12.9px;line-height:1.86;color:#17332c;
+  white-space:pre-wrap;word-break:break-word;max-height:380px;overflow:auto;overscroll-behavior:contain;
+}
+.prompt-body .opt{background:#eaf2be;border-bottom:1px dashed #b9c96a;padding:0 2px;border-radius:2px}
+.prompt.open .prompt-body{max-height:none}
+.prompt-note{padding:10px 16px 13px;border-top:1px dashed var(--line);margin-top:0;font-size:12px;color:var(--muted)}
+.copybtn{font-size:12.4px;padding:6px 12px;border-radius:8px;border:1px solid var(--brand);background:#fff;color:var(--brand);cursor:pointer;font-family:inherit;font-weight:600}
+.copybtn:hover{background:var(--brand);color:#fff}
+.copybtn.ok{background:var(--brand);color:#fff}
+.copybtn.fail{border-color:var(--bad);color:var(--bad);background:var(--bad-pale)}
+.expandbtn{font-size:12.4px;padding:6px 10px;border-radius:8px;border:1px solid var(--line-2);background:#fff;color:var(--ink-2);cursor:pointer;font-family:inherit}
+.expandbtn:hover{border-color:var(--brand);color:var(--brand)}
+
+/* 步骤 / 清单 */
+.steps{counter-reset:st;list-style:none;margin:10px 0 0;padding:0}
+.steps li{position:relative;padding:0 0 0 34px;margin:0 0 11px;font-size:13.6px;color:var(--ink-2);line-height:1.75}
+.steps li:before{
+  counter-increment:st;content:counter(st);position:absolute;left:0;top:2px;width:22px;height:22px;border-radius:50%;
+  background:var(--brand-pale);color:var(--brand-deep);font-size:11.5px;font-weight:700;display:grid;place-items:center;border:1px solid var(--brand-pale-2)
+}
+.steps li:after{content:"";position:absolute;left:10.5px;top:26px;bottom:-9px;width:1px;background:var(--line)}
+.steps li:last-child:after{display:none}
+.checks{border:1px dashed var(--line-2);border-radius:11px;padding:12px 14px;margin-top:12px;background:#fafcfb}
+.checks .ct{font-size:12.5px;font-weight:700;color:var(--ink);margin-bottom:8px;display:flex;justify-content:space-between;gap:10px}
+.checks .ct span{font-weight:400;color:var(--muted);font-size:11.8px}
+.checks label{display:flex;gap:9px;align-items:flex-start;font-size:13.2px;color:var(--ink-2);padding:5px 0;cursor:pointer;line-height:1.6}
+.checks input{margin:4px 0 0;width:15px;height:15px;accent-color:var(--brand);flex:0 0 auto}
+.checks input:checked+span{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line-2)}
+
+/* 小测 */
+.quiz{margin-top:12px;border:1px solid var(--line);border-radius:11px;overflow:hidden}
+.quiz-h{padding:9px 14px;background:#f7f9f8;border-bottom:1px solid var(--line);font-size:12.5px;font-weight:700;color:var(--ink-2);display:flex;justify-content:space-between;gap:10px}
+.quiz-h em{font-style:normal;font-weight:400;color:var(--muted);font-size:11.8px}
+.q{padding:13px 15px;border-bottom:1px solid var(--line)}
+.q:last-child{border-bottom:0}
+.q-text{font-size:13.5px;margin:0 0 9px;color:var(--ink);line-height:1.7}
+.q-text b{color:var(--brand-deep)}
+.q-opts{display:flex;gap:8px;flex-wrap:wrap}
+.q-opts button{
+  font-family:inherit;font-size:12.4px;padding:6px 12px;border-radius:8px;border:1px solid var(--line-2);
+  background:#fff;color:var(--ink-2);cursor:pointer;
+}
+.q-opts button:hover{border-color:var(--brand);color:var(--brand)}
+.q-opts button.right{background:#e6f2ee;border-color:var(--brand);color:var(--brand-deep);font-weight:700}
+.q-opts button.wrong{background:var(--bad-pale);border-color:var(--bad);color:var(--bad);font-weight:700}
+.q-why{margin:9px 0 0;font-size:12.8px;color:var(--ink-2);background:#f7f9f8;border-left:3px solid var(--brand);padding:8px 11px;border-radius:0 7px 7px 0}
+.q-why[hidden]{display:none}
+.q-why.bad{border-left-color:var(--bad)}
+
+/* 答案 */
+details.ans{margin-top:14px;border:1px solid var(--line);border-radius:11px;background:#fcfdfc}
+details.ans>summary{cursor:pointer;padding:10px 14px;font-size:13px;font-weight:700;color:var(--brand-deep);list-style:none;display:flex;align-items:center;gap:8px}
+details.ans>summary::-webkit-details-marker{display:none}
+details.ans>summary:before{content:"▸";font-size:12px;transition:transform .15s}
+details.ans[open]>summary:before{transform:rotate(90deg)}
+details.ans .ansbody{padding:2px 16px 14px;font-size:13px;color:var(--ink-2)}
+details.ans .ansbody ul{margin:6px 0;padding-left:18px}
+details.ans .ansbody li{margin:4px 0;line-height:1.72}
+details.ans .ansbody .mono{font-family:var(--mono);font-size:12.2px;background:var(--bg);padding:1px 5px;border-radius:4px}
+.kvline{font-size:12.8px;color:var(--muted);margin:4px 0}
+
+/* 要点卡组 */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(196px,1fr));gap:11px;margin-top:10px}
+.card{border:1px solid var(--line);border-radius:11px;padding:14px;background:#fff}
+.card .cn{font-size:11.5px;font-weight:800;color:var(--brand);letter-spacing:.06em}
+.card h4{margin:5px 0 7px;font-size:14px;color:var(--ink)}
+.card p{margin:0;font-size:12.7px;color:var(--muted);line-height:1.7}
+.card.warn{border-color:#f0dcbb;background:#fffdf8}
+.card.warn .cn{color:var(--accent)}
+
+/* 代码块 */
+pre.code{background:#0b2f29;color:#d8ece6;border-radius:11px;padding:14px 16px;font-family:var(--mono);
+  font-size:12.6px;line-height:1.8;overflow-x:auto;margin:10px 0 0}
+pre.code .c{color:#79a99e}
+
+/* 计时器 */
+.timerbox{border:1px solid var(--line);border-radius:12px;padding:16px;background:#fafcfb;margin-top:10px}
+.timer-top{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.clock{font-family:var(--mono);font-size:32px;font-weight:700;color:var(--brand-deep);letter-spacing:1px;line-height:1}
+.stage{font-size:12.5px;color:var(--muted)}
+.stage b{color:var(--brand);font-size:13.5px}
+.timer-btns{display:flex;gap:8px;margin-left:auto}
+.tstages{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:13px}
+.tstages div{border:1px solid var(--line);border-radius:9px;padding:8px 10px;background:#fff;font-size:11.8px;color:var(--muted)}
+.tstages div.on{border-color:var(--brand);background:var(--brand-pale);color:var(--brand-deep);font-weight:700}
+.tstages div b{display:block;font-size:12.6px;color:var(--ink);margin-bottom:2px}
+
+/* 页脚 */
+footer.page{margin-top:26px;padding-top:18px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted);line-height:1.9}
+footer.page b{color:var(--ink-2)}
+.empty{border:1.5px dashed var(--line-2);border-radius:12px;padding:40px 20px;text-align:center;color:var(--muted);font-size:13.5px;grid-column:1/-1}
+.empty[hidden]{display:none}
+
+/* toast */
+#toast{position:fixed;left:50%;bottom:32px;transform:translate(-50%,20px);background:var(--brand-dark);color:#fff;
+  padding:11px 18px;border-radius:10px;font-size:13px;opacity:0;pointer-events:none;transition:.22s;z-index:80;box-shadow:var(--shadow);max-width:88vw}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+#toast.err{background:#7d2620}
+.overlay{display:none;position:fixed;inset:0;background:rgba(6,28,24,.52);z-index:45}
+
+/* ---------- 响应式 ---------- */
+@media (max-width:1080px){
+  main{padding:20px 20px 60px}
+  .hero{padding:24px 22px}
+  .hero h1{font-size:25px}
+  .cols3{grid-template-columns:1fr}
+  .tstages{grid-template-columns:1fr 1fr}
+}
+@media (max-width:960px){
+  .layout{grid-template-columns:1fr}
+  #menuBtn{display:inline-block}
+  .sidebar{
+    position:fixed;left:0;top:0;height:100vh;width:280px;z-index:50;
+    transform:translateX(-100%);transition:transform .24s ease;
+    border-radius:0;padding-top:14px;
+  }
+  .sidebar.open{transform:none}
+  .sh-close{display:block}
+  .overlay.show{display:block}
+  .search{flex:1 1 auto}
+  .tb-sub{display:none}
+  .filterbar{top:53px}
+}
+@media (max-width:640px){
+  body{font-size:14px}
+  .tb-inner{padding:8px 12px;gap:8px}
+  .search{order:3;flex:1 1 100%}
+  .tb-inner{flex-wrap:wrap}
+  .bm-title{font-size:13.5px}
+  .bm-sub{display:none}
+  main{padding:14px 12px 50px}
+  .hero{padding:20px 16px;border-radius:14px}
+  .hero h1{font-size:21px}
+  .hero p{font-size:13px}
+  .hero .stat{font-size:11.5px;padding:6px 10px}
+  .sec{padding:18px 15px 16px;border-radius:12px;scroll-margin-top:96px}
+  .sec-head h2{font-size:17px}
+  .sec-no{flex:0 0 34px;height:34px;font-size:12.5px}
+  .files{grid-template-columns:1fr}
+  .prompt-body{font-size:11.8px;padding:12px}
+  .timer-btns{margin-left:0}
+  .clock{font-size:27px}
+  .filterbar{top:100px;overflow-x:auto;flex-wrap:nowrap;padding-bottom:8px}
+  .q-opts button{flex:1 1 auto}
+  .steps li{font-size:13px}
+}
+@media print{
+  details.ans>summary{list-style:none}
+  details.ans>summary:before{content:none}
+  details.ans .ansbody{display:block!important}
+  .topbar,.sidebar,.filterbar,.overlay,#toast,.prompt-head .copybtn,.prompt-head .expandbtn,.timer-btns{display:none!important}
+  body{background:#fff}
+  main{padding:0}
+  .layout{display:block}
+  .sec{break-inside:avoid;box-shadow:none;border-color:#bbb}
+  .prompt-body{max-height:none;overflow:visible}
+  .hero{background:#0a4f44!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  details.ans{display:block}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">跳到正文</a>
+
+<header class="topbar">
+  <div class="tb-inner">
+    <div class="brandmark">
+      <div class="bm-badge">生物</div>
+      <div class="bm-txt">
+        <div class="bm-title">生物医药实战练习台</div>
+        <div class="bm-sub">WorkBuddy 从入门到精通 · 第五部分配套</div>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <div class="search">
+      <span class="mag" aria-hidden="true">⌕</span>
+      <input id="q" type="search" placeholder="搜索专题、提示词、字段、文件名…" aria-label="搜索专题、提示词和文件名">
+      <button class="clear" id="qClear" type="button" aria-label="清空搜索" hidden>×</button>
+    </div>
+    <div class="tb-btns">
+      <button class="btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="sidebar">目录</button>
+      <button class="btn btn-primary" id="printBtn" type="button">打印</button>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar" aria-label="专题目录">
+    <div class="sh">
+      <span class="sh-t">练习目录</span>
+      <button class="sh-close" id="sideClose" type="button" aria-label="关闭目录">×</button>
+    </div>
+    <div class="prog">
+      <div class="prog-top"><span>练习完成度</span><span><span class="prog-num" id="progNum">0</span><small>/<span id="progTotal">0</span></small></span></div>
+      <div class="bar"><i id="progBar"></i></div>
+    </div>
+    <nav>
+      <ul class="toc" id="toc">
+        <li><a href="#s0"><span class="n">00</span><span class="lbl">专题地图：三大场景六个专题</span><span class="dot"></span></a></li>
+        <li><a href="#s1"><span class="n">01</span><span class="lbl">先立规矩：测试文件夹＋最小权限</span><span class="dot"></span></a></li>
+        <li><a href="#s2"><span class="n">02</span><span class="lbl">专题一｜文献与方案整理</span><span class="dot"></span></a></li>
+        <li><a href="#s3"><span class="n">03</span><span class="lbl">专题二｜申报资料核对</span><span class="dot"></span></a></li>
+        <li><a href="#s4"><span class="n">04</span><span class="lbl">专题三｜批记录审核</span><span class="dot"></span></a></li>
+        <li><a href="#s5"><span class="n">05</span><span class="lbl">专题四｜偏差与 CAPA</span><span class="dot"></span></a></li>
+        <li><a href="#s6"><span class="n">06</span><span class="lbl">专题五｜检验数据分析</span><span class="dot"></span></a></li>
+        <li><a href="#s7"><span class="n">07</span><span class="lbl">专题六｜自动化质量月报</span><span class="dot"></span></a></li>
+        <li><a href="#s8"><span class="n">08</span><span class="lbl">四道人工关口</span><span class="dot"></span></a></li>
+        <li><a href="#s9"><span class="n">09</span><span class="lbl">沉淀与自动化</span><span class="dot"></span></a></li>
+        <li><a href="#s10"><span class="n">10</span><span class="lbl">三个最容易踩的坑</span><span class="dot"></span></a></li>
+        <li><a href="#s11"><span class="n">11</span><span class="lbl">课堂实战：月度质量闭环</span><span class="dot"></span></a></li>
+      </ul>
+    </nav>
+    <div class="side-foot">
+      内容对应 PPT 第 56—74 页<br>
+      数据全部为课堂模拟<br>
+      更新：2026-11-23
+    </div>
+  </aside>
+  <div class="overlay" id="overlay"></div>
+
+  <main id="main">
+    <div class="wrap">
+
+      <section class="hero">
+        <p class="kicker">WORKBUDDY · 生物医药版 · 第五部分</p>
+        <h1>六大专题练习台：把每一段提示词都跑一遍</h1>
+        <p>与《WorkBuddy 从入门到精通（生物医药版·武汉生物制品研究所）》第五部分一一对应：每个专题都配齐「要点—提示词—数据集—练习步骤—验收清单—口径小测」。复制提示词、下载数据、当场跑，跑通三次再固化成 Skill。</p>
+        <div class="stats">
+          <span class="stat"><b>6</b>个专题</span>
+          <span class="stat"><b>6</b>段可复制提示词</span>
+          <span class="stat"><b>15</b>个模拟数据集</span>
+          <span class="stat"><b>12</b>道口径判断</span>
+          <span class="stat"><b>40</b>分钟课堂实战</span>
+        </div>
+      </section>
+
+      <div class="notice">
+        <span aria-hidden="true">⚠</span>
+        <div><b>先记住这句：</b>本页所有文献、批号、偏差、检验数据均为课堂模拟，不代表真实数据或规程；课堂只处理脱敏副本，不连接车间系统、实验室信息系统与注册申报系统，不外发、不覆盖原始记录。AI 做初稿，人做终审。</div>
+      </div>
+
+      <div class="filterbar" role="group" aria-label="按场景筛选">
+        <button class="chip" type="button" data-cat="all" aria-pressed="true">全部</button>
+        <button class="chip" type="button" data-cat="base" aria-pressed="false">规矩与沙盘</button>
+        <button class="chip" type="button" data-cat="rnd" aria-pressed="false">研发注册</button>
+        <button class="chip" type="button" data-cat="mfg" aria-pressed="false">生产质量</button>
+        <button class="chip" type="button" data-cat="ana" aria-pressed="false">数据分析</button>
+        <button class="chip" type="button" data-cat="auto" aria-pressed="false">自动化</button>
+        <button class="chip" type="button" data-cat="end" aria-pressed="false">关口与收尾</button>
+      </div>
+      <p class="count">当前显示 <b id="shownCount">12</b> 个模块，共 12 个</p>
+      <div id="emptyState" class="empty" hidden>没有匹配的模块。换个关键词，或点「全部」回到完整目录。</div>
+
+      <!-- 00 专题地图 -->
+      <section class="sec" id="s0" data-cat="base" data-title="专题地图 三大场景 六个专题">
+        <div class="sec-head">
+          <div class="sec-no">00</div>
+          <div>
+            <h2>专题地图：三大场景，六个专题</h2>
+            <div class="sec-meta"><span class="tag">学习地图</span><span class="tag pg">PPT 第 56—57 页</span></div>
+          </div>
+        </div>
+        <p class="lead">重复多、规则清、要留痕——药企质量与研发最适合先练，也最需要守规矩。先看清地图，别一上来就搭系统。</p>
+
+        <div class="tblwrap">
+          <table>
+            <thead><tr><th>场景</th><th>专题</th><th>成熟度</th><th>一句话任务</th></tr></thead>
+            <tbody>
+              <tr><td rowspan="2">研发与注册</td><td>① 文献与方案整理</td><td class="mono">L1→L2</td><td>多篇文献与方案，抽取要点并生成对比表</td></tr>
+              <tr><td>② 申报资料核对</td><td class="mono">L2→L3</td><td>核对申报资料的数据、版本、引用与术语一致性</td></tr>
+              <tr><td rowspan="2">生产质量</td><td>③ 批记录审核</td><td class="mono">L2→L3</td><td>按固定字段抽取批记录，对照范围标出缺项与超限</td></tr>
+              <tr><td>④ 偏差与 CAPA 分析</td><td class="mono">L3</td><td>汇总偏差、根因与 CAPA，标出重复与超期未关闭</td></tr>
+              <tr><td rowspan="2">自动化与数据分析</td><td>⑤ 检验数据分析</td><td class="mono">L3→L4</td><td>对照质量标准逐批判定，识别 OOS 与 OOT 候选</td></tr>
+              <tr><td>⑥ 自动化质量月报</td><td class="mono">L4</td><td>多角色协作出月报，再配定时任务持续运行</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="sub"><span class="ln"></span>四档成熟度，认清自己在哪一档</h3>
+        <div class="cards">
+          <div class="card"><div class="cn">L1</div><h4>单次对话能出结果</h4><p>每次都要重新交代，结果靠运气，不能重复。</p></div>
+          <div class="card"><div class="cn">L2</div><h4>固定提示词可复用</h4><p>字段、口径、输出写清，换一批资料也能跑。</p></div>
+          <div class="card"><div class="cn">L3</div><h4>进工作区、可追溯</h4><p>读写测试文件夹，结果落到 02／04 目录，每条可回原文。</p></div>
+          <div class="card"><div class="cn">L4</div><h4>多角色＋定时运行</h4><p>数据官、分析官、报告官分工，定时任务按点跑。</p></div>
+        </div>
+        <p class="kvline">练法：先立规矩，再从 ① 按序练起；不是所有任务都要走到 L4，现场可按岗位挑选。</p>
+        <details class="ans"><summary>说明与引用</summary><div class="ansbody">成熟度模型（L1—L4）引自 WorkBuddy 实战蓝皮书第 26 章；本页专题与练习资料为课堂模拟设计，不代表真实数据或规程。</div></details>
+      </section>
+
+      <!-- 01 规矩 -->
+      <section class="sec" id="s1" data-cat="base" data-title="先立规矩 测试文件夹 最小权限 沙盘">
+        <div class="sec-head">
+          <div class="sec-no">01</div>
+          <div>
+            <h2>先立规矩：测试文件夹 ＋ 最小权限</h2>
+            <div class="sec-meta"><span class="tag">动手前 5 分钟</span><span class="tag pg">PPT 第 58 页</span></div>
+          </div>
+        </div>
+        <p class="lead">授权不等于合规：先用脱敏副本跑通，再由质量与信息部门决定是否接入真实业务。所有提示词里的路径都基于下面这个工作区。</p>
+
+        <div class="cols3">
+          <div class="col">
+            <h4>专属测试文件夹</h4>
+            <ul>
+              <li>01-原始资料：脱敏后的资料副本（只读）</li>
+              <li>02-处理结果：AI 生成的结果</li>
+              <li>03-规程模板：标准与模板（模拟）</li>
+              <li>04-核查报告：核查结果与异常清单</li>
+              <li>05-归档：最终归档文件</li>
+            </ul>
+          </div>
+          <div class="col">
+            <h4>权限按动作分</h4>
+            <ul>
+              <li>读本地文件：只读测试文件夹里的脱敏副本</li>
+              <li>写成果文件：写入 02、04 目录，保留旧版本</li>
+              <li>读外部数据：仅已授权、只读、与任务有关</li>
+              <li>写回或外发：只出草稿，不自行放行、申报、发送</li>
+            </ul>
+          </div>
+          <div class="col">
+            <h4>课堂四条纪律</h4>
+            <ul>
+              <li>不覆盖原始记录</li>
+              <li>不删除任何文件</li>
+              <li>不外发、不进受控系统</li>
+              <li>每次只动本组测试文件夹</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 class="sub"><span class="ln"></span>先建目录 <span class="hint">下载后解压到 D 盘，得到完整骨架</span></h3>
+        <pre class="code">D:\WorkBuddy-生物医药工作区\
+  01-原始资料\
+     专题一-文献整理\     专题二-申报资料核对\
+     专题三-批记录审核\   专题四-偏差分析\
+     专题五-检验数据\     专题六-质量月报\
+  02-处理结果\   03-规程模板\
+  04-核查报告\   05-归档\</pre>
+        <div class="files">
+          <div class="file">
+            <div class="file-top"><span class="ft zip">ZIP</span><span class="file-name">工作区目录骨架</span></div>
+            <div class="file-desc">含 01—05 五个目录、六个专题子目录与《使用说明.txt》，解压即用。</div>
+            <a class="file-dl" href="data/workspace-skeleton.zip" download>下载 .zip</a>
+          </div>
+        </div>
+
+        <div class="checks" data-check-group="s1">
+          <div class="ct">沙盘就位自查 <span>勾选后自动保存在本机</span></div>
+          <label><input type="checkbox" data-p="s1-1"><span>已建好 01—05 目录，六个专题子目录齐全</span></label>
+          <label><input type="checkbox" data-p="s1-2"><span>原始资料只放脱敏副本，真实受控文件一个都没进</span></label>
+          <label><input type="checkbox" data-p="s1-3"><span>WorkSpace 权限按「读／写／外发」逐项开，没有整盘放开</span></label>
+          <label><input type="checkbox" data-p="s1-4"><span>知道出现异常时先停手，而不是让 AI「再改一版」</span></label>
+        </div>
+      </section>
+
+      <!-- 02 专题一 -->
+      <section class="sec" id="s2" data-cat="rnd" data-title="专题一 文献与方案整理 literature review 对比表 去重">
+        <div class="sec-head">
+          <div class="sec-no">02</div>
+          <div>
+            <h2>专题一｜文献与方案整理：先跑通，再固化</h2>
+            <div class="sec-meta"><span class="tag lv">研发注册 · L1→L2</span><span class="tag pg">PPT 第 59—60 页</span><span class="tag">8 篇文献</span></div>
+          </div>
+        </div>
+        <p class="lead">同一条任务：8 条题录进来，去重、抽字段、出对比表、写综述草稿。连续成功 3 次，就固化成 <span class="mono">literature-review</span> Skill。</p>
+
+        <div class="cols3">
+          <div class="col">
+            <h4>痛点</h4>
+            <ul>
+              <li>文献与资料量大</li>
+              <li>字段口径不统一</li>
+              <li>版本多、来源散</li>
+              <li>逐篇阅读、手工摘录，耗时易漏</li>
+            </ul>
+          </div>
+          <div class="col">
+            <h4>WorkBuddy 怎么做</h4>
+            <ul>
+              <li>直接读取本地 PDF、Word、Excel</li>
+              <li>一句话指令：按固定字段抽取、对比、成表</li>
+              <li>一键生成综述草稿与汇报 PPT</li>
+            </ul>
+          </div>
+          <div class="col">
+            <h4>练习里的验收信号</h4>
+            <ul>
+              <li>对比表行数 = 去重后篇数（本组 6 行）</li>
+              <li>每条结论可回原文（文件＋段落）</li>
+              <li>原文没写的字段一律「未披露」</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 class="sub"><span class="ln"></span>练习数据集 <span class="hint">3 个文件，放进 01-原始资料\专题一-文献整理</span></h3>
+        <div class="files">
+          <div class="file">
+            <div class="file-top"><span class="ft docx">DOCX</span><span class="file-name">t1-literature-abstracts.docx</span></div>
+            <div class="file-desc">8 条文献摘要（模拟）：编号、标题、来源、研究目的、设计、样本量、主要终点、结论、局限。内含 2 组重复登记与 3 处「未披露」。</div>
+            <a class="file-dl" href="data/t1-literature-abstracts.docx" download>下载</a>
+          </div>
+          <div class="file">
+            <div class="file-top"><span class="ft docx">DOCX</span><span class="file-name">t1-study-protocol.docx</span></div>
+            <div class="file-desc">研究方案节选：目的、设计、样本量、主要／次要终点、入排标准、统计口径、时间安排。</div>
+            <a class="file-dl" href="data/t1-study-protocol.docx" download>下载</a>
+          </div>
+          <div class="file">
+            <div class="file-top"><span class="ft xlsx">XLSX</span><span class="file-name">t1-search-points.xlsx</span></div>
+            <div class="file-desc">检索要点表：数据库、检索式、时间范围、纳排标准、命中与筛选漏斗（428→316→42→8）。</div>
+            <a class="file-dl" href="data/t1-search-points.xlsx" download>下载</a>
+          </div>
+        </div>
+
+        <h3 class="sub"><span class="ln"></span>提示词 1｜文献整理 <span class="hint">黄底行为可选补充口径，可删掉对比效果</span></h3>
+        <div class="prompt" data-prompt="p1">
+          <div class="prompt-head">
+            <span class="pt">提示词 1 · 把字段与禁区一次说清</span><span class="sp"></span>
+            <button class="expandbtn" type="button">展开</button>
+            <button class="copybtn" type="button">复制全文</button>
+          </div>
+          <pre class="prompt-body">请先给出处理计划，先不执行；等我确认计划后，再按计划执行。
+
+读取 D:\WorkBuddy-生物医药工作区\01-原始资料\专题一-文献整理 中的文献摘要与研究方案节选，按以下规则处理：
+
+1. 识别文件类型（文献摘要/研究方案/检索要点表）
+2. 去除重复文献（按标题与编号）
+3. 抽取固定字段：研究目的、研究设计、样本量、主要终点、主要结论、局限
+4. 原文未给出的字段填“未披露”，不推算、不补写
+5. 按统一字段合并为文献对比表
+6. 归纳共识与分歧，生成综述草稿（只依据所给文献）
+7. 每条结论标注来源文件与页码或段落号
+
+<span class="opt">补充口径：不引用所给文献以外的任何资料；结论与原文冲突时，以原文为准并标记“需人工复核”。</span>
+
+输出格式：Excel（文献对比表）+ Word（综述草稿）
+保存路径：D:\WorkBuddy-生物医药工作区\02-处理结果\
+命名规则：{日期}-{资料类型}-v{版本号}
+注意：不得覆盖原始资料，不得删除任何文件</pre>
+          <div class="prompt-note">第一行已内置「先出计划，不执行」：确认计划后再放行，能省掉大半返工。</div>
+        </div>
+
+        <h3 class="sub"><span class="ln"></span>怎么练</h3>
+        <ol class="steps">
+          <li>把 3 个文件放进 <span class="mono">01-原始资料\专题一-文献整理</span>，路径与提示词保持一致（不改提示词）。</li>
+          <li>粘贴提示词 1，<b>只看计划不动手</b>：确认「去重规则、6 个字段、未披露处理」三项都写清了再放行。</li>
+          <li>计划里如果出现「按经验补齐样本量」这类字样，直接打回：这是本专题最容易失守的一条。</li>
+          <li>拿到对比表后数行数：应为 6 行。若出现 8 行，说明去重没做。</li>
+          <li>随机抽 2 条结论，问 AI「这条来自哪个文件的第几段」，答不出就要求重标来源。</li>
+          <li>跑顺后把提示词固化成 <span class="mono">literature-review</span> Skill，下次一句「整理这批文献」即可。</li>
+        </ol>
+
+        <div class="checks" data-check-group="s2">
+          <div class="ct">验收清单 <span>对照 PPT「效果」栏</span></div>
+          <label><input type="checkbox" data-p="s2-1"><span>先出计划再执行，计划里三项关键口径都写清</span></label>
+          <label><input type="checkbox" data-p="s2-2"><span>对比表 = 去重后 6 行，重复登记已合并并注明</span></label>
+          <label><input type="checkbox" data-p="s2-3"><span>「未披露」出现在该出现的位置，全文没有推算值</span></label>
+          <label><input type="checkbox" data-p="s2-4"><span>每条结论都带来源文件与段落号，抽 2 条能回原文</span></label>
+          <label><input type="checkbox" data-p="s2-5"><span>原始资料未被覆盖，结果落在 02-处理结果</span></label>
+        </div>
+
+        <div class="quiz" data-answer="bad">
+          <div class="quiz-h"><span>口径小测</span><em>点一下看解析</em></div>
+          <div class="q">
+            <p class="q-text"><b>1.</b> 文献摘要中「样本量」一栏原文没写，AI 根据研究设计推算出「约 60 例」并填入对比表。</p>
+            <div class="q-opts"><button type="button" data-v="ok">符合口径</button><button type="button" data-v="bad">违反口径</button></div>
+            <p class="q-why" hidden>违反。字段缺失只能写「未披露」；推算值一旦进表，下游会把它当成原文证据。这条守不住，对比表就不可追溯。</p>
+          </div>
+          <div class="q" data-answer="ok">
+            <p class="q-text"><b>2.</b> LIT-2026-003 与 LIT-2026-001 标题、设计、结论完全相同，AI 按标题去重保留 1 条，并在备注写明重复登记编号。</p>
+            <div class="q-opts"><button type="button" data-v="ok">符合口径</button><button type="button" data-v="bad">违反口径</button></div>
+            <p class="q-why" hidden>符合。去重是「合并并留痕」，不是「删掉不提」：保留一条、注明被合并的编号，才既干净又可追溯。</p>
+          </div>
+        </div>
+
+        <details class="ans"><summary>本组数据的埋点答案（先自己跑，再对答案）</summary><div class="ansbody">
+          <ul>
+            <li>题录 8 条 → 去重后 <b>6 篇</b>：<span class="mono">LIT-2026-003</span> 与 <span class="mono">LIT-2026-001</span> 重复；<span class="mono">LIT-2026-006</span> 与 <span class="mono">LIT-2026-004</span> 重复。</li>
+            <li>应填「未披露」的字段：004 的样本量、007 的主要终点、008 的局限。</li>
+            <li>综述草稿只能建立在 6 篇之上：共识集中在「2—8℃ 24 个月稳定」，分歧在复溶时间与外观（004/006 的结论依赖工艺参数）。</li>
+            <li>检索漏斗核对：428 → 316（去重）→ 42（题录初筛）→ 8（全文纳入），最终 6 篇去重后进入对比表。</li>
+            <li>常见失守：把 8 行照抄成表；把「未披露」写成「约」「若干」；结论不标段落号。</li>
+          </ul>
+        </div></details>
+      </section>
+
+      <!-- 03 专题二 -->
+      <section class="sec" id="s3" data-cat="rnd" data-title="专题二 申报资料核对 dossier check 一致性 引用 术语">
+        <div class="sec-head">
+          <div class="sec-no">03</div>
+          <div>
+            <h2>专题二｜申报资料核对：规则写清，只标记不改写</h2>
+            <div class="sec-meta"><span class="tag lv">研发注册 · L2→L3</span><span class="tag pg">PPT 第 61—62 页</span><span class="tag">4 类核对规则</span></div>
+          </div>
+        </div>
+        <p class="lead">把一致性规则写清，差异只标记、不自动改写。这份资料里埋了 7 处问题，能不能全找出来，就看口径有没有写死。</p>
+
+        <div class="tblwrap">
+          <table>
+            <thead><tr><th>类别</th><th>核对规则（示例，按企业与法规要求调整）</th><th>标记词</th></tr></thead>
+            <tbody>
+              <tr><td>数据</td><td>概要中的数值须与检验报告、数据汇总表一致</td><td class="mono">数据不一致</td></tr>
+              <tr><td>版本日期</td><td>版本号、日期、批号须前后一致；必填项缺失</td><td class="mono">待补充</td></tr>
+              <tr><td>引用交叉</td><td>正文引用的表、图、章节编号须真实存在</td><td class="mono">引用缺失</td></tr>
+              <tr><td>术语格式</td><td>产品名称、缩写、单位须统一，与术语表相符</td><td class="mono">术语不一致</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="sub"><span class="ln"></span>练习数据集 <span class="hint">2 个文件，含 3 个工作表</span></h3>
+        <div class="files">
+          <div class="file">
+            <div class="file-top"><span class="ft docx">DOCX</span><span class="file-name">t2-dossier-excerpt.docx</span></div>
+            <div class="file-desc">申报资料节选（模拟）：3.2.S 基本信息、工艺描述、质量概要、表 1 工艺参数、表 2 批次信息、版本与日期。</div>
+            <a class="file-dl" href="data/t2-dossier-excerpt.docx" download>下载</a>
+          </div>
+          <div class="file">
+            <div class="file-top"><span class="ft xlsx">XLSX</span><span class="file-name">t2-data-summary.xlsx</span></div>
+            <div class="file-desc">三个工作表：数据汇总（3 批 8 列）、术语表、规格限度（含「超出不含等于」口径）。</div>
+            <a class="file-dl" href="data/t2-data-summary.xlsx" download>下载</a>
+          </div>
+        </div>
+
+        <h3 class="sub"><span class="ln"></span>提示词 2｜申报资料核对</h3>
+        <div class="prompt" data-prompt="p2">
+          <div class="prompt-head">
+            <span class="pt">提示词 2 · 规则按企业要求替换</span><span class="sp"></span>
+            <button class="expandbtn" type="button">展开</button>
+            <button class="copybtn" type="button">复制全文</button>
+          </div>
+          <pre class="prompt-body">请先给出处理计划，先不执行；等我确认计划后，再按计划执行。
+
+读取 D:\WorkBuddy-生物医药工作区\01-原始资料\专题二-申报资料核对 中的申报资料节选与数据汇总表，按以下规则核对：
+
+1. 概要中的数值必须与检验报告、数据汇总表一致
+2. 数值不一致标记为“数据不一致”，并写明两处出处
+3. 单位与小数位必须统一
+4. 版本号、日期、批号前后必须一致
+5. 正文引用的表、图、章节编号必须真实存在，找不到标记为“引用缺失”
+6. 产品名称、缩写、单位与术语表不符的标记为“术语不一致”
+7. 必填项缺失标记为“待补充”
+8. 检验结果超出“规格限度”表范围的，标记为“需复核”
+9. 同一批号的数据在不同章节出现差异的，一并列出
+
+<span class="opt">口径说明：以检验报告与原始数据为准；“超出”不含等于；只比对所给文件，不引用外部资料。</span>
+
+生成核对报告，列出所有差异项，标注严重程度、可能原因、建议处理方式。
+
+保存路径：D:\WorkBuddy-生物医药工作区\04-核查报告\</pre>
+          <div class="prompt-note">差异只标记，不自动改写；报告出来后由人逐项确认。「超出不含等于」这六个字决定了临界值算不算问题。</div>
+        </div>
+
+        <h3 class="sub"><span class="ln"></span>怎么练</h3>
+        <ol class="steps">
+          <li>先自己用眼睛找一遍，把找到的差异写下来（2 分钟），再让 AI 跑——不然你只是在抄答案。</li>
+          <li>跑提示词 2，比对差异清单：条数一样吗？有没有 AI 自己编出来的「差异」。</li>
+          <li>重点看临界值：有关物质 0.50% 对限度 ≤0.50%，被标成「超限」就是口径没说清。</li>
+          <li>看 AI 有没有偷偷改写字句。只要正文被「顺手修正」，这次就不算通过。</li>
+          <li>把规则换成你所在企业的实际要求，再跑第二遍：规则变、结论也要跟着变。</li>
+        </ol>
+
+        <div class="checks" data-check-group="s3">
+          <div class="ct">验收清单 <span>对照 PPT「关键动作」</span></div>
+          <label><input type="checkbox" data-p="s3-1"><span>差异报告每条都有位置、两处出处、建议处理方式</span></label>
+          <label><input type="checkbox" data-p="s3-2"><span>临界值没被误判为超限（0.50% = 限度 → 符合）</span></label>
+          <label><input type="checkbox" data-p="s3-3"><span>AI 只标记、未改写原文任何一句</span></label>
+          <label><input type="checkbox" data-p="s3-4"><span>报告落在 04-核查报告，原文件未被覆盖</span></label>
+          <label><input type="checkbox" data-p="s3-5"><span>把规则沉淀成 dossier-check Skill，可用于每次递交前核对</span></label>
+        </div>
+
+        <div class="quiz" data-answer="bad">
+          <div class="quiz-h"><span>口径小测</span><em>点一下看解析</em></div>
+          <div class="q">
+            <p class="q-text"><b>1.</b> 某项目结果 0.50%，规格限度为 ≤0.50%，AI 判定为「超规格」并列入需复核清单。</p>
+            <div class="q-opts"><button type="button" data-v="ok">符合口径</button><button type="button" data-v="bad">违反口径</button></div>
+            <p class="q-why" hidden>违反。口径写的是「超出不含等于」：0.50% 等于限度，按符合处理。临界值判反，是申报核对里最常见、也最容易被检查发现的问题。</p>
+          </div>
+          <div class="q" data-answer="ok">
+            <p class="q-text"><b>2.</b> 质量概要正文写「宁泰舒」，术语表规定正文用通用名，AI 标记「术语不一致」并保留原文不动。</p>
+            <div class="q-opts"><button type="button" data-v="ok">符合口径</button><button type="button" data-v="bad">违反口径</button></div>
+            <p class="q-why" hidden>符合。术语类问题只标注不改写：改哪个、怎么改是注册人员的判断，AI 擅自统一术语会破坏原文可追溯性。</p>
+          </div>
+        </div>
+
+        <details class="ans"><summary>本组数据的埋点答案（7 处）</summary><div class="ansbody">
+          <ul>
+            <li><b>数据不一致：</b>质量概要称「连续三批…含量为 98.5%」，数据汇总表实际为 97.9 / 99.1 / 98.4 —— 单一数值代替三批结果，且与 B20260101 不符。</li>
+            <li><b>数据不一致（小数位）：</b>概要 pH「7.0」，汇总表「7.02 / 6.98 / 7.11」—— 精度与数值都不一致。</li>
+            <li><b>单位／格式不一致：</b>装量 概要写「mL」，数据汇总表写「ml」，术语表规定统一 mL。</li>
+            <li><b>引用缺失：</b>质量概要写「具体数据详见表 3 稳定性汇总」，但文件只有表 1、表 2，无表 3。</li>
+            <li><b>术语不一致：</b>正文以商品名「宁泰舒」作为产品名称，术语表要求用通用名「XX注射液（模拟）」。</li>
+            <li><b>待补充：</b>3.2.S.1「批准文号」为空。</li>
+            <li><b>临界值（易错）：</b>B20260103 有关物质 0.50%，限度 ≤0.50% → 符合，不应标「超限」，但值得在报告里写一句「临界值，建议复核」。备注栏写「有关物质为限度值」，与表内一致。</li>
+          </ul>
+          <p class="kvline">常见失守：把「ml / mL」当小事略过；把三批数据概括成一个数还照收；临界值判成超限；顺手把商品名改成通用名。</p>
+        </div></details>
+      </section>
+
+      <!-- 04 专题三 -->
+      <section class="sec" id="s4" data-cat="mfg" data-title="专题三 批记录审核 batch record 缺签 漏填 涂改 超范围">
+        <div class="sec-head">
+          <div class="sec-no">04</div>
+          <div>
+            <h2>专题三｜批记录审核：只依据记录，口径写清</h2>
+            <div class="sec-meta"><span class="tag lv">生产质量 · L2→L3</span><span class="tag pg">PPT 第 63—64 页</span><span class="tag">3 份记录 × 8 个字段</span></div>
+          </div>
+        </div>
+        <p class="lead">关键不是抄数，而是口径：缺项不能被「补齐」，超限不能被「解释掉」。3 份记录里埋了超范围、缺签、漏填、涂改、批号打架。</p>
+
+        <div class="cols3">
+          <div class="col">
+            <h4>抽什么</h4>
+            <ul>
+              <li>3 份记录 × 8 个字段</li>
+              <li>批号、工序、关键工艺参数、起止时间</li>
+              <li>操作人与复核人签名、设备编号</li>
+              <li>物料批号、偏差记录</li>
+              <li>输出 JSON＋Excel 汇总表</li>
+            </ul>
+          </div>
+          <div class="col">
+            <h4>守什么口径</h4>
+            <ul>
+              <li>时间统一 24 小时制，参数保留原始精度</li>
+              <li>对照「工艺参数范围表」，超范围逐项列出</li>
+              <li>签名与修改痕迹照实记录，不判断是否合理</li>
+              <li>未填写写「未填写」，不补填、不推算</li>
+            </ul>
+          </div>
+          <div class="col">
+            <h4>验收看什么</h4>
+            <ul>
+              <li>8 个字段全部有值或写明「未填写」</li>
+              <li>超范围参数全部标出，并写明范围</li>
+              <li>缺签、漏填、涂改均被发现</li>
+              <li>每条结果可追溯到具体记录页</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 class="sub"><span class="ln"></span>练习数据集 <span class="hint">4 个文件，3 份批记录＋1 张范围表</span></h3>
+        <div class="files">
+          <div class="file">
+            <div class="file-top"><span class="ft docx">DOCX</span><span class="file-name">t3-batch-record-1.docx</span></div>
+            <div class="file-desc">B20260101：8 条关键工序记录、物料、设备、偏差记录。</div>
+            <a class="file-dl" href="data/t3-batch-record-1.docx" download>下载</a>
+          </div>
+          <div class="file">
+            <div class="file-top"><span class="ft docx">DOCX</span><span class="file-name">t3-batch-record-2.docx</span></div>
+            <div class="file-desc">B20260102：同结构，注意设备信息与灌装速度。</div>
+            <a class="file-dl" href="data/t3-batch-record-2.docx" download>下载</a>
+          </div>
+          <div class="file">
+            <div class="file-top"><span class="ft docx">DOCX</span><span class="file-name">t3-batch-record-3.docx</span></div>
+            <div class="file-desc">B20260103：含手写划改痕迹与两处批号记录，关联一条偏差。</div>
+            <a class="file-dl" href="data/t3-batch-record-3.docx" download>下载</a>
+          </div>
+          <div class="file">
+            <div class="file-top"><span class="ft xlsx">XLSX</span><span class="file-name">t3-parameter-ranges.xlsx</span></div>
+            <div class="file-desc">工艺参数范围表：11 项参数、上下限、单位、是否关键参数。对照判定的唯一依据。</div>
+            <a class="file-dl" href="data/t3-parameter-ranges.xlsx" download>下载</a>
+          </div>
+        </div>
+
+        <h3 class="sub"><span class="ln"></span>提示词 3｜批记录审核</h3>
+        <div class="prompt" data-prompt="p3">
+          <div class="prompt-head">
+            <span class="pt">提示词 3 · 可直接复制</span><span class="sp"></span>
+            <button class="expandbtn" type="button">展开</button>
+            <button class="copybtn" type="button">复制全文</button>
+          </div>
+          <pre class="prompt-body">请先给出处理计划，先不执行；等我确认计划后，再按计划执行。
+
+读取 D:\WorkBuddy-生物医药工作区\01-原始资料\专题三-批记录审核 中的 3 份批生产记录和「工艺参数范围表.xlsx」，抽取每份记录的：批号、工序、关键工艺参数、起止时间、操作人与复核人签名、设备编号、物料批号、偏差记录。
+
+1. 只依据批记录原文与参数范围表，不引用任何外部资料
+2. 时间统一为 24 小时制，参数保留原始精度与单位
+3. 关键工艺参数对照范围表，超出范围的标注“超范围”并写明范围
+4. 签名缺失、字段漏填、涂改痕迹，分别标注“缺签”“漏填”“涂改”，照实记录
+5. 原文缺失的字段填“未填写”，不得推算或补填
+
+<span class="opt">补充：在汇总表增加“风险提示”列，对超范围、缺签、有偏差记录的批次各写一句提示，提示必须引用表内数据。</span>
+
+输出：JSON（每份记录一个对象）+ Excel 汇总表
+保存路径：D:\WorkBuddy-生物医药工作区\02-处理结果\
+命名规则：{日期}-批记录审核-{版本号}
+注意：不得修改原始记录文件</pre>
+          <div class="prompt-note">先审计划：抽取字段、判定口径、缺项处理是否写清，再放行。第 5 条是这批数据的命门。</div>
+        </div>
+
+        <h3 class="sub"><span class="ln"></span>怎么练</h3>
+        <ol class="steps">
+          <li>先看范围表，把 11 项参数的上下限记住（或抄在纸上），再看批记录——顺序反了就会先入为主。</li>
+          <li>跑提示词 3，先审计划：8 个字段齐不齐、缺项怎么写、超范围怎么标。</li>
+          <li>核对汇总表：3 份 × 8 个字段应有值或「未填写」，不许出现「推定」「应签」这类词。</li>
+          <li>看「风险提示」列是否引用表内数据；没有出处的提示要退回。</li>
+          <li>把第 3 批的两处批号记录拿出来单独问一句：「这两处一致吗？」——考察 AI 会不会主动做交叉。</li>
+        </ol>
+
+        <div class="checks" data-check-group="s4">
+          <div class="ct">验收清单 <span>三条全部有值才算过</span></div>
+          <label><input type="checkbox" data-p="s4-1"><span>3 份记录、8 个字段全部有值或写明「未填写」</span></label>
+          <label><input type="checkbox" data-p="s4-2"><span>超范围参数全部标出，并写明对应范围与页码</span></label>
+          <label><input type="checkbox" data-p="s4-3"><span>缺签、漏填、涂改都被发现，没有一条被忽略</span></label>
+          <label><input type="checkbox" data-p="s4-4"><span>每条结果可追溯到具体记录页；原始记录未被修改</span></label>
+          <label><input type="checkbox" data-p="s4-5"><span>输出 JSON 与 Excel 两套，字段名一致</span></label>
+        </div>
+
+        <div class="quiz" data-answer="bad">
+          <div class="quiz-h"><span>口径小测</span><em>点一下看解析</em></div>
+          <div class="q">
+            <p class="q-text"><b>1.</b> 灌装复核人签字栏为空，AI 在汇总表填「乙（推定）」，理由是操作人签字齐全、历史都由乙复核。</p>
+            <div class="q-opts"><button type="button" data-v="ok">符合口径</button><button type="button" data-v="bad">违反口径</button></div>
+            <p class="q-why" hidden>违反。签名栏为空就是「缺签」，历史习惯不能当证据。推定签字一旦写进汇总表，等于替 QA 伪造了记录结论。</p>
+          </div>
+          <div class="q" data-answer="ok">
+            <p class="q-text"><b>2.</b> 配液温度 38.5℃，范围 35—37℃，AI 标注「超范围（35—37℃）」并注明记录页与操作人。</p>
+            <div class="q-opts"><button type="button" data-v="ok">符合口径</button><button type="button" data-v="bad">违反口径</button></div>
+            <p class="q-why" hidden>符合。标注要三件套：结论（超范围）、依据（范围值）、定位（页/行/操作人）。少了任何一件，QA 都得回头重查。</p>
+          </div>
+        </div>
+
+        <details class="ans"><summary>本组数据的埋点答案（7 处）</summary><div class="ansbody">
+          <ul>
+            <li><b>B20260101｜超范围：</b>配液温度 38.5℃，范围 35—37℃。</li>
+            <li><b>B20260101｜缺签：</b>灌装工序复核人签字为空（灌装速度、装量两行）。</li>
+            <li><b>B20260102｜超范围：</b>灌装速度 275 支/min，范围 200—260。</li>
+            <li><b>B20260102｜漏填：</b>灌装设备编号为空（应写「未填写」，不得按 EQ-FL-01 补）。</li>
+            <li><b>B20260103｜涂改：</b>灌装起止时间「14:20（原记 15:20，划改）」——记「涂改」并照录原文，不判断是否合规。</li>
+            <li><b>B20260103｜数据矛盾：</b>关键工序页投料原液批号 M-2602-11，物料使用记录页 M-2602-07。</li>
+            <li><b>B20260103｜偏差关联：</b>偏差记录 DEV-2026-013（灌装复核未执行），需与专题四联动看。</li>
+            <li>其余字段（搅拌转速、pH、压差、预冻温度、真空度、装量、灭菌参数）均在范围内；三份记录均缺灭菌工序记录页，应按「未填写／缺页」标注。</li>
+          </ul>
+        </div></details>
+      </section>
+
+      <!-- 05 专题四 -->
+      <section class="sec" id="s5" data-cat="mfg" data-title="专题四 偏差 CAPA 根因 重复发生 超期未关闭 SOP">
+        <div class="sec-head">
+          <div class="sec-no">05</div>
+          <div>
+            <h2>专题四｜偏差与 CAPA：辅助分析，不替代质量决策</h2>
+            <div class="sec-meta"><span class="tag lv">生产质量 · L3</span><span class="tag pg">PPT 第 65—66 页</span><span class="tag">4 份偏差＋CAPA 台账</span></div>
+          </div>
+        </div>
+        <p class="lead">AI 负责读与标，QA 负责判与签。四条偏差里，重复发生、超期未关闭、CAPA 与根因不对应，三个坑各埋了一次。</p>
+
+        <div class="cols3">
+          <div class="col">
+            <h4>读与提取</h4>
+            <ul>
+              <li>读偏差报告、调查记录、CAPA 台账</li>
+              <li>提取描述、影响批次、原因分类、纠正与预防措施、关闭状态</li>
+              <li>生成分析摘要</li>
+            </ul>
+          </div>
+          <div class="col">
+            <h4>标与对照</h4>
+            <ul>
+              <li>标注同类重复、超期未关闭、CAPA 与根因不对应</li>
+              <li>与 SOP 对照，标出可能涉及的条款</li>
+              <li>每条标注引用报告编号，分级由 QA 决定</li>
+            </ul>
+          </div>
+          <div class="col">
+            <h4>知识库与边界</h4>
+            <ul>
+              <li>历史偏差、SOP 向量化后经 RAG 检索调用</li>
+              <li>先脱敏或副本测试，再决定是否接入真实系统</li>
+              <li>输出标注「辅助分析」，不问「这批能不能放行」</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 class="sub"><span class="ln"></span>练习数据集 <span class="hint">3 个文件，SOP 只作对照、不是分析对象</span></h3>
+        <div class="files">
+          <div class="file">
+            <div class="file-top"><span class="ft docx">DOCX</span><span class="file-name">t4-deviation-report.docx</span></div>
+            <div class="file-desc">4 份偏差报告：编号、日期、工序、描述、影响范围、根因、原因分类、已采取措施、关闭状态。</div>
+            <a class="file-dl" href="data/t4-deviation-report.docx" download>下载</a>
+          </div>
+          <div class="file">
+            <div class="file-top"><span class="ft xlsx">XLSX</span><span class="file-name">t4-capa-tracker.xlsx</span></div>
+            <div class="file-desc">两个工作表：CAPA 台账（措施、责任人、计划／实际完成、有效性评估）、偏差清单（7 列）。</div>
+            <a class="file-dl" href="data/t4-capa-tracker.xlsx" download>下载</a>
+          </div>
+          <div class="file">
+            <div class="file-top"><span class="ft docx">DOCX</span><span class="file-name">t4-sop-excerpt.docx</span></div>
+            <div class="file-desc">《偏差管理规程》节选（SOP-QA-014）：分级、30 日调查、90 日关闭、CAPA 有效性、重复偏差升级。</div>
+            <a class="file-dl" href="data/t4-sop-excerpt.docx" download>下载</a>
+          </div>
+        </div>
+
+        <h3 class="sub"><span class="ln"></span>提示词 4｜偏差与 CAPA 分析</h3>
+        <div class="prompt" data-prompt="p4">
+          <div class="prompt-head">
+            <span class="pt">提示词 4 · 仅用于脱敏或模拟资料</span><span class="sp"></span>
+            <button class="expandbtn" type="button">展开</button>
+            <button class="copybtn" type="button">复制全文</button>
+          </div>
+          <pre class="prompt-body">请先给出处理计划，先不执行；等我确认计划后，再按计划执行。
+
+读取 D:\WorkBuddy-生物医药工作区\01-原始资料\专题四-偏差分析 中的偏差报告与 CAPA 台账，按以下规则分析：
+
+1. 提取每份偏差的：编号、发生日期、涉及工序、偏差描述、原因分类、CAPA 措施、关闭状态
+2. 按原因分类（人、机、料、法、环、测）汇总数量，找出集中的类别
+3. 标注需关注项：同类重复发生、超期未关闭、CAPA 与根因不对应
+4. 与 SOP 节选对照，指出可能涉及的条款，并引用报告编号
+
+<span class="opt">SOP 节选：D:\WorkBuddy-生物医药工作区\03-规程模板\SOP节选（模拟）.docx（只作对照，不是分析对象）</span>
+
+输出格式：Markdown（分析摘要）+ Excel（汇总表）
+保存路径：D:\WorkBuddy-生物医药工作区\04-核查报告\{日期}-偏差分析.md
+注意：此为辅助分析，不替代 QA 与质量受权人的专业判断；不得修改原始报告</pre>
+          <div class="prompt-note">指令里写明边界，输出里也要标注边界。最后一行不能删——删了，AI 就容易替你做放行判断。</div>
+        </div>
+
+        <h3 class="sub"><span class="ln"></span>怎么练</h3>
+        <ol class="steps">
+          <li>先看 SOP 节选，把 30 日调查、90 日关闭、12 个月重复升级三条时限记下来。</li>
+          <li>跑提示词 4，看它有没有主动算「超期天数」。不主动算，就在计划阶段要求加上。</li>
+          <li>重点核对 4 条偏差与 4 条 CAPA 的对应关系：根因和措施说不说得上话。</li>
+          <li>把 SOP 那一行删掉再跑一遍：AI 还能不能指出「重复偏差应升级」？这就是 RAG／知识库的意义。</li>
+          <li>最后问一句「B20260503 能不能放行」，看它会不会守住边界。守住才算过。</li>
+        </ol>
+
+        <div class="checks" data-check-group="s5">
+          <div class="ct">验收清单 <span>三项关注必须齐全</span></div>
+          <label><input type="checkbox" data-p="s5-1"><span>4 条偏差的 7 个字段全部抽出，无编造</span></label>
+          <label><input type="checkbox" data-p="s5-2"><span>重复发生、超期未关闭、CAPA 与根因不对应，三类都被标出</span></label>
+          <label><input type="checkbox" data-p="s5-3"><span>与 SOP 对照时引用了条款号与报告编号</span></label>
+          <label><input type="checkbox" data-p="s5-4"><span>输出明确写着「辅助分析」，未替 QA 做放行或分级判断</span></label>
+          <label><input type="checkbox" data-p="s5-5"><span>删掉 SOP 行重跑，能看出能力差异并记录</span></label>
+        </div>
+
+        <div class="quiz" data-answer="bad">
+          <div class="quiz-h"><span>口径小测</span><em>点一下看解析</em></div>
+          <div class="q">
+            <p class="q-text"><b>1.</b> DEV-2026-012 已超 90 天未关闭，AI 据此判定「B20260503 批次不得放行」。</p>
+            <div class="q-opts"><button type="button" data-v="ok">符合口径</button><button type="button" data-v="bad">违反口径</button></div>
+            <p class="q-why" hidden>违反。超期未关闭是「需关注项」，不是放行决定。批次处置权在 QA 与质量受权人手里，AI 越界一次，这套工具就没人敢用了。</p>
+          </div>
+          <div class="q" data-answer="ok">
+            <p class="q-text"><b>2.</b> DEV-011 与 DEV-013 同工序、同原因分类、根因相同且相隔 3 个月，AI 标「重复发生，建议按 SOP-QA-014 第 7.1 条升级」。</p>
+            <div class="q-opts"><button type="button" data-v="ok">符合口径</button><button type="button" data-v="bad">违反口径</button></div>
+            <p class="q-why" hidden>符合。标事实＋引条款＋给建议，决定权仍留给 QA。这才是「辅助分析」该有的分寸。</p>
+          </div>
+        </div>
+
+        <details class="ans"><summary>本组数据的埋点答案（4 类问题）</summary><div class="ansbody">
+          <ul>
+            <li><b>重复发生：</b>DEV-2026-011 与 DEV-2026-013，同为灌装工序、原因分类「人」、同一根因（未按 SOP-QA-011 第 4.2 条执行双人复核），间隔 2 个多月 → 触发 SOP-QA-014 第 7.1 条「12 个月内同工序同原因重复 2 次及以上，升级为重大偏差」。</li>
+            <li><b>超期未关闭：</b>DEV-2026-012 发生于 2026-05-10，未关闭，至 2026-11-23 已 197 天，远超第 4.3 条 90 天；对应 CAPA-2026-012 计划 2026-08-10 完成，实际完成为空 → 逾期。</li>
+            <li><b>CAPA 与根因不对应：</b>DEV-2026-014 根因为「标签复核 SOP 未规定复核时点（法）」，措施却是「更换标签供应商」→ 违反第 5.1 条，应退回重写。</li>
+            <li><b>有效性评估缺失：</b>CAPA-2026-014 已关闭但有效性评估「未做」，不符合第 5.2 条（关闭后 3 个月内完成）。</li>
+            <li><b>记录合规：</b>DEV-2026-013 描述「复核记录由本人代签」，违反第 6.1 条（不得代签）。</li>
+            <li><b>原因分类分布：</b>人 2、机 1、法 1，集中类别为「人」，且集中在灌装工序。</li>
+          </ul>
+        </div></details>
+      </section>
+
+      <!-- 06 专题五 -->
+      <section class="sec" id="s6" data-cat="ana" data-title="专题五 检验数据分析 OOS OOT 超规格 趋势 时间点缺失">
+        <div class="sec-head">
+          <div class="sec-no">06</div>
+          <div>
+            <h2>专题五｜检验数据分析：让标准可以被对照</h2>
+            <div class="sec-meta"><span class="tag lv">数据分析 · L3→L4</span><span class="tag pg">PPT 第 67—68 页</span><span class="tag">OOS / OOT</span></div>
+          </div>
+        </div>
+        <p class="lead">质量标准进文件，数据出来自动对照：结果在规格内吗？趋势有无漂移？时间点有无缺失？超规格已标记吗？标准没写的事项，一律交给人。</p>
+
+        <div class="cols3">
+          <div class="col">
+            <h4>① 建规格库</h4>
+            <ul>
+              <li>质量标准、检验方法、稳定性方案向量化</li>
+              <li>映射到私有知识库</li>
+              <li>课堂：直接读标准文件</li>
+            </ul>
+          </div>
+          <div class="col">
+            <h4>② 自动对照</h4>
+            <ul>
+              <li>结果在规格内吗</li>
+              <li>趋势有无漂移（OOT）</li>
+              <li>时间点有无缺失</li>
+              <li>超规格（OOS）已标记吗</li>
+            </ul>
+          </div>
+          <div class="col">
+            <h4>③ 设人工关口</h4>
+            <ul>
+              <li>OOS / OOT 结果复核</li>
+              <li>趋势与风险判断</li>
+              <li>QC / QA 人员签字</li>
+              <li>调查、放行确认</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 class="sub"><span class="ln"></span>练习数据集 <span class="hint">3 个文件，注意判定列是「原始记录」不是答案</span></h3>
+        <div class="files">
+          <div class="file">
+            <div class="file-top"><span class="ft docx">DOCX</span><span class="file-name">t5-spec.docx</span></div>
+            <div class="file-desc">质量标准（节选）：8 项放行标准、稳定性考察要求、三条判定口径（含「等于限度按符合处理」）。</div>
+            <a class="file-dl" href="data/t5-spec.docx" download>下载</a>
+          </div>
+          <div class="file">
+            <div class="file-top"><span class="ft xlsx">XLSX</span><span class="file-name">t5-release-results.xlsx</span></div>
+            <div class="file-desc">两个工作表：放行检验结果（5 批）、稳定性数据（2 批 × 4 个时间点）。</div>
+            <a class="file-dl" href="data/t5-release-results.xlsx" download>下载</a>
+          </div>
+          <div class="file">
+            <div class="file-top"><span class="ft xlsx">XLSX</span><span class="file-name">t2-data-summary.xlsx</span></div>
+            <div class="file-desc">跨文件一致性要用到它：B20260101—03 的含量、装量、批号在这里有另一份记录。</div>
+            <a class="file-dl" href="data/t2-data-summary.xlsx" download>下载</a>
+          </div>
+        </div>
+
+        <h3 class="sub"><span class="ln"></span>提示词 5｜检验数据对照</h3>
+        <div class="prompt" data-prompt="p5">
+          <div class="prompt-head">
+            <span class="pt">提示词 5 · 课堂模拟版本</span><span class="sp"></span>
+            <button class="expandbtn" type="button">展开</button>
+            <button class="copybtn" type="button">复制全文</button>
+          </div>
+          <pre class="prompt-body">请先给出处理计划，先不执行；等我确认计划后，再按计划执行。
+
+读取 D:\WorkBuddy-生物医药工作区\01-原始资料\专题五-检验数据 中的《质量标准（节选，模拟）.docx》《放行检验结果.xlsx》《稳定性数据.xlsx》，对照标准逐批检查：
+
+1. 规格：逐项对照标准中的规格限度，超出的标记“超规格”
+2. 趋势：同一检验项目按时间排序，持续偏离历史均值的标记“趋势候选”
+3. 完整性：稳定性方案规定的时间点有缺失的，标记“时间点缺失”
+4. 一致性：同一批号在两个文件中数值不一致的，标记“数据不一致”
+
+<span class="opt">标准没有明确规定的事项，标记为“需人工复核”，不要自行判断。</span>
+
+每个问题写明：批号、检验项目、结果值、对应标准条款、建议处理方式。
+
+输出格式：Excel（含“问题清单”“汇总”两个工作表）
+保存路径：D:\WorkBuddy-生物医药工作区\04-核查报告\检验数据对照-v1.xlsx
+注意：此为辅助检查，不替代 QC、QA 的判断；不得修改原始数据，不得删除任何文件</pre>
+          <div class="prompt-note">标准放在文件里，指令只管怎么查、怎么出结果、哪里必须停。第 4 条要求跨文件比对，别忘了把数据汇总表也放进去。</div>
+        </div>
+
+        <h3 class="sub"><span class="ln"></span>怎么练</h3>
+        <ol class="steps">
+          <li>先把质量标准抄成一张对照卡（项目／限度／方法），再打开检验结果——顺序对了，判定才不会被「合格」二字带跑。</li>
+          <li>跑提示词 5，重点看它有没有<b>重新判定</b>，而不是照抄结果表里的「判定」列。</li>
+          <li>查趋势：稳定性数据按时间排序，算变化量，看是否超过标准里写的 15% 口径。</li>
+          <li>查完整性：稳定性方案要求 0/3/6/9/12 个月，哪个时间点没取样。</li>
+          <li>把 B20260102 的装量拿去和 t2 数据汇总表比一次，看 AI 会不会主动发现跨文件不一致。</li>
+        </ol>
+
+        <div class="checks" data-check-group="s6">
+          <div class="ct">验收清单 <span>四类标记齐全</span></div>
+          <label><input type="checkbox" data-p="s6-1"><span>OOS 全部标出，且写明结果值、限度、标准条款</span></label>
+          <label><input type="checkbox" data-p="s6-2"><span>趋势候选基于排序与变化量计算，不是凭感觉</span></label>
+          <label><input type="checkbox" data-p="s6-3"><span>时间点缺失被标出（0/3/6/9/12 对得上）</span></label>
+          <label><input type="checkbox" data-p="s6-4"><span>跨文件不一致被发现（同批号两文件数值不同）</span></label>
+          <label><input type="checkbox" data-p="s6-5"><span>标准没写的事项标「需人工复核」，未自行判合格</span></label>
+        </div>
+
+        <div class="quiz" data-answer="bad">
+          <div class="quiz-h"><span>口径小测</span><em>点一下看解析</em></div>
+          <div class="q">
+            <p class="q-text"><b>1.</b> 标准未规定装量的取样方式，AI 依据行业惯例自行判定该批装量合格。</p>
+            <div class="q-opts"><button type="button" data-v="ok">符合口径</button><button type="button" data-v="bad">违反口径</button></div>
+            <p class="q-why" hidden>违反。标准没写的事项必须标「需人工复核」。用「行业惯例」补标准，是最危险的一种幻觉，因为它听起来很专业。</p>
+          </div>
+          <div class="q" data-answer="ok">
+            <p class="q-text"><b>2.</b> AI 把有关物质 0.28→0.33→0.45 的走势标为「趋势候选」，并注明只是线索、调查由 QC/QA 完成。</p>
+            <div class="q-opts"><button type="button" data-v="ok">符合口径</button><button type="button" data-v="bad">违反口径</button></div>
+            <p class="q-why" hidden>符合。OOT 只标「候选」，不下结论。三条数据点还不足以判定趋势成立，但足够提示有人去看一眼。</p>
+          </div>
+        </div>
+
+        <details class="ans"><summary>本组数据的埋点答案（6 处）</summary><div class="ansbody">
+          <ul>
+            <li><b>超规格（OOS）｜B20260103 含量：</b>92.0% &lt; 95.0%，判定列却写着「合格」→ 必须重新判定。</li>
+            <li><b>超规格（OOS）｜B20260105 有关物质：</b>0.55% &gt; 0.50%，判定列同样写「合格」。</li>
+            <li><b>临界值（易错）｜B20260103 有关物质：</b>0.50% = 限度 → 符合，不标超规格，但建议标「临界值，需关注」。</li>
+            <li><b>时间点缺失｜B20260101：</b>方案要求 0/3/6/9/12（18/24），缺 6 个月，12 个月计划中 → 标「时间点缺失」。</li>
+            <li><b>趋势候选｜B20260101 有关物质：</b>0.28→0.33→0.45，累计 +0.17，为初始值 60%，超过标准 15% 口径；B20260102 为 0.30→0.34→0.37→0.40（+33%），同样列为候选。</li>
+            <li><b>数据不一致｜B20260102 装量：</b>放行结果 2.1 mL，数据汇总表 2.0ml → 跨文件不一致。</li>
+          </ul>
+          <p class="kvline">常见失守：直接采信「判定」列；用「有关物质升高但仍在限度内」把 OOS 解释掉；把 0.50% 判成超限。</p>
+        </div></details>
+      </section>
+
+      <!-- 07 专题六 -->
+      <section class="sec" id="s7" data-cat="auto" data-title="专题六 质量月报 自动化 多角色 四维度 六步工作流">
+        <div class="sec-head">
+          <div class="sec-no">07</div>
+          <div>
+            <h2>专题六｜自动化质量月报：多维度、多角色</h2>
+            <div class="sec-meta"><span class="tag lv">自动化 · L4</span><span class="tag pg">PPT 第 69—70 页</span><span class="tag">90 行明细＋22 条偏差</span></div>
+          </div>
+        </div>
+        <p class="lead">先跑稳 L1—L3，再让多个角色协作。数据官清洗聚合、分析官出洞察、报告官写月报——没开通专家团，指令不变，按顺序依次完成。</p>
+
+        <div class="cols3">
+          <div class="col">
+            <h4>四个分析维度</h4>
+            <ul>
+              <li>产品与批次</li>
+              <li>检验项目</li>
+              <li>月份</li>
+              <li>设备与实验室</li>
+            </ul>
+          </div>
+          <div class="col">
+            <h4>六步工作流</h4>
+            <ul>
+              <li>读取 → 清洗 → 分类</li>
+              <li>→ 聚合 → 可视化</li>
+              <li>→ 报告生成</li>
+              <li>分析官要回答三问：哪些项目趋势异常？哪类偏差集中？有无单批离群？</li>
+            </ul>
+          </div>
+          <div class="col">
+            <h4>三个角色</h4>
+            <ul>
+              <li>数据官：清洗与聚合</li>
+              <li>分析官：生成洞察</li>
+              <li>报告官：撰写月报、生成 PPT</li>
+              <li>没有专家团？指令不变，依次完成</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 class="sub"><span class="ln"></span>练习数据集 <span class="hint">1 个文件、3 个工作表、110+ 行数据</span></h3>
+        <div class="files">
+          <div class="file">
+            <div class="file-top"><span class="ft xlsx">XLSX</span><span class="file-name">t6-quality-data-2026.xlsx</span></div>
+            <div class="file-desc">质量数据汇总_2026年1-10月：检验明细 90 行（月份×批号×项目）、偏差明细 22 条、月度目标 10 行。</div>
+            <a class="file-dl" href="data/t6-quality-data-2026.xlsx" download>下载</a>
+          </div>
+        </div>
+
+        <h3 class="sub"><span class="ln"></span>提示词 6｜质量月报</h3>
+        <div class="prompt" data-prompt="p6">
+          <div class="prompt-head">
+            <span class="pt">提示词 6 · 分工写进指令</span><span class="sp"></span>
+            <button class="expandbtn" type="button">展开</button>
+            <button class="copybtn" type="button">复制全文</button>
+          </div>
+          <pre class="prompt-body">请先给出处理计划，先不执行；等我确认计划后，再按计划执行。
+
+基于 D:\WorkBuddy-生物医药工作区\01-原始资料\专题六-质量月报\质量数据汇总_2026年1-10月.xlsx 做 2026 年 1–10 月质量数据分析。
+
+角色分工（有专家团或多 Agent 能力时分别调用；没有则按“数据官→分析官→报告官”依次完成）：
+· 数据官：清洗并聚合，输出四个维度汇总表，并核对“明细合计＝汇总合计”
+· 分析官：基于汇总表给出洞察，至少回答：①哪些检验项目、月份趋势异常；②哪类偏差占比过高；③有无单批离群结果。每条写明数据依据（维度＋数值＋占比）
+· 报告官：生成 8–10 页质量月报 PPT 和一份 Excel 汇总，数字与 Excel 一致；“待人工确认事项”单列
+
+由你整合三个角色的结果；数据无法支持的结论或原因，标记“需人工复核”，不要编造。
+
+输出格式：Excel + PPT
+保存路径：D:\WorkBuddy-生物医药工作区\02-处理结果\
+命名规则：{日期}-质量月报-v1
+注意：不得覆盖原始数据，不得删除任何文件</pre>
+          <div class="prompt-note">数据无法支持的结论或原因，一律标「需人工复核」，不要编造。月报里最容易被质疑的就是「原因」那一栏。</div>
+        </div>
+
+        <h3 class="sub"><span class="ln"></span>怎么练</h3>
+        <ol class="steps">
+          <li>先看「月度目标」表：一次合格率 98%、及时关闭率 90%。没有目标，月报就只是一堆数字。</li>
+          <li>跑提示词 6，先审计划：四个维度齐不齐、明细合计＝汇总合计怎么核。</li>
+          <li>抽查 3 个数字：随便指一个月的合格率，让 AI 说出算式。算不出就是聚合没做。</li>
+          <li>看「原因」栏：凡是没有数据依据的推测，一律要求改成「需人工复核」。</li>
+          <li>最后对照 PPT：8—10 页，数字与 Excel 一致，「待人工确认事项」单独一页。</li>
+        </ol>
+
+        <div class="checks" data-check-group="s7">
+          <div class="ct">验收清单 <span>三问必答</span></div>
+          <label><input type="checkbox" data-p="s7-1"><span>四个维度汇总表齐全，明细合计＝汇总合计</span></label>
+          <label><input type="checkbox" data-p="s7-2"><span>三问都有答案：趋势异常、偏差集中、单批离群</span></label>
+          <label><input type="checkbox" data-p="s7-3"><span>每条洞察带数据依据（维度＋数值＋占比）</span></label>
+          <label><input type="checkbox" data-p="s7-4"><span>PPT 数字与 Excel 完全一致，「待人工确认事项」单列</span></label>
+          <label><input type="checkbox" data-p="s7-5"><span>没有编造原因；推测处标「需人工复核」</span></label>
+        </div>
+
+        <div class="quiz" data-answer="bad">
+          <div class="quiz-h"><span>口径小测</span><em>点一下看解析</em></div>
+          <div class="q">
+            <p class="q-text"><b>1.</b> 数据无法支撑某月偏差上升的原因，AI 写「可能与人员流动有关」，并作为月报结论之一。</p>
+            <div class="q-opts"><button type="button" data-v="ok">符合口径</button><button type="button" data-v="bad">违反口径</button></div>
+            <p class="q-why" hidden>违反。原因栏只能写数据能支撑的内容，其余标「需人工复核」。带着「可能」二字的结论进了月报，下一次就会被当成事实引用。</p>
+          </div>
+          <div class="q" data-answer="bad">
+            <p class="q-text"><b>2.</b> 月报 PPT 的合格率与 Excel 不一致时，AI 以 PPT 里的数字为准。</p>
+            <div class="q-opts"><button type="button" data-v="ok">符合口径</button><button type="button" data-v="bad">违反口径</button></div>
+            <p class="q-why" hidden>违反。数字唯一的源头是 Excel。PPT 只能跟 Excel 一致，不一致就是 PPT 要改——这条写进了提示词的第 3 个角色要求里。</p>
+          </div>
+        </div>
+
+        <details class="ans"><summary>本组数据的埋点答案（三问的标准回答）</summary><div class="ansbody">
+          <ul>
+            <li><b>① 趋势异常：</b>含量项目 8—10 月均值 102.1 → 102.5 → 102.8，连续三月同向上升；1 月 98.4、2—6 月稳定在 99.5—99.9。有关物质同步小幅上行（1—10 月均值 0.37 → 0.42）。</li>
+            <li><b>② 偏差集中：</b>原因分类「人」11 条 / 22 条 = 50%，且集中在灌装工序；「机」5 条（22.7%）。</li>
+            <li><b>③ 单批离群：</b>B20260102 含量 96.4%，同月另外两批 98.9 / 99.3，偏离约 2.5 个百分点。</li>
+            <li><b>未达标：</b>7 月、9 月一次合格率均为 88.9%，低于 98% 目标（不合格项：B20260702 含量 93.8%、B20260903 有关物质 0.56%）。</li>
+            <li><b>及时关闭率：</b>4 条未关闭 / 22 条，及时关闭率 81.8%，低于 90% 目标；其中 DEV-2026-009 已超期 197 天、DEV-2026-015 超期 42 天。</li>
+            <li><b>应标「需人工复核」：</b>含量上升的原因（原辅料？灌装装量？检验方法漂移？）数据里没有答案，不能编。</li>
+            <li><b>口径提醒：</b>7 月合格率低是因为 1 条不合格拉低当月 9 条记录，占比差异不要写成「合格率下降 9% 个点」而应写「88.9%」。</li>
+          </ul>
+        </div></details>
+      </section>
+
+      <!-- 08 关口 -->
+      <section class="sec" id="s8" data-cat="end" data-title="四道人工关口 清洗后 出表后 校验后 交付前 终审">
+        <div class="sec-head">
+          <div class="sec-no">08</div>
+          <div>
+            <h2>四道人工关口：AI 做初稿，人做终审</h2>
+            <div class="sec-meta"><span class="tag">边界</span><span class="tag pg">PPT 第 71 页</span></div>
+          </div>
+        </div>
+        <p class="lead">自动化再成熟，也要在四个位置停下来，让人确认。关口要写清：谁确认，什么情况下必须暂停。</p>
+
+        <div class="cards">
+          <div class="card warn"><div class="cn">关口 ①</div><h4>清洗后</h4><p>确认清洗规则正确，异常标记合理。谁确认：数据提出人。</p></div>
+          <div class="card warn"><div class="cn">关口 ②</div><h4>出表后</h4><p>核对关键数字、引用来源和格式。谁确认：业务主办。</p></div>
+          <div class="card warn"><div class="cn">关口 ③</div><h4>校验后</h4><p>确认每个异常项的处理方式。谁确认：QA。</p></div>
+          <div class="card warn"><div class="cn">关口 ④</div><h4>交付前</h4><p>确认内容、格式与数据准确性。谁确认：授权签字人。</p></div>
+        </div>
+
+        <h3 class="sub"><span class="ln"></span>无论自动化多成熟，这四件事必须由人完成</h3>
+        <div class="tblwrap">
+          <table>
+            <thead><tr><th>必须由人做</th><th>对应动作</th><th>AI 能做什么</th></tr></thead>
+            <tbody>
+              <tr><td>数据与原始记录复核</td><td>逐项比对原始记录与汇总结果</td><td>标出差异、给出定位</td></tr>
+              <tr><td>质量与法规判断</td><td>分级、根因确认、合规性结论</td><td>列出事实与条款，给建议</td></tr>
+              <tr><td>授权人员签字</td><td>在记录与报告上签署</td><td>不签、不代签、不推定签名</td></tr>
+              <tr><td>放行、申报、签署确认</td><td>放行决定、递交申报</td><td>只出草稿，不自行放行或申报</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="kvline">练习时把这句话贴在屏幕上：<b>「AI 做初稿，人做终审」</b>——每一个 Demo 都要能指出这四道关口落在哪一步。</p>
+      </section>
+
+      <!-- 09 沉淀 -->
+      <section class="sec" id="s9" data-cat="auto" data-title="沉淀与自动化 Skill 定时任务 quality-report 复盘四问">
+        <div class="sec-head">
+          <div class="sec-no">09</div>
+          <div>
+            <h2>沉淀与自动化：Skill ＋ 定时任务</h2>
+            <div class="sec-meta"><span class="tag">从跑通到跑稳</span><span class="tag pg">PPT 第 72 页</span></div>
+          </div>
+        </div>
+        <p class="lead">把跑通的方法写成 Skill，再交给定时任务按规则运行。自动化只放大已经稳定的流程。</p>
+
+        <h3 class="sub"><span class="ln"></span>quality-report Skill（节选）<span class="hint">照着填，五个字段就够用</span></h3>
+        <pre class="code">名称：quality-report
+触发：“生成质量月报”
+流程：读取 → 清洗 → 对照标准 → 出报表 + PPT
+输出：Excel + PPT；存入 02-处理结果；{日期}-{报告类型}-v{版本号}
+安全：不覆盖原始数据；不删除文件；数值保留原始精度；异常只标记
+
+<span class="c">复盘四问：输入是什么？输出是什么？有哪些坑？哪些步骤可标准化？</span></pre>
+
+        <h3 class="sub"><span class="ln"></span>三条定时流水线</h3>
+        <div class="tblwrap">
+          <table>
+            <thead><tr><th>频率</th><th>动作</th><th>推送</th></tr></thead>
+            <tbody>
+              <tr><td class="mono">每天 8:00</td><td>核对前一天新增数据，生成异常清单</td><td>企业微信</td></tr>
+              <tr><td class="mono">每周五 17:00</td><td>生成偏差与 CAPA 周报</td><td>质量负责人邮箱</td></tr>
+              <tr><td class="mono">每月 1 号</td><td>跑月度流水线：质量月报、检验趋势、稳定性汇总</td><td>02-处理结果 ＋ 归档</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="kvline">时间点与推送渠道为示例，可按企业节奏调整；连接器与定时任务须经授权，只推送给授权人员。</p>
+
+        <div class="checks" data-check-group="s9">
+          <div class="ct">沉淀自查 <span>做不到就别急着上定时任务</span></div>
+          <label><input type="checkbox" data-p="s9-1"><span>同一个任务已连续成功 3 次，结果稳定</span></label>
+          <label><input type="checkbox" data-p="s9-2"><span>复盘四问都写出答案，坑已写进 Skill 的「安全」行</span></label>
+          <label><input type="checkbox" data-p="s9-3"><span>Skill 里写清输出路径与命名规则，不让人每次重新交代</span></label>
+          <label><input type="checkbox" data-p="s9-4"><span>定时任务只推给授权人员，且有失败兜底（谁看、多久看）</span></label>
+        </div>
+      </section>
+
+      <!-- 10 三个坑 -->
+      <section class="sec" id="s10" data-cat="end" data-title="三个最容易踩的坑 数据直接投喂 输出当终稿 跑通不沉淀">
+        <div class="sec-head">
+          <div class="sec-no">10</div>
+          <div>
+            <h2>三个最容易踩的坑</h2>
+            <div class="sec-meta"><span class="tag">课前预警</span><span class="tag pg">PPT 第 73 页</span></div>
+          </div>
+        </div>
+        <p class="lead">三个坑，对应三道防线：脱敏副本守住数据，人工关口守住结果，沉淀复盘守住能力。</p>
+
+        <div class="cols3">
+          <div class="col">
+            <h4>坑一｜数据直接投喂</h4>
+            <ul>
+              <li>授权不等于合规，受控数据先脱敏</li>
+              <li>做法：脱敏副本 ＋ 专属文件夹，先出方案再执行</li>
+              <li><b>防线：安全底座</b></li>
+            </ul>
+          </div>
+          <div class="col">
+            <h4>坑二｜输出当终稿</h4>
+            <ul>
+              <li>初稿质量不稳定</li>
+              <li>做法：AI 出初稿，人验证、判断、做决策</li>
+              <li><b>防线：人工关口</b></li>
+            </ul>
+          </div>
+          <div class="col">
+            <h4>坑三｜跑通不沉淀</h4>
+            <ul>
+              <li>每次都要重新教 AI，效率停在 L1</li>
+              <li>做法：复盘 5 分钟，沉淀成 Skill</li>
+              <li><b>防线：沉淀复盘</b></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 11 课堂实战 -->
+      <section class="sec" id="s11" data-cat="end" data-title="课堂实战 月度质量数据闭环 40分钟 验收六项">
+        <div class="sec-head">
+          <div class="sec-no">11</div>
+          <div>
+            <h2>课堂实战：月度质量数据闭环</h2>
+            <div class="sec-meta"><span class="tag">约 40 分钟</span><span class="tag pg">PPT 第 74 页</span></div>
+          </div>
+        </div>
+        <p class="lead">同一个任务走完全程：搭沙盘 → 先 Plan 再执行 → 校验与关口 → 复盘沉淀。计时器帮你按节奏走。</p>
+
+        <div class="timerbox">
+          <div class="timer-top">
+            <div class="clock" id="clock">40:00</div>
+            <div class="stage">当前阶段：<b id="stageName">① 搭沙盘</b><br><span id="stageTip">建 01–05 目录，把专题三、五的模拟数据放进 01-原始资料</span></div>
+            <div class="timer-btns">
+              <button class="btn btn-primary" id="tStart" type="button">开始</button>
+              <button class="btn" id="tReset" type="button">重置</button>
+            </div>
+          </div>
+          <div class="tstages" id="tStages">
+            <div class="on"><b>① 搭沙盘 · 5 分钟</b>建目录，放数据</div>
+            <div><b>② 先 Plan · 15 分钟</b>用提示词 5 出计划</div>
+            <div><b>③ 校验关口 · 15 分钟</b>用提示词 3 出报告</div>
+            <div><b>④ 复盘沉淀 · 10 分钟</b>答四问，出 Skill 初稿</div>
+          </div>
+        </div>
+
+        <h3 class="sub"><span class="ln"></span>四步走</h3>
+        <ol class="steps">
+          <li><b>① 搭沙盘（5 分钟）</b>：建 01—05 目录，把专题三、五的模拟数据放入 01-原始资料。</li>
+          <li><b>② 先 Plan 再执行（15 分钟）</b>：用提示词 5 先出计划，确认后执行。计划不动手，是最省时间的一步。</li>
+          <li><b>③ 校验与关口（15 分钟）</b>：用提示词 3 出核查报告，人工逐项确认，四道关口逐个过。</li>
+          <li><b>④ 复盘沉淀（10 分钟）</b>：回答复盘四问，生成 Skill 初稿。</li>
+        </ol>
+
+        <h3 class="sub"><span class="ln"></span>验收六项 <span class="hint">能打开、内容对、格式对、范围对、可追溯、可交付</span></h3>
+        <div class="checks" data-check-group="s11">
+          <div class="ct">交付前自查 <span>六项全过才算完成</span></div>
+          <label><input type="checkbox" data-p="s11-1"><span>能打开：Excel 与 PPT 都能正常打开，无损坏</span></label>
+          <label><input type="checkbox" data-p="s11-2"><span>内容对：抽查 3 个数字，与原始数据一致</span></label>
+          <label><input type="checkbox" data-p="s11-3"><span>格式对：命名规则、单位、小数位统一</span></label>
+          <label><input type="checkbox" data-p="s11-4"><span>范围对：只处理了本组测试文件夹里的模拟数据</span></label>
+          <label><input type="checkbox" data-p="s11-5"><span>可追溯：每个结论能回到文件、页、行</span></label>
+          <label><input type="checkbox" data-p="s11-6"><span>可交付：有「待人工确认事项」清单，明确谁签字</span></label>
+        </div>
+
+        <details class="ans"><summary>讲者提示（课堂控场用）</summary><div class="ansbody">
+          <ul>
+            <li>学员最容易在第 ② 步抢跑：计划还没批就直接让 AI 上手。发现抢跑就喊停，让他把计划念一遍。</li>
+            <li>第 ③ 步留一个「故意问错问题」的环节：问 AI「这批能不能放行」，看谁的工具守得住边界。</li>
+            <li>第 ④ 步要求每人写出一句 Skill 触发语，念给同桌听——念不出来的，说明还没想清楚触发场景。</li>
+            <li>全程只处理本组测试文件夹中的模拟数据；不外发、不改原文件。</li>
+          </ul>
+        </div></details>
+      </section>
+
+      <footer class="page">
+        <p><b>内容来源：</b>《WorkBuddy 从入门到精通（生物医药版·武汉生物制品研究所）》第五部分（第 56—74 页），主讲：李家贵。</p>
+        <p><b>数据集说明：</b>本页 15 个文件全部为课堂模拟资料，由讲师按教学需要构造，包含刻意埋设的缺项、超限、重复与不一致；不代表任何真实文献、批次、工艺规程或检验数据，不可用于实际质量判断或申报。</p>
+        <p><b>使用建议：</b>培训现场请使用脱敏副本；是否接入真实业务系统，由企业质量与信息部门决定。AI 做初稿，人做终审。</p>
+        <p>页面更新：2026-11-23　·　李家贵　·　可复制、可下载、可打印</p>
+      </footer>
+
+    </div>
+  </main>
+</div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  'use strict';
+  var $ = function(s,c){return (c||document).querySelector(s);};
+  var $$ = function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s));};
+
+  /* ---------- 移动端抽屉 ---------- */
+  var sidebar = $('#sidebar'), overlay = $('#overlay'), menuBtn = $('#menuBtn'), sideClose = $('#sideClose');
+  function openDrawer(){
+    sidebar.classList.add('open'); overlay.classList.add('show');
+    menuBtn.setAttribute('aria-expanded','true'); document.body.style.overflow='hidden';
+    sideClose.focus();
+  }
+  function closeDrawer(){
+    sidebar.classList.remove('open'); overlay.classList.remove('show');
+    menuBtn.setAttribute('aria-expanded','false'); document.body.style.overflow='';
+    menuBtn.focus();
+  }
+  menuBtn.addEventListener('click', function(){
+    if(sidebar.classList.contains('open')) closeDrawer(); else openDrawer();
+  });
+  sideClose.addEventListener('click', closeDrawer);
+  overlay.addEventListener('click', closeDrawer);
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && sidebar.classList.contains('open')) closeDrawer();
+  });
+  $$('#toc a').forEach(function(a){
+    a.addEventListener('click', function(){
+      if(window.innerWidth <= 960) closeDrawer();
+    });
+  });
+
+  /* ---------- Toast ---------- */
+  var toast = $('#toast'), tTimer;
+  function say(msg, isErr){
+    toast.textContent = msg;
+    toast.className = 'show' + (isErr ? ' err' : '');
+    clearTimeout(tTimer);
+    tTimer = setTimeout(function(){ toast.className = ''; }, 2400);
+  }
+
+  /* ---------- 复制提示词 ---------- */
+  function copyText(text){
+    if(navigator.clipboard && window.isSecureContext){
+      return navigator.clipboard.writeText(text);
+    }
+    return new Promise(function(res, rej){
+      try{
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position='fixed'; ta.style.top='-9999px';
+        document.body.appendChild(ta); ta.focus(); ta.select();
+        var ok = document.execCommand('copy');
+        document.body.removeChild(ta);
+        ok ? res() : rej(new Error('execCommand failed'));
+      }catch(err){ rej(err); }
+    });
+  }
+  $$('.prompt').forEach(function(box){
+    var btn = $('.copybtn', box), pre = $('.prompt-body', box);
+    btn.addEventListener('click', function(){
+      var text = pre.innerText.replace(/\u00a0/g,' ');
+      copyText(text).then(function(){
+        btn.textContent = '已复制';
+        btn.classList.add('ok'); btn.classList.remove('fail');
+        say('提示词全文已复制，可直接粘贴到 WorkBuddy');
+        setTimeout(function(){ btn.textContent='复制全文'; btn.classList.remove('ok'); }, 2200);
+      }).catch(function(){
+        btn.textContent = '复制失败';
+        btn.classList.add('fail');
+        var r = document.createRange(); r.selectNodeContents(pre);
+        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        say('自动复制被浏览器拦截，已为你选中全文，请按 Ctrl+C 手动复制', true);
+        setTimeout(function(){ btn.textContent='复制全文'; btn.classList.remove('fail'); }, 3200);
+      });
+    });
+    var ex = $('.expandbtn', box);
+    ex.addEventListener('click', function(){
+      var open = box.classList.toggle('open');
+      ex.textContent = open ? '收起' : '展开';
+    });
+  });
+
+  /* ---------- 口径小测 ---------- */
+  $$('.quiz').forEach(function(quiz){
+    $$('.q', quiz).forEach(function(q){
+      var answer = q.dataset.answer || quiz.dataset.answer;
+      var why = $('.q-why', q);
+      $$('.q-opts button', q).forEach(function(b){
+        b.addEventListener('click', function(){
+          var picked = b.dataset.v;
+          $$('.q-opts button', q).forEach(function(x){
+            x.disabled = true;
+            if(x.dataset.v === answer) x.classList.add('right');
+          });
+          if(picked !== answer){
+            b.classList.add('wrong');
+            why.classList.add('bad');
+          }
+          why.hidden = false;
+          var good = picked === answer;
+          say(good ? '判断正确 —— ' + why.textContent.slice(0, 18) + '…' : '再想一步：这条为什么不合口径？');
+        });
+      });
+    });
+  });
+
+  /* ---------- 练习进度 ---------- */
+  var KEY = 'biopharma-lab-progress-v1';
+  var saved = {};
+  try{ saved = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; }catch(e){ saved = {}; }
+  var boxes = $$('.checks input[type=checkbox]');
+  var total = boxes.length;
+  $('#progTotal').textContent = total;
+
+  function refreshProgress(){
+    var done = boxes.filter(function(b){ return b.checked; }).length;
+    $('#progNum').textContent = done;
+    $('#progBar').style.width = (total ? (done/total*100) : 0) + '%';
+    $$('.sec').forEach(function(sec){
+      var ins = $$('.checks input[type=checkbox]', sec);
+      var li = $('#toc a[href="#' + sec.id + '"]');
+      if(!li) return;
+      var all = ins.length > 0 && ins.every(function(b){ return b.checked; });
+      li.parentNode.classList.toggle('done', all);
+    });
+  }
+  boxes.forEach(function(b){
+    var id = b.dataset.p;
+    if(saved[id]) b.checked = true;
+    b.addEventListener('change', function(){
+      saved[id] = b.checked;
+      try{ localStorage.setItem(KEY, JSON.stringify(saved)); }catch(e){}
+      refreshProgress();
+    });
+  });
+  refreshProgress();
+
+  /* ---------- 搜索 / 分类 ---------- */
+  var secs = $$('.sec');
+  secs.forEach(function(sec){
+    sec._text = (sec.textContent || '').toLowerCase().replace(/\s+/g,' ');
+    sec._title = (sec.dataset.title || '').toLowerCase();
+  });
+  var q = $('#q'), qClear = $('#qClear'), shown = $('#shownCount'), empty = $('#emptyState');
+  var cat = 'all';
+
+  function apply(){
+    var terms = (q.value || '').toLowerCase().trim().split(/\s+/).filter(Boolean);
+    var n = 0;
+    secs.forEach(function(sec){
+      var okCat = (cat === 'all' || sec.dataset.cat === cat);
+      var okQ = terms.every(function(t){ return sec._text.indexOf(t) > -1 || sec._title.indexOf(t) > -1; });
+      var show = okCat && okQ;
+      sec.hidden = !show;
+      if(show) n++;
+    });
+    shown.textContent = n;
+    empty.hidden = n !== 0;
+    qClear.hidden = !q.value;
+  }
+  q.addEventListener('input', apply);
+  qClear.addEventListener('click', function(){ q.value=''; apply(); q.focus(); });
+  $$('.chip').forEach(function(c){
+    c.addEventListener('click', function(){
+      cat = c.dataset.cat;
+      $$('.chip').forEach(function(x){ x.setAttribute('aria-pressed', String(x === c)); });
+      apply();
+      if(window.innerWidth <= 640) c.scrollIntoView({block:'nearest', inline:'center'});
+    });
+  });
+  apply();
+
+  /* ---------- 滚动高亮 ---------- */
+  var links = $$('#toc a');
+  var map = {};
+  links.forEach(function(a){ map[a.getAttribute('href').slice(1)] = a; });
+  var current = '';
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){
+          var id = en.target.id;
+          if(id !== current && map[id]){
+            current = id;
+            links.forEach(function(a){ a.classList.remove('active'); });
+            map[id].classList.add('active');
+          }
+        }
+      });
+    }, {rootMargin:'-110px 0px -65% 0px', threshold:0});
+    secs.forEach(function(s){ io.observe(s); });
+  }
+
+  /* ---------- 计时器 ---------- */
+  var TOTAL = 40*60, left = TOTAL, running = false, tid = null;
+  var clock = $('#clock'), stageName = $('#stageName'), stageTip = $('#stageTip');
+  var tStart = $('#tStart'), tReset = $('#tReset');
+  var stageEls = $$('#tStages div');
+  var stages = [
+    {end:5*60,  name:'① 搭沙盘',    tip:'建 01–05 目录，把专题三、五的模拟数据放进 01-原始资料'},
+    {end:20*60, name:'② 先 Plan 再执行', tip:'用提示词 5 先出计划，确认后执行'},
+    {end:35*60, name:'③ 校验与关口', tip:'用提示词 3 出核查报告，人工逐项确认'},
+    {end:40*60, name:'④ 复盘沉淀',  tip:'回答复盘四问，生成 Skill 初稿'}
+  ];
+  function fmt(s){
+    var m = Math.floor(s/60), x = s%60;
+    return (m<10?'0':'')+m+':'+(x<10?'0':'')+x;
+  }
+  function renderTimer(){
+    clock.textContent = fmt(left);
+    var elapsed = TOTAL - left, idx = 0;
+    for(var i=0;i<stages.length;i++){ if(elapsed < stages[i].end){ idx = i; break; } idx = i; }
+    stageName.textContent = stages[idx].name;
+    stageTip.textContent = stages[idx].tip;
+    stageEls.forEach(function(el,i){ el.classList.toggle('on', i === idx); });
+    clock.style.color = left === 0 ? '#a8332a' : '';
+  }
+  function tick(){
+    if(left > 0) left--;
+    renderTimer();
+    if(left === 0){
+      running = false; clearInterval(tid); tStart.textContent = '开始';
+      say('40 分钟到，进入复盘：把刚才的坑写进 Skill');
+    }
+  }
+  tStart.addEventListener('click', function(){
+    if(running){ running=false; clearInterval(tid); tStart.textContent='继续'; return; }
+    if(left === 0) return;
+    running = true; tStart.textContent = '暂停';
+    tid = setInterval(tick, 1000);
+  });
+  tReset.addEventListener('click', function(){
+    running = false; clearInterval(tid); tStart.textContent = '开始'; left = TOTAL; renderTimer();
+  });
+  renderTimer();
+
+  $('#printBtn').addEventListener('click', function(){ window.print(); });
+
+  /* ---------- 深链接 ---------- */
+  if(location.hash){
+    var t = document.querySelector(location.hash);
+    if(t) setTimeout(function(){ t.scrollIntoView(); }, 80);
+  }
+})();
+</script>
+</body>
+</html>
