@@ -1,9 +1,9 @@
 {
   "id": "medic-ipo",
-  "title": "中国生物制药 BD｜课前 IPO 填写说明 · 三步交回",
+  "title": "中国生物制药 BD｜课前 IPO 填写说明 · 四步交回",
   "shortTitle": "中国生物制药 BD IPO 填写说明",
   "category": "医疗生命科学",
-  "description": "面向 Sourcing、科学评估、立项决策、尽调·估值·谈判、签协议与项目管理岗位的课前业务场景 IPO 填写说明：下载证据卡场景样例 Word，对着录音讲一遍自己的业务，交给 AI 按模板改写，核对后提交飞书收集表。含医药 BD 场景可复制提示词与口述样例。",
+  "description": "面向 Sourcing、科学评估、立项决策、尽调·估值·谈判、签协议与项目管理岗位的课前业务场景 IPO 填写说明：下载证据卡场景样例 Word，对着录音讲一遍自己的业务，交给 AI 按模板改写，再用 IPO 反向访谈助手（I/O/P 各五问、最多 15 轮）补强规则，核对后提交飞书收集表单。含医药 BD 场景可复制提示词、口述样例与 22 类场景选题提示。",
   "url": "https://xjtulijiagui-max.github.io/lijiagui/medic-ipo/",
   "path": "medic-ipo/",
   "tags": [
@@ -16,13 +16,14 @@
     "课前工具",
     "提示词",
     "语音口述",
-    "飞书收集表"
+    "反向访谈",
+    "飞书表单"
   ],
   "type": "课前工具",
   "client": "中国生物制药 BD 团队",
   "status": "正常",
   "featured": false,
-  "updated": "2026-11-19",
+  "updated": "2026-11-24",
   "source": "基于本站 scene-suite 三件套框架生成（中国生物制药 BD/中国生物制药 BD 团队）",
   "order": 440
 }
