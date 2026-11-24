@@ -28,7 +28,10 @@
 .tool span{display:block;font-size:12.5px;color:var(--muted);line-height:1.75;margin-top:3px}
 .submit-card{margin-top:16px;border:1px solid #cfe0f0;border-radius:13px;background:linear-gradient(180deg,#f4f9fe,#fff);padding:17px 19px}
 .submit-card .label{font-size:12.5px;color:var(--blue);font-weight:750;letter-spacing:.4px}
-.submit-card .url{display:block;margin-top:9px;font-size:12.5px;color:var(--blue-deep);overflow-wrap:anywhere;word-break:break-all;background:#fff;border:1px dashed #b9cedf;border-radius:9px;padding:10px 12px}
+.submit-card .url{display:block;margin-top:9px;font-size:12.5px;color:var(--blue-deep);overflow-wrap:anywhere;word-break:break-all;background:#fff;border:1px dashed #b9cedf;border-radius:9px;padding:10px 12px;font-family:inherit;text-decoration:none}
+a.url{cursor:pointer;transition:background .15s,border-color .15s}
+a.url:hover{background:#f5faff;border-color:#7ea9d2;border-style:solid;text-decoration:underline}
+a.url:after{content:"↗";margin-left:6px;color:var(--blue);font-weight:700;font-size:13px;text-decoration:none;display:inline-block}
 .submit-card .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:13px}
 .submit-card .handoff{margin-top:4px}
 .iosteps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:14px}
@@ -201,8 +204,8 @@
 
           <div class="submit-card">
             <div class="label">提交入口 · BD 团队课前 IPO 收集表</div>
-            <code class="url" id="submit-url">https://lijiagui.feishu.cn/share/base/form/shrcnbFLr1LIHbOfYSB3blNidIf</code>
-            <p style="margin-top:12px;font-size:13.5px">点开是一张飞书表单，<strong>填好三项、把 Word 作为附件传上去</strong>，提交即可：</p>
+            <a class="url" id="submit-url" href="https://lijiagui.feishu.cn/share/base/form/shrcnbFLr1LIHbOfYSB3blNidIf" target="_blank" rel="noopener" title="直接点击打开飞书收集表">https://lijiagui.feishu.cn/share/base/form/shrcnbFLr1LIHbOfYSB3blNidIf</a>
+            <p style="margin-top:12px;font-size:13.5px">上面这行蓝框地址<strong>直接点开就行</strong>，是同一张飞书表单。填好三项、把 Word 作为附件传上去，提交即可：</p>
             <div class="handoff">
               <div><b>谁</b>部门 + 姓名（或用代号）</div>
               <div><b>什么场景</b>一句话说清要解决的事</div>
