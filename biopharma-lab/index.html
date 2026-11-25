@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WorkBuddy 生物医药实战练习台｜六大专题 · 提示词 · 数据集</title>
-<meta name="description" content="《WorkBuddy 从入门到精通（生物医药版·武汉生物制品研究所）》第五部分配套练习页：六大专题、六段可复制提示词、15 个可下载模拟数据集、12 道口径判断题，边看边练。">
+<meta name="description" content="《WorkBuddy 从入门到精通（生物医药版·武汉生物制品研究所）》第五部分配套练习页：环境初始化＋六大专题、七段可复制提示词、15 个可下载模拟数据集、12 道口径判断题，边看边练。">
 <style>
 :root{
   --bg:#f4f7f6;
@@ -161,6 +161,8 @@ main{min-width:0;padding:26px 34px 70px}
 h3.sub{font-size:15px;margin:24px 0 10px;color:var(--ink);font-weight:700;display:flex;align-items:center;gap:8px}
 h3.sub .ln{flex:0 0 4px;height:15px;border-radius:2px;background:var(--brand)}
 h3.sub .hint{font-weight:400;font-size:12.5px;color:var(--muted)}
+h3.sub{flex-wrap:wrap}
+@media (max-width:640px){h3.sub{display:block}h3.sub .ln{display:none}h3.sub .hint{display:block;margin-top:3px}}
 
 /* 三栏 */
 .cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:10px}
@@ -204,7 +206,7 @@ td.mono,th.mono{font-family:var(--mono);font-size:12.4px}
 .prompt-head .sp{flex:1}
 .prompt-body{
   margin:0;padding:15px 16px;font-family:var(--mono);font-size:12.9px;line-height:1.86;color:#17332c;
-  white-space:pre-wrap;word-break:break-word;max-height:380px;overflow:auto;overscroll-behavior:contain;
+  white-space:pre-wrap;word-break:break-word;max-height:680px;overflow:auto;overscroll-behavior:contain;
 }
 .prompt-body .opt{background:#eaf2be;border-bottom:1px dashed #b9c96a;padding:0 2px;border-radius:2px}
 .prompt.open .prompt-body{max-height:none}
@@ -402,7 +404,7 @@ footer.page b{color:var(--ink-2)}
     <nav>
       <ul class="toc" id="toc">
         <li><a href="#s0"><span class="n">00</span><span class="lbl">专题地图：三大场景六个专题</span><span class="dot"></span></a></li>
-        <li><a href="#s1"><span class="n">01</span><span class="lbl">先立规矩：测试文件夹＋最小权限</span><span class="dot"></span></a></li>
+        <li><a href="#s1"><span class="n">01</span><span class="lbl">先立规矩：目录＋权限＋提示词 0</span><span class="dot"></span></a></li>
         <li><a href="#s2"><span class="n">02</span><span class="lbl">专题一｜文献与方案整理</span><span class="dot"></span></a></li>
         <li><a href="#s3"><span class="n">03</span><span class="lbl">专题二｜申报资料核对</span><span class="dot"></span></a></li>
         <li><a href="#s4"><span class="n">04</span><span class="lbl">专题三｜批记录审核</span><span class="dot"></span></a></li>
@@ -432,7 +434,7 @@ footer.page b{color:var(--ink-2)}
         <p>与《WorkBuddy 从入门到精通（生物医药版·武汉生物制品研究所）》第五部分一一对应：每个专题都配齐「要点—提示词—数据集—练习步骤—验收清单—口径小测」。复制提示词、下载数据、当场跑，跑通三次再固化成 Skill。</p>
         <div class="stats">
           <span class="stat"><b>6</b>个专题</span>
-          <span class="stat"><b>6</b>段可复制提示词</span>
+          <span class="stat"><b>7</b>段可复制提示词</span>
           <span class="stat"><b>15</b>个模拟数据集</span>
           <span class="stat"><b>12</b>道口径判断</span>
           <span class="stat"><b>40</b>分钟课堂实战</span>
@@ -493,12 +495,12 @@ footer.page b{color:var(--ink-2)}
       </section>
 
       <!-- 01 规矩 -->
-      <section class="sec" id="s1" data-cat="base" data-title="先立规矩 测试文件夹 最小权限 沙盘">
+      <section class="sec" id="s1" data-cat="base" data-title="先立规矩 测试文件夹 最小权限 沙盘 初始化 提示词 建目录 操作边界">
         <div class="sec-head">
           <div class="sec-no">01</div>
           <div>
             <h2>先立规矩：测试文件夹 ＋ 最小权限</h2>
-            <div class="sec-meta"><span class="tag">动手前 5 分钟</span><span class="tag pg">PPT 第 58 页</span></div>
+            <div class="sec-meta"><span class="tag">动手前 5 分钟</span><span class="tag pg">PPT 第 58 页</span><span class="tag">含 1 段初始化提示词</span></div>
           </div>
         </div>
         <p class="lead">授权不等于合规：先用脱敏副本跑通，再由质量与信息部门决定是否接入真实业务。所有提示词里的路径都基于下面这个工作区。</p>
@@ -550,12 +552,56 @@ footer.page b{color:var(--ink-2)}
           </div>
         </div>
 
+        <h3 class="sub"><span class="ln"></span>提示词 0｜环境初始化 <span class="hint">建目录这件事，让 AI 自己干；开权限这件事，只能你来</span></h3>
+        <div class="prompt" data-prompt="p0">
+          <div class="prompt-head">
+            <span class="pt">提示词 0 · 一句话把沙盘搭起来</span><span class="sp"></span>
+            <button class="expandbtn" type="button">展开</button>
+            <button class="copybtn" type="button">复制全文</button>
+          </div>
+          <pre class="prompt-body">请先给出处理计划，先不执行；等我确认计划后，再按计划执行。
+
+在 D:\WorkBuddy-生物医药工作区 下建立以下目录（已存在的只补缺失项，不清空、不覆盖、不删除任何已有文件）：
+
+D:\WorkBuddy-生物医药工作区\
+  00-操作边界.md
+  01-原始资料\
+      专题一-文献整理\   专题二-申报资料核对\   专题三-批记录审核\
+      专题四-偏差分析\   专题五-检验数据\     专题六-质量月报\
+  02-处理结果\   03-规程模板\   04-核查报告\   05-归档\
+
+建完后依次做三件事：
+1. 生成 00-操作边界.md，写清：可读目录（01）、可写目录（02、04）、仅归档时可写（05）、
+   03 只读；禁止动作（覆盖原始资料、删除文件、外发、访问车间／实验室／申报系统）；
+   命名规则 {日期}-{资料类型}-v{版本号}
+2. 输出一份「权限设置待办清单」：逐条列出需要我本人在 WorkBuddy 权限设置里打开的
+   读、写、外发项，不要替我判断已开还是已关
+3. 列出因已存在而跳过的目录，一条不漏
+
+执行约束：只允许在上述路径内创建目录与文件；遇到删除、清空、移动、改名，一律停下来问我。
+输出格式：目录树（文本）+ 00-操作边界.md
+保存路径：D:\WorkBuddy-生物医药工作区\
+
+<span class="opt">补充口径：不确定路径是否正确时先问我，不要自行改到 C 盘、桌面或带空格的中文路径下。</span></pre>
+          <div class="prompt-note">这段只管「怎么干」，管不了「能干什么」：真正的读写外发开关在客户端权限设置里，必须人工逐项点开。把边界写成 <span class="mono">00-操作边界.md</span> 放在根目录，等于让 AI 每次开工先读自己的规矩。</div>
+        </div>
+
+        <h3 class="sub"><span class="ln"></span>怎么练这段 <span class="hint">先让它说，别让它做</span></h3>
+        <ol class="steps">
+          <li>先别下载 zip，直接贴提示词 0，看它给的计划是否只说建目录、不动别的。</li>
+          <li>计划里只要出现「若已存在则清空重建」「顺手整理旧文件」这类字眼，立刻打回——这是建目录阶段唯一能造成损失的动作。</li>
+          <li>放行后数目录：01 下应有 6 个专题子目录，缺一个都算没跑通。</li>
+          <li>打开生成的 <span class="mono">00-操作边界.md</span>，把「禁止动作」当众念一遍；再按「权限设置待办清单」去设置里逐项开，清单外的一律不开。</li>
+          <li>想省事就直接下载上面的目录骨架 zip 解压——但要讲清区别：zip 是人手工铺的，提示词是 AI 铺的，后者才顺带产出了边界文件与权限待办。</li>
+        </ol>
+
         <div class="checks" data-check-group="s1">
           <div class="ct">沙盘就位自查 <span>勾选后自动保存在本机</span></div>
           <label><input type="checkbox" data-p="s1-1"><span>已建好 01—05 目录，六个专题子目录齐全</span></label>
           <label><input type="checkbox" data-p="s1-2"><span>原始资料只放脱敏副本，真实受控文件一个都没进</span></label>
           <label><input type="checkbox" data-p="s1-3"><span>WorkSpace 权限按「读／写／外发」逐项开，没有整盘放开</span></label>
           <label><input type="checkbox" data-p="s1-4"><span>知道出现异常时先停手，而不是让 AI「再改一版」</span></label>
+          <label><input type="checkbox" data-p="s1-5"><span>提示词 0 建目录时没删改任何已有文件（看它的「已跳过」清单）</span></label>
         </div>
       </section>
 
