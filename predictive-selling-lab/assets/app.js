@@ -227,7 +227,7 @@
 
       return `
       <article class="ex ${isDone ? "done" : ""}" data-ex="${e.id}" id="ex${e.id}">
-        <div class="ex-head">
+        <div class="ex-head" role="button" tabindex="0" aria-expanded="false">
           <div class="ex-no">${e.id === 0 ? "0" : e.id}</div>
           <div class="ex-tt">
             <h4>练习 ${e.id} · ${esc(e.title)}
@@ -236,7 +236,7 @@
             </h4>
             <p>${esc(e.q)}</p>
           </div>
-          <span class="ex-chev">▾</span>
+          <span class="ex-toggle"><em class="ex-toggle-txt">展开</em><i class="ex-chev">▾</i></span>
         </div>
         <div class="ex-body">
           <dl class="kv lead">
@@ -298,13 +298,41 @@
     const cd = e.target.closest("[data-cdl]");
     if (cd) { toast("正在下载：" + cd.dataset.cdl); return; }
 
+    /* 全部展开 / 全部收起 */
+    const oa = e.target.closest("#exOpenAll, #exCloseAll");
+    if (oa) { setAllEx(oa.id === "exOpenAll"); return; }
+
     /* accordion */
     const head = e.target.closest(".ex-head");
     if (head) {
       const art = head.parentElement;
       art.classList.toggle("open");
+      syncExLabel(art);
       return;
     }
+  });
+
+  /* 让「展开 / 收起」按钮的文字与状态始终一致 */
+  function syncExLabel(art) {
+    const on = art.classList.contains("open");
+    const t = art.querySelector(".ex-toggle-txt");
+    if (t) t.textContent = on ? "收起" : "展开";
+    const h = art.querySelector(".ex-head");
+    if (h) h.setAttribute("aria-expanded", on ? "true" : "false");
+  }
+  function setAllEx(open) {
+    $$("#exlist .ex").forEach(art => {
+      art.classList.toggle("open", open);
+      syncExLabel(art);
+    });
+  }
+  document.addEventListener("keydown", e => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    const head = e.target.closest(".ex-head");
+    if (!head || e.target !== head) return;
+    e.preventDefault();
+    head.parentElement.classList.toggle("open");
+    syncExLabel(head.parentElement);
   });
 
   document.addEventListener("change", e => {
@@ -703,5 +731,8 @@
 
   /* open exercise 0 by default */
   const first = $("#ex0");
-  if (first) first.classList.add("open");
+  if (first) {
+    first.classList.add("open");
+    syncExLabel(first);
+  }
 })();
