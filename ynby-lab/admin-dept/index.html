@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>行政管理部练习台｜云南白药药品事业群 AI 赋能实战</title>
+<meta name="description" content="行政管理部岗位场景包与实操练习：从原始速记到纪要 + 督办台账，3 个可下载模拟文件、2 段可复制提示词、9 项验收清单与数据埋点答案。">
+<meta name="theme-color" content="#1B5E8C">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --ink:#15211c; --ink2:#3b4a43; --muted:#63736b; --line:#dde7e1; --line2:#eef4f0;
+  --bg:#f4f8f5; --card:#ffffff; --deep:#08251d; --deep2:#0d3328;
+  --accent:#0F6B4F; --accent-soft:#E6F2EC;
+  --warn:#8A5B1E; --warn-soft:#FFF6E8; --danger:#9B2C2C;
+  --radius:14px; --shadow:0 1px 2px rgba(10,40,30,.05),0 8px 24px rgba(10,40,30,.06);
+  --mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Source Han Sans SC","Hiragino Sans GB",sans-serif;
+}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:15px;line-height:1.72;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+h1,h2,h3,h4{margin:0;line-height:1.35;font-weight:700;letter-spacing:-.01em}
+p{margin:0 0 10px}
+ul,ol{margin:0 0 10px;padding-left:20px}
+li{margin:4px 0}
+code{font-family:var(--mono);font-size:.9em;background:#eef6f1;border:1px solid #dcebe3;
+  border-radius:5px;padding:1px 5px;color:#155340}
+.mono{font-family:var(--mono);font-size:.9em}
+
+/* ---------- 框架 ---------- */
+.shell{display:grid;grid-template-columns:274px minmax(0,1fr);min-height:100vh}
+.sidebar{position:sticky;top:0;height:100vh;background:var(--deep);color:#cfe0d8;
+  display:flex;flex-direction:column;z-index:60}
+.side-head{padding:22px 20px 16px;border-bottom:1px solid rgba(255,255,255,.09)}
+.side-brand{display:flex;align-items:center;gap:10px}
+.side-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(140deg,#1f8a67,#0b4433);
+  display:grid;place-items:center;color:#fff;font-weight:700;font-size:15px;flex:0 0 auto;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}
+.side-brand b{color:#fff;font-size:14.5px;display:block;line-height:1.35}
+.side-brand span{font-size:11.5px;color:#8fae9f;display:block;margin-top:2px}
+.side-toc{flex:1;overflow-y:auto;padding:14px 12px 8px}
+.side-toc::-webkit-scrollbar{width:6px}
+.side-toc::-webkit-scrollbar-thumb{background:#1f4c3c;border-radius:3px}
+.toc-label{font-size:10.5px;letter-spacing:.14em;color:#7d9c8d;padding:6px 10px 8px;font-weight:600}
+.side-toc a{display:flex;gap:9px;align-items:flex-start;color:#bfd4c9;padding:7px 10px;border-radius:8px;
+  font-size:13px;line-height:1.5;margin-bottom:1px;border-left:2px solid transparent}
+.side-toc a:hover{background:rgba(255,255,255,.06);text-decoration:none;color:#fff}
+.side-toc a.on{background:rgba(255,255,255,.10);color:#fff;border-left-color:var(--accent)}
+.side-toc a .n{font-family:var(--mono);font-size:11px;color:#75a892;padding-top:2px;min-width:16px}
+.side-toc a.on .n{color:#9fdcbf}
+.side-toc a.done .n::after{content:"✓";color:#8fd6b1;margin-left:2px}
+.side-foot{padding:12px 16px 16px;border-top:1px solid rgba(255,255,255,.09);font-size:11.5px;color:#8fae9f}
+.bar{height:5px;background:rgba(255,255,255,.12);border-radius:3px;overflow:hidden;margin:8px 0 6px}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#37b98a,#8ad6b4);transition:width .3s}
+
+.main{min-width:0;display:flex;flex-direction:column}
+.topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:12px;
+  padding:10px 26px;background:rgba(244,248,245,.92);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line)}
+.topbar .back{font-size:13px;color:var(--ink2);display:inline-flex;align-items:center;gap:6px;
+  padding:5px 10px;border:1px solid var(--line);border-radius:8px;background:#fff}
+.topbar .back:hover{text-decoration:none;border-color:#bcd4c8;color:var(--accent)}
+.top-dept{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+.top-dept a{font-size:12px;padding:4px 9px;border-radius:7px;color:var(--ink2);border:1px solid transparent}
+.top-dept a:hover{background:#fff;border-color:var(--line);text-decoration:none}
+.top-dept a.on{background:var(--accent);color:#fff}
+.menu-btn{display:none;border:1px solid var(--line);background:#fff;border-radius:8px;
+  width:36px;height:32px;font-size:15px;cursor:pointer;color:var(--ink)}
+.wrap{width:100%;max-width:1000px;margin:0 auto;padding:26px 26px 90px}
+
+/* ---------- 首屏 ---------- */
+.hero{position:relative;background:var(--card);border:1px solid var(--line);border-radius:18px;
+  padding:26px 28px;box-shadow:var(--shadow);overflow:hidden}
+.hero::after{content:"";position:absolute;right:-60px;top:-70px;width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, var(--accent-soft), transparent 68%);opacity:.9}
+.hero .kicker{font-size:12px;letter-spacing:.1em;color:var(--muted);font-weight:600;text-transform:uppercase}
+.hero h1{font-size:30px;margin:8px 0 8px;color:#0d2a21}
+.hero .lede{font-size:15.5px;color:var(--ink2);max-width:640px}
+.hero .glyph{position:absolute;right:26px;top:20px;width:56px;height:56px;border-radius:14px;
+  background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;
+  font-size:26px;font-weight:700;z-index:1}
+.kpis{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;position:relative;z-index:1}
+.kpi{display:inline-flex;align-items:baseline;gap:5px;font-size:12.5px;color:var(--ink2);
+  background:#f3f8f5;border:1px solid var(--line2);border-radius:8px;padding:5px 10px}
+.kpi b{font-family:var(--mono);color:var(--accent);font-size:13.5px}
+
+/* ---------- 区块 ---------- */
+.sec{margin-top:30px;scroll-margin-top:64px}
+.sec-head{display:flex;align-items:baseline;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.secno{font-family:var(--mono);font-size:12px;color:#fff;background:var(--accent);
+  border-radius:6px;padding:2px 7px;letter-spacing:.04em}
+.sec-head h2{font-size:21px;color:#0d2a21}
+.sec-head .hint{font-size:12.5px;color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:18px 20px;box-shadow:var(--shadow)}
+
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.scene{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:15px 16px;
+  border-top:3px solid var(--accent)}
+.scene h3{font-size:14px;color:#123b2d;margin-bottom:6px}
+.scene p{font-size:13.2px;color:var(--ink2);margin:0}
+.assets{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.assets span.lb{font-size:12px;color:var(--muted)}
+.tag{display:inline-block;font-size:12px;padding:3px 9px;border-radius:999px;
+  background:var(--accent-soft);color:var(--accent);border:1px solid #cfe5da}
+
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.panel h3{font-size:13.5px;color:#123b2d;display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.panel h3::before{content:"";width:7px;height:7px;border-radius:2px;background:var(--accent);display:inline-block}
+.panel ul{padding-left:18px;margin:0}
+.panel li{font-size:13.4px;color:var(--ink2);margin:5px 0}
+.boundary{margin-top:13px;background:var(--warn-soft);border:1px solid #f0dcb8;border-radius:12px;
+  padding:13px 16px;font-size:13.4px;color:#6d4815}
+.boundary b{color:#8A5B1E}
+
+/* ---------- 表格 ---------- */
+.tblwrap{width:100%;max-width:100%;overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+.tbl{width:100%;border-collapse:collapse;font-size:13.4px}
+.tbl th{background:#eaf4ee;color:#0d3b2c;text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);
+  white-space:nowrap;font-size:13px;font-weight:700}
+.tbl td{padding:9px 12px;border-bottom:1px solid var(--line2);vertical-align:top;line-height:1.6;color:var(--ink2)}
+.tbl tr:last-child td{border-bottom:0}
+.tbl tbody tr:nth-child(even){background:#fbfdfc}
+
+/* ---------- 文件 ---------- */
+.files{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:11px}
+.file{display:flex;flex-direction:column;gap:6px;background:#fff;border:1px solid var(--line);
+  border-radius:12px;padding:13px 15px;transition:.15s}
+.file:hover{border-color:#b9d6c7;box-shadow:0 6px 18px rgba(10,50,35,.07)}
+.file .fname{font-family:var(--mono);font-size:12px;color:var(--accent);word-break:break-all}
+.file .fdesc{font-size:13px;color:var(--ink);line-height:1.5}
+.file .fmeta{font-size:11.8px;color:var(--muted);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.file .ftype{background:#f0f5f2;border:1px solid var(--line2);border-radius:5px;padding:1px 6px;font-size:11px;color:#456}
+.file a.dl{margin-top:2px;font-size:12.5px;font-weight:600;align-self:flex-start}
+
+/* ---------- 提示词 ---------- */
+.prompt{background:#0d2b22;border-radius:14px;overflow:hidden;box-shadow:var(--shadow);border:1px solid #10382c}
+.prompt+.prompt{margin-top:14px}
+.prompt-head{display:flex;align-items:center;gap:10px;padding:11px 14px;background:#0a231c;
+  border-bottom:1px solid #17402f;flex-wrap:wrap}
+.prompt-head .pt{color:#e6f3ec;font-size:13.5px;font-weight:700}
+.prompt-head .ph{color:#7fae99;font-size:11.8px;flex:1;min-width:180px}
+.copybtn{font-size:12px;border:1px solid #2c6650;background:#144534;color:#bfe6d4;border-radius:7px;
+  padding:5px 11px;cursor:pointer;white-space:nowrap;font-family:var(--sans)}
+.copybtn:hover{background:#1b5a44;color:#fff}
+.copybtn.ok{background:#1f7a58;border-color:#2b9670;color:#fff}
+.copybtn.warn{background:#7a4a12;border-color:#a2661f;color:#ffe6c0}
+.prompt-body{margin:0;padding:15px 16px;font-family:var(--mono);font-size:12.4px;line-height:1.85;
+  color:#d7ece2;white-space:pre-wrap;word-break:break-word;max-height:none;overflow:visible}
+.prompt-body::-webkit-scrollbar{width:8px}
+.prompt-body::-webkit-scrollbar-thumb{background:#265742;border-radius:4px}
+.prompt .opt{margin:0;padding:11px 16px;background:#4a3712;color:#ffe1a8;font-size:12.4px;
+  font-family:var(--mono);border-top:1px dashed #6a5220;line-height:1.7}
+.prompt .opt b{color:#ffd27a}
+.prompt-note{padding:9px 16px 11px;background:#0a231c;border-top:1px solid #17402f;
+  color:#8fb9a6;font-size:11.6px}
+
+/* ---------- 步骤 ---------- */
+.steps{counter-reset:s;list-style:none;padding:0;margin:0}
+.steps li{counter-increment:s;position:relative;padding:0 0 0 38px;margin:0 0 12px;font-size:13.8px;color:var(--ink2)}
+.steps li::before{content:counter(s);position:absolute;left:0;top:1px;width:24px;height:24px;border-radius:7px;
+  background:var(--accent-soft);color:var(--accent);font-family:var(--mono);font-size:12px;font-weight:700;
+  display:grid;place-items:center}
+.steps li b{color:var(--ink)}
+
+/* ---------- 清单 ---------- */
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:7px 14px}
+.checks label{display:flex;min-height:46px;gap:9px;align-items:flex-start;font-size:13.4px;color:var(--ink2);
+  background:#fff;border:1px solid var(--line);border-radius:9px;padding:9px 11px;cursor:pointer;line-height:1.55}
+.checks label:hover{border-color:#b9d6c7;background:#fcfefd}
+.checks input{margin:3px 0 0;accent-color:var(--accent);width:15px;height:15px;flex:0 0 auto}
+.checks input:checked+span{color:#8a9b93;text-decoration:line-through}
+.progline{display:flex;align-items:center;gap:10px;margin-bottom:11px;font-size:12.6px;color:var(--muted)}
+.progline .bar2{flex:1;height:6px;background:#e6eee9;border-radius:3px;overflow:hidden}
+.progline .bar2 i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s}
+.progline b{color:var(--accent);font-family:var(--mono)}
+
+/* ---------- 答案 ---------- */
+details.ans{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+details.ans>summary{cursor:pointer;padding:12px 16px;font-size:13.5px;font-weight:700;color:#0d3b2c;
+  display:flex;align-items:center;gap:8px;list-style:none}
+details.ans>summary::-webkit-details-marker{display:none}
+details.ans>summary::before{content:"▸";color:var(--accent);font-size:12px;transition:.2s}
+details.ans[open]>summary::before{transform:rotate(90deg)}
+details.ans>summary:hover{background:#f8fcfa}
+.ansbody{padding:2px 16px 16px;border-top:1px solid var(--line2)}
+.ansbody dl{margin:0}
+.ansbody dt{font-size:12.6px;font-weight:700;color:#14513f;margin:12px 0 3px;letter-spacing:.01em}
+.ansbody dd{margin:0;font-size:13.2px;color:var(--ink2);line-height:1.68}
+.note{background:#f3f8f5;border-left:3px solid var(--accent);border-radius:0 8px 8px 0;
+  padding:10px 13px;font-size:13px;color:var(--ink2);margin-top:12px}
+
+/* ---------- 测验 ---------- */
+.quiz{display:grid;gap:12px}
+.q{background:#fff;border:1px solid var(--line);border-radius:12px;padding:15px 17px}
+.q .qt{font-size:13.8px;font-weight:700;color:#0d3b2c;margin-bottom:10px;line-height:1.6}
+.q-opts{display:grid;gap:7px}
+.q-opts button{text-align:left;font-family:var(--sans);font-size:13.3px;color:var(--ink2);
+  background:#fafcfb;border:1px solid var(--line);border-radius:9px;padding:9px 12px;cursor:pointer;
+  display:flex;gap:9px;line-height:1.55}
+.q-opts button:hover{border-color:#b9d6c7;background:#f5fbf8}
+.q-opts button .k{font-family:var(--mono);font-size:11.5px;color:#8fa79c;flex:0 0 auto;padding-top:1px}
+.q-opts button.right{border-color:#2f9e73;background:#eaf8f1;color:#0d5c3e}
+.q-opts button.right .k{color:#2f9e73}
+.q-opts button.wrong{border-color:#d9a0a0;background:#fdf0f0;color:#8a2b2b}
+.q-why{margin-top:10px;font-size:12.9px;color:#31503f;background:#f4f9f6;border-radius:9px;
+  padding:10px 12px;line-height:1.7;border-left:3px solid #2f9e73}
+.q-why b{color:#0d5c3e}
+
+/* ---------- 分页 ---------- */
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:36px;flex-wrap:wrap}
+.pager a{flex:1;min-width:200px;background:#fff;border:1px solid var(--line);border-radius:12px;
+  padding:13px 16px;display:flex;flex-direction:column;gap:3px}
+.pager a:hover{border-color:#b9d6c7;text-decoration:none}
+.pager .lb{font-size:11.5px;color:var(--muted)}
+.pager .nm{font-size:14px;color:var(--ink);font-weight:700}
+.pager a.next{text-align:right;align-items:flex-end}
+footer.page{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);
+  font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+/* ---------- 门户 ---------- */
+.deptgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:13px}
+.deptcard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 17px;
+  display:flex;flex-direction:column;gap:8px;position:relative;transition:.16s;border-top:3px solid var(--accent)}
+.deptcard:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(10,50,35,.09);text-decoration:none}
+.deptcard .dc-top{display:flex;align-items:center;gap:9px}
+.deptcard .dc-glyph{width:30px;height:30px;border-radius:8px;background:var(--accent-soft);color:var(--accent);
+  display:grid;place-items:center;font-weight:700;font-size:14px}
+.deptcard h3{font-size:15px;color:#0d2a21}
+.deptcard .dc-tag{font-size:12.4px;color:var(--muted);line-height:1.6}
+.deptcard .dc-task{font-size:13px;color:var(--ink);background:#f6faf8;border-radius:8px;padding:8px 10px;
+  border:1px dashed #d9e8e0;line-height:1.6}
+.deptcard .dc-meta{margin-top:auto;display:flex;gap:10px;font-size:11.8px;color:var(--muted);align-items:center}
+.deptcard .dc-go{margin-left:auto;color:var(--accent);font-weight:700;font-size:12.5px}
+.road{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.road .rcol{background:#fff;border:1px solid var(--line);border-radius:12px;padding:15px 17px}
+.road h3{font-size:14px;margin-bottom:8px;color:#0d3b2c}
+.road ol{padding-left:18px;margin:0}
+.road li{font-size:13.2px;color:var(--ink2);margin:5px 0}
+.road .pg{font-family:var(--mono);font-size:11px;color:#8fa79c;margin-left:4px}
+
+@media (max-width:1080px){
+  .shell{grid-template-columns:1fr}
+  .sidebar{position:fixed;left:0;top:0;width:280px;transform:translateX(-100%);
+    transition:transform .24s ease;box-shadow:0 0 40px rgba(0,0,0,.3)}
+  .sidebar.open{transform:translateX(0)}
+  .menu-btn{display:inline-flex;align-items:center;justify-content:center}
+  .overlay{position:fixed;inset:0;background:rgba(6,30,24,.55);z-index:50;display:none}
+  .overlay.show{display:block}
+  .wrap{padding:20px 18px 80px}
+  .hero h1{font-size:24px}
+  .grid3,.grid2,.twocol,.road{grid-template-columns:1fr}
+  .checks{grid-template-columns:1fr}
+  .top-dept{display:none}
+}
+@media (max-width:520px){
+  .hero{padding:20px 18px}
+  .hero .glyph{display:none}
+  .hero h1{font-size:21px}
+  .sec-head h2{font-size:18px}
+  .card{padding:15px 15px}
+  .prompt-body{font-size:11.8px;line-height:1.8}
+}
+@media print{
+  .sidebar,.topbar,.pager,.copybtn,.menu-btn,.overlay{display:none!important}
+  body{background:#fff}
+  .shell{display:block}
+  .wrap{max-width:none;padding:0}
+  .sec{break-inside:avoid}
+  details.ans>summary::before{content:""}
+  details.ans .ansbody{display:block!important}
+  .prompt{background:#fff;border:1px solid #999}
+  .prompt-body{color:#111;max-height:none;overflow:visible}
+  .prompt-head,.prompt-note{background:#fff;color:#333}
+  .prompt-head .pt{color:#000}
+}
+</style>
+</head>
+<body data-page="admin-dept" style="--accent:#1B5E8C">
+<div class="overlay" id="overlay"></div>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="side-head">
+      <div class="side-brand">
+        <div class="side-mark">行</div>
+        <div>
+          <b>行政管理部</b>
+          <span>PPT P44—45</span>
+        </div>
+      </div>
+      <button id="sideClose" style="display:none"></button>
+    </div>
+    <nav class="side-toc">
+      <div class="toc-label">本页目录</div>
+      <a href="#s1"><span class="n">01</span><span>岗位场景包</span></a>
+      <a href="#s2"><span class="n">02</span><span>本次实操：输入与验收</span></a>
+      <a href="#s3"><span class="n">03</span><span>数据集下载</span></a>
+      <a href="#s4"><span class="n">04</span><span>可复制提示词</span></a>
+      <a href="#s5"><span class="n">05</span><span>怎么练：五步</span></a>
+      <a href="#s6"><span class="n">06</span><span>验收清单</span></a>
+      <a href="#s7"><span class="n">07</span><span>数据埋点答案</span></a>
+      <a href="#s8"><span class="n">08</span><span>口径判断</span></a>
+    </nav>
+      <div class="side-foot">
+        <div style="display:flex;justify-content:space-between">
+          <span>验收进度</span><span><b id="progNum">0</b>/<span id="progTotal">0</span></span>
+        </div>
+        <div class="bar"><i id="progBar"></i></div>
+        <div style="margin-top:6px;font-size:11px;color:#7d9c8d">勾选会保存在本机浏览器</div>
+      </div>
+  </aside>
+<div class="main">
+  <div class="topbar">
+    <button class="menu-btn" id="menuBtn" aria-label="打开目录">☰</button>
+    <a class="back" href="../">← 六部门门户</a>
+    <div class="top-dept"><a href="../data-dept/" class="">01 数据</a><a href="../admin-dept/" class="on">02 行政</a><a href="../risk-dept/" class="">03 风控</a><a href="../finance-dept/" class="">04 财务</a><a href="../hr-dept/" class="">05 人力</a><a href="../party-dept/" class="">06 党群</a></div>
+  </div>
+<div class="wrap">
+<div class="hero">
+  <div class="glyph">行</div>
+  <div class="kicker">云南白药 · 药品事业群中后台 AI 赋能实战｜六部门练习台 02</div>
+  <h1>行政管理部｜从原始速记到纪要 + 督办台账</h1>
+  <p class="lede">会议的结论不写下来，就等于没开。本页把《PPT P44—45》的场景包与实操拆成可动手的四件事：<b>读场景 → 下数据 → 贴提示词 → 对答案</b>。</p>
+  <div class="kpis">
+    <span class="kpi"><b>3</b> 个岗位场景</span>
+    <span class="kpi"><b>2</b> 段提示词</span>
+    <span class="kpi"><b>3</b> 个数据文件</span>
+    <span class="kpi"><b>9</b> 项验收</span>
+    <span class="kpi"><b>45 分钟</b> 课堂用时</span>
+    <span class="kpi">对应 <b>PPT P44—45</b></span>
+  </div>
+</div>
+<section class="sec" id="s1">
+  <div class="sec-head"><span class="secno">01</span><h2>岗位场景包</h2>
+    <span class="hint">先看清楚「哪件事值得做成 AI 任务」，再动手</span></div>
+  <div class="grid3"><div class="scene"><h3>场景 1｜公文与会务</h3><p>通知、请示、方案、接待日程及会议材料，按授权体例生成初稿。体例来自模板，不来自模型记忆——这点决定了公文能不能用。</p></div><div class="scene"><h3>场景 2｜纪要任务化</h3><p>从会议记录里提取行动项、责任人、期限，生成督办清单。难点不是抽取，是分清「已确认」与「讨论过」。</p></div><div class="scene"><h3>场景 3｜资料归档</h3><p>会务、资产、印章、档案、行程资料，先列归档清单再处理副本。清单先行，能避免「整理到一半发现缺件」。</p></div></div>
+  <div class="assets"><span class="lb">本部门应沉淀的资产：</span><span class="tag">公文模板（通知/请示/纪要三件套）</span><span class="tag">会议跟进台账</span><span class="tag">行政资料归档清单</span></div>
+  <div class="note">选场景用「两高两低」：高价值、高频、低门槛、低风险。四条里有一条明显不满足，就先别做——尤其「低风险」，合同签署、付款审批、绩效处置都不属于可练范围。</div>
+</section>
+<section class="sec" id="s2">
+  <div class="sec-head"><span class="secno">02</span><h2>本次实操：从原始速记到纪要 + 督办台账</h2>
+    <span class="hint">对应 PPT P44—45 的「输入与处理规则 / 输出与验收」</span></div>
+  <div class="card" style="margin-bottom:12px">
+    <p style="margin:0"><b>输入：</b>一份 11 条时间线的会议速记（含讨论、会外信息、已补办事项）、纪要模板、空白督办台账。</p>
+  </div>
+  <div class="twocol">
+    <div class="panel"><h3>处理规则（AI 必须照做的）</h3><ul><li>只把会上明确「确认」的内容写进决议；「建议」「可以考虑」「下次再议」一律进讨论未决。</li><li>责任人或期限未明确的，写「待确认」，不许代填、不许按常理推断。</li><li>会前沟通、口头承诺等会外信息，单独标注来源，不作为决议。</li><li>记录里注明「已办理」的事项，状态写「已完成」，不再进督办跟踪。</li><li>每条行动项标注来源段落，便于复核时回查原话。</li></ul></div>
+    <div class="panel"><h3>输出与验收（人必须核对的）</h3><ul><li>Word 纪要：会议信息 / 决议事项 / 行动项 / 讨论未决 / 待确认 五节。</li><li>Excel 督办台账：事项编号、行动项、责任人、期限、状态、依据段落、风险。</li><li>待确认清单：向谁确认、确认什么、什么时候要答复。</li></ul>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px dashed #e3ece7">
+        <div style="font-size:12.4px;color:#456;font-weight:700;margin-bottom:4px">验收要点</div>
+        <ul><li>5 条决议、5 条行动项，一条不多一条不少。</li><li>「待确认」出现在该出现的位置，没有被填成具体人名或日期。</li><li>2 条讨论未决没有被写成决议。</li><li>每条行动项可回溯到速记原段落。</li></ul>
+      </div>
+    </div>
+  </div>
+  <div class="boundary"><b>边界：</b>不替会议确认决议，不自动派发任务，不对外发送。纪要的效力来自主持人确认，不来自文档写得整齐。</div>
+</section>
+<section class="sec" id="s3">
+  <div class="sec-head"><span class="secno">03</span><h2>数据集下载</h2>
+    <span class="hint">全部为课堂模拟数据，已埋入可核对的问题</span></div>
+  <div class="files">
+    <div class="file">
+      <div class="fname">t2-meeting-notes.docx</div>
+      <div class="fdesc">会议速记（11 条时间线）</div>
+      <div class="fmeta"><span class="ftype">Word</span><span>37 KB</span></div>
+      <a class="dl" href="../data/t2-meeting-notes.docx" download>下载 ↓</a>
+    </div>
+    <div class="file">
+      <div class="fname">t2-minutes-template.docx</div>
+      <div class="fdesc">纪要模板（行政体例）</div>
+      <div class="fmeta"><span class="ftype">Word</span><span>37 KB</span></div>
+      <a class="dl" href="../data/t2-minutes-template.docx" download>下载 ↓</a>
+    </div>
+    <div class="file">
+      <div class="fname">t2-supervision-ledger.xlsx</div>
+      <div class="fdesc">空白督办台账</div>
+      <div class="fmeta"><span class="ftype">Excel</span><span>6 KB</span></div>
+      <a class="dl" href="../data/t2-supervision-ledger.xlsx" download>下载 ↓</a>
+    </div>
+  </div>
+  <div class="note">这些文件不是空模板，而是<b>带答案的题</b>：每一份都埋了错，页面第 07 节给出答案。建议先自己找一遍再看答案，否则练的是「抄」而不是「核」。</div>
+</section>
+<section class="sec" id="s4">
+  <div class="sec-head"><span class="secno">04</span><h2>可复制提示词</h2>
+    <span class="hint">逐字可用，路径已按 ../data/ 的下载文件写好</span></div>
+
+  <div class="prompt" data-prompt="p1">
+    <div class="prompt-head">
+      <span class="pt">主提示词｜纪要 + 督办台账</span>
+      <span class="ph">关键在「只写已确认」和「待确认不代填」两句，删掉它们结果立刻变差</span>
+      <button class="copybtn" type="button">复制全文</button>
+    </div>
+    <pre class="prompt-body">先出计划，不执行。
+
+【角色】你是行政管理部的会务岗，负责把会议速记整理成纪要与督办台账。你不是会议主持人，无权替会议做决定。
+
+【输入】
+1. 01-原始副本/t2-meeting-notes.docx（现场速记，未区分确认与讨论）
+2. 01-原始副本/t2-minutes-template.docx（纪要体例，必须遵守）
+3. 01-原始副本/t2-supervision-ledger.xlsx（督办台账字段）
+
+【任务】输出一份 Word 纪要和一份 Excel 督办台账。
+
+【规则】
+1. 只有会上明确「确认」「定了」「就这么办」的内容进决议；「建议」「可以考虑」「下次再议」进讨论未决。
+2. 责任人或期限未明确的，一律写「待确认」，不得根据上下文推断，也不得留空。
+3. 会前沟通、口头承诺、他人转述属会外信息，单独标注「会外信息，未在会上确认」。
+4. 速记中注明已办理的事项，状态写「已完成」，保留在台账中但不计入待办。
+5. 每条行动项必须标注来源段落（第几条），便于复核时回查原话。
+6. 同一事项在速记中出现两次且信息不一致时，两次都列，标「记录不一致，待确认」。
+
+【输出】
+- output/会议纪要-办公用品集采与档案室搬迁-v01.docx
+- output/督办台账-办公用品集采与档案室搬迁-v01.xlsx
+- 待确认清单：向谁确认、确认什么、何时要答复
+
+【红线】不替会议确认决议；不自动派发任务；不对外发送；不虚构参会人或时间。
+
+【验收】人、事、时间、依据四项可追溯；决议与讨论严格分开。</pre>
+    <div class="opt"><b>可删行</b>｜补充口径：会议纪要不写评价性表述（如「气氛热烈」「成效显著」），只写事实、决定与待办。</div>
+    <div class="prompt-note">复制内容含末尾「可删行」；想对比效果，把它删掉再跑一次。</div>
+  </div>
+  <div class="prompt" data-prompt="p2">
+    <div class="prompt-head">
+      <span class="pt">备用提示词｜公文初稿（通知/请示）</span>
+      <span class="ph">场景 1 用；「保留原始数字」这行是防止 AI 把 8 万写成 10 万的关键</span>
+      <button class="copybtn" type="button">复制全文</button>
+    </div>
+    <pre class="prompt-body">先出计划，不执行。
+
+【角色】你是行政文秘，按本单位公文体例起草初稿。
+
+【输入】01-原始副本/ 下的事项说明、会议结论、公文模板（缺哪样先告诉我）。
+
+【任务】根据事项性质判断该用「通知」还是「请示」，说明判断依据，再起草。
+
+【规则】
+1. 结构：背景（为什么办）→ 核心结论（办什么）→ 依据（凭什么）→ 办理要求（谁、何时、怎么办）。
+2. 所有数字、日期、人名只取原文，不换算、不润色、不补全。
+3. 未经审批的结论标「待审批」，不得写成已决定。
+4. 涉及经费的，写明金额、列支渠道、审批权限；缺一项标待确认。
+5. 文末列「待确认事项」，逐条写清找谁确认。
+
+【输出】output/公文初稿-v01.docx + 待确认事项清单。
+
+【红线】不定稿、不编号、不盖章、不外发；不虚构文号与签发人。</pre>
+    <div class="prompt-note">复制内容含末尾「可删行」；想对比效果，把它删掉再跑一次。</div>
+  </div>
+</section>
+<section class="sec" id="s5">
+  <div class="sec-head"><span class="secno">05</span><h2>怎么练：五步</h2>
+    <span class="hint">45 分钟，建议两人一组，一人操作一人记录</span></div>
+  <div class="card"><ol class="steps"><li>先读速记原文，自己用铅笔标一遍：哪些是确认、哪些是讨论——再和 AI 的结果对比，差距就是你的判断力。</li><li>贴提示词，只给「输入」和「规则」，看计划里有没有提出「会外信息怎么处理」。</li><li>执行后先看决议条数：应为 5 条，多了说明把讨论当决议，少了说明漏了。</li><li>打开督办台账，检查「责任人」列有没有出现速记里没有的人名——有就是编的。</li><li>把「待确认」两处对照速记核实：信息部对接人、印章登记本移交期限。</li></ol></div>
+</section>
+<section class="sec" id="s6">
+  <div class="sec-head"><span class="secno">06</span><h2>验收清单</h2>
+    <span class="hint">勾选结果保存在本机，刷新不丢</span></div>
+  <div class="progline"><span>已完成</span><div class="bar2"><i id="bar2"></i></div><b id="progTxt">0 / 9</b></div>
+  <div class="checks" data-group="s6"><label><input type="checkbox" data-p="admin-dept-c1"><span>决议 5 条，且全部来自「确认」表述</span></label><label><input type="checkbox" data-p="admin-dept-c2"><span>行动项 5 条，与决议一一对应</span></label><label><input type="checkbox" data-p="admin-dept-c3"><span>「信息部对接人」写待确认，未编造姓名</span></label><label><input type="checkbox" data-p="admin-dept-c4"><span>「印章登记本移交期限」写待确认</span></label><label><input type="checkbox" data-p="admin-dept-c5"><span>2 条讨论（数字化外包、会议室系统）未进决议</span></label><label><input type="checkbox" data-p="admin-dept-c6"><span>物业口头同意进场标为会外信息</span></label><label><input type="checkbox" data-p="admin-dept-c7"><span>已提交的搬迁清单状态为「已完成」</span></label><label><input type="checkbox" data-p="admin-dept-c8"><span>每条行动项带来源段落</span></label><label><input type="checkbox" data-p="admin-dept-c9"><span>纪要无评价性表述</span></label></div>
+</section>
+<section class="sec" id="s7">
+  <div class="sec-head"><span class="secno">07</span><h2>数据埋点答案</h2>
+    <span class="hint">这些数字直接来自生成数据的脚本，不是事后手写</span></div>
+  <details class="ans">
+    <summary>展开核对答案（建议先自己跑完再看）</summary>
+    <div class="ansbody"><dl><dt>决议条数</dt><dd>5 条：集采牵头与比价时限、搬迁日期、费用上限、清单提交、印章登记本移交</dd><dt>行动项</dt><dd>5 条，其中 1 条状态应为「已完成」</dd><dt>责任人待确认</dt><dd>1 处：档案室搬迁需信息部配合断电，但速记只写「信息部配合」，未写具体对接人</dd><dt>期限待确认</dt><dd>1 处：印章使用登记本移交综合档案室，「等档案室整理完再说」→ 期限未定</dd><dt>讨论未决</dt><dd>2 条：档案数字化外包、会议室预订系统更换，均明确「今天不定」「下次再议」</dd><dt>会外信息</dt><dd>1 条：物业口头同意 12/6 上午进场，发生在会前沟通，未在会上确认</dd><dt>已完成事项</dt><dd>搬迁清单：要求 11/28 前提交，记录注明已于 11/26 提交并签收 → 台账状态「已完成」，不再跟踪</dd><dt>五个坑</dt><dd>许言发言未经本人复述确认，责任人未定；王琳清单已于 11/26 提交，属已完成，不应再进督办；物业口头同意进场属会外信息，不作为决议；张敏移交事项期限未定，只能写待确认；陈锐的数字化外包、李强的系统更换均为讨论，未决议</dd></dl></div>
+  </details>
+</section>
+<section class="sec" id="s8">
+  <div class="sec-head"><span class="secno">08</span><h2>口径判断</h2>
+    <span class="hint">选一个看解析，答错比答对更有用</span></div>
+  <div class="quiz">
+  <div class="q" data-right="2">
+    <div class="qt">Q1. 速记写「陈锐：档案能不能直接数字化外包？周敏：这个想法可以，但要看看预算和保密要求，今天不定。」应写入？</div>
+    <div class="q-opts"><button type="button"><span class="k">A</span><span>决议事项：启动档案数字化外包评估</span></button><button type="button"><span class="k">B</span><span>行动项：陈锐负责外包方案</span></button><button type="button"><span class="k">C</span><span>讨论未决：数字化外包，待评估预算与保密要求</span></button><button type="button"><span class="k">D</span><span>不写入纪要，因为没有结论</span></button></div>
+    <div class="q-why" hidden><b>答案：C</b>　「今天不定」是明确的未决信号。写进讨论未决并记录下一步，既保留了议题，也不会让读者误以为已经决定。写成决议是这类任务最高频的错误。</div>
+  </div>
+  <div class="q" data-right="2">
+    <div class="qt">Q2. 物业在会前口头同意 12/6 上午进场，会议记录里提到了。纪要应如何处理？</div>
+    <div class="q-opts"><button type="button"><span class="k">A</span><span>写入决议，注明物业已同意</span></button><button type="button"><span class="k">B</span><span>写入行动项，责任人填物业</span></button><button type="button"><span class="k">C</span><span>标为会外信息，未在会上确认</span></button><button type="button"><span class="k">D</span><span>删掉，避免争议</span></button></div>
+    <div class="q-why" hidden><b>答案：C</b>　口头、会前、第三方承诺，三个特征都指向「不能当决议」。标注来源比删掉更好——读者需要知道有这么回事，但也要知道它没被确认。</div>
+  </div>
+  </div>
+</section><div class="pager"><a href="../data-dept/"><span class="lb">← 上一部门</span><span class="nm">01 数据与流程管理部</span></a><a class="next" href="../risk-dept/"><span class="lb">下一部门 →</span><span class="nm">03 风控合规部</span></a></div>
+<footer class="page">
+  <span>云南白药 · 药品事业群中后台 AI 赋能实战（两天版）｜行政管理部练习台</span>
+  <span>全部数据为课堂模拟，不含企业真实资料</span>
+</footer>
+</div></div></div>
+<script>
+(function(){
+  var page = document.body.dataset.page || 'page';
+  var KEY = 'ynby-' + page + '-v1';
+
+  // ---- 移动端抽屉
+  var sb = document.getElementById('sidebar'), ov = document.getElementById('overlay'),
+      mb = document.getElementById('menuBtn'), sc = document.getElementById('sideClose');
+  function openD(){ if(!sb) return; sb.classList.add('open'); if(ov) ov.classList.add('show'); }
+  function closeD(){ if(!sb) return; sb.classList.remove('open'); if(ov) ov.classList.remove('show'); }
+  if(mb) mb.addEventListener('click', openD);
+  if(sc) sc.addEventListener('click', closeD);
+  if(ov) ov.addEventListener('click', closeD);
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeD(); });
+  document.querySelectorAll('.side-toc a').forEach(function(a){ a.addEventListener('click', function(){ if(window.innerWidth <= 1080) closeD(); }); });
+
+  // ---- 目录高亮
+  var links = Array.prototype.slice.call(document.querySelectorAll('.side-toc a[href^="#"]'));
+  var secs = links.map(function(a){ return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  function spy(){
+    var y = window.scrollY + 110, cur = null;
+    secs.forEach(function(s){ if(s.offsetTop <= y) cur = s; });
+    links.forEach(function(a){ a.classList.toggle('on', cur && a.getAttribute('href') === '#' + cur.id); });
+  }
+  window.addEventListener('scroll', spy, {passive:true}); spy();
+
+  // ---- 复制
+  function mark(btn, txt, cls){
+    var old = btn.dataset.old || btn.textContent;
+    btn.dataset.old = old;
+    btn.textContent = txt; btn.classList.remove('ok','warn');
+    if(cls) btn.classList.add(cls);
+    setTimeout(function(){ btn.textContent = old; btn.classList.remove('ok','warn'); }, 2200);
+  }
+  function fallbackCopy(text){
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly','');
+    ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0';
+    document.body.appendChild(ta); ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch(e) { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+  document.querySelectorAll('.prompt').forEach(function(box){
+    var btn = box.querySelector('.copybtn');
+    if(!btn) return;
+    btn.addEventListener('click', function(){
+      var pre = box.querySelector('.prompt-body');
+      var opt = box.querySelector('.opt');
+      var text = pre ? pre.innerText : '';
+      if(opt) text += '\n\n' + opt.innerText;
+      var done = function(){ mark(btn, '已复制全文', 'ok'); };
+      var fail = function(){
+        // 退化为手动复制：选中正文
+        try{
+          var r = document.createRange(); r.selectNodeContents(pre);
+          var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        }catch(e){}
+        mark(btn, '请按 Ctrl+C 复制已选中内容', 'warn');
+      };
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done).catch(function(){
+          if(fallbackCopy(text)) done(); else fail();
+        });
+      } else {
+        if(fallbackCopy(text)) done(); else fail();
+      }
+    });
+  });
+
+  // ---- 勾选进度
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('.checks input[type=checkbox]'));
+  if(boxes.length){
+    var saved = {};
+    try { saved = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e) { saved = {}; }
+    boxes.forEach(function(b){
+      var id = b.dataset.p;
+      if(saved[id]) b.checked = true;
+      b.addEventListener('change', function(){
+        saved[id] = b.checked;
+        try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch(e) {}
+        progress();
+      });
+    });
+    function progress(){
+      var total = boxes.length, on = boxes.filter(function(b){ return b.checked; }).length;
+      var pct = total ? Math.round(on / total * 100) : 0;
+      var num = document.getElementById('progNum'), tot = document.getElementById('progTotal'),
+          bar = document.getElementById('progBar'), bar2 = document.getElementById('bar2'),
+          txt = document.getElementById('progTxt');
+      if(num) num.textContent = on;
+      if(tot) tot.textContent = total;
+      if(bar) bar.style.width = pct + '%';
+      if(bar2) bar2.style.width = pct + '%';
+      if(txt) txt.textContent = on + ' / ' + total;
+      // 目录完成标记
+      document.querySelectorAll('.checks').forEach(function(g){
+        var sid = g.dataset.group;
+        var all = g.querySelectorAll('input');
+        var ok = Array.prototype.every.call(all, function(x){ return x.checked; });
+        var a = document.querySelector('.side-toc a[href="#' + sid + '"]');
+        if(a) a.classList.toggle('done', ok);
+      });
+    }
+    progress();
+  }
+
+  // ---- 判断题
+  document.querySelectorAll('.q').forEach(function(q){
+    var btns = Array.prototype.slice.call(q.querySelectorAll('.q-opts button'));
+    var right = parseInt(q.dataset.right, 10);
+    btns.forEach(function(b, i){
+      b.addEventListener('click', function(){
+        if(q.dataset.answered) return;
+        q.dataset.answered = '1';
+        btns[right].classList.add('right');
+        if(i !== right) b.classList.add('wrong');
+        var why = q.querySelector('.q-why');
+        if(why) why.hidden = false;
+      });
+    });
+  });
+
+  // ---- 打印前展开答案
+  window.addEventListener('beforeprint', function(){
+    document.querySelectorAll('details.ans').forEach(function(d){ d.open = true; });
+  });
+})();
+</script>
+</body></html>
