@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>云南白药六部门 AI 练习台｜药品事业群中后台 AI 赋能实战</title>
+<meta name="description" content="对应《WorkBuddy 从入门到精通（两天版）》第二部分：数据、行政、风控、财务、人力、党群六个部门的岗位场景包与实操练习，含 19 个岗位场景、12 段可复制提示词、14 个模拟数据文件与 54 项验收清单。">
+<meta name="theme-color" content="#0F6B4F">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --ink:#15211c; --ink2:#3b4a43; --muted:#63736b; --line:#dde7e1; --line2:#eef4f0;
+  --bg:#f4f8f5; --card:#ffffff; --deep:#08251d; --deep2:#0d3328;
+  --accent:#0F6B4F; --accent-soft:#E6F2EC;
+  --warn:#8A5B1E; --warn-soft:#FFF6E8; --danger:#9B2C2C;
+  --radius:14px; --shadow:0 1px 2px rgba(10,40,30,.05),0 8px 24px rgba(10,40,30,.06);
+  --mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Source Han Sans SC","Hiragino Sans GB",sans-serif;
+}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:15px;line-height:1.72;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+h1,h2,h3,h4{margin:0;line-height:1.35;font-weight:700;letter-spacing:-.01em}
+p{margin:0 0 10px}
+ul,ol{margin:0 0 10px;padding-left:20px}
+li{margin:4px 0}
+code{font-family:var(--mono);font-size:.9em;background:#eef6f1;border:1px solid #dcebe3;
+  border-radius:5px;padding:1px 5px;color:#155340}
+.mono{font-family:var(--mono);font-size:.9em}
+
+/* ---------- 框架 ---------- */
+.shell{display:grid;grid-template-columns:274px minmax(0,1fr);min-height:100vh}
+.sidebar{position:sticky;top:0;height:100vh;background:var(--deep);color:#cfe0d8;
+  display:flex;flex-direction:column;z-index:60}
+.side-head{padding:22px 20px 16px;border-bottom:1px solid rgba(255,255,255,.09)}
+.side-brand{display:flex;align-items:center;gap:10px}
+.side-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(140deg,#1f8a67,#0b4433);
+  display:grid;place-items:center;color:#fff;font-weight:700;font-size:15px;flex:0 0 auto;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}
+.side-brand b{color:#fff;font-size:14.5px;display:block;line-height:1.35}
+.side-brand span{font-size:11.5px;color:#8fae9f;display:block;margin-top:2px}
+.side-toc{flex:1;overflow-y:auto;padding:14px 12px 8px}
+.side-toc::-webkit-scrollbar{width:6px}
+.side-toc::-webkit-scrollbar-thumb{background:#1f4c3c;border-radius:3px}
+.toc-label{font-size:10.5px;letter-spacing:.14em;color:#7d9c8d;padding:6px 10px 8px;font-weight:600}
+.side-toc a{display:flex;gap:9px;align-items:flex-start;color:#bfd4c9;padding:7px 10px;border-radius:8px;
+  font-size:13px;line-height:1.5;margin-bottom:1px;border-left:2px solid transparent}
+.side-toc a:hover{background:rgba(255,255,255,.06);text-decoration:none;color:#fff}
+.side-toc a.on{background:rgba(255,255,255,.10);color:#fff;border-left-color:var(--accent)}
+.side-toc a .n{font-family:var(--mono);font-size:11px;color:#75a892;padding-top:2px;min-width:16px}
+.side-toc a.on .n{color:#9fdcbf}
+.side-toc a.done .n::after{content:"✓";color:#8fd6b1;margin-left:2px}
+.side-foot{padding:12px 16px 16px;border-top:1px solid rgba(255,255,255,.09);font-size:11.5px;color:#8fae9f}
+.bar{height:5px;background:rgba(255,255,255,.12);border-radius:3px;overflow:hidden;margin:8px 0 6px}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#37b98a,#8ad6b4);transition:width .3s}
+
+.main{min-width:0;display:flex;flex-direction:column}
+.topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:12px;
+  padding:10px 26px;background:rgba(244,248,245,.92);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line)}
+.topbar .back{font-size:13px;color:var(--ink2);display:inline-flex;align-items:center;gap:6px;
+  padding:5px 10px;border:1px solid var(--line);border-radius:8px;background:#fff}
+.topbar .back:hover{text-decoration:none;border-color:#bcd4c8;color:var(--accent)}
+.top-dept{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+.top-dept a{font-size:12px;padding:4px 9px;border-radius:7px;color:var(--ink2);border:1px solid transparent}
+.top-dept a:hover{background:#fff;border-color:var(--line);text-decoration:none}
+.top-dept a.on{background:var(--accent);color:#fff}
+.menu-btn{display:none;border:1px solid var(--line);background:#fff;border-radius:8px;
+  width:36px;height:32px;font-size:15px;cursor:pointer;color:var(--ink)}
+.wrap{width:100%;max-width:1000px;margin:0 auto;padding:26px 26px 90px}
+
+/* ---------- 首屏 ---------- */
+.hero{position:relative;background:var(--card);border:1px solid var(--line);border-radius:18px;
+  padding:26px 28px;box-shadow:var(--shadow);overflow:hidden}
+.hero::after{content:"";position:absolute;right:-60px;top:-70px;width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, var(--accent-soft), transparent 68%);opacity:.9}
+.hero .kicker{font-size:12px;letter-spacing:.1em;color:var(--muted);font-weight:600;text-transform:uppercase}
+.hero h1{font-size:30px;margin:8px 0 8px;color:#0d2a21}
+.hero .lede{font-size:15.5px;color:var(--ink2);max-width:640px}
+.hero .glyph{position:absolute;right:26px;top:20px;width:56px;height:56px;border-radius:14px;
+  background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;
+  font-size:26px;font-weight:700;z-index:1}
+.kpis{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;position:relative;z-index:1}
+.kpi{display:inline-flex;align-items:baseline;gap:5px;font-size:12.5px;color:var(--ink2);
+  background:#f3f8f5;border:1px solid var(--line2);border-radius:8px;padding:5px 10px}
+.kpi b{font-family:var(--mono);color:var(--accent);font-size:13.5px}
+
+/* ---------- 区块 ---------- */
+.sec{margin-top:30px;scroll-margin-top:64px}
+.sec-head{display:flex;align-items:baseline;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.secno{font-family:var(--mono);font-size:12px;color:#fff;background:var(--accent);
+  border-radius:6px;padding:2px 7px;letter-spacing:.04em}
+.sec-head h2{font-size:21px;color:#0d2a21}
+.sec-head .hint{font-size:12.5px;color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:18px 20px;box-shadow:var(--shadow)}
+
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.scene{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:15px 16px;
+  border-top:3px solid var(--accent)}
+.scene h3{font-size:14px;color:#123b2d;margin-bottom:6px}
+.scene p{font-size:13.2px;color:var(--ink2);margin:0}
+.assets{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.assets span.lb{font-size:12px;color:var(--muted)}
+.tag{display:inline-block;font-size:12px;padding:3px 9px;border-radius:999px;
+  background:var(--accent-soft);color:var(--accent);border:1px solid #cfe5da}
+
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.panel h3{font-size:13.5px;color:#123b2d;display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.panel h3::before{content:"";width:7px;height:7px;border-radius:2px;background:var(--accent);display:inline-block}
+.panel ul{padding-left:18px;margin:0}
+.panel li{font-size:13.4px;color:var(--ink2);margin:5px 0}
+.boundary{margin-top:13px;background:var(--warn-soft);border:1px solid #f0dcb8;border-radius:12px;
+  padding:13px 16px;font-size:13.4px;color:#6d4815}
+.boundary b{color:#8A5B1E}
+
+/* ---------- 表格 ---------- */
+.tblwrap{width:100%;max-width:100%;overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+.tbl{width:100%;border-collapse:collapse;font-size:13.4px}
+.tbl th{background:#eaf4ee;color:#0d3b2c;text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);
+  white-space:nowrap;font-size:13px;font-weight:700}
+.tbl td{padding:9px 12px;border-bottom:1px solid var(--line2);vertical-align:top;line-height:1.6;color:var(--ink2)}
+.tbl tr:last-child td{border-bottom:0}
+.tbl tbody tr:nth-child(even){background:#fbfdfc}
+
+/* ---------- 文件 ---------- */
+.files{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:11px}
+.file{display:flex;flex-direction:column;gap:6px;background:#fff;border:1px solid var(--line);
+  border-radius:12px;padding:13px 15px;transition:.15s}
+.file:hover{border-color:#b9d6c7;box-shadow:0 6px 18px rgba(10,50,35,.07)}
+.file .fname{font-family:var(--mono);font-size:12px;color:var(--accent);word-break:break-all}
+.file .fdesc{font-size:13px;color:var(--ink);line-height:1.5}
+.file .fmeta{font-size:11.8px;color:var(--muted);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.file .ftype{background:#f0f5f2;border:1px solid var(--line2);border-radius:5px;padding:1px 6px;font-size:11px;color:#456}
+.file a.dl{margin-top:2px;font-size:12.5px;font-weight:600;align-self:flex-start}
+
+/* ---------- 提示词 ---------- */
+.prompt{background:#0d2b22;border-radius:14px;overflow:hidden;box-shadow:var(--shadow);border:1px solid #10382c}
+.prompt+.prompt{margin-top:14px}
+.prompt-head{display:flex;align-items:center;gap:10px;padding:11px 14px;background:#0a231c;
+  border-bottom:1px solid #17402f;flex-wrap:wrap}
+.prompt-head .pt{color:#e6f3ec;font-size:13.5px;font-weight:700}
+.prompt-head .ph{color:#7fae99;font-size:11.8px;flex:1;min-width:180px}
+.copybtn{font-size:12px;border:1px solid #2c6650;background:#144534;color:#bfe6d4;border-radius:7px;
+  padding:5px 11px;cursor:pointer;white-space:nowrap;font-family:var(--sans)}
+.copybtn:hover{background:#1b5a44;color:#fff}
+.copybtn.ok{background:#1f7a58;border-color:#2b9670;color:#fff}
+.copybtn.warn{background:#7a4a12;border-color:#a2661f;color:#ffe6c0}
+.prompt-body{margin:0;padding:15px 16px;font-family:var(--mono);font-size:12.4px;line-height:1.85;
+  color:#d7ece2;white-space:pre-wrap;word-break:break-word;max-height:none;overflow:visible}
+.prompt-body::-webkit-scrollbar{width:8px}
+.prompt-body::-webkit-scrollbar-thumb{background:#265742;border-radius:4px}
+.prompt .opt{margin:0;padding:11px 16px;background:#4a3712;color:#ffe1a8;font-size:12.4px;
+  font-family:var(--mono);border-top:1px dashed #6a5220;line-height:1.7}
+.prompt .opt b{color:#ffd27a}
+.prompt-note{padding:9px 16px 11px;background:#0a231c;border-top:1px solid #17402f;
+  color:#8fb9a6;font-size:11.6px}
+
+/* ---------- 步骤 ---------- */
+.steps{counter-reset:s;list-style:none;padding:0;margin:0}
+.steps li{counter-increment:s;position:relative;padding:0 0 0 38px;margin:0 0 12px;font-size:13.8px;color:var(--ink2)}
+.steps li::before{content:counter(s);position:absolute;left:0;top:1px;width:24px;height:24px;border-radius:7px;
+  background:var(--accent-soft);color:var(--accent);font-family:var(--mono);font-size:12px;font-weight:700;
+  display:grid;place-items:center}
+.steps li b{color:var(--ink)}
+
+/* ---------- 清单 ---------- */
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:7px 14px}
+.checks label{display:flex;min-height:46px;gap:9px;align-items:flex-start;font-size:13.4px;color:var(--ink2);
+  background:#fff;border:1px solid var(--line);border-radius:9px;padding:9px 11px;cursor:pointer;line-height:1.55}
+.checks label:hover{border-color:#b9d6c7;background:#fcfefd}
+.checks input{margin:3px 0 0;accent-color:var(--accent);width:15px;height:15px;flex:0 0 auto}
+.checks input:checked+span{color:#8a9b93;text-decoration:line-through}
+.progline{display:flex;align-items:center;gap:10px;margin-bottom:11px;font-size:12.6px;color:var(--muted)}
+.progline .bar2{flex:1;height:6px;background:#e6eee9;border-radius:3px;overflow:hidden}
+.progline .bar2 i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s}
+.progline b{color:var(--accent);font-family:var(--mono)}
+
+/* ---------- 答案 ---------- */
+details.ans{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+details.ans>summary{cursor:pointer;padding:12px 16px;font-size:13.5px;font-weight:700;color:#0d3b2c;
+  display:flex;align-items:center;gap:8px;list-style:none}
+details.ans>summary::-webkit-details-marker{display:none}
+details.ans>summary::before{content:"▸";color:var(--accent);font-size:12px;transition:.2s}
+details.ans[open]>summary::before{transform:rotate(90deg)}
+details.ans>summary:hover{background:#f8fcfa}
+.ansbody{padding:2px 16px 16px;border-top:1px solid var(--line2)}
+.ansbody dl{margin:0}
+.ansbody dt{font-size:12.6px;font-weight:700;color:#14513f;margin:12px 0 3px;letter-spacing:.01em}
+.ansbody dd{margin:0;font-size:13.2px;color:var(--ink2);line-height:1.68}
+.note{background:#f3f8f5;border-left:3px solid var(--accent);border-radius:0 8px 8px 0;
+  padding:10px 13px;font-size:13px;color:var(--ink2);margin-top:12px}
+
+/* ---------- 测验 ---------- */
+.quiz{display:grid;gap:12px}
+.q{background:#fff;border:1px solid var(--line);border-radius:12px;padding:15px 17px}
+.q .qt{font-size:13.8px;font-weight:700;color:#0d3b2c;margin-bottom:10px;line-height:1.6}
+.q-opts{display:grid;gap:7px}
+.q-opts button{text-align:left;font-family:var(--sans);font-size:13.3px;color:var(--ink2);
+  background:#fafcfb;border:1px solid var(--line);border-radius:9px;padding:9px 12px;cursor:pointer;
+  display:flex;gap:9px;line-height:1.55}
+.q-opts button:hover{border-color:#b9d6c7;background:#f5fbf8}
+.q-opts button .k{font-family:var(--mono);font-size:11.5px;color:#8fa79c;flex:0 0 auto;padding-top:1px}
+.q-opts button.right{border-color:#2f9e73;background:#eaf8f1;color:#0d5c3e}
+.q-opts button.right .k{color:#2f9e73}
+.q-opts button.wrong{border-color:#d9a0a0;background:#fdf0f0;color:#8a2b2b}
+.q-why{margin-top:10px;font-size:12.9px;color:#31503f;background:#f4f9f6;border-radius:9px;
+  padding:10px 12px;line-height:1.7;border-left:3px solid #2f9e73}
+.q-why b{color:#0d5c3e}
+
+/* ---------- 分页 ---------- */
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:36px;flex-wrap:wrap}
+.pager a{flex:1;min-width:200px;background:#fff;border:1px solid var(--line);border-radius:12px;
+  padding:13px 16px;display:flex;flex-direction:column;gap:3px}
+.pager a:hover{border-color:#b9d6c7;text-decoration:none}
+.pager .lb{font-size:11.5px;color:var(--muted)}
+.pager .nm{font-size:14px;color:var(--ink);font-weight:700}
+.pager a.next{text-align:right;align-items:flex-end}
+footer.page{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);
+  font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+/* ---------- 门户 ---------- */
+.deptgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:13px}
+.deptcard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 17px;
+  display:flex;flex-direction:column;gap:8px;position:relative;transition:.16s;border-top:3px solid var(--accent)}
+.deptcard:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(10,50,35,.09);text-decoration:none}
+.deptcard .dc-top{display:flex;align-items:center;gap:9px}
+.deptcard .dc-glyph{width:30px;height:30px;border-radius:8px;background:var(--accent-soft);color:var(--accent);
+  display:grid;place-items:center;font-weight:700;font-size:14px}
+.deptcard h3{font-size:15px;color:#0d2a21}
+.deptcard .dc-tag{font-size:12.4px;color:var(--muted);line-height:1.6}
+.deptcard .dc-task{font-size:13px;color:var(--ink);background:#f6faf8;border-radius:8px;padding:8px 10px;
+  border:1px dashed #d9e8e0;line-height:1.6}
+.deptcard .dc-meta{margin-top:auto;display:flex;gap:10px;font-size:11.8px;color:var(--muted);align-items:center}
+.deptcard .dc-go{margin-left:auto;color:var(--accent);font-weight:700;font-size:12.5px}
+.road{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.road .rcol{background:#fff;border:1px solid var(--line);border-radius:12px;padding:15px 17px}
+.road h3{font-size:14px;margin-bottom:8px;color:#0d3b2c}
+.road ol{padding-left:18px;margin:0}
+.road li{font-size:13.2px;color:var(--ink2);margin:5px 0}
+.road .pg{font-family:var(--mono);font-size:11px;color:#8fa79c;margin-left:4px}
+
+@media (max-width:1080px){
+  .shell{grid-template-columns:1fr}
+  .sidebar{position:fixed;left:0;top:0;width:280px;transform:translateX(-100%);
+    transition:transform .24s ease;box-shadow:0 0 40px rgba(0,0,0,.3)}
+  .sidebar.open{transform:translateX(0)}
+  .menu-btn{display:inline-flex;align-items:center;justify-content:center}
+  .overlay{position:fixed;inset:0;background:rgba(6,30,24,.55);z-index:50;display:none}
+  .overlay.show{display:block}
+  .wrap{padding:20px 18px 80px}
+  .hero h1{font-size:24px}
+  .grid3,.grid2,.twocol,.road{grid-template-columns:1fr}
+  .checks{grid-template-columns:1fr}
+  .top-dept{display:none}
+}
+@media (max-width:520px){
+  .hero{padding:20px 18px}
+  .hero .glyph{display:none}
+  .hero h1{font-size:21px}
+  .sec-head h2{font-size:18px}
+  .card{padding:15px 15px}
+  .prompt-body{font-size:11.8px;line-height:1.8}
+}
+@media print{
+  .sidebar,.topbar,.pager,.copybtn,.menu-btn,.overlay{display:none!important}
+  body{background:#fff}
+  .shell{display:block}
+  .wrap{max-width:none;padding:0}
+  .sec{break-inside:avoid}
+  details.ans>summary::before{content:""}
+  details.ans .ansbody{display:block!important}
+  .prompt{background:#fff;border:1px solid #999}
+  .prompt-body{color:#111;max-height:none;overflow:visible}
+  .prompt-head,.prompt-note{background:#fff;color:#333}
+  .prompt-head .pt{color:#000}
+}
+</style>
+</head>
+<body data-page="hub" style="--accent:#0F6B4F">
+<div class="overlay" id="overlay"></div>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="side-head">
+      <div class="side-brand">
+        <div class="side-mark">云</div>
+        <div>
+          <b>六部门练习台</b>
+          <span>云南白药·药品事业群</span>
+        </div>
+      </div>
+      <button id="sideClose" style="display:none"></button>
+    </div>
+    <nav class="side-toc">
+      <div class="toc-label">本页目录</div>
+      <a href="#s0"><span class="n">00</span><span>六部门入口</span></a>
+      <a href="#s1"><span class="n">01</span><span>两天路线</span></a>
+      <a href="#s2"><span class="n">02</span><span>先立规矩：目录＋权限</span></a>
+      <a href="#s3"><span class="n">03</span><span>通用提示词与验收六项</span></a>
+      <a href="#s4"><span class="n">04</span><span>四道人工关口</span></a>
+      <a href="#s5"><span class="n">05</span><span>IPO 与课堂节奏</span></a>
+    </nav>
+      <div class="side-foot">
+        <div style="font-size:11.5px;line-height:1.6">课堂模拟数据<br>不涉及云南白药真实资料</div>
+      </div>
+  </aside>
+<div class="main">
+  <div class="topbar">
+    <button class="menu-btn" id="menuBtn" aria-label="打开目录">☰</button>
+    <a class="back" href="../">← 六部门门户</a>
+    <div class="top-dept"><a href="../data-dept/" class="">01 数据</a><a href="../admin-dept/" class="">02 行政</a><a href="../risk-dept/" class="">03 风控</a><a href="../finance-dept/" class="">04 财务</a><a href="../hr-dept/" class="">05 人力</a><a href="../party-dept/" class="">06 党群</a></div>
+  </div>
+<div class="wrap">
+<div class="hero">
+  <div class="glyph">云</div>
+  <div class="kicker">云南白药 · 药品事业群中后台 AI 赋能实战（两天版）</div>
+  <h1>六部门 AI 练习台</h1>
+  <p class="lede">把《WorkBuddy 从入门到精通（两天版）》第二部分的六部门场景包与实操，做成一页一个部门的练习：<b>读场景 → 下数据 → 贴提示词 → 对答案</b>。每个部门都有一套埋了错的模拟数据，答案在页面末尾。</p>
+  <div class="kpis">
+    <span class="kpi"><b>6</b> 个部门</span>
+    <span class="kpi"><b>19</b> 个岗位场景</span>
+    <span class="kpi"><b>12</b> 段提示词</span>
+    <span class="kpi"><b>14</b> 个数据文件</span>
+    <span class="kpi"><b>54</b> 项验收</span>
+  </div>
+</div>
+<section class="sec" id="s0">
+  <div class="sec-head"><span class="secno">00</span><h2>六部门入口</h2>
+    <span class="hint">对应 PPT 第 40—53 页的场景地图与各部门实操</span></div>
+  <div class="deptgrid">
+  <a class="deptcard" href="./data-dept/" style="--accent:#0F6B4F;--accent-soft:#E6F2EC">
+    <div class="dc-top"><div class="dc-glyph">数</div><h3>01　数据与流程管理部</h3></div>
+    <div class="dc-tag">别人的表最后一公里，都在你这里合并</div>
+    <div class="dc-task"><b>实操：</b>客户主数据 A/B 表合并与差异核对</div>
+    <div class="dc-meta">
+      <span>3 场景</span><span>3 文件</span>
+      <span>2 提示词</span><span>9 验收</span>
+      <span class="dc-go">进入 →</span>
+    </div>
+  </a>
+  <a class="deptcard" href="./admin-dept/" style="--accent:#1B5E8C;--accent-soft:#E7F0F7">
+    <div class="dc-top"><div class="dc-glyph">行</div><h3>02　行政管理部</h3></div>
+    <div class="dc-tag">会议的结论不写下来，就等于没开</div>
+    <div class="dc-task"><b>实操：</b>从原始速记到纪要 + 督办台账</div>
+    <div class="dc-meta">
+      <span>3 场景</span><span>3 文件</span>
+      <span>2 提示词</span><span>9 验收</span>
+      <span class="dc-go">进入 →</span>
+    </div>
+  </a>
+  <a class="deptcard" href="./risk-dept/" style="--accent:#A2541F;--accent-soft:#FBEEE4">
+    <div class="dc-top"><div class="dc-glyph">风</div><h3>03　风控合规部</h3></div>
+    <div class="dc-tag">AI 只做筛查，判断与签署始终在人</div>
+    <div class="dc-task"><b>实操：</b>合同条款抽取与初审（模拟采购合同）</div>
+    <div class="dc-meta">
+      <span>3 场景</span><span>2 文件</span>
+      <span>2 提示词</span><span>9 验收</span>
+      <span class="dc-go">进入 →</span>
+    </div>
+  </a>
+  <a class="deptcard" href="./finance-dept/" style="--accent:#0E6E6E;--accent-soft:#E5F2F2">
+    <div class="dc-top"><div class="dc-glyph">财</div><h3>04　财务管理部</h3></div>
+    <div class="dc-tag">差异要指出来，但不能替财务下结论</div>
+    <div class="dc-task"><b>实操：</b>合同—订单—发票—付款四方核对</div>
+    <div class="dc-meta">
+      <span>4 场景</span><span>2 文件</span>
+      <span>2 提示词</span><span>9 验收</span>
+      <span class="dc-go">进入 →</span>
+    </div>
+  </a>
+  <a class="deptcard" href="./hr-dept/" style="--accent:#6B4A8C;--accent-soft:#F1EBF7">
+    <div class="dc-top"><div class="dc-glyph">人</div><h3>05　人力资源部</h3></div>
+    <div class="dc-tag">访谈里说的是诉求，不是需求</div>
+    <div class="dc-task"><b>实操：</b>从 5 段匿名访谈到一个课程大纲</div>
+    <div class="dc-meta">
+      <span>3 场景</span><span>2 文件</span>
+      <span>2 提示词</span><span>9 验收</span>
+      <span class="dc-go">进入 →</span>
+    </div>
+  </a>
+  <a class="deptcard" href="./party-dept/" style="--accent:#8C1D2E;--accent-soft:#F8E9EC">
+    <div class="dc-top"><div class="dc-glyph">群</div><h3>06　党群工作部</h3></div>
+    <div class="dc-tag">事实可以写满，评价一句都不能编</div>
+    <div class="dc-task"><b>实操：</b>从活动记录到宣传稿与复盘</div>
+    <div class="dc-meta">
+      <span>3 场景</span><span>2 文件</span>
+      <span>2 提示词</span><span>9 验收</span>
+      <span class="dc-go">进入 →</span>
+    </div>
+  </a>
+  </div>
+  <div class="note">课堂用法：每组只进自己部门那一页，40—55 分钟完成「下一份数据 → 跑一段提示词 → 按清单验收 → 对照答案」。<b>先做完再看答案</b>，否则练的是抄写。</div>
+</section>
+<section class="sec" id="s1">
+  <div class="sec-head"><span class="secno">01</span><h2>两天路线：先交付，再复用</h2>
+    <span class="hint">PPT 第 4 页</span></div>
+  <div class="road">
+    <div class="rcol">
+      <h3>第一天｜入门 + 通用场景</h3>
+      <ol>
+        <li>三栏工作台、创建任务、提示词、权限 <span class="pg">P12—28</span></li>
+        <li>周报或纪要：完成第一次交付闭环 <span class="pg">P29</span></li>
+        <li>通用练习：公文、数据报表、PPT <span class="pg">P34—39</span></li>
+        <li>六部门找场景与分组 <span class="pg">P40—41</span></li>
+      </ol>
+    </div>
+    <div class="rcol">
+      <h3>第二天｜部门实操 + 进阶</h3>
+      <ol>
+        <li>各组选 Top 场景，拆业务 IPO <span class="pg">P55—60</span></li>
+        <li>现场交付、试评与风险清单 <span class="pg">P61</span></li>
+        <li>Skill 五步封装、知识库问答 <span class="pg">P68—76</span></li>
+        <li>工作流、自动化与多 Agent <span class="pg">P79—81</span></li>
+        <li>成果展示、30 天行动计划 <span class="pg">P84</span></li>
+      </ol>
+    </div>
+  </div>
+  <div class="note">第一天先会用，第二天把方法沉淀成岗位资产。本套练习页对应第二天上午的「部门实操」环节，可与第一天的通用练习衔接使用。</div>
+</section>
+<section class="sec" id="s2">
+  <div class="sec-head"><span class="secno">02</span><h2>先立规矩：目录＋权限</h2>
+    <span class="hint">PPT 第 8、17、26 页</span></div>
+  <div class="twocol" style="margin-bottom:14px">
+    <div class="panel"><h3>三条红线（课堂必讲）</h3>
+      <ul>
+        <li><b>数据红线</b>：不上传密钥、身份证件、薪酬明细、患者/经销商敏感资料；只用模拟或脱敏副本。</li>
+        <li><b>权限红线</b>：最小必要授权；只读练习材料、只写 output，不接未经批准的外部系统。</li>
+        <li><b>动作红线</b>：外发、审批、付款、删除、覆盖原件、制度定稿，必须人工确认，课堂一律不做。</li>
+      </ul>
+    </div>
+    <div class="panel"><h3>目录结构与权限四分法</h3>
+      <ul>
+        <li><code>01-原始副本</code> 只读：脱敏样本、制度摘录、模板</li>
+        <li><code>02-过程文件</code> 可写：解析结果、字段映射、异常清单</li>
+        <li><code>output</code> 可写：最终草稿、验收表、风险清单</li>
+        <li>读 / 写 / 外发 / 执行 四类动作分别授权，不打包授权</li>
+      </ul>
+    </div>
+  </div>
+  <div class="prompt" data-prompt="p0">
+    <div class="prompt-head">
+      <span class="pt">提示词 0｜环境初始化（建目录 + 操作边界 + 权限待办）</span>
+      <span class="ph">建目录可以交给 AI，开权限不能</span>
+      <button class="copybtn" type="button">复制全文</button>
+    </div>
+    <pre class="prompt-body">先出计划，不执行。
+
+【任务】在当前工作区建立 AI 练习目录，并生成一份《00-操作边界.md》。
+
+【要建的目录】已存在的只补缺失项，不清空、不覆盖、不删除任何文件。
+
+云南白药AI练习工作区/
+├─ 01-原始副本/          ← 只读：授权脱敏样本、制度摘录、模板
+│  ├─ 01-数据与流程/ 02-行政/ 03-风控/ 04-财务/ 05-人力/ 06-党群/
+├─ 02-过程文件/          ← 可写：解析结果、字段映射、执行计划、异常清单
+└─ output/               ← 可写：最终草稿、验收表、风险清单
+
+【要生成的文件】00-操作边界.md，写明五件事：
+1. 可读范围：仅 01-原始副本
+2. 可写范围：仅 02-过程文件 与 output
+3. 禁止动作：覆盖或删除原件、外发、代审批、付款、定稿、上传含个人信息/薪酬/密钥的材料
+4. 命名规则：部门_任务_日期_v01（例：财务_四方核对_20261127_v01）
+5. 每次开工前先读本文件；与我口头要求冲突时，停下来问，不要自行选择
+
+【要输出给我本人的清单】"权限设置待办"，逐条列出我需要在 WorkBuddy 权限设置里自行开启或关闭的项：
+- 读本地文件：仅限本工作区
+- 写文件：仅限 output 与 02-过程文件
+- 联网 / 外部系统：本次关闭
+- 外发 / 消息：关闭
+并明确写一句：你不判断我已开还是已关，只列清单让我自己点。
+
+【红线】在我确认计划前，不要创建任何目录或文件；若同名文件已存在，停下来告诉我，不要覆盖。</pre>
+  </div>
+  <div class="note"><b>一个必须分清的地方：</b>建目录是写文件动作，AI 能自己完成；「最小权限」的读、写、外发开关在 WorkBuddy 权限设置里，属于系统能力。提示词只能约束 AI 自觉遵守，不能替你打开或关闭权限。所以这段提示词让它<b>输出一份待办清单给你本人去点</b>，而不是替你宣称「权限已设置」。</div>
+</section>
+<section class="sec" id="s3">
+  <div class="sec-head"><span class="secno">03</span><h2>通用提示词与验收六项</h2>
+    <span class="hint">PPT 第 28、33 页</span></div>
+  <div class="prompt" data-prompt="pg">
+    <div class="prompt-head">
+      <span class="pt">通用提示词｜从岗位经验到结构化任务（四层结构）</span>
+      <span class="ph">任何部门、任何任务都能套，把方括号换成你的</span>
+      <button class="copybtn" type="button">复制全文</button>
+    </div>
+    <pre class="prompt-body">【角色与资料】你是【岗位】。只读【授权副本 / 制度版本 / 模板】；材料不足先列缺口再问我，不要猜。
+
+【任务与规则】完成【具体任务】。按【步骤 / 口径 / 字段 / 例外】执行；区分「事实」与「推断」，推断必须标「待核实」。
+
+【交付与验收】输出【文件类型 + 模板】到 output/，文件名用【部门_任务_日期_v01】；附【来源索引】与【待确认清单】；验收人是【岗位】。
+
+【红线与兜底】不覆盖原件、不外发、不代审批、不付款、不定稿；缺数据、规则冲突、权限不足时暂停并说明，不要硬做。</pre>
+  </div>
+  <div style="margin-top:16px">
+  <div class="tblwrap"><table class="tbl">
+    <thead><tr><th style="width:120px">验收项</th><th>要看什么</th><th style="width:150px">不合格怎么办</th></tr></thead>
+    <tbody>
+      <tr><td><b>能打开</b></td><td>文件实测可打开，不是「生成成功」的提示</td><td rowspan="6">在原任务里追问具体问题，保留旧版；缺资料列缺口，<b>禁止自行猜测或强行交付</b>。</td></tr>
+      <tr><td><b>内容对</b></td><td>事实、数字、日期、人员、制度版本、结论边界</td></tr>
+      <tr><td><b>格式对</b></td><td>字段、模板、标题、图表、页码</td></tr>
+      <tr><td><b>范围对</b></td><td>只处理指定材料，没有顺手改别的文件</td></tr>
+      <tr><td><b>可追溯</b></td><td>关键数据有来源、口径、行号或页码</td></tr>
+      <tr><td><b>可交付</b></td><td>可编辑、路径正确、版本明确（v01/v02）</td></tr>
+    </tbody>
+  </table></div>
+  </div>
+</section>
+<section class="sec" id="s4">
+  <div class="sec-head"><span class="secno">04</span><h2>四道人工关口</h2>
+    <span class="hint">PPT 第 82 页：AI 做初稿，人做终审</span></div>
+  <div class="tblwrap"><table class="tbl">
+    <thead><tr><th style="width:90px">关口</th><th>人必须确认的</th><th style="width:44%">课堂上的对应动作</th></tr></thead>
+    <tbody>
+      <tr><td><b>① 输入关</b></td><td>材料范围、脱敏程度、制度版本、授权状态；禁止真实敏感资料越权</td><td>只下本部门那 2—3 个文件；确认它们是模拟数据</td></tr>
+      <tr><td><b>② 处理关</b></td><td>清洗与计算规则、异常标记是否合理；保留原始记录，不擅自修改</td><td>核对行数平衡、单位换算只做一次、重复项未静默删除</td></tr>
+      <tr><td><b>③ 输出关</b></td><td>数字、日期、人员、来源、格式、风险结论；不合格退回修订</td><td>用第 06 节清单逐项打勾，不合格的当场退回重跑</td></tr>
+      <tr><td><b>④ 发布关</b></td><td>授权人确认外发、审批、付款、删除、覆盖、定稿；保留日志与版本</td><td>课堂一律不外发、不审批、不付款</td></tr>
+    </tbody>
+  </table></div>
+</section>
+<section class="sec" id="s5">
+  <div class="sec-head"><span class="secno">05</span><h2>IPO 与课堂节奏</h2>
+    <span class="hint">PPT 第 55、56、61 页</span></div>
+  <div class="grid3">
+    <div class="scene"><h3>I｜Input 输入</h3><p>给 AI 什么？授权文件、结构化数据、业务标准、历史案例与样例。资料缺失先追问，不要让它猜。</p></div>
+    <div class="scene"><h3>P｜Process 处理</h3><p>按什么逻辑执行？步骤、判断规则、优先级、例外与人工确认关口。把人的经验变成可写下来的规则。</p></div>
+    <div class="scene"><h3>O｜Output 输出</h3><p>交什么成果？Word、Excel、PPT、清单或报告；明确字段、结构、模板与质量标准。</p></div>
+  </div>
+  <div class="boundary"><b>边界与验收：</b>信息不足先追问再降级；不得编造制度、数据与人员结论；交付物必须可验收——「看起来不错」不是验收标准。</div>
+
+  <div style="margin-top:16px" class="tblwrap"><table class="tbl">
+    <thead><tr><th style="width:100px">环节</th><th style="width:80px">用时</th><th>做什么</th></tr></thead>
+    <tbody>
+      <tr><td><b>进场</b></td><td>5 分钟</td><td>打开本部门练习页，下载 2—3 个数据文件，放进 <code>01-原始副本</code></td></tr>
+      <tr><td><b>读场景</b></td><td>5 分钟</td><td>看 01 节三个场景，判断哪一个是本周真的会发生的任务</td></tr>
+      <tr><td><b>跑任务</b></td><td>20 分钟</td><td>贴提示词 → 先看计划 → 执行 → 打开输出逐项核对</td></tr>
+      <tr><td><b>验收</b></td><td>10 分钟</td><td>按 06 节清单勾选；至少退回重跑一次，体验「不合格怎么办」</td></tr>
+      <tr><td><b>对答案</b></td><td>5 分钟</td><td>展开 07 节答案，逐条对照；差异处记下是「我没看出」还是「它算错」</td></tr>
+      <tr><td><b>收口</b></td><td>5 分钟</td><td>填写 Top 场景立项卡：任务、输入、交付物、验收人、提效指标</td></tr>
+    </tbody>
+  </table></div>
+</section>
+<footer class="page">
+  <span>云南白药 · 药品事业群中后台 AI 赋能实战（两天版）｜六部门练习台</span>
+  <span>全部数据为课堂模拟，不含企业真实资料</span>
+</footer>
+</div></div></div>
+<script>
+(function(){
+  var page = document.body.dataset.page || 'page';
+  var KEY = 'ynby-' + page + '-v1';
+
+  // ---- 移动端抽屉
+  var sb = document.getElementById('sidebar'), ov = document.getElementById('overlay'),
+      mb = document.getElementById('menuBtn'), sc = document.getElementById('sideClose');
+  function openD(){ if(!sb) return; sb.classList.add('open'); if(ov) ov.classList.add('show'); }
+  function closeD(){ if(!sb) return; sb.classList.remove('open'); if(ov) ov.classList.remove('show'); }
+  if(mb) mb.addEventListener('click', openD);
+  if(sc) sc.addEventListener('click', closeD);
+  if(ov) ov.addEventListener('click', closeD);
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeD(); });
+  document.querySelectorAll('.side-toc a').forEach(function(a){ a.addEventListener('click', function(){ if(window.innerWidth <= 1080) closeD(); }); });
+
+  // ---- 目录高亮
+  var links = Array.prototype.slice.call(document.querySelectorAll('.side-toc a[href^="#"]'));
+  var secs = links.map(function(a){ return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  function spy(){
+    var y = window.scrollY + 110, cur = null;
+    secs.forEach(function(s){ if(s.offsetTop <= y) cur = s; });
+    links.forEach(function(a){ a.classList.toggle('on', cur && a.getAttribute('href') === '#' + cur.id); });
+  }
+  window.addEventListener('scroll', spy, {passive:true}); spy();
+
+  // ---- 复制
+  function mark(btn, txt, cls){
+    var old = btn.dataset.old || btn.textContent;
+    btn.dataset.old = old;
+    btn.textContent = txt; btn.classList.remove('ok','warn');
+    if(cls) btn.classList.add(cls);
+    setTimeout(function(){ btn.textContent = old; btn.classList.remove('ok','warn'); }, 2200);
+  }
+  function fallbackCopy(text){
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly','');
+    ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0';
+    document.body.appendChild(ta); ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch(e) { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+  document.querySelectorAll('.prompt').forEach(function(box){
+    var btn = box.querySelector('.copybtn');
+    if(!btn) return;
+    btn.addEventListener('click', function(){
+      var pre = box.querySelector('.prompt-body');
+      var opt = box.querySelector('.opt');
+      var text = pre ? pre.innerText : '';
+      if(opt) text += '\n\n' + opt.innerText;
+      var done = function(){ mark(btn, '已复制全文', 'ok'); };
+      var fail = function(){
+        // 退化为手动复制：选中正文
+        try{
+          var r = document.createRange(); r.selectNodeContents(pre);
+          var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        }catch(e){}
+        mark(btn, '请按 Ctrl+C 复制已选中内容', 'warn');
+      };
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done).catch(function(){
+          if(fallbackCopy(text)) done(); else fail();
+        });
+      } else {
+        if(fallbackCopy(text)) done(); else fail();
+      }
+    });
+  });
+
+  // ---- 勾选进度
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('.checks input[type=checkbox]'));
+  if(boxes.length){
+    var saved = {};
+    try { saved = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e) { saved = {}; }
+    boxes.forEach(function(b){
+      var id = b.dataset.p;
+      if(saved[id]) b.checked = true;
+      b.addEventListener('change', function(){
+        saved[id] = b.checked;
+        try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch(e) {}
+        progress();
+      });
+    });
+    function progress(){
+      var total = boxes.length, on = boxes.filter(function(b){ return b.checked; }).length;
+      var pct = total ? Math.round(on / total * 100) : 0;
+      var num = document.getElementById('progNum'), tot = document.getElementById('progTotal'),
+          bar = document.getElementById('progBar'), bar2 = document.getElementById('bar2'),
+          txt = document.getElementById('progTxt');
+      if(num) num.textContent = on;
+      if(tot) tot.textContent = total;
+      if(bar) bar.style.width = pct + '%';
+      if(bar2) bar2.style.width = pct + '%';
+      if(txt) txt.textContent = on + ' / ' + total;
+      // 目录完成标记
+      document.querySelectorAll('.checks').forEach(function(g){
+        var sid = g.dataset.group;
+        var all = g.querySelectorAll('input');
+        var ok = Array.prototype.every.call(all, function(x){ return x.checked; });
+        var a = document.querySelector('.side-toc a[href="#' + sid + '"]');
+        if(a) a.classList.toggle('done', ok);
+      });
+    }
+    progress();
+  }
+
+  // ---- 判断题
+  document.querySelectorAll('.q').forEach(function(q){
+    var btns = Array.prototype.slice.call(q.querySelectorAll('.q-opts button'));
+    var right = parseInt(q.dataset.right, 10);
+    btns.forEach(function(b, i){
+      b.addEventListener('click', function(){
+        if(q.dataset.answered) return;
+        q.dataset.answered = '1';
+        btns[right].classList.add('right');
+        if(i !== right) b.classList.add('wrong');
+        var why = q.querySelector('.q-why');
+        if(why) why.hidden = false;
+      });
+    });
+  });
+
+  // ---- 打印前展开答案
+  window.addEventListener('beforeprint', function(){
+    document.querySelectorAll('details.ans').forEach(function(d){ d.open = true; });
+  });
+})();
+</script>
+</body></html>
