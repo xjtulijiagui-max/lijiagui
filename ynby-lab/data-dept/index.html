@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>数据与流程管理部练习台｜云南白药药品事业群 AI 赋能实战</title>
+<meta name="description" content="数据与流程管理部岗位场景包与实操练习：客户主数据 A/B 表合并与差异核对，3 个可下载模拟文件、2 段可复制提示词、9 项验收清单与数据埋点答案。">
+<meta name="theme-color" content="#0F6B4F">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --ink:#15211c; --ink2:#3b4a43; --muted:#63736b; --line:#dde7e1; --line2:#eef4f0;
+  --bg:#f4f8f5; --card:#ffffff; --deep:#08251d; --deep2:#0d3328;
+  --accent:#0F6B4F; --accent-soft:#E6F2EC;
+  --warn:#8A5B1E; --warn-soft:#FFF6E8; --danger:#9B2C2C;
+  --radius:14px; --shadow:0 1px 2px rgba(10,40,30,.05),0 8px 24px rgba(10,40,30,.06);
+  --mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Source Han Sans SC","Hiragino Sans GB",sans-serif;
+}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:15px;line-height:1.72;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+h1,h2,h3,h4{margin:0;line-height:1.35;font-weight:700;letter-spacing:-.01em}
+p{margin:0 0 10px}
+ul,ol{margin:0 0 10px;padding-left:20px}
+li{margin:4px 0}
+code{font-family:var(--mono);font-size:.9em;background:#eef6f1;border:1px solid #dcebe3;
+  border-radius:5px;padding:1px 5px;color:#155340}
+.mono{font-family:var(--mono);font-size:.9em}
+
+/* ---------- 框架 ---------- */
+.shell{display:grid;grid-template-columns:274px minmax(0,1fr);min-height:100vh}
+.sidebar{position:sticky;top:0;height:100vh;background:var(--deep);color:#cfe0d8;
+  display:flex;flex-direction:column;z-index:60}
+.side-head{padding:22px 20px 16px;border-bottom:1px solid rgba(255,255,255,.09)}
+.side-brand{display:flex;align-items:center;gap:10px}
+.side-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(140deg,#1f8a67,#0b4433);
+  display:grid;place-items:center;color:#fff;font-weight:700;font-size:15px;flex:0 0 auto;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}
+.side-brand b{color:#fff;font-size:14.5px;display:block;line-height:1.35}
+.side-brand span{font-size:11.5px;color:#8fae9f;display:block;margin-top:2px}
+.side-toc{flex:1;overflow-y:auto;padding:14px 12px 8px}
+.side-toc::-webkit-scrollbar{width:6px}
+.side-toc::-webkit-scrollbar-thumb{background:#1f4c3c;border-radius:3px}
+.toc-label{font-size:10.5px;letter-spacing:.14em;color:#7d9c8d;padding:6px 10px 8px;font-weight:600}
+.side-toc a{display:flex;gap:9px;align-items:flex-start;color:#bfd4c9;padding:7px 10px;border-radius:8px;
+  font-size:13px;line-height:1.5;margin-bottom:1px;border-left:2px solid transparent}
+.side-toc a:hover{background:rgba(255,255,255,.06);text-decoration:none;color:#fff}
+.side-toc a.on{background:rgba(255,255,255,.10);color:#fff;border-left-color:var(--accent)}
+.side-toc a .n{font-family:var(--mono);font-size:11px;color:#75a892;padding-top:2px;min-width:16px}
+.side-toc a.on .n{color:#9fdcbf}
+.side-toc a.done .n::after{content:"✓";color:#8fd6b1;margin-left:2px}
+.side-foot{padding:12px 16px 16px;border-top:1px solid rgba(255,255,255,.09);font-size:11.5px;color:#8fae9f}
+.bar{height:5px;background:rgba(255,255,255,.12);border-radius:3px;overflow:hidden;margin:8px 0 6px}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#37b98a,#8ad6b4);transition:width .3s}
+
+.main{min-width:0;display:flex;flex-direction:column}
+.topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:12px;
+  padding:10px 26px;background:rgba(244,248,245,.92);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line)}
+.topbar .back{font-size:13px;color:var(--ink2);display:inline-flex;align-items:center;gap:6px;
+  padding:5px 10px;border:1px solid var(--line);border-radius:8px;background:#fff}
+.topbar .back:hover{text-decoration:none;border-color:#bcd4c8;color:var(--accent)}
+.top-dept{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+.top-dept a{font-size:12px;padding:4px 9px;border-radius:7px;color:var(--ink2);border:1px solid transparent}
+.top-dept a:hover{background:#fff;border-color:var(--line);text-decoration:none}
+.top-dept a.on{background:var(--accent);color:#fff}
+.menu-btn{display:none;border:1px solid var(--line);background:#fff;border-radius:8px;
+  width:36px;height:32px;font-size:15px;cursor:pointer;color:var(--ink)}
+.wrap{width:100%;max-width:1000px;margin:0 auto;padding:26px 26px 90px}
+
+/* ---------- 首屏 ---------- */
+.hero{position:relative;background:var(--card);border:1px solid var(--line);border-radius:18px;
+  padding:26px 28px;box-shadow:var(--shadow);overflow:hidden}
+.hero::after{content:"";position:absolute;right:-60px;top:-70px;width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, var(--accent-soft), transparent 68%);opacity:.9}
+.hero .kicker{font-size:12px;letter-spacing:.1em;color:var(--muted);font-weight:600;text-transform:uppercase}
+.hero h1{font-size:30px;margin:8px 0 8px;color:#0d2a21}
+.hero .lede{font-size:15.5px;color:var(--ink2);max-width:640px}
+.hero .glyph{position:absolute;right:26px;top:20px;width:56px;height:56px;border-radius:14px;
+  background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;
+  font-size:26px;font-weight:700;z-index:1}
+.kpis{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;position:relative;z-index:1}
+.kpi{display:inline-flex;align-items:baseline;gap:5px;font-size:12.5px;color:var(--ink2);
+  background:#f3f8f5;border:1px solid var(--line2);border-radius:8px;padding:5px 10px}
+.kpi b{font-family:var(--mono);color:var(--accent);font-size:13.5px}
+
+/* ---------- 区块 ---------- */
+.sec{margin-top:30px;scroll-margin-top:64px}
+.sec-head{display:flex;align-items:baseline;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.secno{font-family:var(--mono);font-size:12px;color:#fff;background:var(--accent);
+  border-radius:6px;padding:2px 7px;letter-spacing:.04em}
+.sec-head h2{font-size:21px;color:#0d2a21}
+.sec-head .hint{font-size:12.5px;color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:18px 20px;box-shadow:var(--shadow)}
+
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.scene{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:15px 16px;
+  border-top:3px solid var(--accent)}
+.scene h3{font-size:14px;color:#123b2d;margin-bottom:6px}
+.scene p{font-size:13.2px;color:var(--ink2);margin:0}
+.assets{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.assets span.lb{font-size:12px;color:var(--muted)}
+.tag{display:inline-block;font-size:12px;padding:3px 9px;border-radius:999px;
+  background:var(--accent-soft);color:var(--accent);border:1px solid #cfe5da}
+
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.panel h3{font-size:13.5px;color:#123b2d;display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.panel h3::before{content:"";width:7px;height:7px;border-radius:2px;background:var(--accent);display:inline-block}
+.panel ul{padding-left:18px;margin:0}
+.panel li{font-size:13.4px;color:var(--ink2);margin:5px 0}
+.boundary{margin-top:13px;background:var(--warn-soft);border:1px solid #f0dcb8;border-radius:12px;
+  padding:13px 16px;font-size:13.4px;color:#6d4815}
+.boundary b{color:#8A5B1E}
+
+/* ---------- 表格 ---------- */
+.tblwrap{width:100%;max-width:100%;overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+.tbl{width:100%;border-collapse:collapse;font-size:13.4px}
+.tbl th{background:#eaf4ee;color:#0d3b2c;text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);
+  white-space:nowrap;font-size:13px;font-weight:700}
+.tbl td{padding:9px 12px;border-bottom:1px solid var(--line2);vertical-align:top;line-height:1.6;color:var(--ink2)}
+.tbl tr:last-child td{border-bottom:0}
+.tbl tbody tr:nth-child(even){background:#fbfdfc}
+
+/* ---------- 文件 ---------- */
+.files{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:11px}
+.file{display:flex;flex-direction:column;gap:6px;background:#fff;border:1px solid var(--line);
+  border-radius:12px;padding:13px 15px;transition:.15s}
+.file:hover{border-color:#b9d6c7;box-shadow:0 6px 18px rgba(10,50,35,.07)}
+.file .fname{font-family:var(--mono);font-size:12px;color:var(--accent);word-break:break-all}
+.file .fdesc{font-size:13px;color:var(--ink);line-height:1.5}
+.file .fmeta{font-size:11.8px;color:var(--muted);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.file .ftype{background:#f0f5f2;border:1px solid var(--line2);border-radius:5px;padding:1px 6px;font-size:11px;color:#456}
+.file a.dl{margin-top:2px;font-size:12.5px;font-weight:600;align-self:flex-start}
+
+/* ---------- 提示词 ---------- */
+.prompt{background:#0d2b22;border-radius:14px;overflow:hidden;box-shadow:var(--shadow);border:1px solid #10382c}
+.prompt+.prompt{margin-top:14px}
+.prompt-head{display:flex;align-items:center;gap:10px;padding:11px 14px;background:#0a231c;
+  border-bottom:1px solid #17402f;flex-wrap:wrap}
+.prompt-head .pt{color:#e6f3ec;font-size:13.5px;font-weight:700}
+.prompt-head .ph{color:#7fae99;font-size:11.8px;flex:1;min-width:180px}
+.copybtn{font-size:12px;border:1px solid #2c6650;background:#144534;color:#bfe6d4;border-radius:7px;
+  padding:5px 11px;cursor:pointer;white-space:nowrap;font-family:var(--sans)}
+.copybtn:hover{background:#1b5a44;color:#fff}
+.copybtn.ok{background:#1f7a58;border-color:#2b9670;color:#fff}
+.copybtn.warn{background:#7a4a12;border-color:#a2661f;color:#ffe6c0}
+.prompt-body{margin:0;padding:15px 16px;font-family:var(--mono);font-size:12.4px;line-height:1.85;
+  color:#d7ece2;white-space:pre-wrap;word-break:break-word;max-height:none;overflow:visible}
+.prompt-body::-webkit-scrollbar{width:8px}
+.prompt-body::-webkit-scrollbar-thumb{background:#265742;border-radius:4px}
+.prompt .opt{margin:0;padding:11px 16px;background:#4a3712;color:#ffe1a8;font-size:12.4px;
+  font-family:var(--mono);border-top:1px dashed #6a5220;line-height:1.7}
+.prompt .opt b{color:#ffd27a}
+.prompt-note{padding:9px 16px 11px;background:#0a231c;border-top:1px solid #17402f;
+  color:#8fb9a6;font-size:11.6px}
+
+/* ---------- 步骤 ---------- */
+.steps{counter-reset:s;list-style:none;padding:0;margin:0}
+.steps li{counter-increment:s;position:relative;padding:0 0 0 38px;margin:0 0 12px;font-size:13.8px;color:var(--ink2)}
+.steps li::before{content:counter(s);position:absolute;left:0;top:1px;width:24px;height:24px;border-radius:7px;
+  background:var(--accent-soft);color:var(--accent);font-family:var(--mono);font-size:12px;font-weight:700;
+  display:grid;place-items:center}
+.steps li b{color:var(--ink)}
+
+/* ---------- 清单 ---------- */
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:7px 14px}
+.checks label{display:flex;min-height:46px;gap:9px;align-items:flex-start;font-size:13.4px;color:var(--ink2);
+  background:#fff;border:1px solid var(--line);border-radius:9px;padding:9px 11px;cursor:pointer;line-height:1.55}
+.checks label:hover{border-color:#b9d6c7;background:#fcfefd}
+.checks input{margin:3px 0 0;accent-color:var(--accent);width:15px;height:15px;flex:0 0 auto}
+.checks input:checked+span{color:#8a9b93;text-decoration:line-through}
+.progline{display:flex;align-items:center;gap:10px;margin-bottom:11px;font-size:12.6px;color:var(--muted)}
+.progline .bar2{flex:1;height:6px;background:#e6eee9;border-radius:3px;overflow:hidden}
+.progline .bar2 i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s}
+.progline b{color:var(--accent);font-family:var(--mono)}
+
+/* ---------- 答案 ---------- */
+details.ans{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+details.ans>summary{cursor:pointer;padding:12px 16px;font-size:13.5px;font-weight:700;color:#0d3b2c;
+  display:flex;align-items:center;gap:8px;list-style:none}
+details.ans>summary::-webkit-details-marker{display:none}
+details.ans>summary::before{content:"▸";color:var(--accent);font-size:12px;transition:.2s}
+details.ans[open]>summary::before{transform:rotate(90deg)}
+details.ans>summary:hover{background:#f8fcfa}
+.ansbody{padding:2px 16px 16px;border-top:1px solid var(--line2)}
+.ansbody dl{margin:0}
+.ansbody dt{font-size:12.6px;font-weight:700;color:#14513f;margin:12px 0 3px;letter-spacing:.01em}
+.ansbody dd{margin:0;font-size:13.2px;color:var(--ink2);line-height:1.68}
+.note{background:#f3f8f5;border-left:3px solid var(--accent);border-radius:0 8px 8px 0;
+  padding:10px 13px;font-size:13px;color:var(--ink2);margin-top:12px}
+
+/* ---------- 测验 ---------- */
+.quiz{display:grid;gap:12px}
+.q{background:#fff;border:1px solid var(--line);border-radius:12px;padding:15px 17px}
+.q .qt{font-size:13.8px;font-weight:700;color:#0d3b2c;margin-bottom:10px;line-height:1.6}
+.q-opts{display:grid;gap:7px}
+.q-opts button{text-align:left;font-family:var(--sans);font-size:13.3px;color:var(--ink2);
+  background:#fafcfb;border:1px solid var(--line);border-radius:9px;padding:9px 12px;cursor:pointer;
+  display:flex;gap:9px;line-height:1.55}
+.q-opts button:hover{border-color:#b9d6c7;background:#f5fbf8}
+.q-opts button .k{font-family:var(--mono);font-size:11.5px;color:#8fa79c;flex:0 0 auto;padding-top:1px}
+.q-opts button.right{border-color:#2f9e73;background:#eaf8f1;color:#0d5c3e}
+.q-opts button.right .k{color:#2f9e73}
+.q-opts button.wrong{border-color:#d9a0a0;background:#fdf0f0;color:#8a2b2b}
+.q-why{margin-top:10px;font-size:12.9px;color:#31503f;background:#f4f9f6;border-radius:9px;
+  padding:10px 12px;line-height:1.7;border-left:3px solid #2f9e73}
+.q-why b{color:#0d5c3e}
+
+/* ---------- 分页 ---------- */
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:36px;flex-wrap:wrap}
+.pager a{flex:1;min-width:200px;background:#fff;border:1px solid var(--line);border-radius:12px;
+  padding:13px 16px;display:flex;flex-direction:column;gap:3px}
+.pager a:hover{border-color:#b9d6c7;text-decoration:none}
+.pager .lb{font-size:11.5px;color:var(--muted)}
+.pager .nm{font-size:14px;color:var(--ink);font-weight:700}
+.pager a.next{text-align:right;align-items:flex-end}
+footer.page{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);
+  font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+/* ---------- 门户 ---------- */
+.deptgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:13px}
+.deptcard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 17px;
+  display:flex;flex-direction:column;gap:8px;position:relative;transition:.16s;border-top:3px solid var(--accent)}
+.deptcard:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(10,50,35,.09);text-decoration:none}
+.deptcard .dc-top{display:flex;align-items:center;gap:9px}
+.deptcard .dc-glyph{width:30px;height:30px;border-radius:8px;background:var(--accent-soft);color:var(--accent);
+  display:grid;place-items:center;font-weight:700;font-size:14px}
+.deptcard h3{font-size:15px;color:#0d2a21}
+.deptcard .dc-tag{font-size:12.4px;color:var(--muted);line-height:1.6}
+.deptcard .dc-task{font-size:13px;color:var(--ink);background:#f6faf8;border-radius:8px;padding:8px 10px;
+  border:1px dashed #d9e8e0;line-height:1.6}
+.deptcard .dc-meta{margin-top:auto;display:flex;gap:10px;font-size:11.8px;color:var(--muted);align-items:center}
+.deptcard .dc-go{margin-left:auto;color:var(--accent);font-weight:700;font-size:12.5px}
+.road{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.road .rcol{background:#fff;border:1px solid var(--line);border-radius:12px;padding:15px 17px}
+.road h3{font-size:14px;margin-bottom:8px;color:#0d3b2c}
+.road ol{padding-left:18px;margin:0}
+.road li{font-size:13.2px;color:var(--ink2);margin:5px 0}
+.road .pg{font-family:var(--mono);font-size:11px;color:#8fa79c;margin-left:4px}
+
+@media (max-width:1080px){
+  .shell{grid-template-columns:1fr}
+  .sidebar{position:fixed;left:0;top:0;width:280px;transform:translateX(-100%);
+    transition:transform .24s ease;box-shadow:0 0 40px rgba(0,0,0,.3)}
+  .sidebar.open{transform:translateX(0)}
+  .menu-btn{display:inline-flex;align-items:center;justify-content:center}
+  .overlay{position:fixed;inset:0;background:rgba(6,30,24,.55);z-index:50;display:none}
+  .overlay.show{display:block}
+  .wrap{padding:20px 18px 80px}
+  .hero h1{font-size:24px}
+  .grid3,.grid2,.twocol,.road{grid-template-columns:1fr}
+  .checks{grid-template-columns:1fr}
+  .top-dept{display:none}
+}
+@media (max-width:520px){
+  .hero{padding:20px 18px}
+  .hero .glyph{display:none}
+  .hero h1{font-size:21px}
+  .sec-head h2{font-size:18px}
+  .card{padding:15px 15px}
+  .prompt-body{font-size:11.8px;line-height:1.8}
+}
+@media print{
+  .sidebar,.topbar,.pager,.copybtn,.menu-btn,.overlay{display:none!important}
+  body{background:#fff}
+  .shell{display:block}
+  .wrap{max-width:none;padding:0}
+  .sec{break-inside:avoid}
+  details.ans>summary::before{content:""}
+  details.ans .ansbody{display:block!important}
+  .prompt{background:#fff;border:1px solid #999}
+  .prompt-body{color:#111;max-height:none;overflow:visible}
+  .prompt-head,.prompt-note{background:#fff;color:#333}
+  .prompt-head .pt{color:#000}
+}
+</style>
+</head>
+<body data-page="data-dept" style="--accent:#0F6B4F">
+<div class="overlay" id="overlay"></div>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="side-head">
+      <div class="side-brand">
+        <div class="side-mark">数</div>
+        <div>
+          <b>数据与流程管理部</b>
+          <span>PPT P42—43</span>
+        </div>
+      </div>
+      <button id="sideClose" style="display:none"></button>
+    </div>
+    <nav class="side-toc">
+      <div class="toc-label">本页目录</div>
+      <a href="#s1"><span class="n">01</span><span>岗位场景包</span></a>
+      <a href="#s2"><span class="n">02</span><span>本次实操：输入与验收</span></a>
+      <a href="#s3"><span class="n">03</span><span>数据集下载</span></a>
+      <a href="#s4"><span class="n">04</span><span>可复制提示词</span></a>
+      <a href="#s5"><span class="n">05</span><span>怎么练：五步</span></a>
+      <a href="#s6"><span class="n">06</span><span>验收清单</span></a>
+      <a href="#s7"><span class="n">07</span><span>数据埋点答案</span></a>
+      <a href="#s8"><span class="n">08</span><span>口径判断</span></a>
+    </nav>
+      <div class="side-foot">
+        <div style="display:flex;justify-content:space-between">
+          <span>验收进度</span><span><b id="progNum">0</b>/<span id="progTotal">0</span></span>
+        </div>
+        <div class="bar"><i id="progBar"></i></div>
+        <div style="margin-top:6px;font-size:11px;color:#7d9c8d">勾选会保存在本机浏览器</div>
+      </div>
+  </aside>
+<div class="main">
+  <div class="topbar">
+    <button class="menu-btn" id="menuBtn" aria-label="打开目录">☰</button>
+    <a class="back" href="../">← 六部门门户</a>
+    <div class="top-dept"><a href="../data-dept/" class="on">01 数据</a><a href="../admin-dept/" class="">02 行政</a><a href="../risk-dept/" class="">03 风控</a><a href="../finance-dept/" class="">04 财务</a><a href="../hr-dept/" class="">05 人力</a><a href="../party-dept/" class="">06 党群</a></div>
+  </div>
+<div class="wrap">
+<div class="hero">
+  <div class="glyph">数</div>
+  <div class="kicker">云南白药 · 药品事业群中后台 AI 赋能实战｜六部门练习台 01</div>
+  <h1>数据与流程管理部｜客户主数据 A/B 表合并与差异核对</h1>
+  <p class="lede">别人的表最后一公里，都在你这里合并。本页把《PPT P42—43》的场景包与实操拆成可动手的四件事：<b>读场景 → 下数据 → 贴提示词 → 对答案</b>。</p>
+  <div class="kpis">
+    <span class="kpi"><b>3</b> 个岗位场景</span>
+    <span class="kpi"><b>2</b> 段提示词</span>
+    <span class="kpi"><b>3</b> 个数据文件</span>
+    <span class="kpi"><b>9</b> 项验收</span>
+    <span class="kpi"><b>50 分钟</b> 课堂用时</span>
+    <span class="kpi">对应 <b>PPT P42—43</b></span>
+  </div>
+</div>
+<section class="sec" id="s1">
+  <div class="sec-head"><span class="secno">01</span><h2>岗位场景包</h2>
+    <span class="hint">先看清楚「哪件事值得做成 AI 任务」，再动手</span></div>
+  <div class="grid3"><div class="scene"><h3>场景 1｜多表合并与差异核对</h3><p>对齐字段、去重、隔离异常；输出标准明细、差异清单、数据字典。这是本部门最典型的「两高两低」任务：每周发生、规则明确、错了能看出来。</p></div><div class="scene"><h3>场景 2｜流程文档化</h3><p>审批、归档、督办、周报四类流程，写成「步骤、输入、规则、输出、责任人」五列。价值不在写得多，在于制度一改能定位到哪张图。</p></div><div class="scene"><h3>场景 3｜制度/流程知识问答</h3><p>按现行制度版本及条款回答，过期版本、相互冲突或缺失的材料标「待更新」，不合并成一个看似完整的答案。</p></div></div>
+  <div class="assets"><span class="lb">本部门应沉淀的资产：</span><span class="tag">数据分析模板（字段对齐 + 差异分级）</span><span class="tag">流程知识库索引（制度名/版本/条款）</span><span class="tag">月度报表工作流初稿</span></div>
+  <div class="note">选场景用「两高两低」：高价值、高频、低门槛、低风险。四条里有一条明显不满足，就先别做——尤其「低风险」，合同签署、付款审批、绩效处置都不属于可练范围。</div>
+</section>
+<section class="sec" id="s2">
+  <div class="sec-head"><span class="secno">02</span><h2>本次实操：客户主数据 A/B 表合并与差异核对</h2>
+    <span class="hint">对应 PPT P42—43 的「输入与处理规则 / 输出与验收」</span></div>
+  <div class="card" style="margin-bottom:12px">
+    <p style="margin:0"><b>输入：</b>销售系统客户主数据 22 行（额度单位万元、日期三种格式）、财务客商档案 19 行（额度单位元）、字段字典与合并口径。</p>
+  </div>
+  <div class="twocol">
+    <div class="panel"><h3>处理规则（AI 必须照做的）</h3><ul><li>匹配键：客户编号 = 客商编码；没有编号的记录不参与匹配，单列「缺键待补」。</li><li>单位统一：信用额度 ×10000 换算为元，换算前的原值必须保留在清洗日志里。</li><li>日期统一：YYYY/M/D、YYYYMMDD 一律转 YYYY-MM-DD，三种格式都要处理。</li><li>重复键：同编号多行保留首次、其余入「重复键清单」，不许直接删。</li><li>差异分级：阻断（缺键/重复键/状态冲突）、提示（名称差异、授信差异&gt;10%）、观察（单边客户）。</li><li>差异判定用「大于 10%」，恰好等于 10% 不进差异表。</li></ul></div>
+    <div class="panel"><h3>输出与验收（人必须核对的）</h3><ul><li>标准明细 xlsx：唯一客户一行，含统一后的额度、日期与来源行号。</li><li>差异清单 xlsx：按 6 类分 sheet 或加「差异类型」列，每条带 A/B 两侧原值。</li><li>清洗日志 md：每类处理动作、影响行数、换算规则。</li><li>口径确认单：合计的两个口径并列，交数据 Owner 签字。</li></ul>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px dashed #e3ece7">
+        <div style="font-size:12.4px;color:#456;font-weight:700;margin-bottom:4px">验收要点</div>
+        <ul><li>行数平衡：22 + 19 = 保留 + 隔离 + 去重剔除，三类互斥且合计相等。</li><li>合计双口径：直接相加与去重剔除后两个数都要给，差额要能逐条解释。</li><li>异常分类：6 类共 15 条，一条不漏、一条不多。</li><li>每条差异可回溯到源文件与原行号。</li></ul>
+      </div>
+    </div>
+  </div>
+  <div class="boundary"><b>边界：</b>不覆盖源表、不删除原始行；口径未确认前不生成正式报表。差异清单是给人看的，不是给系统改数的。</div>
+</section>
+<section class="sec" id="s3">
+  <div class="sec-head"><span class="secno">03</span><h2>数据集下载</h2>
+    <span class="hint">全部为课堂模拟数据，已埋入可核对的问题</span></div>
+  <div class="files">
+    <div class="file">
+      <div class="fname">t1-dept-a-sales.xlsx</div>
+      <div class="fdesc">部门A｜销售系统客户主数据（22 行）</div>
+      <div class="fmeta"><span class="ftype">Excel</span><span>7 KB</span></div>
+      <a class="dl" href="../data/t1-dept-a-sales.xlsx" download>下载 ↓</a>
+    </div>
+    <div class="file">
+      <div class="fname">t1-dept-b-finance.xlsx</div>
+      <div class="fdesc">部门B｜财务客商档案（19 行）</div>
+      <div class="fmeta"><span class="ftype">Excel</span><span>7 KB</span></div>
+      <a class="dl" href="../data/t1-dept-b-finance.xlsx" download>下载 ↓</a>
+    </div>
+    <div class="file">
+      <div class="fname">t1-field-dict.docx</div>
+      <div class="fdesc">字段字典与合并口径</div>
+      <div class="fmeta"><span class="ftype">Word</span><span>38 KB</span></div>
+      <a class="dl" href="../data/t1-field-dict.docx" download>下载 ↓</a>
+    </div>
+  </div>
+  <div class="note">这些文件不是空模板，而是<b>带答案的题</b>：每一份都埋了错，页面第 07 节给出答案。建议先自己找一遍再看答案，否则练的是「抄」而不是「核」。</div>
+</section>
+<section class="sec" id="s4">
+  <div class="sec-head"><span class="secno">04</span><h2>可复制提示词</h2>
+    <span class="hint">逐字可用，路径已按 ../data/ 的下载文件写好</span></div>
+
+  <div class="prompt" data-prompt="p1">
+    <div class="prompt-head">
+      <span class="pt">主提示词｜A/B 表合并与差异核对</span>
+      <span class="ph">这段决定 80% 的结果质量，重点看「规则」和「行数平衡」两节</span>
+      <button class="copybtn" type="button">复制全文</button>
+    </div>
+    <pre class="prompt-body">先出计划，不执行。
+
+【角色】你是数据与流程管理部的数据治理岗，只处理我提供的授权副本，不做任何推测性补数。
+
+【输入】
+1. 01-原始副本/t1-dept-a-sales.xlsx（销售系统客户主数据，额度单位：万元）
+2. 01-原始副本/t1-dept-b-finance.xlsx（财务客商档案，额度单位：元）
+3. 01-原始副本/t1-field-dict.docx（字段字典与合并口径，以本文件为准）
+
+【任务】把 A/B 两表合并成一份客户主数据标准明细，并输出差异清单。
+
+【规则】
+1. 匹配键为「客户编号 = 客商编码」；编号为空的记录不参与匹配，单列「缺键待补」。
+2. 信用额度统一换算为元（×10000），换算前后两个值都要保留在清洗日志中。
+3. 建档日期存在 YYYY-MM-DD、YYYY/M/D、YYYYMMDD 三种格式，统一为 YYYY-MM-DD。
+4. 同一编号出现多行的，保留首次出现行，其余行进入「重复键清单」，不得直接删除。
+5. 差异分三类：阻断（缺键、重复键、状态冲突）；提示（名称差异、授信差异&gt;10%）；观察（单边客户、仅后缀不同）。
+6. 名称比对先去除「有限责任公司/有限公司」后缀；差异「超过 10%」才提示，恰好 10% 列观察。
+7. 规则之间冲突时暂停，列出冲突点等我确认，不要自行选一个执行。
+
+【输出】
+- output/客户主数据-标准明细-v01.xlsx（含来源文件、原行号两列）
+- output/差异清单-v01.xlsx（差异类型、A侧原值、B侧原值、处理建议）
+- output/清洗日志-v01.md（每类动作、影响行数、换算规则）
+- 报告中给出：原始行数、保留行数、隔离行数、去重剔除行数，并证明四者平衡
+
+【红线】不覆盖、不删除源文件；不生成正式报表；不虚构缺失的编号或额度。
+
+【验收】按六项自检：能打开、内容对、格式对、范围对、可追溯、可交付。缺资料列缺口，不要猜。</pre>
+    <div class="opt"><b>可删行</b>｜补充口径：差异条数按「行」统计，同一客户出现两类差异记两条；合计金额给两个口径（原始直接相加、去重并剔除暂停/注销）。</div>
+    <div class="prompt-note">复制内容含末尾「可删行」；想对比效果，把它删掉再跑一次。</div>
+  </div>
+  <div class="prompt" data-prompt="p2">
+    <div class="prompt-head">
+      <span class="pt">备用提示词｜把流程写成可维护的五列</span>
+      <span class="ph">场景 2 用；重点是「制度条款号」这一列，没有它这份流程文档下学期就废了</span>
+      <button class="copybtn" type="button">复制全文</button>
+    </div>
+    <pre class="prompt-body">先出计划，不执行。
+
+【角色】你是流程管理岗，负责把一个口头流程写成可维护的文档。
+
+【输入】01-原始副本/ 下的流程说明或访谈记录（若我没有提供，先列出你需要我补的 3 样东西）。
+
+【任务】把「办公用品采购与报销」流程拆成五列表格：步骤 / 输入 / 规则 / 输出 / 责任人。
+
+【规则】
+1. 每个步骤必须能对应到一条制度依据（制度名 + 条款号）；找不到依据的步骤标「无制度依据，待确认」。
+2. 判断节点单独成行，写清判断条件和两个分支去向。
+3. 责任人写到岗位，不写人名；跨部门节点注明会签方。
+4. 识别并单列三类问题：重复审批、断点（无人负责）、与其他制度冲突。
+
+【输出】output/流程文档-办公用品采购-v01.xlsx + 问题清单（每条带依据）。
+
+【红线】不替任何部门确认职责归属；不虚构条款号，查不到就写「待核实」。</pre>
+    <div class="prompt-note">复制内容含末尾「可删行」；想对比效果，把它删掉再跑一次。</div>
+  </div>
+</section>
+<section class="sec" id="s5">
+  <div class="sec-head"><span class="secno">05</span><h2>怎么练：五步</h2>
+    <span class="hint">50 分钟，建议两人一组，一人操作一人记录</span></div>
+  <div class="card"><ol class="steps"><li>建空间：01-原始副本 放 3 个文件，02-过程文件 放清洗日志，output 放交付物。</li><li>先只贴「输入」和「规则」，让它出计划；重点看它有没有发现「单位不同」和「日期三种格式」。</li><li>计划确认后执行，第一件事核对行数：22 + 19 是否等于保留 + 隔离 + 去重剔除。</li><li>打开差异清单逐条对源表抽查 3 条（建议抽 KH-1006、KH-1017、KH-1018）。</li><li>改一处再跑一次：把「差异&gt;10%」改成「≥10%」，看答案是否变化——这是口径敏感度测试。</li></ol></div>
+</section>
+<section class="sec" id="s6">
+  <div class="sec-head"><span class="secno">06</span><h2>验收清单</h2>
+    <span class="hint">勾选结果保存在本机，刷新不丢</span></div>
+  <div class="progline"><span>已完成</span><div class="bar2"><i id="bar2"></i></div><b id="progTxt">0 / 9</b></div>
+  <div class="checks" data-group="s6"><label><input type="checkbox" data-p="data-dept-c1"><span>行数平衡等式成立，且三类互斥</span></label><label><input type="checkbox" data-p="data-dept-c2"><span>缺键 2 条已单列，未被我或 AI 补编号</span></label><label><input type="checkbox" data-p="data-dept-c3"><span>重复键 KH-1006 保留首次、另一行进清单</span></label><label><input type="checkbox" data-p="data-dept-c4"><span>额度换算只做一次，未对 B 表再乘 10000</span></label><label><input type="checkbox" data-p="data-dept-c5"><span>三种日期格式全部转成 YYYY-MM-DD</span></label><label><input type="checkbox" data-p="data-dept-c6"><span>状态冲突按「暂停 vs 有效」列出，未自行取一个</span></label><label><input type="checkbox" data-p="data-dept-c7"><span>授信差异 &gt;10% 才进差异表，等于 10% 的列观察</span></label><label><input type="checkbox" data-p="data-dept-c8"><span>合计给了两个口径并解释差额</span></label><label><input type="checkbox" data-p="data-dept-c9"><span>每条差异带源文件与原行号</span></label></div>
+</section>
+<section class="sec" id="s7">
+  <div class="sec-head"><span class="secno">07</span><h2>数据埋点答案</h2>
+    <span class="hint">这些数字直接来自生成数据的脚本，不是事后手写</span></div>
+  <details class="ans">
+    <summary>展开核对答案（建议先自己跑完再看）</summary>
+    <div class="ansbody"><dl><dt>A 表 / B 表行数</dt><dd>22 行 / 19 行，合计 41 行</dd><dt>缺键记录</dt><dd>2 条：文山州健之佳医药、怒江峡谷医药（编号列为空，名称状态齐全，最容易被自动补号）</dd><dt>重复键</dt><dd>1 组：KH-1006 出现 2 行，名称一为简称、一为全称</dd><dt>唯一客户数</dt><dd>A 表 19 个、B 表 19 个</dd><dt>单边客户</dt><dd>A 有 B 无 3 家（KH-1009、KH-1015、KH-1020）；B 有 A 无 3 家（KH-1016、KH-1022、KH-1023），后者含已停用残留与集团内关联方</dd><dt>名称差异</dt><dd>实质差异 1 条（KH-1006，简称 vs 全称）；另有 2 条仅「有限责任公司/有限公司」后缀不同（KH-1003、KH-1019），按口径规则不判差异</dd><dt>状态冲突</dt><dd>2 条：KH-1004、KH-1011 在 A 表为「暂停」、B 表为「有效」，属阻断级</dd><dt>授信差异 &gt;10%</dt><dd>2 条：KH-1017 A 400,000 元 vs B 300,000 元（-25.0%）；KH-1018 A 2,000,000 元 vs B 1,750,000 元（-12.5%）</dd><dt>异常合计</dt><dd>15 条，分 6 类（缺键、重复键、单边客户、名称差异、状态冲突、授信差异）</dd><dt>合计金额</dt><dd>直接相加 8,800,000 元（含重复行、含暂停/注销）；去重并剔除暂停注销后 7,590,000 元，活跃客户 16 家</dd></dl></div>
+  </details>
+</section>
+<section class="sec" id="s8">
+  <div class="sec-head"><span class="secno">08</span><h2>口径判断</h2>
+    <span class="hint">选一个看解析，答错比答对更有用</span></div>
+  <div class="quiz">
+  <div class="q" data-right="1">
+    <div class="qt">Q1. B 表某客户授信 1,750,000 元，A 表信用额度 200 万元，差异 12.5%。按口径应如何处置？</div>
+    <div class="q-opts"><button type="button"><span class="k">A</span><span>列入阻断级，停止合并</span></button><button type="button"><span class="k">B</span><span>列入提示级，人工复核</span></button><button type="button"><span class="k">C</span><span>视为一致，不进差异表</span></button><button type="button"><span class="k">D</span><span>按 A 表为准直接覆盖 B 表</span></button></div>
+    <div class="q-why" hidden><b>答案：B</b>　12.5% 大于 10%，进「提示」级并人工复核。它不是状态冲突那种阻断项，也不能因为「差异不大」就忽略；更不允许拿一侧覆盖另一侧。</div>
+  </div>
+  <div class="q" data-right="2">
+    <div class="qt">Q2. 客户合计金额出现两个数（880 万与 759 万），正确处理是？</div>
+    <div class="q-opts"><button type="button"><span class="k">A</span><span>取较大的那个，更保守</span></button><button type="button"><span class="k">B</span><span>取较小的那个，更稳妥</span></button><button type="button"><span class="k">C</span><span>两个口径都列，并逐条解释差额来源</span></button><button type="button"><span class="k">D</span><span>让 AI 判断哪个更准确</span></button></div>
+    <div class="q-why" hidden><b>答案：C</b>　口径不同不算错，藏起来才算错。差额来自重复行与暂停/注销客户，必须能逐条说清；由数据 Owner 决定对外用哪个。</div>
+  </div>
+  </div>
+</section><div class="pager"><a href="../"><span class="lb">← 返回</span><span class="nm">六部门门户</span></a><a class="next" href="../admin-dept/"><span class="lb">下一部门 →</span><span class="nm">02 行政管理部</span></a></div>
+<footer class="page">
+  <span>云南白药 · 药品事业群中后台 AI 赋能实战（两天版）｜数据与流程管理部练习台</span>
+  <span>全部数据为课堂模拟，不含企业真实资料</span>
+</footer>
+</div></div></div>
+<script>
+(function(){
+  var page = document.body.dataset.page || 'page';
+  var KEY = 'ynby-' + page + '-v1';
+
+  // ---- 移动端抽屉
+  var sb = document.getElementById('sidebar'), ov = document.getElementById('overlay'),
+      mb = document.getElementById('menuBtn'), sc = document.getElementById('sideClose');
+  function openD(){ if(!sb) return; sb.classList.add('open'); if(ov) ov.classList.add('show'); }
+  function closeD(){ if(!sb) return; sb.classList.remove('open'); if(ov) ov.classList.remove('show'); }
+  if(mb) mb.addEventListener('click', openD);
+  if(sc) sc.addEventListener('click', closeD);
+  if(ov) ov.addEventListener('click', closeD);
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeD(); });
+  document.querySelectorAll('.side-toc a').forEach(function(a){ a.addEventListener('click', function(){ if(window.innerWidth <= 1080) closeD(); }); });
+
+  // ---- 目录高亮
+  var links = Array.prototype.slice.call(document.querySelectorAll('.side-toc a[href^="#"]'));
+  var secs = links.map(function(a){ return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  function spy(){
+    var y = window.scrollY + 110, cur = null;
+    secs.forEach(function(s){ if(s.offsetTop <= y) cur = s; });
+    links.forEach(function(a){ a.classList.toggle('on', cur && a.getAttribute('href') === '#' + cur.id); });
+  }
+  window.addEventListener('scroll', spy, {passive:true}); spy();
+
+  // ---- 复制
+  function mark(btn, txt, cls){
+    var old = btn.dataset.old || btn.textContent;
+    btn.dataset.old = old;
+    btn.textContent = txt; btn.classList.remove('ok','warn');
+    if(cls) btn.classList.add(cls);
+    setTimeout(function(){ btn.textContent = old; btn.classList.remove('ok','warn'); }, 2200);
+  }
+  function fallbackCopy(text){
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly','');
+    ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0';
+    document.body.appendChild(ta); ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch(e) { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+  document.querySelectorAll('.prompt').forEach(function(box){
+    var btn = box.querySelector('.copybtn');
+    if(!btn) return;
+    btn.addEventListener('click', function(){
+      var pre = box.querySelector('.prompt-body');
+      var opt = box.querySelector('.opt');
+      var text = pre ? pre.innerText : '';
+      if(opt) text += '\n\n' + opt.innerText;
+      var done = function(){ mark(btn, '已复制全文', 'ok'); };
+      var fail = function(){
+        // 退化为手动复制：选中正文
+        try{
+          var r = document.createRange(); r.selectNodeContents(pre);
+          var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        }catch(e){}
+        mark(btn, '请按 Ctrl+C 复制已选中内容', 'warn');
+      };
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done).catch(function(){
+          if(fallbackCopy(text)) done(); else fail();
+        });
+      } else {
+        if(fallbackCopy(text)) done(); else fail();
+      }
+    });
+  });
+
+  // ---- 勾选进度
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('.checks input[type=checkbox]'));
+  if(boxes.length){
+    var saved = {};
+    try { saved = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e) { saved = {}; }
+    boxes.forEach(function(b){
+      var id = b.dataset.p;
+      if(saved[id]) b.checked = true;
+      b.addEventListener('change', function(){
+        saved[id] = b.checked;
+        try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch(e) {}
+        progress();
+      });
+    });
+    function progress(){
+      var total = boxes.length, on = boxes.filter(function(b){ return b.checked; }).length;
+      var pct = total ? Math.round(on / total * 100) : 0;
+      var num = document.getElementById('progNum'), tot = document.getElementById('progTotal'),
+          bar = document.getElementById('progBar'), bar2 = document.getElementById('bar2'),
+          txt = document.getElementById('progTxt');
+      if(num) num.textContent = on;
+      if(tot) tot.textContent = total;
+      if(bar) bar.style.width = pct + '%';
+      if(bar2) bar2.style.width = pct + '%';
+      if(txt) txt.textContent = on + ' / ' + total;
+      // 目录完成标记
+      document.querySelectorAll('.checks').forEach(function(g){
+        var sid = g.dataset.group;
+        var all = g.querySelectorAll('input');
+        var ok = Array.prototype.every.call(all, function(x){ return x.checked; });
+        var a = document.querySelector('.side-toc a[href="#' + sid + '"]');
+        if(a) a.classList.toggle('done', ok);
+      });
+    }
+    progress();
+  }
+
+  // ---- 判断题
+  document.querySelectorAll('.q').forEach(function(q){
+    var btns = Array.prototype.slice.call(q.querySelectorAll('.q-opts button'));
+    var right = parseInt(q.dataset.right, 10);
+    btns.forEach(function(b, i){
+      b.addEventListener('click', function(){
+        if(q.dataset.answered) return;
+        q.dataset.answered = '1';
+        btns[right].classList.add('right');
+        if(i !== right) b.classList.add('wrong');
+        var why = q.querySelector('.q-why');
+        if(why) why.hidden = false;
+      });
+    });
+  });
+
+  // ---- 打印前展开答案
+  window.addEventListener('beforeprint', function(){
+    document.querySelectorAll('details.ans').forEach(function(d){ d.open = true; });
+  });
+})();
+</script>
+</body></html>
