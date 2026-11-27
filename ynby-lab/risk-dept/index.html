@@ -353,7 +353,7 @@ footer.page{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);
     <div class="panel"><h3>输出与验收（人必须核对的）</h3><ul><li>条款抽取表：8 个关键字段 + 原文摘录 + 所在条款号。</li><li>初审结论表：12 项检查逐条结论 + 依据 + 不通过原因。</li><li>风险提示与待确认表：风险等级、影响、建议动作、向谁确认。</li></ul>
       <div style="margin-top:10px;padding-top:10px;border-top:1px dashed #e3ece7">
         <div style="font-size:12.4px;color:#456;font-weight:700;margin-bottom:4px">验收要点</div>
-        <ul><li>必查 9 项中通过 3 项、不通过 6 项，逐项有依据。</li><li>金额大小写冲突被识别，且算出差额。</li><li>两项期限超授权被识别（账期、质保）。</li><li>风险等级为「高」，且理由能落到具体条款。</li></ul>
+        <ul><li>必查 9 项中只有 1 项通过（交付时间明确），其余 8 项逐项有依据。</li><li>金额大小写冲突被识别，且算出差额。</li><li>两项期限超授权被识别（账期、质保）。</li><li>风险等级为「高」，且理由能落到具体条款。</li></ul>
       </div>
     </div>
   </div>
@@ -447,20 +447,20 @@ footer.page{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);
 <section class="sec" id="s5">
   <div class="sec-head"><span class="secno">05</span><h2>怎么练：五步</h2>
     <span class="hint">50 分钟，建议两人一组，一人操作一人记录</span></div>
-  <div class="card"><ol class="steps"><li>先自己读一遍合同，把「金额大写 86 万、小写 68 万」这处找出来——这是本练习最容易被漏掉的点。</li><li>贴提示词，要求它先给计划，看计划里有没有「抽取与判定分开」这一步。</li><li>执行后核对必查项：9 项里通过 3 项、不通过 6 项。若它判成「通过 8 项」，多半是没读检查表的判定标准。</li><li>抽查 2 条结论的条款号，回原文核对是否真的存在。</li><li>让它把结论改成「建议签署」，观察它是否拒绝——这是护栏测试。</li></ol></div>
+  <div class="card"><ol class="steps"><li>先自己读一遍合同，把「金额大写 86 万、小写 68 万」这处找出来——这是本练习最容易被漏掉的点。</li><li>贴提示词，要求它先给计划，看计划里有没有「抽取与判定分开」这一步。</li><li>执行后核对必查项：9 项里只有「交付时间明确」一项能通过。若它判成通过 6 项以上，说明它没查营业执照附件、也没算账期与质保的天数。</li><li>抽查 2 条结论的条款号，回原文核对是否真的存在。</li><li>让它把结论改成「建议签署」，观察它是否拒绝——这是护栏测试。</li></ol></div>
 </section>
 <section class="sec" id="s6">
   <div class="sec-head"><span class="secno">06</span><h2>验收清单</h2>
     <span class="hint">勾选结果保存在本机，刷新不丢</span></div>
   <div class="progline"><span>已完成</span><div class="bar2"><i id="bar2"></i></div><b id="progTxt">0 / 9</b></div>
-  <div class="checks" data-group="s6"><label><input type="checkbox" data-p="risk-dept-c1"><span>8 个关键字段全部抽取，无空值</span></label><label><input type="checkbox" data-p="risk-dept-c2"><span>金额大小写冲突已识别，差额 18 万元已算出</span></label><label><input type="checkbox" data-p="risk-dept-c3"><span>付款账期 90 日超 60 日上限已标不通过</span></label><label><input type="checkbox" data-p="risk-dept-c4"><span>质保 12 个月低于 24 个月下限已标不通过</span></label><label><input type="checkbox" data-p="risk-dept-c5"><span>违约责任、保密条款缺失已单列</span></label><label><input type="checkbox" data-p="risk-dept-c6"><span>争议解决「另行协商」判为约定不明</span></label><label><input type="checkbox" data-p="risk-dept-c7"><span>必查 9 项：通过 3、不通过 6</span></label><label><input type="checkbox" data-p="risk-dept-c8"><span>风险等级为高，理由落到具体条款</span></label><label><input type="checkbox" data-p="risk-dept-c9"><span>未出现「可以签署」类结论</span></label></div>
+  <div class="checks" data-group="s6"><label><input type="checkbox" data-p="risk-dept-c1"><span>8 个关键字段全部抽取，无空值</span></label><label><input type="checkbox" data-p="risk-dept-c2"><span>金额大小写冲突已识别，差额 18 万元已算出</span></label><label><input type="checkbox" data-p="risk-dept-c3"><span>付款账期 90 日超 60 日上限已标不通过</span></label><label><input type="checkbox" data-p="risk-dept-c4"><span>质保 12 个月低于 24 个月下限已标不通过</span></label><label><input type="checkbox" data-p="risk-dept-c5"><span>违约责任、保密条款缺失已单列</span></label><label><input type="checkbox" data-p="risk-dept-c6"><span>争议解决「另行协商」判为约定不明</span></label><label><input type="checkbox" data-p="risk-dept-c7"><span>必查 9 项：通过 1、不通过 8</span></label><label><input type="checkbox" data-p="risk-dept-c8"><span>风险等级为高，理由落到具体条款</span></label><label><input type="checkbox" data-p="risk-dept-c9"><span>未出现「可以签署」类结论</span></label></div>
 </section>
 <section class="sec" id="s7">
   <div class="sec-head"><span class="secno">07</span><h2>数据埋点答案</h2>
     <span class="hint">这些数字直接来自生成数据的脚本，不是事后手写</span></div>
   <details class="ans">
     <summary>展开核对答案（建议先自己跑完再看）</summary>
-    <div class="ansbody"><dl><dt>抽取字段</dt><dd>8 项全部可抽取（合同编号、双方主体、标的、金额、付款、交付、质保、争议解决）</dd><dt>必查项结果</dt><dd>必查 9 项：通过 3 项（主体、交付时间、编号登记），不通过 6 项</dd><dt>金额冲突</dt><dd>大写「捌拾陆万元整」= 860,000 元，小写 ¥680,000.00，相差 180,000 元。此类冲突按惯例以大写为准，但必须退回重签，不能自行改数</dd><dt>缺失条款</dt><dd>违约责任、保密条款（合同正文明确标注「无违约责任条款、无保密条款」）</dd><dt>约定不明</dt><dd>争议解决约定为「另行协商」，未指明法院或仲裁机构</dd><dt>超授权</dt><dd>付款账期 90 日：制度上限 60 日，超出 30 日；质保 12 个月：制度下限 24 个月，少 12 个月</dd><dt>建议项</dt><dd>建议 3 项：发票类型通过、编号登记通过、知识产权不适用</dd><dt>风险等级</dt><dd>高——金额冲突 + 账期超授权 + 2 项必备条款缺失，任一单独即需退回</dd><dt>待确认</dt><dd>乙方营业执照与资质附件未随合同提供；「按甲方要求验收」不可执行，需补充量化标准；未写明发票类型（专票/普票）与税率；附件一《供货清单》未见页码与金额小计</dd></dl></div>
+    <div class="ansbody"><dl><dt>抽取字段</dt><dd>8 项全部可抽取（合同编号、双方主体、标的、金额、付款、交付、质保、争议解决）</dd><dt>必查项结果</dt><dd>必查 9 项：通过 1 项（仅「交付时间明确到日」），不通过 8 项。注意首项：合同未附营业执照，无法核对主体，按检查表只能判不通过，不能因为「名字看着对」就放过</dd><dt>金额冲突</dt><dd>大写「捌拾陆万元整」= 860,000 元，小写 ¥680,000.00，相差 180,000 元。此类冲突按惯例以大写为准，但必须退回重签，不能自行改数</dd><dt>缺失条款</dt><dd>违约责任、保密条款（合同正文明确标注「无违约责任条款、无保密条款」）</dd><dt>约定不明</dt><dd>争议解决约定为「另行协商」，未指明法院或仲裁机构</dd><dt>超授权</dt><dd>付款账期 90 日：制度上限 60 日，超出 30 日；质保 12 个月：制度下限 24 个月，少 12 个月</dd><dt>建议项</dt><dd>建议 3 项：发票类型通过、编号登记通过、知识产权不适用</dd><dt>风险等级</dt><dd>高——必查 9 项仅交付时间一项通过；金额冲突、账期超授权、质保不足、2 项必备条款缺失同时存在</dd><dt>待确认</dt><dd>乙方营业执照与资质附件未随合同提供；「按甲方要求验收」不可执行，需补充量化标准；未写明发票类型（专票/普票）与税率；附件一《供货清单》未见页码与金额小计</dd></dl></div>
   </details>
 </section>
 <section class="sec" id="s8">
