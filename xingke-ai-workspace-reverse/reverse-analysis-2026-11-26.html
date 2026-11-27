@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="基于登录态界面观察与 REA 静态分析整理的杏壳AI工作台功能、架构、接口族与复刻路线。">
+  <title>杏壳AI工作台逆向分析｜功能、架构与复刻路线</title>
+  <style>
+    :root{
+      color-scheme:light;
+      --ink:#14213d;--muted:#5d6982;--line:#d9e1ec;--paper:#f6f8fb;--card:#fff;
+      --navy:#0a1931;--blue:#246bfd;--cyan:#13a8c7;--orange:#f28c28;--green:#258b6a;
+      --shadow:0 14px 36px rgba(20,33,61,.08);--radius:18px;--max:1180px;
+    }
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;line-height:1.75}
+    a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}code{font-family:Consolas,"SFMono-Regular",monospace;font-size:.92em}
+    .hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#08162b 0%,#102c55 62%,#155777 100%);color:#fff}
+    .hero:before,.hero:after{content:"";position:absolute;border-radius:50%;filter:blur(2px);opacity:.36}.hero:before{width:420px;height:420px;right:-120px;top:-210px;background:#2e7cf6}.hero:after{width:260px;height:260px;left:-90px;bottom:-150px;background:#f28c28}
+    .hero-inner{position:relative;z-index:1;max-width:var(--max);margin:auto;padding:76px 26px 64px}.eyebrow{display:inline-flex;gap:8px;align-items:center;padding:7px 12px;border:1px solid rgba(255,255,255,.25);border-radius:999px;background:rgba(255,255,255,.08);font-size:14px}
+    h1{max-width:900px;margin:22px 0 16px;font-size:clamp(34px,5vw,64px);line-height:1.08;letter-spacing:-.04em}.lead{max-width:780px;margin:0;color:#dbe9ff;font-size:clamp(17px,2vw,22px)}
+    .hero-meta{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:28px;color:#bcd0ec;font-size:14px}.hero-meta strong{color:#fff}
+    .shell{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:230px minmax(0,1fr);gap:28px;padding:34px 26px 70px}
+    .toc{position:sticky;top:18px;align-self:start;background:var(--navy);color:#fff;border-radius:16px;padding:18px;box-shadow:var(--shadow)}.toc strong{display:block;margin-bottom:10px;font-size:14px;color:#9ec2ff}.toc a{display:block;color:#dce9ff;padding:8px 10px;border-radius:9px;font-size:14px}.toc a:hover{background:rgba(255,255,255,.1);text-decoration:none}
+    main{min-width:0}.section{scroll-margin-top:20px;margin-bottom:44px}.section h2{margin:0 0 16px;font-size:clamp(26px,3vw,38px);line-height:1.25;letter-spacing:-.02em}.section h3{font-size:20px;margin:0 0 10px}.kicker{color:var(--blue);font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+    .summary{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--orange);border-radius:var(--radius);padding:24px 26px;box-shadow:var(--shadow);font-size:18px}
+    .metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:18px}.metric{background:var(--navy);color:#fff;border-radius:15px;padding:18px}.metric b{display:block;font-size:28px;line-height:1.15;color:#7fb1ff}.metric span{font-size:13px;color:#c9d7ea}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:0 8px 22px rgba(20,33,61,.05)}.card .num{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:9px;background:#e9f0ff;color:var(--blue);font-weight:800;margin-bottom:12px}.card p{margin:0;color:var(--muted)}
+    .architecture{display:grid;gap:12px}.layer{display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}.layer-name{font-weight:800;color:#fff;background:var(--navy);border-radius:10px;padding:10px 12px;text-align:center}.layer:nth-child(2) .layer-name{background:var(--blue)}.layer:nth-child(3) .layer-name{background:var(--cyan)}.layer:nth-child(4) .layer-name{background:var(--green)}.layer:nth-child(5) .layer-name{background:var(--orange)}
+    .chips{display:flex;flex-wrap:wrap;gap:8px}.chip{padding:5px 9px;border-radius:999px;background:#eef3fa;color:#344361;font-size:13px;border:1px solid #dde6f1}
+    .table-wrap{overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}table{width:100%;border-collapse:collapse;min-width:720px}th,td{text-align:left;vertical-align:top;padding:14px 16px;border-bottom:1px solid var(--line)}th{background:#eef3fa;font-size:13px;color:#394967}td{font-size:14px}tr:last-child td{border-bottom:0}
+    .flow{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;align-items:stretch}.step{position:relative;background:var(--card);border:1px solid var(--line);border-top:4px solid var(--blue);border-radius:13px;padding:15px 12px;font-size:13px}.step b{display:block;margin-bottom:5px;font-size:14px}.step:after{content:"→";position:absolute;right:-10px;top:42%;z-index:2;color:var(--orange);font-size:20px;font-weight:800}.step:last-child:after{display:none}
+    .evidence{background:#0d1c34;color:#dce8fa;border-radius:var(--radius);padding:24px}.evidence ul{margin:10px 0 0;padding-left:20px}.evidence strong{color:#fff}.evidence code{color:#8fc2ff}.warning{border:1px solid #f3c98c;background:#fff8eb;border-radius:14px;padding:18px;color:#6f4b1c}
+    footer{background:#071326;color:#afc2de}.footer-inner{max-width:var(--max);margin:auto;padding:30px 26px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}footer a{color:#8fc2ff}
+    @media(max-width:980px){.shell{grid-template-columns:1fr}.toc{position:static;display:flex;gap:4px;overflow:auto;white-space:nowrap}.toc strong{display:none}.metrics{grid-template-columns:repeat(2,1fr)}.flow{grid-template-columns:repeat(2,1fr)}.step:after{display:none}}
+    @media(max-width:640px){.hero-inner{padding:52px 20px 44px}.shell{padding:24px 16px 54px}.grid{grid-template-columns:1fr}.metrics{grid-template-columns:1fr 1fr}.layer{grid-template-columns:1fr}.layer-name{text-align:left}.flow{grid-template-columns:1fr}.summary{padding:20px;font-size:16px}.footer-inner{padding:24px 18px}}
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <span class="eyebrow">REA 静态分析 + 登录态界面观察</span>
+      <h1>杏壳AI工作台逆向分析</h1>
+      <p class="lead">把一个成熟 AI 工作台拆成可理解的功能模块、系统分层、接口族和复刻顺序。这份报告不包含原始源码、凭据、租户参数或个人数据。</p>
+      <div class="hero-meta">
+        <span><strong>分析日期</strong> 2026-11-26</span>
+        <span><strong>目标</strong> workspace.xiaoe-ai.com</span>
+        <span><strong>范围</strong> Web SPA 前端与登录后功能表面</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="shell">
+    <nav class="toc" aria-label="页内导航">
+      <strong>报告导航</strong>
+      <a href="#conclusion">核心结论</a>
+      <a href="#features">功能地图</a>
+      <a href="#architecture">系统架构</a>
+      <a href="#apis">API 族</a>
+      <a href="#workflow">核心工作流</a>
+      <a href="#rebuild">复刻路线</a>
+      <a href="#evidence">证据与边界</a>
+    </nav>
+
+    <main>
+      <section class="section" id="conclusion">
+        <div class="kicker">Executive summary</div>
+        <h2>核心结论</h2>
+        <div class="summary">
+          这不是一个只能对话的 AI 页面，而是一套把「任务执行、能力组装、应用发布、自动化、文件资产、企业权限」放在同一个壳里的企业级 AI 工作台。复刻的难点不是聊天框，而是任务、专家、技能、连接器、工作区文件和企业治理之间的状态一致性。
+        </div>
+        <div class="metrics">
+          <div class="metric"><b>53</b><span>REA 解析的 JavaScript 文件</span></div>
+          <div class="metric"><b>156 万</b><span>结构分析访问的 AST 节点</span></div>
+          <div class="metric"><b>10,433</b><span>语义分析恢复的调用关系</span></div>
+          <div class="metric"><b>47,309</b><span>语义分析恢复的数据流关系</span></div>
+        </div>
+      </section>
+
+      <section class="section" id="features">
+        <div class="kicker">Capability map</div>
+        <h2>六个业务子系统</h2>
+        <div class="grid">
+          <article class="card"><span class="num">01</span><h3>任务与对话</h3><p>新建任务、多场景入口、默认/计划/仅问答模式、专家绑定、模型与推理等级、附件、工作区、对话编辑重跑与任务状态。</p></article>
+          <article class="card"><span class="num">02</span><h3>专家·技能·连接器</h3><p>将专家当作任务角色，技能通过斜杠指令调用，连接器管理外部能力和授权；同时存在市场、已安装、选择与存储连接。</p></article>
+          <article class="card"><span class="num">03</span><h3>应用创作与市场</h3><p>创建应用、预览、打包、安装、版本更新、本地应用、市场安装/卸载、审核与发布。产物和对话会话保留绑定关系。</p></article>
+          <article class="card"><span class="num">04</span><h3>定时任务</h3><p>创建、编辑、启用、暂停定时任务，并用新会话继续执行。代码中对返回不明确、会话不可用等状态设计了容错分支。</p></article>
+          <article class="card"><span class="num">05</span><h3>云盘与文件工作区</h3><p>空间、文件夹、搜索、最近使用、上传、移动、回收站、版本、分享、权限、通知、配额、安全和使用量治理。</p></article>
+          <article class="card"><span class="num">06</span><h3>多格式预览与编辑</h3><p>发现 PDF、DOCX、表格、幻灯片、Markdown、HTML 和代码文件的独立查看/编辑模块，代码查看器按语言按需加载语法包。</p></article>
+        </div>
+      </section>
+
+      <section class="section" id="architecture">
+        <div class="kicker">System layers</div>
+        <h2>从界面到企业治理的五层架构</h2>
+        <div class="architecture">
+          <div class="layer"><div class="layer-name">交互壳</div><div><strong>React + Vite 式分块 SPA</strong><div class="chips"><span class="chip">主导航</span><span class="chip">任务编辑器</span><span class="chip">右侧文件面板</span><span class="chip">多标签预览</span><span class="chip">响应式布局</span></div></div></div>
+          <div class="layer"><div class="layer-name">客户端状态</div><div><strong>路由、对话、任务、安装、文件和权限状态</strong><div class="chips"><span class="chip">localStorage</span><span class="chip">sessionStorage</span><span class="chip">乐观更新</span><span class="chip">冲突检测</span><span class="chip">幂等回执</span></div></div></div>
+          <div class="layer"><div class="layer-name">业务 API</div><div><strong>账号、工作台、连接器、模型、云盘、应用市场</strong><div class="chips"><span class="chip">/api/admin</span><span class="chip">/api/desktop-workbenches</span><span class="chip">/connectors</span><span class="chip">/drive</span><span class="chip">/model-*</span><span class="chip">/open-platform</span></div></div></div>
+          <div class="layer"><div class="layer-name">执行与资产</div><div><strong>Agent 运行时、会话工作区、云盘对象、应用包与版本</strong><div class="chips"><span class="chip">实时状态</span><span class="chip">文件摘要</span><span class="chip">产物保存</span><span class="chip">预览运行</span><span class="chip">版本回溯</span></div></div></div>
+          <div class="layer"><div class="layer-name">企业治理</div><div><strong>企业微信授权、成员部门、空间安全、配额与审核</strong><div class="chips"><span class="chip">身份绑定</span><span class="chip">最小权限</span><span class="chip">分享限制</span><span class="chip">容量管理</span><span class="chip">操作核对</span></div></div></div>
+        </div>
+      </section>
+
+      <section class="section" id="apis">
+        <div class="kicker">Static endpoint inventory</div>
+        <h2>静态代码中出现的 API 族</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>接口族</th><th>主要职责</th><th>代表路径</th><th>复刻时的最小能力</th></tr></thead>
+            <tbody>
+              <tr><td>账号与企业</td><td>登录、企业微信 OAuth、账号、企业和开通流程</td><td><code>/api/admin/auth/*</code><br><code>/api/admin/shops</code></td><td>会话、企业选择、授权回调和失效处理</td></tr>
+              <tr><td>工作台壳</td><td>启动、状态、应用实例、创作器、市场安装与提醒</td><td><code>/api/desktop-workbenches/*</code></td><td>工作台状态机、创作预览、安装任务和安全回执</td></tr>
+              <tr><td>能力注册</td><td>连接器列表、选择、存储授权，技能目录同步</td><td><code>/connectors/*</code><br><code>/catalog-skills-sync</code></td><td>专家、技能和连接器的统一注册表</td></tr>
+              <tr><td>模型与额度</td><td>模型目录、参数配置、用量与额度</td><td><code>/model-directory</code><br><code>/model-config</code><br><code>/model-usage</code></td><td>模型选择、推理等级和额度阻断</td></tr>
+              <tr><td>云盘与文件</td><td>空间、文件夹、搜索、上传、移动、版本、回收站、分享、治理</td><td><code>/drive/*</code><br><code>/uploads/*</code><br><code>/versions/uploads/*</code></td><td>统一文件 ID、摘要、版本号、冲突控制和操作日志</td></tr>
+              <tr><td>分享与开放平台</td><td>文件分享、云应用授权、工具资源声明</td><td><code>/api/cloud-drive/shares/*</code><br><code>/open-platform/*</code></td><td>分享链接、权限范围、到期时间和审计信息</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="warning"><strong>注意：</strong>上表是从前端静态字面量恢复的接口候选，只证明代码存在相关路径，不代表本次实际调用，也不证明服务端当前全部开放。</p>
+      </section>
+
+      <section class="section" id="workflow">
+        <div class="kicker">Product loop</div>
+        <h2>一条跨越六个模块的核心工作流</h2>
+        <div class="flow" aria-label="从任务到企业资产的工作流">
+          <div class="step"><b>1. 建任务</b>选择场景和模式</div>
+          <div class="step"><b>2. 组能力</b>专家 + 技能 + 连接器</div>
+          <div class="step"><b>3. 选工作区</b>附件、文件夹与云盘资料</div>
+          <div class="step"><b>4. 执行</b>模型运行、状态更新、文件产出</div>
+          <div class="step"><b>5. 验收</b>预览、编辑、下载、版本检查</div>
+          <div class="step"><b>6. 沉淀</b>保存到云盘或打包为应用</div>
+          <div class="step"><b>7. 复用</b>定时执行、市场发布或企业分享</div>
+        </div>
+      </section>
+
+      <section class="section" id="rebuild">
+        <div class="kicker">Reconstruction plan</div>
+        <h2>复刻顺序：先跑通任务闭环，再扩企业治理</h2>
+        <div class="grid">
+          <article class="card"><span class="num">M1</span><h3>任务壳</h3><p>完成对话、模型选择、附件、任务状态和一个隔离工作区。验收标准是输入、执行、产出、重试可闭环。</p></article>
+          <article class="card"><span class="num">M2</span><h3>能力注册表</h3><p>用一套 schema 管理专家、技能、连接器、模型和权限，任务只引用稳定 ID，不把具体实现硬编进界面。</p></article>
+          <article class="card"><span class="num">M3</span><h3>文件与版本</h3><p>先支持 Markdown、HTML、图片和通用文件，再增加 Office/PDF 预览。每次修改保留摘要、版本号和来源任务。</p></article>
+          <article class="card"><span class="num">M4</span><h3>自动化和应用</h3><p>定时任务使用同一执行引擎；应用打包使用同一产物和版本模型，避免再造两套运行时。</p></article>
+          <article class="card"><span class="num">M5</span><h3>市场与分享</h3><p>先做内部安装和版本更新，再增加审核、发布、分享链接、到期时间和访问范围。</p></article>
+          <article class="card"><span class="num">M6</span><h3>企业治理</h3><p>最后增加企业、成员、部门、配额、安全策略和审计。每个破坏性操作都需要确认、幂等键和后置核对。</p></article>
+        </div>
+      </section>
+
+      <section class="section" id="evidence">
+        <div class="kicker">Evidence and limits</div>
+        <h2>哪些是观察，哪些仍未验证</h2>
+        <div class="evidence">
+          <strong>已观察</strong>
+          <ul>
+            <li>登录后主界面的导航、场景、专家、模型、任务输入和右侧文件面板。</li>
+            <li>静态采集 63 个前端资源、约 10 MB；REA 结构分析覆盖 53 个 JavaScript 文件、约 922 万字节。</li>
+            <li>REA 结构 Evidence：<code>ev_0793907a…b4919</code>；核心模块语义 Evidence：<code>ev_7b57f334…32b3</code>。</li>
+            <li>统计包括 5,226 条结构发现、39 条静态请求关系、10,433 条调用关系和 47,309 条数据流关系。</li>
+          </ul>
+          <br>
+          <strong>边界</strong>
+          <ul>
+            <li>本次没有记录帐号 Cookie、Token、请求体或服务端返回。接口是静态候选，不是实际运行证据。</li>
+            <li>CDN 在连续请求后返回 567，48 个懒加载资源未取得；语义分析选了 21 个核心文件，32 个已入库文件未进行深层语义分析。</li>
+            <li>REA 语义节点上限被触发，动态属性、混淆表达式和运行时权限仍为未知。</li>
+            <li>报告目标是产品与架构理解，不提供绕过授权、复制商业源码或伪装原品牌的方法。</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span>李家贵 AI 实战资源库 · 逆向分析报告</span>
+      <span><a href="https://workspace.xiaoe-ai.com/" target="_blank" rel="noopener noreferrer">目标站点</a> · <a href="../list/">返回资源导航</a></span>
+    </div>
+  </footer>
+</body>
+</html>
