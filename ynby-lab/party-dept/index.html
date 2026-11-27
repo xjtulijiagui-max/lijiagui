@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>党群工作部练习台｜云南白药药品事业群 AI 赋能实战</title>
+<meta name="description" content="党群工作部岗位场景包与实操练习：从活动记录到宣传稿与复盘，2 个可下载模拟文件、2 段可复制提示词、9 项验收清单与数据埋点答案。">
+<meta name="theme-color" content="#8C1D2E">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --ink:#15211c; --ink2:#3b4a43; --muted:#63736b; --line:#dde7e1; --line2:#eef4f0;
+  --bg:#f4f8f5; --card:#ffffff; --deep:#08251d; --deep2:#0d3328;
+  --accent:#0F6B4F; --accent-soft:#E6F2EC;
+  --warn:#8A5B1E; --warn-soft:#FFF6E8; --danger:#9B2C2C;
+  --radius:14px; --shadow:0 1px 2px rgba(10,40,30,.05),0 8px 24px rgba(10,40,30,.06);
+  --mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Source Han Sans SC","Hiragino Sans GB",sans-serif;
+}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:15px;line-height:1.72;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+h1,h2,h3,h4{margin:0;line-height:1.35;font-weight:700;letter-spacing:-.01em}
+p{margin:0 0 10px}
+ul,ol{margin:0 0 10px;padding-left:20px}
+li{margin:4px 0}
+code{font-family:var(--mono);font-size:.9em;background:#eef6f1;border:1px solid #dcebe3;
+  border-radius:5px;padding:1px 5px;color:#155340}
+.mono{font-family:var(--mono);font-size:.9em}
+
+/* ---------- 框架 ---------- */
+.shell{display:grid;grid-template-columns:274px minmax(0,1fr);min-height:100vh}
+.sidebar{position:sticky;top:0;height:100vh;background:var(--deep);color:#cfe0d8;
+  display:flex;flex-direction:column;z-index:60}
+.side-head{padding:22px 20px 16px;border-bottom:1px solid rgba(255,255,255,.09)}
+.side-brand{display:flex;align-items:center;gap:10px}
+.side-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(140deg,#1f8a67,#0b4433);
+  display:grid;place-items:center;color:#fff;font-weight:700;font-size:15px;flex:0 0 auto;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}
+.side-brand b{color:#fff;font-size:14.5px;display:block;line-height:1.35}
+.side-brand span{font-size:11.5px;color:#8fae9f;display:block;margin-top:2px}
+.side-toc{flex:1;overflow-y:auto;padding:14px 12px 8px}
+.side-toc::-webkit-scrollbar{width:6px}
+.side-toc::-webkit-scrollbar-thumb{background:#1f4c3c;border-radius:3px}
+.toc-label{font-size:10.5px;letter-spacing:.14em;color:#7d9c8d;padding:6px 10px 8px;font-weight:600}
+.side-toc a{display:flex;gap:9px;align-items:flex-start;color:#bfd4c9;padding:7px 10px;border-radius:8px;
+  font-size:13px;line-height:1.5;margin-bottom:1px;border-left:2px solid transparent}
+.side-toc a:hover{background:rgba(255,255,255,.06);text-decoration:none;color:#fff}
+.side-toc a.on{background:rgba(255,255,255,.10);color:#fff;border-left-color:var(--accent)}
+.side-toc a .n{font-family:var(--mono);font-size:11px;color:#75a892;padding-top:2px;min-width:16px}
+.side-toc a.on .n{color:#9fdcbf}
+.side-toc a.done .n::after{content:"✓";color:#8fd6b1;margin-left:2px}
+.side-foot{padding:12px 16px 16px;border-top:1px solid rgba(255,255,255,.09);font-size:11.5px;color:#8fae9f}
+.bar{height:5px;background:rgba(255,255,255,.12);border-radius:3px;overflow:hidden;margin:8px 0 6px}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#37b98a,#8ad6b4);transition:width .3s}
+
+.main{min-width:0;display:flex;flex-direction:column}
+.topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:12px;
+  padding:10px 26px;background:rgba(244,248,245,.92);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line)}
+.topbar .back{font-size:13px;color:var(--ink2);display:inline-flex;align-items:center;gap:6px;
+  padding:5px 10px;border:1px solid var(--line);border-radius:8px;background:#fff}
+.topbar .back:hover{text-decoration:none;border-color:#bcd4c8;color:var(--accent)}
+.top-dept{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+.top-dept a{font-size:12px;padding:4px 9px;border-radius:7px;color:var(--ink2);border:1px solid transparent}
+.top-dept a:hover{background:#fff;border-color:var(--line);text-decoration:none}
+.top-dept a.on{background:var(--accent);color:#fff}
+.menu-btn{display:none;border:1px solid var(--line);background:#fff;border-radius:8px;
+  width:36px;height:32px;font-size:15px;cursor:pointer;color:var(--ink)}
+.wrap{width:100%;max-width:1000px;margin:0 auto;padding:26px 26px 90px}
+
+/* ---------- 首屏 ---------- */
+.hero{position:relative;background:var(--card);border:1px solid var(--line);border-radius:18px;
+  padding:26px 28px;box-shadow:var(--shadow);overflow:hidden}
+.hero::after{content:"";position:absolute;right:-60px;top:-70px;width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, var(--accent-soft), transparent 68%);opacity:.9}
+.hero .kicker{font-size:12px;letter-spacing:.1em;color:var(--muted);font-weight:600;text-transform:uppercase}
+.hero h1{font-size:30px;margin:8px 0 8px;color:#0d2a21}
+.hero .lede{font-size:15.5px;color:var(--ink2);max-width:640px}
+.hero .glyph{position:absolute;right:26px;top:20px;width:56px;height:56px;border-radius:14px;
+  background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;
+  font-size:26px;font-weight:700;z-index:1}
+.kpis{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;position:relative;z-index:1}
+.kpi{display:inline-flex;align-items:baseline;gap:5px;font-size:12.5px;color:var(--ink2);
+  background:#f3f8f5;border:1px solid var(--line2);border-radius:8px;padding:5px 10px}
+.kpi b{font-family:var(--mono);color:var(--accent);font-size:13.5px}
+
+/* ---------- 区块 ---------- */
+.sec{margin-top:30px;scroll-margin-top:64px}
+.sec-head{display:flex;align-items:baseline;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.secno{font-family:var(--mono);font-size:12px;color:#fff;background:var(--accent);
+  border-radius:6px;padding:2px 7px;letter-spacing:.04em}
+.sec-head h2{font-size:21px;color:#0d2a21}
+.sec-head .hint{font-size:12.5px;color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:18px 20px;box-shadow:var(--shadow)}
+
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.scene{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:15px 16px;
+  border-top:3px solid var(--accent)}
+.scene h3{font-size:14px;color:#123b2d;margin-bottom:6px}
+.scene p{font-size:13.2px;color:var(--ink2);margin:0}
+.assets{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.assets span.lb{font-size:12px;color:var(--muted)}
+.tag{display:inline-block;font-size:12px;padding:3px 9px;border-radius:999px;
+  background:var(--accent-soft);color:var(--accent);border:1px solid #cfe5da}
+
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.panel h3{font-size:13.5px;color:#123b2d;display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.panel h3::before{content:"";width:7px;height:7px;border-radius:2px;background:var(--accent);display:inline-block}
+.panel ul{padding-left:18px;margin:0}
+.panel li{font-size:13.4px;color:var(--ink2);margin:5px 0}
+.boundary{margin-top:13px;background:var(--warn-soft);border:1px solid #f0dcb8;border-radius:12px;
+  padding:13px 16px;font-size:13.4px;color:#6d4815}
+.boundary b{color:#8A5B1E}
+
+/* ---------- 表格 ---------- */
+.tblwrap{width:100%;max-width:100%;overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+.tbl{width:100%;border-collapse:collapse;font-size:13.4px}
+.tbl th{background:#eaf4ee;color:#0d3b2c;text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);
+  white-space:nowrap;font-size:13px;font-weight:700}
+.tbl td{padding:9px 12px;border-bottom:1px solid var(--line2);vertical-align:top;line-height:1.6;color:var(--ink2)}
+.tbl tr:last-child td{border-bottom:0}
+.tbl tbody tr:nth-child(even){background:#fbfdfc}
+
+/* ---------- 文件 ---------- */
+.files{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:11px}
+.file{display:flex;flex-direction:column;gap:6px;background:#fff;border:1px solid var(--line);
+  border-radius:12px;padding:13px 15px;transition:.15s}
+.file:hover{border-color:#b9d6c7;box-shadow:0 6px 18px rgba(10,50,35,.07)}
+.file .fname{font-family:var(--mono);font-size:12px;color:var(--accent);word-break:break-all}
+.file .fdesc{font-size:13px;color:var(--ink);line-height:1.5}
+.file .fmeta{font-size:11.8px;color:var(--muted);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.file .ftype{background:#f0f5f2;border:1px solid var(--line2);border-radius:5px;padding:1px 6px;font-size:11px;color:#456}
+.file a.dl{margin-top:2px;font-size:12.5px;font-weight:600;align-self:flex-start}
+
+/* ---------- 提示词 ---------- */
+.prompt{background:#0d2b22;border-radius:14px;overflow:hidden;box-shadow:var(--shadow);border:1px solid #10382c}
+.prompt+.prompt{margin-top:14px}
+.prompt-head{display:flex;align-items:center;gap:10px;padding:11px 14px;background:#0a231c;
+  border-bottom:1px solid #17402f;flex-wrap:wrap}
+.prompt-head .pt{color:#e6f3ec;font-size:13.5px;font-weight:700}
+.prompt-head .ph{color:#7fae99;font-size:11.8px;flex:1;min-width:180px}
+.copybtn{font-size:12px;border:1px solid #2c6650;background:#144534;color:#bfe6d4;border-radius:7px;
+  padding:5px 11px;cursor:pointer;white-space:nowrap;font-family:var(--sans)}
+.copybtn:hover{background:#1b5a44;color:#fff}
+.copybtn.ok{background:#1f7a58;border-color:#2b9670;color:#fff}
+.copybtn.warn{background:#7a4a12;border-color:#a2661f;color:#ffe6c0}
+.prompt-body{margin:0;padding:15px 16px;font-family:var(--mono);font-size:12.4px;line-height:1.85;
+  color:#d7ece2;white-space:pre-wrap;word-break:break-word;max-height:none;overflow:visible}
+.prompt-body::-webkit-scrollbar{width:8px}
+.prompt-body::-webkit-scrollbar-thumb{background:#265742;border-radius:4px}
+.prompt .opt{margin:0;padding:11px 16px;background:#4a3712;color:#ffe1a8;font-size:12.4px;
+  font-family:var(--mono);border-top:1px dashed #6a5220;line-height:1.7}
+.prompt .opt b{color:#ffd27a}
+.prompt-note{padding:9px 16px 11px;background:#0a231c;border-top:1px solid #17402f;
+  color:#8fb9a6;font-size:11.6px}
+
+/* ---------- 步骤 ---------- */
+.steps{counter-reset:s;list-style:none;padding:0;margin:0}
+.steps li{counter-increment:s;position:relative;padding:0 0 0 38px;margin:0 0 12px;font-size:13.8px;color:var(--ink2)}
+.steps li::before{content:counter(s);position:absolute;left:0;top:1px;width:24px;height:24px;border-radius:7px;
+  background:var(--accent-soft);color:var(--accent);font-family:var(--mono);font-size:12px;font-weight:700;
+  display:grid;place-items:center}
+.steps li b{color:var(--ink)}
+
+/* ---------- 清单 ---------- */
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:7px 14px}
+.checks label{display:flex;min-height:46px;gap:9px;align-items:flex-start;font-size:13.4px;color:var(--ink2);
+  background:#fff;border:1px solid var(--line);border-radius:9px;padding:9px 11px;cursor:pointer;line-height:1.55}
+.checks label:hover{border-color:#b9d6c7;background:#fcfefd}
+.checks input{margin:3px 0 0;accent-color:var(--accent);width:15px;height:15px;flex:0 0 auto}
+.checks input:checked+span{color:#8a9b93;text-decoration:line-through}
+.progline{display:flex;align-items:center;gap:10px;margin-bottom:11px;font-size:12.6px;color:var(--muted)}
+.progline .bar2{flex:1;height:6px;background:#e6eee9;border-radius:3px;overflow:hidden}
+.progline .bar2 i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s}
+.progline b{color:var(--accent);font-family:var(--mono)}
+
+/* ---------- 答案 ---------- */
+details.ans{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+details.ans>summary{cursor:pointer;padding:12px 16px;font-size:13.5px;font-weight:700;color:#0d3b2c;
+  display:flex;align-items:center;gap:8px;list-style:none}
+details.ans>summary::-webkit-details-marker{display:none}
+details.ans>summary::before{content:"▸";color:var(--accent);font-size:12px;transition:.2s}
+details.ans[open]>summary::before{transform:rotate(90deg)}
+details.ans>summary:hover{background:#f8fcfa}
+.ansbody{padding:2px 16px 16px;border-top:1px solid var(--line2)}
+.ansbody dl{margin:0}
+.ansbody dt{font-size:12.6px;font-weight:700;color:#14513f;margin:12px 0 3px;letter-spacing:.01em}
+.ansbody dd{margin:0;font-size:13.2px;color:var(--ink2);line-height:1.68}
+.note{background:#f3f8f5;border-left:3px solid var(--accent);border-radius:0 8px 8px 0;
+  padding:10px 13px;font-size:13px;color:var(--ink2);margin-top:12px}
+
+/* ---------- 测验 ---------- */
+.quiz{display:grid;gap:12px}
+.q{background:#fff;border:1px solid var(--line);border-radius:12px;padding:15px 17px}
+.q .qt{font-size:13.8px;font-weight:700;color:#0d3b2c;margin-bottom:10px;line-height:1.6}
+.q-opts{display:grid;gap:7px}
+.q-opts button{text-align:left;font-family:var(--sans);font-size:13.3px;color:var(--ink2);
+  background:#fafcfb;border:1px solid var(--line);border-radius:9px;padding:9px 12px;cursor:pointer;
+  display:flex;gap:9px;line-height:1.55}
+.q-opts button:hover{border-color:#b9d6c7;background:#f5fbf8}
+.q-opts button .k{font-family:var(--mono);font-size:11.5px;color:#8fa79c;flex:0 0 auto;padding-top:1px}
+.q-opts button.right{border-color:#2f9e73;background:#eaf8f1;color:#0d5c3e}
+.q-opts button.right .k{color:#2f9e73}
+.q-opts button.wrong{border-color:#d9a0a0;background:#fdf0f0;color:#8a2b2b}
+.q-why{margin-top:10px;font-size:12.9px;color:#31503f;background:#f4f9f6;border-radius:9px;
+  padding:10px 12px;line-height:1.7;border-left:3px solid #2f9e73}
+.q-why b{color:#0d5c3e}
+
+/* ---------- 分页 ---------- */
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:36px;flex-wrap:wrap}
+.pager a{flex:1;min-width:200px;background:#fff;border:1px solid var(--line);border-radius:12px;
+  padding:13px 16px;display:flex;flex-direction:column;gap:3px}
+.pager a:hover{border-color:#b9d6c7;text-decoration:none}
+.pager .lb{font-size:11.5px;color:var(--muted)}
+.pager .nm{font-size:14px;color:var(--ink);font-weight:700}
+.pager a.next{text-align:right;align-items:flex-end}
+footer.page{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);
+  font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+/* ---------- 门户 ---------- */
+.deptgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:13px}
+.deptcard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 17px;
+  display:flex;flex-direction:column;gap:8px;position:relative;transition:.16s;border-top:3px solid var(--accent)}
+.deptcard:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(10,50,35,.09);text-decoration:none}
+.deptcard .dc-top{display:flex;align-items:center;gap:9px}
+.deptcard .dc-glyph{width:30px;height:30px;border-radius:8px;background:var(--accent-soft);color:var(--accent);
+  display:grid;place-items:center;font-weight:700;font-size:14px}
+.deptcard h3{font-size:15px;color:#0d2a21}
+.deptcard .dc-tag{font-size:12.4px;color:var(--muted);line-height:1.6}
+.deptcard .dc-task{font-size:13px;color:var(--ink);background:#f6faf8;border-radius:8px;padding:8px 10px;
+  border:1px dashed #d9e8e0;line-height:1.6}
+.deptcard .dc-meta{margin-top:auto;display:flex;gap:10px;font-size:11.8px;color:var(--muted);align-items:center}
+.deptcard .dc-go{margin-left:auto;color:var(--accent);font-weight:700;font-size:12.5px}
+.road{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.road .rcol{background:#fff;border:1px solid var(--line);border-radius:12px;padding:15px 17px}
+.road h3{font-size:14px;margin-bottom:8px;color:#0d3b2c}
+.road ol{padding-left:18px;margin:0}
+.road li{font-size:13.2px;color:var(--ink2);margin:5px 0}
+.road .pg{font-family:var(--mono);font-size:11px;color:#8fa79c;margin-left:4px}
+
+@media (max-width:1080px){
+  .shell{grid-template-columns:1fr}
+  .sidebar{position:fixed;left:0;top:0;width:280px;transform:translateX(-100%);
+    transition:transform .24s ease;box-shadow:0 0 40px rgba(0,0,0,.3)}
+  .sidebar.open{transform:translateX(0)}
+  .menu-btn{display:inline-flex;align-items:center;justify-content:center}
+  .overlay{position:fixed;inset:0;background:rgba(6,30,24,.55);z-index:50;display:none}
+  .overlay.show{display:block}
+  .wrap{padding:20px 18px 80px}
+  .hero h1{font-size:24px}
+  .grid3,.grid2,.twocol,.road{grid-template-columns:1fr}
+  .checks{grid-template-columns:1fr}
+  .top-dept{display:none}
+}
+@media (max-width:520px){
+  .hero{padding:20px 18px}
+  .hero .glyph{display:none}
+  .hero h1{font-size:21px}
+  .sec-head h2{font-size:18px}
+  .card{padding:15px 15px}
+  .prompt-body{font-size:11.8px;line-height:1.8}
+}
+@media print{
+  .sidebar,.topbar,.pager,.copybtn,.menu-btn,.overlay{display:none!important}
+  body{background:#fff}
+  .shell{display:block}
+  .wrap{max-width:none;padding:0}
+  .sec{break-inside:avoid}
+  details.ans>summary::before{content:""}
+  details.ans .ansbody{display:block!important}
+  .prompt{background:#fff;border:1px solid #999}
+  .prompt-body{color:#111;max-height:none;overflow:visible}
+  .prompt-head,.prompt-note{background:#fff;color:#333}
+  .prompt-head .pt{color:#000}
+}
+</style>
+</head>
+<body data-page="party-dept" style="--accent:#8C1D2E">
+<div class="overlay" id="overlay"></div>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="side-head">
+      <div class="side-brand">
+        <div class="side-mark">群</div>
+        <div>
+          <b>党群工作部</b>
+          <span>PPT P52—53</span>
+        </div>
+      </div>
+      <button id="sideClose" style="display:none"></button>
+    </div>
+    <nav class="side-toc">
+      <div class="toc-label">本页目录</div>
+      <a href="#s1"><span class="n">01</span><span>岗位场景包</span></a>
+      <a href="#s2"><span class="n">02</span><span>本次实操：输入与验收</span></a>
+      <a href="#s3"><span class="n">03</span><span>数据集下载</span></a>
+      <a href="#s4"><span class="n">04</span><span>可复制提示词</span></a>
+      <a href="#s5"><span class="n">05</span><span>怎么练：五步</span></a>
+      <a href="#s6"><span class="n">06</span><span>验收清单</span></a>
+      <a href="#s7"><span class="n">07</span><span>数据埋点答案</span></a>
+      <a href="#s8"><span class="n">08</span><span>口径判断</span></a>
+    </nav>
+      <div class="side-foot">
+        <div style="display:flex;justify-content:space-between">
+          <span>验收进度</span><span><b id="progNum">0</b>/<span id="progTotal">0</span></span>
+        </div>
+        <div class="bar"><i id="progBar"></i></div>
+        <div style="margin-top:6px;font-size:11px;color:#7d9c8d">勾选会保存在本机浏览器</div>
+      </div>
+  </aside>
+<div class="main">
+  <div class="topbar">
+    <button class="menu-btn" id="menuBtn" aria-label="打开目录">☰</button>
+    <a class="back" href="../">← 六部门门户</a>
+    <div class="top-dept"><a href="../data-dept/" class="">01 数据</a><a href="../admin-dept/" class="">02 行政</a><a href="../risk-dept/" class="">03 风控</a><a href="../finance-dept/" class="">04 财务</a><a href="../hr-dept/" class="">05 人力</a><a href="../party-dept/" class="on">06 党群</a></div>
+  </div>
+<div class="wrap">
+<div class="hero">
+  <div class="glyph">群</div>
+  <div class="kicker">云南白药 · 药品事业群中后台 AI 赋能实战｜六部门练习台 06</div>
+  <h1>党群工作部｜从活动记录到宣传稿与复盘</h1>
+  <p class="lede">事实可以写满，评价一句都不能编。本页把《PPT P52—53》的场景包与实操拆成可动手的四件事：<b>读场景 → 下数据 → 贴提示词 → 对答案</b>。</p>
+  <div class="kpis">
+    <span class="kpi"><b>3</b> 个岗位场景</span>
+    <span class="kpi"><b>2</b> 段提示词</span>
+    <span class="kpi"><b>2</b> 个数据文件</span>
+    <span class="kpi"><b>9</b> 项验收</span>
+    <span class="kpi"><b>45 分钟</b> 课堂用时</span>
+    <span class="kpi">对应 <b>PPT P52—53</b></span>
+  </div>
+</div>
+<section class="sec" id="s1">
+  <div class="sec-head"><span class="secno">01</span><h2>岗位场景包</h2>
+    <span class="hint">先看清楚「哪件事值得做成 AI 任务」，再动手</span></div>
+  <div class="grid3"><div class="scene"><h3>场景 1｜宣传与活动</h3><p>宣传稿、活动方案、学习材料摘要、简报：主题、依据、做法、成效、计划五段。成效必须有材料支撑。</p></div><div class="scene"><h3>场景 2｜总结与问答</h3><p>年度总结、专题汇报 PPT、学习问答及活动复盘；区分事实与评价，这两类混在一起就没人敢签字。</p></div><div class="scene"><h3>场景 3｜台账归档</h3><p>活动台账、素材清单、后续任务，记录素材来源及版本。素材清单先行，写稿时才不会「找不到照片」。</p></div></div>
+  <div class="assets"><span class="lb">本部门应沉淀的资产：</span><span class="tag">宣传稿模板（五段式）</span><span class="tag">活动方案模板</span><span class="tag">党群知识问答库初稿</span></div>
+  <div class="note">选场景用「两高两低」：高价值、高频、低门槛、低风险。四条里有一条明显不满足，就先别做——尤其「低风险」，合同签署、付款审批、绩效处置都不属于可练范围。</div>
+</section>
+<section class="sec" id="s2">
+  <div class="sec-head"><span class="secno">02</span><h2>本次实操：从活动记录到宣传稿与复盘</h2>
+    <span class="hint">对应 PPT P52—53 的「输入与处理规则 / 输出与验收」</span></div>
+  <div class="card" style="margin-bottom:12px">
+    <p style="margin:0"><b>输入：</b>一份活动记录（含现场估数、评价性总结）、一份 8 项素材清单（2 项缺失、1 项未授权、1 项日期不符）。</p>
+  </div>
+  <div class="twocol">
+    <div class="panel"><h3>处理规则（AI 必须照做的）</h3><ul><li>事实与评价分开：事实写进正文，评价只能作为引语并注明是谁说的。</li><li>人数、时长、发言人次等数字，以可核对材料为准；估数与签到表冲突时，两个都列并标待核实。</li><li>素材状态为「未取得/未定稿/未授权」的，不得作为事实依据。</li><li>不编造成效，不使用「显著提升」「极大增强」这类无数据支撑的表述。</li><li>引用原文要标段落，转述要标「据记录」，两者不能混。</li></ul></div>
+    <div class="panel"><h3>输出与验收（人必须核对的）</h3><ul><li>宣传稿：标题、导语、三段正文、结尾，800 字以内。</li><li>活动复盘：做得好的、不足的、下次改进，各 3 条。</li><li>任务台账：后续事项、责任人、期限。</li><li>素材使用说明：哪张图能用、哪张不能用、为什么。</li></ul>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px dashed #e3ece7">
+        <div style="font-size:12.4px;color:#456;font-weight:700;margin-bottom:4px">验收要点</div>
+        <ul><li>9 条事实全部有出处，3 处评价已标注来源。</li><li>2 处数据冲突已标待核实，未擅自取一个。</li><li>缺失素材、未授权素材均在文中回避，未编造。</li><li>全文无「气氛热烈」「成效显著」这类空话。</li></ul>
+      </div>
+    </div>
+  </div>
+  <div class="boundary"><b>边界：</b>不编造活动成效，不擅自发布，不替代内容审核；发布范围由党群负责人确认。</div>
+</section>
+<section class="sec" id="s3">
+  <div class="sec-head"><span class="secno">03</span><h2>数据集下载</h2>
+    <span class="hint">全部为课堂模拟数据，已埋入可核对的问题</span></div>
+  <div class="files">
+    <div class="file">
+      <div class="fname">t6-activity-record.docx</div>
+      <div class="fdesc">主题党日暨业务融合交流会记录</div>
+      <div class="fmeta"><span class="ftype">Word</span><span>37 KB</span></div>
+      <a class="dl" href="../data/t6-activity-record.docx" download>下载 ↓</a>
+    </div>
+    <div class="file">
+      <div class="fname">t6-material-list.xlsx</div>
+      <div class="fdesc">素材清单（8 项）</div>
+      <div class="fmeta"><span class="ftype">Excel</span><span>6 KB</span></div>
+      <a class="dl" href="../data/t6-material-list.xlsx" download>下载 ↓</a>
+    </div>
+  </div>
+  <div class="note">这些文件不是空模板，而是<b>带答案的题</b>：每一份都埋了错，页面第 07 节给出答案。建议先自己找一遍再看答案，否则练的是「抄」而不是「核」。</div>
+</section>
+<section class="sec" id="s4">
+  <div class="sec-head"><span class="secno">04</span><h2>可复制提示词</h2>
+    <span class="hint">逐字可用，路径已按 ../data/ 的下载文件写好</span></div>
+
+  <div class="prompt" data-prompt="p1">
+    <div class="prompt-head">
+      <span class="pt">主提示词｜宣传稿与活动复盘</span>
+      <span class="ph">「评价只能作引语」这一条决定了稿子能不能过审</span>
+      <button class="copybtn" type="button">复制全文</button>
+    </div>
+    <pre class="prompt-body">先出计划，不执行。
+
+【角色】你是党群工作部的宣传岗，负责把活动记录写成宣传稿与复盘。你不编造事实，也不替领导表态。
+
+【输入】
+1. 01-原始副本/t6-activity-record.docx（活动记录，含现场估数与评价性表述）
+2. 01-原始副本/t6-material-list.xlsx（素材清单，含状态与使用限制）
+
+【任务】输出宣传稿、活动复盘、任务台账、素材使用说明。
+
+【规则】
+1. 动笔前先过素材清单：状态为「未取得/未定稿/未授权」的，不得作为事实依据，也不得在文中暗示已核实。
+2. 事实与评价分开：事实进正文并标出处；评价只能作为引语，注明「×××在会上表示」，不得写成客观结论。
+3. 人数、时长、发言人次等数字，以可核对材料为准。估数与签到表冲突时，两个都列并标「待核实」，不得取平均或取整。
+4. 禁止使用无数据支撑的成效表述，包括但不限于「气氛热烈」「成效显著」「极大提升」「反响强烈」。
+5. 引用原话标段落号；转述标「据记录」；两者不得混用。
+6. 记录中缺失的信息，写「待补充」，不得根据常识补全。
+
+【输出】
+- output/宣传稿-v01.docx（800 字以内，五段：主题、依据、做法、成效、下一步）
+- output/活动复盘-v01.docx（做得好 / 不足 / 改进，各 3 条）
+- output/任务台账-v01.xlsx
+- output/素材使用说明-v01.md（逐项：能用/不能用/为什么）
+
+【红线】不编造成效、不虚构引语、不擅自发布、不替代内容审核。
+
+【验收】每条事实可回溯到记录段落或素材编号；全文无空泛评价。</pre>
+    <div class="opt"><b>可删行</b>｜补充口径：宣传稿篇幅 800 字以内，成效部分只写有材料支撑的内容；无支撑则改写为「下一步计划」。</div>
+    <div class="prompt-note">复制内容含末尾「可删行」；想对比效果，把它删掉再跑一次。</div>
+  </div>
+  <div class="prompt" data-prompt="p2">
+    <div class="prompt-head">
+      <span class="pt">备用提示词｜活动方案（可执行版）</span>
+      <span class="ph">场景 1 用；「预算与风险要写清」是把方案从文案变成可批准文件的关键</span>
+      <button class="copybtn" type="button">复制全文</button>
+    </div>
+    <pre class="prompt-body">先出计划，不执行。
+
+【角色】你是党群工作部的活动策划岗。
+
+【输入】01-原始副本/ 下的活动需求、场地与预算约束、往年同类活动材料（缺哪样先说）。
+
+【任务】输出一份可执行的活动方案。
+
+【规则】
+1. 结构：目的（解决什么问题）→ 对象与规模 → 流程（含时间点）→ 分工（岗位，不写人名）→ 预算（分项）→ 风险与预案 → 效果评估方式。
+2. 流程表精确到 10 分钟，每个环节写清负责人岗位与所需物料。
+3. 预算分项列出，注明单价、数量、小计；无报价的写「待询价」，不得估算。
+4. 风险至少覆盖：人员不足、场地变更、设备故障、内容合规。
+5. 效果评估只写可采集的指标（到场率、参与时长、问卷得分），不写「提升凝聚力」这类无法测量的目标。
+
+【输出】output/活动方案-v01.docx + 流程表 + 预算表。
+
+【红线】不承诺参加人数、不虚构往年数据、不代替审批。</pre>
+    <div class="prompt-note">复制内容含末尾「可删行」；想对比效果，把它删掉再跑一次。</div>
+  </div>
+</section>
+<section class="sec" id="s5">
+  <div class="sec-head"><span class="secno">05</span><h2>怎么练：五步</h2>
+    <span class="hint">45 分钟，建议两人一组，一人操作一人记录</span></div>
+  <div class="card"><ol class="steps"><li>先看素材清单：8 项里 2 项未取得、1 项未定稿、1 项未授权——这是写稿的边界，先划出来。</li><li>贴提示词，看计划里有没有「先过素材清单」这一步；没有就补一句再跑。</li><li>执行后搜全文，检查有没有「气氛热烈」「成效显著」——这是最容易被写进去的空话。</li><li>核对人数：记录写「约 50 人」、签到表 46 人，稿子里只能写 46 或标待核实。</li><li>让它把「成效显著」改成有依据的表述，观察它是删掉还是编一个数据来支撑。</li></ol></div>
+</section>
+<section class="sec" id="s6">
+  <div class="sec-head"><span class="secno">06</span><h2>验收清单</h2>
+    <span class="hint">勾选结果保存在本机，刷新不丢</span></div>
+  <div class="progline"><span>已完成</span><div class="bar2"><i id="bar2"></i></div><b id="progTxt">0 / 9</b></div>
+  <div class="checks" data-group="s6"><label><input type="checkbox" data-p="party-dept-c1"><span>动笔前已核对素材清单 8 项状态</span></label><label><input type="checkbox" data-p="party-dept-c2"><span>未取得/未定稿/未授权的素材未被当作事实</span></label><label><input type="checkbox" data-p="party-dept-c3"><span>3 处评价性表述已改为引语或删除</span></label><label><input type="checkbox" data-p="party-dept-c4"><span>人数冲突（46 vs 约 50）已标待核实</span></label><label><input type="checkbox" data-p="party-dept-c5"><span>照片日期不符（11-19 vs 11-20）已标注</span></label><label><input type="checkbox" data-p="party-dept-c6"><span>全文无「气氛热烈」「成效显著」「极大提升」</span></label><label><input type="checkbox" data-p="party-dept-c7"><span>9 条建议中仅 4 条完整，未把 9 条都写成已落实</span></label><label><input type="checkbox" data-p="party-dept-c8"><span>每条事实可回溯到段落或素材编号</span></label><label><input type="checkbox" data-p="party-dept-c9"><span>宣传稿 800 字以内，五段结构完整</span></label></div>
+</section>
+<section class="sec" id="s7">
+  <div class="sec-head"><span class="secno">07</span><h2>数据埋点答案</h2>
+    <span class="hint">这些数字直接来自生成数据的脚本，不是事后手写</span></div>
+  <details class="ans">
+    <summary>展开核对答案（建议先自己跑完再看）</summary>
+    <div class="ansbody"><dl><dt>可用事实</dt><dd>9 条可写进正文（时间、地点、议程、参加 46 人、发言 6 人、建议 9 条等）</dd><dt>需标注的评价</dt><dd>3 处：气氛热烈、成效显著、极大提升了——均为现场原话，只能作引语，且未见数据支撑</dd><dt>数据冲突</dt><dd>2 处：签到表 46 人 vs 记录「约 50 人」；照片日期 11-19 vs 活动日期 11-20</dd><dt>素材缺口</dt><dd>2 项：签到表扫描件、领导讲话稿定稿（签到表只有口头告知，讲话稿未定稿）</dd><dt>未授权素材</dt><dd>M-08 外部转载素材：来源不明，不得使用</dd><dt>可用引语</dt><dd>「一线最怕「审批走完，机会没了」」；「跨部门会签仍有 3 个节点可合并」；「报销退回率高的主因是附件不全」</dd><dt>建议完整性</dt><dd>9 条建议中仅 4 条记录完整，稿子只能写这 4 条，其余标「待补充」</dd></dl></div>
+  </details>
+</section>
+<section class="sec" id="s8">
+  <div class="sec-head"><span class="secno">08</span><h2>口径判断</h2>
+    <span class="hint">选一个看解析，答错比答对更有用</span></div>
+  <div class="quiz">
+  <div class="q" data-right="2">
+    <div class="qt">Q1. 记录写「参加人数约 50 人」，签到表为 46 人。宣传稿应写？</div>
+    <div class="q-opts"><button type="button"><span class="k">A</span><span>约 50 人，与现场记录一致</span></button><button type="button"><span class="k">B</span><span>46 人，以签到表为准</span></button><button type="button"><span class="k">C</span><span>46 人，并注明签到表统计</span></button><button type="button"><span class="k">D</span><span>50 余人，取整更好看</span></button></div>
+    <div class="q-why" hidden><b>答案：C</b>　可核对材料优先，且要说明口径。直接写「46 人」不加说明，读者不知道依据；写「约 50 人」则把一个估数当成了事实。</div>
+  </div>
+  <div class="q" data-right="2">
+    <div class="qt">Q2. 领导总结说「气氛热烈，成效显著，极大提升了服务意识」。稿子里怎么用？</div>
+    <div class="q-opts"><button type="button"><span class="k">A</span><span>作为客观结论写进成效段</span></button><button type="button"><span class="k">B</span><span>删掉，不写</span></button><button type="button"><span class="k">C</span><span>作为引语：「×××在会上表示……」，并补可核对的事实</span></button><button type="button"><span class="k">D</span><span>改成「成效较为显著」，语气缓和一些</span></button></div>
+    <div class="q-why" hidden><b>答案：C</b>　引语保留原意、标明说话人，事实部分另找支撑（发言 6 人、建议 9 条、4 条可落地）。换成「较为显著」只是把没有依据的结论写得更委婉，问题没解决。</div>
+  </div>
+  </div>
+</section><div class="pager"><a href="../hr-dept/"><span class="lb">← 上一部门</span><span class="nm">05 人力资源部</span></a><a class="next" href="../"><span class="lb">已完成六部门 →</span><span class="nm">回到门户</span></a></div>
+<footer class="page">
+  <span>云南白药 · 药品事业群中后台 AI 赋能实战（两天版）｜党群工作部练习台</span>
+  <span>全部数据为课堂模拟，不含企业真实资料</span>
+</footer>
+</div></div></div>
+<script>
+(function(){
+  var page = document.body.dataset.page || 'page';
+  var KEY = 'ynby-' + page + '-v1';
+
+  // ---- 移动端抽屉
+  var sb = document.getElementById('sidebar'), ov = document.getElementById('overlay'),
+      mb = document.getElementById('menuBtn'), sc = document.getElementById('sideClose');
+  function openD(){ if(!sb) return; sb.classList.add('open'); if(ov) ov.classList.add('show'); }
+  function closeD(){ if(!sb) return; sb.classList.remove('open'); if(ov) ov.classList.remove('show'); }
+  if(mb) mb.addEventListener('click', openD);
+  if(sc) sc.addEventListener('click', closeD);
+  if(ov) ov.addEventListener('click', closeD);
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeD(); });
+  document.querySelectorAll('.side-toc a').forEach(function(a){ a.addEventListener('click', function(){ if(window.innerWidth <= 1080) closeD(); }); });
+
+  // ---- 目录高亮
+  var links = Array.prototype.slice.call(document.querySelectorAll('.side-toc a[href^="#"]'));
+  var secs = links.map(function(a){ return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  function spy(){
+    var y = window.scrollY + 110, cur = null;
+    secs.forEach(function(s){ if(s.offsetTop <= y) cur = s; });
+    links.forEach(function(a){ a.classList.toggle('on', cur && a.getAttribute('href') === '#' + cur.id); });
+  }
+  window.addEventListener('scroll', spy, {passive:true}); spy();
+
+  // ---- 复制
+  function mark(btn, txt, cls){
+    var old = btn.dataset.old || btn.textContent;
+    btn.dataset.old = old;
+    btn.textContent = txt; btn.classList.remove('ok','warn');
+    if(cls) btn.classList.add(cls);
+    setTimeout(function(){ btn.textContent = old; btn.classList.remove('ok','warn'); }, 2200);
+  }
+  function fallbackCopy(text){
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly','');
+    ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0';
+    document.body.appendChild(ta); ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch(e) { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+  document.querySelectorAll('.prompt').forEach(function(box){
+    var btn = box.querySelector('.copybtn');
+    if(!btn) return;
+    btn.addEventListener('click', function(){
+      var pre = box.querySelector('.prompt-body');
+      var opt = box.querySelector('.opt');
+      var text = pre ? pre.innerText : '';
+      if(opt) text += '\n\n' + opt.innerText;
+      var done = function(){ mark(btn, '已复制全文', 'ok'); };
+      var fail = function(){
+        // 退化为手动复制：选中正文
+        try{
+          var r = document.createRange(); r.selectNodeContents(pre);
+          var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        }catch(e){}
+        mark(btn, '请按 Ctrl+C 复制已选中内容', 'warn');
+      };
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done).catch(function(){
+          if(fallbackCopy(text)) done(); else fail();
+        });
+      } else {
+        if(fallbackCopy(text)) done(); else fail();
+      }
+    });
+  });
+
+  // ---- 勾选进度
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('.checks input[type=checkbox]'));
+  if(boxes.length){
+    var saved = {};
+    try { saved = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e) { saved = {}; }
+    boxes.forEach(function(b){
+      var id = b.dataset.p;
+      if(saved[id]) b.checked = true;
+      b.addEventListener('change', function(){
+        saved[id] = b.checked;
+        try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch(e) {}
+        progress();
+      });
+    });
+    function progress(){
+      var total = boxes.length, on = boxes.filter(function(b){ return b.checked; }).length;
+      var pct = total ? Math.round(on / total * 100) : 0;
+      var num = document.getElementById('progNum'), tot = document.getElementById('progTotal'),
+          bar = document.getElementById('progBar'), bar2 = document.getElementById('bar2'),
+          txt = document.getElementById('progTxt');
+      if(num) num.textContent = on;
+      if(tot) tot.textContent = total;
+      if(bar) bar.style.width = pct + '%';
+      if(bar2) bar2.style.width = pct + '%';
+      if(txt) txt.textContent = on + ' / ' + total;
+      // 目录完成标记
+      document.querySelectorAll('.checks').forEach(function(g){
+        var sid = g.dataset.group;
+        var all = g.querySelectorAll('input');
+        var ok = Array.prototype.every.call(all, function(x){ return x.checked; });
+        var a = document.querySelector('.side-toc a[href="#' + sid + '"]');
+        if(a) a.classList.toggle('done', ok);
+      });
+    }
+    progress();
+  }
+
+  // ---- 判断题
+  document.querySelectorAll('.q').forEach(function(q){
+    var btns = Array.prototype.slice.call(q.querySelectorAll('.q-opts button'));
+    var right = parseInt(q.dataset.right, 10);
+    btns.forEach(function(b, i){
+      b.addEventListener('click', function(){
+        if(q.dataset.answered) return;
+        q.dataset.answered = '1';
+        btns[right].classList.add('right');
+        if(i !== right) b.classList.add('wrong');
+        var why = q.querySelector('.q-why');
+        if(why) why.hidden = false;
+      });
+    });
+  });
+
+  // ---- 打印前展开答案
+  window.addEventListener('beforeprint', function(){
+    document.querySelectorAll('details.ans').forEach(function(d){ d.open = true; });
+  });
+})();
+</script>
+</body></html>
